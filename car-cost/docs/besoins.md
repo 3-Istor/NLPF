@@ -95,17 +95,3 @@ Si aucun prix exploitable n'est disponible, le système ne doit pas remplacer au
 L'utilisateur est informé de l'anomalie et de l'utilisation éventuelle d'un prix historique.
 
 En l'absence de données exploitables, le système ne doit pas produire de coût total présenté comme fiable.
-
-## 5. Points à valider avec l'équipe
-
-Avant de considérer ce document comme définitif, l'équipe doit confirmer :
-
-* La conformité des cinq invariants avec les exigences du sujet, notamment la slide 25, et le maintien éventuel de règles explicites concernant les cycles de la nomenclature et l'approvisionnabilité des feuilles.
-* Le périmètre de la comparaison des configurations, notamment les composants, les quantités et l'empreinte carbone.
-* La politique de réutilisation des prix historiques, notamment leur durée de validité et leur statut dans les résultats.
-* La portée de l'invariant relatif à la double comptabilisation, en fonction des modes de valorisation et d'approvisionnement réellement prévus.
-* L'emplacement définitif du livrable dans le dépôt Git.
-
-**Validation des invariants :** en attente de relecture et de validation collective.
-
-**Merge du livrable :** à effectuer après validation.
