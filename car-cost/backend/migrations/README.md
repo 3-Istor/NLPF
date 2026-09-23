@@ -64,3 +64,25 @@ portée chemin sur la même pièce, le cas de précédence de l'ADR-0002. Un
 `WARNING` dans la sortie signale une contrainte qui ne tient plus.
 
 Exécuté sur Postgres 16.15 le 2026-09-23 : 15 refus, 0 WARNING.
+
+## Chargement du jeu de données
+
+Le chargeur **n'ouvre pas de connexion** : il émet le script que `psql` exécute,
+et il ne l'émet que si le jeu de données passe tous ses contrôles.
+
+```bash
+docker compose up -d
+PYTHONPATH=backend/src python3 -m carcost.infrastructure seeds \
+  | docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q
+```
+
+Contrôlé avant émission : acyclicité par tri topologique, racine unique, aucun
+orphelin, valorisation exclusive, et **les quantités cumulées recalculées** puis
+comparées à celles annoncées par le fichier. Un refus n'écrit rien du tout.
+
+`validated_at` n'est renseigné qu'à la dernière instruction de la transaction :
+une version présente en base mais non validée n'a pas passé les contrôles, et
+l'application refuse de calculer dessus.
+
+Chargé sur Postgres 16.15 le 2026-09-23 : 474 pièces, 689 arêtes, 302 achetées,
+20 fournisseurs, 30 usines, 742 offres, 1 version validée.

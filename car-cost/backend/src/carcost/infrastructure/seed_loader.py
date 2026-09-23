@@ -1,0 +1,343 @@
+"""Chargement du jeu de données en base.
+
+Le chargeur **n'ouvre pas de connexion** : il émet sur sa sortie standard le
+script que `psql` exécutera. Trois conséquences, toutes voulues :
+
+  - il se teste sans base, donc le contrôle d'intégrité se teste sans base ;
+  - le chargement reste un vrai `COPY`, pas une boucle d'INSERT ;
+  - aucune dépendance : bibliothèque standard seule, et le domaine pour valider.
+
+Ce qui vient d'ici ne franchit jamais la frontière : le domaine ignore que ce
+module existe (ADR-0004).
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+from decimal import Decimal
+from pathlib import Path
+from typing import Mapping, Sequence
+
+from ..domain.bom import Bom, Edge, Part, ValuationMode
+
+
+class SeedRejected(Exception):
+    """Le jeu de données viole une règle : rien ne doit entrer en base."""
+
+
+PART_COLUMNS = (
+    "bom_version_id",
+    "part_ref",
+    "label",
+    "category",
+    "system",
+    "unit",
+    "valuation_mode",
+    "labour_minutes",
+    "base_price_eur",
+    "price_per",
+    "material_ref",
+    "mass_kg",
+    "carbon_factor_kg_co2e_per_unit",
+    "expected_cumulative_quantity",
+)
+
+EDGE_COLUMNS = (
+    "bom_version_id",
+    "parent_ref",
+    "child_ref",
+    "parent_valuation_mode",
+    "quantity",
+    "unit",
+)
+
+
+def build_load_script(
+    *,
+    metadata: Mapping,
+    parts: Sequence[Mapping],
+    edges: Sequence[Mapping],
+    suppliers: Mapping,
+) -> str:
+    """Valide d'abord, émet ensuite. Un fichier refusé ne produit aucun SQL."""
+    bom = _to_domain(metadata, parts, edges)
+    _reject_if_invalid(bom, parts)
+
+    version = metadata["bom_version_id"]
+    blocks = [
+        "BEGIN;",
+        "",
+        _insert_bom_version(metadata, parts, edges),
+        "",
+        _copy_block("part", PART_COLUMNS, parts),
+        "",
+        _copy_block("bom_edge", EDGE_COLUMNS, edges),
+    ]
+
+    supplier_sql = _supplier_blocks(version, suppliers)
+    if supplier_sql:
+        blocks += ["", supplier_sql]
+
+    blocks += [
+        "",
+        "-- Intégrité vérifiée au chargement : acyclicité par tri topologique,",
+        "-- racine unique, aucun orphelin, quantités cumulées conformes.",
+        "UPDATE bom_version SET validated_at = now(), validation_report = "
+        f"{_quote(_report(bom, parts))}::jsonb WHERE id = {_quote(version)};",
+        "",
+        "COMMIT;",
+        "",
+    ]
+    return "\n".join(blocks)
+
+
+# --------------------------------------------------------------------- domaine
+
+
+def _to_domain(
+    metadata: Mapping, parts: Sequence[Mapping], edges: Sequence[Mapping]
+) -> Bom:
+    root = metadata["root_part_ref"]
+    known = {row["part_ref"] for row in parts}
+    if root not in known:
+        raise SeedRejected(f"racine {root} absente du jeu de pièces")
+
+    for row in edges:
+        for side in ("parent_ref", "child_ref"):
+            if row[side] not in known:
+                raise SeedRejected(
+                    f"arête {row['parent_ref']} → {row['child_ref']} : "
+                    f"{row[side]} n'est pas une pièce déclarée"
+                )
+
+    domain_parts = {
+        row["part_ref"]: Part(
+            ref=row["part_ref"],
+            label=row["label"],
+            system=row["system"],
+            unit=row["unit"],
+            valuation_mode=ValuationMode(row["valuation_mode"]),
+            carbon_factor=Decimal(row["carbon_factor_kg_co2e_per_unit"]),
+            labour_minutes=(
+                Decimal(row["labour_minutes"]) if row["labour_minutes"] else None
+            ),
+            mass_kg=Decimal(row["mass_kg"]) if row["mass_kg"] else None,
+        )
+        for row in parts
+    }
+    domain_edges = tuple(
+        Edge(row["parent_ref"], row["child_ref"], Decimal(row["quantity"]))
+        for row in edges
+    )
+    return Bom(root_ref=root, parts=domain_parts, edges=domain_edges)
+
+
+def _reject_if_invalid(bom: Bom, parts: Sequence[Mapping]) -> None:
+    try:
+        order = bom.topological_order()
+    except ValueError as error:
+        raise SeedRejected(str(error)) from error
+
+    has_parent = {edge.child_ref for edge in bom.edges}
+    orphans = sorted(
+        ref for ref in bom.parts if ref != bom.root_ref and ref not in has_parent
+    )
+    if orphans:
+        raise SeedRejected(
+            f"{len(orphans)} pièce(s) orpheline(s), employée(s) nulle part : "
+            f"{orphans[:5]}"
+        )
+
+    for row in parts:
+        ref = row["part_ref"]
+        purchased = row["valuation_mode"] == ValuationMode.PURCHASED.value
+        children = bom.children_of(ref)
+        if purchased and children:
+            raise SeedRejected(
+                f"{ref} est achetée et porte {len(children)} enfant(s) : "
+                f"son coût serait compté deux fois"
+            )
+        if purchased and not row["base_price_eur"]:
+            raise SeedRejected(f"{ref} est achetée et n'a pas de prix")
+        if not purchased and row["base_price_eur"]:
+            raise SeedRejected(
+                f"{ref} est fabriquée et porte un prix propre : son contenu "
+                f"serait perdu"
+            )
+        if not purchased and not children:
+            raise SeedRejected(f"{ref} est fabriquée et n'a aucun enfant")
+
+    _reject_if_quantities_disagree(bom, order, parts)
+
+
+def _reject_if_quantities_disagree(
+    bom: Bom, order: tuple[str, ...], parts: Sequence[Mapping]
+) -> None:
+    """Le fichier annonce une quantité cumulée ; on la recalcule et on compare.
+
+    Ce n'est pas redondant avec le générateur : à l'import, rien ne garantit que
+    le fichier vient de lui.
+    """
+    cumulative = {ref: Decimal(0) for ref in bom.parts}
+    cumulative[bom.root_ref] = Decimal(1)
+    for ref in order:
+        for child_ref, quantity in bom.children_of(ref):
+            cumulative[child_ref] += cumulative[ref] * quantity
+
+    for row in parts:
+        announced = Decimal(row["expected_cumulative_quantity"])
+        computed = cumulative[row["part_ref"]]
+        if announced != computed:
+            raise SeedRejected(
+                f"{row['part_ref']} : quantité cumulée annoncée {announced}, "
+                f"recalculée {computed}"
+            )
+
+
+def _report(bom: Bom, parts: Sequence[Mapping]) -> str:
+    purchased = sum(
+        1 for row in parts if row["valuation_mode"] == ValuationMode.PURCHASED.value
+    )
+    return json.dumps(
+        {
+            "checks": [
+                "acyclicite_par_tri_topologique",
+                "racine_unique",
+                "aucun_orphelin",
+                "valorisation_exclusive",
+                "quantites_cumulees_recalculees",
+            ],
+            "parts": len(parts),
+            "purchased": purchased,
+            "manufactured": len(parts) - purchased,
+            "edges": len(bom.edges),
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+
+
+# ------------------------------------------------------------------------- SQL
+
+
+def _quote(value: str) -> str:
+    return "'" + value.replace("'", "''") + "'"
+
+
+def _copy_field(value) -> str:
+    """Format texte de COPY : la chaîne vide est NULL, le reste est échappé.
+
+    Sans l'échappement, une tabulation dans un libellé décalerait toutes les
+    colonnes suivantes sans qu'aucune erreur ne soit levée.
+    """
+    if value is None or value == "":
+        return "\\N"
+    return (
+        str(value)
+        .replace("\\", "\\\\")
+        .replace("\t", "\\t")
+        .replace("\n", "\\n")
+        .replace("\r", "\\r")
+    )
+
+
+def _copy_block(table: str, columns: Sequence[str], rows: Sequence[Mapping]) -> str:
+    lines = [f"COPY {table} ({', '.join(columns)}) FROM STDIN;"]
+    lines += ["\t".join(_copy_field(row[column]) for column in columns) for row in rows]
+    lines.append("\\.")
+    return "\n".join(lines)
+
+
+def _insert_bom_version(
+    metadata: Mapping, parts: Sequence[Mapping], edges: Sequence[Mapping]
+) -> str:
+    return (
+        "INSERT INTO bom_version (id, label, root_part_ref, generator_version, "
+        "seed_checksum, is_synthetic, part_count, edge_count) VALUES ("
+        f"{_quote(metadata['bom_version_id'])}, "
+        f"{_quote(metadata['vehicle'])}, "
+        f"{_quote(metadata['root_part_ref'])}, "
+        f"{_quote(metadata['generator_version'])}, "
+        f"{_quote(metadata['seed_checksum'])}, "
+        f"{'true' if metadata['is_synthetic'] else 'false'}, "
+        f"{len(parts)}, {len(edges)});"
+    )
+
+
+def _supplier_blocks(version: str, suppliers: Mapping) -> str:
+    declared = suppliers.get("suppliers") or []
+    links = suppliers.get("part_suppliers") or []
+    if not declared:
+        return ""
+
+    supplier_rows = [
+        [s["supplier_id"], s["name"], s["home_country"]] for s in declared
+    ]
+    plant_rows = [
+        [
+            plant["plant_id"],
+            s["supplier_id"],
+            plant["label"],
+            plant["origin_country"],
+            plant["price_coefficient"],
+            plant["lead_time_days"],
+            plant["transport_co2_kg_per_kg"],
+            "true" if plant["is_default"] else "false",
+        ]
+        for s in declared
+        for plant in s["plants"]
+    ]
+    link_rows = [
+        [
+            version,
+            link["part_ref"],
+            "purchased",
+            link["supplier_id"],
+            link["price_multiplier"],
+            "true" if link["is_default"] else "false",
+        ]
+        for link in links
+    ]
+
+    def block(table: str, columns: str, rows: list[list]) -> str:
+        lines = [f"COPY {table} ({columns}) FROM STDIN;"]
+        lines += ["\t".join(_copy_field(value) for value in row) for row in rows]
+        lines.append("\\.")
+        return "\n".join(lines)
+
+    return "\n\n".join(
+        [
+            block("supplier", "id, name, home_country", supplier_rows),
+            block(
+                "supplier_plant",
+                "id, supplier_id, label, origin_country, price_coefficient, "
+                "lead_time_days, transport_co2_kg_per_kg, is_default",
+                plant_rows,
+            ),
+            block(
+                "part_supplier",
+                "bom_version_id, part_ref, part_valuation_mode, supplier_id, "
+                "price_multiplier, is_default",
+                link_rows,
+            ),
+        ]
+    )
+
+
+# ------------------------------------------------------------------- lecture
+
+
+def read_seeds(seeds_dir: Path) -> dict:
+    bom = json.loads((seeds_dir / "bom_multipla.json").read_text(encoding="utf-8"))
+    suppliers = json.loads((seeds_dir / "suppliers.json").read_text(encoding="utf-8"))
+    return {
+        "metadata": bom["metadata"],
+        "parts": list(csv.DictReader(_lines(seeds_dir / "parts.csv"))),
+        "edges": list(csv.DictReader(_lines(seeds_dir / "edges.csv"))),
+        "suppliers": suppliers,
+    }
+
+
+def _lines(path: Path) -> list[str]:
+    return path.read_text(encoding="utf-8").splitlines()
