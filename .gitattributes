@@ -1,0 +1,7 @@
+# Fins de ligne normalisées en LF dans l'arbre de travail, sur toutes les
+# plateformes. Sans cela, le générateur (qui écrit en \n) et les fichiers
+# issus d'un clone Windows (en \r\n) diffèrent, et `--check` échoue alors
+# que rien n'a changé.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
