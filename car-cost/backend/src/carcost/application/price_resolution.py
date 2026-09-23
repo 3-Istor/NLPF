@@ -13,11 +13,23 @@ impossible.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from ..domain.bom import Bom
 from ..domain.prices import PriceSnapshot
 from .scenario import Scenario, ScenarioParameter, Sourcing
+
+
+#: Les prix sont stockés à l'échelle 6 (NUMERIC(18,6)). Le produit de trois
+#: facteurs à 6 décimales en porterait 18, dont douze que la donnée ne contient
+#: pas. On ramène donc le prix unitaire à l'échelle réelle, une fois, ici — et
+#: plus jamais ensuite : c'est la seule façon pour que les contributions se
+#: somment exactement au total (ADR-0011).
+SCALE = Decimal("0.000001")
+
+
+def to_scale(value: Decimal) -> Decimal:
+    return value.quantize(SCALE, rounding=ROUND_HALF_UP)
 
 
 class ParameterNotApplicable(Exception):
@@ -81,10 +93,10 @@ def resolve_unit_prices(
         if parameter is not None and parameter.price_override is not None:
             explanations[ref] = PriceExplanation(
                 part_ref=ref,
-                unit_price=parameter.price_override,
+                unit_price=to_scale(parameter.price_override),
                 override_justification=parameter.price_override_justification,
             )
-            prices[ref] = parameter.price_override
+            prices[ref] = to_scale(parameter.price_override)
             continue
 
         reference = snapshot.prices.get(ref)
@@ -93,7 +105,9 @@ def resolve_unit_prices(
             continue
 
         offer, plant = _sourcing_for(sourcing, ref, parameter)
-        unit_price = reference * offer.price_multiplier * plant.price_coefficient
+        unit_price = to_scale(
+            reference * offer.price_multiplier * plant.price_coefficient
+        )
         prices[ref] = unit_price
         explanations[ref] = PriceExplanation(
             part_ref=ref,

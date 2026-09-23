@@ -12,12 +12,18 @@ qui mènent à elle. Un test à compteur d'appels le prouve.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from .bom import Bom
 from .scenario import CalculationInput
 
 MINUTES_PER_HOUR = Decimal(60)
+
+#: Échelle des montants (ADR-0011). Une division par soixante produit vingt-huit
+#: chiffres significatifs, dont vingt-deux que la donnée ne contient pas. On
+#: ramène donc le coût de main-d'œuvre à l'échelle réelle là où il naît — une
+#: fois, et jamais ensuite : les contributions se somment alors exactement.
+SCALE = Decimal("0.000001")
 
 
 @dataclass(frozen=True)
@@ -133,7 +139,9 @@ def _own_unit_costs(
                 costs[ref] = None
                 missing.append(ref)
         elif labour_is_active and part.labour_minutes is not None:
-            costs[ref] = part.labour_minutes / MINUTES_PER_HOUR * inputs.labour_rate
+            costs[ref] = (
+                part.labour_minutes / MINUTES_PER_HOUR * inputs.labour_rate
+            ).quantize(SCALE, rounding=ROUND_HALF_UP)
         else:
             costs[ref] = Decimal(0)
 

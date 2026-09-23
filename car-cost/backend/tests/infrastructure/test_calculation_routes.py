@@ -150,6 +150,24 @@ class TestCalculation:
             Decimal(system["cost"]["amount"]) for system in body["systems"]
         ) == Decimal(body["total_cost"]["amount"])
 
+    def test_the_serialised_systems_sum_exactly_to_the_serialised_total(self, client):
+        """Pas « une fois désérialisés » : les chaînes elles-mêmes.
+
+        Arrondir chaque montant à la sérialisation casse l'addition — dix
+        montants arrondis ne somment pas au total arrondi. Le défaut n'est
+        apparu qu'en exécutant le vrai calcul sur les 474 pièces, avec un écart
+        de deux millionièmes d'euro.
+        """
+        scenario_id = make_scenario(client)
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        total = Decimal(body["total_cost"]["amount"])
+        systems = sum(Decimal(s["cost"]["amount"]) for s in body["systems"])
+
+        assert systems - total == Decimal(0)
+
     def test_it_says_which_prices_it_used_and_how_old_they_are(self, client):
         scenario_id = make_scenario(client)
 

@@ -89,6 +89,17 @@ class TestConservation:
         assert result.total_cost == Decimal("395")
 
 
+class TestPrecision:
+    def test_amounts_carry_no_more_precision_than_the_data(self, diamond):
+        """Une division par soixante produit vingt-huit chiffres ; la donnée
+        n'en porte pas autant. Sans cet arrondi à la source, un total sort avec
+        vingt-cinq décimales de bruit."""
+        result = compute(inputs(diamond))
+
+        assert -result.line("A").own_unit_cost.as_tuple().exponent <= 6
+        assert -result.total_cost.as_tuple().exponent <= 6
+
+
 class TestValuationMode:
     def test_purchased_node_never_sums_children(self, diamond):
         result = compute(inputs(diamond))

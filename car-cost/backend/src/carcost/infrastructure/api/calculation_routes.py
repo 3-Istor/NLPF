@@ -22,7 +22,11 @@ from ...application.price_resolution import (
     PriceOverrideNeedsJustification,
     resolve_unit_prices,
 )
-from ...application.run_calculation import input_digest, run_calculation
+from ...application.run_calculation import (
+    input_digest,
+    run_calculation,
+    with_contributors,
+)
 from ...application.scenario import Scenario, ScenarioParameter
 from .errors import error_response
 
@@ -161,7 +165,12 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
 
     @app.get("/api/v1/calculations/{calculation_id}")
     def read_calculation(calculation_id: str):
-        return _calculation_payload(repositories.calculations.get(calculation_id))
+        calculation = repositories.calculations.get(calculation_id)
+        if not calculation.top_contributors:
+            calculation = with_contributors(
+                calculation, repositories.bom.load(calculation.bom_version)
+            )
+        return _calculation_payload(calculation)
 
     @app.get("/api/v1/calculations/{calculation_id}/aggregated")
     def read_aggregated(
@@ -230,7 +239,13 @@ def _state(repositories, scenario: Scenario):
 
 
 def _money(amount: Decimal, currency: str) -> dict:
-    return {"amount": str(amount.quantize(SCALE)), "currency": currency}
+    """Le montant exact, tel quel.
+
+    L'arrondir ici casserait l'addition : dix montants arrondis ne somment pas
+    au total arrondi. L'arrondi est un acte d'affichage, et il a lieu dans le
+    navigateur (ADR-0011).
+    """
+    return {"amount": str(amount), "currency": currency}
 
 
 def _scenario_payload(repositories, scenario: Scenario) -> dict:

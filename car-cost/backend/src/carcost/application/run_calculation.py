@@ -129,6 +129,27 @@ def run_calculation(
     )
 
 
+def with_contributors(calculation: Calculation, bom: Bom, top: int = 15) -> Calculation:
+    """Reconstitue les contributeurs d'un calcul relu en base.
+
+    Ils ne sont pas stockés : ce sont les mêmes lignes, triées, avec les
+    libellés de la nomenclature. Une donnée dupliquée finit par diverger de
+    celle dont elle est tirée.
+    """
+    from dataclasses import replace
+
+    return replace(
+        calculation,
+        top_contributors=_contributors(
+            bom,
+            calculation.lines,
+            calculation.total_cost,
+            _first_path_of_each_part(bom),
+            top,
+        ),
+    )
+
+
 def input_digest(scenario: Scenario, snapshot: PriceSnapshot) -> str:
     """L'empreinte des entrées, et d'elles seules.
 
