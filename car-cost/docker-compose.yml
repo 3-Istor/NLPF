@@ -1,0 +1,35 @@
+# Postgres 16 pour 3istor.
+#
+# Les fichiers de backend/migrations sont montés dans /docker-entrypoint-initdb.d :
+# Postgres exécute les *.sql dans l'ordre lexicographique **au premier démarrage
+# seulement** (quand le volume est vide). Pour rejouer le schéma depuis zéro :
+#
+#     docker compose down -v && docker compose up -d
+#
+# Le README.md du dossier est ignoré : l'entrypoint ne traite que .sql, .sh et .sql.gz.
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: 3istor-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-3istor}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-3istor}
+      POSTGRES_DB: ${POSTGRES_DB:-3istor}
+      # Comparaisons de chaînes déterministes, indépendantes de la locale de l'hôte :
+      # deux machines doivent trier les références de pièces de la même façon.
+      POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF8"
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-3istor} -d ${POSTGRES_DB:-3istor}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  db-data:
