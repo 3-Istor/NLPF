@@ -3,7 +3,20 @@ name = "carcost"
 version = "0.1.0"
 description = "3istor — coût de fabrication explicable d'un véhicule"
 requires-python = ">=3.12"
-dependencies = []
+
+# Chaque dépendance porte la raison de sa présence. Le domaine, lui, n'en
+# utilise aucune : un test d'architecture le vérifie (ADR-0004).
+dependencies = [
+    "fastapi>=0.115",        # l'API du produit — pile imposée
+    "uvicorn[standard]>=0.32",  # serveur ASGI pour la lancer
+    "psycopg[binary]>=3.2",  # Postgres, et son COPY natif
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",           # requis par le client de test de Starlette
+]
 
 [build-system]
 requires = ["setuptools>=68"]

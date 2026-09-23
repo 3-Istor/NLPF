@@ -24,3 +24,21 @@ class PriceSource(Protocol):
         self, refs: Sequence[str], currency: str
     ) -> Mapping[str, Decimal]:  # pragma: no cover - contrat
         ...
+
+
+class BomVersionNotFound(Exception):
+    """Version de nomenclature inconnue."""
+
+
+class BomVersionNotValidated(Exception):
+    """La version n'a pas passé ses contrôles d'intégrité.
+
+    Tant que `validated_at` est nul, rien ne se lit et rien ne se calcule
+    dessus : un graphe dont on n'a pas prouvé l'acyclicité ne doit pas servir.
+    """
+
+
+class BomRepository(Protocol):
+    def load(self, version: str):  # pragma: no cover - contrat
+        """Renvoie la nomenclature complète d'une version validée."""
+        ...
