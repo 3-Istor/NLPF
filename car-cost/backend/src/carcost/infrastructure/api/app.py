@@ -10,7 +10,10 @@ rendre la reproductibilité au centime indémontrable (ADR-0011).
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from datetime import datetime, timezone
 from decimal import Decimal
+from typing import Callable
 
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import JSONResponse
@@ -26,12 +29,37 @@ from ...application.ports import (
     BomRepository,
     BomVersionNotFound,
     BomVersionNotValidated,
+    CalculationNotFound,
+    CalculationRepository,
+    PriceSnapshotRepository,
+    ScenarioNotFound,
+    ScenarioRepository,
+    SourcingRepository,
 )
+from .calculation_routes import register_calculation_routes
+from .errors import error_response
 
 SCALE = Decimal("0.000001")
 
 
-def create_app(repository: BomRepository) -> FastAPI:
+@dataclass
+class Repositories:
+    """Les adaptateurs concrets, réunis en un point de câblage.
+
+    C'est le seul endroit qui sait qu'il existe un Postgres et une API de prix ;
+    ni le domaine ni les cas d'usage ne les nomment (ADR-0004).
+    """
+
+    bom: BomRepository
+    sourcing: SourcingRepository | None = None
+    snapshots: PriceSnapshotRepository | None = None
+    scenarios: ScenarioRepository | None = None
+    calculations: CalculationRepository | None = None
+    clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
+
+
+def create_app(repositories: Repositories) -> FastAPI:
+    repository = repositories.bom
     app = FastAPI(
         title="3istor",
         description=(
@@ -57,6 +85,16 @@ def create_app(repository: BomRepository) -> FastAPI:
     @app.exception_handler(PathNotFound)
     async def _path_not_found(_: Request, error: PathNotFound):
         return _error(404, "PATH_NOT_FOUND", str(error))
+
+    @app.exception_handler(ScenarioNotFound)
+    async def _scenario_not_found(_: Request, error: ScenarioNotFound):
+        return _error(404, "SCENARIO_NOT_FOUND", str(error))
+
+    @app.exception_handler(CalculationNotFound)
+    async def _calculation_not_found(_: Request, error: CalculationNotFound):
+        return _error(404, "CALCULATION_NOT_FOUND", str(error))
+
+    register_calculation_routes(app, repositories)
 
     @app.get("/api/v1/bom/{version}/root")
     def read_root(version: str):
@@ -156,7 +194,4 @@ def _node_payload(node) -> dict:
 
 
 def _error(status: int, code: str, message: str, details: dict | None = None):
-    return JSONResponse(
-        status_code=status,
-        content={"error": {"code": code, "message": message, "details": details or {}}},
-    )
+    return error_response(status, code, message, details)

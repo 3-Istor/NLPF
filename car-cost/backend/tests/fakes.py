@@ -1,0 +1,153 @@
+"""Dépôts en mémoire.
+
+Ils permettent de tester les routes sans Postgres. Ils respectent les mêmes
+interdits que la base — un snapshot ne se modifie pas — parce qu'un double
+plus permissif que le vrai laisserait passer des bogues.
+"""
+
+from __future__ import annotations
+
+from dataclasses import replace
+from decimal import Decimal
+
+from carcost.application.ports import (
+    BomVersionNotFound,
+    BomVersionNotValidated,
+    CalculationNotFound,
+    ScenarioNotFound,
+)
+from carcost.application.scenario import Plant, Scenario, Sourcing, SupplierOffer
+
+
+class FakeBomRepository:
+    def __init__(self, bom, version: str = "bom-test", validated: bool = True):
+        self.bom = bom
+        self.version = version
+        self.validated = validated
+
+    def load(self, version: str):
+        if version != self.version:
+            raise BomVersionNotFound(version)
+        if not self.validated:
+            raise BomVersionNotValidated(version)
+        return self.bom
+
+
+class FakeSourcingRepository:
+    def __init__(self, sourcing: Sourcing | None = None):
+        self.sourcing = sourcing or _default_sourcing()
+
+    def load(self, bom_version: str) -> Sourcing:
+        return self.sourcing
+
+
+def _default_sourcing() -> Sourcing:
+    return Sourcing(
+        offers={
+            "S": (
+                SupplierOffer("SUP-IT", Decimal("1.000000"), is_default=True),
+                SupplierOffer("SUP-DE", Decimal("1.200000"), is_default=False),
+            )
+        },
+        plants={
+            "SUP-IT": (
+                Plant("PLT-IT", "SUP-IT", "IT", Decimal("1.000000"),
+                      Decimal("0.021000"), is_default=True),
+                Plant("PLT-TR", "SUP-IT", "TR", Decimal("0.900000"),
+                      Decimal("0.142000"), is_default=False),
+            ),
+            "SUP-DE": (
+                Plant("PLT-DE", "SUP-DE", "DE", Decimal("1.000000"),
+                      Decimal("0.046000"), is_default=True),
+            ),
+        },
+    )
+
+
+class FakeSnapshotRepository:
+    def __init__(self, *snapshots):
+        self.snapshots = list(snapshots)
+
+    def latest(self):
+        return self.snapshots[-1] if self.snapshots else None
+
+    def get(self, snapshot_id: str):
+        for snapshot in self.snapshots:
+            if snapshot.id == snapshot_id:
+                return snapshot
+        raise KeyError(snapshot_id)
+
+    def save(self, snapshot) -> None:
+        if any(existing.id == snapshot.id for existing in self.snapshots):
+            raise AssertionError("un snapshot enregistré ne se réécrit pas")
+        self.snapshots.append(snapshot)
+
+
+class FakeScenarioRepository:
+    def __init__(self):
+        self.scenarios: dict[str, Scenario] = {}
+        self._sequence = 0
+
+    def create(self, scenario: Scenario) -> None:
+        self.scenarios[scenario.id] = scenario
+
+    def get(self, scenario_id: str) -> Scenario:
+        try:
+            return self.scenarios[scenario_id]
+        except KeyError as missing:
+            raise ScenarioNotFound(scenario_id) from missing
+
+    def put_parameter(self, scenario_id: str, parameter) -> str:
+        scenario = self.get(scenario_id)
+        kept = tuple(
+            existing
+            for existing in scenario.parameters
+            if not (
+                existing.part_ref == parameter.part_ref
+                and existing.scope == parameter.scope
+                and (existing.path or "") == (parameter.path or "")
+            )
+        )
+        self._sequence += 1
+        identifier = f"prm-{self._sequence}"
+        self.scenarios[scenario_id] = replace(
+            scenario, parameters=kept + (parameter,)
+        )
+        self._ids = getattr(self, "_ids", {})
+        self._ids[identifier] = parameter
+        return identifier
+
+    def delete_parameter(self, scenario_id: str, parameter_id: str) -> None:
+        parameter = getattr(self, "_ids", {}).get(parameter_id)
+        if parameter is None:
+            return
+        scenario = self.get(scenario_id)
+        self.scenarios[scenario_id] = replace(
+            scenario,
+            parameters=tuple(p for p in scenario.parameters if p is not parameter),
+        )
+
+
+class FakeCalculationRepository:
+    def __init__(self):
+        self.calculations: dict[str, object] = {}
+        self.order: list[str] = []
+
+    def save(self, calculation) -> None:
+        if calculation.id in self.calculations:
+            raise AssertionError("un calcul enregistré ne se réécrit pas")
+        self.calculations[calculation.id] = calculation
+        self.order.append(calculation.id)
+
+    def get(self, calculation_id: str):
+        try:
+            return self.calculations[calculation_id]
+        except KeyError as missing:
+            raise CalculationNotFound(calculation_id) from missing
+
+    def latest_for(self, scenario_id: str):
+        for identifier in reversed(self.order):
+            calculation = self.calculations[identifier]
+            if calculation.scenario_id == scenario_id:
+                return calculation
+        return None

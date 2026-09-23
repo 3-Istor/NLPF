@@ -11,8 +11,8 @@ from __future__ import annotations
 import os
 
 from ..postgres_bom_repository import PostgresBomRepository
-from .app import create_app
+from .app import Repositories, create_app
 
 DSN = os.environ.get("CARCOST_DSN", "postgresql://3istor:3istor@127.0.0.1:5432/3istor")
 
-app = create_app(PostgresBomRepository(DSN))
+app = create_app(Repositories(bom=PostgresBomRepository(DSN)))

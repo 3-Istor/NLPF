@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 
 from carcost.application.ports import BomVersionNotFound, BomVersionNotValidated
 from carcost.domain.bom import Bom, Edge
-from carcost.infrastructure.api.app import create_app
+from carcost.infrastructure.api.app import Repositories, create_app
 from factories import manufactured, purchased
 
 VERSION = "bom-test"
@@ -53,7 +53,7 @@ def bom() -> Bom:
 
 @pytest.fixture
 def client(bom) -> TestClient:
-    return TestClient(create_app(FakeRepository(bom)))
+    return TestClient(create_app(Repositories(bom=FakeRepository(bom))))
 
 
 class TestUnfolding:
@@ -141,7 +141,9 @@ class TestErrors:
         assert response.json()["error"]["code"] == "BOM_VERSION_NOT_FOUND"
 
     def test_a_version_that_failed_its_checks_refuses_to_be_read(self, bom):
-        client = TestClient(create_app(FakeRepository(bom, validated=False)))
+        client = TestClient(
+            create_app(Repositories(bom=FakeRepository(bom, validated=False)))
+        )
 
         response = client.get(f"/api/v1/bom/{VERSION}/root")
 
