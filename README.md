@@ -30,6 +30,33 @@ Vérifier :
 python --version && node --version && docker compose version
 ```
 
+### Sur Ubuntu
+
+Ubuntu 24.04 fournit Python 3.12 ; sur 22.04, il faut l'ajouter (dépôt
+`deadsnakes` ou équivalent).
+
+```bash
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip git curl
+```
+
+**Docker.** Installer le moteur et le greffon Compose depuis le dépôt officiel
+Docker — le paquet `docker.io` d'Ubuntu ne fournit pas toujours `docker compose`
+en version 2. Puis, pour ne pas préfixer chaque commande par `sudo` :
+
+```bash
+sudo usermod -aG docker "$USER"   # puis se déconnecter / reconnecter
+docker compose version            # doit afficher v2.x
+```
+
+**Node.** Le paquet `nodejs` d'Ubuntu est souvent trop ancien. Passer par nvm :
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+exec "$SHELL"
+nvm install 22 && nvm use 22
+```
+
 ### Sous Windows
 
 Docker passe par WSL 2. Les commandes `docker compose` se lancent depuis un
@@ -46,6 +73,21 @@ suivant. Depuis une session WSL interactive, le problème ne se produit pas.
 ## Lancer l'application
 
 Cinq étapes. Les trois premières ne servent qu'une fois.
+
+Les commandes ci-dessous sont identiques sur Ubuntu et sous Windows ; seul le
+chemin de l'interpréteur du venv change. Posez-le une fois dans votre terminal,
+depuis `car-cost/` :
+
+```bash
+PY=backend/.venv/bin/python           # Ubuntu, macOS, WSL
+# PY=backend/.venv/Scripts/python.exe # Windows (Git Bash, PowerShell)
+```
+
+> **Un venv ne se partage pas entre WSL et Windows.** Les deux écrivent dans le
+> même `backend/.venv` mais dans des dossiers différents — `bin/` d'un côté,
+> `Scripts/` de l'autre — et le second créé rend le premier inutilisable :
+> `No Python at '/usr/bin\python.exe'`. Si vous passez de l'un à l'autre,
+> supprimez `.venv` et recréez-le.
 
 ### 1. La base
 
@@ -65,10 +107,16 @@ docker compose down -v && docker compose up -d
 
 ```bash
 cd car-cost/backend
-python -m venv .venv
-.venv/Scripts/python -m pip install -e ".[dev]"     # Windows
-# source .venv/bin/activate && pip install -e ".[dev]"   # Linux, macOS
+
+python3 -m venv .venv                                  # Ubuntu, macOS
+# python -m venv .venv                                 # Windows
+
+.venv/bin/python -m pip install -e ".[dev]"            # Ubuntu, macOS
+# .venv/Scripts/python.exe -m pip install -e ".[dev]"  # Windows
 ```
+
+Le projet s'installe en mode **éditable** : `uvicorn` et `pytest` trouvent alors
+le paquet sans qu'on ait à manipuler `PYTHONPATH`.
 
 ### 3. La nomenclature en base
 
@@ -88,8 +136,8 @@ Pour régénérer les fichiers (le générateur est déterministe, deux exécuti
 produisent les mêmes octets) :
 
 ```bash
-python -m tools.bom_generator            # écrit seeds/ et imprime son rapport
-python -m tools.bom_generator --check    # vérifie le déterminisme, n'écrit rien
+$PY -m tools.bom_generator            # écrit seeds/ et imprime son rapport
+$PY -m tools.bom_generator --check    # vérifie le déterminisme, n'écrit rien
 ```
 
 ### 4. Les prix
@@ -97,18 +145,19 @@ python -m tools.bom_generator --check    # vérifie le déterminisme, n'écrit r
 L'API de prix est un **simulateur** qu'on peut faire tomber à la demande.
 
 ```bash
-# terminal A
-python price-api/mock_price_api.py --port 8099
+# terminal A — le simulateur
+cd car-cost
+$PY price-api/mock_price_api.py --port 8099
 
 # terminal B — prendre un snapshot
 cd car-cost
-backend/.venv/Scripts/python -m carcost.infrastructure.snapshot_cli
+$PY -m carcost.infrastructure.snapshot_cli
 ```
 
 Les modes de panne, pour la démonstration :
 
 ```bash
-CLI="backend/.venv/Scripts/python -m carcost.infrastructure.snapshot_cli"
+CLI="$PY -m carcost.infrastructure.snapshot_cli"
 
 $CLI --fail timeout --timeout 1  # l'API se tait → le snapshot précédent reste en vigueur
 $CLI --fail outlier              # prix négatif → quarantaine, dernier prix sain retenu
@@ -119,11 +168,11 @@ $CLI --fail missing              # pièce absente → repli, ou pièce nommée s
 ### 5. L'API et l'écran
 
 ```bash
-# terminal C
-cd car-cost/backend
-.venv/Scripts/python -m uvicorn carcost.infrastructure.api.main:app --port 8000
+# terminal C — l'API
+cd car-cost
+$PY -m uvicorn carcost.infrastructure.api.main:app --port 8000
 
-# terminal D
+# terminal D — l'écran
 cd car-cost/frontend
 npm install        # une seule fois
 npm run dev
@@ -137,9 +186,12 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-cd car-cost/backend && .venv/Scripts/python -m pytest      # 181 tests
-cd car-cost/frontend && npm test                           # 7 tests
+cd car-cost && $PY -m pytest backend      # 181 tests
+cd car-cost/frontend && npm test          # 7 tests
 ```
+
+Vérifié sur Ubuntu 24.04 (Python 3.12.3) : `175 passed, 6 skipped` — les six
+d'intégration se sautent quand Postgres n'est pas joignable.
 
 Les six tests d'intégration se **sautent** si Postgres n'est pas joignable : la
 suite reste verte hors ligne.
@@ -153,7 +205,7 @@ docker compose exec -T db psql -U 3istor -d 3istor -q \
 # attendu : 15 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
-python -m tools.bom_generator --check
+$PY -m tools.bom_generator --check
 ```
 
 ---
