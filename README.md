@@ -224,6 +224,7 @@ python -m tools.bom_generator --check
 
 | Chemin | Contenu |
 |---|---|
+| [AGENTS.md](AGENTS.md) | Comment contribuer, seul ou avec un assistant : les règles qu'on ne discute pas, ce que la CI refuse, comment pousser |
 | [docs/cadrage.md](car-cost/docs/cadrage.md) | Le problème, les acteurs, 5 questions métier, 5 invariants, 3 modes de panne, 11 ambiguïtés |
 | [docs/perimetre.md](car-cost/docs/perimetre.md) | Ce qu'on fait, ce qu'on ne fait pas, ce qu'on reporte, la tranche verticale |
 | [docs/domain-glossary.md](car-cost/docs/domain-glossary.md) | Pièce, occurrence, quantité unitaire, quantité cumulée — les quatre mots qu'on confond |
