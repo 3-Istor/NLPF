@@ -20,6 +20,9 @@ class SupplierOffer:
     supplier_id: str
     price_multiplier: Decimal
     is_default: bool
+    #: Le nom lisible. L'écran affiche « Meccanica Torinese », pas un
+    #: identifiant : on choisit un fournisseur, pas une clé primaire.
+    name: str = ""
 
 
 @dataclass(frozen=True)
@@ -30,6 +33,10 @@ class Plant:
     price_coefficient: Decimal
     transport_co2_kg_per_kg: Decimal
     is_default: bool
+    label: str = ""
+    #: Le délai fait partie du choix : une usine moins chère et plus lente n'est
+    #: pas la même offre. L'afficher à zéro reviendrait à le cacher.
+    lead_time_days: int = 0
 
 
 @dataclass(frozen=True)

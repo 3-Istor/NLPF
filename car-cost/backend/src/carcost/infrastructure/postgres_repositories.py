@@ -43,14 +43,16 @@ class _PostgresRepository:
 
 class PostgresSourcingRepository(_PostgresRepository):
     OFFERS = """
-        SELECT part_ref, supplier_id, price_multiplier, is_default
-        FROM part_supplier
-        WHERE bom_version_id = %s
-        ORDER BY part_ref, supplier_id
+        SELECT ps.part_ref, ps.supplier_id, ps.price_multiplier, ps.is_default,
+               s.name
+        FROM part_supplier ps
+        JOIN supplier s ON s.id = ps.supplier_id
+        WHERE ps.bom_version_id = %s
+        ORDER BY ps.part_ref, ps.supplier_id
     """
     PLANTS = """
         SELECT supplier_id, id, origin_country, price_coefficient,
-               transport_co2_kg_per_kg, is_default
+               transport_co2_kg_per_kg, is_default, label, lead_time_days
         FROM supplier_plant
         ORDER BY supplier_id, id
     """
@@ -61,17 +63,23 @@ class PostgresSourcingRepository(_PostgresRepository):
 
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(self.OFFERS, (bom_version,))
-            for part_ref, supplier_id, multiplier, is_default in cursor.fetchall():
+            for part_ref, supplier_id, multiplier, is_default, name in (
+                cursor.fetchall()
+            ):
                 offers.setdefault(part_ref, []).append(
-                    SupplierOffer(supplier_id, multiplier, is_default)
+                    SupplierOffer(supplier_id, multiplier, is_default, name)
                 )
 
             cursor.execute(self.PLANTS)
-            for supplier_id, plant_id, origin, coefficient, co2, is_default in (
-                cursor.fetchall()
-            ):
+            for (
+                supplier_id, plant_id, origin, coefficient, co2, is_default,
+                label, lead_time,
+            ) in cursor.fetchall():
                 plants.setdefault(supplier_id, []).append(
-                    Plant(plant_id, supplier_id, origin, coefficient, co2, is_default)
+                    Plant(
+                        plant_id, supplier_id, origin, coefficient, co2,
+                        is_default, label, lead_time,
+                    )
                 )
 
         return Sourcing(

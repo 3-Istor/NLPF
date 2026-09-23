@@ -1,0 +1,145 @@
+/**
+ * La synthèse, toujours visible.
+ *
+ * Elle affiche des chiffres venus de l'API, jamais recalculés ici. Tant que des
+ * paramètres ont changé sans recalcul, les totaux sont marqués obsolètes :
+ * montrer un ancien total comme s'il était frais est une faute, pas un détail
+ * d'ergonomie.
+ */
+
+import type { Calculation, CalculationState } from "../api/types";
+import { age, money, percent, quantity } from "../format";
+
+type Props = {
+  calculation: Calculation | null;
+  state: CalculationState;
+  staleReason: string | null;
+  busy: boolean;
+  failure: string | null;
+  onRecalculate: () => void;
+  onGoToPath: (path: string) => void;
+};
+
+const STATE_LABELS: Record<CalculationState, string> = {
+  NEVER_RUN: "jamais calculé",
+  UP_TO_DATE: "à jour",
+  PARAMETERS_CHANGED: "totaux obsolètes",
+  NO_PRICES: "aucun prix disponible",
+};
+
+export function Summary({
+  calculation,
+  state,
+  staleReason,
+  busy,
+  failure,
+  onRecalculate,
+  onGoToPath,
+}: Props) {
+  const stale = state !== "UP_TO_DATE";
+
+  return (
+    <aside className="summary">
+      <header className="summary__header">
+        <h2>Synthèse</h2>
+        <span className={`state state--${stale ? "stale" : "fresh"}`}>
+          {busy ? "calcul en cours…" : STATE_LABELS[state]}
+        </span>
+      </header>
+
+      {stale && state === "PARAMETERS_CHANGED" && (
+        <p className="banner banner--warn">
+          {staleReason === "prices"
+            ? "Les prix ont changé depuis ce calcul."
+            : "Des paramètres ont changé depuis ce calcul."}{" "}
+          Les montants ci-dessous ne sont plus à jour.
+        </p>
+      )}
+      {failure && <p className="banner banner--danger">{failure}</p>}
+
+      <button className="recalc" onClick={onRecalculate} disabled={busy}>
+        {calculation ? "Recalculer" : "Calculer"}
+      </button>
+
+      {calculation && (
+        <div className={stale ? "figures figures--stale" : "figures"}>
+          <p className="total">
+            <span className="total__label">Coût de fabrication</span>
+            <span className="total__value">{money(calculation.total_cost)}</span>
+          </p>
+
+          {calculation.status !== "OK" && (
+            <p
+              className={`banner banner--${
+                calculation.status === "INCOMPLETE" ? "danger" : "warn"
+              }`}
+            >
+              {calculation.status === "INCOMPLETE"
+                ? `Total incomplet : ${calculation.parts_without_price.length} pièce(s) sans prix.`
+                : "Prix dégradés : repli après panne, ou snapshot périmé."}
+            </p>
+          )}
+
+          <dl className="snapshot">
+            <dt>Prix utilisés</dt>
+            <dd>
+              <code>{calculation.price_snapshot.id}</code>
+              <span
+                className={
+                  calculation.price_snapshot.status === "FRESH"
+                    ? "chip"
+                    : "chip chip--warn"
+                }
+              >
+                {calculation.price_snapshot.status.toLowerCase()}
+              </span>{" "}
+              {age(calculation.price_snapshot.age_seconds)}
+            </dd>
+          </dl>
+
+          <h3>Par système</h3>
+          <ul className="systems">
+            {calculation.systems.map((system) => (
+              <li key={system.system}>
+                <span className="systems__name">{system.system}</span>
+                <span className="systems__bar">
+                  <i style={{ width: `${system.cost_share_pct}%` }} />
+                </span>
+                <span className="systems__value">{money(system.cost)}</span>
+                <span className="systems__pct">
+                  {percent(system.cost_share_pct)}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <h3>Principaux contributeurs</h3>
+          <ul className="contributors">
+            {calculation.top_cost_contributors.slice(0, 8).map((contributor) => (
+              <li key={contributor.part_ref}>
+                <button
+                  onClick={() => onGoToPath(contributor.first_path)}
+                  title="Déplier l'arbre jusqu'à cette pièce"
+                >
+                  {contributor.label}
+                </button>
+                <span className="contributors__qty">
+                  × {quantity(contributor.cumulative_quantity)}
+                </span>
+                <span className="contributors__value">
+                  {money(contributor.own_contribution)}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <p className="provenance">
+            Calcul <code>{calculation.id}</code> · moteur{" "}
+            <code>{calculation.bom_version}</code> · données{" "}
+            <strong>plausibles mais synthétiques</strong>.
+          </p>
+        </div>
+      )}
+    </aside>
+  );
+}

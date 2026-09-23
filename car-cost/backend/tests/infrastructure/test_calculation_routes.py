@@ -349,3 +349,28 @@ class TestCostedTreeLines:
             item["is_modified"] is False and item["has_modified_descendant"] is False
             for item in self.children(client, "V", calculation_id)
         )
+
+
+class TestPartDetail:
+    """Le panneau de saisie se construit sur cette réponse."""
+
+    def test_a_purchased_part_offers_its_suppliers_and_their_plants(self, client):
+        body = client.get(f"/api/v1/bom/{VERSION}/parts/S").json()
+
+        assert body["valuation_mode"] == "purchased"
+        assert [s["supplier_id"] for s in body["suppliers"]] == ["SUP-IT", "SUP-DE"]
+        assert len(body["suppliers"][0]["plants"]) == 2
+
+    def test_an_assembly_has_no_suppliers_key_at_all(self, client):
+        """Absente, pas vide. Une liste vide inviterait l'écran à afficher un
+        sélecteur sans options ; l'absence lui dit qu'il n'y a rien à choisir."""
+        body = client.get(f"/api/v1/bom/{VERSION}/parts/A").json()
+
+        assert body["valuation_mode"] == "manufactured"
+        assert "suppliers" not in body
+
+    def test_an_unknown_reference_is_a_named_404(self, client):
+        response = client.get(f"/api/v1/bom/{VERSION}/parts/NOWHERE")
+
+        assert response.status_code == 404
+        assert response.json()["error"]["code"] == "PATH_NOT_FOUND"

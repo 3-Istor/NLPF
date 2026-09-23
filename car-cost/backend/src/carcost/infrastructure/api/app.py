@@ -148,6 +148,54 @@ def create_app(repositories: Repositories) -> FastAPI:
             "offset": page.offset,
         }
 
+    @app.get("/api/v1/bom/{version}/parts/{part_ref}")
+    def read_part(version: str, part_ref: str):
+        """La fiche d'une pièce, et ses options de sourcing si elle est achetée.
+
+        Sur un ensemble fabriqué, la clé `suppliers` est **absente** — pas vide.
+        Une liste vide inviterait l'écran à afficher un sélecteur sans options ;
+        l'absence lui dit qu'il n'y a pas de fournisseur à choisir (ADR-0008).
+        """
+        bom = repository.load(version)
+        part = bom.parts.get(part_ref)
+        if part is None:
+            raise PathNotFound(f"référence inconnue : {part_ref}")
+
+        payload = {
+            "part_ref": part.ref,
+            "label": part.label,
+            "system": part.system,
+            "unit": part.unit,
+            "valuation_mode": part.valuation_mode.value,
+            "labour_minutes": (
+                str(part.labour_minutes) if part.labour_minutes is not None else None
+            ),
+            "occurrence_count": where_used(bom, part_ref, limit=1).total,
+        }
+        if part.is_purchased and repositories.sourcing is not None:
+            sourcing = repositories.sourcing.load(version)
+            payload["suppliers"] = [
+                {
+                    "supplier_id": offer.supplier_id,
+                    "name": offer.name or offer.supplier_id,
+                    "price_multiplier": str(offer.price_multiplier),
+                    "is_default": offer.is_default,
+                    "plants": [
+                        {
+                            "plant_id": plant.plant_id,
+                            "label": plant.label or plant.plant_id,
+                            "origin_country": plant.origin_country,
+                            "price_coefficient": str(plant.price_coefficient),
+                            "lead_time_days": plant.lead_time_days,
+                            "is_default": plant.is_default,
+                        }
+                        for plant in sourcing.plants.get(offer.supplier_id, ())
+                    ],
+                }
+                for offer in sourcing.offers_for(part_ref)
+            ]
+        return payload
+
     @app.get("/api/v1/bom/{version}/search")
     def read_search(
         version: str,
