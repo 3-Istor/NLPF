@@ -1,0 +1,373 @@
+{
+  "parts": 474,
+  "edges": 689,
+  "purchased": 302,
+  "manufactured": 172,
+  "max_depth": 5,
+  "deepest_part": "MAT-STEEL-SPRING",
+  "shared_parts": 65,
+  "total_paths": 749,
+  "most_shared": [
+    {
+      "part_ref": "MAT-STEEL-SHEET",
+      "label": "Tôle acier DC04",
+      "parent_count": 29,
+      "occurrence_count": 33,
+      "cumulative_quantity": "297.300000",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "FIX-M8-20",
+      "label": "Vis M8×20",
+      "parent_count": 21,
+      "occurrence_count": 21,
+      "cumulative_quantity": "204",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "FIX-M10-40",
+      "label": "Vis M10×40",
+      "parent_count": 14,
+      "occurrence_count": 16,
+      "cumulative_quantity": "120",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "MAT-PP-GRANULE",
+      "label": "Granulé polypropylène",
+      "parent_count": 14,
+      "occurrence_count": 15,
+      "cumulative_quantity": "28.950000",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "FIX-CLIP-PLASTIC",
+      "label": "Agrafe plastique",
+      "parent_count": 9,
+      "occurrence_count": 9,
+      "cumulative_quantity": "168",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "FIX-M12-60",
+      "label": "Vis M12×60",
+      "parent_count": 9,
+      "occurrence_count": 11,
+      "cumulative_quantity": "68",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "FIX-M6-16",
+      "label": "Vis M6×16",
+      "parent_count": 9,
+      "occurrence_count": 9,
+      "cumulative_quantity": "68",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-12P",
+      "label": "Connecteur 12 voies",
+      "parent_count": 8,
+      "occurrence_count": 9,
+      "cumulative_quantity": "44",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "MAT-STEEL-BAR",
+      "label": "Barre acier 42CrMo4",
+      "parent_count": 8,
+      "occurrence_count": 9,
+      "cumulative_quantity": "54.890000",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-2P",
+      "label": "Connecteur 2 voies",
+      "parent_count": 7,
+      "occurrence_count": 8,
+      "cumulative_quantity": "49",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "FIX-SCREW-TORX-M5",
+      "label": "Vis Torx M5",
+      "parent_count": 7,
+      "occurrence_count": 7,
+      "cumulative_quantity": "72",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "MAT-ALU-CAST",
+      "label": "Alliage aluminium de fonderie",
+      "parent_count": 7,
+      "occurrence_count": 10,
+      "cumulative_quantity": "29.240000",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "MAT-ABS-GRANULE",
+      "label": "Granulé ABS",
+      "parent_count": 6,
+      "occurrence_count": 6,
+      "cumulative_quantity": "12.400000",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "MAT-COPPER-WIRE",
+      "label": "Fil de cuivre émaillé",
+      "parent_count": 6,
+      "occurrence_count": 7,
+      "cumulative_quantity": "11.100000",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "MAT-FABRIC-PES",
+      "label": "Tissu polyester",
+      "parent_count": 6,
+      "occurrence_count": 8,
+      "cumulative_quantity": "25.400000",
+      "unit": "m2"
+    }
+  ],
+  "systems": {
+    "CAR": {
+      "parts": 55,
+      "cost": "1784.92",
+      "co2": "132.96"
+    },
+    "CHS": {
+      "parts": 67,
+      "cost": "2385.37",
+      "co2": "456.26"
+    },
+    "ELE": {
+      "parts": 66,
+      "cost": "1572.37",
+      "co2": "149.30"
+    },
+    "FIX": {
+      "parts": 25,
+      "cost": "59.62",
+      "co2": "4.18"
+    },
+    "FLU": {
+      "parts": 9,
+      "cost": "110.22",
+      "co2": "31.34"
+    },
+    "GMP": {
+      "parts": 127,
+      "cost": "2525.79",
+      "co2": "211.52"
+    },
+    "INT": {
+      "parts": 48,
+      "cost": "1918.92",
+      "co2": "159.15"
+    },
+    "MAT": {
+      "parts": 35,
+      "cost": "1448.46",
+      "co2": "1878.70"
+    },
+    "TRN": {
+      "parts": 41,
+      "cost": "1311.98",
+      "co2": "114.99"
+    },
+    "VEH": {
+      "parts": 1,
+      "cost": "168.00",
+      "co2": "12.00"
+    }
+  },
+  "top_contributors": [
+    {
+      "part_ref": "MAT-STEEL-SHEET",
+      "label": "Tôle acier DC04",
+      "system": "MAT",
+      "cumulative_quantity": "297.300000",
+      "own_contribution": "335.32"
+    },
+    {
+      "part_ref": "CHS-TIRE-185-65-15",
+      "label": "Pneumatique 185/65 R15",
+      "system": "CHS",
+      "cumulative_quantity": "5",
+      "own_contribution": "213.39"
+    },
+    {
+      "part_ref": "INT-SEAT-RAIL",
+      "label": "Glissière de siège",
+      "system": "INT",
+      "cumulative_quantity": "12",
+      "own_contribution": "182.65"
+    },
+    {
+      "part_ref": "ENG-AC-COMPRESSOR",
+      "label": "Compresseur de climatisation",
+      "system": "GMP",
+      "cumulative_quantity": "1",
+      "own_contribution": "180.23"
+    },
+    {
+      "part_ref": "VEH-MULTIPLA-16V",
+      "label": "Fiat Multipla 1.6 16V — véhicule complet",
+      "system": "VEH",
+      "cumulative_quantity": "1",
+      "own_contribution": "168.00"
+    },
+    {
+      "part_ref": "CHS-ABS-UNIT",
+      "label": "Bloc hydraulique ABS",
+      "system": "CHS",
+      "cumulative_quantity": "1",
+      "own_contribution": "158.83"
+    },
+    {
+      "part_ref": "MAT-FABRIC-PES",
+      "label": "Tissu polyester",
+      "system": "MAT",
+      "cumulative_quantity": "25.400000",
+      "own_contribution": "155.64"
+    },
+    {
+      "part_ref": "INT-BELT-RETRACTOR",
+      "label": "Enrouleur de ceinture",
+      "system": "INT",
+      "cumulative_quantity": "6",
+      "own_contribution": "149.84"
+    },
+    {
+      "part_ref": "CHS-RIM-STEEL",
+      "label": "Jante acier 15 pouces",
+      "system": "CHS",
+      "cumulative_quantity": "5",
+      "own_contribution": "147.69"
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-12P",
+      "label": "Connecteur 12 voies",
+      "system": "ELE",
+      "cumulative_quantity": "44",
+      "own_contribution": "146.74"
+    },
+    {
+      "part_ref": "TRN-GEAR-SET",
+      "label": "Couple de pignons de vitesse",
+      "system": "TRN",
+      "cumulative_quantity": "5",
+      "own_contribution": "139.89"
+    },
+    {
+      "part_ref": "CAR-WINDOW-REGULATOR",
+      "label": "Lève-vitre",
+      "system": "CAR",
+      "cumulative_quantity": "4",
+      "own_contribution": "137.80"
+    },
+    {
+      "part_ref": "CAR-DOOR-LOCK",
+      "label": "Serrure de porte",
+      "system": "CAR",
+      "cumulative_quantity": "5",
+      "own_contribution": "132.64"
+    },
+    {
+      "part_ref": "MAT-PGM-CATALYST",
+      "label": "Métaux précieux de catalyse",
+      "system": "MAT",
+      "cumulative_quantity": "3.200000",
+      "own_contribution": "129.01"
+    },
+    {
+      "part_ref": "CAR-BIW-ASSY",
+      "label": "Caisse en blanc",
+      "system": "CAR",
+      "cumulative_quantity": "1",
+      "own_contribution": "126.00"
+    }
+  ],
+  "control_values": [
+    {
+      "part_ref": "ENG-PISTON-RING",
+      "label": "Segment de piston",
+      "expected": "12",
+      "computed": "12",
+      "occurrence_count": 1
+    },
+    {
+      "part_ref": "ENG-VALVE-INTAKE",
+      "label": "Soupape d'admission",
+      "expected": "8",
+      "computed": "8",
+      "occurrence_count": 1
+    },
+    {
+      "part_ref": "CHS-TIRE-185-65-15",
+      "label": "Pneumatique 185/65 R15",
+      "expected": "5",
+      "computed": "5",
+      "occurrence_count": 3
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-FRONT",
+      "label": "Vitre de porte avant",
+      "expected": "2",
+      "computed": "2",
+      "occurrence_count": 1
+    },
+    {
+      "part_ref": "INT-SEAT-ASSY",
+      "label": "Siège individuel complet",
+      "expected": "6",
+      "computed": "6",
+      "occurrence_count": 2
+    },
+    {
+      "part_ref": "CAR-DOOR-HINGE",
+      "label": "Charnière",
+      "expected": "12",
+      "computed": "12",
+      "occurrence_count": 4
+    },
+    {
+      "part_ref": "ENG-MOUNT-ASSY",
+      "label": "Support élastique complet",
+      "expected": "4",
+      "computed": "4",
+      "occurrence_count": 2
+    },
+    {
+      "part_ref": "ELE-SENSOR-ABS",
+      "label": "Capteur de roue ABS",
+      "expected": "4",
+      "computed": "4",
+      "occurrence_count": 2
+    },
+    {
+      "part_ref": "ELE-PCB",
+      "label": "Carte électronique équipée",
+      "expected": "4",
+      "computed": "4",
+      "occurrence_count": 4
+    },
+    {
+      "part_ref": "ELE-SPEAKER-100",
+      "label": "Haut-parleur 100 mm",
+      "expected": "4",
+      "computed": "4",
+      "occurrence_count": 2
+    }
+  ],
+  "costing": {
+    "labour_rate_eur_per_hour": "42.00",
+    "material_cost": "9900.46",
+    "labour_cost": "3385.20",
+    "total_cost": "13285.66",
+    "total_cost_exact": "13285.66095824294000000000000",
+    "own_co2": "3083.40",
+    "transport_co2": "67.01",
+    "total_co2": "3150.40"
+  }
+}

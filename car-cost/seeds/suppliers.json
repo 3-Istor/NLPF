@@ -1,0 +1,4902 @@
+{
+  "metadata": {
+    "dataset": "suppliers-multipla-16v",
+    "bom_version_id": "bom-multipla-2026-09-22",
+    "dataset_date": "2026-09-22",
+    "is_synthetic": true,
+    "disclaimer": "Prix, masses, facteurs carbone, coefficients d'usine et délais sont PLAUSIBLES MAIS SYNTHÉTIQUES. Ils ont été construits pour être cohérents entre eux et d'ordres de grandeur crédibles. Ils ne proviennent d'aucun constructeur, d'aucun fournisseur et d'aucune base de données publique, et ne doivent jamais être présentés comme des données réelles.",
+    "assembly_site": "IT",
+    "conventions": {
+      "price_multiplier": "Porté par le fournisseur (marge, qualité, service).",
+      "plant_price_coefficient": "Porté par le site : coût local de production.",
+      "transport_co2_kg_per_kg": "kg CO2e par kilogramme de pièce transportée jusqu'au site d'assemblage (Turin, IT). Intensité, pas forfait.",
+      "independence": "Fournisseur et site sont deux leviers indépendants : on peut changer de site sans changer de fournisseur (ADR-0010)."
+    }
+  },
+  "suppliers": [
+    {
+      "supplier_id": "SUP-METALLI",
+      "name": "Metalli Padani",
+      "family": "RAW",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-METALLI-IT",
+          "label": "Brescia",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 9,
+          "transport_co2_kg_per_kg": "0.018000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-METALLI-PL",
+          "label": "Katowice",
+          "origin_country": "PL",
+          "price_coefficient": "0.948000",
+          "lead_time_days": 19,
+          "transport_co2_kg_per_kg": "0.052000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-EUROPOLY",
+      "name": "Europoly Kunststoffe",
+      "family": "RAW",
+      "home_country": "DE",
+      "plants": [
+        {
+          "plant_id": "PLT-EUROPOLY-DE",
+          "label": "Ludwigshafen",
+          "origin_country": "DE",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 14,
+          "transport_co2_kg_per_kg": "0.041000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-EUROPOLY-TR",
+          "label": "Izmir",
+          "origin_country": "TR",
+          "price_coefficient": "0.884000",
+          "lead_time_days": 33,
+          "transport_co2_kg_per_kg": "0.139000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-BALTIC-RAW",
+      "name": "Baltic Raw Materials",
+      "family": "RAW",
+      "home_country": "PL",
+      "plants": [
+        {
+          "plant_id": "PLT-BALTIC-PL",
+          "label": "Gdansk",
+          "origin_country": "PL",
+          "price_coefficient": "0.962000",
+          "lead_time_days": 21,
+          "transport_co2_kg_per_kg": "0.057000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-BULLONI",
+      "name": "Bulloni SpA",
+      "family": "FIX",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-BULLONI-IT",
+          "label": "Lecco",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 12,
+          "transport_co2_kg_per_kg": "0.021000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-BULLONI-TR",
+          "label": "Bursa",
+          "origin_country": "TR",
+          "price_coefficient": "0.920000",
+          "lead_time_days": 34,
+          "transport_co2_kg_per_kg": "0.142000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-FIXPRO",
+      "name": "FixPro Verbindungstechnik",
+      "family": "FIX",
+      "home_country": "DE",
+      "plants": [
+        {
+          "plant_id": "PLT-FIXPRO-DE",
+          "label": "Hagen",
+          "origin_country": "DE",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 15,
+          "transport_co2_kg_per_kg": "0.046000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-FIXPRO-CZ",
+          "label": "Plzen",
+          "origin_country": "CZ",
+          "price_coefficient": "0.941000",
+          "lead_time_days": 20,
+          "transport_co2_kg_per_kg": "0.061000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "name": "Anadolu Fasteners",
+      "family": "FIX",
+      "home_country": "TR",
+      "plants": [
+        {
+          "plant_id": "PLT-ANADOLU-TR",
+          "label": "Konya",
+          "origin_country": "TR",
+          "price_coefficient": "0.868000",
+          "lead_time_days": 38,
+          "transport_co2_kg_per_kg": "0.151000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-MECCANICA",
+      "name": "Meccanica Torinese",
+      "family": "MECH",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-MECCANICA-IT",
+          "label": "Turin",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 8,
+          "transport_co2_kg_per_kg": "0.009000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-MECCANICA-RO",
+          "label": "Pitesti",
+          "origin_country": "RO",
+          "price_coefficient": "0.913000",
+          "lead_time_days": 26,
+          "transport_co2_kg_per_kg": "0.078000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-RHEIN-MECH",
+      "name": "Rhein Mechanik",
+      "family": "MECH",
+      "home_country": "DE",
+      "plants": [
+        {
+          "plant_id": "PLT-RHEIN-DE",
+          "label": "Solingen",
+          "origin_country": "DE",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 16,
+          "transport_co2_kg_per_kg": "0.048000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-RHEIN-CZ",
+          "label": "Brno",
+          "origin_country": "CZ",
+          "price_coefficient": "0.934000",
+          "lead_time_days": 22,
+          "transport_co2_kg_per_kg": "0.063000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-CARPATI",
+      "name": "Carpati Auto Parts",
+      "family": "MECH",
+      "home_country": "RO",
+      "plants": [
+        {
+          "plant_id": "PLT-CARPATI-RO",
+          "label": "Brasov",
+          "origin_country": "RO",
+          "price_coefficient": "0.897000",
+          "lead_time_days": 28,
+          "transport_co2_kg_per_kg": "0.081000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-ELETTRO",
+      "name": "Elettro Lombardia",
+      "family": "ELEC",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-ELETTRO-IT",
+          "label": "Monza",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 11,
+          "transport_co2_kg_per_kg": "0.016000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "name": "Bavaria Elektronik",
+      "family": "ELEC",
+      "home_country": "DE",
+      "plants": [
+        {
+          "plant_id": "PLT-BAVARIA-DE",
+          "label": "Regensburg",
+          "origin_country": "DE",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 17,
+          "transport_co2_kg_per_kg": "0.049000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-BAVARIA-HU",
+          "label": "Gyor",
+          "origin_country": "HU",
+          "price_coefficient": "0.926000",
+          "lead_time_days": 23,
+          "transport_co2_kg_per_kg": "0.067000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "name": "Shenzhen Electronics",
+      "family": "ELEC",
+      "home_country": "CN",
+      "plants": [
+        {
+          "plant_id": "PLT-SHENZHEN-CN",
+          "label": "Shenzhen",
+          "origin_country": "CN",
+          "price_coefficient": "0.792000",
+          "lead_time_days": 62,
+          "transport_co2_kg_per_kg": "0.348000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-LAMIERA",
+      "name": "Lamiera Veneta",
+      "family": "BODY",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-LAMIERA-IT",
+          "label": "Vicenza",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 10,
+          "transport_co2_kg_per_kg": "0.014000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-LAMIERA-SK",
+          "label": "Trnava",
+          "origin_country": "SK",
+          "price_coefficient": "0.938000",
+          "lead_time_days": 24,
+          "transport_co2_kg_per_kg": "0.069000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-IBERPLAST",
+      "name": "Iberplast",
+      "family": "BODY",
+      "home_country": "ES",
+      "plants": [
+        {
+          "plant_id": "PLT-IBERPLAST-ES",
+          "label": "Valence",
+          "origin_country": "ES",
+          "price_coefficient": "0.971000",
+          "lead_time_days": 18,
+          "transport_co2_kg_per_kg": "0.053000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-VETRO",
+      "name": "Vetro Sicuro",
+      "family": "BODY",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-VETRO-IT",
+          "label": "Pordenone",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 13,
+          "transport_co2_kg_per_kg": "0.022000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-VETRO-TR",
+          "label": "Istanbul",
+          "origin_country": "TR",
+          "price_coefficient": "0.906000",
+          "lead_time_days": 36,
+          "transport_co2_kg_per_kg": "0.147000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-TESSUTI",
+      "name": "Tessuti Auto",
+      "family": "TRIM",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-TESSUTI-IT",
+          "label": "Prato",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 12,
+          "transport_co2_kg_per_kg": "0.019000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "name": "Maghreb Trim",
+      "family": "TRIM",
+      "home_country": "MA",
+      "plants": [
+        {
+          "plant_id": "PLT-MAGHREB-MA",
+          "label": "Tanger",
+          "origin_country": "MA",
+          "price_coefficient": "0.841000",
+          "lead_time_days": 41,
+          "transport_co2_kg_per_kg": "0.158000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "name": "Visegrad Interiors",
+      "family": "TRIM",
+      "home_country": "CZ",
+      "plants": [
+        {
+          "plant_id": "PLT-VISEGRAD-CZ",
+          "label": "Ostrava",
+          "origin_country": "CZ",
+          "price_coefficient": "0.929000",
+          "lead_time_days": 25,
+          "transport_co2_kg_per_kg": "0.064000",
+          "is_default": true
+        },
+        {
+          "plant_id": "PLT-VISEGRAD-UA",
+          "label": "Lviv",
+          "origin_country": "UA",
+          "price_coefficient": "0.874000",
+          "lead_time_days": 39,
+          "transport_co2_kg_per_kg": "0.096000",
+          "is_default": false
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-CHIMICA",
+      "name": "Chimica Adriatica",
+      "family": "FLUID",
+      "home_country": "IT",
+      "plants": [
+        {
+          "plant_id": "PLT-CHIMICA-IT",
+          "label": "Ravenne",
+          "origin_country": "IT",
+          "price_coefficient": "1.000000",
+          "lead_time_days": 7,
+          "transport_co2_kg_per_kg": "0.024000",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "supplier_id": "SUP-NORDOIL",
+      "name": "Nordoil",
+      "family": "FLUID",
+      "home_country": "FI",
+      "plants": [
+        {
+          "plant_id": "PLT-NORDOIL-FI",
+          "label": "Porvoo",
+          "origin_country": "FI",
+          "price_coefficient": "0.954000",
+          "lead_time_days": 27,
+          "transport_co2_kg_per_kg": "0.088000",
+          "is_default": true
+        }
+      ]
+    }
+  ],
+  "part_suppliers": [
+    {
+      "part_ref": "ALT-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.096700",
+      "is_default": true
+    },
+    {
+      "part_ref": "ALT-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.062600",
+      "is_default": false
+    },
+    {
+      "part_ref": "ALT-DIODE-BRIDGE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.966460",
+      "is_default": false
+    },
+    {
+      "part_ref": "ALT-DIODE-BRIDGE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.044560",
+      "is_default": true
+    },
+    {
+      "part_ref": "ALT-PULLEY",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.105080",
+      "is_default": false
+    },
+    {
+      "part_ref": "ALT-PULLEY",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.984300",
+      "is_default": false
+    },
+    {
+      "part_ref": "ALT-PULLEY",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.949760",
+      "is_default": true
+    },
+    {
+      "part_ref": "ALT-REGULATOR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.067060",
+      "is_default": false
+    },
+    {
+      "part_ref": "ALT-REGULATOR",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.129860",
+      "is_default": false
+    },
+    {
+      "part_ref": "ALT-REGULATOR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.033340",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-BADGE",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.067020",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-BADGE",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "0.975200",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-BUMPER-ABSORBER",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "0.994180",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-BUMPER-ABSORBER",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.122080",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-BUMPER-ABSORBER",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.088360",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-BUMPER-BRACKET",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.032100",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-BUMPER-BRACKET",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.040860",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-BUMPER-BRACKET",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.067900",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-DOOR-HINGE",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "0.995200",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-DOOR-HINGE",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.052220",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-DOOR-HINGE",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.006300",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-DOOR-LOCK",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.103740",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-DOOR-LOCK",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.004840",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-GAS-STRUT",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.069160",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GAS-STRUT",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "0.997060",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GAS-STRUT",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "0.963340",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-FRONT",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "0.979260",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-FRONT",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "0.975000",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-FRONT",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.004280",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-REAR",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.013920",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-REAR",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.115540",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GLASS-DOOR-REAR",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.106600",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GLASS-WINDSHIELD",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.105940",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-GLASS-WINDSHIELD",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.116400",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-HANDLE-EXT",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.134240",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-HANDLE-EXT",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.008300",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-HANDLE-INT",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "0.999900",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-HANDLE-INT",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.002280",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-HANDLE-INT",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.137400",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-HOOD-INSULATION",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "0.968100",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-HOOD-INSULATION",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.050960",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-HOOD-LATCH",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.017460",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-HOOD-LATCH",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.066400",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-JACK",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.062560",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-JACK",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.018740",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-JACK",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.039620",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-MIRROR-EXT",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.050280",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-MIRROR-EXT",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.022300",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-MIRROR-EXT",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.128060",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-MOULDING-SIDE",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "0.958040",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-MOULDING-SIDE",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.044120",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-MOULDING-SIDE",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "0.959120",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-SPARE-CARRIER",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.055240",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-SPARE-CARRIER",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "0.987640",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-WHEEL-WRENCH",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.083620",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-WHEEL-WRENCH",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.114540",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-WINDOW-REGULATOR",
+      "supplier_id": "SUP-IBERPLAST",
+      "price_multiplier": "1.127400",
+      "is_default": false
+    },
+    {
+      "part_ref": "CAR-WINDOW-REGULATOR",
+      "supplier_id": "SUP-VETRO",
+      "price_multiplier": "1.013200",
+      "is_default": true
+    },
+    {
+      "part_ref": "CAR-WINDOW-REGULATOR",
+      "supplier_id": "SUP-LAMIERA",
+      "price_multiplier": "1.013360",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ABS-UNIT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.055660",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ABS-UNIT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.945420",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-ARB-BUSHING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.956560",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-ARB-BUSHING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.091520",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ARB-FRONT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.958940",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-ARB-FRONT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.030760",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ARB-LINK",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.068920",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ARB-LINK",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.954340",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ARB-LINK",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.949660",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-ARM-BUSHING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.126160",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ARM-BUSHING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.081860",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-ARM-BUSHING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.115520",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BALANCE-WEIGHT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.968000",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BALANCE-WEIGHT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.129900",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BALL-JOINT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.120940",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BALL-JOINT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.089420",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-DISC",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.961100",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-DISC",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.941920",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-DISC",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.018020",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-DRUM",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.060780",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-DRUM",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.023880",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-HOSE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.982900",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-HOSE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.112540",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-LINE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.060080",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-LINE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.985060",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-PAD-SET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.114600",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-PAD-SET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.030620",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-SERVO",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.044560",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-SERVO",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.975000",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-SHOE-SET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.000720",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BRAKE-SHOE-SET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.957320",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-BRAKE-SHOE-SET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.092200",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BUMP-STOP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.126520",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-BUMP-STOP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.008540",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-CALIPER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.040900",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-CALIPER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.995320",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-CALIPER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.955240",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-DRUM-SPRING-KIT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.080220",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-DRUM-SPRING-KIT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.966740",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-DRUM-SPRING-KIT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.093260",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-DUST-COVER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.092760",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-DUST-COVER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.005140",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-HUB-CARRIER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.969380",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-HUB-CARRIER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.951900",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-HUB-FLANGE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.054900",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-HUB-FLANGE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.120940",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-HUB-FLANGE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.004300",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-HUBCAP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.088340",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-HUBCAP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.999940",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-MASTER-CYL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.957120",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-MASTER-CYL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.042760",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-PARK-CABLE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.138640",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-PARK-CABLE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.960640",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-PARK-LEVER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.047160",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-PARK-LEVER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.000880",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-PS-HOSE-HP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.091360",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-PS-HOSE-HP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.940040",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-PS-HOSE-HP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.038760",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-PS-HOSE-LP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.041220",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-PS-HOSE-LP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.106280",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-RACK-PINION",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.136500",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-RACK-PINION",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.105580",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-RACK-SEAL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.053960",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-RACK-SEAL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.999960",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-REAR-BUSHING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.024280",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-REAR-BUSHING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.040380",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-REAR-BUSHING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.092780",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-REAR-HUB-UNIT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.984420",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-REAR-HUB-UNIT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.099100",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-REAR-HUB-UNIT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.013680",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-RIM-STEEL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.110180",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-RIM-STEEL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.968520",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-SHOCK-FRONT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.034940",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-SHOCK-FRONT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.964180",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-SHOCK-FRONT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.124300",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-SHOCK-REAR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.114500",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-SHOCK-REAR",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.969280",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-SHOCK-REAR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.126220",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STEERING-BOOT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.070440",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STEERING-BOOT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.080000",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STEERING-BOOT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.011640",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-STEERING-COLUMN",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.062100",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-STEERING-COLUMN",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.085540",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STEERING-COLUMN",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.995720",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STRUT-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.985920",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STRUT-BEARING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.024280",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-STRUT-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.026780",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-TIE-ROD-END",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.101020",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-TIE-ROD-END",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.060760",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-TIE-ROD-INNER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.084140",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-TIE-ROD-INNER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.009420",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-TIRE-185-65-15",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.132840",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-TIRE-185-65-15",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.127000",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-TIRE-185-65-15",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.090540",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-TIRE-VALVE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.963140",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-TIRE-VALVE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.004820",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-TOP-MOUNT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.959300",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-TOP-MOUNT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.994120",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-TOP-MOUNT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.028380",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-UJ",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.042740",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-UJ",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.996140",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-WHEEL-BEARING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.044620",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-WHEEL-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.056340",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-WHEEL-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.076200",
+      "is_default": false
+    },
+    {
+      "part_ref": "CHS-WHEEL-CYLINDER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.004640",
+      "is_default": true
+    },
+    {
+      "part_ref": "CHS-WHEEL-CYLINDER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.006340",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-ANTENNA",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.053220",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-ANTENNA",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.101540",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-ANTENNA-CABLE",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.984860",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-ANTENNA-CABLE",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.963340",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-BATTERY-TERMINAL",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.107820",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BATTERY-TERMINAL",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.970060",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-BATTERY-TERMINAL",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.050960",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BULB-H4",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.130800",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BULB-H4",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.098700",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-BULB-H4",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.057500",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BULB-P21W",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.139600",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BULB-P21W",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.997760",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-BULB-P21W",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.115400",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BULB-W5W",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.957660",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-BULB-W5W",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.048840",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-BULB-W5W",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.997340",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CABLE-GROUND",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.979360",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-CABLE-GROUND",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.086180",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CABLE-GROUND",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.089360",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CABLE-POSITIVE",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.025160",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-CABLE-POSITIVE",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.961340",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CLUSTER",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.129260",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-CLUSTER",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.134720",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-12P",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.131080",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-12P",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.042180",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-2P",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.968740",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-2P",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.033380",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-2P",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.991500",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-40P",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.988320",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-40P",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.111640",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-CONNECTOR-40P",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.063640",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-FOG-LAMP",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.109620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-FOG-LAMP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.953400",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-FUSE-BLADE",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.110300",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-FUSE-BLADE",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.972820",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-HARNESS-TAPE",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.996540",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-HARNESS-TAPE",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.124940",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-HORN",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.103300",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-HORN",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.959240",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-HORN",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.117380",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-IC-CHIP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.108060",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-IC-CHIP",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.056620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-IC-CHIP",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.998100",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-LAMP-ADJUSTER",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.034600",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-LAMP-ADJUSTER",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.037260",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-LAMP-ADJUSTER",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.116180",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-LAMP-INTERIOR",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.980440",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-LAMP-INTERIOR",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.087900",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-LAMP-INTERIOR",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.067280",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-LENS-RED",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.096480",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-LENS-RED",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.096040",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-PASSIVE-COMPONENT",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.948620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-PASSIVE-COMPONENT",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.942160",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-PLATE-LAMP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.124580",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-PLATE-LAMP",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.969060",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-RADIO",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.130700",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-RADIO",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.026280",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-RADIO",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.106220",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-REFLECTOR",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.949760",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-REFLECTOR",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.076560",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-REFLECTOR",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.995760",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-RELAY-4P",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.050240",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-RELAY-4P",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.126960",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-REPEATER",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.110500",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-REPEATER",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.115300",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-ABS",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.084920",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-ABS",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.955440",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-ABS",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.133920",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-CAM",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.998320",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-CAM",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "0.943700",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-COOLANT-TEMP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.093140",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-COOLANT-TEMP",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.092700",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-CRANK",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.038580",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-CRANK",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.115740",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-CRANK",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.049700",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-KNOCK",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.974100",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-KNOCK",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.078960",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-KNOCK",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.021640",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-LAMBDA",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.942680",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-LAMBDA",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.956080",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-LAMBDA",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.095020",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-MAF",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.092580",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-MAF",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.033680",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SENSOR-MAP",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.050360",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SENSOR-MAP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.007420",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SPEAKER-100",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.138740",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-SPEAKER-100",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.054320",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-SPEAKER-100",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.953200",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-THIRD-BRAKE-LAMP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.043120",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-THIRD-BRAKE-LAMP",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.039560",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-THIRD-BRAKE-LAMP",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.078900",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WASHER-NOZZLE",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.952300",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WASHER-NOZZLE",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.110360",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WASHER-PUMP",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.097460",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WASHER-PUMP",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.948680",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WASHER-PUMP",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "0.971120",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WIPER-ARM",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "0.998760",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WIPER-ARM",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.065760",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WIPER-ARM",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.087960",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WIPER-BLADE",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.048780",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WIPER-BLADE",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.118540",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WIPER-LINKAGE",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.033400",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WIPER-LINKAGE",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.007380",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WIPER-MOTOR",
+      "supplier_id": "SUP-SHENZHEN-EL",
+      "price_multiplier": "1.009940",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WIPER-MOTOR",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.054620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ELE-WIPER-REAR-MOTOR",
+      "supplier_id": "SUP-ELETTRO",
+      "price_multiplier": "1.021980",
+      "is_default": true
+    },
+    {
+      "part_ref": "ELE-WIPER-REAR-MOTOR",
+      "supplier_id": "SUP-BAVARIA-ELEC",
+      "price_multiplier": "1.103360",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-AC-COMPRESSOR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.115940",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-AC-COMPRESSOR",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.072820",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-ACC-BELT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.026420",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-ACC-BELT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.089620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-ACC-BELT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.944080",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-AIR-DUCT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.041440",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-AIR-DUCT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.137220",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-AIR-DUCT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.019500",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-AIR-FILTER-ELEMENT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.053160",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-AIR-FILTER-ELEMENT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.029380",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-AIR-FILTER-ELEMENT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.023060",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-BELT-TENSIONER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.104220",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-BELT-TENSIONER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.990720",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CAM-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.054800",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAM-BEARING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.969060",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CAM-COVER-GASKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.103800",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAM-COVER-GASKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.087540",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAM-COVER-GASKET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.960680",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CAM-SPROCKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.057620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAM-SPROCKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.984620",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CAMSHAFT-EXHAUST",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.971280",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CAMSHAFT-EXHAUST",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.019560",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAMSHAFT-EXHAUST",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.095980",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAMSHAFT-INTAKE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.034260",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAMSHAFT-INTAKE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.955520",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAMSHAFT-INTAKE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.042940",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CAT-MAT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.053200",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CAT-MAT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.950700",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CRANK-PULLEY",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.000700",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CRANK-PULLEY",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.941900",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-CRANK-SPROCKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.094980",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CRANK-SPROCKET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.022580",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-CRANK-SPROCKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.942960",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-DIPSTICK",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.950880",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-DIPSTICK",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.093960",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-DIPSTICK",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.123000",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-DIPSTICK-TUBE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.076320",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-DIPSTICK-TUBE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.944800",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-DRAIN-PLUG",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.994620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-DRAIN-PLUG",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.135860",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-DRAIN-PLUG",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.959280",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-EXH-CLAMP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.002720",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-EXH-CLAMP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.120240",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-EXH-CLAMP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.003960",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-EXH-GASKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.977620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-EXH-GASKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.947240",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-EXH-HANGER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.969180",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-EXH-HANGER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.958120",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-EXH-HANGER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.985080",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-EXP-TANK-CAP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.972980",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-EXP-TANK-CAP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.980720",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-EXP-TANK-CAP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.063600",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FAN-BLADE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.130780",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FAN-BLADE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.119120",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FAN-BLADE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.997580",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FAN-MOTOR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.077740",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FAN-MOTOR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.046060",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FLYWHEEL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.135400",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FLYWHEEL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.039100",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FUEL-CAP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.130640",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FUEL-CAP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.079920",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FUEL-FILTER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.077900",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FUEL-FILTER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.062860",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FUEL-LEVEL-SENDER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.991700",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FUEL-LEVEL-SENDER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.944300",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FUEL-PUMP-MODULE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.018120",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FUEL-PUMP-MODULE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.954280",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FUEL-REGULATOR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.973600",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-FUEL-REGULATOR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.975620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-FUEL-REGULATOR",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.069520",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HEAD-GASKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.015020",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HEAD-GASKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.002780",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-HEAD-GASKET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.944660",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HOSE-COOL-20",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.137080",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HOSE-COOL-20",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.112940",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HOSE-COOL-20",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.065920",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-HOSE-COOL-32",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.944060",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-HOSE-COOL-32",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.010740",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HOSE-COOL-32",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.115460",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HT-LEAD",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.020440",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-HT-LEAD",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.943180",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HYDRAULIC-LIFTER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.972340",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-HYDRAULIC-LIFTER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.125780",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-HYDRAULIC-LIFTER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.952420",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-IDLER-PULLEY",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.059020",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-IDLER-PULLEY",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.988380",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-IDLER-PULLEY",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.975260",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-IGNITION-COIL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.079920",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-IGNITION-COIL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.082140",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-INJECTOR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.956480",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-INJECTOR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.129800",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-INTAKE-GASKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.971280",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-INTAKE-GASKET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.072480",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-INTAKE-GASKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.973660",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-MAIN-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.027540",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-MAIN-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.942580",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-FILTER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.067640",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-OIL-FILTER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.123120",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-FILTER-HOUSING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.033420",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-FILTER-HOUSING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.059700",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-OIL-FILTER-HOUSING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.060940",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-PAN-GASKET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.992080",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-PAN-GASKET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.987840",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-PAN-GASKET",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.990020",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-OIL-PICKUP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.000920",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-OIL-PICKUP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.122820",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-PRESSURE-SWITCH",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.070340",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-PRESSURE-SWITCH",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.989680",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-OIL-PUMP-ROTOR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.940860",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-OIL-PUMP-ROTOR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.997940",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-RELIEF-VALVE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.047920",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-RELIEF-VALVE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.023520",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-OIL-RELIEF-VALVE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.955160",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-PISTON-PIN",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.121500",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-PISTON-PIN",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.036240",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-PISTON-PIN",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.127680",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-PISTON-RING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.109100",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-PISTON-RING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.013540",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-PISTON-RING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.958120",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-PS-PUMP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.961260",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-PS-PUMP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.031400",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-PS-PUMP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.991660",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-RAD-DRAIN-PLUG",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.076560",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-RAD-DRAIN-PLUG",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.006000",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-RAD-DRAIN-PLUG",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.115860",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-RAD-SEAL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.007420",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-RAD-SEAL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.995580",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-RAD-SEAL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.973240",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-ROD-BEARING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.051140",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-ROD-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.084160",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-ROD-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.001340",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-SEAL-CRANK-FRONT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.986560",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-SEAL-CRANK-FRONT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.063640",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-SEAL-CRANK-REAR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.986120",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-SEAL-CRANK-REAR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.945200",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-SPARK-PLUG",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.962900",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-SPARK-PLUG",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.121300",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-SPARK-PLUG",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.025340",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-STARTER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.087560",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-STARTER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.123100",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-THERMOSTAT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.986580",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-THERMOSTAT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.024980",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-THERMOSTAT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.999860",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-THROTTLE-BODY",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.069620",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-THROTTLE-BODY",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.012560",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-THRUST-WASHER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.099700",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-THRUST-WASHER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.963640",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-TIMING-BELT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.044680",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-TIMING-BELT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.941800",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-TIMING-IDLER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.956720",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-TIMING-IDLER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.086300",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-TIMING-IDLER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.077580",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-TIMING-TENSIONER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.124960",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-TIMING-TENSIONER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.118420",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-COLLET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.037880",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-COLLET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.069760",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-EXHAUST",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.947520",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-EXHAUST",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.978520",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-EXHAUST",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.114560",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-GUIDE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.021500",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-GUIDE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.125340",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-GUIDE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.010280",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-INTAKE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.043180",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-INTAKE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.035820",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-RETAINER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.102760",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-RETAINER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.001060",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-RETAINER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.056080",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-SEAL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.119980",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-SEAL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.011280",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-SPRING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.102400",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-VALVE-SPRING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.006020",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-VALVE-SPRING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.139780",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-WATER-PUMP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.060420",
+      "is_default": false
+    },
+    {
+      "part_ref": "ENG-WATER-PUMP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.068640",
+      "is_default": true
+    },
+    {
+      "part_ref": "ENG-WATER-PUMP",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.976840",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-BOLT-WHEEL-M12",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.110560",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-BOLT-WHEEL-M12",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.134900",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-BOLT-WHEEL-M12",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.125360",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-CABLE-TIE-200",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.040800",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-CABLE-TIE-200",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.049780",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-CIRCLIP-20",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.081400",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-CIRCLIP-20",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.034060",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-CLIP-PLASTIC",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.101480",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-CLIP-PLASTIC",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.086780",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-GROMMET-12",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.087000",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-GROMMET-12",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "0.977180",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-HOSE-CLAMP-25",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.125540",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-HOSE-CLAMP-25",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.043640",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-HOSE-CLAMP-25",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.064260",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-HOSE-CLAMP-40",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.135400",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-HOSE-CLAMP-40",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.090400",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-HOSE-CLAMP-40",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.099460",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M10-40",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "0.943320",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M10-40",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.114200",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M10-40",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.029280",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M12-60",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.044680",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M12-60",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.060420",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M6-16",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.117540",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M6-16",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.061720",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M6-25",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "0.992980",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M6-25",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.129360",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M8-20",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "0.958300",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M8-20",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.077760",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M8-20",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.121740",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-M8-35",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.096140",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-M8-35",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "0.987580",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-NUT-EXHAUST-M8",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.065440",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-NUT-EXHAUST-M8",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "0.994480",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-NUT-M10",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.089120",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-NUT-M10",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.047720",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-NUT-M6",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.121940",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-NUT-M6",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "0.997120",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-NUT-M8",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "0.972120",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-NUT-M8",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "0.986740",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-NUT-M8",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "0.968440",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-RIVET-4",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "0.944480",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-RIVET-4",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.034880",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-SCREW-TORX-M5",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.126580",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-SCREW-TORX-M5",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.003020",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-SCREW-TORX-M5",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.138220",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-SPRING-PIN-6",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.027060",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-SPRING-PIN-6",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.127180",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-STUD-M8",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.092300",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-STUD-M8",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "0.961740",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-STUD-M8",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.071100",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-WASHER-10",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.020140",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-WASHER-10",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "0.964200",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-WASHER-6",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.109240",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-WASHER-6",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.134260",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-WASHER-6",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.064300",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-WASHER-8",
+      "supplier_id": "SUP-ANADOLU-FIX",
+      "price_multiplier": "1.011380",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-WASHER-8",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.030660",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-WASHER-8",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.030580",
+      "is_default": false
+    },
+    {
+      "part_ref": "FIX-WELD-NUT-M8",
+      "supplier_id": "SUP-BULLONI",
+      "price_multiplier": "1.003020",
+      "is_default": true
+    },
+    {
+      "part_ref": "FIX-WELD-NUT-M8",
+      "supplier_id": "SUP-FIXPRO",
+      "price_multiplier": "1.049080",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-AC-REFRIGERANT",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "0.977160",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-AC-REFRIGERANT",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.071500",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-BRAKE-FLUID",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.037460",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-BRAKE-FLUID",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "1.035340",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-COOLANT",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "1.092760",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-COOLANT",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "0.941320",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-ENGINE-OIL",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "1.093040",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-ENGINE-OIL",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.082380",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-GEARBOX-OIL",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "1.097380",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-GEARBOX-OIL",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.121860",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-GREASE",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.107360",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-GREASE",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "0.955700",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-PS-FLUID",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.119800",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-PS-FLUID",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "0.944880",
+      "is_default": true
+    },
+    {
+      "part_ref": "FLU-WASHER-FLUID",
+      "supplier_id": "SUP-CHIMICA",
+      "price_multiplier": "1.104220",
+      "is_default": false
+    },
+    {
+      "part_ref": "FLU-WASHER-FLUID",
+      "supplier_id": "SUP-NORDOIL",
+      "price_multiplier": "1.056600",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-AC-LINE",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.129760",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-AC-LINE",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "0.991960",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-AC-LINE",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.101360",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-AIR-VENT",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.999640",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-AIR-VENT",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.044260",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-AIRBAG-DRIVER",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "0.983800",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-AIRBAG-DRIVER",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.051880",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-AIRBAG-DRIVER",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.970980",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-AIRBAG-PASSENGER",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.067000",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-AIRBAG-PASSENGER",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.060040",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-BELT-ANCHOR",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.026160",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-BELT-ANCHOR",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.968300",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-BELT-BUCKLE",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.960600",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-BELT-BUCKLE",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.999460",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-BELT-BUCKLE",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.057220",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-BELT-RETRACTOR",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.121460",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-BELT-RETRACTOR",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.060560",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-BELT-WEBBING",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.012840",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-BELT-WEBBING",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.120480",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-BLOWER-MOTOR",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.014980",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-BLOWER-MOTOR",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.104000",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-CABIN-FILTER",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.059580",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-CABIN-FILTER",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.958000",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-CABIN-FILTER",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.099580",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-CONDENSER",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.056440",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-CONDENSER",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.971380",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-CONDENSER",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.016620",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-EVAPORATOR",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.986400",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-EVAPORATOR",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.943300",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-EXPANSION-VALVE",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.965480",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-EXPANSION-VALVE",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.111700",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-GRAB-HANDLE",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.076760",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-GRAB-HANDLE",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.997820",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-GRAB-HANDLE",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.137720",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-HEATER-CORE",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.131780",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-HEATER-CORE",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.131160",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-HEATER-CORE",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.049060",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-HVAC-ACTUATOR",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.032040",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-HVAC-ACTUATOR",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "0.997160",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-HVAC-ACTUATOR",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.965680",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-HVAC-CONTROL",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.004760",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-HVAC-CONTROL",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.136820",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-HVAC-CONTROL",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.104940",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-MIRROR-INT",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.965980",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-MIRROR-INT",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.091980",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-MIRROR-INT",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.101200",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SEAT-RAIL",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.077320",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-SEAT-RAIL",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.984800",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SEAT-RECLINER",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "0.995000",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SEAT-RECLINER",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.990020",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SEAT-RECLINER",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.022720",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-STEERING-WHEEL",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "1.134240",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-STEERING-WHEEL",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.074440",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-STEERING-WHEEL",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "0.966000",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SUN-VISOR",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.072900",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SUN-VISOR",
+      "supplier_id": "SUP-MAGHREB-TRIM",
+      "price_multiplier": "0.980160",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-SUN-VISOR",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.062900",
+      "is_default": false
+    },
+    {
+      "part_ref": "INT-SWITCH-PANEL",
+      "supplier_id": "SUP-VISEGRAD-TRIM",
+      "price_multiplier": "1.042700",
+      "is_default": true
+    },
+    {
+      "part_ref": "INT-SWITCH-PANEL",
+      "supplier_id": "SUP-TESSUTI",
+      "price_multiplier": "1.041960",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ABS-GRANULE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.091740",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ABS-GRANULE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.016900",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-ADHESIVE-PU",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.059040",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-ADHESIVE-PU",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.052640",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ALU-CAST",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.030780",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-ALU-CAST",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.086140",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ALU-SHEET",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.983560",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-ALU-SHEET",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.130420",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-BITUMEN-PAD",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.135240",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-BITUMEN-PAD",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.047560",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-BRASS-BAR",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.002540",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-BRASS-BAR",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.015620",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-CARPET-FELT",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.991000",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-CARPET-FELT",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.016300",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-CAST-IRON",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.086280",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-CAST-IRON",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.031240",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-CAST-IRON",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.111400",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-CERAMIC-ALO",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.959240",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-CERAMIC-ALO",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.951400",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-CERAMIC-ALO",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.960940",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-COPPER-WIRE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.959640",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-COPPER-WIRE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.109280",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-COPPER-WIRE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.053780",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-EPDM-RUBBER",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.026900",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-EPDM-RUBBER",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.134460",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-EPDM-RUBBER",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.953660",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-FABRIC-PES",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.942680",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-FABRIC-PES",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.074060",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-FOAM-PU",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.084920",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-FOAM-PU",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.133980",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-FOAM-PU",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.133480",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-GLASS-FIBER",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.971600",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-GLASS-FIBER",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.967880",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-GLASS-FIBER",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.951840",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-GLASS-FLOAT",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.118680",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-GLASS-FLOAT",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.050260",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-HDPE-GRANULE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.046740",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-HDPE-GRANULE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.013240",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-HDPE-GRANULE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.941440",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-LEAD-INGOT",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.096980",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-LEAD-INGOT",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.961220",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-LEATHERETTE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.081600",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-LEATHERETTE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.086380",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-NBR-RUBBER",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.999460",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-NBR-RUBBER",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.027880",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-NBR-RUBBER",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.090920",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PA66-GRANULE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.957180",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PA66-GRANULE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.994980",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PAINT-BASE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.102180",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PAINT-BASE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.964160",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PAINT-CLEAR",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.050120",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PAINT-CLEAR",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.129940",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PAINT-PRIMER",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.128100",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PAINT-PRIMER",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.956820",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PAINT-PRIMER",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.053380",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PC-GRANULE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.992740",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PC-GRANULE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.037520",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PCB-LAMINATE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.028760",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PCB-LAMINATE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.099060",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PGM-CATALYST",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.102860",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PGM-CATALYST",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.082560",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PP-GRANULE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.053720",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-PP-GRANULE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.950200",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-PP-GRANULE",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.026520",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-SOLDER-SAC",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.094260",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-SOLDER-SAC",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.078120",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-STAINLESS-SHEET",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.094640",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-STAINLESS-SHEET",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "0.975640",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-STEEL-BAR",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.127100",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-STEEL-BAR",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.077500",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-STEEL-BAR",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.088280",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-STEEL-SHEET",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.065860",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-STEEL-SHEET",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.028760",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-STEEL-SHEET",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.057440",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-STEEL-SPRING",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.943560",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-STEEL-SPRING",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.129660",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-SULFURIC-ACID",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.065900",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-SULFURIC-ACID",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "1.109260",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-SULFURIC-ACID",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.020300",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-WELD-WIRE",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "1.032500",
+      "is_default": true
+    },
+    {
+      "part_ref": "MAT-WELD-WIRE",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.124080",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ZINC-COATING",
+      "supplier_id": "SUP-METALLI",
+      "price_multiplier": "0.984300",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ZINC-COATING",
+      "supplier_id": "SUP-EUROPOLY",
+      "price_multiplier": "1.117940",
+      "is_default": false
+    },
+    {
+      "part_ref": "MAT-ZINC-COATING",
+      "supplier_id": "SUP-BALTIC-RAW",
+      "price_multiplier": "0.942780",
+      "is_default": true
+    },
+    {
+      "part_ref": "MOUNT-RUBBER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.943000",
+      "is_default": false
+    },
+    {
+      "part_ref": "MOUNT-RUBBER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.988780",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-BEARING-BALL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.135780",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-BEARING-BALL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.948260",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-BEARING-BALL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.128720",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-BEARING-TAPER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.103720",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-BEARING-TAPER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.979900",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-BOOT-CLAMP",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.136340",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-BOOT-CLAMP",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.996380",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CLUTCH-DISC",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.108420",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CLUTCH-DISC",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.072640",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CLUTCH-FORK",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.940700",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CLUTCH-FORK",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.959040",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CLUTCH-LINE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.973000",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CLUTCH-LINE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.052520",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CLUTCH-MASTER-CYL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.120540",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CLUTCH-MASTER-CYL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.052960",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CLUTCH-SLAVE-CYL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.994100",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CLUTCH-SLAVE-CYL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.005480",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CROWN-WHEEL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.038100",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CROWN-WHEEL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.958920",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CV-BOOT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.088240",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CV-BOOT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.018640",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CV-GREASE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.082800",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CV-GREASE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.987200",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CV-GREASE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.973000",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CV-JOINT-INNER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.963580",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CV-JOINT-INNER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.057780",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CV-JOINT-INNER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.043700",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-CV-JOINT-OUTER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.979360",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-CV-JOINT-OUTER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.098720",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-DIFF-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.027960",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-DIFF-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.085400",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-DIFF-BEARING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.009400",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-GEAR-SET",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.981700",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-GEAR-SET",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.993860",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-INPUT-SHAFT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.099140",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-INPUT-SHAFT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.981400",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-INPUT-SHAFT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.019880",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-OIL-SEAL",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.083120",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-OIL-SEAL",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.965920",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-OIL-SEAL",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.043000",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-OUTPUT-SHAFT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.136940",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-OUTPUT-SHAFT",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.987220",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-PINION",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.124780",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-PINION",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.043580",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-PINION",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.963600",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-PLANET-GEAR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.990940",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-PLANET-GEAR",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.079260",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-PLANET-GEAR",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.008540",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-PRESSURE-PLATE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.102920",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-PRESSURE-PLATE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.976060",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-PRESSURE-PLATE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.086140",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-RELEASE-BEARING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.092540",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-RELEASE-BEARING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.046680",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-REVERSE-IDLER",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.023920",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-REVERSE-IDLER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.077240",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-REVERSE-IDLER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.065880",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SELECTOR-SHAFT",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.127440",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SELECTOR-SHAFT",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.106980",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SHIFT-BUSHING",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.003800",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SHIFT-BUSHING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.067920",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SHIFT-CABLE",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "0.997960",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SHIFT-CABLE",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.966980",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SHIFT-CABLE",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.031860",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SHIFT-FORK",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.002500",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SHIFT-FORK",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "0.983760",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SHIFT-FORK",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.981600",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SHIFT-KNOB",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.052520",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SHIFT-KNOB",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "0.960480",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SHIFT-LEVER",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.017640",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SHIFT-LEVER",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.087440",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SUN-GEAR",
+      "supplier_id": "SUP-MECCANICA",
+      "price_multiplier": "1.040540",
+      "is_default": true
+    },
+    {
+      "part_ref": "TRN-SUN-GEAR",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.097760",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SYNCHRO-RING",
+      "supplier_id": "SUP-RHEIN-MECH",
+      "price_multiplier": "1.076000",
+      "is_default": false
+    },
+    {
+      "part_ref": "TRN-SYNCHRO-RING",
+      "supplier_id": "SUP-CARPATI",
+      "price_multiplier": "1.005160",
+      "is_default": true
+    }
+  ]
+}

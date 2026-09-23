@@ -1,0 +1,475 @@
+bom_version_id,part_ref,label,category,system,unit,valuation_mode,labour_minutes,base_price_eur,price_per,material_ref,mass_kg,carbon_factor_kg_co2e_per_unit,expected_cumulative_quantity
+bom-multipla-2026-09-22,ALT-BEARING,Roulement d'alternateur,engine,GMP,pce,purchased,,4.200000,1,,0.048000,0.340000,2
+bom-multipla-2026-09-22,ALT-DIODE-BRIDGE,Pont de diodes,engine,GMP,pce,purchased,,11.500000,1,,0.092000,0.860000,1
+bom-multipla-2026-09-22,ALT-HOUSING,Carter d'alternateur,engine,GMP,pce,manufactured,10,,1,MAT-ALU-CAST,1.600000000000,0.50,1
+bom-multipla-2026-09-22,ALT-PULLEY,Poulie d'alternateur,engine,GMP,pce,purchased,,9.800000,1,,0.310000,0.720000,1
+bom-multipla-2026-09-22,ALT-REGULATOR,Régulateur d'alternateur,engine,GMP,pce,purchased,,14.000000,1,,0.064000,0.920000,1
+bom-multipla-2026-09-22,ALT-ROTOR,Rotor d'alternateur,engine,GMP,pce,manufactured,16,,1,MAT-COPPER-WIRE,1.900000000000,0.80,1
+bom-multipla-2026-09-22,ALT-STATOR,Stator d'alternateur,engine,GMP,pce,manufactured,18,,1,MAT-COPPER-WIRE,2.300000000000,0.90,1
+bom-multipla-2026-09-22,CAR-ARCH-TRIM,Enjoliveur de passage de roue,body,CAR,pce,manufactured,4,,1,MAT-PP-GRANULE,0.600000000000,0.20,4
+bom-multipla-2026-09-22,CAR-ASSY,Carrosserie,body,CAR,pce,manufactured,120,,1,,362.989000000000,6.00,1
+bom-multipla-2026-09-22,CAR-BADGE,Monogramme,body,CAR,pce,purchased,,4.200000,1,,0.048000,0.180000,2
+bom-multipla-2026-09-22,CAR-BIW-ASSY,Caisse en blanc,body,CAR,pce,manufactured,180,,1,,158.200000000000,9.00,1
+bom-multipla-2026-09-22,CAR-BODY-PAINTED-ASSY,Caisse peinte,body,CAR,pce,manufactured,40,,1,,181.385000000000,2.00,1
+bom-multipla-2026-09-22,CAR-BULKHEAD,Tablier,body,CAR,pce,manufactured,18,,1,MAT-STEEL-SHEET,9.200000000000,0.90,1
+bom-multipla-2026-09-22,CAR-BUMPER-ABSORBER,Absorbeur de choc,body,CAR,pce,purchased,,14.600000,1,,0.860000,1.240000,2
+bom-multipla-2026-09-22,CAR-BUMPER-BEAM,Traverse de pare-chocs,body,CAR,pce,manufactured,10,,1,MAT-STEEL-SHEET,4.100000000000,0.50,2
+bom-multipla-2026-09-22,CAR-BUMPER-BRACKET,Support de pare-chocs,body,CAR,pce,purchased,,8.400000,1,,0.420000,0.640000,4
+bom-multipla-2026-09-22,CAR-BUMPER-FRONT-ASSY,Pare-chocs avant équipé,body,CAR,pce,manufactured,14,,1,,11.448000000000,0.70,1
+bom-multipla-2026-09-22,CAR-BUMPER-REAR-ASSY,Pare-chocs arrière équipé,body,CAR,pce,manufactured,12,,1,,10.088000000000,0.60,1
+bom-multipla-2026-09-22,CAR-BUMPER-SKIN-FRONT,Peau de pare-chocs avant,body,CAR,pce,manufactured,16,,1,MAT-PP-GRANULE,4.600000000000,0.80,1
+bom-multipla-2026-09-22,CAR-BUMPER-SKIN-REAR,Peau de pare-chocs arrière,body,CAR,pce,manufactured,15,,1,MAT-PP-GRANULE,4.200000000000,0.75,1
+bom-multipla-2026-09-22,CAR-COWL,Auvent,body,CAR,pce,manufactured,10,,1,MAT-STEEL-SHEET,3.600000000000,0.50,1
+bom-multipla-2026-09-22,CAR-DOOR-FRONT-ASSY,Porte avant équipée,body,CAR,pce,manufactured,34,,1,,20.570000000000,1.70,2
+bom-multipla-2026-09-22,CAR-DOOR-HINGE,Charnière,body,CAR,pce,purchased,,9.800000,1,,0.380000,0.740000,12
+bom-multipla-2026-09-22,CAR-DOOR-LOCK,Serrure de porte,body,CAR,pce,purchased,,26.400000,1,,0.620000,1.940000,5
+bom-multipla-2026-09-22,CAR-DOOR-REAR-ASSY,Porte arrière équipée,body,CAR,pce,manufactured,30,,1,,18.028000000000,1.50,2
+bom-multipla-2026-09-22,CAR-DOOR-SEAL,Joint d'ouvrant,body,CAR,pce,manufactured,8,,1,MAT-EPDM-RUBBER,0.860000000000,0.40,5
+bom-multipla-2026-09-22,CAR-DOOR-SHELL-FRONT,Caisson de porte avant,body,CAR,pce,manufactured,20,,1,MAT-STEEL-SHEET,9.400000000000,1.00,2
+bom-multipla-2026-09-22,CAR-DOOR-SHELL-REAR,Caisson de porte arrière,body,CAR,pce,manufactured,18,,1,MAT-STEEL-SHEET,8.600000000000,0.90,2
+bom-multipla-2026-09-22,CAR-GAS-STRUT,Vérin de hayon,body,CAR,pce,purchased,,18.400000,1,,0.340000,1.340000,2
+bom-multipla-2026-09-22,CAR-GLASS-DOOR-FRONT,Vitre de porte avant,glazing,CAR,pce,purchased,,28.000000,1,,3.240000,2.180000,2
+bom-multipla-2026-09-22,CAR-GLASS-DOOR-REAR,Vitre de porte arrière,glazing,CAR,pce,purchased,,24.000000,1,,2.860000,1.920000,2
+bom-multipla-2026-09-22,CAR-GLASS-QUARTER,Custode latérale trempée,glazing,CAR,pce,manufactured,9,,1,MAT-GLASS-FLOAT,3.600000000000,0.45,2
+bom-multipla-2026-09-22,CAR-GLASS-TAILGATE,Vitre de hayon trempée,glazing,CAR,pce,manufactured,14,,1,MAT-GLASS-FLOAT,7.200000000000,0.70,1
+bom-multipla-2026-09-22,CAR-GLASS-WINDSHIELD,Pare-brise feuilleté,glazing,CAR,pce,purchased,,96.000000,1,,12.400000,7.840000,1
+bom-multipla-2026-09-22,CAR-GLAZING-ASSY,Vitrage collé,body,CAR,pce,manufactured,22,,1,,20.500000000000,1.10,1
+bom-multipla-2026-09-22,CAR-GRILLE,Calandre,body,CAR,pce,manufactured,6,,1,MAT-ABS-GRANULE,0.800000000000,0.30,1
+bom-multipla-2026-09-22,CAR-HANDLE-EXT,Poignée extérieure,body,CAR,pce,purchased,,12.400000,1,,0.180000,0.860000,4
+bom-multipla-2026-09-22,CAR-HANDLE-INT,Poignée intérieure,body,CAR,pce,purchased,,7.600000,1,,0.096000,0.420000,4
+bom-multipla-2026-09-22,CAR-HOOD-ASSY,Capot équipé,body,CAR,pce,manufactured,12,,1,,13.614000000000,0.60,1
+bom-multipla-2026-09-22,CAR-HOOD-INSULATION,Insonorisant de capot,body,CAR,pce,purchased,,16.800000,1,,1.180000,1.240000,1
+bom-multipla-2026-09-22,CAR-HOOD-LATCH,Serrure de capot,body,CAR,pce,purchased,,14.200000,1,,0.420000,0.980000,1
+bom-multipla-2026-09-22,CAR-HOOD-SHELL,Caisson de capot,body,CAR,pce,manufactured,16,,1,MAT-STEEL-SHEET,11.200000000000,0.80,1
+bom-multipla-2026-09-22,CAR-JACK,Cric,body,CAR,pce,purchased,,18.600000,1,,2.480000,1.640000,1
+bom-multipla-2026-09-22,CAR-MIRROR-EXT,Rétroviseur extérieur,body,CAR,pce,purchased,,38.000000,1,,0.940000,2.840000,2
+bom-multipla-2026-09-22,CAR-MOULDING-SIDE,Baguette de protection latérale,body,CAR,pce,purchased,,11.800000,1,,0.480000,0.720000,2
+bom-multipla-2026-09-22,CAR-PAINT-SET,Peinture et protection,body,CAR,pce,manufactured,95,,1,,16.685000000000,4.75,1
+bom-multipla-2026-09-22,CAR-PANEL-FLOOR,Plancher,body,CAR,pce,manufactured,26,,1,MAT-STEEL-SHEET,32.000000000000,1.30,1
+bom-multipla-2026-09-22,CAR-PANEL-ROOF,Pavillon,body,CAR,pce,manufactured,16,,1,MAT-STEEL-SHEET,12.400000000000,0.80,1
+bom-multipla-2026-09-22,CAR-PANEL-SIDE,Côté de caisse,body,CAR,pce,manufactured,22,,1,MAT-STEEL-SHEET,18.500000000000,1.10,2
+bom-multipla-2026-09-22,CAR-PILLAR-A,Pied avant,body,CAR,pce,manufactured,11,,1,MAT-STEEL-SHEET,4.200000000000,0.55,2
+bom-multipla-2026-09-22,CAR-PILLAR-B,Pied milieu,body,CAR,pce,manufactured,12,,1,MAT-STEEL-SHEET,5.100000000000,0.60,2
+bom-multipla-2026-09-22,CAR-PILLAR-C,Pied arrière,body,CAR,pce,manufactured,11,,1,MAT-STEEL-SHEET,4.600000000000,0.55,2
+bom-multipla-2026-09-22,CAR-RAIL-FRONT,Longeron avant,body,CAR,pce,manufactured,14,,1,MAT-STEEL-SHEET,6.800000000000,0.70,2
+bom-multipla-2026-09-22,CAR-RAIL-REAR,Longeron arrière,body,CAR,pce,manufactured,12,,1,MAT-STEEL-SHEET,5.400000000000,0.60,2
+bom-multipla-2026-09-22,CAR-SPARE-CARRIER,Support de roue de secours,body,CAR,pce,purchased,,16.400000,1,,1.240000,1.180000,1
+bom-multipla-2026-09-22,CAR-SPARE-WHEEL-WELL,Logement de roue de secours,body,CAR,pce,manufactured,8,,1,,22.396000,0.40,1
+bom-multipla-2026-09-22,CAR-TAILGATE-ASSY,Hayon équipé,body,CAR,pce,manufactured,26,,1,,21.754000000000,1.30,1
+bom-multipla-2026-09-22,CAR-TAILGATE-SHELL,Caisson de hayon,body,CAR,pce,manufactured,18,,1,MAT-STEEL-SHEET,10.400000000000,0.90,1
+bom-multipla-2026-09-22,CAR-TRIM-EXT-ASSY,Éléments extérieurs,body,CAR,pce,manufactured,16,,1,,4.332000000000,0.80,1
+bom-multipla-2026-09-22,CAR-WHEEL-ARCH,Passage de roue,body,CAR,pce,manufactured,8,,1,MAT-STEEL-SHEET,2.300000000000,0.40,4
+bom-multipla-2026-09-22,CAR-WHEEL-WRENCH,Clé de roue,body,CAR,pce,purchased,,7.400000,1,,0.860000,0.620000,1
+bom-multipla-2026-09-22,CAR-WINDOW-REGULATOR,Lève-vitre,body,CAR,pce,purchased,,34.000000,1,,1.420000,2.680000,4
+bom-multipla-2026-09-22,CHS-ABS-UNIT,Bloc hydraulique ABS,chassis,CHS,pce,purchased,,168.000000,1,,2.640000,12.400000,1
+bom-multipla-2026-09-22,CHS-ARB-BUSHING,Palier de barre stabilisatrice,chassis,CHS,pce,purchased,,5.200000,1,,0.094000,0.240000,4
+bom-multipla-2026-09-22,CHS-ARB-FRONT,Barre stabilisatrice avant,chassis,CHS,pce,purchased,,28.400000,1,,3.120000,2.680000,1
+bom-multipla-2026-09-22,CHS-ARB-LINK,Biellette de barre stabilisatrice,chassis,CHS,pce,purchased,,12.800000,1,,0.280000,0.860000,2
+bom-multipla-2026-09-22,CHS-ARM-BUSHING,Silentbloc de bras,chassis,CHS,pce,purchased,,8.600000,1,,0.180000,0.420000,4
+bom-multipla-2026-09-22,CHS-ASSY,Châssis et liaison au sol,chassis,CHS,pce,manufactured,36,,1,,225.752000000000,1.80,1
+bom-multipla-2026-09-22,CHS-BALANCE-WEIGHT,Masse d'équilibrage,chassis,CHS,pce,purchased,,0.900000,1,,0.020000,0.040000,10
+bom-multipla-2026-09-22,CHS-BALL-JOINT,Rotule de suspension,chassis,CHS,pce,purchased,,17.200000,1,,0.480000,1.340000,2
+bom-multipla-2026-09-22,CHS-BRAKE-DISC,Disque de frein avant,chassis,CHS,pce,purchased,,26.400000,1,,6.200000,9.840000,2
+bom-multipla-2026-09-22,CHS-BRAKE-DRUM,Tambour de frein arrière,chassis,CHS,pce,purchased,,22.800000,1,,5.400000,8.240000,2
+bom-multipla-2026-09-22,CHS-BRAKE-FRONT-ASSY,Frein avant complet,chassis,CHS,pce,manufactured,10,,1,,11.404000,0.50,2
+bom-multipla-2026-09-22,CHS-BRAKE-HOSE,Flexible de frein,chassis,CHS,pce,purchased,,8.400000,1,,0.140000,0.380000,4
+bom-multipla-2026-09-22,CHS-BRAKE-HYD-ASSY,Commande de freinage,chassis,CHS,pce,manufactured,18,,1,,13.136000000000,0.90,1
+bom-multipla-2026-09-22,CHS-BRAKE-LINE,Canalisation rigide de frein,chassis,CHS,pce,purchased,,7.200000,1,,0.220000,0.340000,4
+bom-multipla-2026-09-22,CHS-BRAKE-PAD-SET,Jeu de plaquettes avant,chassis,CHS,pce,purchased,,18.600000,1,,1.240000,1.420000,2
+bom-multipla-2026-09-22,CHS-BRAKE-REAR-ASSY,Frein arrière complet,chassis,CHS,pce,manufactured,12,,1,,7.854000,0.60,2
+bom-multipla-2026-09-22,CHS-BRAKE-SERVO,Servofrein,chassis,CHS,pce,purchased,,62.000000,1,,3.860000,5.180000,1
+bom-multipla-2026-09-22,CHS-BRAKE-SHOE-SET,Jeu de mâchoires arrière,chassis,CHS,pce,purchased,,16.200000,1,,1.680000,1.180000,2
+bom-multipla-2026-09-22,CHS-BUMP-STOP,Butée de compression,chassis,CHS,pce,purchased,,6.400000,1,,0.110000,0.280000,4
+bom-multipla-2026-09-22,CHS-CALIPER,Étrier de frein avant,chassis,CHS,pce,purchased,,48.000000,1,,3.640000,4.860000,2
+bom-multipla-2026-09-22,CHS-DRUM-SPRING-KIT,Kit de ressorts de tambour,chassis,CHS,pce,purchased,,6.800000,1,,0.180000,0.320000,2
+bom-multipla-2026-09-22,CHS-DUST-COVER,Soufflet d'amortisseur,chassis,CHS,pce,purchased,,4.900000,1,,0.086000,0.220000,2
+bom-multipla-2026-09-22,CHS-FRONT-AXLE-ASSY,Train avant,chassis,CHS,pce,manufactured,30,,1,,114.866000000000,1.50,1
+bom-multipla-2026-09-22,CHS-HUB-ASSY,Moyeu avant équipé,chassis,CHS,pce,manufactured,9,,1,,7.530000,0.45,2
+bom-multipla-2026-09-22,CHS-HUB-CARRIER,Porte-fusée,chassis,CHS,pce,purchased,,52.000000,1,,4.180000,5.640000,2
+bom-multipla-2026-09-22,CHS-HUB-FLANGE,Moyeu de roue,chassis,CHS,pce,purchased,,31.000000,1,,2.240000,3.180000,2
+bom-multipla-2026-09-22,CHS-HUBCAP,Enjoliveur,chassis,CHS,pce,purchased,,8.600000,1,,0.420000,0.640000,5
+bom-multipla-2026-09-22,CHS-LOWER-ARM,Bras inférieur,chassis,CHS,pce,manufactured,12,,1,MAT-STEEL-SHEET,3.100000000000,0.60,2
+bom-multipla-2026-09-22,CHS-LOWER-ARM-ASSY,Bras inférieur équipé,chassis,CHS,pce,manufactured,10,,1,,4.030000000000,0.50,2
+bom-multipla-2026-09-22,CHS-MASTER-CYL,Maître-cylindre,chassis,CHS,pce,purchased,,38.000000,1,,1.240000,2.940000,1
+bom-multipla-2026-09-22,CHS-PARK-CABLE,Câble de frein à main,chassis,CHS,pce,purchased,,14.400000,1,,0.480000,0.820000,2
+bom-multipla-2026-09-22,CHS-PARK-LEVER,Levier de frein à main,chassis,CHS,pce,purchased,,18.200000,1,,0.860000,1.140000,1
+bom-multipla-2026-09-22,CHS-PEDAL-BOX,Pédalier,chassis,CHS,pce,manufactured,12,,1,MAT-STEEL-SHEET,2.600000000000,0.60,1
+bom-multipla-2026-09-22,CHS-PS-HOSE-HP,Flexible haute pression de direction,chassis,CHS,pce,purchased,,22.400000,1,,0.480000,1.180000,1
+bom-multipla-2026-09-22,CHS-PS-HOSE-LP,Flexible retour de direction,chassis,CHS,pce,purchased,,16.800000,1,,0.380000,0.920000,1
+bom-multipla-2026-09-22,CHS-RACK-BAR,Barre de crémaillère,chassis,CHS,pce,manufactured,14,,1,MAT-STEEL-BAR,2.200000000000,0.70,1
+bom-multipla-2026-09-22,CHS-RACK-HOUSING,Corps de crémaillère,chassis,CHS,pce,manufactured,16,,1,MAT-ALU-CAST,3.400000000000,0.80,1
+bom-multipla-2026-09-22,CHS-RACK-PINION,Pignon de crémaillère,chassis,CHS,pce,purchased,,24.800000,1,,0.680000,2.240000,1
+bom-multipla-2026-09-22,CHS-RACK-SEAL,Joint de crémaillère,chassis,CHS,pce,purchased,,5.600000,1,,0.042000,0.240000,2
+bom-multipla-2026-09-22,CHS-REAR-AXLE-ASSY,Train arrière,chassis,CHS,pce,manufactured,24,,1,,81.694000000000,1.20,1
+bom-multipla-2026-09-22,CHS-REAR-BEAM,Traverse arrière,chassis,CHS,pce,manufactured,26,,1,MAT-STEEL-SHEET,11.480000000000,1.30,1
+bom-multipla-2026-09-22,CHS-REAR-BUSHING,Silentbloc de traverse arrière,chassis,CHS,pce,purchased,,9.400000,1,,0.210000,0.460000,4
+bom-multipla-2026-09-22,CHS-REAR-HUB-ASSY,Moyeu arrière équipé,chassis,CHS,pce,manufactured,7,,1,,3.288000,0.35,2
+bom-multipla-2026-09-22,CHS-REAR-HUB-UNIT,Moyeu arrière monobloc,chassis,CHS,pce,purchased,,42.000000,1,,2.860000,4.240000,2
+bom-multipla-2026-09-22,CHS-RIM-STEEL,Jante acier 15 pouces,chassis,CHS,pce,purchased,,34.000000,1,,8.400000,18.600000,5
+bom-multipla-2026-09-22,CHS-SHOCK-FRONT,Amortisseur avant,chassis,CHS,pce,purchased,,46.000000,1,,3.240000,4.180000,2
+bom-multipla-2026-09-22,CHS-SHOCK-REAR,Amortisseur arrière,chassis,CHS,pce,purchased,,38.000000,1,,2.680000,3.460000,2
+bom-multipla-2026-09-22,CHS-SPRING-FRONT,Ressort de suspension avant,chassis,CHS,pce,manufactured,14,,1,MAT-STEEL-SPRING,2.860000000000,0.70,2
+bom-multipla-2026-09-22,CHS-SPRING-REAR,Ressort de suspension arrière,chassis,CHS,pce,manufactured,12,,1,MAT-STEEL-SPRING,2.420000000000,0.60,2
+bom-multipla-2026-09-22,CHS-STEERING-ASSY,Direction assistée,chassis,CHS,pce,manufactured,20,,1,,15.516000000000,1.00,1
+bom-multipla-2026-09-22,CHS-STEERING-BOOT,Soufflet de crémaillère,chassis,CHS,pce,purchased,,7.800000,1,,0.120000,0.360000,2
+bom-multipla-2026-09-22,CHS-STEERING-COLUMN,Colonne de direction,chassis,CHS,pce,purchased,,68.000000,1,,5.240000,6.480000,1
+bom-multipla-2026-09-22,CHS-STEERING-RACK,Crémaillère de direction assistée,chassis,CHS,pce,manufactured,28,,1,,6.692000000000,1.40,1
+bom-multipla-2026-09-22,CHS-STRUT-BEARING,Roulement de butée de jambe,chassis,CHS,pce,purchased,,11.600000,1,,0.240000,0.780000,2
+bom-multipla-2026-09-22,CHS-STRUT-FRONT-ASSY,Jambe de force avant,chassis,CHS,pce,manufactured,14,,1,,6.964000000000,0.70,2
+bom-multipla-2026-09-22,CHS-STRUT-REAR-ASSY,Jambe de force arrière,chassis,CHS,pce,manufactured,11,,1,,5.638000000000,0.55,2
+bom-multipla-2026-09-22,CHS-SUBFRAME,Berceau avant,chassis,CHS,pce,manufactured,34,,1,MAT-STEEL-SHEET,14.850000000000,1.70,1
+bom-multipla-2026-09-22,CHS-TIE-ROD-ASSY,Biellette de direction complète,chassis,CHS,pce,manufactured,5,,1,,0.776000,0.25,2
+bom-multipla-2026-09-22,CHS-TIE-ROD-END,Rotule de direction,chassis,CHS,pce,purchased,,14.200000,1,,0.340000,1.120000,2
+bom-multipla-2026-09-22,CHS-TIE-ROD-INNER,Biellette de direction,chassis,CHS,pce,purchased,,16.400000,1,,0.420000,1.280000,2
+bom-multipla-2026-09-22,CHS-TIRE-185-65-15,Pneumatique 185/65 R15,chassis,CHS,pce,purchased,,42.000000,1,,8.900000,31.200000,5
+bom-multipla-2026-09-22,CHS-TIRE-VALVE,Valve de gonflage,chassis,CHS,pce,purchased,,1.400000,1,,0.012000,0.060000,5
+bom-multipla-2026-09-22,CHS-TOP-MOUNT,Coupelle supérieure de jambe,chassis,CHS,pce,purchased,,14.800000,1,,0.420000,0.920000,4
+bom-multipla-2026-09-22,CHS-UJ,Cardan de colonne,chassis,CHS,pce,purchased,,18.600000,1,,0.520000,1.460000,2
+bom-multipla-2026-09-22,CHS-WHEEL-ASSY,Roue complète,chassis,CHS,pce,manufactured,6,,1,,17.772000,0.30,5
+bom-multipla-2026-09-22,CHS-WHEEL-BEARING,Roulement de roue,chassis,CHS,pce,purchased,,24.600000,1,,0.860000,2.140000,2
+bom-multipla-2026-09-22,CHS-WHEEL-CYLINDER,Cylindre de roue,chassis,CHS,pce,purchased,,12.600000,1,,0.320000,0.940000,2
+bom-multipla-2026-09-22,ELE-ANTENNA,Antenne de toit,electrical,ELE,pce,purchased,,14.800000,1,,0.180000,0.940000,1
+bom-multipla-2026-09-22,ELE-ANTENNA-CABLE,Câble d'antenne,electrical,ELE,pce,purchased,,6.200000,1,,0.120000,0.340000,1
+bom-multipla-2026-09-22,ELE-ASSY,Électricité et électronique,electrical,ELE,pce,manufactured,46,,1,,41.714000000000,2.30,1
+bom-multipla-2026-09-22,ELE-AUDIO-ASSY,Réception radio,electrical,ELE,pce,manufactured,10,,1,,0.312000,0.50,1
+bom-multipla-2026-09-22,ELE-BATTERY,Batterie 12 V,electrical,ELE,pce,manufactured,16,,1,MAT-LEAD-INGOT,19.556000000000,0.80,1
+bom-multipla-2026-09-22,ELE-BATTERY-TERMINAL,Borne de batterie,electrical,ELE,pce,purchased,,3.400000,1,,0.048000,0.180000,2
+bom-multipla-2026-09-22,ELE-BATTERY-TRAY,Bac de batterie,electrical,ELE,pce,manufactured,6,,1,MAT-STEEL-SHEET,1.200000000000,0.30,1
+bom-multipla-2026-09-22,ELE-BULB-H4,Lampe H4,electrical,ELE,pce,purchased,,4.800000,1,,0.038000,0.320000,2
+bom-multipla-2026-09-22,ELE-BULB-P21W,Lampe P21W,electrical,ELE,pce,purchased,,1.600000,1,,0.012000,0.098000,4
+bom-multipla-2026-09-22,ELE-BULB-W5W,Lampe W5W,electrical,ELE,pce,purchased,,0.900000,1,,0.004000,0.064000,8
+bom-multipla-2026-09-22,ELE-CABLE-GROUND,Tresse de masse,electrical,ELE,pce,purchased,,8.400000,1,,0.240000,0.480000,1
+bom-multipla-2026-09-22,ELE-CABLE-POSITIVE,Câble de puissance positif,electrical,ELE,pce,purchased,,16.800000,1,,0.620000,1.240000,1
+bom-multipla-2026-09-22,ELE-CLUSTER,Combiné d'instruments,electrical,ELE,pce,purchased,,84.000000,1,,1.420000,6.240000,1
+bom-multipla-2026-09-22,ELE-CONNECTOR-12P,Connecteur 12 voies,electrical,ELE,pce,purchased,,3.200000,1,,0.024000,0.240000,44
+bom-multipla-2026-09-22,ELE-CONNECTOR-2P,Connecteur 2 voies,electrical,ELE,pce,purchased,,1.400000,1,,0.008000,0.096000,49
+bom-multipla-2026-09-22,ELE-CONNECTOR-40P,Connecteur 40 voies,electrical,ELE,pce,purchased,,8.600000,1,,0.086000,0.640000,1
+bom-multipla-2026-09-22,ELE-ECU-ABS,Calculateur ABS,electrical,ELE,pce,manufactured,14,,1,,0.587500000000,0.70,1
+bom-multipla-2026-09-22,ELE-ECU-AIRBAG,Calculateur d'airbag,electrical,ELE,pce,manufactured,14,,1,,0.587500000000,0.70,1
+bom-multipla-2026-09-22,ELE-ECU-BODY,Calculateur d'habitacle,electrical,ELE,pce,manufactured,14,,1,,0.587500000000,0.70,1
+bom-multipla-2026-09-22,ELE-ECU-ENGINE,Calculateur moteur,electrical,ELE,pce,manufactured,18,,1,,0.625500000000,0.90,1
+bom-multipla-2026-09-22,ELE-ECU-HOUSING,Boîtier de calculateur,electrical,ELE,pce,manufactured,6,,1,MAT-ALU-CAST,0.380000000000,0.30,4
+bom-multipla-2026-09-22,ELE-FOG-LAMP,Projecteur antibrouillard,electrical,ELE,pce,purchased,,26.400000,1,,0.480000,1.840000,2
+bom-multipla-2026-09-22,ELE-FUSE-BLADE,Fusible à lame,electrical,ELE,pce,purchased,,0.340000,1,,0.002000,0.024000,20
+bom-multipla-2026-09-22,ELE-FUSE-BOX,Platine à fusibles et relais,electrical,ELE,pce,manufactured,14,,1,,0.940000000000,0.70,1
+bom-multipla-2026-09-22,ELE-FUSE-BOX-HOUSING,Boîtier de la platine à fusibles,electrical,ELE,pce,manufactured,5,,1,MAT-PA66-GRANULE,0.600000000000,0.25,1
+bom-multipla-2026-09-22,ELE-HARNESS-DASH,Faisceau de planche de bord,electrical,ELE,pce,manufactured,34,,1,MAT-COPPER-WIRE,3.550000000000,1.70,1
+bom-multipla-2026-09-22,ELE-HARNESS-DOOR,Faisceau de porte,electrical,ELE,pce,manufactured,12,,1,MAT-COPPER-WIRE,0.486000000000,0.60,4
+bom-multipla-2026-09-22,ELE-HARNESS-ENGINE,Faisceau moteur,electrical,ELE,pce,manufactured,38,,1,MAT-COPPER-WIRE,2.808000000000,1.90,1
+bom-multipla-2026-09-22,ELE-HARNESS-REAR,Faisceau arrière,electrical,ELE,pce,manufactured,22,,1,MAT-COPPER-WIRE,2.086000000000,1.10,1
+bom-multipla-2026-09-22,ELE-HARNESS-TAPE,Ruban de faisceau,electrical,ELE,pce,purchased,,2.800000,1,,0.062000,0.140000,3
+bom-multipla-2026-09-22,ELE-HEADLAMP-ASSY,Projecteur avant,electrical,ELE,pce,manufactured,12,,1,,1.504000000000,0.60,2
+bom-multipla-2026-09-22,ELE-HORN,Avertisseur sonore,electrical,ELE,pce,purchased,,13.600000,1,,0.480000,0.980000,1
+bom-multipla-2026-09-22,ELE-IC-CHIP,Circuit intégré,electrical,ELE,pce,purchased,,4.600000,1,,0.002000,1.240000,24
+bom-multipla-2026-09-22,ELE-LAMP-ADJUSTER,Vis de réglage de projecteur,electrical,ELE,pce,purchased,,3.400000,1,,0.024000,0.180000,4
+bom-multipla-2026-09-22,ELE-LAMP-HOUSING,Boîtier de feu,electrical,ELE,pce,manufactured,6,,1,MAT-PP-GRANULE,0.700000000000,0.30,4
+bom-multipla-2026-09-22,ELE-LAMP-INTERIOR,Plafonnier,electrical,ELE,pce,purchased,,8.400000,1,,0.140000,0.520000,3
+bom-multipla-2026-09-22,ELE-LAMP-LENS,Glace de projecteur,electrical,ELE,pce,manufactured,7,,1,MAT-PC-GRANULE,0.450000000000,0.35,2
+bom-multipla-2026-09-22,ELE-LENS-RED,Glace de feu arrière,electrical,ELE,pce,purchased,,12.600000,1,,0.320000,0.840000,2
+bom-multipla-2026-09-22,ELE-LIGHTING-ASSY,Éclairage et signalisation,electrical,ELE,pce,manufactured,18,,1,,6.144000000000,0.90,1
+bom-multipla-2026-09-22,ELE-PASSIVE-COMPONENT,Composant passif,electrical,ELE,pce,purchased,,0.120000,1,,0.000300,0.018000,320
+bom-multipla-2026-09-22,ELE-PCB,Carte électronique équipée,electrical,ELE,pce,manufactured,12,,1,MAT-PCB-LAMINATE,0.159500000000,0.60,4
+bom-multipla-2026-09-22,ELE-PLATE-LAMP,Éclaireur de plaque,electrical,ELE,pce,purchased,,5.200000,1,,0.062000,0.310000,2
+bom-multipla-2026-09-22,ELE-RADIO,Autoradio,electrical,ELE,pce,purchased,,96.000000,1,,1.860000,7.480000,1
+bom-multipla-2026-09-22,ELE-REFLECTOR,Réflecteur de projecteur,electrical,ELE,pce,purchased,,14.200000,1,,0.240000,0.960000,2
+bom-multipla-2026-09-22,ELE-RELAY-4P,Relais 4 broches,electrical,ELE,pce,purchased,,3.800000,1,,0.034000,0.280000,6
+bom-multipla-2026-09-22,ELE-REPEATER,Répétiteur latéral,electrical,ELE,pce,purchased,,6.800000,1,,0.086000,0.420000,2
+bom-multipla-2026-09-22,ELE-SENSOR-ABS,Capteur de roue ABS,electrical,ELE,pce,purchased,,22.400000,1,,0.094000,1.320000,4
+bom-multipla-2026-09-22,ELE-SENSOR-CAM,Capteur d'arbre à cames,electrical,ELE,pce,purchased,,31.000000,1,,0.068000,1.580000,1
+bom-multipla-2026-09-22,ELE-SENSOR-COOLANT-TEMP,Sonde de température d'eau,electrical,ELE,pce,purchased,,9.400000,1,,0.042000,0.480000,1
+bom-multipla-2026-09-22,ELE-SENSOR-CRANK,Capteur de position vilebrequin,electrical,ELE,pce,purchased,,28.000000,1,,0.072000,1.460000,1
+bom-multipla-2026-09-22,ELE-SENSOR-KNOCK,Capteur de cliquetis,electrical,ELE,pce,purchased,,24.000000,1,,0.058000,1.240000,1
+bom-multipla-2026-09-22,ELE-SENSOR-LAMBDA,Sonde lambda,electrical,ELE,pce,purchased,,46.000000,1,,0.120000,2.840000,2
+bom-multipla-2026-09-22,ELE-SENSOR-MAF,Débitmètre d'air,electrical,ELE,pce,purchased,,54.000000,1,,0.180000,3.240000,1
+bom-multipla-2026-09-22,ELE-SENSOR-MAP,Capteur de pression d'admission,electrical,ELE,pce,purchased,,21.000000,1,,0.064000,1.180000,1
+bom-multipla-2026-09-22,ELE-SPEAKER-100,Haut-parleur 100 mm,electrical,ELE,pce,purchased,,12.400000,1,,0.420000,0.860000,4
+bom-multipla-2026-09-22,ELE-TAIL-LAMP-ASSY,Feu arrière,electrical,ELE,pce,manufactured,8,,1,,1.072000000000,0.40,2
+bom-multipla-2026-09-22,ELE-THIRD-BRAKE-LAMP,Troisième feu stop,electrical,ELE,pce,purchased,,14.800000,1,,0.240000,0.920000,1
+bom-multipla-2026-09-22,ELE-WASHER-NOZZLE,Gicleur de lave-glace,electrical,ELE,pce,purchased,,3.600000,1,,0.024000,0.190000,2
+bom-multipla-2026-09-22,ELE-WASHER-PUMP,Pompe de lave-glace,electrical,ELE,pce,purchased,,11.200000,1,,0.180000,0.720000,1
+bom-multipla-2026-09-22,ELE-WASHER-TANK,Réservoir de lave-glace,electrical,ELE,pce,manufactured,6,,1,MAT-HDPE-GRANULE,0.800000000000,0.30,1
+bom-multipla-2026-09-22,ELE-WIPER-ARM,Bras d'essuie-glace,electrical,ELE,pce,purchased,,9.800000,1,,0.280000,0.640000,2
+bom-multipla-2026-09-22,ELE-WIPER-ASSY,Essuyage et lavage,electrical,ELE,pce,manufactured,16,,1,,4.802000000000,0.80,1
+bom-multipla-2026-09-22,ELE-WIPER-BLADE,Balai d'essuie-glace,electrical,ELE,pce,purchased,,6.400000,1,,0.140000,0.380000,2
+bom-multipla-2026-09-22,ELE-WIPER-LINKAGE,Tringlerie d'essuyage,electrical,ELE,pce,purchased,,24.600000,1,,1.240000,1.840000,1
+bom-multipla-2026-09-22,ELE-WIPER-MOTOR,Moteur d'essuie-glace avant,electrical,ELE,pce,purchased,,42.000000,1,,1.640000,3.180000,1
+bom-multipla-2026-09-22,ELE-WIPER-REAR-MOTOR,Moteur d'essuie-glace arrière,electrical,ELE,pce,purchased,,32.000000,1,,1.180000,2.480000,1
+bom-multipla-2026-09-22,ENG-AC-COMPRESSOR,Compresseur de climatisation,engine,GMP,pce,purchased,,168.000000,1,,5.400000,14.600000,1
+bom-multipla-2026-09-22,ENG-ACC-BELT,Courroie d'accessoires,engine,GMP,pce,purchased,,16.400000,1,,0.260000,0.940000,1
+bom-multipla-2026-09-22,ENG-ACC-BRACKET,Patte de fixation d'accessoire,engine,GMP,pce,manufactured,8,,1,MAT-STEEL-SHEET,1.300000000000,0.40,3
+bom-multipla-2026-09-22,ENG-ACCESSORY-ASSY,Accessoires entraînés,engine,GMP,pce,manufactured,24,,1,,23.814000000000,1.20,1
+bom-multipla-2026-09-22,ENG-AIR-DUCT,Conduit d'admission souple,engine,GMP,pce,purchased,,12.600000,1,,0.420000,0.680000,1
+bom-multipla-2026-09-22,ENG-AIR-FILTER-ELEMENT,Élément filtrant à air,engine,GMP,pce,purchased,,7.300000,1,,0.310000,0.420000,1
+bom-multipla-2026-09-22,ENG-AIRBOX-ASSY,Boîtier de filtre à air complet,engine,GMP,pce,manufactured,8,,1,,2.754000000000,0.40,1
+bom-multipla-2026-09-22,ENG-AIRBOX-HOUSING,Corps de boîtier de filtre à air,engine,GMP,pce,manufactured,8,,1,MAT-PP-GRANULE,1.300000000000,0.40,1
+bom-multipla-2026-09-22,ENG-AIRBOX-LID,Couvercle de boîtier de filtre à air,engine,GMP,pce,manufactured,5,,1,MAT-PP-GRANULE,0.700000000000,0.25,1
+bom-multipla-2026-09-22,ENG-ALTERNATOR,Alternateur,engine,GMP,pce,manufactured,22,,1,,6.382000000000,1.10,1
+bom-multipla-2026-09-22,ENG-BELT-TENSIONER,Tendeur de courroie d'accessoires,engine,GMP,pce,purchased,,34.000000,1,,0.420000,2.180000,1
+bom-multipla-2026-09-22,ENG-BLOCK-ASSY,Bloc-cylindres assemblé,engine,GMP,pce,manufactured,42,,1,,62.986000000000,2.10,1
+bom-multipla-2026-09-22,ENG-BLOCK-RAW,Bloc-cylindres usiné,engine,GMP,pce,manufactured,48,,1,MAT-CAST-IRON,34.000000000000,2.40,1
+bom-multipla-2026-09-22,ENG-CAM-BEARING,Chapeau de palier d'arbre à cames,engine,GMP,pce,purchased,,2.100000,1,,0.052000,0.180000,10
+bom-multipla-2026-09-22,ENG-CAM-COVER,Cache-culbuteurs,engine,GMP,pce,manufactured,9,,1,MAT-ALU-SHEET,1.200000000000,0.45,1
+bom-multipla-2026-09-22,ENG-CAM-COVER-GASKET,Joint de cache-culbuteurs,engine,GMP,pce,purchased,,7.400000,1,,0.084000,0.240000,1
+bom-multipla-2026-09-22,ENG-CAM-SPROCKET,Pignon d'arbre à cames,engine,GMP,pce,purchased,,11.500000,1,,0.480000,1.020000,2
+bom-multipla-2026-09-22,ENG-CAMSHAFT-EXHAUST,Arbre à cames d'échappement,engine,GMP,pce,purchased,,42.000000,1,,3.200000,4.800000,1
+bom-multipla-2026-09-22,ENG-CAMSHAFT-INTAKE,Arbre à cames d'admission,engine,GMP,pce,purchased,,42.000000,1,,3.200000,4.800000,1
+bom-multipla-2026-09-22,ENG-CAT-MAT,Natte de maintien du catalyseur,engine,GMP,pce,purchased,,8.900000,1,,0.180000,0.460000,1
+bom-multipla-2026-09-22,ENG-CAT-SHELL,Enveloppe de catalyseur,engine,GMP,pce,manufactured,14,,1,MAT-STAINLESS-SHEET,2.600000000000,0.70,1
+bom-multipla-2026-09-22,ENG-CAT-SUBSTRATE,Support catalytique imprégné,engine,GMP,pce,manufactured,12,,1,MAT-CERAMIC-ALO,1.203200000000,0.60,1
+bom-multipla-2026-09-22,ENG-CATALYST,Catalyseur,engine,GMP,pce,manufactured,16,,1,,3.983200000000,0.80,1
+bom-multipla-2026-09-22,ENG-CONROD,Bielle,engine,GMP,pce,manufactured,14,,1,MAT-STEEL-BAR,0.720000000000,0.70,4
+bom-multipla-2026-09-22,ENG-COOL-ASSY,Circuit de refroidissement,engine,GMP,pce,manufactured,22,,1,,10.158000000000,1.10,1
+bom-multipla-2026-09-22,ENG-CRANK-ASSY,Vilebrequin équipé,engine,GMP,pce,manufactured,16,,1,,13.476000000000,0.80,1
+bom-multipla-2026-09-22,ENG-CRANK-PULLEY,Poulie damper de vilebrequin,engine,GMP,pce,purchased,,26.500000,1,,1.850000,2.340000,1
+bom-multipla-2026-09-22,ENG-CRANK-SPROCKET,Pignon de vilebrequin,engine,GMP,pce,purchased,,6.800000,1,,0.310000,0.720000,1
+bom-multipla-2026-09-22,ENG-CRANKSHAFT,Vilebrequin,engine,GMP,pce,manufactured,38,,1,MAT-STEEL-BAR,12.500000000000,1.90,1
+bom-multipla-2026-09-22,ENG-DIPSTICK,Jauge à huile,engine,GMP,pce,purchased,,2.800000,1,,0.048000,0.110000,1
+bom-multipla-2026-09-22,ENG-DIPSTICK-TUBE,Tube de jauge,engine,GMP,pce,purchased,,3.400000,1,,0.071000,0.140000,1
+bom-multipla-2026-09-22,ENG-DRAIN-PLUG,Bouchon de vidange,engine,GMP,pce,purchased,,1.700000,1,,0.042000,0.060000,1
+bom-multipla-2026-09-22,ENG-EXH-CLAMP,Collier d'échappement,engine,GMP,pce,purchased,,5.600000,1,,0.096000,0.280000,3
+bom-multipla-2026-09-22,ENG-EXH-FRONT-PIPE,Tube avant d'échappement,engine,GMP,pce,manufactured,12,,1,MAT-STAINLESS-SHEET,3.100000000000,0.60,1
+bom-multipla-2026-09-22,ENG-EXH-GASKET,Joint d'échappement,engine,GMP,pce,purchased,,4.200000,1,,0.042000,0.190000,3
+bom-multipla-2026-09-22,ENG-EXH-HANGER,Silentbloc d'échappement,engine,GMP,pce,purchased,,2.400000,1,,0.048000,0.140000,4
+bom-multipla-2026-09-22,ENG-EXH-MANIFOLD,Collecteur d'échappement,engine,GMP,pce,manufactured,18,,1,MAT-CAST-IRON,5.400000000000,0.90,1
+bom-multipla-2026-09-22,ENG-EXHAUST-ASSY,Ligne d'échappement,engine,GMP,pce,manufactured,26,,1,,23.255200000000,1.30,1
+bom-multipla-2026-09-22,ENG-EXP-TANK-CAP,Bouchon de vase d'expansion,engine,GMP,pce,purchased,,3.100000,1,,0.034000,0.120000,1
+bom-multipla-2026-09-22,ENG-EXPANSION-TANK,Vase d'expansion,engine,GMP,pce,manufactured,6,,1,MAT-PP-GRANULE,0.550000000000,0.30,1
+bom-multipla-2026-09-22,ENG-FAN-ASSY,Groupe motoventilateur,engine,GMP,pce,manufactured,10,,1,,3.044000000000,0.50,1
+bom-multipla-2026-09-22,ENG-FAN-BLADE,Hélice de ventilateur,engine,GMP,pce,purchased,,7.600000,1,,0.380000,0.940000,1
+bom-multipla-2026-09-22,ENG-FAN-MOTOR,Moteur de ventilateur,engine,GMP,pce,purchased,,24.000000,1,,1.240000,3.100000,1
+bom-multipla-2026-09-22,ENG-FAN-SHROUD,Buse de ventilateur,engine,GMP,pce,manufactured,7,,1,MAT-PP-GRANULE,1.400000000000,0.35,1
+bom-multipla-2026-09-22,ENG-FLYWHEEL,Volant moteur,engine,GMP,pce,purchased,,48.000000,1,,7.400000,14.200000,1
+bom-multipla-2026-09-22,ENG-FUEL-ASSY,Circuit d'alimentation carburant,engine,GMP,pce,manufactured,28,,1,,15.162000000000,1.40,1
+bom-multipla-2026-09-22,ENG-FUEL-CAP,Bouchon de réservoir,engine,GMP,pce,purchased,,6.800000,1,,0.098000,0.310000,1
+bom-multipla-2026-09-22,ENG-FUEL-FILTER,Filtre à carburant,engine,GMP,pce,purchased,,11.200000,1,,0.290000,0.620000,1
+bom-multipla-2026-09-22,ENG-FUEL-LEVEL-SENDER,Jauge de niveau de carburant,engine,GMP,pce,purchased,,18.400000,1,,0.180000,0.940000,1
+bom-multipla-2026-09-22,ENG-FUEL-LINE,Canalisation de carburant,engine,GMP,pce,manufactured,6,,1,MAT-NBR-RUBBER,0.400000000000,0.30,2
+bom-multipla-2026-09-22,ENG-FUEL-PUMP-MODULE,Module de pompe à carburant,engine,GMP,pce,purchased,,78.000000,1,,1.860000,6.400000,1
+bom-multipla-2026-09-22,ENG-FUEL-RAIL,Rampe d'injection,engine,GMP,pce,manufactured,9,,1,MAT-STEEL-BAR,0.650000000000,0.45,1
+bom-multipla-2026-09-22,ENG-FUEL-REGULATOR,Régulateur de pression carburant,engine,GMP,pce,purchased,,16.500000,1,,0.120000,0.780000,1
+bom-multipla-2026-09-22,ENG-FUEL-TANK,Réservoir de carburant,engine,GMP,pce,manufactured,26,,1,MAT-HDPE-GRANULE,8.500000000000,1.30,1
+bom-multipla-2026-09-22,ENG-HEAD-ASSY,Culasse assemblée 16 soupapes,engine,GMP,pce,manufactured,56,,1,,23.048000000000,2.80,1
+bom-multipla-2026-09-22,ENG-HEAD-GASKET,Joint de culasse,engine,GMP,pce,purchased,,18.500000,1,,0.290000,0.880000,1
+bom-multipla-2026-09-22,ENG-HEAD-RAW,Culasse usinée,engine,GMP,pce,manufactured,44,,1,MAT-ALU-CAST,11.500000000000,2.20,1
+bom-multipla-2026-09-22,ENG-HOSE-COOL-20,Durite de chauffage Ø20,engine,GMP,pce,purchased,,4.200000,1,,0.110000,0.240000,2
+bom-multipla-2026-09-22,ENG-HOSE-COOL-32,Durite de refroidissement Ø32,engine,GMP,pce,purchased,,6.400000,1,,0.180000,0.380000,2
+bom-multipla-2026-09-22,ENG-HT-LEAD,Câble haute tension,engine,GMP,pce,purchased,,7.200000,1,,0.074000,0.340000,4
+bom-multipla-2026-09-22,ENG-HYDRAULIC-LIFTER,Poussoir hydraulique,engine,GMP,pce,purchased,,6.200000,1,,0.046000,0.540000,16
+bom-multipla-2026-09-22,ENG-IDLER-PULLEY,Galet d'accessoires,engine,GMP,pce,purchased,,14.200000,1,,0.240000,1.040000,2
+bom-multipla-2026-09-22,ENG-IGNITION-ASSY,Circuit d'allumage,engine,GMP,pce,manufactured,12,,1,,1.726000,0.60,1
+bom-multipla-2026-09-22,ENG-IGNITION-COIL,Bobine d'allumage double,engine,GMP,pce,purchased,,38.000000,1,,0.480000,2.240000,2
+bom-multipla-2026-09-22,ENG-INJECTOR,Injecteur,engine,GMP,pce,purchased,,32.000000,1,,0.086000,1.840000,4
+bom-multipla-2026-09-22,ENG-INTAKE-ASSY,Circuit d'admission,engine,GMP,pce,manufactured,18,,1,,6.832000000000,0.90,1
+bom-multipla-2026-09-22,ENG-INTAKE-GASKET,Joint de collecteur d'admission,engine,GMP,pce,purchased,,6.100000,1,,0.054000,0.220000,1
+bom-multipla-2026-09-22,ENG-INTAKE-MANIFOLD,Collecteur d'admission,engine,GMP,pce,manufactured,16,,1,MAT-PA66-GRANULE,2.500000000000,0.80,1
+bom-multipla-2026-09-22,ENG-LUB-ASSY,Circuit de lubrification,engine,GMP,pce,manufactured,12,,1,,2.613000000000,0.60,1
+bom-multipla-2026-09-22,ENG-MAIN-BEARING,Coussinet de palier,engine,GMP,pce,purchased,,2.300000,1,,0.041000,0.240000,10
+bom-multipla-2026-09-22,ENG-MOUNT-ASSY,Support élastique complet,engine,GMP,pce,manufactured,6,,1,,2.229000000000,0.30,4
+bom-multipla-2026-09-22,ENG-OIL-FILTER,Filtre à huile,engine,GMP,pce,purchased,,4.900000,1,,0.320000,0.360000,1
+bom-multipla-2026-09-22,ENG-OIL-FILTER-HOUSING,Support de filtre à huile,engine,GMP,pce,purchased,,12.300000,1,,0.520000,1.140000,1
+bom-multipla-2026-09-22,ENG-OIL-PAN,Carter d'huile,engine,GMP,pce,manufactured,12,,1,MAT-STEEL-SHEET,2.400000000000,0.60,1
+bom-multipla-2026-09-22,ENG-OIL-PAN-ASSY,Carter d'huile équipé,engine,GMP,pce,manufactured,8,,1,,2.584000000000,0.40,1
+bom-multipla-2026-09-22,ENG-OIL-PAN-GASKET,Joint de carter d'huile,engine,GMP,pce,purchased,,5.600000,1,,0.062000,0.190000,1
+bom-multipla-2026-09-22,ENG-OIL-PICKUP,Crépine d'aspiration,engine,GMP,pce,purchased,,8.600000,1,,0.210000,0.480000,1
+bom-multipla-2026-09-22,ENG-OIL-PRESSURE-SWITCH,Manocontact de pression d'huile,engine,GMP,pce,purchased,,6.300000,1,,0.038000,0.290000,1
+bom-multipla-2026-09-22,ENG-OIL-PUMP,Pompe à huile,engine,GMP,pce,manufactured,14,,1,,1.501000000000,0.70,1
+bom-multipla-2026-09-22,ENG-OIL-PUMP-HOUSING,Corps de pompe à huile,engine,GMP,pce,manufactured,10,,1,MAT-ALU-CAST,1.100000000000,0.50,1
+bom-multipla-2026-09-22,ENG-OIL-PUMP-ROTOR,Rotor de pompe à huile,engine,GMP,pce,purchased,,9.400000,1,,0.340000,0.860000,1
+bom-multipla-2026-09-22,ENG-OIL-RELIEF-VALVE,Clapet de décharge,engine,GMP,pce,purchased,,3.700000,1,,0.045000,0.220000,1
+bom-multipla-2026-09-22,ENG-PISTON,Piston,engine,GMP,pce,manufactured,9,,1,MAT-ALU-CAST,0.380000000000,0.45,4
+bom-multipla-2026-09-22,ENG-PISTON-PIN,Axe de piston,engine,GMP,pce,purchased,,2.400000,1,,0.088000,0.260000,4
+bom-multipla-2026-09-22,ENG-PISTON-RING,Segment de piston,engine,GMP,pce,purchased,,1.850000,1,,0.012000,0.190000,12
+bom-multipla-2026-09-22,ENG-PISTON-ROD-ASSY,Attelage mobile complet,engine,GMP,pce,manufactured,11,,1,,1.316000000000,0.55,4
+bom-multipla-2026-09-22,ENG-PS-PUMP,Pompe de direction assistée,engine,GMP,pce,purchased,,112.000000,1,,3.600000,8.800000,1
+bom-multipla-2026-09-22,ENG-RAD-CORE,Faisceau de radiateur,engine,GMP,pce,manufactured,18,,1,MAT-ALU-SHEET,3.040000000000,0.90,1
+bom-multipla-2026-09-22,ENG-RAD-DRAIN-PLUG,Bouchon de vidange radiateur,engine,GMP,pce,purchased,,1.900000,1,,0.014000,0.070000,1
+bom-multipla-2026-09-22,ENG-RAD-SEAL,Joint de boîte à eau,engine,GMP,pce,purchased,,2.900000,1,,0.026000,0.110000,2
+bom-multipla-2026-09-22,ENG-RAD-TANK,Boîte à eau de radiateur,engine,GMP,pce,manufactured,5,,1,MAT-PA66-GRANULE,0.450000000000,0.25,2
+bom-multipla-2026-09-22,ENG-RADIATOR,Radiateur de refroidissement,engine,GMP,pce,manufactured,16,,1,,4.022000000000,0.80,1
+bom-multipla-2026-09-22,ENG-ROD-BEARING,Coussinet de bielle,engine,GMP,pce,purchased,,1.950000,1,,0.032000,0.210000,8
+bom-multipla-2026-09-22,ENG-SEAL-CRANK-FRONT,Joint spi avant de vilebrequin,engine,GMP,pce,purchased,,3.200000,1,,0.024000,0.120000,1
+bom-multipla-2026-09-22,ENG-SEAL-CRANK-REAR,Joint spi arrière de vilebrequin,engine,GMP,pce,purchased,,4.100000,1,,0.031000,0.150000,1
+bom-multipla-2026-09-22,ENG-SILENCER-CENTER,Silencieux intermédiaire,engine,GMP,pce,manufactured,16,,1,MAT-STAINLESS-SHEET,4.200000000000,0.80,1
+bom-multipla-2026-09-22,ENG-SILENCER-REAR,Silencieux arrière,engine,GMP,pce,manufactured,18,,1,MAT-STAINLESS-SHEET,5.600000000000,0.90,1
+bom-multipla-2026-09-22,ENG-SPARK-PLUG,Bougie d'allumage,engine,GMP,pce,purchased,,4.600000,1,,0.062000,0.310000,4
+bom-multipla-2026-09-22,ENG-STARTER,Démarreur,engine,GMP,pce,purchased,,96.000000,1,,3.100000,9.400000,1
+bom-multipla-2026-09-22,ENG-TANK-STRAP,Sangle de réservoir,engine,GMP,pce,manufactured,6,,1,MAT-STEEL-SHEET,1.100000000000,0.30,2
+bom-multipla-2026-09-22,ENG-THERMOSTAT,Thermostat,engine,GMP,pce,purchased,,7.900000,1,,0.092000,0.410000,1
+bom-multipla-2026-09-22,ENG-THERMOSTAT-HOUSING,Boîtier de thermostat,engine,GMP,pce,manufactured,4,,1,MAT-PA66-GRANULE,0.220000000000,0.20,1
+bom-multipla-2026-09-22,ENG-THROTTLE-BODY,Boîtier papillon,engine,GMP,pce,purchased,,86.000000,1,,1.140000,5.200000,1
+bom-multipla-2026-09-22,ENG-THRUST-WASHER,Cale de butée de vilebrequin,engine,GMP,pce,purchased,,1.600000,1,,0.018000,0.150000,2
+bom-multipla-2026-09-22,ENG-TIMING-ASSY,Distribution complète,engine,GMP,pce,manufactured,24,,1,,4.874000000000,1.20,1
+bom-multipla-2026-09-22,ENG-TIMING-BELT,Courroie de distribution,engine,GMP,pce,purchased,,14.800000,1,,0.240000,0.920000,1
+bom-multipla-2026-09-22,ENG-TIMING-COVER,Carter de distribution,engine,GMP,pce,manufactured,6,,1,MAT-PP-GRANULE,0.900000000000,0.30,1
+bom-multipla-2026-09-22,ENG-TIMING-IDLER,Galet enrouleur,engine,GMP,pce,purchased,,16.200000,1,,0.260000,1.180000,2
+bom-multipla-2026-09-22,ENG-TIMING-TENSIONER,Galet tendeur de distribution,engine,GMP,pce,purchased,,22.400000,1,,0.310000,1.640000,1
+bom-multipla-2026-09-22,ENG-VALVE-COLLET,Clavette de soupape,engine,GMP,pce,purchased,,0.350000,1,,0.002000,0.020000,32
+bom-multipla-2026-09-22,ENG-VALVE-EXHAUST,Soupape d'échappement,engine,GMP,pce,purchased,,3.900000,1,,0.058000,0.410000,8
+bom-multipla-2026-09-22,ENG-VALVE-GUIDE,Guide de soupape,engine,GMP,pce,purchased,,0.950000,1,,0.014000,0.070000,16
+bom-multipla-2026-09-22,ENG-VALVE-INTAKE,Soupape d'admission,engine,GMP,pce,purchased,,3.100000,1,,0.062000,0.340000,8
+bom-multipla-2026-09-22,ENG-VALVE-RETAINER,Coupelle de ressort,engine,GMP,pce,purchased,,0.900000,1,,0.011000,0.060000,16
+bom-multipla-2026-09-22,ENG-VALVE-SEAL,Joint de queue de soupape,engine,GMP,pce,purchased,,0.650000,1,,0.003000,0.030000,16
+bom-multipla-2026-09-22,ENG-VALVE-SPRING,Ressort de soupape,engine,GMP,pce,purchased,,1.200000,1,,0.021000,0.090000,16
+bom-multipla-2026-09-22,ENG-WATER-PUMP,Pompe à eau,engine,GMP,pce,purchased,,28.000000,1,,1.420000,2.680000,1
+bom-multipla-2026-09-22,FIX-BOLT-WHEEL-M12,Boulon de roue M12,fastener,FIX,pce,purchased,,34.000000,100,,0.062000,0.014000,16
+bom-multipla-2026-09-22,FIX-CABLE-TIE-200,Collier de câblage 200 mm,fastener,FIX,pce,purchased,,1.100000,100,,0.001000,0.000400,122
+bom-multipla-2026-09-22,FIX-CIRCLIP-20,Circlip Ø20,fastener,FIX,pce,purchased,,2.600000,100,,0.002000,0.000900,18
+bom-multipla-2026-09-22,FIX-CLIP-PLASTIC,Agrafe plastique,fastener,FIX,pce,purchased,,1.800000,100,,0.002000,0.000600,168
+bom-multipla-2026-09-22,FIX-GROMMET-12,Passe-fil Ø12,fastener,FIX,pce,purchased,,2.900000,100,,0.003000,0.001000,14
+bom-multipla-2026-09-22,FIX-HOSE-CLAMP-25,Collier de serrage Ø25,fastener,FIX,pce,purchased,,9.500000,100,,0.011000,0.003400,12
+bom-multipla-2026-09-22,FIX-HOSE-CLAMP-40,Collier de serrage Ø40,fastener,FIX,pce,purchased,,12.000000,100,,0.016000,0.004200,4
+bom-multipla-2026-09-22,FIX-M10-40,Vis M10×40,fastener,FIX,pce,purchased,,12.500000,100,,0.022000,0.005200,120
+bom-multipla-2026-09-22,FIX-M12-60,Vis M12×60,fastener,FIX,pce,purchased,,22.000000,100,,0.045000,0.009800,68
+bom-multipla-2026-09-22,FIX-M6-16,Vis M6×16,fastener,FIX,pce,purchased,,3.900000,100,,0.004000,0.001300,68
+bom-multipla-2026-09-22,FIX-M6-25,Vis M6×25,fastener,FIX,pce,purchased,,4.400000,100,,0.005000,0.001600,16
+bom-multipla-2026-09-22,FIX-M8-20,Vis M8×20,fastener,FIX,pce,purchased,,6.200000,100,,0.009000,0.002400,204
+bom-multipla-2026-09-22,FIX-M8-35,Vis M8×35,fastener,FIX,pce,purchased,,7.800000,100,,0.012000,0.003100,14
+bom-multipla-2026-09-22,FIX-NUT-EXHAUST-M8,Écrou cuivré M8 échappement,fastener,FIX,pce,purchased,,5.100000,100,,0.006000,0.002000,8
+bom-multipla-2026-09-22,FIX-NUT-M10,Écrou M10,fastener,FIX,pce,purchased,,4.600000,100,,0.008000,0.001900,8
+bom-multipla-2026-09-22,FIX-NUT-M6,Écrou M6,fastener,FIX,pce,purchased,,2.100000,100,,0.002000,0.000800,14
+bom-multipla-2026-09-22,FIX-NUT-M8,Écrou M8,fastener,FIX,pce,purchased,,3.000000,100,,0.004000,0.001200,10
+bom-multipla-2026-09-22,FIX-RIVET-4,Rivet aveugle Ø4,fastener,FIX,pce,purchased,,1.400000,100,,0.001000,0.000500,12
+bom-multipla-2026-09-22,FIX-SCREW-TORX-M5,Vis Torx M5,fastener,FIX,pce,purchased,,3.200000,100,,0.003000,0.001100,72
+bom-multipla-2026-09-22,FIX-SPRING-PIN-6,Goupille élastique Ø6,fastener,FIX,pce,purchased,,2.200000,100,,0.002000,0.000800,6
+bom-multipla-2026-09-22,FIX-STUD-M8,Goujon M8,fastener,FIX,pce,purchased,,8.400000,100,,0.013000,0.003300,10
+bom-multipla-2026-09-22,FIX-WASHER-10,Rondelle Ø10,fastener,FIX,pce,purchased,,1.700000,100,,0.003000,0.000700,16
+bom-multipla-2026-09-22,FIX-WASHER-6,Rondelle Ø6,fastener,FIX,pce,purchased,,0.900000,100,,0.001000,0.000400,24
+bom-multipla-2026-09-22,FIX-WASHER-8,Rondelle Ø8,fastener,FIX,pce,purchased,,1.200000,100,,0.002000,0.000500,22
+bom-multipla-2026-09-22,FIX-WELD-NUT-M8,Écrou à souder M8,fastener,FIX,pce,purchased,,3.600000,100,,0.005000,0.001400,40
+bom-multipla-2026-09-22,FLU-AC-REFRIGERANT,Fluide frigorigène R134a,fluid,FLU,kg,purchased,,28.000000,1,,1.000000,14.200000,0.650000
+bom-multipla-2026-09-22,FLU-ASSY,Fluides de premier remplissage,fluid,FLU,pce,manufactured,22,,1,,18.880000000000,1.10,1
+bom-multipla-2026-09-22,FLU-BRAKE-FLUID,Liquide de frein DOT4,fluid,FLU,L,purchased,,6.400000,1,,1.040000,1.480000,0.900000
+bom-multipla-2026-09-22,FLU-COOLANT,Liquide de refroidissement,fluid,FLU,L,purchased,,3.200000,1,,1.060000,0.960000,6.500000
+bom-multipla-2026-09-22,FLU-ENGINE-OIL,Huile moteur 10W-40,fluid,FLU,L,purchased,,4.800000,1,,0.870000,1.240000,4.200000
+bom-multipla-2026-09-22,FLU-GEARBOX-OIL,Huile de boîte 75W-80,fluid,FLU,L,purchased,,7.800000,1,,0.880000,1.620000,2.300000
+bom-multipla-2026-09-22,FLU-GREASE,Graisse multi-usage,fluid,FLU,kg,purchased,,9.400000,1,,1.000000,1.840000,0.350000
+bom-multipla-2026-09-22,FLU-PS-FLUID,Fluide de direction assistée,fluid,FLU,L,purchased,,5.600000,1,,0.860000,1.320000,1.100000
+bom-multipla-2026-09-22,FLU-WASHER-FLUID,Liquide lave-glace,fluid,FLU,L,purchased,,1.200000,1,,0.980000,0.340000,3.500000
+bom-multipla-2026-09-22,GMP-ASSY,Groupe motopropulseur,engine,GMP,pce,manufactured,95,,1,,181.563200000000,4.75,1
+bom-multipla-2026-09-22,INT-AC-LINE,Canalisation de climatisation,interior,INT,pce,purchased,,22.600000,1,,0.680000,1.640000,2
+bom-multipla-2026-09-22,INT-AIR-VENT,Aérateur,interior,INT,pce,purchased,,8.400000,1,,0.140000,0.420000,4
+bom-multipla-2026-09-22,INT-AIRBAG-DRIVER,Coussin gonflable conducteur,interior,INT,pce,purchased,,96.000000,1,,1.620000,6.840000,1
+bom-multipla-2026-09-22,INT-AIRBAG-PASSENGER,Coussin gonflable passager,interior,INT,pce,purchased,,112.000000,1,,2.180000,7.920000,1
+bom-multipla-2026-09-22,INT-ASSY,Intérieur,interior,INT,pce,manufactured,60,,1,,164.808000000000,3.00,1
+bom-multipla-2026-09-22,INT-BELT-ANCHOR,Point d'ancrage de ceinture,interior,INT,pce,purchased,,6.200000,1,,0.180000,0.480000,12
+bom-multipla-2026-09-22,INT-BELT-BUCKLE,Boucle de ceinture,interior,INT,pce,purchased,,12.400000,1,,0.280000,0.920000,6
+bom-multipla-2026-09-22,INT-BELT-RETRACTOR,Enrouleur de ceinture,interior,INT,pce,purchased,,28.000000,1,,1.060000,2.140000,6
+bom-multipla-2026-09-22,INT-BELT-WEBBING,Sangle de ceinture,interior,INT,pce,purchased,,9.600000,1,,0.320000,0.680000,6
+bom-multipla-2026-09-22,INT-BLOWER-MOTOR,Pulseur d'habitacle,interior,INT,pce,purchased,,38.000000,1,,1.240000,2.640000,1
+bom-multipla-2026-09-22,INT-CABIN-FILTER,Filtre d'habitacle,interior,INT,pce,purchased,,8.600000,1,,0.180000,0.480000,1
+bom-multipla-2026-09-22,INT-CARPET,Moquette,interior,INT,pce,manufactured,12,,1,MAT-CARPET-FELT,7.240000000000,0.60,1
+bom-multipla-2026-09-22,INT-CENTER-CONSOLE,Console centrale,interior,INT,pce,manufactured,10,,1,MAT-PP-GRANULE,1.800000000000,0.50,1
+bom-multipla-2026-09-22,INT-CONDENSER,Condenseur de climatisation,interior,INT,pce,purchased,,52.000000,1,,2.240000,4.860000,1
+bom-multipla-2026-09-22,INT-DASH-ASSY,Planche de bord équipée,interior,INT,pce,manufactured,42,,1,,25.500000000000,2.10,1
+bom-multipla-2026-09-22,INT-DASH-CARRIER,Traverse de planche de bord,interior,INT,pce,manufactured,18,,1,MAT-STEEL-SHEET,5.400000000000,0.90,1
+bom-multipla-2026-09-22,INT-DASH-UPPER,Peau de planche de bord,interior,INT,pce,manufactured,14,,1,MAT-PP-GRANULE,3.200000000000,0.70,1
+bom-multipla-2026-09-22,INT-DOOR-PANEL-FRONT,Panneau de porte avant,interior,INT,pce,manufactured,12,,1,MAT-ABS-GRANULE,2.070000000000,0.60,2
+bom-multipla-2026-09-22,INT-DOOR-PANEL-REAR,Panneau de porte arrière,interior,INT,pce,manufactured,11,,1,MAT-ABS-GRANULE,1.652000000000,0.55,2
+bom-multipla-2026-09-22,INT-EVAPORATOR,Évaporateur,interior,INT,pce,purchased,,46.000000,1,,1.860000,4.180000,1
+bom-multipla-2026-09-22,INT-EXPANSION-VALVE,Détendeur,interior,INT,pce,purchased,,18.400000,1,,0.240000,1.180000,1
+bom-multipla-2026-09-22,INT-GLOVE-BOX,Boîte à gants,interior,INT,pce,manufactured,8,,1,MAT-PP-GRANULE,1.100000000000,0.40,1
+bom-multipla-2026-09-22,INT-GRAB-HANDLE,Poignée de maintien,interior,INT,pce,purchased,,5.600000,1,,0.120000,0.320000,4
+bom-multipla-2026-09-22,INT-HEADLINER,Ciel de toit,interior,INT,pce,manufactured,14,,1,MAT-FABRIC-PES,2.328000000000,0.70,1
+bom-multipla-2026-09-22,INT-HEADREST,Appuie-tête,interior,INT,pce,manufactured,7,,1,MAT-FOAM-PU,0.647000000000,0.35,6
+bom-multipla-2026-09-22,INT-HEATER-CORE,Radiateur de chauffage,interior,INT,pce,purchased,,32.000000,1,,1.420000,3.240000,1
+bom-multipla-2026-09-22,INT-HVAC-ACTUATOR,Actionneur de volet,interior,INT,pce,purchased,,12.800000,1,,0.160000,0.920000,3
+bom-multipla-2026-09-22,INT-HVAC-ASSY,Climatisation et chauffage,interior,INT,pce,manufactured,32,,1,,11.888000000000,1.60,1
+bom-multipla-2026-09-22,INT-HVAC-CONTROL,Commande de climatisation,interior,INT,pce,purchased,,26.400000,1,,0.420000,1.840000,1
+bom-multipla-2026-09-22,INT-HVAC-HOUSING,Boîtier de climatisation,interior,INT,pce,manufactured,12,,1,MAT-PP-GRANULE,2.400000000000,0.60,1
+bom-multipla-2026-09-22,INT-MIRROR-INT,Rétroviseur intérieur,interior,INT,pce,purchased,,12.800000,1,,0.320000,0.840000,1
+bom-multipla-2026-09-22,INT-PARCEL-SHELF,Tablette arrière,interior,INT,pce,manufactured,8,,1,MAT-ABS-GRANULE,1.410000000000,0.40,1
+bom-multipla-2026-09-22,INT-PILLAR-TRIM,Garniture de pied,interior,INT,pce,manufactured,4,,1,MAT-ABS-GRANULE,0.400000000000,0.20,6
+bom-multipla-2026-09-22,INT-ROW-FRONT,Rangée avant trois places,interior,INT,pce,manufactured,14,,1,,55.239000000000,0.70,1
+bom-multipla-2026-09-22,INT-ROW-REAR,Rangée arrière trois places,interior,INT,pce,manufactured,12,,1,,55.239000000000,0.60,1
+bom-multipla-2026-09-22,INT-SEAT-ASSY,Siège individuel complet,interior,INT,pce,manufactured,26,,1,,17.421000000000,1.30,6
+bom-multipla-2026-09-22,INT-SEAT-COVER,Coiffe de siège,interior,INT,pce,manufactured,12,,1,MAT-FABRIC-PES,0.588000000000,0.60,12
+bom-multipla-2026-09-22,INT-SEAT-CROSSMEMBER,Traverse de fixation de rangée,interior,INT,pce,manufactured,9,,1,MAT-STEEL-SHEET,2.800000000000,0.45,2
+bom-multipla-2026-09-22,INT-SEAT-FOAM,Mousse de siège,interior,INT,pce,manufactured,6,,1,MAT-FOAM-PU,1.600000000000,0.30,12
+bom-multipla-2026-09-22,INT-SEAT-FRAME,Armature de siège,interior,INT,pce,manufactured,22,,1,MAT-STEEL-BAR,6.900000000000,1.10,6
+bom-multipla-2026-09-22,INT-SEAT-RAIL,Glissière de siège,interior,INT,pce,purchased,,16.800000,1,,1.180000,1.240000,12
+bom-multipla-2026-09-22,INT-SEAT-RECLINER,Mécanisme d'inclinaison,interior,INT,pce,purchased,,22.400000,1,,0.940000,1.680000,6
+bom-multipla-2026-09-22,INT-SEATBELT-ASSY,Ceinture de sécurité complète,interior,INT,pce,manufactured,9,,1,,2.110000,0.45,6
+bom-multipla-2026-09-22,INT-SILL-TRIM,Garniture de bas de caisse,interior,INT,pce,manufactured,4,,1,MAT-ABS-GRANULE,0.500000000000,0.20,4
+bom-multipla-2026-09-22,INT-STEERING-WHEEL,Volant,interior,INT,pce,purchased,,42.000000,1,,2.240000,3.180000,1
+bom-multipla-2026-09-22,INT-SUN-VISOR,Pare-soleil,interior,INT,pce,purchased,,9.400000,1,,0.240000,0.560000,2
+bom-multipla-2026-09-22,INT-SWITCH-PANEL,Bloc de commandes,interior,INT,pce,purchased,,24.600000,1,,0.420000,1.640000,1
+bom-multipla-2026-09-22,INT-TRIM-ASSY,Garnitures intérieures,interior,INT,pce,manufactured,34,,1,,15.458000000000,1.70,1
+bom-multipla-2026-09-22,MAT-ABS-GRANULE,Granulé ABS,material,MAT,kg,purchased,,2.050000,1,,1.000000,3.100000,12.400000
+bom-multipla-2026-09-22,MAT-ADHESIVE-PU,Colle polyuréthane,material,MAT,kg,purchased,,8.600000,1,,1.000000,3.900000,2.300000
+bom-multipla-2026-09-22,MAT-ALU-CAST,Alliage aluminium de fonderie,material,MAT,kg,purchased,,2.600000,1,,1.000000,8.600000,29.240000
+bom-multipla-2026-09-22,MAT-ALU-SHEET,Tôle aluminium 5754,material,MAT,kg,purchased,,3.100000,1,,1.000000,9.200000,4.000000
+bom-multipla-2026-09-22,MAT-BITUMEN-PAD,Plaque bitume insonorisante,material,MAT,kg,purchased,,1.600000,1,,1.000000,1.400000,8.700000
+bom-multipla-2026-09-22,MAT-BRASS-BAR,Barre de laiton,material,MAT,kg,purchased,,6.900000,1,,1.000000,3.800000,0.240000
+bom-multipla-2026-09-22,MAT-CARPET-FELT,Feutre de moquette,material,MAT,m2,purchased,,4.100000,1,,0.900000,3.400000,5.600000
+bom-multipla-2026-09-22,MAT-CAST-IRON,Fonte grise GJL-250,material,MAT,kg,purchased,,0.850000,1,,1.000000,1.900000,39.400000
+bom-multipla-2026-09-22,MAT-CERAMIC-ALO,Support céramique cordiérite,material,MAT,kg,purchased,,11.500000,1,,1.000000,9.400000,1.200000
+bom-multipla-2026-09-22,MAT-COPPER-WIRE,Fil de cuivre émaillé,material,MAT,kg,purchased,,8.400000,1,,1.000000,4.200000,11.100000
+bom-multipla-2026-09-22,MAT-EPDM-RUBBER,Caoutchouc EPDM,material,MAT,kg,purchased,,2.400000,1,,1.000000,2.800000,4.300000
+bom-multipla-2026-09-22,MAT-FABRIC-PES,Tissu polyester,material,MAT,m2,purchased,,6.500000,1,,0.420000,5.200000,25.400000
+bom-multipla-2026-09-22,MAT-FOAM-PU,Mousse polyuréthane,material,MAT,kg,purchased,,4.200000,1,,1.000000,5.800000,23.100000
+bom-multipla-2026-09-22,MAT-GLASS-FIBER,Fibre de verre de renfort,material,MAT,kg,purchased,,2.800000,1,,1.000000,2.600000,0.400000
+bom-multipla-2026-09-22,MAT-GLASS-FLOAT,Verre float,material,MAT,kg,purchased,,0.950000,1,,1.000000,1.200000,14.400000
+bom-multipla-2026-09-22,MAT-HDPE-GRANULE,Granulé polyéthylène HD,material,MAT,kg,purchased,,1.350000,1,,1.000000,1.800000,9.300000
+bom-multipla-2026-09-22,MAT-LEAD-INGOT,Lingot de plomb,material,MAT,kg,purchased,,2.100000,1,,1.000000,1.600000,12.400000
+bom-multipla-2026-09-22,MAT-LEATHERETTE,Simili cuir,material,MAT,m2,purchased,,9.800000,1,,0.550000,7.100000,0.640000
+bom-multipla-2026-09-22,MAT-NBR-RUBBER,Caoutchouc nitrile,material,MAT,kg,purchased,,3.100000,1,,1.000000,3.200000,0.440000
+bom-multipla-2026-09-22,MAT-PA66-GRANULE,Granulé polyamide 6.6,material,MAT,kg,purchased,,3.600000,1,,1.000000,6.400000,3.820000
+bom-multipla-2026-09-22,MAT-PAINT-BASE,Base colorée,material,MAT,L,purchased,,12.400000,1,,1.100000,5.300000,3.800000
+bom-multipla-2026-09-22,MAT-PAINT-CLEAR,Vernis,material,MAT,L,purchased,,14.200000,1,,1.050000,5.900000,3.100000
+bom-multipla-2026-09-22,MAT-PAINT-PRIMER,Apprêt,material,MAT,L,purchased,,7.500000,1,,1.250000,4.600000,4.200000
+bom-multipla-2026-09-22,MAT-PC-GRANULE,Granulé polycarbonate,material,MAT,kg,purchased,,3.900000,1,,1.000000,5.500000,0.900000
+bom-multipla-2026-09-22,MAT-PCB-LAMINATE,Stratifié FR-4,material,MAT,m2,purchased,,42.000000,1,,2.300000,28.000000,0.180000
+bom-multipla-2026-09-22,MAT-PGM-CATALYST,Métaux précieux de catalyse,material,MAT,g,purchased,,38.000000,1,,0.001000,0.210000,3.200000
+bom-multipla-2026-09-22,MAT-PP-GRANULE,Granulé polypropylène,material,MAT,kg,purchased,,1.450000,1,,1.000000,1.900000,28.950000
+bom-multipla-2026-09-22,MAT-SOLDER-SAC,Alliage de brasage SAC305,material,MAT,kg,purchased,,26.000000,1,,1.000000,12.000000,0.080000
+bom-multipla-2026-09-22,MAT-STAINLESS-SHEET,Tôle inox 409,material,MAT,kg,purchased,,3.400000,1,,1.000000,4.500000,15.500000
+bom-multipla-2026-09-22,MAT-STEEL-BAR,Barre acier 42CrMo4,material,MAT,kg,purchased,,1.250000,1,,1.000000,2.200000,54.890000
+bom-multipla-2026-09-22,MAT-STEEL-SHEET,Tôle acier DC04,material,MAT,kg,purchased,,1.100000,1,,1.000000,2.100000,297.300000
+bom-multipla-2026-09-22,MAT-STEEL-SPRING,Fil acier à ressort,material,MAT,kg,purchased,,1.850000,1,,1.000000,2.400000,10.560000
+bom-multipla-2026-09-22,MAT-SULFURIC-ACID,Acide sulfurique dilué,material,MAT,L,purchased,,0.900000,1,,1.300000,0.600000,4.200000
+bom-multipla-2026-09-22,MAT-WELD-WIRE,Fil de soudure MAG,material,MAT,kg,purchased,,2.300000,1,,1.000000,2.500000,3.030000
+bom-multipla-2026-09-22,MAT-ZINC-COATING,Revêtement zinc,material,MAT,kg,purchased,,3.200000,1,,1.000000,3.500000,2.600000
+bom-multipla-2026-09-22,MOUNT-BRACKET,Support de groupe motopropulseur,engine,GMP,pce,manufactured,9,,1,MAT-STEEL-SHEET,1.800000000000,0.45,4
+bom-multipla-2026-09-22,MOUNT-RUBBER,Bloc élastomère de support,engine,GMP,pce,purchased,,8.900000,1,,0.340000,0.520000,4
+bom-multipla-2026-09-22,TRN-ASSY,Transmission,transmission,TRN,pce,manufactured,40,,1,,61.054600000000,2.00,1
+bom-multipla-2026-09-22,TRN-BEARING-BALL,Roulement à billes de boîte,transmission,TRN,pce,purchased,,11.900000,1,,0.260000,0.980000,2
+bom-multipla-2026-09-22,TRN-BEARING-TAPER,Roulement conique de boîte,transmission,TRN,pce,purchased,,16.800000,1,,0.420000,1.460000,4
+bom-multipla-2026-09-22,TRN-BOOT-CLAMP,Collier de soufflet,transmission,TRN,pce,purchased,,1.900000,1,,0.014000,0.070000,8
+bom-multipla-2026-09-22,TRN-CLUTCH-ASSY,Embrayage complet,transmission,TRN,pce,manufactured,18,,1,,5.844000,0.90,1
+bom-multipla-2026-09-22,TRN-CLUTCH-DISC,Disque d'embrayage,transmission,TRN,pce,purchased,,34.000000,1,,1.820000,2.640000,1
+bom-multipla-2026-09-22,TRN-CLUTCH-FORK,Fourchette d'embrayage,transmission,TRN,pce,purchased,,11.200000,1,,0.410000,0.860000,1
+bom-multipla-2026-09-22,TRN-CLUTCH-HYD-ASSY,Commande hydraulique d'embrayage,transmission,TRN,pce,manufactured,8,,1,,0.916000,0.40,1
+bom-multipla-2026-09-22,TRN-CLUTCH-LINE,Canalisation d'embrayage,transmission,TRN,pce,purchased,,9.600000,1,,0.160000,0.480000,1
+bom-multipla-2026-09-22,TRN-CLUTCH-MASTER-CYL,Émetteur d'embrayage,transmission,TRN,pce,purchased,,26.400000,1,,0.380000,1.480000,1
+bom-multipla-2026-09-22,TRN-CLUTCH-SLAVE-CYL,Récepteur d'embrayage,transmission,TRN,pce,purchased,,22.800000,1,,0.340000,1.320000,1
+bom-multipla-2026-09-22,TRN-CROWN-WHEEL,Couronne de différentiel,transmission,TRN,pce,purchased,,48.000000,1,,2.840000,4.620000,1
+bom-multipla-2026-09-22,TRN-CV-BOOT,Soufflet de cardan,transmission,TRN,pce,purchased,,8.400000,1,,0.180000,0.420000,4
+bom-multipla-2026-09-22,TRN-CV-GREASE,Graisse de cardan,transmission,TRN,kg,purchased,,6.200000,1,,0.220000,0.340000,0.480000
+bom-multipla-2026-09-22,TRN-CV-JOINT-INNER,Joint homocinétique intérieur,transmission,TRN,pce,purchased,,38.000000,1,,1.480000,3.520000,2
+bom-multipla-2026-09-22,TRN-CV-JOINT-OUTER,Joint homocinétique extérieur,transmission,TRN,pce,purchased,,42.000000,1,,1.640000,3.860000,2
+bom-multipla-2026-09-22,TRN-DIFF-ASSY,Différentiel,transmission,TRN,pce,manufactured,22,,1,,8.836000,1.10,1
+bom-multipla-2026-09-22,TRN-DIFF-BEARING,Roulement de différentiel,transmission,TRN,pce,purchased,,19.400000,1,,0.520000,1.680000,2
+bom-multipla-2026-09-22,TRN-DRIVESHAFT-ASSY,Arbre de transmission complet,transmission,TRN,pce,manufactured,14,,1,,6.788800000000,0.70,2
+bom-multipla-2026-09-22,TRN-GEAR-SET,Couple de pignons de vitesse,transmission,TRN,pce,purchased,,28.500000,1,,1.240000,2.940000,5
+bom-multipla-2026-09-22,TRN-GEARBOX-ASSY,Boîte de vitesses assemblée,transmission,TRN,pce,manufactured,48,,1,,36.908000000000,2.40,1
+bom-multipla-2026-09-22,TRN-GEARBOX-HOUSING,Carter de boîte de vitesses,transmission,TRN,pce,manufactured,32,,1,MAT-ALU-CAST,8.600000000000,1.60,1
+bom-multipla-2026-09-22,TRN-GEARSHAFT-ASSY,Arbres et pignonnerie,transmission,TRN,pce,manufactured,26,,1,,16.956000,1.30,1
+bom-multipla-2026-09-22,TRN-INPUT-SHAFT,Arbre primaire,transmission,TRN,pce,purchased,,64.000000,1,,3.400000,6.200000,1
+bom-multipla-2026-09-22,TRN-OIL-SEAL,Joint spi de boîte,transmission,TRN,pce,purchased,,4.800000,1,,0.038000,0.180000,3
+bom-multipla-2026-09-22,TRN-OUTPUT-SHAFT,Arbre secondaire,transmission,TRN,pce,purchased,,72.000000,1,,3.900000,6.800000,1
+bom-multipla-2026-09-22,TRN-PINION,Pignon d'attaque,transmission,TRN,pce,purchased,,36.000000,1,,1.620000,3.480000,1
+bom-multipla-2026-09-22,TRN-PLANET-GEAR,Satellite de différentiel,transmission,TRN,pce,purchased,,14.600000,1,,0.480000,1.240000,4
+bom-multipla-2026-09-22,TRN-PRESSURE-PLATE,Mécanisme d'embrayage,transmission,TRN,pce,purchased,,58.000000,1,,3.240000,4.180000,1
+bom-multipla-2026-09-22,TRN-RELEASE-BEARING,Butée d'embrayage,transmission,TRN,pce,purchased,,18.500000,1,,0.320000,1.240000,1
+bom-multipla-2026-09-22,TRN-REVERSE-IDLER,Pignon de marche arrière,transmission,TRN,pce,purchased,,21.000000,1,,0.860000,1.920000,1
+bom-multipla-2026-09-22,TRN-SELECTOR-SHAFT,Axe de sélection,transmission,TRN,pce,purchased,,18.600000,1,,0.620000,1.380000,1
+bom-multipla-2026-09-22,TRN-SHAFT-BAR,Barre d'arbre de transmission,transmission,TRN,pce,manufactured,10,,1,MAT-STEEL-BAR,3.200000000000,0.50,2
+bom-multipla-2026-09-22,TRN-SHIFT-BUSHING,Bague de tringlerie,transmission,TRN,pce,purchased,,2.400000,1,,0.018000,0.090000,4
+bom-multipla-2026-09-22,TRN-SHIFT-CABLE,Câble de commande de boîte,transmission,TRN,pce,purchased,,13.800000,1,,0.320000,0.760000,2
+bom-multipla-2026-09-22,TRN-SHIFT-FORK,Fourchette de passage,transmission,TRN,pce,purchased,,14.200000,1,,0.340000,1.120000,3
+bom-multipla-2026-09-22,TRN-SHIFT-KNOB,Pommeau de levier,transmission,TRN,pce,purchased,,7.600000,1,,0.140000,0.380000,1
+bom-multipla-2026-09-22,TRN-SHIFT-LEVER,Levier de vitesses,transmission,TRN,pce,purchased,,16.400000,1,,0.480000,0.940000,1
+bom-multipla-2026-09-22,TRN-SHIFTER-ASSY,Commande de vitesses,transmission,TRN,pce,manufactured,12,,1,,1.360000,0.60,1
+bom-multipla-2026-09-22,TRN-SUN-GEAR,Planétaire de différentiel,transmission,TRN,pce,purchased,,17.800000,1,,0.620000,1.560000,2
+bom-multipla-2026-09-22,TRN-SYNCHRO-RING,Bague de synchroniseur,transmission,TRN,pce,purchased,,12.400000,1,,0.180000,1.080000,5
+bom-multipla-2026-09-22,VEH-MULTIPLA-16V,Fiat Multipla 1.6 16V — véhicule complet,vehicle,VEH,pce,manufactured,240,,1,,1056.760800000000,12.00,1

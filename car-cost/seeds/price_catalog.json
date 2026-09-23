@@ -1,0 +1,6363 @@
+{
+  "metadata": {
+    "dataset": "price-catalog-multipla-16v",
+    "bom_version_id": "bom-multipla-2026-09-22",
+    "dataset_date": "2026-09-22",
+    "is_synthetic": true,
+    "disclaimer": "Prix, masses, facteurs carbone, coefficients d'usine et délais sont PLAUSIBLES MAIS SYNTHÉTIQUES. Ils ont été construits pour être cohérents entre eux et d'ordres de grandeur crédibles. Ils ne proviennent d'aucun constructeur, d'aucun fournisseur et d'aucune base de données publique, et ne doivent jamais être présentés comme des données réelles.",
+    "currencies": [
+      "EUR",
+      "USD",
+      "RUB"
+    ],
+    "conventions": {
+      "independent_currencies": "Les trois devises sont des prix indépendants, pas la conversion d'un prix pivot : aucun taux de change n'est lu à l'exécution (ADR-0003).",
+      "year_min_max": "Bornes observées sur l'année, servant au contrôle d'aberration.",
+      "price_per": "Le prix s'entend pour price_per unités (la visserie s'achète par 100)."
+    }
+  },
+  "prices": {
+    "ALT-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.200000",
+          "year_min": "3.691044",
+          "year_max": "5.138708"
+        },
+        "USD": {
+          "reference": "4.636509",
+          "year_min": "4.122895",
+          "year_max": "5.126959"
+        },
+        "RUB": {
+          "reference": "416.600037",
+          "year_min": "383.813614",
+          "year_max": "451.420301"
+        }
+      }
+    },
+    "ALT-DIODE-BRIDGE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.500000",
+          "year_min": "9.223989",
+          "year_max": "13.069658"
+        },
+        "USD": {
+          "reference": "12.290112",
+          "year_min": "10.715183",
+          "year_max": "14.509190"
+        },
+        "RUB": {
+          "reference": "1145.323525",
+          "year_min": "1069.823798",
+          "year_max": "1364.492635"
+        }
+      }
+    },
+    "ALT-PULLEY": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.800000",
+          "year_min": "8.709280",
+          "year_max": "10.787272"
+        },
+        "USD": {
+          "reference": "10.710944",
+          "year_min": "9.748073",
+          "year_max": "12.089250"
+        },
+        "RUB": {
+          "reference": "939.005228",
+          "year_min": "749.038836",
+          "year_max": "984.601444"
+        }
+      }
+    },
+    "ALT-REGULATOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.000000",
+          "year_min": "13.000008",
+          "year_max": "14.694904"
+        },
+        "USD": {
+          "reference": "15.539671",
+          "year_min": "12.995889",
+          "year_max": "16.982778"
+        },
+        "RUB": {
+          "reference": "1360.935100",
+          "year_min": "1148.958571",
+          "year_max": "1555.344679"
+        }
+      }
+    },
+    "CAR-BADGE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.200000",
+          "year_min": "3.679326",
+          "year_max": "5.007223"
+        },
+        "USD": {
+          "reference": "4.489080",
+          "year_min": "4.169646",
+          "year_max": "5.339518"
+        },
+        "RUB": {
+          "reference": "428.316021",
+          "year_min": "364.478088",
+          "year_max": "485.232367"
+        }
+      }
+    },
+    "CAR-BUMPER-ABSORBER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.600000",
+          "year_min": "13.165316",
+          "year_max": "16.807666"
+        },
+        "USD": {
+          "reference": "15.836402",
+          "year_min": "13.062466",
+          "year_max": "19.447640"
+        },
+        "RUB": {
+          "reference": "1479.891186",
+          "year_min": "1295.896315",
+          "year_max": "1668.894009"
+        }
+      }
+    },
+    "CAR-BUMPER-BRACKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "7.469784",
+          "year_max": "9.123895"
+        },
+        "USD": {
+          "reference": "9.152559",
+          "year_min": "7.762560",
+          "year_max": "11.235022"
+        },
+        "RUB": {
+          "reference": "864.219300",
+          "year_min": "823.770380",
+          "year_max": "1018.758995"
+        }
+      }
+    },
+    "CAR-DOOR-HINGE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.800000",
+          "year_min": "8.445562",
+          "year_max": "12.171424"
+        },
+        "USD": {
+          "reference": "10.422763",
+          "year_min": "8.742113",
+          "year_max": "12.176039"
+        },
+        "RUB": {
+          "reference": "998.100894",
+          "year_min": "892.260279",
+          "year_max": "1216.698963"
+        }
+      }
+    },
+    "CAR-DOOR-LOCK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.400000",
+          "year_min": "20.959330",
+          "year_max": "29.449306"
+        },
+        "USD": {
+          "reference": "28.062594",
+          "year_min": "25.568166",
+          "year_max": "30.393922"
+        },
+        "RUB": {
+          "reference": "2584.199508",
+          "year_min": "2240.531984",
+          "year_max": "3207.084621"
+        }
+      }
+    },
+    "CAR-GAS-STRUT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.400000",
+          "year_min": "14.356637",
+          "year_max": "21.210600"
+        },
+        "USD": {
+          "reference": "19.503454",
+          "year_min": "15.270268",
+          "year_max": "20.640154"
+        },
+        "RUB": {
+          "reference": "1794.439116",
+          "year_min": "1502.699205",
+          "year_max": "1967.240014"
+        }
+      }
+    },
+    "CAR-GLASS-DOOR-FRONT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.000000",
+          "year_min": "25.963728",
+          "year_max": "32.891152"
+        },
+        "USD": {
+          "reference": "30.101924",
+          "year_min": "27.405634",
+          "year_max": "35.265548"
+        },
+        "RUB": {
+          "reference": "2799.728540",
+          "year_min": "2560.693317",
+          "year_max": "3033.119511"
+        }
+      }
+    },
+    "CAR-GLASS-DOOR-REAR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.000000",
+          "year_min": "20.373264",
+          "year_max": "29.763744"
+        },
+        "USD": {
+          "reference": "25.246909",
+          "year_min": "20.288820",
+          "year_max": "29.000064"
+        },
+        "RUB": {
+          "reference": "2413.431240",
+          "year_min": "2164.978148",
+          "year_max": "2521.384019"
+        }
+      }
+    },
+    "CAR-GLASS-WINDSHIELD": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "96.000000",
+          "year_min": "84.143808",
+          "year_max": "114.875328"
+        },
+        "USD": {
+          "reference": "100.839583",
+          "year_min": "88.421995",
+          "year_max": "123.115652"
+        },
+        "RUB": {
+          "reference": "9419.878080",
+          "year_min": "7740.031222",
+          "year_max": "10599.925047"
+        }
+      }
+    },
+    "CAR-HANDLE-EXT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.400000",
+          "year_min": "10.950713",
+          "year_max": "13.083141"
+        },
+        "USD": {
+          "reference": "13.286819",
+          "year_min": "12.515227",
+          "year_max": "13.852492"
+        },
+        "RUB": {
+          "reference": "1279.135578",
+          "year_min": "1069.354785",
+          "year_max": "1431.861808"
+        }
+      }
+    },
+    "CAR-HANDLE-INT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.600000",
+          "year_min": "6.201463",
+          "year_max": "8.929605"
+        },
+        "USD": {
+          "reference": "8.268772",
+          "year_min": "7.193534",
+          "year_max": "9.304254"
+        },
+        "RUB": {
+          "reference": "732.916830",
+          "year_min": "679.444684",
+          "year_max": "912.043169"
+        }
+      }
+    },
+    "CAR-HOOD-INSULATION": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.800000",
+          "year_min": "15.407986",
+          "year_max": "20.129054"
+        },
+        "USD": {
+          "reference": "18.171760",
+          "year_min": "16.544733",
+          "year_max": "20.649261"
+        },
+        "RUB": {
+          "reference": "1731.979872",
+          "year_min": "1620.177107",
+          "year_max": "2074.690193"
+        }
+      }
+    },
+    "CAR-HOOD-LATCH": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.200000",
+          "year_min": "11.144756",
+          "year_max": "17.418089"
+        },
+        "USD": {
+          "reference": "15.091606",
+          "year_min": "13.064773",
+          "year_max": "17.071474"
+        },
+        "RUB": {
+          "reference": "1418.841280",
+          "year_min": "1332.436684",
+          "year_max": "1553.256628"
+        }
+      }
+    },
+    "CAR-JACK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.600000",
+          "year_min": "17.260391",
+          "year_max": "21.448925"
+        },
+        "USD": {
+          "reference": "20.101379",
+          "year_min": "18.077612",
+          "year_max": "21.016434"
+        },
+        "RUB": {
+          "reference": "1770.449835",
+          "year_min": "1556.384745",
+          "year_max": "2012.881072"
+        }
+      }
+    },
+    "CAR-MIRROR-EXT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "35.255640",
+          "year_max": "45.106988"
+        },
+        "USD": {
+          "reference": "41.336473",
+          "year_min": "37.098162",
+          "year_max": "45.138850"
+        },
+        "RUB": {
+          "reference": "3899.831700",
+          "year_min": "3244.036001",
+          "year_max": "4393.604991"
+        }
+      }
+    },
+    "CAR-MOULDING-SIDE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.800000",
+          "year_min": "10.801248",
+          "year_max": "13.758729"
+        },
+        "USD": {
+          "reference": "13.016594",
+          "year_min": "11.315299",
+          "year_max": "15.091647"
+        },
+        "RUB": {
+          "reference": "1205.758397",
+          "year_min": "1007.816276",
+          "year_max": "1269.692530"
+        }
+      }
+    },
+    "CAR-SPARE-CARRIER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.400000",
+          "year_min": "13.158638",
+          "year_max": "18.704134"
+        },
+        "USD": {
+          "reference": "17.225912",
+          "year_min": "13.769223",
+          "year_max": "18.506521"
+        },
+        "RUB": {
+          "reference": "1622.491606",
+          "year_min": "1271.880905",
+          "year_max": "1727.298074"
+        }
+      }
+    },
+    "CAR-WHEEL-WRENCH": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.400000",
+          "year_min": "6.020418",
+          "year_max": "9.092987"
+        },
+        "USD": {
+          "reference": "7.801631",
+          "year_min": "6.578601",
+          "year_max": "8.879707"
+        },
+        "RUB": {
+          "reference": "730.693094",
+          "year_min": "629.876445",
+          "year_max": "819.479612"
+        }
+      }
+    },
+    "CAR-WINDOW-REGULATOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "34.000000",
+          "year_min": "30.247692",
+          "year_max": "42.573712"
+        },
+        "USD": {
+          "reference": "37.469308",
+          "year_min": "34.661433",
+          "year_max": "39.555824"
+        },
+        "RUB": {
+          "reference": "3510.689720",
+          "year_min": "3174.239260",
+          "year_max": "4378.132000"
+        }
+      }
+    },
+    "CHS-ABS-UNIT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "168.000000",
+          "year_min": "135.101232",
+          "year_max": "210.212688"
+        },
+        "USD": {
+          "reference": "178.753236",
+          "year_min": "154.295861",
+          "year_max": "196.631420"
+        },
+        "RUB": {
+          "reference": "17353.556640",
+          "year_min": "16532.282218",
+          "year_max": "18226.371125"
+        }
+      }
+    },
+    "CHS-ARB-BUSHING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.200000",
+          "year_min": "4.377797",
+          "year_max": "6.301693"
+        },
+        "USD": {
+          "reference": "5.453282",
+          "year_min": "4.380774",
+          "year_max": "5.853531"
+        },
+        "RUB": {
+          "reference": "526.218914",
+          "year_min": "474.822060",
+          "year_max": "612.167302"
+        }
+      }
+    },
+    "CHS-ARB-FRONT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.400000",
+          "year_min": "27.004310",
+          "year_max": "35.659665"
+        },
+        "USD": {
+          "reference": "31.476220",
+          "year_min": "24.801876",
+          "year_max": "34.253178"
+        },
+        "RUB": {
+          "reference": "2665.110954",
+          "year_min": "2529.531430",
+          "year_max": "3142.213787"
+        }
+      }
+    },
+    "CHS-ARB-LINK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.800000",
+          "year_min": "11.518003",
+          "year_max": "15.884698"
+        },
+        "USD": {
+          "reference": "13.878079",
+          "year_min": "11.645762",
+          "year_max": "14.947663"
+        },
+        "RUB": {
+          "reference": "1215.625536",
+          "year_min": "1137.613983",
+          "year_max": "1334.185495"
+        }
+      }
+    },
+    "CHS-ARM-BUSHING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.600000",
+          "year_min": "7.513579",
+          "year_max": "10.001628"
+        },
+        "USD": {
+          "reference": "9.106438",
+          "year_min": "8.466966",
+          "year_max": "11.300215"
+        },
+        "RUB": {
+          "reference": "880.585863",
+          "year_min": "726.499188",
+          "year_max": "926.503132"
+        }
+      }
+    },
+    "CHS-BALANCE-WEIGHT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.900000",
+          "year_min": "0.775337",
+          "year_max": "0.989816"
+        },
+        "USD": {
+          "reference": "0.966792",
+          "year_min": "0.781123",
+          "year_max": "1.062040"
+        },
+        "RUB": {
+          "reference": "85.317646",
+          "year_min": "80.661009",
+          "year_max": "103.209439"
+        }
+      }
+    },
+    "CHS-BALL-JOINT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "17.200000",
+          "year_min": "15.808898",
+          "year_max": "20.292354"
+        },
+        "USD": {
+          "reference": "18.424531",
+          "year_min": "17.615915",
+          "year_max": "19.980298"
+        },
+        "RUB": {
+          "reference": "1687.287664",
+          "year_min": "1574.543102",
+          "year_max": "1804.297689"
+        }
+      }
+    },
+    "CHS-BRAKE-DISC": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.400000",
+          "year_min": "23.760634",
+          "year_max": "28.343462"
+        },
+        "USD": {
+          "reference": "28.690428",
+          "year_min": "25.612404",
+          "year_max": "31.211513"
+        },
+        "RUB": {
+          "reference": "2638.105800",
+          "year_min": "2216.562874",
+          "year_max": "3035.562820"
+        }
+      }
+    },
+    "CHS-BRAKE-DRUM": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.800000",
+          "year_min": "17.975657",
+          "year_max": "24.577260"
+        },
+        "USD": {
+          "reference": "23.942014",
+          "year_min": "19.539700",
+          "year_max": "25.418518"
+        },
+        "RUB": {
+          "reference": "2290.379130",
+          "year_min": "2076.320297",
+          "year_max": "2466.142824"
+        }
+      }
+    },
+    "CHS-BRAKE-HOSE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "7.277911",
+          "year_max": "9.043322"
+        },
+        "USD": {
+          "reference": "9.286081",
+          "year_min": "7.523620",
+          "year_max": "9.979491"
+        },
+        "RUB": {
+          "reference": "832.364400",
+          "year_min": "775.622119",
+          "year_max": "897.412013"
+        }
+      }
+    },
+    "CHS-BRAKE-LINE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.200000",
+          "year_min": "6.787973",
+          "year_max": "8.092296"
+        },
+        "USD": {
+          "reference": "7.546872",
+          "year_min": "6.525433",
+          "year_max": "9.057952"
+        },
+        "RUB": {
+          "reference": "709.646796",
+          "year_min": "567.320035",
+          "year_max": "770.459269"
+        }
+      }
+    },
+    "CHS-BRAKE-PAD-SET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.600000",
+          "year_min": "17.721410",
+          "year_max": "19.893965"
+        },
+        "USD": {
+          "reference": "19.655304",
+          "year_min": "16.555623",
+          "year_max": "22.516251"
+        },
+        "RUB": {
+          "reference": "1774.681986",
+          "year_min": "1646.003345",
+          "year_max": "1906.264007"
+        }
+      }
+    },
+    "CHS-BRAKE-SERVO": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "62.000000",
+          "year_min": "48.730512",
+          "year_max": "77.154288"
+        },
+        "USD": {
+          "reference": "68.892064",
+          "year_min": "60.654089",
+          "year_max": "85.985563"
+        },
+        "RUB": {
+          "reference": "6017.715660",
+          "year_min": "5116.911767",
+          "year_max": "6686.969889"
+        }
+      }
+    },
+    "CHS-BRAKE-SHOE-SET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.200000",
+          "year_min": "14.448586",
+          "year_max": "18.996736"
+        },
+        "USD": {
+          "reference": "17.638872",
+          "year_min": "14.466662",
+          "year_max": "21.275796"
+        },
+        "RUB": {
+          "reference": "1541.302587",
+          "year_min": "1279.287312",
+          "year_max": "1912.981541"
+        }
+      }
+    },
+    "CHS-BUMP-STOP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.400000",
+          "year_min": "5.341056",
+          "year_max": "7.399424"
+        },
+        "USD": {
+          "reference": "7.065861",
+          "year_min": "5.784693",
+          "year_max": "8.477366"
+        },
+        "RUB": {
+          "reference": "660.369216",
+          "year_min": "573.166140",
+          "year_max": "831.745593"
+        }
+      }
+    },
+    "CHS-CALIPER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "48.000000",
+          "year_min": "43.684128",
+          "year_max": "51.976032"
+        },
+        "USD": {
+          "reference": "51.091327",
+          "year_min": "47.783164",
+          "year_max": "57.947987"
+        },
+        "RUB": {
+          "reference": "4945.204320",
+          "year_min": "4672.891699",
+          "year_max": "5221.344529"
+        }
+      }
+    },
+    "CHS-DRUM-SPRING-KIT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.800000",
+          "year_min": "5.960309",
+          "year_max": "8.516238"
+        },
+        "USD": {
+          "reference": "7.459492",
+          "year_min": "6.547226",
+          "year_max": "8.113988"
+        },
+        "RUB": {
+          "reference": "683.798820",
+          "year_min": "558.853732",
+          "year_max": "830.160487"
+        }
+      }
+    },
+    "CHS-DUST-COVER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.900000",
+          "year_min": "4.676482",
+          "year_max": "5.698710"
+        },
+        "USD": {
+          "reference": "5.348646",
+          "year_min": "4.627520",
+          "year_max": "6.560082"
+        },
+        "RUB": {
+          "reference": "480.772492",
+          "year_min": "449.201124",
+          "year_max": "562.122082"
+        }
+      }
+    },
+    "CHS-HUB-CARRIER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "52.000000",
+          "year_min": "44.314296",
+          "year_max": "56.053400"
+        },
+        "USD": {
+          "reference": "56.375991",
+          "year_min": "53.807388",
+          "year_max": "61.555592"
+        },
+        "RUB": {
+          "reference": "5338.199620",
+          "year_min": "4763.574460",
+          "year_max": "5754.899482"
+        }
+      }
+    },
+    "CHS-HUB-FLANGE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "31.000000",
+          "year_min": "24.437238",
+          "year_max": "32.966330"
+        },
+        "USD": {
+          "reference": "33.352642",
+          "year_min": "28.840296",
+          "year_max": "35.488012"
+        },
+        "RUB": {
+          "reference": "3180.342390",
+          "year_min": "2687.497451",
+          "year_max": "3602.819073"
+        }
+      }
+    },
+    "CHS-HUBCAP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.600000",
+          "year_min": "6.992987",
+          "year_max": "9.885081"
+        },
+        "USD": {
+          "reference": "9.214216",
+          "year_min": "8.840174",
+          "year_max": "10.449179"
+        },
+        "RUB": {
+          "reference": "847.947100",
+          "year_min": "791.333064",
+          "year_max": "990.417476"
+        }
+      }
+    },
+    "CHS-MASTER-CYL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "30.911556",
+          "year_max": "40.129444"
+        },
+        "USD": {
+          "reference": "40.032386",
+          "year_min": "35.420495",
+          "year_max": "50.306938"
+        },
+        "RUB": {
+          "reference": "3882.651330",
+          "year_min": "3331.011994",
+          "year_max": "4831.237407"
+        }
+      }
+    },
+    "CHS-PARK-CABLE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.400000",
+          "year_min": "13.253760",
+          "year_max": "16.527370"
+        },
+        "USD": {
+          "reference": "16.009789",
+          "year_min": "14.277786",
+          "year_max": "19.763764"
+        },
+        "RUB": {
+          "reference": "1392.712776",
+          "year_min": "1293.986153",
+          "year_max": "1567.762845"
+        }
+      }
+    },
+    "CHS-PARK-LEVER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.200000",
+          "year_min": "15.759635",
+          "year_max": "20.322193"
+        },
+        "USD": {
+          "reference": "20.215017",
+          "year_min": "17.358554",
+          "year_max": "23.275288"
+        },
+        "RUB": {
+          "reference": "1779.451947",
+          "year_min": "1504.978602",
+          "year_max": "2003.228706"
+        }
+      }
+    },
+    "CHS-PS-HOSE-HP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.400000",
+          "year_min": "18.177600",
+          "year_max": "26.069478"
+        },
+        "USD": {
+          "reference": "23.755092",
+          "year_min": "19.799774",
+          "year_max": "24.828632"
+        },
+        "RUB": {
+          "reference": "2249.446864",
+          "year_min": "2158.740169",
+          "year_max": "2530.596230"
+        }
+      }
+    },
+    "CHS-PS-HOSE-LP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.800000",
+          "year_min": "15.988291",
+          "year_max": "17.857862"
+        },
+        "USD": {
+          "reference": "17.925945",
+          "year_min": "14.782129",
+          "year_max": "21.855527"
+        },
+        "RUB": {
+          "reference": "1588.889316",
+          "year_min": "1522.988543",
+          "year_max": "1787.058769"
+        }
+      }
+    },
+    "CHS-RACK-PINION": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.800000",
+          "year_min": "19.534613",
+          "year_max": "26.135728"
+        },
+        "USD": {
+          "reference": "27.288771",
+          "year_min": "24.035949",
+          "year_max": "29.839780"
+        },
+        "RUB": {
+          "reference": "2444.021400",
+          "year_min": "2270.329687",
+          "year_max": "2878.050272"
+        }
+      }
+    },
+    "CHS-RACK-SEAL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.600000",
+          "year_min": "4.623427",
+          "year_max": "5.936112"
+        },
+        "USD": {
+          "reference": "6.116621",
+          "year_min": "4.943380",
+          "year_max": "7.176485"
+        },
+        "RUB": {
+          "reference": "526.402912",
+          "year_min": "473.841581",
+          "year_max": "621.124905"
+        }
+      }
+    },
+    "CHS-REAR-BUSHING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.400000",
+          "year_min": "7.713208",
+          "year_max": "9.922208"
+        },
+        "USD": {
+          "reference": "9.918707",
+          "year_min": "8.128480",
+          "year_max": "10.345787"
+        },
+        "RUB": {
+          "reference": "926.307396",
+          "year_min": "757.667577",
+          "year_max": "1095.495589"
+        }
+      }
+    },
+    "CHS-REAR-HUB-UNIT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "34.426980",
+          "year_max": "45.969672"
+        },
+        "USD": {
+          "reference": "45.328429",
+          "year_min": "43.226459",
+          "year_max": "53.220652"
+        },
+        "RUB": {
+          "reference": "3945.705120",
+          "year_min": "3142.351666",
+          "year_max": "4747.890645"
+        }
+      }
+    },
+    "CHS-RIM-STEEL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "34.000000",
+          "year_min": "31.335828",
+          "year_max": "42.326124"
+        },
+        "USD": {
+          "reference": "36.004180",
+          "year_min": "29.418943",
+          "year_max": "41.836497"
+        },
+        "RUB": {
+          "reference": "3342.904820",
+          "year_min": "2828.719258",
+          "year_max": "3829.043411"
+        }
+      }
+    },
+    "CHS-SHOCK-FRONT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "46.000000",
+          "year_min": "39.836184",
+          "year_max": "50.170636"
+        },
+        "USD": {
+          "reference": "48.328505",
+          "year_min": "44.332801",
+          "year_max": "52.766608"
+        },
+        "RUB": {
+          "reference": "4330.322010",
+          "year_min": "3831.685431",
+          "year_max": "5208.511314"
+        }
+      }
+    },
+    "CHS-SHOCK-REAR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "36.193404",
+          "year_max": "41.213736"
+        },
+        "USD": {
+          "reference": "41.773795",
+          "year_min": "34.042301",
+          "year_max": "43.871174"
+        },
+        "RUB": {
+          "reference": "3588.788400",
+          "year_min": "2919.019998",
+          "year_max": "3978.911232"
+        }
+      }
+    },
+    "CHS-STEERING-BOOT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.800000",
+          "year_min": "6.288142",
+          "year_max": "9.549665"
+        },
+        "USD": {
+          "reference": "8.348032",
+          "year_min": "6.738966",
+          "year_max": "9.305100"
+        },
+        "RUB": {
+          "reference": "796.112460",
+          "year_min": "625.137756",
+          "year_max": "993.661398"
+        }
+      }
+    },
+    "CHS-STEERING-COLUMN": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "68.000000",
+          "year_min": "54.510024",
+          "year_max": "73.764360"
+        },
+        "USD": {
+          "reference": "73.255812",
+          "year_min": "66.919624",
+          "year_max": "90.232993"
+        },
+        "RUB": {
+          "reference": "6951.385340",
+          "year_min": "6639.421069",
+          "year_max": "8407.464222"
+        }
+      }
+    },
+    "CHS-STRUT-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.600000",
+          "year_min": "9.102706",
+          "year_max": "14.349061"
+        },
+        "USD": {
+          "reference": "12.677208",
+          "year_min": "11.997608",
+          "year_max": "14.569586"
+        },
+        "RUB": {
+          "reference": "1090.131808",
+          "year_min": "877.970356",
+          "year_max": "1163.619773"
+        }
+      }
+    },
+    "CHS-TIE-ROD-END": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.200000",
+          "year_min": "11.861203",
+          "year_max": "14.896709"
+        },
+        "USD": {
+          "reference": "15.222360",
+          "year_min": "14.492083",
+          "year_max": "18.847961"
+        },
+        "RUB": {
+          "reference": "1342.696052",
+          "year_min": "1286.305503",
+          "year_max": "1559.579060"
+        }
+      }
+    },
+    "CHS-TIE-ROD-INNER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.400000",
+          "year_min": "14.058113",
+          "year_max": "19.369450"
+        },
+        "USD": {
+          "reference": "17.868326",
+          "year_min": "14.995778",
+          "year_max": "20.456982"
+        },
+        "RUB": {
+          "reference": "1693.811516",
+          "year_min": "1551.849785",
+          "year_max": "2000.238957"
+        }
+      }
+    },
+    "CHS-TIRE-185-65-15": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "36.648864",
+          "year_max": "50.788332"
+        },
+        "USD": {
+          "reference": "45.665364",
+          "year_min": "40.775243",
+          "year_max": "50.769108"
+        },
+        "RUB": {
+          "reference": "4302.438630",
+          "year_min": "3539.599051",
+          "year_max": "5113.921580"
+        }
+      }
+    },
+    "CHS-TIRE-VALVE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.400000",
+          "year_min": "1.310988",
+          "year_max": "1.628572"
+        },
+        "USD": {
+          "reference": "1.469171",
+          "year_min": "1.373302",
+          "year_max": "1.749310"
+        },
+        "RUB": {
+          "reference": "143.668357",
+          "year_min": "125.415580",
+          "year_max": "172.997103"
+        }
+      }
+    },
+    "CHS-TOP-MOUNT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.800000",
+          "year_min": "12.468142",
+          "year_max": "18.447756"
+        },
+        "USD": {
+          "reference": "15.747597",
+          "year_min": "12.591243",
+          "year_max": "19.365607"
+        },
+        "RUB": {
+          "reference": "1429.300010",
+          "year_min": "1173.332388",
+          "year_max": "1544.047073"
+        }
+      }
+    },
+    "CHS-UJ": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.600000",
+          "year_min": "15.569316",
+          "year_max": "23.321833"
+        },
+        "USD": {
+          "reference": "20.678949",
+          "year_min": "19.095438",
+          "year_max": "21.985610"
+        },
+        "RUB": {
+          "reference": "1810.902603",
+          "year_min": "1504.946986",
+          "year_max": "2185.245145"
+        }
+      }
+    },
+    "CHS-WHEEL-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.600000",
+          "year_min": "20.304299",
+          "year_max": "25.647320"
+        },
+        "USD": {
+          "reference": "26.447328",
+          "year_min": "24.472083",
+          "year_max": "31.209804"
+        },
+        "RUB": {
+          "reference": "2485.785597",
+          "year_min": "2029.116953",
+          "year_max": "2771.810031"
+        }
+      }
+    },
+    "CHS-WHEEL-CYLINDER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.600000",
+          "year_min": "10.591636",
+          "year_max": "14.431234"
+        },
+        "USD": {
+          "reference": "13.766560",
+          "year_min": "12.648936",
+          "year_max": "16.232233"
+        },
+        "RUB": {
+          "reference": "1217.556333",
+          "year_min": "1064.774929",
+          "year_max": "1475.164467"
+        }
+      }
+    },
+    "ELE-ANTENNA": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.800000",
+          "year_min": "11.648695",
+          "year_max": "17.763019"
+        },
+        "USD": {
+          "reference": "15.642102",
+          "year_min": "12.906423",
+          "year_max": "17.305327"
+        },
+        "RUB": {
+          "reference": "1525.471076",
+          "year_min": "1227.924892",
+          "year_max": "1799.766030"
+        }
+      }
+    },
+    "ELE-ANTENNA-CABLE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.200000",
+          "year_min": "5.726456",
+          "year_max": "7.602217"
+        },
+        "USD": {
+          "reference": "6.887519",
+          "year_min": "6.109670",
+          "year_max": "8.057474"
+        },
+        "RUB": {
+          "reference": "619.457438",
+          "year_min": "515.233724",
+          "year_max": "748.149721"
+        }
+      }
+    },
+    "ELE-BATTERY-TERMINAL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.400000",
+          "year_min": "2.732723",
+          "year_max": "4.104630"
+        },
+        "USD": {
+          "reference": "3.627473",
+          "year_min": "2.945196",
+          "year_max": "4.129377"
+        },
+        "RUB": {
+          "reference": "335.964982",
+          "year_min": "307.371674",
+          "year_max": "380.735004"
+        }
+      }
+    },
+    "ELE-BULB-H4": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.800000",
+          "year_min": "3.995597",
+          "year_max": "5.347661"
+        },
+        "USD": {
+          "reference": "5.113767",
+          "year_min": "4.523260",
+          "year_max": "6.367407"
+        },
+        "RUB": {
+          "reference": "465.750552",
+          "year_min": "402.721461",
+          "year_max": "582.542160"
+        }
+      }
+    },
+    "ELE-BULB-P21W": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.600000",
+          "year_min": "1.329850",
+          "year_max": "1.851053"
+        },
+        "USD": {
+          "reference": "1.775879",
+          "year_min": "1.627678",
+          "year_max": "2.203813"
+        },
+        "RUB": {
+          "reference": "156.689072",
+          "year_min": "142.011066",
+          "year_max": "189.889293"
+        }
+      }
+    },
+    "ELE-BULB-W5W": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.900000",
+          "year_min": "0.795944",
+          "year_max": "1.101191"
+        },
+        "USD": {
+          "reference": "0.974654",
+          "year_min": "0.790370",
+          "year_max": "1.176066"
+        },
+        "RUB": {
+          "reference": "87.650028",
+          "year_min": "71.075934",
+          "year_max": "97.498210"
+        }
+      }
+    },
+    "ELE-CABLE-GROUND": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "7.659389",
+          "year_max": "9.450067"
+        },
+        "USD": {
+          "reference": "9.172645",
+          "year_min": "7.777944",
+          "year_max": "11.385399"
+        },
+        "RUB": {
+          "reference": "845.892390",
+          "year_min": "660.252846",
+          "year_max": "1056.445157"
+        }
+      }
+    },
+    "ELE-CABLE-POSITIVE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.800000",
+          "year_min": "14.862456",
+          "year_max": "21.054163"
+        },
+        "USD": {
+          "reference": "18.230003",
+          "year_min": "14.497009",
+          "year_max": "19.189011"
+        },
+        "RUB": {
+          "reference": "1734.958512",
+          "year_min": "1381.124133",
+          "year_max": "2161.505002"
+        }
+      }
+    },
+    "ELE-CLUSTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "84.000000",
+          "year_min": "66.017448",
+          "year_max": "93.547104"
+        },
+        "USD": {
+          "reference": "90.618756",
+          "year_min": "82.664967",
+          "year_max": "102.790124"
+        },
+        "RUB": {
+          "reference": "8430.544080",
+          "year_min": "7530.330583",
+          "year_max": "10141.742195"
+        }
+      }
+    },
+    "ELE-CONNECTOR-12P": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.200000",
+          "year_min": "2.802778",
+          "year_max": "3.859942"
+        },
+        "USD": {
+          "reference": "3.425560",
+          "year_min": "2.953785",
+          "year_max": "4.202635"
+        },
+        "RUB": {
+          "reference": "326.064944",
+          "year_min": "289.886082",
+          "year_max": "400.354277"
+        }
+      }
+    },
+    "ELE-CONNECTOR-2P": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.400000",
+          "year_min": "1.196882",
+          "year_max": "1.754206"
+        },
+        "USD": {
+          "reference": "1.494409",
+          "year_min": "1.385918",
+          "year_max": "1.805892"
+        },
+        "RUB": {
+          "reference": "140.979307",
+          "year_min": "120.776690",
+          "year_max": "171.775109"
+        }
+      }
+    },
+    "ELE-CONNECTOR-40P": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.600000",
+          "year_min": "7.776584",
+          "year_max": "9.540548"
+        },
+        "USD": {
+          "reference": "9.201566",
+          "year_min": "7.568104",
+          "year_max": "11.071287"
+        },
+        "RUB": {
+          "reference": "815.223627",
+          "year_min": "646.879948",
+          "year_max": "984.747750"
+        }
+      }
+    },
+    "ELE-FOG-LAMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.400000",
+          "year_min": "23.663693",
+          "year_max": "32.568782"
+        },
+        "USD": {
+          "reference": "28.713010",
+          "year_min": "25.823792",
+          "year_max": "33.551210"
+        },
+        "RUB": {
+          "reference": "2568.571104",
+          "year_min": "2075.564703",
+          "year_max": "2745.453185"
+        }
+      }
+    },
+    "ELE-FUSE-BLADE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.340000",
+          "year_min": "0.275757",
+          "year_max": "0.394792"
+        },
+        "USD": {
+          "reference": "0.366852",
+          "year_min": "0.309917",
+          "year_max": "0.433937"
+        },
+        "RUB": {
+          "reference": "34.289741",
+          "year_min": "29.522850",
+          "year_max": "43.045901"
+        }
+      }
+    },
+    "ELE-HARNESS-TAPE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.800000",
+          "year_min": "2.244682",
+          "year_max": "3.485866"
+        },
+        "USD": {
+          "reference": "3.041291",
+          "year_min": "2.597913",
+          "year_max": "3.290537"
+        },
+        "RUB": {
+          "reference": "281.233260",
+          "year_min": "227.780379",
+          "year_max": "342.548860"
+        }
+      }
+    },
+    "ELE-HORN": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "13.600000",
+          "year_min": "12.531638",
+          "year_max": "15.339005"
+        },
+        "USD": {
+          "reference": "14.478167",
+          "year_min": "11.305219",
+          "year_max": "18.185157"
+        },
+        "RUB": {
+          "reference": "1275.205428",
+          "year_min": "1067.033243",
+          "year_max": "1339.174833"
+        }
+      }
+    },
+    "ELE-IC-CHIP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.600000",
+          "year_min": "3.692742",
+          "year_max": "5.010182"
+        },
+        "USD": {
+          "reference": "4.932350",
+          "year_min": "3.908404",
+          "year_max": "5.856021"
+        },
+        "RUB": {
+          "reference": "435.107399",
+          "year_min": "372.309218",
+          "year_max": "461.959617"
+        }
+      }
+    },
+    "ELE-LAMP-ADJUSTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.400000",
+          "year_min": "2.771830",
+          "year_max": "3.716492"
+        },
+        "USD": {
+          "reference": "3.618154",
+          "year_min": "3.277461",
+          "year_max": "4.370542"
+        },
+        "RUB": {
+          "reference": "321.098771",
+          "year_min": "256.202141",
+          "year_max": "343.592382"
+        }
+      }
+    },
+    "ELE-LAMP-INTERIOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "7.046575",
+          "year_max": "9.915763"
+        },
+        "USD": {
+          "reference": "9.309106",
+          "year_min": "7.858133",
+          "year_max": "10.910067"
+        },
+        "RUB": {
+          "reference": "822.443874",
+          "year_min": "660.766212",
+          "year_max": "947.637925"
+        }
+      }
+    },
+    "ELE-LENS-RED": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.600000",
+          "year_min": "11.240737",
+          "year_max": "14.792425"
+        },
+        "USD": {
+          "reference": "14.007504",
+          "year_min": "12.639867",
+          "year_max": "16.309245"
+        },
+        "RUB": {
+          "reference": "1241.100000",
+          "year_min": "1094.389569",
+          "year_max": "1462.405505"
+        }
+      }
+    },
+    "ELE-PASSIVE-COMPONENT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.120000",
+          "year_min": "0.111990",
+          "year_max": "0.143430"
+        },
+        "USD": {
+          "reference": "0.130701",
+          "year_min": "0.119601",
+          "year_max": "0.141136"
+        },
+        "RUB": {
+          "reference": "11.688916",
+          "year_min": "10.046483",
+          "year_max": "14.324042"
+        }
+      }
+    },
+    "ELE-PLATE-LAMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.200000",
+          "year_min": "4.846920",
+          "year_max": "5.899348"
+        },
+        "USD": {
+          "reference": "5.450654",
+          "year_min": "4.818989",
+          "year_max": "5.723241"
+        },
+        "RUB": {
+          "reference": "535.669004",
+          "year_min": "494.842455",
+          "year_max": "604.729595"
+        }
+      }
+    },
+    "ELE-RADIO": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "96.000000",
+          "year_min": "77.083200",
+          "year_max": "107.772672"
+        },
+        "USD": {
+          "reference": "101.374572",
+          "year_min": "81.977156",
+          "year_max": "115.909455"
+        },
+        "RUB": {
+          "reference": "9345.175680",
+          "year_min": "7763.261722",
+          "year_max": "11114.348269"
+        }
+      }
+    },
+    "ELE-REFLECTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.200000",
+          "year_min": "11.448920",
+          "year_max": "16.865141"
+        },
+        "USD": {
+          "reference": "14.971985",
+          "year_min": "12.341916",
+          "year_max": "16.815935"
+        },
+        "RUB": {
+          "reference": "1399.595168",
+          "year_min": "1091.860580",
+          "year_max": "1740.150263"
+        }
+      }
+    },
+    "ELE-RELAY-4P": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.800000",
+          "year_min": "3.436644",
+          "year_max": "4.268760"
+        },
+        "USD": {
+          "reference": "4.012325",
+          "year_min": "3.603678",
+          "year_max": "4.316612"
+        },
+        "RUB": {
+          "reference": "357.404098",
+          "year_min": "317.664336",
+          "year_max": "424.287271"
+        }
+      }
+    },
+    "ELE-REPEATER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.800000",
+          "year_min": "5.681971",
+          "year_max": "8.122940"
+        },
+        "USD": {
+          "reference": "7.126412",
+          "year_min": "6.421895",
+          "year_max": "8.350273"
+        },
+        "RUB": {
+          "reference": "679.177200",
+          "year_min": "601.935735",
+          "year_max": "792.753286"
+        }
+      }
+    },
+    "ELE-SENSOR-ABS": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.400000",
+          "year_min": "21.430214",
+          "year_max": "25.989152"
+        },
+        "USD": {
+          "reference": "24.224514",
+          "year_min": "20.973294",
+          "year_max": "30.214316"
+        },
+        "RUB": {
+          "reference": "2278.946432",
+          "year_min": "2115.755636",
+          "year_max": "2425.154519"
+        }
+      }
+    },
+    "ELE-SENSOR-CAM": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "31.000000",
+          "year_min": "26.020284",
+          "year_max": "35.537470"
+        },
+        "USD": {
+          "reference": "34.197543",
+          "year_min": "29.212020",
+          "year_max": "38.953259"
+        },
+        "RUB": {
+          "reference": "2930.077530",
+          "year_min": "2398.538025",
+          "year_max": "3205.985351"
+        }
+      }
+    },
+    "ELE-SENSOR-COOLANT-TEMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.400000",
+          "year_min": "7.675307",
+          "year_max": "11.627687"
+        },
+        "USD": {
+          "reference": "10.007882",
+          "year_min": "9.296101",
+          "year_max": "11.903175"
+        },
+        "RUB": {
+          "reference": "920.816809",
+          "year_min": "723.905659",
+          "year_max": "1118.335698"
+        }
+      }
+    },
+    "ELE-SENSOR-CRANK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.000000",
+          "year_min": "24.617040",
+          "year_max": "31.377640"
+        },
+        "USD": {
+          "reference": "30.910602",
+          "year_min": "28.393923",
+          "year_max": "36.381593"
+        },
+        "RUB": {
+          "reference": "2802.100420",
+          "year_min": "2340.936337",
+          "year_max": "3353.906847"
+        }
+      }
+    },
+    "ELE-SENSOR-KNOCK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.000000",
+          "year_min": "18.815040",
+          "year_max": "25.796352"
+        },
+        "USD": {
+          "reference": "25.476457",
+          "year_min": "20.349473",
+          "year_max": "27.539133"
+        },
+        "RUB": {
+          "reference": "2288.588400",
+          "year_min": "2168.414623",
+          "year_max": "2413.110495"
+        }
+      }
+    },
+    "ELE-SENSOR-LAMBDA": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "46.000000",
+          "year_min": "36.389220",
+          "year_max": "53.098352"
+        },
+        "USD": {
+          "reference": "50.237410",
+          "year_min": "42.087897",
+          "year_max": "57.559713"
+        },
+        "RUB": {
+          "reference": "4623.024610",
+          "year_min": "3773.386655",
+          "year_max": "5534.943952"
+        }
+      }
+    },
+    "ELE-SENSOR-MAF": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "54.000000",
+          "year_min": "48.573108",
+          "year_max": "60.945264"
+        },
+        "USD": {
+          "reference": "60.043706",
+          "year_min": "47.229659",
+          "year_max": "64.170630"
+        },
+        "RUB": {
+          "reference": "5210.705160",
+          "year_min": "4222.953468",
+          "year_max": "5767.510692"
+        }
+      }
+    },
+    "ELE-SENSOR-MAP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "21.000000",
+          "year_min": "18.029214",
+          "year_max": "22.514520"
+        },
+        "USD": {
+          "reference": "22.060972",
+          "year_min": "20.592020",
+          "year_max": "25.865166"
+        },
+        "RUB": {
+          "reference": "2047.752945",
+          "year_min": "1726.182014",
+          "year_max": "2138.447923"
+        }
+      }
+    },
+    "ELE-SPEAKER-100": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.400000",
+          "year_min": "11.813827",
+          "year_max": "14.802054"
+        },
+        "USD": {
+          "reference": "13.741290",
+          "year_min": "11.019223",
+          "year_max": "16.943093"
+        },
+        "RUB": {
+          "reference": "1221.497712",
+          "year_min": "1108.172040",
+          "year_max": "1480.235357"
+        }
+      }
+    },
+    "ELE-THIRD-BRAKE-LAMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.800000",
+          "year_min": "11.722754",
+          "year_max": "15.483819"
+        },
+        "USD": {
+          "reference": "15.646897",
+          "year_min": "14.131871",
+          "year_max": "17.824914"
+        },
+        "RUB": {
+          "reference": "1452.916370",
+          "year_min": "1316.917586",
+          "year_max": "1741.334799"
+        }
+      }
+    },
+    "ELE-WASHER-NOZZLE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.600000",
+          "year_min": "2.866514",
+          "year_max": "4.406666"
+        },
+        "USD": {
+          "reference": "3.893972",
+          "year_min": "3.413970",
+          "year_max": "4.521073"
+        },
+        "RUB": {
+          "reference": "344.458440",
+          "year_min": "301.346711",
+          "year_max": "377.363866"
+        }
+      }
+    },
+    "ELE-WASHER-PUMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.200000",
+          "year_min": "10.158893",
+          "year_max": "13.659363"
+        },
+        "USD": {
+          "reference": "12.055430",
+          "year_min": "10.550502",
+          "year_max": "14.535015"
+        },
+        "RUB": {
+          "reference": "1110.525248",
+          "year_min": "922.100208",
+          "year_max": "1330.413689"
+        }
+      }
+    },
+    "ELE-WIPER-ARM": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.800000",
+          "year_min": "8.503597",
+          "year_max": "12.317816"
+        },
+        "USD": {
+          "reference": "10.651441",
+          "year_min": "9.205018",
+          "year_max": "11.967256"
+        },
+        "RUB": {
+          "reference": "949.777976",
+          "year_min": "891.049405",
+          "year_max": "1043.329207"
+        }
+      }
+    },
+    "ELE-WIPER-BLADE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.400000",
+          "year_min": "5.943437",
+          "year_max": "6.992934"
+        },
+        "USD": {
+          "reference": "7.009086",
+          "year_min": "6.619339",
+          "year_max": "8.039478"
+        },
+        "RUB": {
+          "reference": "626.233056",
+          "year_min": "546.310688",
+          "year_max": "771.281156"
+        }
+      }
+    },
+    "ELE-WIPER-LINKAGE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.600000",
+          "year_min": "23.331280",
+          "year_max": "30.129539"
+        },
+        "USD": {
+          "reference": "26.707641",
+          "year_min": "23.287087",
+          "year_max": "31.888923"
+        },
+        "RUB": {
+          "reference": "2346.651195",
+          "year_min": "1901.942020",
+          "year_max": "2691.163057"
+        }
+      }
+    },
+    "ELE-WIPER-MOTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "36.324540",
+          "year_max": "47.017488"
+        },
+        "USD": {
+          "reference": "45.591064",
+          "year_min": "36.751777",
+          "year_max": "51.843970"
+        },
+        "RUB": {
+          "reference": "4118.673090",
+          "year_min": "3475.674085",
+          "year_max": "4645.319581"
+        }
+      }
+    },
+    "ELE-WIPER-REAR-MOTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "32.000000",
+          "year_min": "26.155200",
+          "year_max": "38.372032"
+        },
+        "USD": {
+          "reference": "34.794317",
+          "year_min": "28.491118",
+          "year_max": "39.701151"
+        },
+        "RUB": {
+          "reference": "3221.091840",
+          "year_min": "2920.802332",
+          "year_max": "3696.106254"
+        }
+      }
+    },
+    "ENG-AC-COMPRESSOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "168.000000",
+          "year_min": "139.150368",
+          "year_max": "206.431680"
+        },
+        "USD": {
+          "reference": "178.532243",
+          "year_min": "161.358155",
+          "year_max": "211.109378"
+        },
+        "RUB": {
+          "reference": "16778.513640",
+          "year_min": "15159.353517",
+          "year_max": "17982.674007"
+        }
+      }
+    },
+    "ENG-ACC-BELT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.400000",
+          "year_min": "15.127032",
+          "year_max": "18.478274"
+        },
+        "USD": {
+          "reference": "17.963014",
+          "year_min": "15.841546",
+          "year_max": "22.499034"
+        },
+        "RUB": {
+          "reference": "1575.321926",
+          "year_min": "1451.400802",
+          "year_max": "1806.179053"
+        }
+      }
+    },
+    "ENG-AIR-DUCT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.600000",
+          "year_min": "10.845878",
+          "year_max": "14.300950"
+        },
+        "USD": {
+          "reference": "13.882501",
+          "year_min": "12.970365",
+          "year_max": "16.904638"
+        },
+        "RUB": {
+          "reference": "1199.696904",
+          "year_min": "1002.123620",
+          "year_max": "1455.558662"
+        }
+      }
+    },
+    "ENG-AIR-FILTER-ELEMENT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.300000",
+          "year_min": "5.748794",
+          "year_max": "8.277601"
+        },
+        "USD": {
+          "reference": "7.696582",
+          "year_min": "6.283043",
+          "year_max": "9.361245"
+        },
+        "RUB": {
+          "reference": "735.523436",
+          "year_min": "590.720937",
+          "year_max": "806.579413"
+        }
+      }
+    },
+    "ENG-BELT-TENSIONER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "34.000000",
+          "year_min": "27.319884",
+          "year_max": "39.755996"
+        },
+        "USD": {
+          "reference": "35.691546",
+          "year_min": "32.032020",
+          "year_max": "41.941207"
+        },
+        "RUB": {
+          "reference": "3230.077010",
+          "year_min": "2832.435150",
+          "year_max": "3906.455136"
+        }
+      }
+    },
+    "ENG-CAM-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.100000",
+          "year_min": "1.688501",
+          "year_max": "2.321029"
+        },
+        "USD": {
+          "reference": "2.245901",
+          "year_min": "1.898712",
+          "year_max": "2.671576"
+        },
+        "RUB": {
+          "reference": "198.789056",
+          "year_min": "158.705231",
+          "year_max": "226.140840"
+        }
+      }
+    },
+    "ENG-CAM-COVER-GASKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.400000",
+          "year_min": "6.028144",
+          "year_max": "8.355666"
+        },
+        "USD": {
+          "reference": "7.871449",
+          "year_min": "7.109713",
+          "year_max": "8.379740"
+        },
+        "RUB": {
+          "reference": "763.777865",
+          "year_min": "631.807743",
+          "year_max": "859.088177"
+        }
+      }
+    },
+    "ENG-CAM-SPROCKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.500000",
+          "year_min": "10.574871",
+          "year_max": "13.906835"
+        },
+        "USD": {
+          "reference": "12.362843",
+          "year_min": "11.149109",
+          "year_max": "12.869596"
+        },
+        "RUB": {
+          "reference": "1182.194538",
+          "year_min": "1100.646759",
+          "year_max": "1240.197731"
+        }
+      }
+    },
+    "ENG-CAMSHAFT-EXHAUST": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "40.291272",
+          "year_max": "51.877728"
+        },
+        "USD": {
+          "reference": "44.164401",
+          "year_min": "35.495194",
+          "year_max": "53.932242"
+        },
+        "RUB": {
+          "reference": "4168.234350",
+          "year_min": "3374.794269",
+          "year_max": "4602.639397"
+        }
+      }
+    },
+    "ENG-CAMSHAFT-INTAKE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "35.664552",
+          "year_max": "51.433284"
+        },
+        "USD": {
+          "reference": "46.237716",
+          "year_min": "38.524803",
+          "year_max": "52.052386"
+        },
+        "RUB": {
+          "reference": "4126.036950",
+          "year_min": "3741.085955",
+          "year_max": "4324.210505"
+        }
+      }
+    },
+    "ENG-CAT-MAT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.900000",
+          "year_min": "8.207099",
+          "year_max": "10.933223"
+        },
+        "USD": {
+          "reference": "9.628206",
+          "year_min": "8.841350",
+          "year_max": "10.966315"
+        },
+        "RUB": {
+          "reference": "877.886076",
+          "year_min": "758.325016",
+          "year_max": "999.854300"
+        }
+      }
+    },
+    "ENG-CRANK-PULLEY": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.500000",
+          "year_min": "21.691257",
+          "year_max": "27.954691"
+        },
+        "USD": {
+          "reference": "28.743810",
+          "year_min": "25.979805",
+          "year_max": "30.212906"
+        },
+        "RUB": {
+          "reference": "2727.345815",
+          "year_min": "2283.492102",
+          "year_max": "3255.670882"
+        }
+      }
+    },
+    "ENG-CRANK-SPROCKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.800000",
+          "year_min": "5.528849",
+          "year_max": "7.937735"
+        },
+        "USD": {
+          "reference": "7.150779",
+          "year_min": "5.905700",
+          "year_max": "8.284907"
+        },
+        "RUB": {
+          "reference": "687.931486",
+          "year_min": "641.369531",
+          "year_max": "861.617676"
+        }
+      }
+    },
+    "ENG-DIPSTICK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.800000",
+          "year_min": "2.450818",
+          "year_max": "3.141090"
+        },
+        "USD": {
+          "reference": "2.998399",
+          "year_min": "2.742779",
+          "year_max": "3.138124"
+        },
+        "RUB": {
+          "reference": "278.668320",
+          "year_min": "253.787698",
+          "year_max": "327.849934"
+        }
+      }
+    },
+    "ENG-DIPSTICK-TUBE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.400000",
+          "year_min": "2.753225",
+          "year_max": "3.811862"
+        },
+        "USD": {
+          "reference": "3.698086",
+          "year_min": "2.941753",
+          "year_max": "4.149149"
+        },
+        "RUB": {
+          "reference": "351.263214",
+          "year_min": "319.382565",
+          "year_max": "388.412109"
+        }
+      }
+    },
+    "ENG-DRAIN-PLUG": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.700000",
+          "year_min": "1.547605",
+          "year_max": "1.831879"
+        },
+        "USD": {
+          "reference": "1.857008",
+          "year_min": "1.544232",
+          "year_max": "2.065249"
+        },
+        "RUB": {
+          "reference": "174.151349",
+          "year_min": "153.521032",
+          "year_max": "216.277515"
+        }
+      }
+    },
+    "ENG-EXH-CLAMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.600000",
+          "year_min": "5.282054",
+          "year_max": "5.900630"
+        },
+        "USD": {
+          "reference": "6.027534",
+          "year_min": "5.707556",
+          "year_max": "7.540855"
+        },
+        "RUB": {
+          "reference": "548.500008",
+          "year_min": "436.765071",
+          "year_max": "618.382200"
+        }
+      }
+    },
+    "ENG-EXH-GASKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.200000",
+          "year_min": "3.530772",
+          "year_max": "5.107108"
+        },
+        "USD": {
+          "reference": "4.412113",
+          "year_min": "3.546201",
+          "year_max": "5.155466"
+        },
+        "RUB": {
+          "reference": "407.159403",
+          "year_min": "372.807364",
+          "year_max": "471.243036"
+        }
+      }
+    },
+    "ENG-EXH-HANGER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.400000",
+          "year_min": "1.974384",
+          "year_max": "2.648222"
+        },
+        "USD": {
+          "reference": "2.518797",
+          "year_min": "2.132459",
+          "year_max": "2.832115"
+        },
+        "RUB": {
+          "reference": "232.019508",
+          "year_min": "205.640746",
+          "year_max": "263.519869"
+        }
+      }
+    },
+    "ENG-EXP-TANK-CAP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.100000",
+          "year_min": "2.708551",
+          "year_max": "3.313547"
+        },
+        "USD": {
+          "reference": "3.260798",
+          "year_min": "2.921825",
+          "year_max": "3.845472"
+        },
+        "RUB": {
+          "reference": "308.012652",
+          "year_min": "242.306777",
+          "year_max": "347.777085"
+        }
+      }
+    },
+    "ENG-FAN-BLADE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.600000",
+          "year_min": "6.776844",
+          "year_max": "9.526509"
+        },
+        "USD": {
+          "reference": "8.389577",
+          "year_min": "7.360394",
+          "year_max": "9.456060"
+        },
+        "RUB": {
+          "reference": "762.157146",
+          "year_min": "626.570914",
+          "year_max": "935.116516"
+        }
+      }
+    },
+    "ENG-FAN-MOTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.000000",
+          "year_min": "21.941424",
+          "year_max": "26.319072"
+        },
+        "USD": {
+          "reference": "26.619996",
+          "year_min": "24.625626",
+          "year_max": "30.131014"
+        },
+        "RUB": {
+          "reference": "2294.687520",
+          "year_min": "1827.732378",
+          "year_max": "2409.444843"
+        }
+      }
+    },
+    "ENG-FLYWHEEL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "48.000000",
+          "year_min": "42.829632",
+          "year_max": "60.130464"
+        },
+        "USD": {
+          "reference": "52.744193",
+          "year_min": "50.028711",
+          "year_max": "65.814837"
+        },
+        "RUB": {
+          "reference": "4806.295680",
+          "year_min": "3995.127545",
+          "year_max": "5006.266418"
+        }
+      }
+    },
+    "ENG-FUEL-CAP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.800000",
+          "year_min": "5.518934",
+          "year_max": "7.177019"
+        },
+        "USD": {
+          "reference": "7.454513",
+          "year_min": "6.354197",
+          "year_max": "7.822065"
+        },
+        "RUB": {
+          "reference": "684.461922",
+          "year_min": "652.069077",
+          "year_max": "843.885424"
+        }
+      }
+    },
+    "ENG-FUEL-FILTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.200000",
+          "year_min": "9.067632",
+          "year_max": "12.040022"
+        },
+        "USD": {
+          "reference": "11.844452",
+          "year_min": "11.276439",
+          "year_max": "14.420834"
+        },
+        "RUB": {
+          "reference": "1097.639872",
+          "year_min": "1000.132132",
+          "year_max": "1358.274460"
+        }
+      }
+    },
+    "ENG-FUEL-LEVEL-SENDER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.400000",
+          "year_min": "14.762688",
+          "year_max": "22.036392"
+        },
+        "USD": {
+          "reference": "20.331997",
+          "year_min": "16.966035",
+          "year_max": "25.332489"
+        },
+        "RUB": {
+          "reference": "1842.068988",
+          "year_min": "1648.025441",
+          "year_max": "2240.077466"
+        }
+      }
+    },
+    "ENG-FUEL-PUMP-MODULE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "78.000000",
+          "year_min": "61.857900",
+          "year_max": "86.954400"
+        },
+        "USD": {
+          "reference": "81.864937",
+          "year_min": "68.802895",
+          "year_max": "85.897768"
+        },
+        "RUB": {
+          "reference": "8031.885030",
+          "year_min": "6319.952991",
+          "year_max": "8610.791175"
+        }
+      }
+    },
+    "ENG-FUEL-REGULATOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.500000",
+          "year_min": "13.263525",
+          "year_max": "18.167325"
+        },
+        "USD": {
+          "reference": "18.041431",
+          "year_min": "14.364263",
+          "year_max": "20.848858"
+        },
+        "RUB": {
+          "reference": "1705.001018",
+          "year_min": "1404.078568",
+          "year_max": "1801.558636"
+        }
+      }
+    },
+    "ENG-HEAD-GASKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.500000",
+          "year_min": "15.292470",
+          "year_max": "21.675895"
+        },
+        "USD": {
+          "reference": "20.091369",
+          "year_min": "18.434233",
+          "year_max": "25.271808"
+        },
+        "RUB": {
+          "reference": "1739.556295",
+          "year_min": "1591.067770",
+          "year_max": "2150.700425"
+        }
+      }
+    },
+    "ENG-HOSE-COOL-20": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.200000",
+          "year_min": "3.674866",
+          "year_max": "4.666637"
+        },
+        "USD": {
+          "reference": "4.475907",
+          "year_min": "4.171832",
+          "year_max": "4.791226"
+        },
+        "RUB": {
+          "reference": "411.677007",
+          "year_min": "373.527722",
+          "year_max": "502.166083"
+        }
+      }
+    },
+    "ENG-HOSE-COOL-32": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.400000",
+          "year_min": "5.727091",
+          "year_max": "7.122752"
+        },
+        "USD": {
+          "reference": "7.044254",
+          "year_min": "5.778923",
+          "year_max": "8.308402"
+        },
+        "RUB": {
+          "reference": "600.481216",
+          "year_min": "528.936281",
+          "year_max": "697.488956"
+        }
+      }
+    },
+    "ENG-HT-LEAD": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.200000",
+          "year_min": "6.650986",
+          "year_max": "8.965238"
+        },
+        "USD": {
+          "reference": "7.631133",
+          "year_min": "7.072183",
+          "year_max": "9.098478"
+        },
+        "RUB": {
+          "reference": "684.285804",
+          "year_min": "637.995238",
+          "year_max": "743.045426"
+        }
+      }
+    },
+    "ENG-HYDRAULIC-LIFTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.200000",
+          "year_min": "5.297689",
+          "year_max": "6.504742"
+        },
+        "USD": {
+          "reference": "6.854293",
+          "year_min": "5.490577",
+          "year_max": "7.568332"
+        },
+        "RUB": {
+          "reference": "582.656656",
+          "year_min": "459.852443",
+          "year_max": "649.891738"
+        }
+      }
+    },
+    "ENG-IDLER-PULLEY": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.200000",
+          "year_min": "12.773440",
+          "year_max": "17.256266"
+        },
+        "USD": {
+          "reference": "15.131264",
+          "year_min": "13.483409",
+          "year_max": "17.594029"
+        },
+        "RUB": {
+          "reference": "1452.745768",
+          "year_min": "1150.086526",
+          "year_max": "1533.451606"
+        }
+      }
+    },
+    "ENG-IGNITION-COIL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "32.378052",
+          "year_max": "46.438736"
+        },
+        "USD": {
+          "reference": "39.857802",
+          "year_min": "36.335727",
+          "year_max": "46.955361"
+        },
+        "RUB": {
+          "reference": "3836.537570",
+          "year_min": "3316.241691",
+          "year_max": "4121.669042"
+        }
+      }
+    },
+    "ENG-INJECTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "32.000000",
+          "year_min": "27.830784",
+          "year_max": "39.069696"
+        },
+        "USD": {
+          "reference": "34.495511",
+          "year_min": "31.187736",
+          "year_max": "39.882330"
+        },
+        "RUB": {
+          "reference": "3056.021600",
+          "year_min": "2830.970057",
+          "year_max": "3693.666619"
+        }
+      }
+    },
+    "ENG-INTAKE-GASKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.100000",
+          "year_min": "4.805434",
+          "year_max": "7.260989"
+        },
+        "USD": {
+          "reference": "6.705319",
+          "year_min": "6.088658",
+          "year_max": "7.102609"
+        },
+        "RUB": {
+          "reference": "597.184815",
+          "year_min": "518.325366",
+          "year_max": "686.013667"
+        }
+      }
+    },
+    "ENG-MAIN-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.300000",
+          "year_min": "2.058008",
+          "year_max": "2.848058"
+        },
+        "USD": {
+          "reference": "2.524479",
+          "year_min": "2.149357",
+          "year_max": "3.113198"
+        },
+        "RUB": {
+          "reference": "223.022616",
+          "year_min": "176.703495",
+          "year_max": "277.539602"
+        }
+      }
+    },
+    "ENG-OIL-FILTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.900000",
+          "year_min": "4.484558",
+          "year_max": "5.304916"
+        },
+        "USD": {
+          "reference": "5.315750",
+          "year_min": "4.299379",
+          "year_max": "6.268885"
+        },
+        "RUB": {
+          "reference": "478.349588",
+          "year_min": "418.213391",
+          "year_max": "499.314694"
+        }
+      }
+    },
+    "ENG-OIL-FILTER-HOUSING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.300000",
+          "year_min": "10.433549",
+          "year_max": "14.539264"
+        },
+        "USD": {
+          "reference": "13.390803",
+          "year_min": "11.874884",
+          "year_max": "13.983587"
+        },
+        "RUB": {
+          "reference": "1216.117544",
+          "year_min": "1093.484251",
+          "year_max": "1491.828417"
+        }
+      }
+    },
+    "ENG-OIL-PAN-GASKET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.600000",
+          "year_min": "4.536235",
+          "year_max": "5.897304"
+        },
+        "USD": {
+          "reference": "6.091183",
+          "year_min": "4.935101",
+          "year_max": "6.548570"
+        },
+        "RUB": {
+          "reference": "561.644636",
+          "year_min": "486.659461",
+          "year_max": "701.049328"
+        }
+      }
+    },
+    "ENG-OIL-PICKUP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.600000",
+          "year_min": "8.218074",
+          "year_max": "10.005790"
+        },
+        "USD": {
+          "reference": "9.120203",
+          "year_min": "7.779278",
+          "year_max": "10.472784"
+        },
+        "RUB": {
+          "reference": "851.005131",
+          "year_min": "734.461680",
+          "year_max": "890.643248"
+        }
+      }
+    },
+    "ENG-OIL-PRESSURE-SWITCH": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.300000",
+          "year_min": "5.952064",
+          "year_max": "6.795936"
+        },
+        "USD": {
+          "reference": "6.885526",
+          "year_min": "6.313394",
+          "year_max": "7.983946"
+        },
+        "RUB": {
+          "reference": "640.370367",
+          "year_min": "592.670459",
+          "year_max": "760.643449"
+        }
+      }
+    },
+    "ENG-OIL-PUMP-ROTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.400000",
+          "year_min": "7.549253",
+          "year_max": "10.373859"
+        },
+        "USD": {
+          "reference": "10.072266",
+          "year_min": "8.152613",
+          "year_max": "11.169619"
+        },
+        "RUB": {
+          "reference": "959.713868",
+          "year_min": "830.425055",
+          "year_max": "1158.777719"
+        }
+      }
+    },
+    "ENG-OIL-RELIEF-VALVE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.700000",
+          "year_min": "3.073079",
+          "year_max": "4.332167"
+        },
+        "USD": {
+          "reference": "4.049730",
+          "year_min": "3.843202",
+          "year_max": "4.588676"
+        },
+        "RUB": {
+          "reference": "370.984588",
+          "year_min": "310.062241",
+          "year_max": "450.815278"
+        }
+      }
+    },
+    "ENG-PISTON-PIN": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.400000",
+          "year_min": "2.208917",
+          "year_max": "2.741203"
+        },
+        "USD": {
+          "reference": "2.591471",
+          "year_min": "2.340503",
+          "year_max": "2.826543"
+        },
+        "RUB": {
+          "reference": "247.276764",
+          "year_min": "196.058328",
+          "year_max": "290.499259"
+        }
+      }
+    },
+    "ENG-PISTON-RING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.850000",
+          "year_min": "1.742034",
+          "year_max": "2.294289"
+        },
+        "USD": {
+          "reference": "1.972034",
+          "year_min": "1.797951",
+          "year_max": "2.054169"
+        },
+        "RUB": {
+          "reference": "182.901055",
+          "year_min": "146.261218",
+          "year_max": "210.605809"
+        }
+      }
+    },
+    "ENG-PS-PUMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "112.000000",
+          "year_min": "101.469984",
+          "year_max": "139.572608"
+        },
+        "USD": {
+          "reference": "117.418291",
+          "year_min": "98.345333",
+          "year_max": "135.790496"
+        },
+        "RUB": {
+          "reference": "10972.978800",
+          "year_min": "8689.084939",
+          "year_max": "13025.211133"
+        }
+      }
+    },
+    "ENG-RAD-DRAIN-PLUG": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.900000",
+          "year_min": "1.523279",
+          "year_max": "2.393164"
+        },
+        "USD": {
+          "reference": "2.033446",
+          "year_min": "1.658780",
+          "year_max": "2.353002"
+        },
+        "RUB": {
+          "reference": "181.168686",
+          "year_min": "170.817432",
+          "year_max": "198.654725"
+        }
+      }
+    },
+    "ENG-RAD-SEAL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.900000",
+          "year_min": "2.518250",
+          "year_max": "3.083947"
+        },
+        "USD": {
+          "reference": "3.080510",
+          "year_min": "2.566983",
+          "year_max": "3.217624"
+        },
+        "RUB": {
+          "reference": "292.839810",
+          "year_min": "274.373917",
+          "year_max": "353.103900"
+        }
+      }
+    },
+    "ENG-ROD-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.950000",
+          "year_min": "1.628582",
+          "year_max": "2.057773"
+        },
+        "USD": {
+          "reference": "2.045537",
+          "year_min": "1.863603",
+          "year_max": "2.389764"
+        },
+        "RUB": {
+          "reference": "187.532426",
+          "year_min": "177.769488",
+          "year_max": "197.430763"
+        }
+      }
+    },
+    "ENG-SEAL-CRANK-FRONT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.200000",
+          "year_min": "2.895341",
+          "year_max": "3.913024"
+        },
+        "USD": {
+          "reference": "3.535191",
+          "year_min": "3.056526",
+          "year_max": "4.135700"
+        },
+        "RUB": {
+          "reference": "303.329568",
+          "year_min": "286.457164",
+          "year_max": "353.059844"
+        }
+      }
+    },
+    "ENG-SEAL-CRANK-REAR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.100000",
+          "year_min": "3.501835",
+          "year_max": "5.088789"
+        },
+        "USD": {
+          "reference": "4.490833",
+          "year_min": "4.180975",
+          "year_max": "5.544436"
+        },
+        "RUB": {
+          "reference": "401.148244",
+          "year_min": "354.891038",
+          "year_max": "496.268516"
+        }
+      }
+    },
+    "ENG-SPARK-PLUG": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.600000",
+          "year_min": "3.850807",
+          "year_max": "5.180704"
+        },
+        "USD": {
+          "reference": "4.840273",
+          "year_min": "3.951580",
+          "year_max": "6.043584"
+        },
+        "RUB": {
+          "reference": "466.566132",
+          "year_min": "397.606725",
+          "year_max": "565.979244"
+        }
+      }
+    },
+    "ENG-STARTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "96.000000",
+          "year_min": "90.048384",
+          "year_max": "101.409216"
+        },
+        "USD": {
+          "reference": "101.499610",
+          "year_min": "91.794217",
+          "year_max": "115.058740"
+        },
+        "RUB": {
+          "reference": "9180.735840",
+          "year_min": "8105.065745",
+          "year_max": "11460.073850"
+        }
+      }
+    },
+    "ENG-THERMOSTAT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.900000",
+          "year_min": "6.965857",
+          "year_max": "8.332620"
+        },
+        "USD": {
+          "reference": "8.546590",
+          "year_min": "7.579219",
+          "year_max": "9.605393"
+        },
+        "RUB": {
+          "reference": "811.734954",
+          "year_min": "686.265082",
+          "year_max": "901.832663"
+        }
+      }
+    },
+    "ENG-THROTTLE-BODY": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "86.000000",
+          "year_min": "68.355552",
+          "year_max": "99.161096"
+        },
+        "USD": {
+          "reference": "93.649046",
+          "year_min": "76.294567",
+          "year_max": "108.798652"
+        },
+        "RUB": {
+          "reference": "8429.915650",
+          "year_min": "7304.437612",
+          "year_max": "9467.216771"
+        }
+      }
+    },
+    "ENG-THRUST-WASHER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.600000",
+          "year_min": "1.266662",
+          "year_max": "1.669386"
+        },
+        "USD": {
+          "reference": "1.775765",
+          "year_min": "1.572372",
+          "year_max": "1.890004"
+        },
+        "RUB": {
+          "reference": "160.233496",
+          "year_min": "129.239210",
+          "year_max": "193.888619"
+        }
+      }
+    },
+    "ENG-TIMING-BELT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.800000",
+          "year_min": "12.198012",
+          "year_max": "17.050281"
+        },
+        "USD": {
+          "reference": "15.925211",
+          "year_min": "15.043687",
+          "year_max": "17.806329"
+        },
+        "RUB": {
+          "reference": "1466.736314",
+          "year_min": "1216.024142",
+          "year_max": "1718.498669"
+        }
+      }
+    },
+    "ENG-TIMING-IDLER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.200000",
+          "year_min": "15.143177",
+          "year_max": "19.467896"
+        },
+        "USD": {
+          "reference": "17.167320",
+          "year_min": "16.025453",
+          "year_max": "18.743074"
+        },
+        "RUB": {
+          "reference": "1659.272688",
+          "year_min": "1551.536112",
+          "year_max": "2070.168339"
+        }
+      }
+    },
+    "ENG-TIMING-TENSIONER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.400000",
+          "year_min": "20.714131",
+          "year_max": "25.504730"
+        },
+        "USD": {
+          "reference": "24.753303",
+          "year_min": "22.051331",
+          "year_max": "27.109223"
+        },
+        "RUB": {
+          "reference": "2281.880944",
+          "year_min": "1960.468886",
+          "year_max": "2506.039237"
+        }
+      }
+    },
+    "ENG-VALVE-COLLET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.350000",
+          "year_min": "0.296770",
+          "year_max": "0.402338"
+        },
+        "USD": {
+          "reference": "0.375535",
+          "year_min": "0.353490",
+          "year_max": "0.437657"
+        },
+        "RUB": {
+          "reference": "32.970856",
+          "year_min": "31.533920",
+          "year_max": "34.426058"
+        }
+      }
+    },
+    "ENG-VALVE-EXHAUST": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.900000",
+          "year_min": "3.713674",
+          "year_max": "4.401002"
+        },
+        "USD": {
+          "reference": "4.089456",
+          "year_min": "3.630406",
+          "year_max": "4.482183"
+        },
+        "RUB": {
+          "reference": "386.066908",
+          "year_min": "367.441496",
+          "year_max": "446.915686"
+        }
+      }
+    },
+    "ENG-VALVE-GUIDE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.950000",
+          "year_min": "0.863094",
+          "year_max": "1.047753"
+        },
+        "USD": {
+          "reference": "1.004423",
+          "year_min": "0.859475",
+          "year_max": "1.229842"
+        },
+        "RUB": {
+          "reference": "90.763071",
+          "year_min": "84.203261",
+          "year_max": "110.507669"
+        }
+      }
+    },
+    "ENG-VALVE-INTAKE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.100000",
+          "year_min": "2.451257",
+          "year_max": "3.428941"
+        },
+        "USD": {
+          "reference": "3.421723",
+          "year_min": "3.106117",
+          "year_max": "3.880556"
+        },
+        "RUB": {
+          "reference": "310.168423",
+          "year_min": "294.545860",
+          "year_max": "351.384844"
+        }
+      }
+    },
+    "ENG-VALVE-RETAINER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.900000",
+          "year_min": "0.753224",
+          "year_max": "1.012309"
+        },
+        "USD": {
+          "reference": "0.999924",
+          "year_min": "0.860611",
+          "year_max": "1.099008"
+        },
+        "RUB": {
+          "reference": "86.031279",
+          "year_min": "74.286633",
+          "year_max": "106.162254"
+        }
+      }
+    },
+    "ENG-VALVE-SEAL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.650000",
+          "year_min": "0.568016",
+          "year_max": "0.790629"
+        },
+        "USD": {
+          "reference": "0.716135",
+          "year_min": "0.637320",
+          "year_max": "0.761481"
+        },
+        "RUB": {
+          "reference": "61.473604",
+          "year_min": "56.405474",
+          "year_max": "65.939538"
+        }
+      }
+    },
+    "ENG-VALVE-SPRING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.200000",
+          "year_min": "1.136362",
+          "year_max": "1.470103"
+        },
+        "USD": {
+          "reference": "1.268271",
+          "year_min": "1.062076",
+          "year_max": "1.362473"
+        },
+        "RUB": {
+          "reference": "117.221304",
+          "year_min": "108.991900",
+          "year_max": "124.225980"
+        }
+      }
+    },
+    "ENG-WATER-PUMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.000000",
+          "year_min": "23.884728",
+          "year_max": "31.223640"
+        },
+        "USD": {
+          "reference": "30.199176",
+          "year_min": "26.839699",
+          "year_max": "37.172649"
+        },
+        "RUB": {
+          "reference": "2675.232420",
+          "year_min": "2215.349266",
+          "year_max": "2992.943022"
+        }
+      }
+    },
+    "FIX-BOLT-WHEEL-M12": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "34.000000",
+          "year_min": "29.214636",
+          "year_max": "37.874028"
+        },
+        "USD": {
+          "reference": "37.577706",
+          "year_min": "32.363198",
+          "year_max": "45.317511"
+        },
+        "RUB": {
+          "reference": "3368.859570",
+          "year_min": "3040.604631",
+          "year_max": "3634.723230"
+        }
+      }
+    },
+    "FIX-CABLE-TIE-200": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "1.100000",
+          "year_min": "0.933438",
+          "year_max": "1.213793"
+        },
+        "USD": {
+          "reference": "1.166281",
+          "year_min": "1.079806",
+          "year_max": "1.384509"
+        },
+        "RUB": {
+          "reference": "112.293940",
+          "year_min": "94.851771",
+          "year_max": "120.123298"
+        }
+      }
+    },
+    "FIX-CIRCLIP-20": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "2.600000",
+          "year_min": "2.035301",
+          "year_max": "2.808790"
+        },
+        "USD": {
+          "reference": "2.882064",
+          "year_min": "2.487060",
+          "year_max": "3.532235"
+        },
+        "RUB": {
+          "reference": "263.624218",
+          "year_min": "235.232417",
+          "year_max": "294.131867"
+        }
+      }
+    },
+    "FIX-CLIP-PLASTIC": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "1.800000",
+          "year_min": "1.694110",
+          "year_max": "2.193156"
+        },
+        "USD": {
+          "reference": "1.984334",
+          "year_min": "1.683330",
+          "year_max": "2.238678"
+        },
+        "RUB": {
+          "reference": "177.159933",
+          "year_min": "160.838543",
+          "year_max": "193.884894"
+        }
+      }
+    },
+    "FIX-GROMMET-12": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "2.900000",
+          "year_min": "2.615916",
+          "year_max": "3.289064"
+        },
+        "USD": {
+          "reference": "3.115463",
+          "year_min": "2.987424",
+          "year_max": "3.576819"
+        },
+        "RUB": {
+          "reference": "287.472447",
+          "year_min": "254.965063",
+          "year_max": "328.373452"
+        }
+      }
+    },
+    "FIX-HOSE-CLAMP-25": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "9.500000",
+          "year_min": "7.932747",
+          "year_max": "11.582932"
+        },
+        "USD": {
+          "reference": "10.230390",
+          "year_min": "9.302616",
+          "year_max": "11.758422"
+        },
+        "RUB": {
+          "reference": "927.159815",
+          "year_min": "820.380673",
+          "year_max": "1069.007849"
+        }
+      }
+    },
+    "FIX-HOSE-CLAMP-40": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "12.000000",
+          "year_min": "11.423016",
+          "year_max": "13.415616"
+        },
+        "USD": {
+          "reference": "12.949269",
+          "year_min": "10.583852",
+          "year_max": "14.864880"
+        },
+        "RUB": {
+          "reference": "1178.808600",
+          "year_min": "989.300972",
+          "year_max": "1257.444564"
+        }
+      }
+    },
+    "FIX-M10-40": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "12.500000",
+          "year_min": "11.814600",
+          "year_max": "13.168025"
+        },
+        "USD": {
+          "reference": "13.493358",
+          "year_min": "12.149689",
+          "year_max": "16.381503"
+        },
+        "RUB": {
+          "reference": "1255.333250",
+          "year_min": "985.870947",
+          "year_max": "1396.352366"
+        }
+      }
+    },
+    "FIX-M12-60": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "22.000000",
+          "year_min": "17.856564",
+          "year_max": "23.103124"
+        },
+        "USD": {
+          "reference": "23.999358",
+          "year_min": "20.406846",
+          "year_max": "28.585539"
+        },
+        "RUB": {
+          "reference": "2107.190800",
+          "year_min": "1923.679768",
+          "year_max": "2354.056631"
+        }
+      }
+    },
+    "FIX-M6-16": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "3.900000",
+          "year_min": "3.676889",
+          "year_max": "4.762906"
+        },
+        "USD": {
+          "reference": "4.127111",
+          "year_min": "3.457685",
+          "year_max": "4.338774"
+        },
+        "RUB": {
+          "reference": "371.158047",
+          "year_min": "340.518208",
+          "year_max": "398.962981"
+        }
+      }
+    },
+    "FIX-M6-25": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "4.400000",
+          "year_min": "4.209665",
+          "year_max": "4.781119"
+        },
+        "USD": {
+          "reference": "4.703558",
+          "year_min": "4.447684",
+          "year_max": "4.995282"
+        },
+        "RUB": {
+          "reference": "436.316782",
+          "year_min": "350.576171",
+          "year_max": "506.016643"
+        }
+      }
+    },
+    "FIX-M8-20": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "6.200000",
+          "year_min": "5.206624",
+          "year_max": "7.306638"
+        },
+        "USD": {
+          "reference": "6.595279",
+          "year_min": "5.821587",
+          "year_max": "7.175545"
+        },
+        "RUB": {
+          "reference": "630.193544",
+          "year_min": "500.478286",
+          "year_max": "661.515424"
+        }
+      }
+    },
+    "FIX-M8-35": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "7.800000",
+          "year_min": "6.635632",
+          "year_max": "9.694495"
+        },
+        "USD": {
+          "reference": "8.514474",
+          "year_min": "7.831971",
+          "year_max": "10.689088"
+        },
+        "RUB": {
+          "reference": "760.132971",
+          "year_min": "725.937629",
+          "year_max": "819.402059"
+        }
+      }
+    },
+    "FIX-NUT-EXHAUST-M8": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "5.100000",
+          "year_min": "4.035650",
+          "year_max": "5.876444"
+        },
+        "USD": {
+          "reference": "5.431097",
+          "year_min": "4.707849",
+          "year_max": "5.921243"
+        },
+        "RUB": {
+          "reference": "515.898380",
+          "year_min": "464.980242",
+          "year_max": "585.043208"
+        }
+      }
+    },
+    "FIX-NUT-M10": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "4.600000",
+          "year_min": "3.816942",
+          "year_max": "5.086892"
+        },
+        "USD": {
+          "reference": "5.103656",
+          "year_min": "4.208587",
+          "year_max": "5.966776"
+        },
+        "RUB": {
+          "reference": "464.685767",
+          "year_min": "388.568380",
+          "year_max": "583.050526"
+        }
+      }
+    },
+    "FIX-NUT-M6": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "2.100000",
+          "year_min": "1.922558",
+          "year_max": "2.430061"
+        },
+        "USD": {
+          "reference": "2.252691",
+          "year_min": "2.057928",
+          "year_max": "2.397066"
+        },
+        "RUB": {
+          "reference": "198.625644",
+          "year_min": "171.113212",
+          "year_max": "242.306601"
+        }
+      }
+    },
+    "FIX-NUT-M8": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "3.000000",
+          "year_min": "2.787660",
+          "year_max": "3.423468"
+        },
+        "USD": {
+          "reference": "3.179833",
+          "year_min": "2.505340",
+          "year_max": "3.465617"
+        },
+        "RUB": {
+          "reference": "309.973590",
+          "year_min": "288.652987",
+          "year_max": "358.617745"
+        }
+      }
+    },
+    "FIX-RIVET-4": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "1.400000",
+          "year_min": "1.204442",
+          "year_max": "1.759164"
+        },
+        "USD": {
+          "reference": "1.529727",
+          "year_min": "1.419856",
+          "year_max": "1.902047"
+        },
+        "RUB": {
+          "reference": "142.628591",
+          "year_min": "129.999400",
+          "year_max": "153.956724"
+        }
+      }
+    },
+    "FIX-SCREW-TORX-M5": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "3.200000",
+          "year_min": "2.682912",
+          "year_max": "3.912813"
+        },
+        "USD": {
+          "reference": "3.427239",
+          "year_min": "3.024758",
+          "year_max": "3.870676"
+        },
+        "RUB": {
+          "reference": "317.403248",
+          "year_min": "287.875859",
+          "year_max": "333.374345"
+        }
+      }
+    },
+    "FIX-SPRING-PIN-6": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "2.200000",
+          "year_min": "1.730850",
+          "year_max": "2.563057"
+        },
+        "USD": {
+          "reference": "2.368786",
+          "year_min": "2.020892",
+          "year_max": "2.636241"
+        },
+        "RUB": {
+          "reference": "214.600177",
+          "year_min": "194.238483",
+          "year_max": "249.070545"
+        }
+      }
+    },
+    "FIX-STUD-M8": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "7.702330",
+          "year_max": "9.690862"
+        },
+        "USD": {
+          "reference": "8.810563",
+          "year_min": "8.061665",
+          "year_max": "10.942561"
+        },
+        "RUB": {
+          "reference": "854.977242",
+          "year_min": "701.724281",
+          "year_max": "1025.112583"
+        }
+      }
+    },
+    "FIX-WASHER-10": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "1.700000",
+          "year_min": "1.507183",
+          "year_max": "1.971531"
+        },
+        "USD": {
+          "reference": "1.839007",
+          "year_min": "1.641016",
+          "year_max": "2.085121"
+        },
+        "RUB": {
+          "reference": "169.656991",
+          "year_min": "143.298742",
+          "year_max": "182.829499"
+        }
+      }
+    },
+    "FIX-WASHER-6": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "0.900000",
+          "year_min": "0.832669",
+          "year_max": "1.121704"
+        },
+        "USD": {
+          "reference": "0.969335",
+          "year_min": "0.900359",
+          "year_max": "1.085157"
+        },
+        "RUB": {
+          "reference": "84.361113",
+          "year_min": "69.979062",
+          "year_max": "95.673432"
+        }
+      }
+    },
+    "FIX-WASHER-8": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "1.200000",
+          "year_min": "1.032401",
+          "year_max": "1.433090"
+        },
+        "USD": {
+          "reference": "1.327641",
+          "year_min": "1.237207",
+          "year_max": "1.552607"
+        },
+        "RUB": {
+          "reference": "114.248574",
+          "year_min": "95.881745",
+          "year_max": "123.734862"
+        }
+      }
+    },
+    "FIX-WELD-NUT-M8": {
+      "unit": "pce",
+      "price_per": "100",
+      "prices": {
+        "EUR": {
+          "reference": "3.600000",
+          "year_min": "3.040502",
+          "year_max": "4.412052"
+        },
+        "USD": {
+          "reference": "3.891406",
+          "year_min": "3.677262",
+          "year_max": "4.164264"
+        },
+        "RUB": {
+          "reference": "369.826524",
+          "year_min": "325.689947",
+          "year_max": "393.496161"
+        }
+      }
+    },
+    "FLU-AC-REFRIGERANT": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.000000",
+          "year_min": "26.476800",
+          "year_max": "34.178592"
+        },
+        "USD": {
+          "reference": "30.979368",
+          "year_min": "25.642181",
+          "year_max": "39.027870"
+        },
+        "RUB": {
+          "reference": "2638.357960",
+          "year_min": "2320.113946",
+          "year_max": "3239.122621"
+        }
+      }
+    },
+    "FLU-BRAKE-FLUID": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.400000",
+          "year_min": "5.691494",
+          "year_max": "7.404774"
+        },
+        "USD": {
+          "reference": "6.795464",
+          "year_min": "6.387138",
+          "year_max": "8.548531"
+        },
+        "RUB": {
+          "reference": "602.208512",
+          "year_min": "534.435966",
+          "year_max": "742.221991"
+        }
+      }
+    },
+    "FLU-COOLANT": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.200000",
+          "year_min": "2.896205",
+          "year_max": "3.536877"
+        },
+        "USD": {
+          "reference": "3.406939",
+          "year_min": "3.222215",
+          "year_max": "3.886425"
+        },
+        "RUB": {
+          "reference": "302.506896",
+          "year_min": "245.914511",
+          "year_max": "325.435104"
+        }
+      }
+    },
+    "FLU-ENGINE-OIL": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.800000",
+          "year_min": "4.404701",
+          "year_max": "5.664989"
+        },
+        "USD": {
+          "reference": "5.264217",
+          "year_min": "4.392442",
+          "year_max": "6.339791"
+        },
+        "RUB": {
+          "reference": "487.839768",
+          "year_min": "464.989353",
+          "year_max": "562.904649"
+        }
+      }
+    },
+    "FLU-GEARBOX-OIL": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.800000",
+          "year_min": "6.809166",
+          "year_max": "8.815560"
+        },
+        "USD": {
+          "reference": "8.537067",
+          "year_min": "7.064440",
+          "year_max": "10.102919"
+        },
+        "RUB": {
+          "reference": "742.861587",
+          "year_min": "633.305846",
+          "year_max": "910.919164"
+        }
+      }
+    },
+    "FLU-GREASE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.400000",
+          "year_min": "8.384762",
+          "year_max": "11.374564"
+        },
+        "USD": {
+          "reference": "10.385110",
+          "year_min": "8.341154",
+          "year_max": "11.928254"
+        },
+        "RUB": {
+          "reference": "950.399314",
+          "year_min": "884.310447",
+          "year_max": "1023.562954"
+        }
+      }
+    },
+    "FLU-PS-FLUID": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.600000",
+          "year_min": "5.125814",
+          "year_max": "6.530675"
+        },
+        "USD": {
+          "reference": "5.927524",
+          "year_min": "5.369803",
+          "year_max": "6.564840"
+        },
+        "RUB": {
+          "reference": "573.675032",
+          "year_min": "501.048920",
+          "year_max": "646.878261"
+        }
+      }
+    },
+    "FLU-WASHER-FLUID": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.200000",
+          "year_min": "0.972396",
+          "year_max": "1.316587"
+        },
+        "USD": {
+          "reference": "1.269670",
+          "year_min": "1.207296",
+          "year_max": "1.560399"
+        },
+        "RUB": {
+          "reference": "112.319550",
+          "year_min": "96.521131",
+          "year_max": "123.355620"
+        }
+      }
+    },
+    "INT-AC-LINE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.600000",
+          "year_min": "18.162128",
+          "year_max": "28.383024"
+        },
+        "USD": {
+          "reference": "24.838557",
+          "year_min": "21.025193",
+          "year_max": "28.781281"
+        },
+        "RUB": {
+          "reference": "2117.867018",
+          "year_min": "1732.754079",
+          "year_max": "2547.882973"
+        }
+      }
+    },
+    "INT-AIR-VENT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "6.646802",
+          "year_max": "10.150644"
+        },
+        "USD": {
+          "reference": "9.093283",
+          "year_min": "7.507360",
+          "year_max": "11.301696"
+        },
+        "RUB": {
+          "reference": "837.386718",
+          "year_min": "702.842119",
+          "year_max": "1034.916196"
+        }
+      }
+    },
+    "INT-AIRBAG-DRIVER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "96.000000",
+          "year_min": "90.145152",
+          "year_max": "112.484544"
+        },
+        "USD": {
+          "reference": "100.917343",
+          "year_min": "94.539165",
+          "year_max": "106.394935"
+        },
+        "RUB": {
+          "reference": "9807.290400",
+          "year_min": "8238.771217",
+          "year_max": "12000.318221"
+        }
+      }
+    },
+    "INT-AIRBAG-PASSENGER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "112.000000",
+          "year_min": "104.348832",
+          "year_max": "116.999904"
+        },
+        "USD": {
+          "reference": "123.326703",
+          "year_min": "108.264319",
+          "year_max": "136.762901"
+        },
+        "RUB": {
+          "reference": "11216.786000",
+          "year_min": "9436.973698",
+          "year_max": "13242.559985"
+        }
+      }
+    },
+    "INT-BELT-ANCHOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.200000",
+          "year_min": "5.072034",
+          "year_max": "7.112814"
+        },
+        "USD": {
+          "reference": "6.627018",
+          "year_min": "5.728765",
+          "year_max": "8.137912"
+        },
+        "RUB": {
+          "reference": "617.332202",
+          "year_min": "564.670061",
+          "year_max": "769.621883"
+        }
+      }
+    },
+    "INT-BELT-BUCKLE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.400000",
+          "year_min": "10.677739",
+          "year_max": "15.165423"
+        },
+        "USD": {
+          "reference": "13.484566",
+          "year_min": "11.687397",
+          "year_max": "16.799800"
+        },
+        "RUB": {
+          "reference": "1169.514928",
+          "year_min": "923.336714",
+          "year_max": "1377.052369"
+        }
+      }
+    },
+    "INT-BELT-RETRACTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.000000",
+          "year_min": "21.892920",
+          "year_max": "32.331208"
+        },
+        "USD": {
+          "reference": "30.329631",
+          "year_min": "26.259576",
+          "year_max": "37.709558"
+        },
+        "RUB": {
+          "reference": "2663.152380",
+          "year_min": "2443.831129",
+          "year_max": "3105.981358"
+        }
+      }
+    },
+    "INT-BELT-WEBBING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.600000",
+          "year_min": "8.416973",
+          "year_max": "11.576870"
+        },
+        "USD": {
+          "reference": "10.123523",
+          "year_min": "8.399649",
+          "year_max": "12.603523"
+        },
+        "RUB": {
+          "reference": "902.546832",
+          "year_min": "743.382698",
+          "year_max": "1114.473854"
+        }
+      }
+    },
+    "INT-BLOWER-MOTOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "34.987512",
+          "year_max": "43.515244"
+        },
+        "USD": {
+          "reference": "41.165829",
+          "year_min": "34.433075",
+          "year_max": "49.495241"
+        },
+        "RUB": {
+          "reference": "3874.641310",
+          "year_min": "3536.299882",
+          "year_max": "4681.217642"
+        }
+      }
+    },
+    "INT-CABIN-FILTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.600000",
+          "year_min": "7.480916",
+          "year_max": "9.668258"
+        },
+        "USD": {
+          "reference": "9.188693",
+          "year_min": "7.465225",
+          "year_max": "10.904387"
+        },
+        "RUB": {
+          "reference": "884.474052",
+          "year_min": "733.814511",
+          "year_max": "1093.655703"
+        }
+      }
+    },
+    "INT-CONDENSER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "52.000000",
+          "year_min": "47.446152",
+          "year_max": "55.042104"
+        },
+        "USD": {
+          "reference": "56.569406",
+          "year_min": "46.898866",
+          "year_max": "64.216006"
+        },
+        "RUB": {
+          "reference": "5022.172220",
+          "year_min": "4281.783503",
+          "year_max": "6191.374090"
+        }
+      }
+    },
+    "INT-EVAPORATOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "46.000000",
+          "year_min": "41.059968",
+          "year_max": "54.233816"
+        },
+        "USD": {
+          "reference": "51.014504",
+          "year_min": "42.996044",
+          "year_max": "54.480429"
+        },
+        "RUB": {
+          "reference": "4372.958720",
+          "year_min": "3772.359078",
+          "year_max": "5493.669327"
+        }
+      }
+    },
+    "INT-EXPANSION-VALVE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.400000",
+          "year_min": "14.875958",
+          "year_max": "21.985792"
+        },
+        "USD": {
+          "reference": "20.212050",
+          "year_min": "17.784219",
+          "year_max": "22.946821"
+        },
+        "RUB": {
+          "reference": "1767.959952",
+          "year_min": "1601.135251",
+          "year_max": "2033.076155"
+        }
+      }
+    },
+    "INT-GRAB-HANDLE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "5.600000",
+          "year_min": "4.717574",
+          "year_max": "6.290805"
+        },
+        "USD": {
+          "reference": "6.097823",
+          "year_min": "5.706611",
+          "year_max": "6.449863"
+        },
+        "RUB": {
+          "reference": "530.705392",
+          "year_min": "488.241531",
+          "year_max": "563.387291"
+        }
+      }
+    },
+    "INT-HEATER-CORE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "32.000000",
+          "year_min": "27.925824",
+          "year_max": "40.305920"
+        },
+        "USD": {
+          "reference": "34.907328",
+          "year_min": "28.878344",
+          "year_max": "39.686490"
+        },
+        "RUB": {
+          "reference": "3212.455360",
+          "year_min": "2554.692275",
+          "year_max": "3559.548312"
+        }
+      }
+    },
+    "INT-HVAC-ACTUATOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.800000",
+          "year_min": "11.551181",
+          "year_max": "15.580851"
+        },
+        "USD": {
+          "reference": "13.835944",
+          "year_min": "12.350323",
+          "year_max": "14.390599"
+        },
+        "RUB": {
+          "reference": "1299.115712",
+          "year_min": "1175.782863",
+          "year_max": "1483.236784"
+        }
+      }
+    },
+    "INT-HVAC-CONTROL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.400000",
+          "year_min": "23.312520",
+          "year_max": "31.552963"
+        },
+        "USD": {
+          "reference": "27.918209",
+          "year_min": "23.430022",
+          "year_max": "29.500501"
+        },
+        "RUB": {
+          "reference": "2567.036868",
+          "year_min": "2287.383872",
+          "year_max": "2894.996364"
+        }
+      }
+    },
+    "INT-MIRROR-INT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.800000",
+          "year_min": "11.060198",
+          "year_max": "14.097946"
+        },
+        "USD": {
+          "reference": "13.983087",
+          "year_min": "11.300460",
+          "year_max": "15.085066"
+        },
+        "RUB": {
+          "reference": "1314.320960",
+          "year_min": "1161.415488",
+          "year_max": "1374.845440"
+        }
+      }
+    },
+    "INT-SEAT-RAIL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.800000",
+          "year_min": "15.693149",
+          "year_max": "18.987730"
+        },
+        "USD": {
+          "reference": "17.663583",
+          "year_min": "16.597762",
+          "year_max": "20.871926"
+        },
+        "RUB": {
+          "reference": "1710.583308",
+          "year_min": "1539.042593",
+          "year_max": "2030.958456"
+        }
+      }
+    },
+    "INT-SEAT-RECLINER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.400000",
+          "year_min": "18.995290",
+          "year_max": "24.356013"
+        },
+        "USD": {
+          "reference": "24.319879",
+          "year_min": "19.545157",
+          "year_max": "29.085554"
+        },
+        "RUB": {
+          "reference": "2308.181232",
+          "year_min": "2198.071755",
+          "year_max": "2678.732031"
+        }
+      }
+    },
+    "INT-STEERING-WHEEL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "34.384644",
+          "year_max": "49.712796"
+        },
+        "USD": {
+          "reference": "45.194527",
+          "year_min": "40.371909",
+          "year_max": "56.470833"
+        },
+        "RUB": {
+          "reference": "4331.273520",
+          "year_min": "3843.676072",
+          "year_max": "4937.894364"
+        }
+      }
+    },
+    "INT-SUN-VISOR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.400000",
+          "year_min": "7.824372",
+          "year_max": "11.621897"
+        },
+        "USD": {
+          "reference": "10.265723",
+          "year_min": "8.075449",
+          "year_max": "11.723148"
+        },
+        "RUB": {
+          "reference": "910.326362",
+          "year_min": "785.167411",
+          "year_max": "1053.464259"
+        }
+      }
+    },
+    "INT-SWITCH-PANEL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "24.600000",
+          "year_min": "21.376318",
+          "year_max": "27.137785"
+        },
+        "USD": {
+          "reference": "25.859272",
+          "year_min": "23.718021",
+          "year_max": "31.993298"
+        },
+        "RUB": {
+          "reference": "2482.199409",
+          "year_min": "2377.371164",
+          "year_max": "2685.352537"
+        }
+      }
+    },
+    "MAT-ABS-GRANULE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.050000",
+          "year_min": "1.671029",
+          "year_max": "2.312490"
+        },
+        "USD": {
+          "reference": "2.162870",
+          "year_min": "1.976262",
+          "year_max": "2.380714"
+        },
+        "RUB": {
+          "reference": "199.301994",
+          "year_min": "172.632198",
+          "year_max": "220.936624"
+        }
+      }
+    },
+    "MAT-ADHESIVE-PU": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.600000",
+          "year_min": "7.110944",
+          "year_max": "10.071443"
+        },
+        "USD": {
+          "reference": "9.010809",
+          "year_min": "7.951156",
+          "year_max": "10.951395"
+        },
+        "RUB": {
+          "reference": "826.684890",
+          "year_min": "650.781226",
+          "year_max": "964.036931"
+        }
+      }
+    },
+    "MAT-ALU-CAST": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.600000",
+          "year_min": "2.435581",
+          "year_max": "3.146270"
+        },
+        "USD": {
+          "reference": "2.727365",
+          "year_min": "2.537857",
+          "year_max": "3.070708"
+        },
+        "RUB": {
+          "reference": "243.638174",
+          "year_min": "215.986703",
+          "year_max": "288.727804"
+        }
+      }
+    },
+    "MAT-ALU-SHEET": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.100000",
+          "year_min": "2.571171",
+          "year_max": "3.778193"
+        },
+        "USD": {
+          "reference": "3.356919",
+          "year_min": "2.815985",
+          "year_max": "3.988443"
+        },
+        "RUB": {
+          "reference": "309.569937",
+          "year_min": "292.634604",
+          "year_max": "338.999513"
+        }
+      }
+    },
+    "MAT-BITUMEN-PAD": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.600000",
+          "year_min": "1.505443",
+          "year_max": "1.745734"
+        },
+        "USD": {
+          "reference": "1.755921",
+          "year_min": "1.561249",
+          "year_max": "2.001076"
+        },
+        "RUB": {
+          "reference": "164.403592",
+          "year_min": "135.236422",
+          "year_max": "173.186032"
+        }
+      }
+    },
+    "MAT-BRASS-BAR": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.900000",
+          "year_min": "5.436027",
+          "year_max": "8.073290"
+        },
+        "USD": {
+          "reference": "7.451955",
+          "year_min": "6.890301",
+          "year_max": "7.769215"
+        },
+        "RUB": {
+          "reference": "702.928012",
+          "year_min": "640.813075",
+          "year_max": "856.817230"
+        }
+      }
+    },
+    "MAT-CARPET-FELT": {
+      "unit": "m2",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.100000",
+          "year_min": "3.719766",
+          "year_max": "4.994800"
+        },
+        "USD": {
+          "reference": "4.517614",
+          "year_min": "3.946181",
+          "year_max": "5.132046"
+        },
+        "RUB": {
+          "reference": "391.799116",
+          "year_min": "330.018664",
+          "year_max": "445.026593"
+        }
+      }
+    },
+    "MAT-CAST-IRON": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.850000",
+          "year_min": "0.700164",
+          "year_max": "0.980642"
+        },
+        "USD": {
+          "reference": "0.939674",
+          "year_min": "0.759585",
+          "year_max": "0.980197"
+        },
+        "RUB": {
+          "reference": "86.730728",
+          "year_min": "79.436674",
+          "year_max": "100.362370"
+        }
+      }
+    },
+    "MAT-CERAMIC-ALO": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.500000",
+          "year_min": "9.838779",
+          "year_max": "14.409799"
+        },
+        "USD": {
+          "reference": "12.490570",
+          "year_min": "10.168023",
+          "year_max": "13.040755"
+        },
+        "RUB": {
+          "reference": "1122.770472",
+          "year_min": "921.879888",
+          "year_max": "1323.346680"
+        }
+      }
+    },
+    "MAT-COPPER-WIRE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "6.950563",
+          "year_max": "10.200355"
+        },
+        "USD": {
+          "reference": "8.875392",
+          "year_min": "8.218116",
+          "year_max": "10.195766"
+        },
+        "RUB": {
+          "reference": "837.957624",
+          "year_min": "736.036838",
+          "year_max": "1038.092071"
+        }
+      }
+    },
+    "MAT-EPDM-RUBBER": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.400000",
+          "year_min": "1.967256",
+          "year_max": "3.021043"
+        },
+        "USD": {
+          "reference": "2.569963",
+          "year_min": "2.048934",
+          "year_max": "2.718162"
+        },
+        "RUB": {
+          "reference": "227.064564",
+          "year_min": "199.524357",
+          "year_max": "274.472012"
+        }
+      }
+    },
+    "MAT-FABRIC-PES": {
+      "unit": "m2",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.500000",
+          "year_min": "5.886192",
+          "year_max": "7.481721"
+        },
+        "USD": {
+          "reference": "7.201790",
+          "year_min": "6.643046",
+          "year_max": "8.961130"
+        },
+        "RUB": {
+          "reference": "657.082172",
+          "year_min": "602.673140",
+          "year_max": "799.647977"
+        }
+      }
+    },
+    "MAT-FOAM-PU": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.200000",
+          "year_min": "3.741469",
+          "year_max": "4.794980"
+        },
+        "USD": {
+          "reference": "4.448963",
+          "year_min": "3.633557",
+          "year_max": "5.009426"
+        },
+        "RUB": {
+          "reference": "416.190474",
+          "year_min": "378.034964",
+          "year_max": "506.298209"
+        }
+      }
+    },
+    "MAT-GLASS-FIBER": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.800000",
+          "year_min": "2.215248",
+          "year_max": "2.952163"
+        },
+        "USD": {
+          "reference": "3.031149",
+          "year_min": "2.575173",
+          "year_max": "3.291167"
+        },
+        "RUB": {
+          "reference": "283.243842",
+          "year_min": "256.878939",
+          "year_max": "331.955551"
+        }
+      }
+    },
+    "MAT-GLASS-FLOAT": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.950000",
+          "year_min": "0.896901",
+          "year_max": "1.036509"
+        },
+        "USD": {
+          "reference": "0.996279",
+          "year_min": "0.822809",
+          "year_max": "1.162554"
+        },
+        "RUB": {
+          "reference": "91.731572",
+          "year_min": "75.488663",
+          "year_max": "100.268479"
+        }
+      }
+    },
+    "MAT-HDPE-GRANULE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.350000",
+          "year_min": "1.075186",
+          "year_max": "1.670320"
+        },
+        "USD": {
+          "reference": "1.464220",
+          "year_min": "1.189875",
+          "year_max": "1.827265"
+        },
+        "RUB": {
+          "reference": "130.530920",
+          "year_min": "121.353030",
+          "year_max": "155.072821"
+        }
+      }
+    },
+    "MAT-LEAD-INGOT": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.100000",
+          "year_min": "1.943348",
+          "year_max": "2.416756"
+        },
+        "USD": {
+          "reference": "2.208288",
+          "year_min": "1.789124",
+          "year_max": "2.421719"
+        },
+        "RUB": {
+          "reference": "208.190388",
+          "year_min": "166.113445",
+          "year_max": "232.218890"
+        }
+      }
+    },
+    "MAT-LEATHERETTE": {
+      "unit": "m2",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.800000",
+          "year_min": "8.820412",
+          "year_max": "11.203595"
+        },
+        "USD": {
+          "reference": "10.557265",
+          "year_min": "10.033118",
+          "year_max": "12.459980"
+        },
+        "RUB": {
+          "reference": "933.194122",
+          "year_min": "835.328188",
+          "year_max": "1037.450569"
+        }
+      }
+    },
+    "MAT-NBR-RUBBER": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.100000",
+          "year_min": "2.840350",
+          "year_max": "3.506962"
+        },
+        "USD": {
+          "reference": "3.272027",
+          "year_min": "2.855734",
+          "year_max": "3.403268"
+        },
+        "RUB": {
+          "reference": "303.914855",
+          "year_min": "290.007711",
+          "year_max": "358.354515"
+        }
+      }
+    },
+    "MAT-PA66-GRANULE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.600000",
+          "year_min": "3.094157",
+          "year_max": "3.920616"
+        },
+        "USD": {
+          "reference": "3.854454",
+          "year_min": "3.141002",
+          "year_max": "4.417613"
+        },
+        "RUB": {
+          "reference": "345.430044",
+          "year_min": "283.114464",
+          "year_max": "367.948629"
+        }
+      }
+    },
+    "MAT-PAINT-BASE": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.400000",
+          "year_min": "11.751778",
+          "year_max": "13.741680"
+        },
+        "USD": {
+          "reference": "13.747477",
+          "year_min": "13.065437",
+          "year_max": "16.527904"
+        },
+        "RUB": {
+          "reference": "1200.819410",
+          "year_min": "966.013584",
+          "year_max": "1479.402308"
+        }
+      }
+    },
+    "MAT-PAINT-CLEAR": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.200000",
+          "year_min": "11.693274",
+          "year_max": "17.251892"
+        },
+        "USD": {
+          "reference": "15.504021",
+          "year_min": "13.608499",
+          "year_max": "17.137215"
+        },
+        "RUB": {
+          "reference": "1372.292544",
+          "year_min": "1167.587665",
+          "year_max": "1586.650129"
+        }
+      }
+    },
+    "MAT-PAINT-PRIMER": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.500000",
+          "year_min": "6.957000",
+          "year_max": "9.110265"
+        },
+        "USD": {
+          "reference": "7.865165",
+          "year_min": "6.431424",
+          "year_max": "8.215417"
+        },
+        "RUB": {
+          "reference": "747.674100",
+          "year_min": "674.297364",
+          "year_max": "790.789475"
+        }
+      }
+    },
+    "MAT-PC-GRANULE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.900000",
+          "year_min": "3.387033",
+          "year_max": "4.568827"
+        },
+        "USD": {
+          "reference": "4.142275",
+          "year_min": "3.444219",
+          "year_max": "4.460244"
+        },
+        "RUB": {
+          "reference": "375.510466",
+          "year_min": "314.622195",
+          "year_max": "393.141433"
+        }
+      }
+    },
+    "MAT-PCB-LAMINATE": {
+      "unit": "m2",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "38.770956",
+          "year_max": "50.715336"
+        },
+        "USD": {
+          "reference": "44.443909",
+          "year_min": "38.563002",
+          "year_max": "55.463510"
+        },
+        "RUB": {
+          "reference": "4186.685370",
+          "year_min": "3981.311706",
+          "year_max": "4603.947181"
+        }
+      }
+    },
+    "MAT-PGM-CATALYST": {
+      "unit": "g",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "30.919080",
+          "year_max": "47.480392"
+        },
+        "USD": {
+          "reference": "40.380323",
+          "year_min": "33.867623",
+          "year_max": "47.210251"
+        },
+        "RUB": {
+          "reference": "3775.114940",
+          "year_min": "3104.141111",
+          "year_max": "3974.705267"
+        }
+      }
+    },
+    "MAT-PP-GRANULE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.450000",
+          "year_min": "1.131365",
+          "year_max": "1.723676"
+        },
+        "USD": {
+          "reference": "1.583467",
+          "year_min": "1.285040",
+          "year_max": "1.788903"
+        },
+        "RUB": {
+          "reference": "136.306467",
+          "year_min": "119.734872",
+          "year_max": "150.590022"
+        }
+      }
+    },
+    "MAT-SOLDER-SAC": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.000000",
+          "year_min": "21.504288",
+          "year_max": "32.263504"
+        },
+        "USD": {
+          "reference": "28.847258",
+          "year_min": "23.678002",
+          "year_max": "32.326468"
+        },
+        "RUB": {
+          "reference": "2546.888890",
+          "year_min": "2030.721106",
+          "year_max": "2967.976218"
+        }
+      }
+    },
+    "MAT-STAINLESS-SHEET": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.400000",
+          "year_min": "3.093925",
+          "year_max": "4.151903"
+        },
+        "USD": {
+          "reference": "3.639327",
+          "year_min": "3.156519",
+          "year_max": "4.342394"
+        },
+        "RUB": {
+          "reference": "351.276610",
+          "year_min": "323.030458",
+          "year_max": "389.261555"
+        }
+      }
+    },
+    "MAT-STEEL-BAR": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.250000",
+          "year_min": "1.111822",
+          "year_max": "1.574808"
+        },
+        "USD": {
+          "reference": "1.335104",
+          "year_min": "1.169038",
+          "year_max": "1.458561"
+        },
+        "RUB": {
+          "reference": "127.782819",
+          "year_min": "109.710495",
+          "year_max": "148.102843"
+        }
+      }
+    },
+    "MAT-STEEL-SHEET": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.100000",
+          "year_min": "1.021528",
+          "year_max": "1.316086"
+        },
+        "USD": {
+          "reference": "1.198443",
+          "year_min": "1.027329",
+          "year_max": "1.320337"
+        },
+        "RUB": {
+          "reference": "113.758832",
+          "year_min": "103.864089",
+          "year_max": "118.679584"
+        }
+      }
+    },
+    "MAT-STEEL-SPRING": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.850000",
+          "year_min": "1.510166",
+          "year_max": "2.226401"
+        },
+        "USD": {
+          "reference": "1.953357",
+          "year_min": "1.734089",
+          "year_max": "2.320319"
+        },
+        "RUB": {
+          "reference": "188.373272",
+          "year_min": "170.238954",
+          "year_max": "199.708445"
+        }
+      }
+    },
+    "MAT-SULFURIC-ACID": {
+      "unit": "L",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "0.900000",
+          "year_min": "0.770202",
+          "year_max": "0.999142"
+        },
+        "USD": {
+          "reference": "0.980655",
+          "year_min": "0.884113",
+          "year_max": "1.097161"
+        },
+        "RUB": {
+          "reference": "92.952184",
+          "year_min": "78.572853",
+          "year_max": "111.465470"
+        }
+      }
+    },
+    "MAT-WELD-WIRE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.300000",
+          "year_min": "1.894312",
+          "year_max": "2.863288"
+        },
+        "USD": {
+          "reference": "2.537401",
+          "year_min": "2.201053",
+          "year_max": "2.844995"
+        },
+        "RUB": {
+          "reference": "220.014032",
+          "year_min": "188.370734",
+          "year_max": "267.575785"
+        }
+      }
+    },
+    "MAT-ZINC-COATING": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "3.200000",
+          "year_min": "2.620474",
+          "year_max": "3.345037"
+        },
+        "USD": {
+          "reference": "3.411853",
+          "year_min": "3.036542",
+          "year_max": "3.697398"
+        },
+        "RUB": {
+          "reference": "319.934304",
+          "year_min": "263.496613",
+          "year_max": "358.513902"
+        }
+      }
+    },
+    "MOUNT-RUBBER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.900000",
+          "year_min": "8.403344",
+          "year_max": "9.697333"
+        },
+        "USD": {
+          "reference": "9.863335",
+          "year_min": "8.329350",
+          "year_max": "10.914707"
+        },
+        "RUB": {
+          "reference": "841.136908",
+          "year_min": "724.551968",
+          "year_max": "988.051563"
+        }
+      }
+    },
+    "TRN-BEARING-BALL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.900000",
+          "year_min": "10.077325",
+          "year_max": "14.663085"
+        },
+        "USD": {
+          "reference": "13.117420",
+          "year_min": "10.531216",
+          "year_max": "15.457594"
+        },
+        "RUB": {
+          "reference": "1209.916673",
+          "year_min": "1008.874499",
+          "year_max": "1463.086897"
+        }
+      }
+    },
+    "TRN-BEARING-TAPER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.800000",
+          "year_min": "13.811314",
+          "year_max": "17.500090"
+        },
+        "USD": {
+          "reference": "18.526004",
+          "year_min": "15.845514",
+          "year_max": "22.314053"
+        },
+        "RUB": {
+          "reference": "1731.682008",
+          "year_min": "1448.399612",
+          "year_max": "1881.105385"
+        }
+      }
+    },
+    "TRN-BOOT-CLAMP": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "1.900000",
+          "year_min": "1.595202",
+          "year_max": "2.100689"
+        },
+        "USD": {
+          "reference": "2.030454",
+          "year_min": "1.601553",
+          "year_max": "2.126994"
+        },
+        "RUB": {
+          "reference": "188.278514",
+          "year_min": "154.069061",
+          "year_max": "214.909004"
+        }
+      }
+    },
+    "TRN-CLUTCH-DISC": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "34.000000",
+          "year_min": "28.835196",
+          "year_max": "40.821148"
+        },
+        "USD": {
+          "reference": "36.260633",
+          "year_min": "34.246282",
+          "year_max": "39.336042"
+        },
+        "RUB": {
+          "reference": "3490.461760",
+          "year_min": "3242.338795",
+          "year_max": "3805.315373"
+        }
+      }
+    },
+    "TRN-CLUTCH-FORK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "11.200000",
+          "year_min": "10.270781",
+          "year_max": "13.289270"
+        },
+        "USD": {
+          "reference": "11.939599",
+          "year_min": "9.327931",
+          "year_max": "12.476021"
+        },
+        "RUB": {
+          "reference": "1063.948144",
+          "year_min": "927.377632",
+          "year_max": "1327.466820"
+        }
+      }
+    },
+    "TRN-CLUTCH-LINE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "9.600000",
+          "year_min": "8.207021",
+          "year_max": "10.513056"
+        },
+        "USD": {
+          "reference": "10.122776",
+          "year_min": "9.146090",
+          "year_max": "10.580467"
+        },
+        "RUB": {
+          "reference": "990.695664",
+          "year_min": "900.708795",
+          "year_max": "1185.004767"
+        }
+      }
+    },
+    "TRN-CLUTCH-MASTER-CYL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "26.400000",
+          "year_min": "23.180890",
+          "year_max": "32.026315"
+        },
+        "USD": {
+          "reference": "27.899049",
+          "year_min": "22.214227",
+          "year_max": "32.994141"
+        },
+        "RUB": {
+          "reference": "2497.034100",
+          "year_min": "2063.469075",
+          "year_max": "2646.906087"
+        }
+      }
+    },
+    "TRN-CLUTCH-SLAVE-CYL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "22.800000",
+          "year_min": "21.170210",
+          "year_max": "26.655890"
+        },
+        "USD": {
+          "reference": "24.713090",
+          "year_min": "20.311788",
+          "year_max": "26.488330"
+        },
+        "RUB": {
+          "reference": "2309.401056",
+          "year_min": "1936.308078",
+          "year_max": "2511.824677"
+        }
+      }
+    },
+    "TRN-CROWN-WHEEL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "48.000000",
+          "year_min": "38.507904",
+          "year_max": "53.880000"
+        },
+        "USD": {
+          "reference": "52.291008",
+          "year_min": "45.806609",
+          "year_max": "59.465125"
+        },
+        "RUB": {
+          "reference": "4577.365920",
+          "year_min": "4278.344914",
+          "year_max": "4983.515598"
+        }
+      }
+    },
+    "TRN-CV-BOOT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "8.400000",
+          "year_min": "7.807867",
+          "year_max": "10.579010"
+        },
+        "USD": {
+          "reference": "9.086043",
+          "year_min": "7.126202",
+          "year_max": "9.655374"
+        },
+        "RUB": {
+          "reference": "848.250480",
+          "year_min": "745.444218",
+          "year_max": "1031.267307"
+        }
+      }
+    },
+    "TRN-CV-GREASE": {
+      "unit": "kg",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "6.200000",
+          "year_min": "5.536736",
+          "year_max": "6.466687"
+        },
+        "USD": {
+          "reference": "6.527984",
+          "year_min": "6.008121",
+          "year_max": "6.812944"
+        },
+        "RUB": {
+          "reference": "591.731658",
+          "year_min": "495.666390",
+          "year_max": "670.962160"
+        }
+      }
+    },
+    "TRN-CV-JOINT-INNER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "38.000000",
+          "year_min": "34.040172",
+          "year_max": "42.569728"
+        },
+        "USD": {
+          "reference": "40.650695",
+          "year_min": "35.284153",
+          "year_max": "44.169094"
+        },
+        "RUB": {
+          "reference": "3638.383150",
+          "year_min": "2855.424926",
+          "year_max": "4136.994454"
+        }
+      }
+    },
+    "TRN-CV-JOINT-OUTER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "42.000000",
+          "year_min": "37.951452",
+          "year_max": "48.319404"
+        },
+        "USD": {
+          "reference": "44.564748",
+          "year_min": "42.472522",
+          "year_max": "47.940528"
+        },
+        "RUB": {
+          "reference": "4168.648050",
+          "year_min": "3428.329506",
+          "year_max": "5102.641983"
+        }
+      }
+    },
+    "TRN-DIFF-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "19.400000",
+          "year_min": "18.371528",
+          "year_max": "20.315564"
+        },
+        "USD": {
+          "reference": "21.043267",
+          "year_min": "16.423975",
+          "year_max": "23.978003"
+        },
+        "RUB": {
+          "reference": "1850.420015",
+          "year_min": "1743.328807",
+          "year_max": "2077.259304"
+        }
+      }
+    },
+    "TRN-GEAR-SET": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "28.500000",
+          "year_min": "25.660944",
+          "year_max": "34.447209"
+        },
+        "USD": {
+          "reference": "31.032088",
+          "year_min": "26.017613",
+          "year_max": "32.310238"
+        },
+        "RUB": {
+          "reference": "2813.454022",
+          "year_min": "2349.205974",
+          "year_max": "3035.671874"
+        }
+      }
+    },
+    "TRN-INPUT-SHAFT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "64.000000",
+          "year_min": "59.076096",
+          "year_max": "72.805888"
+        },
+        "USD": {
+          "reference": "70.296146",
+          "year_min": "65.077641",
+          "year_max": "74.598833"
+        },
+        "RUB": {
+          "reference": "6463.491200",
+          "year_min": "5837.191830",
+          "year_max": "6880.580287"
+        }
+      }
+    },
+    "TRN-OIL-SEAL": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "4.800000",
+          "year_min": "3.805258",
+          "year_max": "5.838595"
+        },
+        "USD": {
+          "reference": "5.182942",
+          "year_min": "4.520821",
+          "year_max": "6.073838"
+        },
+        "RUB": {
+          "reference": "468.365136",
+          "year_min": "405.993888",
+          "year_max": "506.615580"
+        }
+      }
+    },
+    "TRN-OUTPUT-SHAFT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "72.000000",
+          "year_min": "61.494336",
+          "year_max": "88.337664"
+        },
+        "USD": {
+          "reference": "76.488624",
+          "year_min": "72.251919",
+          "year_max": "79.874622"
+        },
+        "RUB": {
+          "reference": "7393.055400",
+          "year_min": "6537.885896",
+          "year_max": "9251.004153"
+        }
+      }
+    },
+    "TRN-PINION": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "36.000000",
+          "year_min": "30.893616",
+          "year_max": "39.592656"
+        },
+        "USD": {
+          "reference": "38.683112",
+          "year_min": "31.910782",
+          "year_max": "43.399666"
+        },
+        "RUB": {
+          "reference": "3524.546700",
+          "year_min": "2837.076817",
+          "year_max": "4180.471890"
+        }
+      }
+    },
+    "TRN-PLANET-GEAR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.600000",
+          "year_min": "12.257342",
+          "year_max": "16.609486"
+        },
+        "USD": {
+          "reference": "16.144824",
+          "year_min": "13.076532",
+          "year_max": "17.324462"
+        },
+        "RUB": {
+          "reference": "1424.553098",
+          "year_min": "1290.978452",
+          "year_max": "1568.190787"
+        }
+      }
+    },
+    "TRN-PRESSURE-PLATE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "58.000000",
+          "year_min": "47.744556",
+          "year_max": "62.010700"
+        },
+        "USD": {
+          "reference": "62.632107",
+          "year_min": "59.763807",
+          "year_max": "72.400336"
+        },
+        "RUB": {
+          "reference": "5501.333350",
+          "year_min": "5273.457120",
+          "year_max": "6723.267508"
+        }
+      }
+    },
+    "TRN-RELEASE-BEARING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.500000",
+          "year_min": "16.302126",
+          "year_max": "21.657173"
+        },
+        "USD": {
+          "reference": "20.492247",
+          "year_min": "19.226236",
+          "year_max": "22.183390"
+        },
+        "RUB": {
+          "reference": "1825.019820",
+          "year_min": "1669.564632",
+          "year_max": "1936.605182"
+        }
+      }
+    },
+    "TRN-REVERSE-IDLER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "21.000000",
+          "year_min": "16.773876",
+          "year_max": "25.019484"
+        },
+        "USD": {
+          "reference": "23.142400",
+          "year_min": "20.118059",
+          "year_max": "29.001593"
+        },
+        "RUB": {
+          "reference": "2134.836795",
+          "year_min": "1965.019067",
+          "year_max": "2299.180801"
+        }
+      }
+    },
+    "TRN-SELECTOR-SHAFT": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "18.600000",
+          "year_min": "15.171908",
+          "year_max": "21.081872"
+        },
+        "USD": {
+          "reference": "20.382932",
+          "year_min": "16.585510",
+          "year_max": "22.244424"
+        },
+        "RUB": {
+          "reference": "1862.256366",
+          "year_min": "1465.599485",
+          "year_max": "2222.182103"
+        }
+      }
+    },
+    "TRN-SHIFT-BUSHING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "2.400000",
+          "year_min": "2.185805",
+          "year_max": "2.868187"
+        },
+        "USD": {
+          "reference": "2.612264",
+          "year_min": "2.154601",
+          "year_max": "3.136859"
+        },
+        "RUB": {
+          "reference": "231.631812",
+          "year_min": "189.745368",
+          "year_max": "250.079896"
+        }
+      }
+    },
+    "TRN-SHIFT-CABLE": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "13.800000",
+          "year_min": "12.623026",
+          "year_max": "16.670897"
+        },
+        "USD": {
+          "reference": "14.736241",
+          "year_min": "13.246525",
+          "year_max": "18.171170"
+        },
+        "RUB": {
+          "reference": "1328.131251",
+          "year_min": "1113.112114",
+          "year_max": "1609.718983"
+        }
+      }
+    },
+    "TRN-SHIFT-FORK": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "14.200000",
+          "year_min": "12.447038",
+          "year_max": "17.037586"
+        },
+        "USD": {
+          "reference": "15.338116",
+          "year_min": "12.907945",
+          "year_max": "17.946915"
+        },
+        "RUB": {
+          "reference": "1342.724026",
+          "year_min": "1084.085839",
+          "year_max": "1608.204735"
+        }
+      }
+    },
+    "TRN-SHIFT-KNOB": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "7.600000",
+          "year_min": "7.238954",
+          "year_max": "8.355607"
+        },
+        "USD": {
+          "reference": "8.319547",
+          "year_min": "6.879200",
+          "year_max": "10.120413"
+        },
+        "RUB": {
+          "reference": "713.550548",
+          "year_min": "564.018895",
+          "year_max": "757.382531"
+        }
+      }
+    },
+    "TRN-SHIFT-LEVER": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "16.400000",
+          "year_min": "12.898862",
+          "year_max": "18.412969"
+        },
+        "USD": {
+          "reference": "17.350994",
+          "year_min": "14.498213",
+          "year_max": "18.237803"
+        },
+        "RUB": {
+          "reference": "1680.726776",
+          "year_min": "1392.287170",
+          "year_max": "1748.547463"
+        }
+      }
+    },
+    "TRN-SUN-GEAR": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "17.800000",
+          "year_min": "14.324550",
+          "year_max": "19.176937"
+        },
+        "USD": {
+          "reference": "19.234958",
+          "year_min": "16.604924",
+          "year_max": "23.812032"
+        },
+        "RUB": {
+          "reference": "1667.511031",
+          "year_min": "1337.247131",
+          "year_max": "2087.967267"
+        }
+      }
+    },
+    "TRN-SYNCHRO-RING": {
+      "unit": "pce",
+      "price_per": "1",
+      "prices": {
+        "EUR": {
+          "reference": "12.400000",
+          "year_min": "9.903235",
+          "year_max": "13.619738"
+        },
+        "USD": {
+          "reference": "13.626789",
+          "year_min": "11.036309",
+          "year_max": "16.962600"
+        },
+        "RUB": {
+          "reference": "1204.837816",
+          "year_min": "1037.365360",
+          "year_max": "1513.218465"
+        }
+      }
+    }
+  }
+}
