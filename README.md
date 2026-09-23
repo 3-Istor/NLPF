@@ -74,14 +74,22 @@ suivant. Depuis une session WSL interactive, le problème ne se produit pas.
 
 Cinq étapes. Les trois premières ne servent qu'une fois.
 
-Les commandes ci-dessous sont identiques sur Ubuntu et sous Windows ; seul le
-chemin de l'interpréteur du venv change. Posez-le une fois dans votre terminal,
-depuis `car-cost/` :
+**Chaque bloc part de la racine du dépôt** (le dossier qui contient ce
+fichier). Les `cd` ne s'enchaînent donc pas d'un bloc à l'autre.
+
+Les commandes sont identiques sur Ubuntu et sous Windows. **Dans chaque terminal
+que vous ouvrez**, placez-vous dans `car-cost/` et activez le venv — ensuite,
+`python` désigne celui du projet :
 
 ```bash
-PY=backend/.venv/bin/python           # Ubuntu, macOS, WSL
-# PY=backend/.venv/Scripts/python.exe # Windows (Git Bash, PowerShell)
+cd car-cost
+source backend/.venv/bin/activate        # Ubuntu, macOS, WSL
+# source backend/.venv/Scripts/activate  # Windows, Git Bash
+# backend\.venv\Scripts\Activate.ps1     # Windows, PowerShell
 ```
+
+L'invite affiche alors `(.venv)`. À refaire dans chaque nouveau terminal : une
+activation ne franchit pas les fenêtres — une variable posée ailleurs non plus.
 
 > **Un venv ne se partage pas entre WSL et Windows.** Les deux écrivent dans le
 > même `backend/.venv` mais dans des dossiers différents — `bin/` d'un côté,
@@ -123,8 +131,8 @@ le paquet sans qu'on ait à manipuler `PYTHONPATH`.
 Le jeu de données est déjà dans `car-cost/seeds/` et versionné. Pour le charger :
 
 ```bash
-cd car-cost
-PYTHONPATH=backend/src python -m carcost.infrastructure seeds \
+cd car-cost && source backend/.venv/bin/activate
+python -m carcost.infrastructure seeds \
   | docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q
 ```
 
@@ -136,8 +144,9 @@ Pour régénérer les fichiers (le générateur est déterministe, deux exécuti
 produisent les mêmes octets) :
 
 ```bash
-$PY -m tools.bom_generator            # écrit seeds/ et imprime son rapport
-$PY -m tools.bom_generator --check    # vérifie le déterminisme, n'écrit rien
+cd car-cost && source backend/.venv/bin/activate
+python -m tools.bom_generator            # écrit seeds/ et imprime son rapport
+python -m tools.bom_generator --check    # vérifie le déterminisme, n'écrit rien
 ```
 
 ### 4. Les prix
@@ -146,18 +155,18 @@ L'API de prix est un **simulateur** qu'on peut faire tomber à la demande.
 
 ```bash
 # terminal A — le simulateur
-cd car-cost
-$PY price-api/mock_price_api.py --port 8099
+cd car-cost && source backend/.venv/bin/activate
+python price-api/mock_price_api.py --port 8099
 
 # terminal B — prendre un snapshot
-cd car-cost
-$PY -m carcost.infrastructure.snapshot_cli
+cd car-cost && source backend/.venv/bin/activate
+python -m carcost.infrastructure.snapshot_cli
 ```
 
 Les modes de panne, pour la démonstration :
 
 ```bash
-CLI="$PY -m carcost.infrastructure.snapshot_cli"
+CLI="python -m carcost.infrastructure.snapshot_cli"
 
 $CLI --fail timeout --timeout 1  # l'API se tait → le snapshot précédent reste en vigueur
 $CLI --fail outlier              # prix négatif → quarantaine, dernier prix sain retenu
@@ -169,10 +178,10 @@ $CLI --fail missing              # pièce absente → repli, ou pièce nommée s
 
 ```bash
 # terminal C — l'API
-cd car-cost
-$PY -m uvicorn carcost.infrastructure.api.main:app --port 8000
+cd car-cost && source backend/.venv/bin/activate
+python -m uvicorn carcost.infrastructure.api.main:app --port 8000
 
-# terminal D — l'écran
+# terminal D — l'écran (pas de venv ici : c'est du Node)
 cd car-cost/frontend
 npm install        # une seule fois
 npm run dev
@@ -186,15 +195,16 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-cd car-cost && $PY -m pytest backend      # 181 tests
-cd car-cost/frontend && npm test          # 7 tests
+# backend — 181 tests
+cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
+
+# front — 7 tests
+cd car-cost/frontend && npm test
 ```
 
-Vérifié sur Ubuntu 24.04 (Python 3.12.3) : `175 passed, 6 skipped` — les six
-d'intégration se sautent quand Postgres n'est pas joignable.
-
 Les six tests d'intégration se **sautent** si Postgres n'est pas joignable : la
-suite reste verte hors ligne.
+suite reste verte hors ligne. Vérifié sur Ubuntu 24.04 (Python 3.12.3) :
+`175 passed, 6 skipped`.
 
 Deux contrôles valent d'être lancés à la main :
 
@@ -205,7 +215,7 @@ docker compose exec -T db psql -U 3istor -d 3istor -q \
 # attendu : 15 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
-$PY -m tools.bom_generator --check
+python -m tools.bom_generator --check
 ```
 
 ---
