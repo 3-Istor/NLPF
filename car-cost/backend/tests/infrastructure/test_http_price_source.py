@@ -17,6 +17,10 @@ import pytest
 from carcost.application.ports import PriceSourceTimeout
 from carcost.infrastructure.http_price_source import HttpPriceSource
 
+def by_ref(quotes):
+    return {quote.part_ref: quote for quote in quotes}
+
+
 ROOT = Path(__file__).resolve().parents[3]
 CATALOG = ROOT / "seeds" / "price_catalog.json"
 MOCK = ROOT / "price-api" / "mock_price_api.py"
@@ -44,10 +48,10 @@ class TestNominal:
     def test_returns_prices_as_exact_decimals(self, mock_api):
         source = HttpPriceSource(mock_api, timeout_seconds=5.0)
 
-        prices = source.fetch(["FIX-M6-16", "CHS-TIRE-185-65-15"], "EUR")
+        quotes = by_ref(source.fetch(["FIX-M6-16", "CHS-TIRE-185-65-15"], "EUR"))
 
-        assert prices["CHS-TIRE-185-65-15"] == Decimal("42.000000")
-        assert isinstance(prices["FIX-M6-16"], Decimal)
+        assert quotes["CHS-TIRE-185-65-15"].price == Decimal("42.000000")
+        assert isinstance(quotes["FIX-M6-16"].price, Decimal)
 
     def test_divides_by_the_quantity_the_price_refers_to(self, mock_api):
         """La visserie s'achète par 100 : 3,90 € les cent, pas la pièce.
@@ -57,23 +61,23 @@ class TestNominal:
         """
         source = HttpPriceSource(mock_api, timeout_seconds=5.0)
 
-        prices = source.fetch(["FIX-M6-16"], "EUR")
+        quotes = by_ref(source.fetch(["FIX-M6-16"], "EUR"))
 
-        assert prices["FIX-M6-16"] == Decimal("0.039")
+        assert quotes["FIX-M6-16"].price == Decimal("0.039")
 
     def test_asks_only_for_what_it_needs(self, mock_api):
         source = HttpPriceSource(mock_api, timeout_seconds=5.0)
 
-        prices = source.fetch(["FIX-M6-16"], "EUR")
+        quotes = source.fetch(["FIX-M6-16"], "EUR")
 
-        assert list(prices) == ["FIX-M6-16"]
+        assert [quote.part_ref for quote in quotes] == ["FIX-M6-16"]
 
     def test_serves_another_currency(self, mock_api):
         source = HttpPriceSource(mock_api, timeout_seconds=5.0)
 
-        prices = source.fetch(["CHS-TIRE-185-65-15"], "USD")
+        quotes = by_ref(source.fetch(["CHS-TIRE-185-65-15"], "USD"))
 
-        assert prices["CHS-TIRE-185-65-15"] != Decimal("42.000000")
+        assert quotes["CHS-TIRE-185-65-15"].price != Decimal("42.000000")
 
 
 class TestTimeout:

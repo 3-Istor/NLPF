@@ -16,10 +16,10 @@ import socket
 import urllib.error
 import urllib.request
 from decimal import Decimal, InvalidOperation
-from typing import Mapping, Sequence
+from typing import Sequence
 from urllib.parse import urlencode
 
-from ..application.ports import PriceSourceError, PriceSourceTimeout
+from ..application.ports import PriceSourceError, PriceSourceTimeout, Quote
 
 
 class HttpPriceSource:
@@ -38,7 +38,7 @@ class HttpPriceSource:
         #: « none », c'est un mode d'essai, pas un réglage de production.
         self.failure_mode = failure_mode
 
-    def fetch(self, refs: Sequence[str], currency: str) -> Mapping[str, Decimal]:
+    def fetch(self, refs: Sequence[str], currency: str) -> Sequence[Quote]:
         query = urlencode({"refs": ",".join(refs), "currency": currency})
         request = urllib.request.Request(
             f"{self.base_url}/prices?{query}",
@@ -65,27 +65,36 @@ class HttpPriceSource:
                 f"réponse illisible de la source de prix : {failure}"
             ) from failure
 
-        return _to_unit_prices(payload)
+        return _to_quotes(payload)
 
 
-def _to_unit_prices(payload: dict) -> dict[str, Decimal]:
-    """Ramène chaque prix à l'unité.
+def _to_quotes(payload: dict) -> list[Quote]:
+    """Ramène chaque prix à l'unité, sans juger de sa vraisemblance.
+
+    Ce qui est illisible ressort en cotation sans prix, avec ce que l'API a
+    répondu : décider si une valeur est aberrante appartient à l'application,
+    qui seule connaît le dernier prix connu.
 
     Le catalogue cote la visserie par cent : ignorer `per` multiplierait par
     cent le coût de toute la visserie du véhicule, sans lever la moindre erreur.
     """
-    prices: dict[str, Decimal] = {}
-    for quote in payload.get("prices", []):
+    quotes: list[Quote] = []
+    for raw in payload.get("prices", []):
+        ref = raw.get("ref")
+        if ref is None:
+            continue
         try:
-            amount = Decimal(str(quote["price"]))
-            per = Decimal(str(quote.get("per", 1)))
-        except (InvalidOperation, KeyError) as failure:
-            raise PriceSourceError(
-                f"prix inexploitable pour {quote.get('ref', '?')} : {quote}"
-            ) from failure
-        if per <= 0:
-            raise PriceSourceError(
-                f"quantité de référence invalide pour {quote['ref']} : {per}"
+            amount = Decimal(str(raw["price"]))
+            per = Decimal(str(raw.get("per", 1)))
+        except (InvalidOperation, KeyError, TypeError):
+            quotes.append(
+                Quote(ref, None, str(raw.get("price")), "valeur non numérique")
             )
-        prices[quote["ref"]] = amount / per
-    return prices
+            continue
+        if per <= 0:
+            quotes.append(
+                Quote(ref, None, str(raw.get("price")), f"quantité de référence {per}")
+            )
+            continue
+        quotes.append(Quote(ref, amount / per, str(raw["price"])))
+    return quotes

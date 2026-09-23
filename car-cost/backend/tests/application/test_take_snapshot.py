@@ -11,7 +11,7 @@ from decimal import Decimal
 
 import pytest
 
-from carcost.application.ports import PriceSourceTimeout
+from carcost.application.ports import PriceSourceTimeout, Quote
 from carcost.application.take_snapshot import (
     NoPriceAvailable,
     SnapshotTaken,
@@ -36,7 +36,10 @@ class FakeSource:
         self.calls += 1
         if self.timeout:
             raise PriceSourceTimeout("aucune réponse en 2,0 s")
-        return {ref: Decimal(self.prices[ref]) for ref in refs}
+        return [
+            Quote(part_ref=ref, price=Decimal(self.prices[ref]), raw=self.prices[ref])
+            for ref in refs
+        ]
 
 
 def previous_snapshot(taken_at=NOW - timedelta(hours=3)) -> PriceSnapshot:

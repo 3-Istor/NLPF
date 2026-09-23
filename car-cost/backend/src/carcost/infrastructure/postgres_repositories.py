@@ -11,6 +11,7 @@ snapshot et un calcul s'insèrent une fois, complets, et ne se modifient plus
 
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 from decimal import Decimal
 
@@ -147,27 +148,50 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
             prices={part_ref: price for part_ref, price, _ in rows},
         )
 
-    def save(self, snapshot: PriceSnapshot) -> None:
+    def save(self, snapshot: PriceSnapshot, quarantined=(), previous_id=None) -> None:
+        """Écrit le snapshot et son journal de quarantaine, en une transaction.
+
+        Une ligne de repli porte `origin = FALLBACK` et l'identifiant du
+        snapshot dont elle vient : « d'où sort ce prix ? » doit avoir une
+        réponse en base, pas seulement à l'écran.
+        """
+        counts = {
+            "from_api": len(snapshot.prices) - len(snapshot.fallback_refs),
+            "fallback": len(snapshot.fallback_refs),
+            "quarantined": len(quarantined),
+            "missing": len(snapshot.missing_refs),
+        }
+        degraded = snapshot.fallback_refs or snapshot.missing_refs
+
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(
                 """
-                INSERT INTO price_snapshot (id, taken_at, source, status, counts)
-                VALUES (%s, %s, %s, %s, %s::jsonb)
+                INSERT INTO price_snapshot
+                    (id, taken_at, source, status, counts, degraded_reason)
+                VALUES (%s, %s, %s, %s, %s::jsonb, %s)
                 """,
                 (
                     snapshot.id,
                     snapshot.taken_at,
                     snapshot.source,
                     snapshot.status(datetime.now(timezone.utc)).value,
-                    '{"from_api": %d}' % len(snapshot.prices),
+                    json.dumps(counts),
+                    (
+                        f"{counts['quarantined']} valeur(s) en quarantaine, "
+                        f"{counts['fallback']} repli(s), "
+                        f"{counts['missing']} sans prix"
+                        if degraded
+                        else None
+                    ),
                 ),
             )
             with cursor.copy(
                 "COPY price_snapshot_line "
-                "(snapshot_id, part_ref, currency, price, price_per, origin, as_of) "
-                "FROM STDIN"
+                "(snapshot_id, part_ref, currency, price, price_per, origin, as_of, "
+                "fallback_from_snapshot_id) FROM STDIN"
             ) as copy:
                 for part_ref, price in sorted(snapshot.prices.items()):
+                    from_fallback = part_ref in snapshot.fallback_refs
                     copy.write_row(
                         (
                             snapshot.id,
@@ -175,10 +199,55 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
                             snapshot.currency,
                             price,
                             Decimal(1),
-                            "API",
+                            "FALLBACK" if from_fallback else "API",
                             snapshot.taken_at,
+                            previous_id if from_fallback else None,
                         )
                     )
+
+            for entry in quarantined:
+                cursor.execute(
+                    """
+                    INSERT INTO price_quarantine
+                        (snapshot_id, part_ref, currency, rejected_value, reason,
+                         replacement_price, replacement_from_snapshot_id)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    (
+                        snapshot.id,
+                        entry.part_ref,
+                        snapshot.currency,
+                        entry.rejected_value,
+                        entry.reason,
+                        entry.replacement,
+                        previous_id if entry.replacement is not None else None,
+                    ),
+                )
+
+    def quarantine_of(self, snapshot_id: str) -> list[dict]:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT part_ref, rejected_value, reason, replacement_price,
+                       replacement_from_snapshot_id, detected_at
+                FROM price_quarantine
+                WHERE snapshot_id = %s
+                ORDER BY part_ref
+                """,
+                (snapshot_id,),
+            )
+            return [
+                {
+                    "part_ref": part_ref,
+                    "rejected_value": rejected,
+                    "reason": reason,
+                    "replacement": str(replacement) if replacement is not None else None,
+                    "replacement_from_snapshot": source_id,
+                    "detected_at": detected.isoformat(),
+                }
+                for part_ref, rejected, reason, replacement, source_id, detected
+                in cursor.fetchall()
+            ]
 
 
 # --------------------------------------------------------------- scénarios

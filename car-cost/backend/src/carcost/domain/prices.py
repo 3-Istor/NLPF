@@ -34,13 +34,18 @@ class PriceSnapshot:
     currency: str
     source: str
     prices: Mapping[str, Decimal]
+    #: Pièces dont le prix vient du snapshot précédent : valeur refusée, ou
+    #: absente de la réponse.
     fallback_refs: frozenset[str] = field(default_factory=frozenset)
+    #: Pièces sans aucun prix, ni frais ni ancien. Elles sont nommées, jamais
+    #: remplacées par zéro.
+    missing_refs: frozenset[str] = field(default_factory=frozenset)
 
     def age(self, now: datetime) -> timedelta:
         return now - self.taken_at
 
     def status(self, now: datetime) -> SnapshotStatus:
-        if self.fallback_refs:
+        if self.fallback_refs or self.missing_refs:
             return SnapshotStatus.DEGRADED
         if self.age(now) > FRESHNESS_LIMIT:
             return SnapshotStatus.STALE

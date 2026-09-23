@@ -7,6 +7,7 @@ nommé ici.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from decimal import Decimal
 from typing import Mapping, Protocol, Sequence
 
@@ -19,10 +20,25 @@ class PriceSourceTimeout(PriceSourceError):
     """La source n'a pas répondu dans le temps imparti (mode de panne P1)."""
 
 
+@dataclass(frozen=True)
+class Quote:
+    """Ce que la source a répondu pour une pièce, avant tout jugement.
+
+    `price` vaut None quand la réponse est inexploitable — non numérique,
+    devise inconnue. On garde `raw` pour pouvoir dire dans le journal ce qui a
+    été refusé, et pas seulement qu'on a refusé quelque chose.
+    """
+
+    part_ref: str
+    price: Decimal | None
+    raw: str
+    reason: str | None = None
+
+
 class PriceSource(Protocol):
     def fetch(
         self, refs: Sequence[str], currency: str
-    ) -> Mapping[str, Decimal]:  # pragma: no cover - contrat
+    ) -> Sequence[Quote]:  # pragma: no cover - contrat
         ...
 
 

@@ -8,7 +8,7 @@ reproductible.
     python price-api/mock_price_api.py --port 8099 --catalog seeds/price_catalog.json
 
     GET /prices?refs=FIX-M6-16,ELE-ECU-MAIN&currency=EUR
-    X-Mock-Failure: none | timeout
+    X-Mock-Failure: none | timeout | outlier | missing | garbage
 
 Bibliothèque standard seule : un simulateur ne mérite pas une dépendance, et
 celui-ci doit pouvoir démarrer sur n'importe quelle machine de l'équipe.
@@ -66,6 +66,7 @@ class Handler(BaseHTTPRequestHandler):
         currency = query.get("currency", ["EUR"])[0]
 
         quotes = [q for q in (self.catalog.quote(ref, currency) for ref in refs) if q]
+        quotes = self._derail(quotes, failure)
         self._send(
             200,
             {
@@ -75,6 +76,24 @@ class Handler(BaseHTTPRequestHandler):
                 "prices": quotes,
             },
         )
+
+    @staticmethod
+    def _derail(quotes: list[dict], failure: str) -> list[dict]:
+        """Les pannes que le produit doit savoir encaisser.
+
+        Elles portent sur la PREMIÈRE pièce demandée : une panne qui frappe
+        tout le lot se remarque trop facilement, alors que le cas difficile est
+        celui d'une seule ligne fausse au milieu de trois cents justes.
+        """
+        if not quotes or failure in ("none", "timeout"):
+            return quotes
+        if failure == "outlier":
+            quotes[0] = {**quotes[0], "price": "-42.000000"}
+        elif failure == "garbage":
+            quotes[0] = {**quotes[0], "price": "indisponible"}
+        elif failure == "missing":
+            quotes = quotes[1:]
+        return quotes
 
     def _send(self, status: int, payload: dict) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")

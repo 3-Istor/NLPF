@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--currency", default="EUR")
     parser.add_argument("--timeout", type=float, default=2.0)
     parser.add_argument(
-        "--fail", default="none", choices=["none", "timeout"],
+        "--fail", default="none", choices=["none", "timeout", "outlier", "garbage", "missing"],
         help="provoque une panne de l'API, pour la démonstration",
     )
     arguments = parser.parse_args(argv)
@@ -43,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
     purchased = sorted(ref for ref, part in bom.parts.items() if part.is_purchased)
 
     snapshots = PostgresPriceSnapshotRepository(arguments.dsn)
+    previous = snapshots.latest()
     source = HttpPriceSource(
         arguments.api,
         timeout_seconds=arguments.timeout,
@@ -54,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
             source,
             refs=purchased,
             currency=arguments.currency,
-            previous=snapshots.latest(),
+            previous=previous,
             now=datetime.now(timezone.utc),
             snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
         )
@@ -71,11 +72,31 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    snapshots.save(outcome.snapshot)
+    snapshots.save(
+        outcome.snapshot,
+        quarantined=outcome.quarantined,
+        previous_id=previous.id if previous else None,
+    )
     print(
         f"snapshot {outcome.snapshot.id} enregistré : "
         f"{len(outcome.snapshot.prices)} prix en {arguments.currency}"
     )
+    for entry in outcome.quarantined:
+        print(
+            f"  quarantaine {entry.part_ref} : « {entry.rejected_value} » refusé "
+            f"({entry.reason}) — retenu {entry.replacement}"
+        )
+    fallbacks = sorted(outcome.snapshot.fallback_refs)
+    silent = [ref for ref in fallbacks
+              if ref not in {e.part_ref for e in outcome.quarantined}]
+    for ref in silent:
+        # Une pièce absente de la réponse, remplacée par son dernier prix connu.
+        # Ne pas l'annoncer ici serait un repli silencieux.
+        print(f"  repli      {ref} : absent de la réponse, dernier prix connu retenu")
+    for ref in outcome.missing:
+        print(f"  sans prix  {ref} : aucun historique, la pièce est signalée")
+    if outcome.quarantined or outcome.missing or fallbacks:
+        print("  snapshot marqué dégradé ; les calculs qui l'utilisent le diront.")
     return 0
 
 
