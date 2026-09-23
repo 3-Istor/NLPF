@@ -276,3 +276,76 @@ class TestErrors:
 
         assert response.status_code == 409
         assert response.json()["error"]["code"] == "NO_PRICE_SNAPSHOT"
+
+
+class TestCostedTreeLines:
+    """Ce que l'arbre affiche une fois qu'un calcul existe."""
+
+    def calculate(self, client) -> tuple[str, str]:
+        scenario_id = make_scenario(client)
+        calculation = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+        return scenario_id, calculation["id"]
+
+    def children(self, client, path, calculation_id):
+        return client.get(
+            f"/api/v1/bom/{VERSION}/children",
+            params={"path": path, "calculation_id": calculation_id},
+        ).json()["items"]
+
+    def test_a_line_shows_what_this_occurrence_weighs(self, client):
+        """Sous A il y a 8 vis à 10 € : 80 €. Sous B, 15 vis : 150 €.
+        Même pièce, deux lignes, deux montants."""
+        _, calculation_id = self.calculate(client)
+
+        under_a = self.children(client, "V/A", calculation_id)[0]
+        under_b = self.children(client, "V/B", calculation_id)[0]
+
+        assert under_a["rolled_up_contribution"]["amount"] == "80.000000"
+        assert under_b["rolled_up_contribution"]["amount"] == "150.000000"
+
+    def test_on_an_assembly_the_two_montants_differ(self, client):
+        """A : 60 € de main-d'œuvre en propre, 140 € enfants compris.
+        Les additionner reviendrait à compter la vis deux fois."""
+        _, calculation_id = self.calculate(client)
+
+        assembly = next(
+            item
+            for item in self.children(client, "V", calculation_id)
+            if item["part_ref"] == "A"
+        )
+
+        assert assembly["own_contribution"]["amount"] == "60.000000"
+        assert assembly["rolled_up_contribution"]["amount"] == "140.000000"
+
+    def test_a_modified_part_is_marked_and_so_is_its_way_up(self, client):
+        """Sans la remontée, un réglage posé sur une vis est introuvable."""
+        scenario_id, _ = self.calculate(client)
+        client.put(
+            f"/api/v1/scenarios/{scenario_id}/parameters/S",
+            json={"scope": "part", "supplier_id": "SUP-DE"},
+        )
+        calculation_id = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()["id"]
+
+        screw = self.children(client, "V/A", calculation_id)[0]
+        assembly = next(
+            item
+            for item in self.children(client, "V", calculation_id)
+            if item["part_ref"] == "A"
+        )
+
+        assert screw["is_modified"] is True
+        assert screw["has_modified_descendant"] is False
+        assert assembly["is_modified"] is False
+        assert assembly["has_modified_descendant"] is True
+
+    def test_nothing_is_marked_on_an_untouched_scenario(self, client):
+        _, calculation_id = self.calculate(client)
+
+        assert all(
+            item["is_modified"] is False and item["has_modified_descendant"] is False
+            for item in self.children(client, "V", calculation_id)
+        )

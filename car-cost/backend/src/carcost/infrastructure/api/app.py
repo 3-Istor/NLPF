@@ -25,6 +25,7 @@ from ...application.browse_bom import (
     search_parts,
     where_used,
 )
+from ...application.tree_view import with_costs
 from ...application.ports import (
     BomRepository,
     BomVersionNotFound,
@@ -97,24 +98,27 @@ def create_app(repositories: Repositories) -> FastAPI:
     register_calculation_routes(app, repositories)
 
     @app.get("/api/v1/bom/{version}/root")
-    def read_root(version: str):
-        return _node_payload(root_node(repository.load(version)))
+    def read_root(version: str, calculation_id: str | None = Query(None)):
+        bom = repository.load(version)
+        return _render(repositories, bom, (root_node(bom),), calculation_id)[0]
 
     @app.get("/api/v1/bom/{version}/children")
     def read_children(
         version: str,
         path: str = Query(..., description="Le nœud à déplier, chemin complet"),
+        calculation_id: str | None = Query(
+            None, description="Enrichit chaque ligne des chiffres de ce calcul"
+        ),
         limit: int = Query(50, ge=1, le=500),
         offset: int = Query(0, ge=0),
     ):
         # Aucun paramètre de profondeur : le dépliage se fait nœud par nœud, et
         # le navigateur ne doit jamais pouvoir demander le graphe entier.
-        page = children_of_path(
-            repository.load(version), path, limit=limit, offset=offset
-        )
+        bom = repository.load(version)
+        page = children_of_path(bom, path, limit=limit, offset=offset)
         return {
             "path": path,
-            "items": [_node_payload(node) for node in page.items],
+            "items": _render(repositories, bom, page.items, calculation_id),
             "total": page.total,
             "limit": page.limit,
             "offset": page.offset,
@@ -166,6 +170,49 @@ def create_app(repositories: Repositories) -> FastAPI:
         }
 
     return app
+
+
+def _render(repositories, bom, nodes, calculation_id: str | None) -> list[dict]:
+    """Les lignes, avec ou sans les chiffres d'un calcul.
+
+    Sans `calculation_id`, aucun champ monétaire n'est renvoyé — pas même à
+    zéro : un zéro se lit comme un prix.
+    """
+    if calculation_id is None:
+        return [_node_payload(node) for node in nodes]
+
+    calculation = repositories.calculations.get(calculation_id)
+    scenario = repositories.scenarios.get(calculation.scenario_id)
+    return [
+        _costed_payload(costed, calculation.display_currency)
+        for costed in with_costs(bom, tuple(nodes), calculation, scenario)
+    ]
+
+
+def _costed_payload(costed, currency: str) -> dict:
+    payload = _node_payload(costed.node)
+    payload.update(
+        {
+            "quantity_on_path": str(costed.quantity_on_path),
+            "unit_cost": _money(costed.unit_cost, currency),
+            "own_unit_cost": _money(costed.own_unit_cost, currency),
+            # Ce que pèse cette occurrence, enfants compris. Ne se somme pas
+            # entre niveaux : un parent contient déjà ses enfants.
+            "rolled_up_contribution": _money(costed.rolled_up_contribution, currency),
+            # La seule grandeur qui se somme au total.
+            "own_contribution": _money(costed.own_contribution, currency),
+            "price_status": costed.price_status,
+            "is_modified": costed.is_modified,
+            "has_modified_descendant": costed.has_modified_descendant,
+        }
+    )
+    return payload
+
+
+def _money(amount: Decimal | None, currency: str) -> dict | None:
+    if amount is None:
+        return None
+    return {"amount": str(amount), "currency": currency}
 
 
 def _decimal(value: Decimal) -> str:
