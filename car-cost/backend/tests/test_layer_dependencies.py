@@ -11,7 +11,9 @@ from pathlib import Path
 
 import pytest
 
-DOMAIN = Path(__file__).resolve().parents[1] / "src" / "carcost" / "domain"
+SRC = Path(__file__).resolve().parents[1] / "src" / "carcost"
+DOMAIN = SRC / "domain"
+APPLICATION = SRC / "application"
 
 FORBIDDEN = {
     "fastapi",
@@ -25,6 +27,11 @@ FORBIDDEN = {
     "aiohttp",
     "pydantic",
     "redis",
+    # Le réseau non plus : « ni écran, ni réseau, ni fournisseur de prix ».
+    "urllib",
+    "socket",
+    "http",
+    "sqlite3",
 }
 
 
@@ -49,6 +56,28 @@ def test_domain_imports_no_infrastructure(module: Path) -> None:
         f"{module.name} importe {sorted(offenders)} : le moteur doit rester "
         f"testable sans base ni réseau"
     )
+
+
+@pytest.mark.parametrize(
+    "module", sorted(APPLICATION.rglob("*.py")), ids=lambda p: p.name
+)
+def test_application_imports_no_infrastructure(module: Path) -> None:
+    """Les cas d'usage déclarent des ports ; ils n'en connaissent aucun client."""
+    offenders = imported_roots(module) & FORBIDDEN
+
+    assert not offenders, (
+        f"{module.name} importe {sorted(offenders)} : un cas d'usage nomme ce "
+        f"dont il a besoin, pas qui le lui fournit"
+    )
+
+
+def test_the_domain_never_imports_the_application_or_the_infrastructure() -> None:
+    """La flèche de dépendance ne va que vers l'intérieur."""
+    for module in DOMAIN.rglob("*.py"):
+        text = module.read_text(encoding="utf-8")
+
+        assert "from ..application" not in text, module.name
+        assert "from ..infrastructure" not in text, module.name
 
 
 def test_the_guard_itself_is_not_vacuous(tmp_path: Path) -> None:
