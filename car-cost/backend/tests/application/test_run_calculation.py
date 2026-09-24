@@ -228,3 +228,42 @@ class TestStatus:
 
         assert calculation.snapshot_age == timedelta(hours=30)
         assert calculation.snapshot_id == "snp-vieux"
+
+
+class TestIssueCounts:
+    """Le bandeau dit combien de lignes sont concernées, et de quelle façon.
+
+    Chaque ligne compte dans une seule catégorie : une valeur refusée sans
+    aucun historique est une pièce sans prix, pas « en quarantaine » en plus.
+    """
+
+    def test_each_degraded_line_is_counted_once(self):
+        refs = ("FRESH", "ABSENT", "REFUSED", "REFUSED-NO-HISTORY")
+        bom = Bom(
+            root_ref="V",
+            parts={"V": manufactured("V"), **{ref: purchased(ref) for ref in refs}},
+            edges=tuple(Edge("V", ref, Decimal("1")) for ref in refs),
+        )
+        sourcing = Sourcing(
+            offers={
+                ref: (SupplierOffer("SUP", Decimal("1.000000"), is_default=True),)
+                for ref in refs
+            },
+            plants={
+                "SUP": (
+                    Plant("PLT", "SUP", "IT", Decimal("1.000000"), Decimal("0.02"),
+                          is_default=True),
+                )
+            },
+        )
+        snapshot = PriceSnapshot(
+            id="snp-2", taken_at=NOW, currency="EUR", source="mock",
+            prices={ref: Decimal("1.000000") for ref in refs[:3]},
+            fallback_refs=frozenset({"ABSENT", "REFUSED"}),
+            quarantined_refs=frozenset({"REFUSED", "REFUSED-NO-HISTORY"}),
+            missing_refs=frozenset({"REFUSED-NO-HISTORY"}),
+        )
+
+        counts = run(bom, sourcing, snapshot).issue_counts()
+
+        assert counts == {"missing_price": 1, "quarantined": 1, "fallback": 1}

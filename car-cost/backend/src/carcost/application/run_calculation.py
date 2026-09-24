@@ -13,10 +13,11 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from decimal import ROUND_HALF_UP, Decimal
 from enum import Enum
+from typing import Mapping
 
 from ..domain.bom import Bom
 from ..domain.engine import PartLine, compute
@@ -39,6 +40,31 @@ class CalculationStatus(str, Enum):
     #: concernées sont nommées plutôt que remplacées par zéro.
     INCOMPLETE = "INCOMPLETE"
     FAILED = "FAILED"
+
+
+class PriceStatus(str, Enum):
+    """D'où vient le prix d'une ligne, dit sur la ligne elle-même.
+
+    Une ligne a un seul statut : sans prix, elle est `MISSING` même si la
+    valeur reçue avait d'abord été refusée — il n'y a rien de retenu à montrer.
+    """
+
+    OK = "OK"
+    #: Absente de la réponse de l'API : le dernier prix connu a été retenu.
+    FALLBACK = "FALLBACK"
+    #: Reçue mais refusée (journal de quarantaine) : le dernier prix sain a été
+    #: retenu à la place.
+    QUARANTINED = "QUARANTINED"
+    #: Aucun prix. Jamais remplacé par zéro.
+    MISSING = "MISSING"
+
+
+#: Les clés de `issue_counts`, telles que docs/api.md §4.1 les nomme.
+ISSUE_KEYS = {
+    PriceStatus.MISSING: "missing_price",
+    PriceStatus.QUARANTINED: "quarantined",
+    PriceStatus.FALLBACK: "fallback",
+}
 
 
 @dataclass(frozen=True)
@@ -81,6 +107,17 @@ class Calculation:
     top_contributors: tuple[Contributor, ...]
     parts_without_price: tuple[str, ...]
     explanations: dict[str, PriceExplanation]
+    #: Les lignes dont le prix n'est pas `OK`, et elles seules.
+    price_statuses: Mapping[str, PriceStatus] = field(default_factory=dict)
+
+    def price_status_of(self, part_ref: str) -> PriceStatus:
+        return self.price_statuses.get(part_ref, PriceStatus.OK)
+
+    def issue_counts(self) -> dict[str, int]:
+        counts = {key: 0 for key in ISSUE_KEYS.values()}
+        for status in self.price_statuses.values():
+            counts[ISSUE_KEYS[status]] += 1
+        return counts
 
 
 def run_calculation(
@@ -126,7 +163,26 @@ def run_calculation(
         top_contributors=_contributors(bom, result.lines, total, first_paths, top),
         parts_without_price=result.parts_without_price,
         explanations=resolved.explanations,
+        price_statuses=_price_statuses(
+            snapshot, resolved, result.parts_without_price
+        ),
     )
+
+
+def _price_statuses(
+    snapshot: PriceSnapshot, resolved: ResolvedPrices, missing: tuple[str, ...]
+) -> dict[str, PriceStatus]:
+    statuses = {ref: PriceStatus.MISSING for ref in missing}
+    for ref, explanation in resolved.explanations.items():
+        # Un prix forcé remplace celui du snapshot : ce qui est arrivé à ce
+        # dernier ne dit plus rien du montant affiché.
+        if explanation.is_overridden:
+            continue
+        if ref in snapshot.quarantined_refs:
+            statuses[ref] = PriceStatus.QUARANTINED
+        elif ref in snapshot.fallback_refs:
+            statuses[ref] = PriceStatus.FALLBACK
+    return statuses
 
 
 def with_contributors(calculation: Calculation, bom: Bom, top: int = 15) -> Calculation:

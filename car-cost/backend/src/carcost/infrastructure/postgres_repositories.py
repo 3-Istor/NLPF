@@ -24,7 +24,7 @@ from ..application.ports import (
     ScenarioNotFound,
 )
 from ..application.price_resolution import PriceExplanation
-from ..application.run_calculation import Calculation, CalculationStatus
+from ..application.run_calculation import Calculation, CalculationStatus, PriceStatus
 from ..application.scenario import (
     Plant,
     Scenario,
@@ -444,7 +444,7 @@ class PostgresCalculationRepository(_PostgresRepository):
                             line.own_unit_cost,
                             line.own_contribution,
                             line.occurrence_count,
-                            "MISSING" if line.own_unit_cost is None else "OK",
+                            calculation.price_status_of(line.part_ref).value,
                             explanation.supplier_id if explanation else None,
                             explanation.plant_id if explanation else None,
                         )
@@ -526,7 +526,8 @@ class PostgresCalculationRepository(_PostgresRepository):
             cursor.execute(
                 """
                 SELECT part_ref, cumulative_quantity, occurrence_count, unit_cost,
-                       own_unit_cost, own_contribution, supplier_id, plant_id
+                       own_unit_cost, own_contribution, supplier_id, plant_id,
+                       price_status
                 FROM calculation_line
                 WHERE calculation_id = %s
                 ORDER BY part_ref
@@ -543,9 +544,17 @@ class PostgresCalculationRepository(_PostgresRepository):
                     own_contribution=own,
                     full_unit_cost=full,
                 )
-                for part_ref, quantity, occurrences, full, own_unit, own, _, _
+                for part_ref, quantity, occurrences, full, own_unit, own, _, _, _
                 in rows
             )
+            # Relu tel qu'il a été écrit, pas recalculé depuis le snapshot : le
+            # calcul dit ce qu'il a vu, et un snapshot n'est de toute façon
+            # jamais modifié.
+            price_statuses = {
+                row[0]: PriceStatus(row[8])
+                for row in rows
+                if row[8] != PriceStatus.OK.value
+            }
             # Le fournisseur et l'usine retenus sont relus ; les trois facteurs
             # du prix ne sont pas stockés. La décomposition complète se
             # recalcule à la demande (route /explain, tranche T2) plutôt que
@@ -557,7 +566,7 @@ class PostgresCalculationRepository(_PostgresRepository):
                     supplier_id=supplier_id,
                     plant_id=plant_id,
                 )
-                for part_ref, _, _, _, own_unit, _, supplier_id, plant_id in rows
+                for part_ref, _, _, _, own_unit, _, supplier_id, plant_id, _ in rows
                 if supplier_id is not None
             }
 
@@ -611,4 +620,5 @@ class PostgresCalculationRepository(_PostgresRepository):
             top_contributors=(),
             parts_without_price=missing,
             explanations=explanations,
+            price_statuses=price_statuses,
         )

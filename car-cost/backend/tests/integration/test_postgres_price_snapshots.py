@@ -19,6 +19,9 @@ from decimal import Decimal
 import pytest
 
 from carcost.application.ports import PriceSnapshotNotFound
+from carcost.application.price_resolution import resolve_unit_prices
+from carcost.application.run_calculation import PriceStatus, run_calculation
+from carcost.application.scenario import Scenario
 from carcost.application.take_snapshot import QuarantinedPrice
 from carcost.domain.prices import PriceSnapshot, SnapshotStatus
 
@@ -146,3 +149,46 @@ class TestReadingBack:
         with pytest.raises(PriceSnapshotNotFound):
             snapshots.quarantine_of("snp-qui-n-existe-pas")
 
+
+class TestCalculationLines:
+    def test_each_line_keeps_the_origin_of_its_price(self, connection, two_purchased):
+        from carcost.infrastructure.postgres_bom_repository import (
+            PostgresBomRepository,
+        )
+        from carcost.infrastructure.postgres_repositories import (
+            PostgresCalculationRepository,
+            PostgresPriceSnapshotRepository,
+            PostgresScenarioRepository,
+            PostgresSourcingRepository,
+        )
+
+        fresh_ref, refused_ref = two_purchased
+        snapshots = held(PostgresPriceSnapshotRepository(DSN), connection)
+        save_degraded(snapshots, fresh_ref, refused_ref)
+        snapshot = snapshots.get("snp-test-jour")
+
+        # En lecture seule, et déjà validée en base : pas besoin de la transaction.
+        bom = PostgresBomRepository(DSN).load(VERSION)
+        sourcing = held(PostgresSourcingRepository(DSN), connection).load(VERSION)
+        scenario = Scenario(
+            id="scn-test-quarantaine", bom_version=VERSION,
+            display_currency="EUR", labour_rate=Decimal("42.00"),
+        )
+        held(PostgresScenarioRepository(DSN), connection).create(scenario)
+
+        calculation = run_calculation(
+            bom=bom, scenario=scenario, snapshot=snapshot,
+            resolved=resolve_unit_prices(bom, sourcing, snapshot, scenario),
+            now=NOW, calculation_id="calc-test-quarantaine",
+        )
+        calculations = held(PostgresCalculationRepository(DSN), connection)
+        calculations.save(calculation)
+
+        read = calculations.get("calc-test-quarantaine")
+
+        assert read.price_status_of(fresh_ref) is PriceStatus.OK
+        assert read.price_status_of(refused_ref) is PriceStatus.QUARANTINED
+        # Toutes les autres pièces achetées sont sans prix dans ce snapshot de
+        # deux lignes : elles le restent à la relecture, et aucune n'a pris zéro.
+        assert read.issue_counts() == calculation.issue_counts()
+        assert read.issue_counts()["missing_price"] > 0

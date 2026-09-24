@@ -119,12 +119,9 @@ def with_costs(
                     quantity * own_unit_cost if own_unit_cost is not None else None
                 ),
                 # Un prix manquant se dit ; il ne se remplace pas par zéro, qui
-                # se lirait comme « cette pièce est gratuite ».
-                price_status=(
-                    "MISSING"
-                    if node.part_ref in calculation.parts_without_price
-                    else "OK"
-                ),
+                # se lirait comme « cette pièce est gratuite ». Un prix de repli
+                # se dit aussi : sur la ligne, pas seulement sur le total.
+                price_status=calculation.price_status_of(node.part_ref).value,
                 is_modified=marks.is_modified(node.part_ref),
                 has_modified_descendant=marks.has_modified_descendant(node.part_ref),
             )

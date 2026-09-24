@@ -317,6 +317,9 @@ def _calculation_payload(calculation) -> dict:
             for contributor in calculation.top_contributors
         ],
         "parts_without_price": list(calculation.parts_without_price),
+        # Compté ici plutôt que dans le navigateur : chaque ligne relève d'une
+        # seule catégorie, et c'est le serveur qui sait laquelle.
+        "issue_counts": calculation.issue_counts(),
     }
 
 

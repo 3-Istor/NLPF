@@ -178,6 +178,12 @@ Points de contrat :
 - `has_modified_descendant` est calculé **côté serveur** : le front ne connaît pas le graphe et ne
   peut pas le déduire (ADR-0009).
 - Sans `calculation_id`, les champs monétaires sont absents — jamais `null` déguisé en zéro.
+- `price_status` dit d'où vient le prix **de cette ligne** : `OK` ; `FALLBACK` (absente de la
+  réponse de l'API, dernier prix connu retenu) ; `QUARANTINED` (reçue mais refusée, dernier prix
+  sain retenu — le détail est au journal, §5.3) ; `MISSING` (aucun prix, jamais un zéro). Une
+  ligne n'a qu'un statut : refusée **et** sans historique, elle est `MISSING`. Un prix forcé par
+  le scénario est `OK` : ce qui est arrivé au snapshot ne dit plus rien du montant affiché. Seule
+  la ligne concernée est marquée ; ses parents ne le sont pas.
 
 ### 2.4 `GET /bom/{bom_version}/where-used`
 
@@ -347,6 +353,9 @@ Réponse `200` avec le nouvel `calculation_state`.
 - La somme des `systems[].cost` est **exactement** `total_cost` (ADR-0011). Les pourcentages, eux,
   sont arrondis à une décimale et peuvent ne pas totaliser 100.
 - `first_path` permet au front de déplier jusqu'au contributeur en un clic.
+- `issue_counts` compte les **pièces** selon leur `price_status` (§2.3) : les trois catégories sont
+  disjointes. Ce n'est pas le `counts` d'un snapshot (§5.1), où `fallback` inclut les valeurs mises
+  en quarantaine puis remplacées.
 
 ### 4.2 `GET /calculations/{id}/aggregated` — vue agrégée
 

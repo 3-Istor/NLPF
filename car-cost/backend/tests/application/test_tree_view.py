@@ -131,6 +131,67 @@ class TestCostedLines:
         assert nodes[0].own_contribution is None
 
 
+
+class TestPriceStatusOnTheLine:
+    """Un prix dégradé se voit sur la ligne concernée, pas seulement sur le total.
+
+    Sans ce marquage, l'écran annonce « prix dégradés » et laisse l'utilisateur
+    chercher lequel parmi trois cents.
+    """
+
+    def screw(self, bom, snapshot, scenario=None):
+        scenario = scenario or a_scenario()
+        resolved = resolve_unit_prices(
+            bom, FakeSourcingRepository().load("bom-test"), snapshot, scenario
+        )
+        result = run_calculation(
+            bom=bom, scenario=scenario, snapshot=snapshot, resolved=resolved,
+            now=NOW, calculation_id="calc-3",
+        )
+        return with_costs(bom, children_of_path(bom, "V/A").items, result, scenario)[0]
+
+    def snapshot(self, **refs):
+        return PriceSnapshot(
+            id="snp-2", taken_at=NOW, currency="EUR", source="mock",
+            prices={"S": Decimal("10.000000")}, **refs,
+        )
+
+    def test_a_fresh_price_is_ok(self, bom):
+        assert self.screw(bom, self.snapshot()).price_status == "OK"
+
+    def test_a_price_carried_over_from_the_previous_snapshot_says_so(self, bom):
+        line = self.screw(bom, self.snapshot(fallback_refs=frozenset({"S"})))
+
+        assert line.price_status == "FALLBACK"
+        # Le montant reste affiché : un repli est un prix, pas un trou.
+        assert line.own_contribution == Decimal("80")
+
+    def test_a_refused_value_is_told_apart_from_an_absent_one(self, bom):
+        line = self.screw(
+            bom,
+            self.snapshot(
+                fallback_refs=frozenset({"S"}), quarantined_refs=frozenset({"S"})
+            ),
+        )
+
+        assert line.price_status == "QUARANTINED"
+
+    def test_a_forced_price_does_not_inherit_the_snapshot_s_trouble(self, bom):
+        """Le prix forcé remplace celui du snapshot : l'origine de ce dernier
+        ne dit plus rien du montant affiché."""
+        scenario = a_scenario(
+            ScenarioParameter(
+                part_ref="S", scope="part", price_override=Decimal("9.50"),
+                price_override_justification="devis ferme du 2026-09-20",
+            )
+        )
+        line = self.screw(
+            bom, self.snapshot(fallback_refs=frozenset({"S"})), scenario
+        )
+
+        assert line.price_status == "OK"
+
+
 class TestModificationMarks:
     def test_a_touched_part_is_marked(self, bom):
         scenario = a_scenario(
