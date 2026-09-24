@@ -4,7 +4,7 @@
 # qu'ils n'ont aucune raison de s'attendre l'un l'autre.
 #
 # Le travail backend monte un vrai Postgres, y applique le schéma et y charge la
-# nomenclature : sans base, les six tests d'intégration se sautent, et une suite
+# nomenclature : sans base, les tests d'intégration se sautent, et une suite
 # qui se saute en silence ne prouve rien.
 
 name: CI

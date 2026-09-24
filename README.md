@@ -195,16 +195,18 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 181 tests
+# backend — 201 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 7 tests
+# front — 15 tests
 cd car-cost/frontend && npm test
 ```
 
-Les six tests d'intégration se **sautent** si Postgres n'est pas joignable : la
-suite reste verte hors ligne. Vérifié sur Ubuntu 24.04 (Python 3.12.3) :
-`175 passed, 6 skipped`.
+Les onze tests d'intégration se **sautent** si Postgres n'est pas joignable : la
+suite reste verte hors ligne. Vérifié sous WSL (Python 3.12) : `190 passed,
+11 skipped` hors ligne, `201 passed` avec la base chargée. Les tests
+d'intégration qui écrivent le font dans une transaction annulée : un snapshot ne
+se supprime pas, et un snapshot de test deviendrait celui que l'écran utilise.
 
 Deux contrôles valent d'être lancés à la main :
 
@@ -254,6 +256,11 @@ entièrement distinct.
   impossible, vérifié sur une vraie base
 - Snapshot de prix immuable, repli sur timeout, quarantaine des valeurs
   aberrantes, pièces sans prix nommées
+- Prix dégradés visibles : chaque ligne d'arbre dit si son prix est frais, de
+  repli, en quarantaine ou manquant ; la synthèse compte les lignes concernées
+  et affiche le journal de quarantaine, dont chaque entrée déplie l'arbre
+  jusqu'à la pièce. Vérifié à l'écran contre la vraie base, sur des snapshots
+  `--fail outlier` et `--fail missing`
 - API de dépliage nœud par nœud, where-used, recherche, calcul, scénarios
 - Écran : arbre dépliable, synthèse permanente, panneau de saisie contextuel,
   marquage des modifications, totaux obsolètes signalés
@@ -262,11 +269,10 @@ entièrement distinct.
 
 **Tranche T2 — « l'outil dit la vérité sur ses prix »**
 
-- [ ] **Rendre la quarantaine visible.** Le backend met en quarantaine et
-      journalise ; l'écran n'en montre rien. Il manque la route
-      `GET /price-snapshots/{id}/quarantine`, et une ligne d'arbre ne distingue
-      pas encore un prix de repli d'un prix frais. C'est la moitié manquante de
-      ce qui vient d'être construit, et le prochain chantier.
+- [ ] **Lister les prix de repli.** La synthèse les compte, mais seules les
+      valeurs en quarantaine sont cliquables (par le journal). Sur une panne
+      qui touche trente pièces, les trouver dans l'arbre reste une chasse. La
+      route prévue est `GET /calculations/{id}/issues` (docs/api.md §4.5).
 - [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
       pièce, CO₂ de transport par usine — mais ne calcule que le coût.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
@@ -295,6 +301,24 @@ entièrement distinct.
   et l'usine retenus sont persistés ; la décomposition
   `référence × multiplicateur × coefficient` sera recalculée par une route
   `/explain`, pas stockée en double.
+- **Un snapshot relu oublie ses pièces sans prix.** Elles n'ont pas de ligne en
+  base, seulement un compte. Relu, un snapshot où une pièce n'avait aucun prix
+  s'affiche `fresh` ; le calcul, lui, reste `INCOMPLETE` et nomme la pièce —
+  rien n'est silencieux, mais la pastille du snapshot ment. Corriger demande de
+  stocker ces références (migration).
+- **La date d'un prix de repli est fausse.** `as_of` vaut la date du snapshot
+  qui reprend le prix, pas celle du prix. Sur une chaîne de replis, seul
+  `fallback_from_snapshot_id`, remonté de proche en proche, dit d'où vient la
+  valeur. La route `/explain` devra le faire ; les lignes déjà écrites sont
+  immuables.
+- **Le journal de quarantaine n'est pas protégé en écriture.** Snapshot et
+  lignes de prix ont leur déclencheur d'immutabilité ; `price_quarantine` non.
+  L'ajouter fait passer le contrôle du schéma de 15 à 16 refus.
+- **Le motif de quarantaine est une phrase**, pas le code prévu par le contrat
+  initial (docs/api.md §5.3). Suffisant pour l'écran ; pas pour trier.
+- **Déplier jusqu'à une pièce ouvre le panneau de chaque ancêtre** (journal,
+  contributeurs, recherche) : l'arbre se remplit de panneaux qu'on n'a pas
+  demandés.
 - **Pas de purge des snapshots**, pas de comparaison entre deux scénarios, pas
   de recalcul incrémental. Chacune a son signal de réouverture dans
   [docs/perimetre.md](car-cost/docs/perimetre.md) §3.
