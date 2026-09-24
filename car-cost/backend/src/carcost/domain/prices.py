@@ -40,6 +40,10 @@ class PriceSnapshot:
     #: Pièces sans aucun prix, ni frais ni ancien. Elles sont nommées, jamais
     #: remplacées par zéro.
     missing_refs: frozenset[str] = field(default_factory=frozenset)
+    #: Parmi les précédentes, celles dont la valeur reçue a été refusée plutôt
+    #: qu'absente. La différence se lit sur la ligne : une valeur refusée
+    #: renvoie au journal de quarantaine, une absence renvoie à la source.
+    quarantined_refs: frozenset[str] = field(default_factory=frozenset)
 
     def age(self, now: datetime) -> timedelta:
         return now - self.taken_at

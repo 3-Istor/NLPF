@@ -14,6 +14,8 @@ from carcost.application.ports import (
     BomVersionNotFound,
     BomVersionNotValidated,
     CalculationNotFound,
+    PriceSnapshotNotFound,
+    QuarantineRecord,
     ScenarioNotFound,
 )
 from carcost.application.scenario import Plant, Scenario, Sourcing, SupplierOffer
@@ -67,6 +69,7 @@ def _default_sourcing() -> Sourcing:
 class FakeSnapshotRepository:
     def __init__(self, *snapshots):
         self.snapshots = list(snapshots)
+        self.journals: dict[str, tuple[QuarantineRecord, ...]] = {}
 
     def latest(self):
         return self.snapshots[-1] if self.snapshots else None
@@ -75,12 +78,30 @@ class FakeSnapshotRepository:
         for snapshot in self.snapshots:
             if snapshot.id == snapshot_id:
                 return snapshot
-        raise KeyError(snapshot_id)
+        raise PriceSnapshotNotFound(snapshot_id)
 
-    def save(self, snapshot) -> None:
+    def save(self, snapshot, quarantined=(), previous_id=None) -> None:
         if any(existing.id == snapshot.id for existing in self.snapshots):
             raise AssertionError("un snapshot enregistré ne se réécrit pas")
         self.snapshots.append(snapshot)
+        self.journals[snapshot.id] = tuple(
+            QuarantineRecord(
+                part_ref=entry.part_ref,
+                currency=snapshot.currency,
+                rejected_value=entry.rejected_value,
+                reason=entry.reason,
+                replacement=entry.replacement,
+                replacement_from_snapshot=(
+                    previous_id if entry.replacement is not None else None
+                ),
+                detected_at=snapshot.taken_at,
+            )
+            for entry in quarantined
+        )
+
+    def quarantine_of(self, snapshot_id: str):
+        self.get(snapshot_id)
+        return self.journals.get(snapshot_id, ())
 
 
 class FakeScenarioRepository:

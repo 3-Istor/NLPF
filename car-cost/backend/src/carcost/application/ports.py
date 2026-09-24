@@ -8,6 +8,7 @@ nommé ici.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 from decimal import Decimal
 from typing import Mapping, Protocol, Sequence
 
@@ -66,16 +67,55 @@ class SourcingRepository(Protocol):
         ...
 
 
+class PriceSnapshotNotFound(KeyError):
+    """Snapshot inconnu."""
+
+
+@dataclass(frozen=True)
+class QuarantineRecord:
+    """Une valeur refusée, telle que le journal la conserve.
+
+    `rejected_value` reste du texte : ce que l'API a renvoyé n'était pas
+    forcément un nombre, et c'est précisément ce qu'on veut pouvoir montrer.
+    """
+
+    part_ref: str
+    currency: str
+    rejected_value: str
+    reason: str
+    #: Ce qui a été retenu à la place, ou None : la pièce est alors sans prix.
+    replacement: Decimal | None
+    replacement_from_snapshot: str | None
+    detected_at: datetime
+
+
 class PriceSnapshotRepository(Protocol):
     def latest(self):  # pragma: no cover - contrat
         """Le dernier snapshot pris, même périmé — ou None s'il n'y en a aucun."""
         ...
 
     def get(self, snapshot_id: str):  # pragma: no cover - contrat
+        """Lève PriceSnapshotNotFound si l'identifiant est inconnu."""
         ...
 
-    def save(self, snapshot) -> None:  # pragma: no cover - contrat
-        """Écrit un snapshot. Ne le modifie jamais : un nouveau est un nouveau."""
+    def save(
+        self, snapshot, quarantined=(), previous_id: str | None = None
+    ) -> None:  # pragma: no cover - contrat
+        """Écrit un snapshot et son journal de quarantaine.
+
+        Ne le modifie jamais : un nouveau est un nouveau.
+        """
+        ...
+
+    def quarantine_of(
+        self, snapshot_id: str
+    ) -> Sequence[QuarantineRecord]:  # pragma: no cover - contrat
+        """Le journal d'un snapshot, vide s'il est sain.
+
+        Lève PriceSnapshotNotFound si l'identifiant est inconnu : un journal
+        vide ne doit pas pouvoir se lire comme « tout allait bien » pour un
+        snapshot qui n'existe pas.
+        """
         ...
 
 

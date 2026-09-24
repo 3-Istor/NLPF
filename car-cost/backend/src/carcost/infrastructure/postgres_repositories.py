@@ -17,7 +17,12 @@ from decimal import Decimal
 
 import psycopg
 
-from ..application.ports import CalculationNotFound, ScenarioNotFound
+from ..application.ports import (
+    CalculationNotFound,
+    PriceSnapshotNotFound,
+    QuarantineRecord,
+    ScenarioNotFound,
+)
 from ..application.price_resolution import PriceExplanation
 from ..application.run_calculation import Calculation, CalculationStatus
 from ..application.scenario import (
@@ -110,10 +115,13 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
         LIMIT 1
     """
     LINES = """
-        SELECT part_ref, price, currency
+        SELECT part_ref, price, currency, origin
         FROM price_snapshot_line
         WHERE snapshot_id = %s
         ORDER BY part_ref
+    """
+    QUARANTINED_REFS = """
+        SELECT DISTINCT part_ref FROM price_quarantine WHERE snapshot_id = %s
     """
 
     def latest(self) -> PriceSnapshot | None:
@@ -122,7 +130,7 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
     def get(self, snapshot_id: str) -> PriceSnapshot:
         snapshot = self._read(snapshot_id)
         if snapshot is None:
-            raise KeyError(snapshot_id)
+            raise PriceSnapshotNotFound(snapshot_id)
         return snapshot
 
     def _read(self, snapshot_id: str | None) -> PriceSnapshot | None:
@@ -139,13 +147,24 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
             cursor.execute(self.LINES, (identifier,))
             rows = cursor.fetchall()
 
+            cursor.execute(self.QUARANTINED_REFS, (identifier,))
+            quarantined = frozenset(row[0] for row in cursor.fetchall())
+
         currency = rows[0][2] if rows else "EUR"
+        # Sans l'origine, un snapshot dégradé relu en base passait pour frais,
+        # et le calcul qui s'en servait sortait `OK` : un repli silencieux.
+        # Les pièces restées sans prix, elles, ne se relisent pas — elles n'ont
+        # pas de ligne ; le calcul les retrouve en cherchant leur prix.
         return PriceSnapshot(
             id=identifier,
             taken_at=taken_at,
             currency=currency,
             source=source,
-            prices={part_ref: price for part_ref, price, _ in rows},
+            prices={part_ref: price for part_ref, price, _, _ in rows},
+            fallback_refs=frozenset(
+                part_ref for part_ref, _, _, origin in rows if origin == "FALLBACK"
+            ),
+            quarantined_refs=quarantined,
         )
 
     def save(self, snapshot: PriceSnapshot, quarantined=(), previous_id=None) -> None:
@@ -224,29 +243,36 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
                     ),
                 )
 
-    def quarantine_of(self, snapshot_id: str) -> list[dict]:
+    def quarantine_of(self, snapshot_id: str) -> list[QuarantineRecord]:
         with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM price_snapshot WHERE id = %s", (snapshot_id,))
+            if cursor.fetchone() is None:
+                raise PriceSnapshotNotFound(snapshot_id)
+
             cursor.execute(
                 """
-                SELECT part_ref, rejected_value, reason, replacement_price,
+                SELECT part_ref, currency, rejected_value, reason, replacement_price,
                        replacement_from_snapshot_id, detected_at
                 FROM price_quarantine
                 WHERE snapshot_id = %s
-                ORDER BY part_ref
+                ORDER BY part_ref, id
                 """,
                 (snapshot_id,),
             )
             return [
-                {
-                    "part_ref": part_ref,
-                    "rejected_value": rejected,
-                    "reason": reason,
-                    "replacement": str(replacement) if replacement is not None else None,
-                    "replacement_from_snapshot": source_id,
-                    "detected_at": detected.isoformat(),
-                }
-                for part_ref, rejected, reason, replacement, source_id, detected
-                in cursor.fetchall()
+                QuarantineRecord(
+                    part_ref=part_ref,
+                    currency=currency,
+                    rejected_value=rejected,
+                    reason=reason,
+                    replacement=replacement,
+                    replacement_from_snapshot=source_id,
+                    detected_at=detected,
+                )
+                for (
+                    part_ref, currency, rejected, reason, replacement, source_id,
+                    detected,
+                ) in cursor.fetchall()
             ]
 
 

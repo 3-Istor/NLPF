@@ -120,6 +120,7 @@ def take_snapshot(
             prices=prices,
             fallback_refs=frozenset(fallback),
             missing_refs=frozenset(missing),
+            quarantined_refs=frozenset(entry.part_ref for entry in quarantined),
         ),
         quarantined=tuple(quarantined),
         missing=tuple(sorted(missing)),

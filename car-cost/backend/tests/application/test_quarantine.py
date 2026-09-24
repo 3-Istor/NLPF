@@ -139,3 +139,23 @@ class TestMissingPrices:
         outcome = take(good("PANEL", "12.000000"), previous=None)
 
         assert outcome.snapshot.status(NOW) is SnapshotStatus.DEGRADED
+
+
+class TestRefusedOrAbsent:
+    """Deux replis, deux vérifications différentes pour qui lit la ligne.
+
+    Une valeur refusée appelle un coup d'œil au journal ; une pièce absente de
+    la réponse, une question à la source. Le snapshot garde donc la différence.
+    """
+
+    def test_a_refused_value_is_remembered_as_quarantined(self):
+        outcome = take(good("SCREW", "-42.000000"), good("PANEL", "12.000000"))
+
+        assert outcome.snapshot.quarantined_refs == frozenset({"SCREW"})
+        assert outcome.snapshot.fallback_refs == frozenset({"SCREW"})
+
+    def test_an_absent_part_falls_back_without_being_quarantined(self):
+        outcome = take(good("PANEL", "12.000000"))
+
+        assert outcome.snapshot.fallback_refs == frozenset({"SCREW"})
+        assert outcome.snapshot.quarantined_refs == frozenset()
