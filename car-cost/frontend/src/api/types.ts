@@ -17,6 +17,15 @@ export type Money = {
 
 export type ValuationMode = "purchased" | "manufactured";
 
+/**
+ * D'où vient le prix d'une ligne. Décidé par le serveur, affiché tel quel.
+ *
+ * - `FALLBACK` : absent de la réponse de l'API, dernier prix connu retenu ;
+ * - `QUARANTINED` : reçu mais refusé, dernier prix sain retenu ;
+ * - `MISSING` : aucun prix — jamais un zéro.
+ */
+export type PriceStatus = "OK" | "FALLBACK" | "QUARANTINED" | "MISSING";
+
 export type TreeLine = {
   readonly path: string;
   readonly part_ref: string;
@@ -40,7 +49,7 @@ export type TreeLine = {
   readonly rolled_up_contribution?: Money | null;
   /** La contribution propre : celle qui se somme au total. */
   readonly own_contribution?: Money | null;
-  readonly price_status?: "OK" | "MISSING" | "FALLBACK";
+  readonly price_status?: PriceStatus;
   readonly is_modified?: boolean;
   readonly has_modified_descendant?: boolean;
 };
@@ -138,6 +147,30 @@ export type Calculation = {
   readonly systems: readonly SystemTotal[];
   readonly top_cost_contributors: readonly Contributor[];
   readonly parts_without_price: readonly string[];
+  /** Une ligne compte dans une seule catégorie. Compté par le serveur. */
+  readonly issue_counts: {
+    readonly missing_price: number;
+    readonly quarantined: number;
+    readonly fallback: number;
+  };
+};
+
+/** Une valeur refusée par le contrôle, telle que le journal la conserve. */
+export type QuarantineEntry = {
+  readonly part_ref: string;
+  readonly currency: string;
+  /** Telle que reçue : ce n'était pas forcément un nombre. */
+  readonly rejected_value: string;
+  readonly reason: string;
+  /** `null` : rien n'a pu être retenu, la pièce est sans prix. */
+  readonly replacement: Money | null;
+  readonly replacement_from_snapshot: string | null;
+  readonly detected_at: string;
+};
+
+export type QuarantineJournal = {
+  readonly snapshot_id: string;
+  readonly items: readonly QuarantineEntry[];
 };
 
 export type Supplier = {

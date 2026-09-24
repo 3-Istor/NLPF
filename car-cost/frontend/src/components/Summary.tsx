@@ -7,17 +7,25 @@
  * d'ergonomie.
  */
 
-import type { Calculation, CalculationState } from "../api/types";
+import type {
+  Calculation,
+  CalculationState,
+  QuarantineJournal,
+} from "../api/types";
 import { age, money, percent, quantity } from "../format";
+import { refusal } from "../quarantine";
 
 type Props = {
   calculation: Calculation | null;
+  /** `null` tant qu'il n'est pas lu, ou s'il n'a pas pu l'être. */
+  journal: QuarantineJournal | null;
   state: CalculationState;
   staleReason: string | null;
   busy: boolean;
   failure: string | null;
   onRecalculate: () => void;
   onGoToPath: (path: string) => void;
+  onGoToPart: (partRef: string) => void;
 };
 
 const STATE_LABELS: Record<CalculationState, string> = {
@@ -29,12 +37,14 @@ const STATE_LABELS: Record<CalculationState, string> = {
 
 export function Summary({
   calculation,
+  journal,
   state,
   staleReason,
   busy,
   failure,
   onRecalculate,
   onGoToPath,
+  onGoToPart,
 }: Props) {
   const stale = state !== "UP_TO_DATE";
 
@@ -76,7 +86,7 @@ export function Summary({
             >
               {calculation.status === "INCOMPLETE"
                 ? `Total incomplet : ${calculation.parts_without_price.length} pièce(s) sans prix.`
-                : "Prix dégradés : repli après panne, ou snapshot périmé."}
+                : degradedMessage(calculation)}
             </p>
           )}
 
@@ -96,6 +106,38 @@ export function Summary({
               {age(calculation.price_snapshot.age_seconds)}
             </dd>
           </dl>
+
+          {(calculation.issue_counts.quarantined > 0 ||
+            (journal?.items.length ?? 0) > 0) && (
+            <>
+              <h3>Journal de quarantaine</h3>
+              {journal ? (
+                <ul className="quarantine">
+                  {journal.items.map((entry, index) => (
+                    <li key={`${entry.part_ref}-${entry.currency}-${index}`}>
+                      <button
+                        onClick={() => onGoToPart(entry.part_ref)}
+                        title="Déplier l'arbre jusqu'à cette pièce"
+                      >
+                        {entry.part_ref}
+                      </button>
+                      <span className="quarantine__why">{refusal(entry)}</span>
+                      <span className="quarantine__kept">
+                        {entry.replacement
+                          ? `référence retenue ${money(entry.replacement)}`
+                          : "aucun prix retenu"}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="hint hint--danger">
+                  Le journal de quarantaine n'a pas pu être lu : les valeurs
+                  refusées ne sont pas détaillées.
+                </p>
+              )}
+            </>
+          )}
 
           <h3>Par système</h3>
           <ul className="systems">
@@ -141,5 +183,25 @@ export function Summary({
         </div>
       )}
     </aside>
+  );
+}
+
+/**
+ * Combien de prix ne sont pas frais, et pourquoi. Les nombres viennent du
+ * serveur : l'écran les cite, il ne les compte pas.
+ */
+function degradedMessage(calculation: Calculation): string {
+  const { quarantined, fallback } = calculation.issue_counts;
+  const kinds = [
+    quarantined > 0 ? `${quarantined} prix en quarantaine` : null,
+    fallback > 0 ? `${fallback} prix de repli` : null,
+  ].filter((kind): kind is string => kind !== null);
+
+  if (kinds.length === 0) {
+    return "Prix dégradés : snapshot périmé, ou repris tel quel après une panne de l'API.";
+  }
+  return (
+    `Prix dégradés : ${kinds.join(", ")}. Le dernier prix sain a été retenu ; ` +
+    "les lignes concernées sont marquées dans l'arbre."
   );
 }

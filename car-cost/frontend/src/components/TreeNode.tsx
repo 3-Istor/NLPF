@@ -7,10 +7,11 @@
  * (ADR-0009).
  */
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { api } from "../api/client";
 import type { Page, TreeLine } from "../api/types";
 import { money, quantity } from "../format";
+import { describeRefusal, Refusals } from "../quarantine";
 import { NodePanel } from "./NodePanel";
 
 type Props = {
@@ -78,6 +79,7 @@ export function TreeNode({
 
   const modified = line.is_modified === true;
   const inPath = line.has_modified_descendant === true;
+  const refused = useContext(Refusals).get(line.part_ref);
 
   return (
     <li className="node">
@@ -132,7 +134,24 @@ export function TreeNode({
           <span className="chip chip--danger">prix manquant</span>
         )}
         {line.price_status === "FALLBACK" && (
-          <span className="chip chip--warn">prix de repli</span>
+          <span
+            className="chip chip--warn"
+            title="Absent de la réponse de l'API : le dernier prix connu a été retenu."
+          >
+            prix de repli
+          </span>
+        )}
+        {line.price_status === "QUARANTINED" && (
+          <span
+            className="chip chip--warn"
+            title={
+              refused
+                ? describeRefusal(refused)
+                : "Valeur refusée par le contrôle : le dernier prix sain a été retenu."
+            }
+          >
+            prix en quarantaine
+          </span>
         )}
 
         <span className="cost" title="Coût unitaire">

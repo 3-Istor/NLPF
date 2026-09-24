@@ -6,7 +6,8 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Page, TreeLine } from "../api/types";
+import type { Page, QuarantineEntry, TreeLine } from "../api/types";
+import { Refusals } from "../quarantine";
 import { TreeNode } from "./TreeNode";
 
 const calls: string[] = [];
@@ -62,19 +63,24 @@ function child(path: string, ref: string): TreeLine {
   });
 }
 
-function mount(overrides: Partial<TreeLine> = {}) {
+function mount(
+  overrides: Partial<TreeLine> = {},
+  refusals: ReadonlyMap<string, QuarantineEntry> = new Map(),
+) {
   return render(
-    <ul>
-      <TreeNode
-        line={line(overrides)}
-        version="bom-test"
-        scenarioId={null}
-        calculationId={null}
-        depth={0}
-        onParameterChanged={() => {}}
-        onShowWhereUsed={() => {}}
-      />
-    </ul>,
+    <Refusals.Provider value={refusals}>
+      <ul>
+        <TreeNode
+          line={line(overrides)}
+          version="bom-test"
+          scenarioId={null}
+          calculationId={null}
+          depth={0}
+          onParameterChanged={() => {}}
+          onShowWhereUsed={() => {}}
+        />
+      </ul>
+    </Refusals.Provider>,
   );
 }
 
@@ -155,5 +161,46 @@ describe("montants", () => {
 
     expect(screen.getByText("412,55 €")).toBeInTheDocument();
     expect(screen.getByText("825,10 €")).toBeInTheDocument();
+  });
+});
+
+describe("prix dégradés", () => {
+  const refused: QuarantineEntry = {
+    part_ref: "V",
+    currency: "EUR",
+    rejected_value: "-42.000000",
+    reason: "prix négatif",
+    replacement: { amount: "4.200000", currency: "EUR" },
+    replacement_from_snapshot: "snp-hier",
+    detected_at: "2026-09-24T08:33:42+00:00",
+  };
+
+  it("ne marque rien quand le prix est frais", () => {
+    mount({ price_status: "OK" });
+
+    expect(screen.queryByText(/prix de repli|prix en quarantaine/)).not.toBeInTheDocument();
+  });
+
+  it("dit qu'un prix vient d'un repli", () => {
+    mount({ price_status: "FALLBACK" });
+
+    expect(screen.getByText("prix de repli")).toBeInTheDocument();
+    expect(screen.queryByText("prix en quarantaine")).not.toBeInTheDocument();
+  });
+
+  it("distingue une valeur refusée d'une valeur absente", () => {
+    mount({ price_status: "QUARANTINED" });
+
+    expect(screen.getByText("prix en quarantaine")).toBeInTheDocument();
+    expect(screen.queryByText("prix de repli")).not.toBeInTheDocument();
+  });
+
+  it("dit sur la ligne ce qui a été refusé, pourquoi, et ce qui a été retenu", () => {
+    mount({ price_status: "QUARANTINED" }, new Map([["V", refused]]));
+
+    expect(screen.getByText("prix en quarantaine")).toHaveAttribute(
+      "title",
+      "« -42.000000 » refusé : prix négatif. Référence retenue : 4,20 € (snapshot snp-hier).",
+    );
   });
 });

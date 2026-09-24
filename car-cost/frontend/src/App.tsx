@@ -8,12 +8,19 @@
  * est celui des positions à l'écran.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { api, ApiFailure } from "./api/client";
-import type { Calculation, Scenario, SearchHit, TreeLine } from "./api/types";
+import type {
+  Calculation,
+  QuarantineJournal,
+  Scenario,
+  SearchHit,
+  TreeLine,
+} from "./api/types";
 import { Summary } from "./components/Summary";
 import { TreeNode } from "./components/TreeNode";
 import { WhereUsed } from "./components/WhereUsed";
+import { byPart, Refusals } from "./quarantine";
 
 const BOM_VERSION =
   import.meta.env.VITE_BOM_VERSION ?? "bom-multipla-2026-09-22";
@@ -22,6 +29,8 @@ export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [root, setRoot] = useState<TreeLine | null>(null);
   const [calculation, setCalculation] = useState<Calculation | null>(null);
+  const [journal, setJournal] = useState<QuarantineJournal | null>(null);
+  const refusals = useMemo(() => byPart(journal), [journal]);
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
@@ -66,6 +75,13 @@ export function App() {
     try {
       const result = await api.calculate(scenario.id);
       setCalculation(result);
+      // Le journal éclaire le calcul sans le conditionner : s'il ne se lit
+      // pas, la synthèse le dit, mais le total reste affiché.
+      setJournal(null);
+      api
+        .quarantine(result.price_snapshot.id)
+        .then(setJournal)
+        .catch(() => setJournal(null));
       setScenario(await api.scenario(scenario.id));
       // Les lignes déjà dépliées portent les chiffres de l'ancien calcul :
       // on remonte l'arbre pour qu'elles redemandent les nouveaux.
@@ -89,6 +105,16 @@ export function App() {
     setHits(null);
     setExpandTo(path.split("/"));
     setTreeKey((key) => key + 1);
+  }
+
+  /** Une pièce du journal : le serveur dit où elle est montée, on y va. */
+  async function goToPart(partRef: string) {
+    try {
+      const { items } = await api.whereUsed(BOM_VERSION, partRef);
+      if (items.length > 0) goToPath(items[0].path);
+    } catch (error) {
+      setFailure(describe(error));
+    }
   }
 
   return (
@@ -132,18 +158,20 @@ export function App() {
           )}
 
           {root ? (
-            <ul className="children" key={treeKey}>
-              <TreeNode
-                line={root}
-                version={BOM_VERSION}
-                scenarioId={scenario?.id ?? null}
-                calculationId={calculation?.id ?? null}
-                depth={0}
-                expandTo={expandTo}
-                onParameterChanged={refreshScenario}
-                onShowWhereUsed={setWhereUsed}
-              />
-            </ul>
+            <Refusals.Provider value={refusals}>
+              <ul className="children" key={treeKey}>
+                <TreeNode
+                  line={root}
+                  version={BOM_VERSION}
+                  scenarioId={scenario?.id ?? null}
+                  calculationId={calculation?.id ?? null}
+                  depth={0}
+                  expandTo={expandTo}
+                  onParameterChanged={refreshScenario}
+                  onShowWhereUsed={setWhereUsed}
+                />
+              </ul>
+            </Refusals.Provider>
           ) : (
             <p className="hint">{failure ?? "chargement de la nomenclature…"}</p>
           )}
@@ -151,12 +179,14 @@ export function App() {
 
         <Summary
           calculation={calculation}
+          journal={journal}
           state={scenario?.calculation_state ?? "NEVER_RUN"}
           staleReason={scenario?.stale_reason ?? null}
           busy={busy}
           failure={failure}
           onRecalculate={recalculate}
           onGoToPath={goToPath}
+          onGoToPart={goToPart}
         />
       </main>
 

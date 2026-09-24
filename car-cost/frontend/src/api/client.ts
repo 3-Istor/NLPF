@@ -10,6 +10,7 @@ import type {
   Occurrence,
   Page,
   ParameterAck,
+  QuarantineJournal,
   Scenario,
   SearchHit,
   TreeLine,
@@ -99,4 +100,10 @@ export const api = {
     }),
 
   calculation: (id: string) => call<Calculation>(`/calculations/${id}`),
+
+  /** Les valeurs refusées à la prise de ce snapshot ; vide s'il est sain. */
+  quarantine: (snapshotId: string) =>
+    call<QuarantineJournal>(
+      `/price-snapshots/${encodeURIComponent(snapshotId)}/quarantine`,
+    ),
 };
