@@ -111,6 +111,51 @@ def calculate(client) -> dict:
     return response.json()
 
 
+class TestQuarantineJournal:
+    def test_it_lists_what_was_refused_why_and_what_was_kept(self, client):
+        body = client.get("/api/v1/price-snapshots/snp-jour/quarantine").json()
+
+        assert body["snapshot_id"] == "snp-jour"
+        assert body["items"] == [
+            {
+                "part_ref": "S-REFUSED",
+                "currency": "EUR",
+                # Telle que reçue : la valeur refusée peut n'être pas un nombre.
+                "rejected_value": "-42.000000",
+                "reason": "prix négatif",
+                "replacement": {"amount": "3.000000", "currency": "EUR"},
+                "replacement_from_snapshot": "snp-hier",
+                "detected_at": "2026-09-23T12:00:00+00:00",
+            }
+        ]
+
+    def test_a_clean_snapshot_has_an_empty_journal_not_an_error(self, client):
+        body = client.get("/api/v1/price-snapshots/snp-hier/quarantine").json()
+
+        assert body["items"] == []
+
+    def test_an_unknown_snapshot_is_a_named_404(self, client):
+        response = client.get("/api/v1/price-snapshots/snp-inconnu/quarantine")
+
+        assert response.status_code == 404
+        assert response.json()["error"]["code"] == "PRICE_SNAPSHOT_NOT_FOUND"
+
+    def test_calculating_on_an_unknown_snapshot_is_a_named_404(self, client):
+        """Pas une erreur 500 : l'identifiant vient de l'utilisateur."""
+        scenario_id = client.post(
+            "/api/v1/scenarios",
+            json={"bom_version": VERSION, "name": "t", "labour_rate": "60.00"},
+        ).json()["id"]
+
+        response = client.post(
+            "/api/v1/calculations",
+            json={"scenario_id": scenario_id, "price_snapshot_id": "snp-inconnu"},
+        )
+
+        assert response.status_code == 404
+        assert response.json()["error"]["code"] == "PRICE_SNAPSHOT_NOT_FOUND"
+
+
 class TestDegradedPricesOnTheScreen:
     def lines(self, client, calculation_id) -> dict[str, dict]:
         items = client.get(

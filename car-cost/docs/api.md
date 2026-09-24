@@ -81,6 +81,7 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `SCOPE_PATH_REQUIRES_PATH` | 422 | `scope = "path"` sans chemin, ou `scope = "part"` avec chemin |
 | `OCCURRENCE_VIEW_TOO_LARGE` | 422 | La vue par occurrence demandée dépasse la borne (voir §4.3) |
 | `NO_PRICE_SNAPSHOT` | 409 | Aucun snapshot disponible, même périmé |
+| `PRICE_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot inconnu (journal de quarantaine, ou `price_snapshot_id` d'un calcul) |
 | `CALCULATION_FAILED` | 500 | Échec interne ; le calcul est persisté avec `status = "FAILED"` |
 
 **Une panne de l'API de prix ne produit jamais d'erreur HTTP** : elle produit un calcul de statut
@@ -450,14 +451,26 @@ Chaque snapshot porte `age_seconds` et `status` (`FRESH` < 24 h, `STALE` au-del�
 ### 5.3 `GET /price-snapshots/{id}/quarantine`
 
 ```json
-{ "items": [ { "part_ref": "ELE-ECU-MAIN", "currency": "EUR",
-  "rejected_value": "-42.000000", "reason": "NEGATIVE_PRICE",
-  "replacement": { "amount": "318.400000", "currency": "EUR" },
-  "replacement_from_snapshot": "snp-19a…", "detected_at": "2026-09-22T09:00:01Z" } ] }
+{ "snapshot_id": "snp-8c3…",
+  "items": [ { "part_ref": "ALT-BEARING", "currency": "EUR",
+  "rejected_value": "-42.000000", "reason": "prix négatif",
+  "replacement": { "amount": "4.200000", "currency": "EUR" },
+  "replacement_from_snapshot": "snp-2a2…", "detected_at": "2026-09-24T08:33:42.259757+00:00" } ] }
 ```
 
-Motifs : `NEGATIVE_PRICE`, `ZERO_PRICE_ON_PURCHASED`, `NOT_A_NUMBER`, `UNKNOWN_CURRENCY`,
-`OUT_OF_CATALOG_RANGE`, `DEVIATION_ABOVE_THRESHOLD`.
+- Un snapshot sain a un journal **vide** (`items: []`) ; un identifiant inconnu est un
+  `404 PRICE_SNAPSHOT_NOT_FOUND` — un journal vide ne doit pas pouvoir se lire comme « tout allait
+  bien » pour un snapshot qui n'existe pas.
+- `rejected_value` est la valeur **telle que reçue**, en texte : elle peut n'être pas un nombre.
+- `replacement` est un **prix de référence** (ADR-0010), pas le coût unitaire de la ligne :
+  multiplicateur fournisseur et coefficient d'usine s'appliquent ensuite. `null` si rien n'a pu
+  être retenu — la pièce est alors sans prix.
+- `reason` est **une phrase**, pas un code. Écart avec la version initiale de ce contrat, qui
+  prévoyait `NEGATIVE_PRICE`, `ZERO_PRICE_ON_PURCHASED`, `NOT_A_NUMBER`, `UNKNOWN_CURRENCY`,
+  `OUT_OF_CATALOG_RANGE`, `DEVIATION_ABOVE_THRESHOLD` : la prise de snapshot écrit en base le motif
+  lisible (« prix négatif », « écart de 60 % au dernier prix connu (0.5) »), et c'est lui que
+  l'écran affiche. Un code stable demanderait une colonne de plus — à ajouter si un consommateur
+  doit trier ou filtrer par motif.
 
 ### 5.4 L'API de prix simulée (service externe, port distinct)
 

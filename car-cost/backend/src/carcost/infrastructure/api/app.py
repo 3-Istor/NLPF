@@ -39,6 +39,7 @@ from ...application.ports import (
 )
 from .calculation_routes import register_calculation_routes
 from .errors import error_response
+from .snapshot_routes import register_snapshot_routes
 
 SCALE = Decimal("0.000001")
 
@@ -96,6 +97,7 @@ def create_app(repositories: Repositories) -> FastAPI:
         return _error(404, "CALCULATION_NOT_FOUND", str(error))
 
     register_calculation_routes(app, repositories)
+    register_snapshot_routes(app, repositories)
 
     @app.get("/api/v1/bom/{version}/root")
     def read_root(version: str, calculation_id: str | None = Query(None)):
