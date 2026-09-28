@@ -374,3 +374,110 @@ class TestPartDetail:
 
         assert response.status_code == 404
         assert response.json()["error"]["code"] == "PATH_NOT_FOUND"
+
+
+def calculate(client) -> str:
+    scenario_id = make_scenario(client)
+    return client.post(
+        "/api/v1/calculations", json={"scenario_id": scenario_id}
+    ).json()["id"]
+
+
+class TestExplain:
+    """docs/api.md §4.4. À la main : S vaut 10 × 1 × 1 = 10 ; A vaut
+    4 × 10 + 30 min à 60 €/h = 70."""
+
+    def explain(self, client, path):
+        return client.get(
+            f"/api/v1/calculations/{calculate(client)}/explain", params={"path": path}
+        )
+
+    def test_a_purchased_line_shows_its_three_factors(self, client):
+        body = self.explain(client, "V/A/S").json()
+
+        breakdown = body["unit_cost_breakdown"]
+        assert breakdown["kind"] == "catalogue"
+        assert breakdown["reference_price"] == {"amount": "10.000000", "currency": "EUR"}
+        assert breakdown["supplier"]["supplier_id"] == "SUP-IT"
+        assert breakdown["plant"]["plant_id"] == "PLT-IT"
+        assert breakdown["formula"] == "10.000000 × 1.000000 × 1.000000"
+        assert breakdown["unit_cost"]["amount"] == "10.000000"
+        assert breakdown["reproduced"] is True
+
+    def test_both_quantities_travel_as_strings(self, client):
+        body = self.explain(client, "V/A/S").json()
+
+        assert body["quantity"] == {
+            "on_path": "8.000000",
+            "cumulative_in_vehicle": "23.000000",
+            "unit": "pce",
+        }
+
+    def test_an_assembly_shows_children_and_labour_and_no_price(self, client):
+        body = self.explain(client, "V/A").json()
+
+        breakdown = body["unit_cost_breakdown"]
+        assert breakdown["kind"] == "assembly"
+        assert breakdown["children"] == [
+            {
+                "part_ref": "S",
+                "quantity": "4.000000",
+                "unit_cost": {"amount": "10.000000", "currency": "EUR"},
+                "contribution": {"amount": "40.000000", "currency": "EUR"},
+            }
+        ]
+        assert breakdown["labour"]["amount"]["amount"] == "30.000000"
+        assert breakdown["unit_cost"]["amount"] == "70.000000"
+        assert "reference_price" not in breakdown
+
+    def test_it_names_the_snapshot_the_price_came_from(self, client):
+        body = self.explain(client, "V/A/S").json()
+
+        assert body["price_source"]["snapshot_id"] == "snp-1"
+        assert body["price_source"]["status"] == "OK"
+
+    def test_an_unknown_path_is_a_named_404(self, client):
+        response = self.explain(client, "V/S")
+
+        assert response.status_code == 404
+        assert response.json()["error"]["code"] == "PATH_NOT_FOUND"
+
+
+class TestIssues:
+    """docs/api.md §4.5 : la liste cliquable exigée par le mode de panne P3."""
+
+    def test_a_clean_calculation_has_no_issue(self, client):
+        body = client.get(f"/api/v1/calculations/{calculate(client)}/issues").json()
+
+        assert body["items"] == []
+        assert body["total"] == 0
+
+    def test_a_part_without_price_is_listed_with_a_path_to_unfold(self, bom):
+        without_price = Repositories(
+            bom=FakeBomRepository(bom, version=VERSION),
+            sourcing=FakeSourcingRepository(),
+            snapshots=FakeSnapshotRepository(
+                PriceSnapshot(
+                    id="snp-1", taken_at=NOW, currency="EUR", source="mock",
+                    prices={}, missing_refs=frozenset({"S"}),
+                )
+            ),
+            scenarios=FakeScenarioRepository(),
+            calculations=FakeCalculationRepository(),
+            clock=lambda: NOW,
+        )
+        client = TestClient(create_app(without_price))
+
+        body = client.get(f"/api/v1/calculations/{calculate(client)}/issues").json()
+
+        assert body["items"] == [
+            {
+                "kind": "MISSING_PRICE",
+                "part_ref": "S",
+                "label": "S",
+                "system": "TST",
+                "path": "V/A/S",
+                "cumulative_quantity": "23.000000",
+                "occurrence_count": 2,
+            }
+        ]

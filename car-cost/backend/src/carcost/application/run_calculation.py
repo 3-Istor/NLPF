@@ -141,7 +141,7 @@ def run_calculation(
     )
 
     total = result.total_cost
-    first_paths = _first_path_of_each_part(bom)
+    first_paths = first_path_of_each_part(bom)
 
     return Calculation(
         id=calculation_id,
@@ -200,7 +200,7 @@ def with_contributors(calculation: Calculation, bom: Bom, top: int = 15) -> Calc
             bom,
             calculation.lines,
             calculation.total_cost,
-            _first_path_of_each_part(bom),
+            first_path_of_each_part(bom),
             top,
         ),
     )
@@ -298,7 +298,7 @@ def _contributors(
     )
 
 
-def _first_path_of_each_part(bom: Bom) -> dict[str, str]:
+def first_path_of_each_part(bom: Bom) -> dict[str, str]:
     """Un chemin par pièce, le premier rencontré en descendant.
 
     Il ne s'agit pas de désigner « le bon » emplacement — il n'y en a pas — mais

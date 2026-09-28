@@ -15,7 +15,15 @@ from fastapi import FastAPI, Query, Request
 from pydantic import BaseModel, Field
 
 from ...application.browse_bom import where_used
+from ...application.calculation_issues import calculation_issues
 from ...application.calculation_state import scope_label, state_of
+from ...application.explain_calculation import (
+    AssemblyBreakdown,
+    CatalogueBreakdown,
+    LineExplanation,
+    OverrideBreakdown,
+    explain_line,
+)
 from ...application.price_resolution import (
     ParameterNotApplicable,
     PlantNotAvailableForSupplier,
@@ -190,6 +198,50 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             ),
         }
 
+    @app.get("/api/v1/calculations/{calculation_id}/explain")
+    def read_explanation(
+        calculation_id: str,
+        path: str = Query(..., description="La ligne à expliquer, chemin complet"),
+    ):
+        calculation = repositories.calculations.get(calculation_id)
+        explanation = explain_line(
+            calculation=calculation,
+            bom=repositories.bom.load(calculation.bom_version),
+            scenario=repositories.scenarios.get(calculation.scenario_id),
+            snapshot=repositories.snapshots.get(calculation.snapshot_id),
+            sourcing=repositories.sourcing.load(calculation.bom_version),
+            path=path,
+        )
+        return _explanation_payload(explanation, calculation.display_currency)
+
+    @app.get("/api/v1/calculations/{calculation_id}/issues")
+    def read_issues(
+        calculation_id: str,
+        limit: int = Query(50, ge=1, le=500),
+        offset: int = Query(0, ge=0),
+    ):
+        calculation = repositories.calculations.get(calculation_id)
+        issues = calculation_issues(
+            calculation, repositories.bom.load(calculation.bom_version)
+        )
+        return {
+            "items": [
+                {
+                    "kind": issue.kind,
+                    "part_ref": issue.part_ref,
+                    "label": issue.label,
+                    "system": issue.system,
+                    "path": issue.path,
+                    "cumulative_quantity": _decimal(issue.cumulative_quantity),
+                    "occurrence_count": issue.occurrence_count,
+                }
+                for issue in issues[offset : offset + limit]
+            ],
+            "total": len(issues),
+            "limit": limit,
+            "offset": offset,
+        }
+
 
 # ---------------------------------------------------------------- assemblage
 
@@ -342,3 +394,131 @@ def _line_payload(line, calculation) -> dict:
             "is_overridden": explanation.is_overridden,
         }
     return payload
+
+
+#: Ce que dit `price_source.reason` pour chaque statut de ligne.
+PRICE_REASONS = {
+    "OK": None,
+    "FALLBACK": "Absent de la réponse de l'API : dernier prix connu retenu",
+    "QUARANTINED": (
+        "Valeur refusée (journal de quarantaine) : dernier prix sain retenu"
+    ),
+    "MISSING": "Aucun prix connu, ni frais ni ancien : le total est partiel",
+}
+
+
+def _explanation_payload(explanation: LineExplanation, currency: str) -> dict:
+    parameter = explanation.applied_parameter
+    status = explanation.price_status
+    return {
+        "path": explanation.path,
+        "part_ref": explanation.part_ref,
+        "valuation_mode": explanation.valuation_mode,
+        "unit_cost_breakdown": _breakdown_payload(explanation.breakdown, currency),
+        "quantity": {
+            "on_path": _decimal(explanation.quantity_on_path),
+            "cumulative_in_vehicle": _decimal(explanation.cumulative_quantity),
+            "unit": explanation.unit,
+        },
+        "occurrence_count": explanation.occurrence_count,
+        "applied_parameter": (
+            None
+            if parameter is None
+            else {
+                "scope": parameter.scope,
+                "scope_label": scope_label(
+                    parameter.scope, occurrences=explanation.occurrence_count
+                ),
+                "supplier_id": parameter.supplier_id,
+                "plant_id": parameter.plant_id,
+                "price_override": _optional_money(parameter.price_override, currency),
+            }
+        ),
+        "parameters_changed_since_calculation": explanation.parameters_changed_since,
+        "applied_rules": list(explanation.applied_rules),
+        "price_source": {
+            "snapshot_id": explanation.snapshot_id,
+            "status": status,
+            # La date d'un prix de repli est celle du snapshot qui l'a repris,
+            # pas celle du prix : on ne la donne pas plutôt que de la donner
+            # fausse. Remonter la chaîne des replis reste à faire.
+            "as_of": (
+                explanation.snapshot_taken_at.isoformat()
+                if status in ("OK", None)
+                else None
+            ),
+            "reason": PRICE_REASONS.get(status),
+        },
+    }
+
+
+def _breakdown_payload(breakdown, currency: str) -> dict | None:
+    if breakdown is None:
+        return None
+    if isinstance(breakdown, CatalogueBreakdown):
+        factors = (
+            breakdown.reference_price,
+            breakdown.supplier_multiplier,
+            breakdown.plant_coefficient,
+        )
+        return {
+            "kind": "catalogue",
+            "reference_price": _money(breakdown.reference_price, currency),
+            "supplier": {
+                "supplier_id": breakdown.supplier_id,
+                "name": breakdown.supplier_name,
+                "multiplier": _optional_decimal(breakdown.supplier_multiplier),
+            },
+            "plant": {
+                "plant_id": breakdown.plant_id,
+                "origin": breakdown.origin_country,
+                "coefficient": _optional_decimal(breakdown.plant_coefficient),
+            },
+            "formula": (
+                " × ".join(_decimal(factor) for factor in factors)
+                if None not in factors
+                else None
+            ),
+            "unit_cost": _money(breakdown.unit_cost, currency),
+            # Faux si le sourcing a changé depuis le calcul : la formule ne
+            # redonne plus le prix enregistré, et l'écran doit le dire.
+            "reproduced": breakdown.reproduced,
+        }
+    if isinstance(breakdown, OverrideBreakdown):
+        return {
+            "kind": "override",
+            "unit_cost": _money(breakdown.unit_cost, currency),
+            "justification": breakdown.justification,
+        }
+    assert isinstance(breakdown, AssemblyBreakdown)
+    return {
+        "kind": "assembly",
+        "children": [
+            {
+                "part_ref": child.part_ref,
+                "quantity": _decimal(child.quantity),
+                "unit_cost": _optional_money(child.unit_cost, currency),
+                "contribution": _optional_money(child.contribution, currency),
+            }
+            for child in breakdown.children
+        ],
+        "children_cost": _optional_money(breakdown.children_cost, currency),
+        "labour": {
+            "labour_minutes": _optional_decimal(breakdown.labour_minutes),
+            "labour_rate": _money(breakdown.labour_rate, currency),
+            "amount": _optional_money(breakdown.labour_cost, currency),
+        },
+        "unit_cost": _optional_money(breakdown.unit_cost, currency),
+    }
+
+
+def _optional_money(amount: Decimal | None, currency: str) -> dict | None:
+    return None if amount is None else _money(amount, currency)
+
+
+def _decimal(value: Decimal) -> str:
+    return str(value.quantize(SCALE))
+
+
+def _optional_decimal(value: Decimal | None) -> str | None:
+    return None if value is None else _decimal(value)
