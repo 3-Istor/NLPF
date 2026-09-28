@@ -106,6 +106,9 @@ Toute réponse de calcul porte : `bom_version`, `price_snapshot_id`, `rules_vers
 
 `is_synthetic: true` est **toujours** renvoyé et affiché : les données sont plausibles mais inventées.
 
+Une version pas encore validée est listée avec `validated_at: null` : l'écran peut dire pourquoi
+elle ne s'ouvre pas. Une version validée ne change plus (ADR-0012).
+
 ### 2.2 `GET /bom/{bom_version}/root`
 
 Renvoie la ligne racine, au même format qu'un enfant (§2.3), avec `path` de longueur 1.

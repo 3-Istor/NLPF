@@ -28,6 +28,8 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 | [0008](0008-mode-de-valorisation-exclusif.md) | Mode de valorisation exclusif : achetée ou fabriquée | accepté |
 | [0009](0009-depliage-paresseux-du-dag-a-l-ecran.md) | Dépliage nœud par nœud, pièce partagée répétée et badgée | accepté |
 | [0010](0010-prix-decompose-fournisseur-et-usine.md) | Prix = référence × multiplicateur fournisseur × coefficient d'usine | accepté |
+| [0011](0011-decimal-exact-et-arrondi-a-l-affichage.md) | Décimal exact ; l'arrondi est un acte d'affichage | accepté |
+| [0012](0012-version-de-nomenclature-validee-immuable.md) | Une version de nomenclature validée est immuable, et se garde en mémoire | proposé |
 
 ## Ce qui reste à décider
 

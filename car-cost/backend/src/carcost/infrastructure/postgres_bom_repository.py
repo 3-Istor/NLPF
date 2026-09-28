@@ -15,7 +15,11 @@ from decimal import Decimal
 
 import psycopg
 
-from ..application.ports import BomVersionNotFound, BomVersionNotValidated
+from ..application.ports import (
+    BomVersionNotFound,
+    BomVersionNotValidated,
+    BomVersionSummary,
+)
 from ..domain.bom import Bom, Edge, Part, ValuationMode
 
 VERSION_QUERY = """
@@ -37,6 +41,14 @@ EDGES_QUERY = """
     FROM bom_edge
     WHERE bom_version_id = %s
     ORDER BY parent_ref, child_ref
+"""
+
+
+VERSIONS_QUERY = """
+    SELECT id, label, root_part_ref, part_count, edge_count, validated_at,
+           is_synthetic
+    FROM bom_version
+    ORDER BY created_at DESC, id
 """
 
 
@@ -77,3 +89,8 @@ class PostgresBomRepository:
             )
 
         return Bom(root_ref=root_ref, parts=parts, edges=edges)
+
+    def versions(self) -> list[BomVersionSummary]:
+        with psycopg.connect(self.dsn) as connection, connection.cursor() as cursor:
+            cursor.execute(VERSIONS_QUERY)
+            return [BomVersionSummary(*row) for row in cursor.fetchall()]

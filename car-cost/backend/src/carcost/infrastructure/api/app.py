@@ -99,6 +99,27 @@ def create_app(repositories: Repositories) -> FastAPI:
     register_calculation_routes(app, repositories)
     register_snapshot_routes(app, repositories)
 
+    @app.get("/api/v1/bom/versions")
+    def read_versions():
+        return {
+            "items": [
+                {
+                    "id": summary.id,
+                    "label": summary.label,
+                    "root_part_ref": summary.root_part_ref,
+                    "part_count": summary.part_count,
+                    "edge_count": summary.edge_count,
+                    "validated_at": (
+                        summary.validated_at.isoformat()
+                        if summary.validated_at
+                        else None
+                    ),
+                    "is_synthetic": summary.is_synthetic,
+                }
+                for summary in repository.versions()
+            ]
+        }
+
     @app.get("/api/v1/bom/{version}/root")
     def read_root(version: str, calculation_id: str | None = Query(None)):
         bom = repository.load(version)

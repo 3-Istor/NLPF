@@ -67,8 +67,10 @@ jobs:
 
       - name: Appliquer le schéma
         run: |
-          psql -h 127.0.0.1 -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
-            -f backend/migrations/0001_initial_schema.sql
+          for migration in backend/migrations/0*.sql; do
+            psql -h 127.0.0.1 -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+              -f "$migration"
+          done
 
       # Le script annonce « refusé » pour chaque écriture interdite qu'il a
       # tentée, et WARNING pour une contrainte qui n'a pas tenu. Il sort
@@ -85,8 +87,8 @@ jobs:
           fi
           refus=$(grep -c "refusé" <<<"$rapport" || true)
           echo "écritures interdites refusées : $refus"
-          if [ "$refus" -ne 15 ]; then
-            echo "::error::15 refus attendus, $refus obtenus — un contrôle a disparu"
+          if [ "$refus" -ne 21 ]; then
+            echo "::error::21 refus attendus, $refus obtenus — un contrôle a disparu"
             exit 1
           fi
 

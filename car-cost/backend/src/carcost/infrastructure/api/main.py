@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import os
 
+from ..cached_bom_repository import CachedBomRepository
 from ..postgres_bom_repository import PostgresBomRepository
 from ..postgres_repositories import (
     PostgresCalculationRepository,
@@ -23,7 +24,7 @@ DSN = os.environ.get("CARCOST_DSN", "postgresql://3istor:3istor@127.0.0.1:5432/3
 
 app = create_app(
     Repositories(
-        bom=PostgresBomRepository(DSN),
+        bom=CachedBomRepository(PostgresBomRepository(DSN)),
         sourcing=PostgresSourcingRepository(DSN),
         snapshots=PostgresPriceSnapshotRepository(DSN),
         scenarios=PostgresScenarioRepository(DSN),

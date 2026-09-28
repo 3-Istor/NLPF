@@ -107,3 +107,12 @@ def test_the_engine_agrees_with_the_control_values_read_from_the_database(multip
 def test_an_unknown_version_is_refused(repository):
     with pytest.raises(BomVersionNotFound):
         repository.load("bom-inexistante")
+
+
+def test_the_loaded_version_is_listed_with_its_counts(repository):
+    listed = {summary.id: summary for summary in repository.versions()}
+
+    summary = listed[VERSION]
+    assert (summary.part_count, summary.edge_count) == (474, 689)
+    assert summary.validated_at is not None
+    assert summary.is_synthetic is True

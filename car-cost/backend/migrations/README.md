@@ -5,7 +5,7 @@ chacun terminé par son `INSERT INTO schema_migration`.
 
 ```
 0001_initial_schema.sql
-0002_....sql
+0002_validated_bom_is_frozen.sql
 ```
 
 ## Règles
@@ -29,7 +29,7 @@ perdu. Ce n'est pas une décision structurante, donc pas d'ADR.
 ## Application
 
 ```bash
-psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f 0001_initial_schema.sql
+for migration in 0*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
 ```
 
 ## Ce que le schéma garantit, et ce qu'il ne garantit pas
@@ -43,6 +43,7 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f 0001_initial_schema.sql
 | L'usine choisie appartient au fournisseur choisi | Clé étrangère composite vers `supplier_plant (id, supplier_id)` |
 | Un prix forcé porte une justification | `CHECK` sur `scenario_parameter` |
 | Un snapshot n'est jamais modifié | Déclencheur `forbid_mutation` |
+| Une version validée n'est plus modifiée ni supprimée (ADR-0012) | Déclencheurs `*_frozen_once_validated` (0002) |
 | **Acyclicité** | ❌ Impossible en déclaratif — tri topologique au chargement |
 | **Racine unique** | ❌ Contrôle au chargement |
 | **Aucun orphelin** | ❌ Contrôle au chargement |
