@@ -75,6 +75,7 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `BOM_VERSION_NOT_VALIDATED` | 409 | La version n'a pas passé le contrôle d'intégrité : aucun calcul n'est autorisé dessus |
 | `PATH_NOT_FOUND` | 404 | Le chemin ne correspond à aucune suite d'arêtes existante |
 | `PART_NOT_FOUND` | 404 | Référence inconnue dans cette version |
+| `SCENARIO_NOT_FOUND` | 404 | Identifiant de scénario inconnu |
 | `PARAMETER_NOT_APPLICABLE` | 422 | Fournisseur, usine ou prix posé sur un nœud **fabriqué** ; temps de main-d'œuvre posé sur un nœud **acheté** (ADR-0008) |
 | `PLANT_NOT_AVAILABLE_FOR_SUPPLIER` | 422 | L'usine demandée n'appartient pas au fournisseur retenu (ADR-0010) |
 | `PRICE_OVERRIDE_JUSTIFICATION_REQUIRED` | 422 | Prix forcé sans justification |
@@ -256,25 +257,71 @@ doit pas pouvoir proposer un fournisseur sur un ensemble (ADR-0008).
 
 ```json
 { "bom_version": "bom-multipla-2026-09-22", "name": "Sourcing Turquie",
-  "display_currency": "EUR", "labour_rate": { "amount": "42.000000", "currency": "EUR" },
-  "active_rules": ["labour"] }
+  "display_currency": "EUR", "labour_rate": "42.000000",
+  "active_rules": ["labour"],
+  "parameters": [ { "part_ref": "FIX-M6-16", "scope": "part",
+                    "supplier_id": "SUP-BULLONI", "plant_id": "PLT-BULLONI-TR",
+                    "purchase_currency": "USD" } ] }
 ```
 
-### 3.2 `GET /scenarios/{id}`
+`parameters` est facultatif (liste vide par défaut). Le scénario et ses paramètres sont sauvegardés
+dans une seule transaction. La réponse `201` contient le scénario relu, avec son nom et tous ses
+réglages. Un nom vide est refusé. Les références sont vérifiées dans la nomenclature **validée** de
+la version demandée, même sans snapshot de prix : une pièce inconnue provoque
+`422 PARAMETER_NOT_APPLICABLE` avant toute écriture.
+
+Les toggles sont représentés par `active_rules` : `[]` désactive la main-d'œuvre,
+`["labour"]` l'active (ADR-0006). La provenance est le choix de `plant_id`, distinct du
+fournisseur (ADR-0010). La devise d'achat est distincte de la devise d'affichage ; elle est
+conservée ici. Un snapshot porte aujourd'hui une seule devise : la sélection d'un prix dans une
+autre devise attend le catalogue multi-devise du périmètre prix, sans conversion à taux courant.
+
+### 3.2 `GET /scenarios` — lister les scénarios
+
+Renvoie tous les scénarios du plus récent au plus ancien. Chaque élément utilise le même format que
+`GET /scenarios/{id}`, y compris les paramètres et l'état du calcul calculé côté serveur :
+
+```json
+{
+  "items": [
+    { "id": "scn-8f2…", "name": "Sourcing Turquie", "parameters": [] }
+  ],
+  "total": 1
+}
+```
+
+Une base sans scénario renvoie `{"items": [], "total": 0}`.
+
+### 3.3 `GET /scenarios/{id}`
 
 Renvoie le scénario, ses paramètres, et **l'état du calcul**, qui est une donnée serveur (§6.2) :
 
 ```json
-{ "id": "scn-8f2…", "bom_version": "bom-multipla-2026-09-22", "display_currency": "EUR",
+{ "id": "scn-8f2…", "name": "Sourcing Turquie",
+  "bom_version": "bom-multipla-2026-09-22", "display_currency": "EUR",
+  "labour_rate": "42.000000",
   "active_rules": ["labour"], "parameters": [ … ],
   "calculation_state": "PARAMETERS_CHANGED",
-  "last_calculation_id": "calc-41b…" }
+  "stale_reason": "parameters" }
 ```
 
-### 3.3 `PUT /scenarios/{id}/parameters/{target}` — poser un paramètre
+Chaque paramètre expose `parameter_id`, `part_ref`, `scope`, `path`, `supplier_id`, `plant_id`,
+`purchase_currency`, `price_override`, `price_override_justification` et `labour_minutes`.
+`parameter_id` est l'identifiant `prm-…` à passer à la route de suppression ; il reste donc
+récupérable après un redémarrage ou lorsque la réponse initiale du `PUT` n'a pas été conservée.
+Les valeurs décimales sont des chaînes, sans arrondi. Un réglage qui dépasse l'échelle de stockage
+(6 décimales pour les montants, 4 pour les minutes) est refusé plutôt qu'arrondi silencieusement.
+
+### 3.4 `PUT /scenarios/{id}/parameters/{target}` — poser un paramètre
 
 `target` est soit une référence (portée pièce), soit un chemin (portée chemin). La portée est
 **explicite**, jamais déduite (ADR-0002).
+
+`scope` omis vaut `part`. Pour `path`, `target` est le chemin complet depuis la racine,
+avec ses `/` ; le serveur vérifie chaque arête et la référence finale. Si le corps comporte
+également `path`, il doit correspondre à `target`. Une cible pièce ne peut pas porter de chemin.
+Les deux portées peuvent coexister pour une même pièce ; une mise à jour ne remplace que la cible
+exacte. La réponse de portée chemin indique `affects_occurrences = 1`.
 
 ```json
 { "scope": "part",
@@ -307,9 +354,74 @@ Règles de validation, refusées en 422 :
 **Précédence** : si une pièce porte à la fois un paramètre de portée pièce et un de portée chemin,
 **le plus spécifique gagne**, et l'explication (§4.4) dit lequel s'est appliqué.
 
-### 3.4 `DELETE /scenarios/{id}/parameters/{parameter_id}`
+Le calcul applique cette précédence. La vue agrégée conserve une contribution exacte et expose un
+coût unitaire moyen pondéré à l'échelle de stockage lorsque deux occurrences de la même pièce ont
+des coûts différents.
+La vue par chemin conserve le coût propre et le coût complet de l'occurrence surchargée.
+Le paramètre de chemin remplace la cible complète : un champ omis y reprend la valeur par défaut du
+catalogue, pas la valeur du paramètre de portée pièce.
+
+### 3.5 `DELETE /scenarios/{id}/parameters/{parameter_id}`
 
 Réponse `200` avec le nouvel `calculation_state`.
+
+### 3.6 `DELETE /scenarios/{id}` — supprimer un scénario
+
+Réponse `204` sans corps. La suppression est définitive : les paramètres, les calculs et les
+résultats persistés de ce scénario sont supprimés en cascade. La nomenclature et les snapshots
+de prix sont conservés, car ils peuvent être utilisés par d'autres scénarios. Un identifiant inconnu
+provoque `404 SCENARIO_NOT_FOUND`.
+
+### 3.7 `POST /scenarios/{id}/duplicate` — préparer un autre scénario
+
+```json
+{ "name": "Alternative Allemagne" }
+```
+
+Réponse `201` : le scénario copié, avec un nouvel `id` et le nom demandé. La version de BOM,
+les devises, le taux horaire, les règles actives et tous les paramètres sont conservés.
+Les paramètres de la copie ont leurs propres identifiants en base ; modifier ou supprimer un
+réglage de la copie ne change pas l'original. Aucun calcul n'est copié ou lancé et aucune
+comparaison n'est effectuée. Une source inconnue provoque `404 SCENARIO_NOT_FOUND`.
+
+### 3.8 `POST /scenarios/compare` — comparer A et B
+
+```json
+{ "scenario_a_id": "scn-base", "scenario_b_id": "scn-variante",
+  "price_snapshot_id": "snp-19a…" }
+```
+
+Les deux scénarios sont calculés par le moteur normal avec le même snapshot. Ils doivent partager
+la version de nomenclature et la devise d'affichage. La réponse contient `total_a`, `total_b`,
+`cost_delta` (`B - A`) et jusqu'à dix `top_differences`, triées par valeur absolue décroissante puis
+par référence. Chaque différence porte les deux contributions et les quantités cumulées ; une
+pièce partagée est donc pondérée par sa quantité totale, jamais par une seule occurrence.
+Une comparaison est refusée avec `422 INCOMPARABLE_SCENARIOS` si l'un des calculs est incomplet :
+une contribution sans prix ne doit jamais être assimilée à zéro.
+
+`co2_delta_kg` vaut `null` tant que le calcul ne porte pas les projections carbone de NLPF-47/48.
+Le champ est déjà stable et devient numérique dès que les deux calculs portent `total_co2`.
+
+### 3.9 `POST /scenarios/{id}/recommend-sourcing` — recommandation contrainte
+
+```json
+{ "name": "Sourcing optimisé", "price_snapshot_id": "snp-19a…",
+  "forbidden_origins": ["RU"], "max_lead_time_days": 30,
+  "accepted_part_refs": ["FIX-M6-16", "TRN-BEARING-BALL"] }
+```
+
+Pour chaque pièce achetée sans prix forcé, le serveur évalue les couples fournisseur/usine connus,
+écarte les provenances interdites et les délais trop longs, puis retient le prix unitaire minimal.
+Les égalités sont départagées par identifiants fournisseur puis usine, afin de rendre le résultat
+déterministe. La réponse explique le choix avec les options actuelle et recommandée, la provenance,
+le délai, la quantité affectée et l'économie estimée.
+Un calcul de base incomplet est refusé avec `409 INCOMPLETE_CALCULATION`, car aucune économie fiable
+ne peut être calculée à partir d'un prix manquant.
+
+`accepted_part_refs` permet de n'appliquer qu'une partie des recommandations. Omis, il accepte tout ;
+vide, il crée une copie indépendante sans modification. La réponse `201` contient le scénario créé,
+les recommandations marquées `accepted` et l'économie exacte issue d'une comparaison des deux
+calculs sur le même snapshot.
 
 ---
 
@@ -443,10 +555,30 @@ source du bandeau d'alerte et la liste cliquable exigée par le mode de panne P3
   "counts": { "from_api": 210, "fallback": 3, "quarantined": 2, "missing": 0 } }
 ```
 
-### 5.2 `GET /price-snapshots` et `GET /price-snapshots/{id}`
+### 5.2 `GET /price-snapshots` — retrouver les snapshots disponibles
 
-Chaque snapshot porte `age_seconds` et `status` (`FRESH` < 24 h, `STALE` au-delà, `DEGRADED` s'il a
-été construit par repli). Un snapshot **n'est jamais modifié** (ADR-0003).
+Les snapshots sont triés du plus récent au plus ancien afin que le premier identifiant puisse être
+repris dans un calcul ou une comparaison :
+
+```json
+{
+  "items": [
+    {
+      "id": "snp-20b…",
+      "taken_at": "2026-09-22T09:00:00+00:00",
+      "source": "mock-price-api",
+      "currency": "EUR",
+      "status": "FRESH",
+      "age_seconds": 120,
+      "counts": { "prices": 302, "fallback": 0, "quarantined": 0, "missing": 0 }
+    }
+  ],
+  "total": 1
+}
+```
+
+`status` vaut `FRESH` pendant 24 heures, `STALE` au-delà, ou `DEGRADED` lorsqu'un prix vient d'un
+repli ou manque. Un snapshot **n'est jamais modifié** (ADR-0003).
 
 ### 5.3 `GET /price-snapshots/{id}/quarantine`
 
@@ -551,4 +683,6 @@ asynchrone le rendrait observable, et que l'écran doit déjà savoir l'afficher
 - Elle n'expose aucune écriture sur la nomenclature : la BOM vient du seed (périmètre §2.4).
 - Elle ne renvoie jamais le graphe entier en une réponse.
 - Elle ne renvoie aucun montant en nombre flottant.
-- Elle ne compare pas deux scénarios (reporté, périmètre §3.5).
+- Elle ne calcule pas encore la projection carbone : ce moteur appartient à NLPF-47/48.
+- Elle ne convertit pas une devise à l'exécution ; les taux courants rendraient le calcul
+  irreproductible.

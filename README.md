@@ -251,7 +251,8 @@ entièrement distinct.
 
 - Nomenclature exhaustive : 474 pièces, 689 arêtes, profondeur 5, **65 pièces à
   parents multiples**, générateur déterministe, rapport de validation à zéro erreur
-- Moteur de coût par programmation dynamique sur le DAG, une évaluation par pièce
+- Moteur de coût par programmation dynamique sur le DAG : une évaluation par pièce dans le cas
+  courant, et seulement les préfixes concernés réévalués lorsqu'une surcharge de chemin existe
 - Schéma Postgres dont les contraintes rendent la double comptabilisation
   impossible, vérifié sur une vraie base
 - Snapshot de prix immuable, repli sur timeout, quarantaine des valeurs
@@ -261,7 +262,8 @@ entièrement distinct.
   et affiche le journal de quarantaine, dont chaque entrée déplie l'arbre
   jusqu'à la pièce. Vérifié à l'écran contre la vraie base, sur des snapshots
   `--fail outlier` et `--fail missing`
-- API de dépliage nœud par nœud, where-used, recherche, calcul, scénarios
+- API de dépliage nœud par nœud, where-used, recherche, calcul, scénarios, comparaison et
+  recommandation de sourcing
 - Écran : arbre dépliable, synthèse permanente, panneau de saisie contextuel,
   marquage des modifications, totaux obsolètes signalés
 
@@ -277,10 +279,6 @@ entièrement distinct.
       pièce, CO₂ de transport par usine — mais ne calcule que le coût.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
       l'euro.
-- [ ] **Portée « chemin ».** Le champ existe et est persisté ; le moteur ne
-      résout que la portée pièce, et l'écran affiche le choix en grisé. C'est la
-      moitié difficile de l'ADR-0002 : la clé de mémoïsation doit porter un
-      contexte.
 - [ ] **Prix forcé et temps de main-d'œuvre** éditables à l'écran (l'API les
       accepte déjà, avec justification obligatoire).
 - [ ] **Vue par occurrence** — une ligne par chemin, bornée à un sous-arbre.
@@ -289,8 +287,9 @@ entièrement distinct.
 
 **Tranche T3 — « l'outil aide à décider »**
 
-- [ ] Comparer deux fournisseurs pour une pièce, avec le delta en euros et en
-      kg CO₂e. C'est ce qui répond aux questions Q3 et Q5 du cadrage.
+- [ ] **Ajouter le CO₂e aux calculs et aux comparaisons.** Le delta de coût, les
+      dix principaux écarts et la recommandation de sourcing sont disponibles ;
+      la projection carbone dépend encore de NLPF-46 à NLPF-48.
 
 **Dette assumée, nommée**
 
@@ -319,8 +318,8 @@ entièrement distinct.
 - **Déplier jusqu'à une pièce ouvre le panneau de chaque ancêtre** (journal,
   contributeurs, recherche) : l'arbre se remplit de panneaux qu'on n'a pas
   demandés.
-- **Pas de purge des snapshots**, pas de comparaison entre deux scénarios, pas
-  de recalcul incrémental. Chacune a son signal de réouverture dans
+- **Pas de purge des snapshots**, pas de recalcul incrémental. Chacune a son
+  signal de réouverture dans
   [docs/perimetre.md](car-cost/docs/perimetre.md) §3.
 
 **Reporté, avec sa condition de déclenchement**

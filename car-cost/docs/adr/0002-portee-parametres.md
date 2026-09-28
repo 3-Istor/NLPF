@@ -101,7 +101,7 @@ Borne annoncée : le nombre d'entrées mémoïsées est majoré par
   doit le dire).
 - La clé de mémoïsation n'est plus « la référence » : toute personne qui touche au moteur doit
   comprendre la notion de contexte.
-- Le nombre d'entrées mémoïsées devient une grandeur à surveiller.
+- Le nombre d'entrées mémoïsées devient une grandeur à surveiller.fe
 
 **Dette acceptée**
 - La portée `path` n'est **résolue par le moteur et exposée à l'écran qu'en tranche T2**. En T1, le
