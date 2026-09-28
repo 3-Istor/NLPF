@@ -195,16 +195,16 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 201 tests
+# backend — 255 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
 # front — 15 tests
 cd car-cost/frontend && npm test
 ```
 
-Les onze tests d'intégration se **sautent** si Postgres n'est pas joignable : la
-suite reste verte hors ligne. Vérifié sous WSL (Python 3.12) : `190 passed,
-11 skipped` hors ligne, `201 passed` avec la base chargée. Les tests
+Les treize tests d'intégration se **sautent** si Postgres n'est pas joignable : la
+suite reste verte hors ligne. Vérifié sous NixOS (Python 3.13) : `242 passed,
+13 skipped` hors ligne, `255 passed` avec la base chargée. Les tests
 d'intégration qui écrivent le font dans une transaction annulée : un snapshot ne
 se supprime pas, et un snapshot de test deviendrait celui que l'écran utilise.
 
@@ -262,6 +262,16 @@ entièrement distinct.
   jusqu'à la pièce. Vérifié à l'écran contre la vraie base, sur des snapshots
   `--fail outlier` et `--fail missing`
 - API de dépliage nœud par nœud, where-used, recherche, calcul, scénarios
+- Contrôle d'intégrité de la nomenclature dans le domaine
+  (`domain/bom_validation.py`) : cycle, orphelin, racine sous un parent, arête
+  en double, quantité non positive, valorisation. Le chargeur passe par lui et
+  nomme toutes les fautes d'un coup
+- Plusieurs nomenclatures : `GET /bom/versions`, version validée figée en base
+  (ADR-0012), gardée en mémoire par l'API — un dépliage ne relit plus la base
+- `GET /calculations/{id}/explain` (facteurs du prix, vérifiés contre le prix
+  enregistré ; enfants et main-d'œuvre d'un ensemble) et
+  `GET /calculations/{id}/issues` (lignes au prix malsain, avec un chemin).
+  Côté API seulement : l'écran ne les appelle pas encore
 - Écran : arbre dépliable, synthèse permanente, panneau de saisie contextuel,
   marquage des modifications, totaux obsolètes signalés
 
@@ -269,10 +279,10 @@ entièrement distinct.
 
 **Tranche T2 — « l'outil dit la vérité sur ses prix »**
 
-- [ ] **Lister les prix de repli.** La synthèse les compte, mais seules les
-      valeurs en quarantaine sont cliquables (par le journal). Sur une panne
-      qui touche trente pièces, les trouver dans l'arbre reste une chasse. La
-      route prévue est `GET /calculations/{id}/issues` (docs/api.md §4.5).
+- [ ] **Lister les prix de repli à l'écran.** La route existe
+      (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
+- [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
+      existe ; aucun panneau ne l'affiche.
 - [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
       pièce, CO₂ de transport par usine — mais ne calcule que le coût.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
@@ -297,10 +307,15 @@ entièrement distinct.
 - **Recalculer replie l'arbre.** On remonte le composant pour que les lignes
   redemandent les nouveaux chiffres, et on perd sa place. Sur 474 pièces c'est
   pénible ; la correction est de rafraîchir les nœuds ouverts en place.
-- **Les trois facteurs du prix ne survivent pas au redémarrage.** Le fournisseur
-  et l'usine retenus sont persistés ; la décomposition
-  `référence × multiplicateur × coefficient` sera recalculée par une route
-  `/explain`, pas stockée en double.
+- **Le temps de main-d'œuvre posé en paramètre n'est pas appliqué.** L'API
+  l'accepte, le persiste et le fait entrer dans l'empreinte : les totaux
+  passent en « obsolète », mais le moteur lit toujours `part.labour_minutes`,
+  et le recalcul redonne le même total. À corriger avant de l'exposer à
+  l'écran.
+- **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
+  périmètre figé par l'ADR-0012 : le modifier change l'explication d'un calcul
+  ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
+  l'ancienne valeur.
 - **Un snapshot relu oublie ses pièces sans prix.** Elles n'ont pas de ligne en
   base, seulement un compte. Relu, un snapshot où une pièce n'avait aucun prix
   s'affiche `fresh` ; le calcul, lui, reste `INCOMPLETE` et nomme la pièce —
@@ -309,8 +324,8 @@ entièrement distinct.
 - **La date d'un prix de repli est fausse.** `as_of` vaut la date du snapshot
   qui reprend le prix, pas celle du prix. Sur une chaîne de replis, seul
   `fallback_from_snapshot_id`, remonté de proche en proche, dit d'où vient la
-  valeur. La route `/explain` devra le faire ; les lignes déjà écrites sont
-  immuables.
+  valeur. En attendant, `/explain` renvoie `as_of: null` sur ces lignes plutôt
+  qu'une date fausse ; les lignes déjà écrites sont immuables.
 - **Le journal de quarantaine n'est pas protégé en écriture.** Snapshot et
   lignes de prix ont leur déclencheur d'immutabilité ; `price_quarantine` non.
   L'ajouter fait passer le contrôle du schéma de 21 à 22 refus.
