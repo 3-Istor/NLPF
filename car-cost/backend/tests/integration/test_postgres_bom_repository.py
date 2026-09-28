@@ -31,7 +31,7 @@ VERSION = os.environ.get("CARCOST_BOM_VERSION", "bom-multipla-2026-09-22")
 @pytest.fixture(scope="module")
 def repository():
     psycopg = pytest.importorskip("psycopg")
-    from carcost.infrastructure.postgres_bom_repository import PostgresBomRepository
+    from carcost.infrastructure.postgres.bom import PostgresBomRepository
 
     try:
         with psycopg.connect(DSN, connect_timeout=3):

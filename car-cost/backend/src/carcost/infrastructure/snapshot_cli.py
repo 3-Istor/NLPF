@@ -18,8 +18,8 @@ from datetime import datetime, timezone
 
 from ..application.take_snapshot import NoPriceAvailable, TookFallback, take_snapshot
 from .http_price_source import HttpPriceSource
-from .postgres_bom_repository import PostgresBomRepository
-from .postgres_repositories import PostgresPriceSnapshotRepository
+from .postgres.bom import PostgresBomRepository
+from .postgres.snapshots import PostgresPriceSnapshotRepository
 
 DEFAULT_DSN = "postgresql://3istor:3istor@127.0.0.1:5432/3istor"
 

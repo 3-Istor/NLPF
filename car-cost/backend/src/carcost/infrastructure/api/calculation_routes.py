@@ -22,11 +22,7 @@ from ...application.price_resolution import (
     PriceOverrideNeedsJustification,
     resolve_unit_prices,
 )
-from ...application.run_calculation import (
-    input_digest,
-    run_calculation,
-    with_contributors,
-)
+from ...application.run_calculation import run_calculation, with_contributors
 from ...application.scenario import Scenario, ScenarioParameter
 from .errors import error_response
 

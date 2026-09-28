@@ -66,7 +66,7 @@ def held(repository, connection):
 
 @pytest.fixture
 def snapshots(connection):
-    from carcost.infrastructure.postgres_repositories import (
+    from carcost.infrastructure.postgres.snapshots import (
         PostgresPriceSnapshotRepository,
     )
 
@@ -152,13 +152,17 @@ class TestReadingBack:
 
 class TestCalculationLines:
     def test_each_line_keeps_the_origin_of_its_price(self, connection, two_purchased):
-        from carcost.infrastructure.postgres_bom_repository import (
-            PostgresBomRepository,
-        )
-        from carcost.infrastructure.postgres_repositories import (
+        from carcost.infrastructure.postgres.bom import PostgresBomRepository
+        from carcost.infrastructure.postgres.calculations import (
             PostgresCalculationRepository,
-            PostgresPriceSnapshotRepository,
+        )
+        from carcost.infrastructure.postgres.scenarios import (
             PostgresScenarioRepository,
+        )
+        from carcost.infrastructure.postgres.snapshots import (
+            PostgresPriceSnapshotRepository,
+        )
+        from carcost.infrastructure.postgres.sourcing import (
             PostgresSourcingRepository,
         )
 
