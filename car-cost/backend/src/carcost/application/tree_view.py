@@ -103,8 +103,18 @@ def with_costs(
     for node in nodes:
         line = by_ref.get(node.part_ref)
         quantity = path_quantity(bom, node.path)
-        unit_cost = line.full_unit_cost if line else None
-        own_unit_cost = line.own_unit_cost if line else None
+        unit_cost = calculation.path_full_unit_costs.get(
+            node.path,
+            calculation.part_full_unit_costs.get(
+                node.part_ref, line.full_unit_cost if line else None
+            ),
+        )
+        own_unit_cost = calculation.path_own_unit_costs.get(
+            node.path,
+            calculation.part_own_unit_costs.get(
+                node.part_ref, line.own_unit_cost if line else None
+            ),
+        )
 
         costed.append(
             CostedNode(

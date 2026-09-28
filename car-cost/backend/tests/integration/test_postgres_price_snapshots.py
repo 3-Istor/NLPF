@@ -114,6 +114,20 @@ def save_degraded(snapshots, fresh_ref, refused_ref):
 
 
 class TestReadingBack:
+    def test_snapshots_are_listed_newest_first(self, snapshots, two_purchased):
+        save_degraded(snapshots, *two_purchased)
+
+        listed = [
+            snapshot
+            for snapshot in snapshots.list_all()
+            if snapshot.id in {"snp-test-hier", "snp-test-jour"}
+        ]
+
+        assert [snapshot.id for snapshot in listed] == [
+            "snp-test-jour", "snp-test-hier"
+        ]
+        assert listed[0].status(NOW) is SnapshotStatus.DEGRADED
+
     def test_a_degraded_snapshot_is_still_degraded_once_read_back(
         self, snapshots, two_purchased
     ):
