@@ -164,3 +164,29 @@ class TestRefusals:
     def test_an_unknown_root_is_refused(self):
         with pytest.raises(SeedRejected, match="racine"):
             script(metadata={**METADATA, "root_part_ref": "NOWHERE"})
+
+    def test_a_duplicated_edge_is_refused_before_copy(self):
+        """La clé primaire la refuserait aussi, mais au milieu du COPY, avec un
+        message de contrainte au lieu du nom de l'arête."""
+        edges = rows()["edges"] + [_edge("SUBASM", "SCREW", "5")]
+
+        with pytest.raises(SeedRejected, match="SUBASM → SCREW"):
+            script(edges=edges)
+
+    def test_a_root_with_a_parent_is_refused(self):
+        """TOP au-dessus de ROOT : aucun cycle, mais le véhicule déclaré n'est
+        plus le sommet du graphe."""
+        parts = rows()["parts"] + [_part("TOP", "manufactured", labour="1")]
+        edges = rows()["edges"] + [_edge("TOP", "ROOT", "1")]
+
+        with pytest.raises(SeedRejected, match="racine ROOT est employée"):
+            script(parts=parts, edges=edges)
+
+    def test_every_violation_is_named_at_once(self):
+        parts = rows()["parts"] + [_part("LOST", "purchased", price="1.000000")]
+        edges = rows()["edges"] + [_edge("SUBASM", "SCREW", "5")]
+
+        with pytest.raises(SeedRejected) as refusal:
+            script(parts=parts, edges=edges)
+
+        assert "LOST" in str(refusal.value) and "SUBASM → SCREW" in str(refusal.value)

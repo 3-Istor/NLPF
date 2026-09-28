@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Mapping, Sequence
 
 from ..domain.bom import Bom, Edge, Part, ValuationMode
+from ..domain.bom_validation import validate_bom
 
 
 class SeedRejected(Exception):
@@ -98,19 +99,6 @@ def build_load_script(
 def _to_domain(
     metadata: Mapping, parts: Sequence[Mapping], edges: Sequence[Mapping]
 ) -> Bom:
-    root = metadata["root_part_ref"]
-    known = {row["part_ref"] for row in parts}
-    if root not in known:
-        raise SeedRejected(f"racine {root} absente du jeu de pièces")
-
-    for row in edges:
-        for side in ("parent_ref", "child_ref"):
-            if row[side] not in known:
-                raise SeedRejected(
-                    f"arête {row['parent_ref']} → {row['child_ref']} : "
-                    f"{row[side]} n'est pas une pièce déclarée"
-                )
-
     domain_parts = {
         row["part_ref"]: Part(
             ref=row["part_ref"],
@@ -130,45 +118,38 @@ def _to_domain(
         Edge(row["parent_ref"], row["child_ref"], Decimal(row["quantity"]))
         for row in edges
     )
-    return Bom(root_ref=root, parts=domain_parts, edges=domain_edges)
+    try:
+        return Bom(
+            root_ref=metadata["root_part_ref"], parts=domain_parts, edges=domain_edges
+        )
+    except ValueError as unusable:
+        raise SeedRejected(str(unusable)) from unusable
 
 
 def _reject_if_invalid(bom: Bom, parts: Sequence[Mapping]) -> None:
-    try:
-        order = bom.topological_order()
-    except ValueError as error:
-        raise SeedRejected(str(error)) from error
-
-    has_parent = {edge.child_ref for edge in bom.edges}
-    orphans = sorted(
-        ref for ref in bom.parts if ref != bom.root_ref and ref not in has_parent
-    )
-    if orphans:
+    faults = [violation.message for violation in validate_bom(bom)]
+    faults += _price_faults(parts)
+    if faults:
         raise SeedRejected(
-            f"{len(orphans)} pièce(s) orpheline(s), employée(s) nulle part : "
-            f"{orphans[:5]}"
+            f"{len(faults)} violation(s) : " + " ; ".join(faults[:20])
         )
+    _reject_if_quantities_disagree(bom, bom.topological_order(), parts)
 
+
+def _price_faults(parts: Sequence[Mapping]) -> list[str]:
+    """Le prix n'est pas une donnée de la pièce dans le domaine : c'est ici,
+    à l'entrée du catalogue, qu'on vérifie la face « prix » de l'ADR-0008."""
+    faults = []
     for row in parts:
-        ref = row["part_ref"]
         purchased = row["valuation_mode"] == ValuationMode.PURCHASED.value
-        children = bom.children_of(ref)
-        if purchased and children:
-            raise SeedRejected(
-                f"{ref} est achetée et porte {len(children)} enfant(s) : "
-                f"son coût serait compté deux fois"
-            )
         if purchased and not row["base_price_eur"]:
-            raise SeedRejected(f"{ref} est achetée et n'a pas de prix")
+            faults.append(f"{row['part_ref']} est achetée et n'a pas de prix")
         if not purchased and row["base_price_eur"]:
-            raise SeedRejected(
-                f"{ref} est fabriquée et porte un prix propre : son contenu "
-                f"serait perdu"
+            faults.append(
+                f"{row['part_ref']} est fabriquée et porte un prix propre : son "
+                f"contenu serait perdu"
             )
-        if not purchased and not children:
-            raise SeedRejected(f"{ref} est fabriquée et n'a aucun enfant")
-
-    _reject_if_quantities_disagree(bom, order, parts)
+    return faults
 
 
 def _reject_if_quantities_disagree(

@@ -52,6 +52,24 @@ class Bom:
     )
 
     def __post_init__(self) -> None:
+        # Une arête vers une pièce inconnue ne forme pas un graphe : on ne peut
+        # même pas le contrôler. Le reste des règles est dans bom_validation.
+        if self.root_ref not in self.parts:
+            raise ValueError(f"racine {self.root_ref} absente des pièces déclarées")
+        dangling = sorted(
+            {
+                ref
+                for edge in self.edges
+                for ref in (edge.parent_ref, edge.child_ref)
+                if ref not in self.parts
+            }
+        )
+        if dangling:
+            raise ValueError(
+                f"{len(dangling)} référence(s) d'arête sans pièce déclarée : "
+                f"{dangling[:5]}"
+            )
+
         index: dict[str, list[tuple[str, Decimal]]] = {ref: [] for ref in self.parts}
         for edge in self.edges:
             index[edge.parent_ref].append((edge.child_ref, edge.quantity))
