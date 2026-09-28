@@ -35,7 +35,6 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 
 | Sujet | Déclencheur de l'ADR |
 |---|---|
-| Règle d'arrondi et précision monétaire | À trancher avant le premier calcul persisté (ambiguïté A3 du cadrage) — candidat ADR-0011 |
 | Politique de prise de snapshot (manuelle, planifiée, à la demande) | Si la prise manuelle laisse l'utilisateur en `STALE` permanent (ADR-0003) |
 | Make or buy (devis attaché à un nœud fabriqué) | À la première demande réelle (ADR-0008) |
 | Comparaison de deux scénarios enregistrés | Si la question « qu'est-ce qui a changé depuis lundi ? » est activée (périmètre §3.5) |
