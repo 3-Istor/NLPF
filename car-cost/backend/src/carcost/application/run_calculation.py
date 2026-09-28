@@ -137,6 +137,7 @@ def run_calculation(
             unit_prices=resolved.prices,
             labour_rate=scenario.labour_rate,
             active_rules=scenario.active_rules,
+            labour_minutes=scenario.labour_minutes(),
         )
     )
 

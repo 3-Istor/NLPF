@@ -223,6 +223,23 @@ class TestAssembly:
             Decimal("84"),
         )
 
+    def test_the_labour_time_shown_is_the_one_the_scenario_set(self, bom):
+        """4 × 13,5 + 90 min à 60 €/h = 54 + 90 = 144."""
+        longer = ScenarioParameter(
+            part_ref="A", scope="part", labour_minutes=Decimal("90")
+        )
+        the_scenario = scenario(ON_THE_POLISH_PLANT, longer)
+        calculation = calculate(bom, the_scenario, snapshot())
+
+        breakdown = explain(
+            bom, calculation, "V/A", the_scenario=the_scenario
+        ).breakdown
+
+        assert (breakdown.labour_minutes, breakdown.unit_cost) == (
+            Decimal("90"),
+            Decimal("144"),
+        )
+
     def test_an_assembly_with_an_unpriced_child_has_no_unit_cost(self, bom):
         calculation = calculate(bom, scenario(), snapshot())
 

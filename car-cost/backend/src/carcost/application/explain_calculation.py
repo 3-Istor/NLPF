@@ -116,7 +116,7 @@ def explain_line(
                               snapshot, sourcing)
         price_status = calculation.price_status_of(ref).value
     else:
-        breakdown = _assembly(calculation, bom, ref, scenario)
+        breakdown = _assembly(calculation, bom, ref, scenario, unchanged)
         price_status = None
 
     return LineExplanation(
@@ -184,7 +184,11 @@ def _purchase(
 
 
 def _assembly(
-    calculation: Calculation, bom: Bom, ref: str, scenario: Scenario
+    calculation: Calculation,
+    bom: Bom,
+    ref: str,
+    scenario: Scenario,
+    unchanged: bool,
 ) -> AssemblyBreakdown:
     lines = {line.part_ref: line for line in calculation.lines}
     children = []
@@ -205,7 +209,13 @@ def _assembly(
     return AssemblyBreakdown(
         children=tuple(children),
         children_cost=children_cost,
-        labour_minutes=bom.parts[ref].labour_minutes,
+        # Le temps appliqué peut venir du scénario ; s'il a changé depuis, on
+        # ne sait plus lequel a servi, et celui de la nomenclature mentirait.
+        labour_minutes=(
+            scenario.labour_minutes().get(ref, bom.parts[ref].labour_minutes)
+            if unchanged
+            else None
+        ),
         labour_rate=scenario.labour_rate,
         labour_cost=lines[ref].own_unit_cost,
         unit_cost=lines[ref].full_unit_cost,

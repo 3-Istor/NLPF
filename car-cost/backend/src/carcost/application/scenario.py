@@ -119,3 +119,11 @@ class Scenario:
             if parameter.part_ref == part_ref and parameter.scope == "part":
                 return parameter
         return None
+
+    def labour_minutes(self) -> dict[str, Decimal]:
+        """Les temps de main-d'œuvre posés en portée pièce, par référence."""
+        return {
+            parameter.part_ref: parameter.labour_minutes
+            for parameter in self.parameters
+            if parameter.scope == "part" and parameter.labour_minutes is not None
+        }

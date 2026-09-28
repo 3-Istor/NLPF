@@ -248,6 +248,22 @@ class TestStaleness:
             == "UP_TO_DATE"
         )
 
+    def test_a_labour_time_set_on_an_assembly_changes_the_total(self, client):
+        """A passe de 30 à 90 min, deux A par véhicule : 120 € de plus.
+        Accepté, marqué obsolète, puis recalculé à l'identique, ce paramètre
+        ferait croire à l'utilisateur qu'il a changé quelque chose."""
+        scenario_id = make_scenario(client)
+        client.put(
+            f"/api/v1/scenarios/{scenario_id}/parameters/A",
+            json={"scope": "part", "labour_minutes": "90"},
+        )
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert body["total_cost"]["amount"] == "515.000000"
+
 
 class TestErrors:
     def test_an_unknown_scenario_is_a_named_404(self, client):

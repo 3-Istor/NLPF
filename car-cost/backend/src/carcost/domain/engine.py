@@ -138,9 +138,11 @@ def _own_unit_costs(
             else:
                 costs[ref] = None
                 missing.append(ref)
-        elif labour_is_active and part.labour_minutes is not None:
+            continue
+        minutes = inputs.labour_minutes.get(ref, part.labour_minutes)
+        if labour_is_active and minutes is not None:
             costs[ref] = (
-                part.labour_minutes / MINUTES_PER_HOUR * inputs.labour_rate
+                minutes / MINUTES_PER_HOUR * inputs.labour_rate
             ).quantize(SCALE, rounding=ROUND_HALF_UP)
         else:
             costs[ref] = Decimal(0)

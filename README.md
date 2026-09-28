@@ -307,11 +307,6 @@ entièrement distinct.
 - **Recalculer replie l'arbre.** On remonte le composant pour que les lignes
   redemandent les nouveaux chiffres, et on perd sa place. Sur 474 pièces c'est
   pénible ; la correction est de rafraîchir les nœuds ouverts en place.
-- **Le temps de main-d'œuvre posé en paramètre n'est pas appliqué.** L'API
-  l'accepte, le persiste et le fait entrer dans l'empreinte : les totaux
-  passent en « obsolète », mais le moteur lit toujours `part.labour_minutes`,
-  et le recalcul redonne le même total. À corriger avant de l'exposer à
-  l'écran.
 - **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
   périmètre figé par l'ADR-0012 : le modifier change l'explication d'un calcul
   ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
