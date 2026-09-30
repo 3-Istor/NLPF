@@ -302,13 +302,21 @@ Renvoie le scénario, ses paramètres, et **l'état du calcul**, qui est une don
   "labour_rate": "42.000000",
   "active_rules": ["labour"], "parameters": [ … ],
   "calculation_state": "PARAMETERS_CHANGED",
-  "stale_reason": "parameters" }
+  "stale_reason": "parameters",
+  "last_calculation_id": "calc-41b…" }
 ```
+
+`last_calculation_id` désigne le dernier calcul enregistré (`null` s'il n'y en a aucun). L'écran le
+relit avec `GET /calculations/{id}` pour réafficher un scénario rouvert, sans relancer de calcul.
 
 Chaque paramètre expose `parameter_id`, `part_ref`, `scope`, `path`, `supplier_id`, `plant_id`,
 `purchase_currency`, `price_override`, `price_override_justification` et `labour_minutes`.
 `parameter_id` est l'identifiant `prm-…` à passer à la route de suppression ; il reste donc
 récupérable après un redémarrage ou lorsque la réponse initiale du `PUT` n'a pas été conservée.
+**`purchase_currency` est accepté et persisté, mais n'a aucun effet sur le calcul** : aucune
+conversion de devise n'existe encore, les prix restent ceux du snapshot. Le champ entre seulement
+dans l'empreinte des entrées, si bien qu'il marque les totaux obsolètes. Choix retenu en revue du
+2026-09-30 : le laisser tel quel jusqu'à la tranche devises.
 Les valeurs décimales sont des chaînes, sans arrondi. Un réglage qui dépasse l'échelle de stockage
 (6 décimales pour les montants, 4 pour les minutes) est refusé plutôt qu'arrondi silencieusement.
 
@@ -357,7 +365,9 @@ Règles de validation, refusées en 422 :
 Le calcul applique cette précédence. La vue agrégée conserve une contribution exacte et expose un
 coût unitaire moyen pondéré à l'échelle de stockage lorsque deux occurrences de la même pièce ont
 des coûts différents.
-La vue par chemin conserve le coût propre et le coût complet de l'occurrence surchargée.
+La vue par chemin conserve le coût propre et le coût complet de l'occurrence surchargée ; ces coûts
+de contexte sont persistés avec le calcul (`calculation_context_cost`, migration 0002), si bien que
+l'arbre relu depuis la base affiche le coût de chaque occurrence et non la moyenne de la ligne.
 Le paramètre de chemin remplace la cible complète : un champ omis y reprend la valeur par défaut du
 catalogue, pas la valeur du paramètre de portée pièce.
 
@@ -404,6 +414,8 @@ Le champ est déjà stable et devient numérique dès que les deux calculs porte
 
 ### 3.9 `POST /scenarios/{id}/recommend-sourcing` — recommandation contrainte
 
+Décision : [ADR-0012](adr/0012-comparaison-et-recommandation-par-piece.md).
+
 ```json
 { "name": "Sourcing optimisé", "price_snapshot_id": "snp-19a…",
   "forbidden_origins": ["RU"], "max_lead_time_days": 30,
@@ -418,10 +430,23 @@ le délai, la quantité affectée et l'économie estimée.
 Un calcul de base incomplet est refusé avec `409 INCOMPLETE_CALCULATION`, car aucune économie fiable
 ne peut être calculée à partir d'un prix manquant.
 
+Si l'option actuelle **viole une contrainte**, l'option autorisée la moins chère est proposée même
+si elle coûte plus cher : la ligne porte `required_by_constraint: true` et une économie négative.
+Si aucune option autorisée n'existe, la pièce figure dans **`unresolved`** avec son sourcing actuel
+et une raison ; elle n'est jamais ignorée en silence, car la variante la garderait telle quelle.
+
 `accepted_part_refs` permet de n'appliquer qu'une partie des recommandations. Omis, il accepte tout ;
 vide, il crée une copie indépendante sans modification. La réponse `201` contient le scénario créé,
-les recommandations marquées `accepted` et l'économie exacte issue d'une comparaison des deux
-calculs sur le même snapshot.
+les recommandations marquées `accepted`, les `unresolved` et l'économie exacte issue d'une
+comparaison des deux calculs sur le même snapshot.
+
+### 3.10 `POST /scenarios/{id}/recommend-sourcing/preview` — aperçu sans création
+
+Même corps que §3.9, sans `name` ni `accepted_part_refs`. Réponse `200` : `base_scenario_id`,
+`price_snapshot_id` (celui réellement utilisé), `constraints`, `recommendations` et `unresolved`.
+**Aucun scénario n'est créé** ; seul le calcul de base est enregistré. L'écran s'en sert pour faire
+cocher les lignes, puis appelle §3.9 avec les lignes retenues et **le même `price_snapshot_id`**,
+pour que l'économie annoncée porte sur les prix que l'utilisateur a vus.
 
 ---
 

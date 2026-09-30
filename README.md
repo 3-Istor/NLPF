@@ -320,9 +320,8 @@ entièrement distinct.
 - [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
       pièce, CO₂ de transport par usine — mais ne calcule que le coût.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
-      l'euro.
-- [ ] **Prix forcé et temps de main-d'œuvre** éditables à l'écran (l'API les
-      accepte déjà, avec justification obligatoire).
+      l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
+      persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).
 - [ ] **Vue par occurrence** — une ligne par chemin, bornée à un sous-arbre.
 - [ ] **Recherche à l'écran** : l'API renvoie les chemins, le front ne déplie
       pas encore automatiquement jusqu'au résultat.
@@ -330,8 +329,11 @@ entièrement distinct.
 **Tranche T3 — « l'outil aide à décider »**
 
 - [ ] **Ajouter le CO₂e aux calculs et aux comparaisons.** Le delta de coût, les
-      dix principaux écarts et la recommandation de sourcing sont disponibles ;
-      la projection carbone dépend encore de NLPF-46 à NLPF-48.
+      dix principaux écarts et la recommandation de sourcing sont disponibles,
+      à l'écran comme dans l'API ; la projection carbone dépend encore de
+      NLPF-46 à NLPF-48. L'écran affiche l'écart CO₂ « non calculé ».
+- [ ] **Valider l'ADR-0012** (comparaison sur snapshot commun, recommandation
+      pièce par pièce), rédigé en revue au statut « proposé ».
 
 **Dette assumée, nommée**
 
@@ -360,6 +362,9 @@ entièrement distinct.
 - **Déplier jusqu'à une pièce ouvre le panneau de chaque ancêtre** (journal,
   contributeurs, recherche) : l'arbre se remplit de panneaux qu'on n'a pas
   demandés.
+- **Comparer et recommander enregistrent de nouveaux calculs** à chaque appel,
+  même quand un calcul de même empreinte existe déjà sur ce snapshot : la table
+  `calculation` grossit plus vite que nécessaire.
 - **Pas de purge des snapshots**, pas de recalcul incrémental. Chacune a son
   signal de réouverture dans
   [docs/perimetre.md](car-cost/docs/perimetre.md) §3.

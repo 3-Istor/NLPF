@@ -5,7 +5,7 @@ scénarios, des paramètres, du calcul, de la comparaison et de la recommandatio
 Il décrit le comportement final du produit, les fichiers concernés, les vérifications effectuées
 et la prochaine tranche consacrée au CO₂.
 
-État vérifié le **28 septembre 2026**. Tous les prix, masses, facteurs carbone et données de
+État vérifié le **30 septembre 2026**, après la revue de la PR. Tous les prix, masses, facteurs carbone et données de
 nomenclature du projet sont **synthétiques** : aucun chiffre ne provient d'un constructeur.
 
 ## 1. Ce qui est opérationnel
@@ -20,10 +20,11 @@ Les quatre fonctionnalités d'aide à la décision prévues pour les scénarios 
 - **NLPF-45 — recommander un sourcing** : chercher le couple fournisseur/usine le moins cher sous
   les contraintes demandées et créer une variante indépendante.
 
-La recette Swagger effectuée confirme le parcours complet : scénario de base, paramètres,
-suppression, calcul, comparaison et recommandation. Le seul champ fonctionnellement incomplet dans
-ce parcours est `co2_delta_kg`, qui vaut actuellement `null` parce que le moteur ne calcule pas
-encore l'empreinte carbone.
+Le parcours est disponible **à l'écran** : sélecteur de scénario, duplication, suppression,
+portée « cette occurrence » dans le panneau de saisie, et une fenêtre « Comparer · Recommander ».
+Il a été piloté dans un navigateur contre la vraie nomenclature (voir §9). Le seul champ
+fonctionnellement incomplet est `co2_delta_kg`, qui vaut `null` parce que le moteur ne calcule pas
+encore l'empreinte carbone ; l'écran l'affiche « non calculé », jamais 0.
 
 ## 2. Les notions à connaître
 
@@ -117,6 +118,7 @@ Toutes les routes ci-dessous sont préfixées par `/api/v1`.
 | `GET /calculations/{calculation_id}` | Relire un calcul enregistré. |
 | `GET /calculations/{calculation_id}/aggregated` | Obtenir une ligne agrégée par référence de pièce. |
 | `POST /scenarios/compare` | Calculer puis comparer les scénarios A et B. |
+| `POST /scenarios/{scenario_id}/recommend-sourcing/preview` | Voir les recommandations sans rien créer. |
 | `POST /scenarios/{scenario_id}/recommend-sourcing` | Créer une variante de sourcing optimisée. |
 | `GET /price-snapshots` | Lister les snapshots, leur âge et leur état. |
 | `GET /price-snapshots/{snapshot_id}/quarantine` | Expliquer les prix écartés ou remplacés. |
@@ -187,6 +189,17 @@ elle :
 - champ omis ou `null` : toutes les recommandations sont acceptées ;
 - liste vide `[]` : une copie indépendante est créée sans changement ;
 - liste de références : seules ces recommandations sont appliquées.
+
+Deux cas liés aux contraintes sont explicites (ADR-0012) :
+
+- l'option actuelle viole une contrainte : l'option autorisée la moins chère est proposée même si
+  elle coûte plus cher ; la ligne porte `required_by_constraint` (badge « imposé » à l'écran) et une
+  économie négative ;
+- aucune option autorisée n'existe : la pièce est listée dans `unresolved`, avec sa raison. Elle
+  n'est jamais ignorée en silence.
+
+L'écran appelle d'abord l'aperçu (`…/recommend-sourcing/preview`), fait cocher les lignes, puis crée
+la variante avec les lignes retenues **et le snapshot de l'aperçu**.
 
 L'algorithme optimise chaque pièce indépendamment. Il ne cherche pas une combinaison globale avec
 des contraintes couplées entre plusieurs pièces. Une telle optimisation est un problème métier
@@ -260,62 +273,42 @@ distinct.
 - [`docs/perimetre.md`](perimetre.md) situe ces fonctionnalités dans les tranches du projet.
 - [`../README.md`](../../README.md) décrit l'installation et le lancement général du projet.
 
-Aucune migration de schéma n'a été ajoutée pour cette tranche : les tables et les clés étrangères
-nécessaires existaient déjà. Le fichier `output/pdf/etat-scenarios-nlpf.pdf` est un document de
-revue généré, pas du code exécuté par l'application.
+### Schéma et front
+
+- [`backend/migrations/0002_calculation_context_cost.sql`](../backend/migrations/0002_calculation_context_cost.sql)
+  conserve les coûts par occurrence d'un calcul qui porte une surcharge de chemin. Sans elle,
+  l'arbre relu depuis la base affichait la moyenne pondérée sur chaque occurrence. Le conteneur
+  `backend` applique au démarrage les migrations absentes d'une base existante.
+- [`frontend/src/components/ScenarioBar.tsx`](../frontend/src/components/ScenarioBar.tsx) : choisir,
+  dupliquer, supprimer un scénario ; ouvrir l'aide à la décision.
+- [`frontend/src/components/DecisionDialog.tsx`](../frontend/src/components/DecisionDialog.tsx) :
+  comparaison A/B et recommandation avec cases à cocher.
+- [`frontend/src/components/NodePanel.tsx`](../frontend/src/components/NodePanel.tsx) : portée
+  « cette occurrence uniquement » activée, temps de main-d'œuvre saisissable sur un ensemble.
 
 ## 9. Vérifications réalisées
 
-Les contrôles suivants ont réussi sur PostgreSQL et le jeu de données complet :
+Le 30 septembre 2026, sur PostgreSQL et le jeu de données complet :
 
-- **287 tests backend** ;
-- **15 tests frontend** ;
-- vérification TypeScript avec `tsc --noEmit` ;
-- contrôle du générateur déterministe avec `python -m tools.bom_generator --check` ;
-- contrôle des espaces et fins de ligne avec `git diff --check`.
+- **305 tests backend**, dont les tests d'intégration contre Postgres (aucun sauté) ;
+- **19 tests frontend** et `tsc --noEmit` ;
+- parcours piloté dans un navigateur contre la vraie nomenclature : dupliquer un scénario, forcer
+  le prix d'une vis partagée sur **une seule** de ses 9 occurrences, recalculer (+15,34 €), relire
+  l'arbre : l'occurrence surchargée affiche 1,00 €, les autres 0,041407 €, la ligne agrégée la
+  moyenne pondérée ; comparer (écart −15,34 €, seule la vis diffère) ; recommander sous
+  interdiction de `DE` (158 lignes dont 36 imposées), décocher une ligne, créer la variante
+  (−352,81 €), vérifier en base que la ligne décochée n'a pas été appliquée et que l'original est
+  intact ; supprimer les scénarios de recette et vérifier la cascade.
 
 Le jeu de données de validation contient **474 pièces**, **689 relations**, **302 pièces achetées**,
 **172 pièces fabriquées**, **65 pièces partagées**, **749 chemins** et une profondeur maximale de
 **5**.
 
-## 10. Lancer Swagger sous Windows
+## 10. Lancer l'application
 
-Depuis `C:\Users\rapha\NLPF\car-cost`, utiliser trois terminaux PowerShell.
-
-Terminal 1 — PostgreSQL et chargement idempotent des données :
-
-```powershell
-$env:POSTGRES_PORT = '55432'
-docker compose up -d
-.\backend\.venv\Scripts\python.exe -m carcost.infrastructure seeds |
-  docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q
-```
-
-Terminal 2 — simulateur de prix :
-
-```powershell
-.\backend\.venv\Scripts\python.exe price-api/mock_price_api.py --port 8099
-```
-
-Terminal 1 — créer un snapshot :
-
-```powershell
-$env:CARCOST_DSN = 'postgresql://3istor:3istor@127.0.0.1:55432/3istor'
-.\backend\.venv\Scripts\python.exe -m carcost.infrastructure.snapshot_cli
-```
-
-Terminal 3 — API. Le port `8001` est utilisé ici parce que le port `8000` était déjà occupé sur la
-machine de recette :
-
-```powershell
-$env:CARCOST_DSN = 'postgresql://3istor:3istor@127.0.0.1:55432/3istor'
-.\backend\.venv\Scripts\python.exe -m uvicorn carcost.infrastructure.api.main:app `
-  --host 127.0.0.1 --port 8001
-```
-
-Swagger est alors disponible sur <http://127.0.0.1:8001/docs>. L'erreur Windows `10048` signifie
-qu'un autre processus écoute déjà sur le port demandé ; il faut réutiliser ce service, arrêter son
-processus, ou choisir un autre port libre.
+Voir le [README](../../README.md) : `docker compose up` depuis la racine du dépôt, puis
+<http://localhost:5173> pour l'écran et <http://localhost:8000/docs> pour Swagger. Sur une
+installation existante, le conteneur `backend` applique la migration 0002 au démarrage.
 
 L'ordre de test conseillé dans Swagger est :
 
@@ -326,12 +319,9 @@ L'ordre de test conseillé dans Swagger est :
 5. `POST /calculations` ;
 6. `POST /scenarios/{id}/duplicate` puis modification de la copie ;
 7. `POST /scenarios/compare` ;
-8. `POST /scenarios/{id}/recommend-sourcing` ;
+8. `POST /scenarios/{id}/recommend-sourcing/preview` puis `…/recommend-sourcing` ;
 9. suppression d'un paramètre avec son `parameter_id` ;
 10. suppression des scénarios de test.
-
-Les schémas de requête, les champs obligatoires et les exemples de valeurs sont directement
-visibles dans Swagger avec le bouton **Try it out** de chaque endpoint.
 
 ## 11. Prochaine tranche : calculer le CO₂
 
