@@ -5,7 +5,15 @@ chacun terminé par son `INSERT INTO schema_migration`.
 
 ```
 0001_initial_schema.sql
-0002_....sql
+0002_calculation_context_cost.sql   coûts par occurrence quand une surcharge de chemin existe
+```
+
+Docker Compose ne les exécute qu'à la **création** du volume. Sur une base existante, appliquer
+à la main celles qui manquent (`SELECT version FROM schema_migration`) :
+
+```bash
+docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+  < backend/migrations/0002_calculation_context_cost.sql
 ```
 
 ## Règles

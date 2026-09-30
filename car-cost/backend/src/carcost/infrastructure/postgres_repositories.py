@@ -541,6 +541,15 @@ class PostgresCalculationRepository(_PostgresRepository):
                     (calculation.id, part_ref, "aucun prix connu pour cette pièce"),
                 )
 
+            context_rows = _context_cost_rows(calculation)
+            if context_rows:
+                with cursor.copy(
+                    "COPY calculation_context_cost (calculation_id, scope, target, "
+                    "own_unit_cost, full_unit_cost) FROM STDIN"
+                ) as copy:
+                    for row in context_rows:
+                        copy.write_row((calculation.id, *row))
+
     def get(self, calculation_id: str) -> Calculation:
         calculation = self._read(calculation_id)
         if calculation is None:
@@ -659,7 +668,25 @@ class PostgresCalculationRepository(_PostgresRepository):
             )
             missing = tuple(row[0] for row in cursor.fetchall())
 
-        age = (finished_at - snapshot_taken_at) if snapshot_taken_at else timedelta(0)
+            cursor.execute(
+                """
+                SELECT scope, target, own_unit_cost, full_unit_cost
+                FROM calculation_context_cost
+                WHERE calculation_id = %s
+                """,
+                (calculation_id,),
+            )
+            contexts = cursor.fetchall()
+
+        costs: dict[tuple[str, str], dict[str, Decimal | None]] = {
+            ("part", "own"): {}, ("part", "full"): {},
+            ("path", "own"): {}, ("path", "full"): {},
+        }
+        for scope, target, own_unit, full_unit in contexts:
+            costs[(scope, "own")][target] = own_unit
+            costs[(scope, "full")][target] = full_unit
+
+        age =(finished_at - snapshot_taken_at) if snapshot_taken_at else timedelta(0)
         return Calculation(
             id=calculation_id,
             scenario_id=scenario_id,
@@ -687,4 +714,36 @@ class PostgresCalculationRepository(_PostgresRepository):
             parts_without_price=missing,
             explanations=explanations,
             price_statuses=price_statuses,
+            path_own_unit_costs=costs[("path", "own")],
+            path_full_unit_costs=costs[("path", "full")],
+            part_own_unit_costs=costs[("part", "own")],
+            part_full_unit_costs=costs[("part", "full")],
         )
+
+
+def _context_cost_rows(calculation: Calculation) -> list[tuple]:
+    """Les coûts de contexte qui ne se déduisent pas des lignes agrégées.
+
+    Sans surcharge de chemin, rien : chaque occurrence porte le coût de sa
+    ligne. Avec, les préfixes surchargés, et le coût de référence des seules
+    pièces dont la ligne porte une moyenne différente.
+    """
+    if not calculation.path_own_unit_costs and not calculation.path_full_unit_costs:
+        return []
+    rows = [
+        (
+            "path",
+            path,
+            calculation.path_own_unit_costs.get(path),
+            calculation.path_full_unit_costs.get(path),
+        )
+        for path in sorted(
+            set(calculation.path_own_unit_costs) | set(calculation.path_full_unit_costs)
+        )
+    ]
+    for line in calculation.lines:
+        own = calculation.part_own_unit_costs.get(line.part_ref, line.own_unit_cost)
+        full = calculation.part_full_unit_costs.get(line.part_ref, line.full_unit_cost)
+        if own != line.own_unit_cost or full != line.full_unit_cost:
+            rows.append(("part", line.part_ref, own, full))
+    return rows
