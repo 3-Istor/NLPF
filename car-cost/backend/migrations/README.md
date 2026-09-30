@@ -8,8 +8,9 @@ chacun terminé par son `INSERT INTO schema_migration`.
 0002_calculation_context_cost.sql   coûts par occurrence quand une surcharge de chemin existe
 ```
 
-Docker Compose ne les exécute qu'à la **création** du volume. Sur une base existante, appliquer
-à la main celles qui manquent (`SELECT version FROM schema_migration`) :
+Postgres ne les exécute qu'à la **création** du volume. Le conteneur `backend` rattrape à chaque
+démarrage celles qui manquent dans `schema_migration` (`carcost.infrastructure.startup`). Hors
+conteneur, sur une base existante, les appliquer à la main :
 
 ```bash
 docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
