@@ -71,12 +71,13 @@ Le tableau ci-dessus est vérifié, pas affirmé :
 docker compose exec -T db psql -U 3istor -d 3istor -q < backend/migrations/checks/contraintes.sql
 ```
 
-Quinze écritures interdites, chacune annoncée « refusé » avec la contrainte qui
-l'a arrêtée, et deux paramètres valides acceptés — dont une portée pièce et une
+Vingt-et-une écritures interdites, chacune annoncée « refusé » avec la
+contrainte qui l'a arrêtée — dont les six qui protègent une version validée
+(ADR-0013) — et deux paramètres valides acceptés, dont une portée pièce et une
 portée chemin sur la même pièce, le cas de précédence de l'ADR-0002. Un
 `WARNING` dans la sortie signale une contrainte qui ne tient plus.
 
-Exécuté sur Postgres 16.15 le 2026-09-23 : 15 refus, 0 WARNING.
+Exécuté sur Postgres 16.15 le 2026-09-30 : 21 refus, 0 WARNING.
 
 ## Chargement du jeu de données
 

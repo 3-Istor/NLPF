@@ -237,18 +237,19 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — voir décompte réel après fusion
+# backend — 363 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 15 tests
+# front — 19 tests
 cd car-cost/frontend && npm test
 ```
 
-Les treize tests d'intégration se **sautent** si Postgres n'est pas joignable : la
-suite reste verte hors ligne. Vérifié sous NixOS (Python 3.13) : `246 passed,
-13 skipped` hors ligne, `259 passed` avec la base chargée. Les tests
-d'intégration qui écrivent le font dans une transaction annulée : un snapshot ne
-se supprime pas, et un snapshot de test deviendrait celui que l'écran utilise.
+Les vingt-et-un tests d'intégration se **sautent** si Postgres n'est pas
+joignable : la suite reste verte hors ligne. Vérifié sous NixOS (Python 3.12) :
+`342 passed, 21 skipped` hors ligne, `363 passed` avec la base chargée. Les
+tests d'intégration qui écrivent le font dans une transaction annulée : un
+snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
+l'écran utilise.
 
 Deux contrôles valent d'être lancés à la main :
 

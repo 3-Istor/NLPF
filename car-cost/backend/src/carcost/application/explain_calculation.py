@@ -109,14 +109,14 @@ def explain_line(
     line = next(line for line in calculation.lines if line.part_ref == ref)
 
     unchanged = input_digest(scenario, snapshot) == calculation.input_digest
-    parameter = scenario.parameter_for(ref) if unchanged else None
+    parameter = scenario.parameter_for(ref, path) if unchanged else None
 
     if part.is_purchased:
         breakdown = _purchase(calculation, ref, line.own_unit_cost, parameter,
                               snapshot, sourcing)
         price_status = calculation.price_status_of(ref).value
     else:
-        breakdown = _assembly(calculation, bom, ref, scenario, unchanged)
+        breakdown = _assembly(calculation, bom, ref, path, scenario, unchanged)
         price_status = None
 
     return LineExplanation(
@@ -187,6 +187,7 @@ def _assembly(
     calculation: Calculation,
     bom: Bom,
     ref: str,
+    path: str,
     scenario: Scenario,
     unchanged: bool,
 ) -> AssemblyBreakdown:
@@ -206,16 +207,20 @@ def _assembly(
     children_cost = (
         None if None in contributions else sum(contributions, Decimal(0))
     )
+    # Le temps appliqué peut venir du scénario, en portée pièce ou chemin ; s'il
+    # a changé depuis, on ne sait plus lequel a servi, et celui de la
+    # nomenclature mentirait.
+    parameter = scenario.parameter_for(ref, path) if unchanged else None
+    if parameter is not None and parameter.labour_minutes is not None:
+        labour_minutes = parameter.labour_minutes
+    elif unchanged:
+        labour_minutes = bom.parts[ref].labour_minutes
+    else:
+        labour_minutes = None
     return AssemblyBreakdown(
         children=tuple(children),
         children_cost=children_cost,
-        # Le temps appliqué peut venir du scénario ; s'il a changé depuis, on
-        # ne sait plus lequel a servi, et celui de la nomenclature mentirait.
-        labour_minutes=(
-            scenario.labour_minutes().get(ref, bom.parts[ref].labour_minutes)
-            if unchanged
-            else None
-        ),
+        labour_minutes=labour_minutes,
         labour_rate=scenario.labour_rate,
         labour_cost=lines[ref].own_unit_cost,
         unit_cost=lines[ref].full_unit_cost,

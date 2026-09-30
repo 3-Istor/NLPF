@@ -98,7 +98,7 @@ class TestLabourTimeFromTheScenario:
                 bom=diamond,
                 unit_prices={"S": Decimal("10")},
                 labour_rate=Decimal("60"),
-                labour_minutes={"A": Decimal("90")},
+                labour_minutes_by_part={"A": Decimal("90")},
             )
         )
 
@@ -113,7 +113,7 @@ class TestLabourTimeFromTheScenario:
                 unit_prices={"S": Decimal("10")},
                 labour_rate=Decimal("60"),
                 active_rules=frozenset(),
-                labour_minutes={"A": Decimal("90")},
+                labour_minutes_by_part={"A": Decimal("90")},
             )
         )
 
