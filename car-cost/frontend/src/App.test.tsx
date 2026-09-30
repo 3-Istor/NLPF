@@ -156,11 +156,13 @@ vi.mock("./api/client", () => ({
 }));
 
 const children = vi.mocked(api.children);
+const scrollIntoView = vi.fn();
 
 beforeEach(() => {
   localStorage.clear();
   history.replaceState(null, "", "/");
   vi.clearAllMocks();
+  Element.prototype.scrollIntoView = scrollIntoView;
   stored = [
     scenario("scn-1", "Scénario récent", "calc-1"),
     scenario("scn-2", "Scénario ancien", "calc-3"),
@@ -215,6 +217,45 @@ describe("l'écran garde l'arbre", () => {
     expect(api.putParameter).toHaveBeenCalled();
     expect(screen.getByText("Vis de culasse")).toBeInTheDocument();
     expect(kept?.isConnected).toBe(true);
+  });
+
+  it("la ligne sélectionnée est dans l'URL", async () => {
+    await start();
+    fireEvent.click(chevron("V"));
+    fireEvent.click(await screen.findByText("Châssis"));
+
+    await waitFor(() =>
+      expect(new URLSearchParams(location.search).get("node")).toBe("V/B"),
+    );
+    expect(new URLSearchParams(location.search).get("scenario")).toBe("scn-1");
+  });
+
+  it("le F5 rouvre le scénario et la ligne de l'URL", async () => {
+    history.replaceState(null, "", "/?scenario=scn-2&node=V/A");
+
+    await start();
+
+    expect(screen.getByLabelText("Scénario")).toHaveValue("scn-2");
+    await waitFor(() =>
+      expect(row("V/A")).toHaveAttribute("aria-selected", "true"),
+    );
+    await waitFor(() =>
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: "center" }),
+    );
+    const scrolled = scrollIntoView.mock.contexts.at(-1);
+    expect(scrolled).toBe(row("V/A"));
+  });
+
+  it("un scénario inconnu dans l'URL retombe sur le plus récent", async () => {
+    history.replaceState(null, "", "/?scenario=scn-inconnu");
+
+    await start();
+
+    expect(screen.getByLabelText("Scénario")).toHaveValue("scn-1");
+    expect(document.querySelector(".banner--danger")).toBeNull();
+    await waitFor(() =>
+      expect(new URLSearchParams(location.search).get("scenario")).toBe("scn-1"),
+    );
   });
 
   it("changer de scénario garde le dépliage", async () => {

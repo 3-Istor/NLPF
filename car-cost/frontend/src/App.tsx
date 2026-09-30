@@ -8,7 +8,7 @@
  * est celui des positions à l'écran.
  */
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiFailure } from "./api/client";
 import type {
   Calculation,
@@ -20,13 +20,32 @@ import type {
 import { DecisionDialog } from "./components/DecisionDialog";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { Summary } from "./components/Summary";
-import { Tree } from "./components/Tree";
+import { rowId, Tree } from "./components/Tree";
 import { WhereUsed } from "./components/WhereUsed";
 import { byPart, Refusals } from "./quarantine";
 import { useTreeState } from "./tree/useTreeState";
 
 const BOM_VERSION =
   import.meta.env.VITE_BOM_VERSION ?? "bom-multipla-2026-09-22";
+
+/**
+ * Le scénario et la ligne sélectionnée vivent dans l'URL : un F5 ou un lien
+ * partagé rouvre le même endroit. `replaceState`, pas `pushState` : cliquer
+ * une ligne ne doit pas remplir l'historique du bouton « Précédent ».
+ */
+function readLocation(): { scenario: string | null; node: string | null } {
+  const params = new URLSearchParams(window.location.search);
+  return { scenario: params.get("scenario"), node: params.get("node") };
+}
+
+function writeLocation(scenario: string, node: string | null) {
+  const params = new URLSearchParams(window.location.search);
+  params.set("scenario", scenario);
+  if (node) params.set("node", node);
+  else params.delete("node");
+  const url = `${window.location.pathname}?${params}${window.location.hash}`;
+  window.history.replaceState(window.history.state, "", url);
+}
 
 export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
@@ -41,14 +60,21 @@ export function App() {
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<SearchHit[] | null>(null);
+  const [initial] = useState(readLocation);
   const tree = useTreeState({
     version: BOM_VERSION,
     calculationId: calculation?.id ?? null,
+    initialSelected: initial.node,
   });
+  // La ligne de l'URL, à rouvrir puis à amener à l'écran une fois l'arbre là.
+  const [pendingReveal, setPendingReveal] = useState(initial.node);
+  const pendingScroll = useRef(initial.node);
 
-  // Démarrage : on reprend le scénario le plus récent de cette nomenclature,
-  // et on n'en crée un que s'il n'y en a aucun. En créer un à chaque
-  // chargement remplirait la liste de scénarios de travail vides.
+  // Démarrage : on reprend le scénario de l'URL s'il appartient à cette
+  // nomenclature, sinon le plus récent, sans rien signaler (un lien vers un
+  // scénario supprimé n'est pas une erreur). On n'en crée un que s'il n'y en a
+  // aucun : en créer un à chaque chargement remplirait la liste de scénarios
+  // de travail vides.
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -67,7 +93,7 @@ export function App() {
         }
         if (!alive) return;
         setScenarios(known);
-        await open(known[0]);
+        await open(known.find((item) => item.id === initial.scenario) ?? known[0]);
       } catch (error) {
         if (alive) setFailure(describe(error));
       }
@@ -76,6 +102,29 @@ export function App() {
       alive = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (scenario) writeLocation(scenario.id, tree.selected);
+  }, [scenario, tree.selected]);
+
+  // Déplier jusqu'à la ligne de l'URL attend la racine : avant, le calcul du
+  // scénario ouvert n'est pas encore celui de l'arbre, et les pages demandées
+  // seraient aussitôt périmées.
+  const { reveal } = tree;
+  useEffect(() => {
+    if (!root || !pendingReveal) return;
+    setPendingReveal(null);
+    void reveal(pendingReveal);
+  }, [root, pendingReveal, reveal]);
+
+  // Puis on la montre, dès qu'elle est rendue.
+  useEffect(() => {
+    if (!pendingScroll.current) return;
+    const row = document.getElementById(rowId(pendingScroll.current));
+    if (!row) return;
+    pendingScroll.current = null;
+    row.scrollIntoView({ block: "center" });
+  });
 
   const refreshScenario = useCallback(async () => {
     if (!scenario) return;
@@ -184,7 +233,7 @@ export function App() {
 
   function goToPath(path: string) {
     setHits(null);
-    void tree.reveal(path);
+    void reveal(path);
   }
 
   /** Une pièce du journal : le serveur dit où elle est montée, on y va. */
