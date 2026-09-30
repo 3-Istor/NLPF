@@ -15,7 +15,8 @@ from decimal import Decimal
 
 import pytest
 
-from carcost.application.browse_bom import children_of_path, root_node
+from carcost.application.browse_bom import children_of_path
+from carcost.application.browse_bom import root_node
 from carcost.application.price_resolution import resolve_unit_prices
 from carcost.application.run_calculation import run_calculation
 from carcost.application.scenario import Scenario, ScenarioParameter
