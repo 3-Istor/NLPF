@@ -94,7 +94,11 @@ def compute(inputs: CalculationInput) -> CalculationResult:
         if contribution is not None:
             total += contribution
 
-    full_unit_cost[bom.root_ref] = total
+    # Les moyennes pondérées arrondies peuvent écarter la racine du total de
+    # quelques millionièmes : le total exact fait foi. Seulement s'il est
+    # complet — un total partiel n'est pas le coût du véhicule.
+    if full_unit_cost[bom.root_ref] is not None:
+        full_unit_cost[bom.root_ref] = total
     lines = tuple(
         PartLine(
             part_ref=ref,
@@ -253,7 +257,10 @@ def _path_costs(
         if own is None:
             full_by_path[path] = None
             return None
-        total = own
+        total: Decimal | None = own
+        # Tous les enfants touchés sont évalués, même après un coût inconnu :
+        # s'arrêter au premier manque ferait disparaître les surcharges des
+        # branches voisines, précisément sur un calcul incomplet.
         for child_ref, quantity in inputs.bom.children_of(ref):
             child_path = f"{path}/{child_ref}"
             child_cost = (
@@ -261,10 +268,10 @@ def _path_costs(
                 if child_path in affected
                 else base_full[child_ref]
             )
-            if child_cost is None:
-                full_by_path[path] = None
-                return None
-            total += quantity * child_cost
+            if child_cost is None or total is None:
+                total = None
+            else:
+                total += quantity * child_cost
         full_by_path[path] = total
         return total
 
