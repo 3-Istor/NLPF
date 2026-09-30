@@ -20,9 +20,10 @@ import type {
 import { DecisionDialog } from "./components/DecisionDialog";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { Summary } from "./components/Summary";
-import { TreeNode } from "./components/TreeNode";
+import { Tree } from "./components/Tree";
 import { WhereUsed } from "./components/WhereUsed";
 import { byPart, Refusals } from "./quarantine";
+import { useTreeState } from "./tree/useTreeState";
 
 const BOM_VERSION =
   import.meta.env.VITE_BOM_VERSION ?? "bom-multipla-2026-09-22";
@@ -40,8 +41,11 @@ export function App() {
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<SearchHit[] | null>(null);
-  const [expandTo, setExpandTo] = useState<string[] | undefined>();
   const [treeKey, setTreeKey] = useState(0);
+  const tree = useTreeState({
+    version: BOM_VERSION,
+    calculationId: calculation?.id ?? null,
+  });
 
   // Démarrage : on reprend le scénario le plus récent de cette nomenclature,
   // et on n'en crée un que s'il n'y en a aucun. En créer un à chaque
@@ -120,7 +124,6 @@ export function App() {
         .then(setJournal)
         .catch(() => setJournal(null));
     }
-    setExpandTo(undefined);
     setTreeKey((key) => key + 1);
     setRoot(await api.root(BOM_VERSION, last?.id ?? null));
   }
@@ -183,7 +186,7 @@ export function App() {
 
   function goToPath(path: string) {
     setHits(null);
-    setExpandTo(path.split("/"));
+    void tree.reveal(path);
     setTreeKey((key) => key + 1);
   }
 
@@ -247,18 +250,15 @@ export function App() {
 
           {root ? (
             <Refusals.Provider value={refusals}>
-              <ul className="children" key={treeKey}>
-                <TreeNode
-                  line={root}
-                  version={BOM_VERSION}
-                  scenarioId={scenario?.id ?? null}
-                  calculationId={calculation?.id ?? null}
-                  depth={0}
-                  expandTo={expandTo}
-                  onParameterChanged={refreshScenario}
-                  onShowWhereUsed={setWhereUsed}
-                />
-              </ul>
+              <Tree
+                key={treeKey}
+                root={root}
+                state={tree}
+                version={BOM_VERSION}
+                scenario={scenario}
+                onParameterChanged={refreshScenario}
+                onShowWhereUsed={setWhereUsed}
+              />
             </Refusals.Provider>
           ) : (
             <p className="hint">{failure ?? "chargement de la nomenclature…"}</p>
