@@ -70,6 +70,33 @@ function isPathGone(error: unknown): boolean {
   return failure.code === "PATH_NOT_FOUND" || failure.status === 404;
 }
 
+function strictPrefixes(path: string): string[] {
+  const segments = path.split("/");
+  return segments.slice(1).map((_, depth) => segments.slice(0, depth + 1).join("/"));
+}
+
+/**
+ * Ce qui s'affiche : un chemin déplié dont tous les ancêtres le sont aussi.
+ * Un sous-niveau resté déplié sous un parent replié est caché, pas oublié.
+ */
+function visiblePaths(paths: ReadonlySet<string>): string[] {
+  return [...paths].filter((path) =>
+    strictPrefixes(path).every((prefix) => paths.has(prefix)),
+  );
+}
+
+/** Ce que rouvrir `root` rend visible : lui, et les sous-niveaux dépliés dessous. */
+function openedBelow(root: string, paths: ReadonlySet<string>): string[] {
+  const rootDepth = root.split("/").length;
+  return [...paths].filter(
+    (path) =>
+      isUnder(path, root) &&
+      strictPrefixes(path)
+        .slice(rootDepth - 1)
+        .every((prefix) => paths.has(prefix)),
+  );
+}
+
 /** Les parents avant les enfants : l'écran se remplit de haut en bas. */
 const byDepth = (a: string, b: string) => a.split("/").length - b.split("/").length;
 
@@ -170,8 +197,33 @@ export function useTreeState(options: {
     [prune, setEntry],
   );
 
+  // Redemande les pages dont le calcul n'est plus le courant, jamais plus de
+  // REFRESH_CONCURRENCY à la fois. S'arrête si le calcul change entre-temps.
+  const refresh = useCallback(
+    (paths: readonly string[]) => {
+      const { version: forVersion, calculationId: forCalculation } = current.current;
+      const queue = paths.filter(needsLoad).sort(byDepth);
+      const worker = async () => {
+        while (queue.length > 0) {
+          if (
+            current.current.version !== forVersion ||
+            current.current.calculationId !== forCalculation
+          ) {
+            return;
+          }
+          const path = queue.shift()!;
+          // Un autre rafraîchissement a pu la demander depuis.
+          if (needsLoad(path)) await load(path);
+        }
+      };
+      const workers = Math.min(REFRESH_CONCURRENCY, queue.length);
+      for (let slot = 0; slot < workers; slot++) void worker();
+    },
+    [load, needsLoad],
+  );
+
   // Au montage, à chaque changement de calcul ou de nomenclature : on
-  // redemande ce qui est déplié, jamais plus de REFRESH_CONCURRENCY à la fois.
+  // redemande les pages visibles. Les cachées attendent leur réouverture.
   useEffect(() => {
     const versionChanged = current.current.version !== version;
     current.current = { version, calculationId };
@@ -184,21 +236,8 @@ export function useTreeState(options: {
       setExpansion({ version, paths });
     }
 
-    const queue = [...paths].filter(needsLoad).sort(byDepth);
-    const worker = async () => {
-      while (queue.length > 0) {
-        if (
-          current.current.version !== version ||
-          current.current.calculationId !== calculationId
-        ) {
-          return;
-        }
-        await load(queue.shift()!);
-      }
-    };
-    const workers = Math.min(REFRESH_CONCURRENCY, queue.length);
-    for (let slot = 0; slot < workers; slot++) void worker();
-  }, [version, calculationId, load, needsLoad]);
+    refresh(visiblePaths(paths));
+  }, [version, calculationId, refresh]);
 
   const expand = useCallback((path: string) => {
     setExpansion((previous) =>
@@ -211,20 +250,19 @@ export function useTreeState(options: {
   const toggle = useCallback(
     (path: string) => {
       if (expandedRef.current.has(path)) {
-        // Replier ferme aussi ce qui était ouvert dessous : ce qui est déplié
-        // est exactement ce qui est affiché, donc ce qu'un recalcul redemande.
-        const paths = new Set(
-          [...expandedRef.current].filter((known) => !isUnder(known, path)),
-        );
+        // Replier cache les sous-niveaux sans les oublier : ils se rouvriront
+        // avec le parent, comme dans un explorateur de fichiers.
+        const paths = new Set(expandedRef.current);
+        paths.delete(path);
         expandedRef.current = paths;
         setExpansion((previous) => ({ version: previous.version, paths }));
         return;
       }
       expandedRef.current = new Set(expandedRef.current).add(path);
       expand(path);
-      if (needsLoad(path)) void load(path);
+      refresh(openedBelow(path, expandedRef.current));
     },
-    [expand, load, needsLoad],
+    [expand, refresh],
   );
 
   const collapseAll = useCallback(() => {
@@ -244,8 +282,10 @@ export function useTreeState(options: {
         if (needsLoad(prefix) && (await load(prefix)) !== "ready") return;
       }
       setSelected(path);
+      // Les sous-niveaux cachés sous les ancêtres rouverts redeviennent visibles.
+      refresh(visiblePaths(expandedRef.current));
     },
-    [expand, load, needsLoad],
+    [expand, load, needsLoad, refresh],
   );
 
   const expanded = expansion.paths;

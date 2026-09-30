@@ -371,4 +371,113 @@ describe("useTreeState", () => {
     expect(result.current.isExpanded("V/A")).toBe(false);
     expect(calledPaths().filter((path) => path === "V/A")).toHaveLength(1);
   });
+
+  describe("sous-niveaux cachés par le repli d'un parent", () => {
+    function stored() {
+      return JSON.parse(localStorage.getItem("3istor.tree.bom-test")!);
+    }
+
+    it("replier un parent cache ses sous-niveaux sans les oublier", async () => {
+      answerAtOnce();
+      const { result } = mount();
+      await act(async () => result.current.toggle("V"));
+      await act(async () => result.current.toggle("V/A"));
+
+      act(() => result.current.toggle("V"));
+
+      expect(result.current.isExpanded("V")).toBe(false);
+      expect(stored()).toContain("V/A");
+      expect(stored()).not.toContain("V");
+
+      await act(async () => result.current.toggle("V"));
+
+      expect(result.current.isExpanded("V")).toBe(true);
+      expect(result.current.isExpanded("V/A")).toBe(true);
+      // Même calcul : les pages sont déjà là, rien n'est redemandé.
+      expect(calledPaths()).toEqual(["V", "V/A"]);
+    });
+
+    it("un recalcul ne redemande que les pages visibles, la réouverture recharge le reste", async () => {
+      answerAtOnce();
+      const { result, rerender } = mount("calc-1");
+      await act(async () => result.current.toggle("V"));
+      await act(async () => result.current.toggle("V/A"));
+      await act(async () => result.current.toggle("V/A/M"));
+      await act(async () => result.current.toggle("V/B"));
+      act(() => result.current.toggle("V/A"));
+
+      rerender({ calculationId: "calc-2" });
+      await waitFor(() =>
+        expect(result.current.childrenOf("V/B")).toMatchObject({ calculationId: "calc-2" }),
+      );
+
+      expect(calledPaths("calc-2").sort()).toEqual(["V", "V/B"]);
+      expect(result.current.childrenOf("V/A")).toMatchObject({ calculationId: "calc-1" });
+      expect(result.current.childrenOf("V/A/M")).toMatchObject({ calculationId: "calc-1" });
+
+      await act(async () => result.current.toggle("V/A"));
+
+      expect(result.current.isExpanded("V/A/M")).toBe(true);
+      await waitFor(() => {
+        for (const path of ["V/A", "V/A/M"]) {
+          expect(result.current.childrenOf(path)).toMatchObject({
+            status: "ready",
+            calculationId: "calc-2",
+          });
+        }
+      });
+      expect(amountsOf(result, "V/A")).toEqual(["222.00"]);
+      expect(amountsOf(result, "V/A/M")).toEqual(["222.00"]);
+    });
+
+    it("rouvrir un ancêtre recharge les sous-niveaux cachés, 4 au plus à la fois", async () => {
+      const five = ["V/A", "V/B", "V/A/M", "V/B/M", "V/A/M/X"];
+      localStorage.setItem("3istor.tree.bom-test", JSON.stringify(["V", ...five]));
+      answerAtOnce();
+      const { result, rerender } = mount("calc-1");
+      await waitFor(() => expect(children).toHaveBeenCalledTimes(6));
+      act(() => result.current.toggle("V"));
+
+      rerender({ calculationId: "calc-2" });
+      await act(async () => {});
+      expect(calledPaths("calc-2")).toEqual([]);
+
+      deferResponses();
+      act(() => result.current.toggle("V"));
+      for (let round = 0; round < 6; round++) {
+        await waitFor(() => expect(pending.length).toBeGreaterThan(0));
+        await act(async () => pending[0].resolve());
+      }
+      expect(pending).toHaveLength(0);
+
+      expect(maxInFlight).toBe(4);
+      expect(calledPaths("calc-2").sort()).toEqual(["V", ...five].sort());
+      for (const path of ["V", ...five]) {
+        expect(result.current.childrenOf(path)).toMatchObject({ calculationId: "calc-2" });
+      }
+    });
+
+    it("un sous-niveau caché qui a disparu est élagué à la réouverture", async () => {
+      localStorage.setItem(
+        "3istor.tree.bom-test",
+        JSON.stringify(["V", "V/B", "V/B/M"]),
+      );
+      answerAtOnce();
+      const { result, rerender } = mount("calc-1");
+      await waitFor(() => expect(children).toHaveBeenCalledTimes(3));
+      act(() => result.current.toggle("V"));
+      rerender({ calculationId: "calc-2" });
+
+      children.mockImplementation(async (_version, path, calculationId) => {
+        if (path === "V/B") throw { code: "PATH_NOT_FOUND", status: 404 };
+        return page(path, calculationId);
+      });
+      await act(async () => result.current.toggle("V"));
+
+      await waitFor(() => expect(result.current.isExpanded("V/B")).toBe(false));
+      expect(result.current.isExpanded("V/B/M")).toBe(false);
+      expect(result.current.isExpanded("V")).toBe(true);
+      expect(stored()).toEqual(["V"]);
+    });
+  });
 });
