@@ -255,7 +255,7 @@ distinct.
 ### Documentation
 
 - [`docs/api.md`](api.md) contient le contrat détaillé de chaque endpoint.
-- [`docs/adr/0002-portee-parametres.md`](adr/0002-portee-parametres.md) explique la décision de
+- [`docs/adr/0002-portee-des-parametres-piece-ou-chemin.md`](adr/0002-portee-des-parametres-piece-ou-chemin.md) explique la décision de
   supporter les portées pièce et chemin.
 - [`docs/perimetre.md`](perimetre.md) situe ces fonctionnalités dans les tranches du projet.
 - [`../README.md`](../../README.md) décrit l'installation et le lancement général du projet.

@@ -10,7 +10,7 @@
 
 | Réf | Décision | Conséquence directe |
 |---|---|---|
-| **D1** | L'outil **montre** l'effet coût/CO₂ d'un changement et peut recommander, indépendamment pour chaque pièce, le sourcing le moins cher sous contraintes. | L'optimiseur combinatoire global reste **Reporté** (§3). Le moteur reste une fonction pure appelée pour vérifier exactement le scénario proposé. |
+| **D1** | L'outil **montre** l'effet coût/CO₂ d'un changement et peut recommander, indépendamment pour chaque pièce, le sourcing le moins cher sous contraintes. | Objet de l'ADR-0012. L'optimiseur combinatoire global reste **Reporté** (§3). Le moteur reste une fonction pure appelée pour vérifier exactement le scénario proposé. |
 | **D2** | Coût = **quantité × coût unitaire**, le coût unitaire étant **matière + main-d'œuvre + règles**. | Modèle de coût figé (§0.1). Frais généraux, outillage, douane, marge restent **hors périmètre**. |
 | **D3** | Portée d'un paramètre : **les deux, l'utilisateur choisit** (pièce ou chemin). | Objet de l'ADR-0002. La portée est un champ du modèle de scénario **dès la première ligne de code**, même quand une seule des deux est implémentée (§4). |
 | **D4** | Scénarios et calculs **persistés en base, rechargeables**. | Rend l'invariant I5 démontrable. Le schéma porte scénario, snapshot et calcul dès la première migration. |
@@ -161,10 +161,13 @@ scénario documenté.
 ### 3.5 Comparaison de deux scénarios enregistrés (« qu'est-ce qui a changé depuis lundi ? »)
 *Déclencheur* : deux scénarios persistés coexistent et la question est posée. C'est la sixième
 question métier laissée de côté au cadrage.
+*Réalisé* en tranche T3 sous la forme « B contre A sur un snapshot commun » (ADR-0012). L'écart
+**dans le temps** d'un même scénario, qui mêle effet prix et effet scénario, reste reporté.
 
 ### 3.6 Portée « chemin » exposée dans l'interface
 *Déclencheur* : **fin de la tranche T2** — c'est un report de calendrier, pas de périmètre. D3 est
 acté : le modèle porte la portée dès T1 (§4).
+*Réalisé* : le moteur la résout et le panneau de saisie la propose.
 
 ---
 
