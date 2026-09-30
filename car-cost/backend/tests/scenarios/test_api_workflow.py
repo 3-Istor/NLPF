@@ -97,6 +97,21 @@ def test_recommendation_creates_a_calculable_optimized_scenario(client):
     assert optimized["parameters"][0]["plant_id"] == "PLT-TR"
 
 
+def test_a_scenario_names_its_last_calculation(client):
+    """Rouvrir un scénario « à jour » doit pouvoir montrer son total sans
+    relancer un calcul : l'écran relit celui que le serveur désigne."""
+    scenario = create_scenario(client, "Base")
+    assert client.get(f"/api/v1/scenarios/{scenario}").json()["last_calculation_id"] is None
+
+    calculation = client.post(
+        "/api/v1/calculations", json={"scenario_id": scenario, "price_snapshot_id": "snp"}
+    ).json()
+
+    reread = client.get(f"/api/v1/scenarios/{scenario}").json()
+    assert reread["last_calculation_id"] == calculation["id"]
+    assert reread["calculation_state"] == "UP_TO_DATE"
+
+
 def test_preview_explains_recommendations_without_creating_a_scenario(client):
     """L'écran montre les lignes, l'utilisateur coche, puis seulement on crée.
 

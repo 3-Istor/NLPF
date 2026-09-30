@@ -695,8 +695,9 @@ def _execute_calculation(repositories, scenario_id: str, snapshot):
     return calculation
 
 
-def _state(repositories, scenario: Scenario):
-    latest = repositories.calculations.latest_for(scenario.id)
+def _state(repositories, scenario: Scenario, latest=None):
+    if latest is None:
+        latest = repositories.calculations.latest_for(scenario.id)
     return state_of(
         scenario,
         _snapshot_or_none(repositories),
@@ -716,7 +717,8 @@ def _money(amount: Decimal, currency: str) -> dict:
 
 
 def _scenario_payload(repositories, scenario: Scenario) -> dict:
-    state, reason = _state(repositories, scenario)
+    latest = repositories.calculations.latest_for(scenario.id)
+    state, reason = _state(repositories, scenario, latest)
     parameter_ids = repositories.scenarios.parameter_ids(scenario.id)
     return {
         "id": scenario.id,
@@ -750,6 +752,9 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         ],
         "calculation_state": state.value,
         "stale_reason": reason,
+        # Relire ce calcul suffit pour réafficher un scénario « à jour » ; en
+        # relancer un à chaque ouverture remplirait la table pour rien.
+        "last_calculation_id": latest.id if latest else None,
     }
 
 
