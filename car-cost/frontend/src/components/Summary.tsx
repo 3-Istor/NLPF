@@ -65,6 +65,11 @@ export function Summary({
           Les montants ci-dessous ne sont plus à jour.
         </p>
       )}
+      {state === "NO_PRICES" && (
+        <p className="banner banner--danger">
+          Aucun snapshot de prix disponible : aucun calcul n'est possible.
+        </p>
+      )}
       {failure && <p className="banner banner--danger">{failure}</p>}
 
       <button className="recalc" onClick={onRecalculate} disabled={busy}>

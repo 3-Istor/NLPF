@@ -93,3 +93,36 @@ describe("prix dégradés", () => {
     expect(screen.getByText(/journal de quarantaine n'a pas pu être lu/)).toBeInTheDocument();
   });
 });
+
+describe("aucun prix disponible", () => {
+  const NO_PRICES_TEXT =
+    "Aucun snapshot de prix disponible : aucun calcul n'est possible.";
+
+  function mountState(state: "NO_PRICES" | "UP_TO_DATE") {
+    return render(
+      <Summary
+        calculation={state === "NO_PRICES" ? null : degraded}
+        journal={null}
+        state={state}
+        staleReason={null}
+        busy={false}
+        failure={null}
+        onRecalculate={() => {}}
+        onGoToPath={() => {}}
+        onGoToPart={() => {}}
+      />,
+    );
+  }
+
+  it("explique qu'aucun calcul n'est possible sans snapshot de prix", () => {
+    const { container } = mountState("NO_PRICES");
+
+    expect(container.querySelector(".banner")).toHaveTextContent(NO_PRICES_TEXT);
+  });
+
+  it("pas de bandeau NO_PRICES quand le calcul est à jour", () => {
+    mountState("UP_TO_DATE");
+
+    expect(screen.queryByText(NO_PRICES_TEXT)).not.toBeInTheDocument();
+  });
+});
