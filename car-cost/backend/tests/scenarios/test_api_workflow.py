@@ -97,6 +97,33 @@ def test_recommendation_creates_a_calculable_optimized_scenario(client):
     assert optimized["parameters"][0]["plant_id"] == "PLT-TR"
 
 
+def test_preview_explains_recommendations_without_creating_a_scenario(client):
+    """L'écran montre les lignes, l'utilisateur coche, puis seulement on crée.
+
+    Sans aperçu, choisir les lignes obligerait à créer une variante pour voir
+    la liste, puis une seconde avec la sélection : une variante fantôme par
+    essai, dans la liste des scénarios de l'utilisateur.
+    """
+    baseline = create_scenario(client, "Base")
+    before = client.get("/api/v1/scenarios").json()["total"]
+
+    response = client.post(
+        f"/api/v1/scenarios/{baseline}/recommend-sourcing/preview",
+        json={"price_snapshot_id": "snp", "forbidden_origins": ["de"]},
+    )
+
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert body["base_scenario_id"] == baseline
+    assert body["constraints"]["forbidden_origins"] == ["DE"]
+    assert body["price_snapshot_id"] == "snp"
+    assert [item["part_ref"] for item in body["recommendations"]] == ["S"]
+    assert body["recommendations"][0]["estimated_saving"]["amount"] == "23.000000"
+    assert body["unresolved"] == []
+    assert "optimized_scenario" not in body
+    assert client.get("/api/v1/scenarios").json()["total"] == before
+
+
 def test_recommendation_can_be_accepted_partially_by_part(client):
     baseline = create_scenario(client, "Base")
 

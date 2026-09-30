@@ -149,11 +149,7 @@ class CompareScenarios(BaseModel):
     )
 
 
-class RecommendSourcing(BaseModel):
-    name: str = Field(
-        description="Nom du nouveau scénario optimisé qui sera créé.",
-        examples=["RECETTE - Optimisé"],
-    )
+class SourcingQuery(BaseModel):
     forbidden_origins: list[str] = Field(
         default_factory=list,
         description="Codes pays ISO à deux lettres interdits, par exemple `RU`.",
@@ -162,15 +158,22 @@ class RecommendSourcing(BaseModel):
         default=None, ge=0,
         description="Délai fournisseur maximal. `null` n'impose aucune limite.",
     )
-    accepted_part_refs: list[str] | None = Field(
-        default=None,
-        description="`null` applique tout, `[]` rien, une liste applique seulement ces pièces.",
-        examples=[["FIX-M6-16"]],
-    )
     price_snapshot_id: str | None = Field(
         default=None,
         description="Snapshot utilisé pour évaluer les options. `null` utilise le plus récent.",
         examples=["snp-7a9947ddac59"],
+    )
+
+
+class RecommendSourcing(SourcingQuery):
+    name: str = Field(
+        description="Nom du nouveau scénario optimisé qui sera créé.",
+        examples=["RECETTE - Optimisé"],
+    )
+    accepted_part_refs: list[str] | None = Field(
+        default=None,
+        description="`null` applique tout, `[]` rien, une liste applique seulement ces pièces.",
+        examples=[["FIX-M6-16"]],
     )
 
 
@@ -455,6 +458,29 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         )
 
     @app.post(
+        "/api/v1/scenarios/{scenario_id}/recommend-sourcing/preview",
+        tags=["Scénarios"], summary="Prévisualiser les recommandations de sourcing",
+        description=(
+            "Évalue les fournisseurs et usines autorisés et explique chaque recommandation, "
+            "sans créer de scénario. L'écran s'en sert pour laisser l'utilisateur choisir les "
+            "lignes avant `POST /scenarios/{id}/recommend-sourcing`."
+        ),
+    )
+    def preview_sourcing(
+        scenario_id: Annotated[
+            str,
+            Path(description="Identifiant `scn-…` du scénario servant de point de départ."),
+        ],
+        payload: SourcingQuery,
+    ):
+        base, snapshot, _, report = _evaluate_sourcing(repositories, scenario_id, payload)
+        return {
+            "base_scenario_id": base.id,
+            "price_snapshot_id": snapshot.id,
+            **_report_payload(report, payload, set(), base.display_currency),
+        }
+
+    @app.post(
         "/api/v1/scenarios/{scenario_id}/recommend-sourcing", status_code=201,
         tags=["Scénarios"], summary="Créer une variante de sourcing optimisée",
         description=(
@@ -470,31 +496,8 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         ],
         payload: RecommendSourcing,
     ):
-        invalid_origins = [
-            origin
-            for origin in payload.forbidden_origins
-            if len(origin) != 2 or not origin.isalpha()
-        ]
-        if invalid_origins:
-            raise manage_scenarios.InvalidScenario(
-                "codes de provenance invalides : "
-                + ", ".join(sorted(invalid_origins))
-            )
-        base = repositories.scenarios.get(scenario_id)
-        bom = repositories.bom.load(base.bom_version)
-        sourcing = repositories.sourcing.load(base.bom_version)
-        snapshot = _snapshot(repositories, payload.price_snapshot_id)
-        baseline = _execute_calculation(repositories, base.id, snapshot)
-        report = recommend(
-            bom=bom,
-            sourcing=sourcing,
-            snapshot=snapshot,
-            scenario=base,
-            baseline=baseline,
-            constraints=SourcingConstraints(
-                forbidden_origins=frozenset(payload.forbidden_origins),
-                max_lead_time_days=payload.max_lead_time_days,
-            ),
+        base, snapshot, baseline, report = _evaluate_sourcing(
+            repositories, scenario_id, payload
         )
         recommendations = report.recommendations
         available = {item.part_ref for item in recommendations}
@@ -529,33 +532,8 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         return {
             "base_scenario_id": base.id,
             "optimized_scenario": _scenario_payload(repositories, optimized),
-            "constraints": {
-                "forbidden_origins": sorted(
-                    origin.upper() for origin in payload.forbidden_origins
-                ),
-                "max_lead_time_days": payload.max_lead_time_days,
-            },
             "savings": _money(-comparison.cost_delta, comparison.display_currency),
-            "recommendations": [
-                _recommendation_payload(
-                    item, item.part_ref in accepted, base.display_currency
-                )
-                for item in recommendations
-            ],
-            # Une pièce dont le sourcing viole une contrainte sans remède reste
-            # telle quelle dans la variante : on le dit plutôt que de le taire.
-            "unresolved": [
-                {
-                    "part_ref": item.part_ref,
-                    "current": {
-                        "supplier_id": item.current_supplier_id,
-                        "plant_id": item.current_plant_id,
-                        "origin_country": item.current_origin,
-                    },
-                    "reason": item.reason,
-                }
-                for item in report.unresolved
-            ],
+            **_report_payload(report, payload, accepted, base.display_currency),
         }
 
     @app.get(
@@ -625,6 +603,64 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
 
 
 # ---------------------------------------------------------------- assemblage
+
+
+def _evaluate_sourcing(repositories, scenario_id: str, query: SourcingQuery):
+    invalid_origins = [
+        origin
+        for origin in query.forbidden_origins
+        if len(origin) != 2 or not origin.isalpha()
+    ]
+    if invalid_origins:
+        raise manage_scenarios.InvalidScenario(
+            "codes de provenance invalides : " + ", ".join(sorted(invalid_origins))
+        )
+    base = repositories.scenarios.get(scenario_id)
+    bom = repositories.bom.load(base.bom_version)
+    sourcing = repositories.sourcing.load(base.bom_version)
+    snapshot = _snapshot(repositories, query.price_snapshot_id)
+    baseline = _execute_calculation(repositories, base.id, snapshot)
+    report = recommend(
+        bom=bom,
+        sourcing=sourcing,
+        snapshot=snapshot,
+        scenario=base,
+        baseline=baseline,
+        constraints=SourcingConstraints(
+            forbidden_origins=frozenset(query.forbidden_origins),
+            max_lead_time_days=query.max_lead_time_days,
+        ),
+    )
+    return base, snapshot, baseline, report
+
+
+def _report_payload(report, query: SourcingQuery, accepted: set, currency: str) -> dict:
+    return {
+        "constraints": {
+            "forbidden_origins": sorted(
+                origin.upper() for origin in query.forbidden_origins
+            ),
+            "max_lead_time_days": query.max_lead_time_days,
+        },
+        "recommendations": [
+            _recommendation_payload(item, item.part_ref in accepted, currency)
+            for item in report.recommendations
+        ],
+        # Une pièce dont le sourcing viole une contrainte sans remède reste
+        # telle quelle dans la variante : on le dit plutôt que de le taire.
+        "unresolved": [
+            {
+                "part_ref": item.part_ref,
+                "current": {
+                    "supplier_id": item.current_supplier_id,
+                    "plant_id": item.current_plant_id,
+                    "origin_country": item.current_origin,
+                },
+                "reason": item.reason,
+            }
+            for item in report.unresolved
+        ],
+    }
 
 
 def _snapshot_or_none(repositories):
