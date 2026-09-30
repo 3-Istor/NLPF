@@ -109,6 +109,15 @@ class Calculation:
     explanations: dict[str, PriceExplanation]
     #: Les lignes dont le prix n'est pas `OK`, et elles seules.
     price_statuses: Mapping[str, PriceStatus] = field(default_factory=dict)
+    path_own_unit_costs: Mapping[str, Decimal | None] = field(default_factory=dict)
+    path_full_unit_costs: Mapping[str, Decimal | None] = field(default_factory=dict)
+    total_co2: Decimal | None = None
+    part_own_unit_costs: Mapping[str, Decimal | None] = field(default_factory=dict)
+    part_full_unit_costs: Mapping[str, Decimal | None] = field(default_factory=dict)
+
+    @property
+    def lines_by_ref(self) -> dict[str, PartLine]:
+        return {line.part_ref: line for line in self.lines}
 
     def price_status_of(self, part_ref: str) -> PriceStatus:
         return self.price_statuses.get(part_ref, PriceStatus.OK)
@@ -137,7 +146,21 @@ def run_calculation(
             unit_prices=resolved.prices,
             labour_rate=scenario.labour_rate,
             active_rules=scenario.active_rules,
-            labour_minutes=scenario.labour_minutes(),
+            unit_prices_by_path=resolved.path_prices,
+            labour_minutes_by_part={
+                parameter.part_ref: parameter.labour_minutes
+                for parameter in scenario.parameters
+                if parameter.scope == "part" and parameter.labour_minutes is not None
+            },
+            labour_minutes_by_path={
+                parameter.path: scenario.parameter_for(
+                    parameter.part_ref, parameter.path
+                ).labour_minutes
+                for parameter in scenario.parameters
+                if parameter.scope == "path"
+                and scenario.parameter_for(parameter.part_ref, parameter.path).labour_minutes
+                is not None
+            },
         )
     )
 
@@ -167,6 +190,10 @@ def run_calculation(
         price_statuses=_price_statuses(
             snapshot, resolved, result.parts_without_price
         ),
+        path_own_unit_costs=result.path_own_unit_costs,
+        path_full_unit_costs=result.path_full_unit_costs,
+        part_own_unit_costs=result.part_own_unit_costs,
+        part_full_unit_costs=result.part_full_unit_costs,
     )
 
 
@@ -235,6 +262,15 @@ def input_digest(scenario: Scenario, snapshot: PriceSnapshot) -> str:
             for parameter in scenario.parameters
         ),
     }
+    purchase_currencies = sorted(
+        (p.part_ref, p.scope, p.path or "", p.purchase_currency)
+        for p in scenario.parameters if p.purchase_currency is not None
+    )
+    # Un réglage sauvegardé doit rendre les anciens totaux obsolètes. L'ajout
+    # conditionnel conserve les empreintes des scénarios antérieurs sans devise
+    # d'achat explicite ; il ne réalise aucune conversion de prix.
+    if purchase_currencies:
+        payload["purchase_currencies"] = purchase_currencies
     canonical = json.dumps(payload, sort_keys=True, ensure_ascii=False)
     return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 

@@ -79,19 +79,23 @@ class Sourcing:
 @dataclass(frozen=True)
 class ScenarioParameter:
     part_ref: str
-    scope: Scope
+    scope: Scope = "part"
     path: str | None = None
     supplier_id: str | None = None
     plant_id: str | None = None
     price_override: Decimal | None = None
     price_override_justification: str | None = None
     labour_minutes: Decimal | None = None
+    purchase_currency: str | None = None
 
     @property
     def touches_purchase(self) -> bool:
         return any(
             value is not None
-            for value in (self.supplier_id, self.plant_id, self.price_override)
+            for value in (
+                self.supplier_id, self.plant_id, self.price_override,
+                self.purchase_currency,
+            )
         )
 
 
@@ -105,25 +109,47 @@ class Scenario:
         default_factory=lambda: frozenset({"labour"})
     )
     parameters: Sequence[ScenarioParameter] = ()
+    name: str = ""
 
-    def parameter_for(self, part_ref: str) -> ScenarioParameter | None:
-        """Le paramètre applicable à une pièce, portée pièce.
+    def __post_init__(self) -> None:
+        # Une copie peut partager des valeurs immuables, jamais les collections
+        # modifiables que l'appelant a utilisées pour construire le scénario.
+        # Les paramètres sont un jeu de cibles, sans ordre métier. Le même
+        # ordre canonique en mémoire et en base rend l'aller-retour comparable.
+        parameters = sorted(
+            self.parameters, key=lambda p: (p.part_ref, p.path or "", p.scope),
+        )
+        object.__setattr__(self, "parameters", tuple(parameters))
+        object.__setattr__(self, "active_rules", frozenset(self.active_rules))
 
-        La portée chemin n'est pas encore résolue par le moteur : le champ
-        existe, il est persisté, et la tranche T2 le fera jouer. En attendant,
-        un paramètre de portée chemin est ignoré plutôt que traité comme un
-        paramètre de portée pièce — l'appliquer partout serait pire que de ne
-        pas l'appliquer.
+    def parameter_for(
+        self, part_ref: str, path: str | None = None
+    ) -> ScenarioParameter | None:
+        """Résout la portée pièce, puis la surcharge exacte de chemin.
+
+        Un paramètre de chemin est une cible complète : s'il existe, il gagne
+        sur celui de portée pièce. Ses champs absents reprennent donc les
+        valeurs par défaut du catalogue, pas celles d'une autre cible.
         """
-        for parameter in self.parameters:
-            if parameter.part_ref == part_ref and parameter.scope == "part":
-                return parameter
-        return None
-
-    def labour_minutes(self) -> dict[str, Decimal]:
-        """Les temps de main-d'œuvre posés en portée pièce, par référence."""
-        return {
-            parameter.part_ref: parameter.labour_minutes
-            for parameter in self.parameters
-            if parameter.scope == "part" and parameter.labour_minutes is not None
-        }
+        part = next(
+            (
+                parameter
+                for parameter in self.parameters
+                if parameter.part_ref == part_ref and parameter.scope == "part"
+            ),
+            None,
+        )
+        if path is not None:
+            specific = next(
+                (
+                    parameter
+                    for parameter in self.parameters
+                    if parameter.part_ref == part_ref
+                    and parameter.scope == "path"
+                    and parameter.path == path
+                ),
+                None,
+            )
+            if specific is not None:
+                return specific
+        return part

@@ -152,6 +152,35 @@ class TestValuationMode:
         assert "S" in result.parts_without_price
         assert result.line("S").own_contribution is None
 
+    def test_an_incomplete_root_has_no_full_unit_cost(self, diamond):
+        """Le total partiel n'est pas le coût du véhicule : la racine l'ignore."""
+        result = compute(inputs(diamond, prices={}))
+
+        assert result.line("V").full_unit_cost is None
+
+
+class TestPathScope:
+    def test_a_missing_price_elsewhere_does_not_hide_a_path_override(self, diamond):
+        """V/A n'a pas de prix (S manque sous A) ; V/B/S est surchargé.
+
+        Une évaluation qui s'arrête au premier enfant sans prix ne visite jamais
+        V/B : la surcharge disparaît alors de l'arbre dès que le calcul est
+        incomplet, c'est-à-dire exactement quand on a besoin d'y voir clair.
+        """
+        result = compute(
+            CalculationInput(
+                bom=diamond,
+                unit_prices={},
+                labour_rate=Decimal("60"),
+                unit_prices_by_path={"V/B/S": Decimal("7")},
+            )
+        )
+
+        assert result.path_own_unit_costs["V/B/S"] == Decimal("7")
+        # 15 min à 60 €/h, plus 5 vis à 7 €.
+        assert result.path_full_unit_costs["V/B"] == Decimal("50")
+        assert result.path_full_unit_costs["V"] is None
+
 
 class TestGuards:
     def test_a_cycle_is_refused(self):

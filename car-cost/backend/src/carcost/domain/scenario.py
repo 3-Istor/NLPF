@@ -21,7 +21,9 @@ class CalculationInput:
     unit_prices: Mapping[str, Decimal]
     labour_rate: Decimal
     active_rules: frozenset[str] = field(default_factory=lambda: frozenset({"labour"}))
-    #: Temps de main-d'œuvre posés par le scénario, par pièce fabriquée. Ils
-    #: remplacent celui de la nomenclature, qui reste intact : la version est
-    #: figée et partagée entre scénarios (ADR-0012).
-    labour_minutes: Mapping[str, Decimal] = field(default_factory=dict)
+    unit_prices_by_path: Mapping[str, Decimal] = field(default_factory=dict)
+    #: Temps de main-d'œuvre posés par le scénario. Ils remplacent celui de la
+    #: nomenclature, qui reste intact : la version est figée et partagée entre
+    #: scénarios (ADR-0013).
+    labour_minutes_by_part: Mapping[str, Decimal] = field(default_factory=dict)
+    labour_minutes_by_path: Mapping[str, Decimal] = field(default_factory=dict)

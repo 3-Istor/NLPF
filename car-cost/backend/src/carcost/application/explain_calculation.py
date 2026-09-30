@@ -2,7 +2,7 @@
 
 Le calcul ne stocke que le fournisseur et l'usine retenus, pas les trois
 facteurs du prix. On les relit dans le snapshot et le sourcing de la version,
-tous deux figés (ADR-0003, ADR-0012), puis on **vérifie** qu'ils redonnent le
+tous deux figés (ADR-0003, ADR-0013), puis on **vérifie** qu'ils redonnent le
 prix enregistré. Le coefficient d'usine, lui, n'est pas versionné : s'il a
 changé depuis, `reproduced` le dit au lieu d'afficher une formule dont le
 résultat n'est pas celui de la ligne.

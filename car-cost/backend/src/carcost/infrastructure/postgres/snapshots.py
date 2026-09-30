@@ -45,6 +45,18 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
     def latest(self) -> PriceSnapshot | None:
         return self._read(None)
 
+    def list_all(self) -> tuple[PriceSnapshot, ...]:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT id
+                FROM price_snapshot
+                ORDER BY taken_at DESC, id DESC
+                """
+            )
+            identifiers = tuple(row[0] for row in cursor.fetchall())
+        return tuple(self.get(identifier) for identifier in identifiers)
+
     def get(self, snapshot_id: str) -> PriceSnapshot:
         snapshot = self._read(snapshot_id)
         if snapshot is None:

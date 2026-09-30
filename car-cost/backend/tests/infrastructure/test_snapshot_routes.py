@@ -112,6 +112,44 @@ def calculate(client) -> dict:
 
 
 class TestQuarantineJournal:
+    def test_snapshots_are_listed_newest_first(self, client):
+        response = client.get("/api/v1/price-snapshots")
+
+        assert response.status_code == 200, response.text
+        assert response.json() == {
+            "items": [
+                {
+                    "id": "snp-jour",
+                    "taken_at": "2026-09-23T12:00:00+00:00",
+                    "source": "mock",
+                    "currency": "EUR",
+                    "status": "DEGRADED",
+                    "age_seconds": 0,
+                    "counts": {
+                        "prices": 3,
+                        "fallback": 2,
+                        "quarantined": 1,
+                        "missing": 0,
+                    },
+                },
+                {
+                    "id": "snp-hier",
+                    "taken_at": "2026-09-23T12:00:00+00:00",
+                    "source": "mock",
+                    "currency": "EUR",
+                    "status": "FRESH",
+                    "age_seconds": 0,
+                    "counts": {
+                        "prices": 3,
+                        "fallback": 0,
+                        "quarantined": 0,
+                        "missing": 0,
+                    },
+                },
+            ],
+            "total": 2,
+        }
+
     def test_it_lists_what_was_refused_why_and_what_was_kept(self, client):
         body = client.get("/api/v1/price-snapshots/snp-jour/quarantine").json()
 

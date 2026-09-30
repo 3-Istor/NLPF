@@ -1,7 +1,7 @@
 """Le cache de nomenclature.
 
 Garder une version en mémoire n'est juste que parce qu'une version validée ne
-change plus (ADR-0012). Ce qui n'est pas encore validé, ou pas encore chargé,
+change plus (ADR-0013). Ce qui n'est pas encore validé, ou pas encore chargé,
 doit donc être redemandé à chaque fois : le cache ne doit pas figer un refus.
 """
 

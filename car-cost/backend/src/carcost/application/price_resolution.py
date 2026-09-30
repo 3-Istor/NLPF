@@ -12,7 +12,7 @@ impossible.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import ROUND_HALF_UP, Decimal
 
 from ..domain.bom import Bom
@@ -73,12 +73,14 @@ class ResolvedPrices:
     explanations: dict[str, PriceExplanation]
     #: Pièces achetées dont aucun prix n'est connu. Jamais remplacées par zéro.
     missing: tuple[str, ...]
+    path_prices: dict[str, Decimal] = field(default_factory=dict)
+    path_explanations: dict[str, PriceExplanation] = field(default_factory=dict)
 
 
 def resolve_unit_prices(
     bom: Bom, sourcing: Sourcing, snapshot: PriceSnapshot, scenario: Scenario
 ) -> ResolvedPrices:
-    _reject_inapplicable_parameters(bom, scenario)
+    validate_parameters(bom, scenario)
 
     prices: dict[str, Decimal] = {}
     explanations: dict[str, PriceExplanation] = {}
@@ -88,44 +90,75 @@ def resolve_unit_prices(
         if not part.is_purchased:
             continue
 
-        parameter = scenario.parameter_for(ref)
-
-        if parameter is not None and parameter.price_override is not None:
-            explanations[ref] = PriceExplanation(
-                part_ref=ref,
-                unit_price=to_scale(parameter.price_override),
-                override_justification=parameter.price_override_justification,
-            )
-            prices[ref] = to_scale(parameter.price_override)
-            continue
-
-        reference = snapshot.prices.get(ref)
-        if reference is None:
+        resolved = resolve_purchase_price(
+            sourcing, snapshot, ref, scenario.parameter_for(ref)
+        )
+        if resolved is None:
             missing.append(ref)
-            continue
+        else:
+            prices[ref] = resolved.unit_price
+            explanations[ref] = resolved
 
-        offer, plant = _sourcing_for(sourcing, ref, parameter)
-        unit_price = to_scale(
-            reference * offer.price_multiplier * plant.price_coefficient
+    path_prices: dict[str, Decimal] = {}
+    path_explanations: dict[str, PriceExplanation] = {}
+    for parameter in scenario.parameters:
+        if (
+            parameter.scope != "path"
+            or not bom.parts[parameter.part_ref].is_purchased
+        ):
+            continue
+        resolved = resolve_purchase_price(
+            sourcing,
+            snapshot,
+            parameter.part_ref,
+            scenario.parameter_for(parameter.part_ref, parameter.path),
         )
-        prices[ref] = unit_price
-        explanations[ref] = PriceExplanation(
-            part_ref=ref,
-            unit_price=unit_price,
-            reference_price=reference,
-            supplier_id=offer.supplier_id,
-            supplier_multiplier=offer.price_multiplier,
-            plant_id=plant.plant_id,
-            plant_coefficient=plant.price_coefficient,
-            origin_country=plant.origin_country,
-        )
+        if resolved is not None:
+            path_prices[parameter.path] = resolved.unit_price
+            path_explanations[parameter.path] = resolved
 
     return ResolvedPrices(
-        prices=prices, explanations=explanations, missing=tuple(sorted(missing))
+        prices=prices,
+        explanations=explanations,
+        missing=tuple(sorted(missing)),
+        path_prices=path_prices,
+        path_explanations=path_explanations,
     )
 
 
-def _reject_inapplicable_parameters(bom: Bom, scenario: Scenario) -> None:
+def resolve_purchase_price(
+    sourcing: Sourcing,
+    snapshot: PriceSnapshot,
+    part_ref: str,
+    parameter: ScenarioParameter | None,
+) -> PriceExplanation | None:
+    """Résout une option de sourcing sans traverser le graphe."""
+    if parameter is not None and parameter.price_override is not None:
+        return PriceExplanation(
+            part_ref=part_ref,
+            unit_price=to_scale(parameter.price_override),
+            override_justification=parameter.price_override_justification,
+        )
+    reference = snapshot.prices.get(part_ref)
+    if reference is None:
+        return None
+    offer, plant = _sourcing_for(sourcing, part_ref, parameter)
+    unit_price = to_scale(
+        reference * offer.price_multiplier * plant.price_coefficient
+    )
+    return PriceExplanation(
+        part_ref=part_ref,
+        unit_price=unit_price,
+        reference_price=reference,
+        supplier_id=offer.supplier_id,
+        supplier_multiplier=offer.price_multiplier,
+        plant_id=plant.plant_id,
+        plant_coefficient=plant.price_coefficient,
+        origin_country=plant.origin_country,
+    )
+
+
+def validate_parameters(bom: Bom, scenario: Scenario) -> None:
     """Refuser tôt, et nommer la pièce fautive.
 
     La base porte les mêmes interdits par clés étrangères composites ; les
@@ -145,7 +178,7 @@ def _reject_inapplicable_parameters(bom: Bom, scenario: Scenario) -> None:
         if not part.is_purchased and parameter.touches_purchase:
             raise ParameterNotApplicable(
                 f"{part.ref} est un ensemble fabriqué : ni fournisseur, ni usine, "
-                f"ni prix propre"
+                f"ni devise d'achat, ni prix propre"
             )
         if parameter.price_override is not None and not (
             parameter.price_override_justification or ""

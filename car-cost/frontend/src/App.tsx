@@ -17,6 +17,8 @@ import type {
   SearchHit,
   TreeLine,
 } from "./api/types";
+import { DecisionDialog } from "./components/DecisionDialog";
+import { ScenarioBar } from "./components/ScenarioBar";
 import { Summary } from "./components/Summary";
 import { TreeNode } from "./components/TreeNode";
 import { WhereUsed } from "./components/WhereUsed";
@@ -27,6 +29,8 @@ const BOM_VERSION =
 
 export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
+  const [scenarios, setScenarios] = useState<Scenario[]>([]);
+  const [deciding, setDeciding] = useState(false);
   const [root, setRoot] = useState<TreeLine | null>(null);
   const [calculation, setCalculation] = useState<Calculation | null>(null);
   const [journal, setJournal] = useState<QuarantineJournal | null>(null);
@@ -39,21 +43,28 @@ export function App() {
   const [expandTo, setExpandTo] = useState<string[] | undefined>();
   const [treeKey, setTreeKey] = useState(0);
 
-  // Démarrage : un scénario de travail, et la racine de la nomenclature.
+  // Démarrage : on reprend le scénario le plus récent de cette nomenclature,
+  // et on n'en crée un que s'il n'y en a aucun. En créer un à chaque
+  // chargement remplirait la liste de scénarios de travail vides.
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const created = await api.createScenario({
-          bom_version: BOM_VERSION,
-          name: "Scénario de travail",
-          display_currency: "EUR",
-          labour_rate: "42.00",
-        });
-        const line = await api.root(BOM_VERSION, null);
+        const { items } = await api.scenarios();
+        let known = items.filter((item) => item.bom_version === BOM_VERSION);
+        if (known.length === 0) {
+          known = [
+            await api.createScenario({
+              bom_version: BOM_VERSION,
+              name: "Scénario de travail",
+              display_currency: "EUR",
+              labour_rate: "42.00",
+            }),
+          ];
+        }
         if (!alive) return;
-        setScenario(created);
-        setRoot(line);
+        setScenarios(known);
+        await open(known[0]);
       } catch (error) {
         if (alive) setFailure(describe(error));
       }
@@ -65,8 +76,77 @@ export function App() {
 
   const refreshScenario = useCallback(async () => {
     if (!scenario) return;
-    setScenario(await api.scenario(scenario.id));
+    const fresh = await api.scenario(scenario.id);
+    setScenario(fresh);
+    setScenarios((list) =>
+      list.map((item) => (item.id === fresh.id ? fresh : item)),
+    );
   }, [scenario]);
+
+  async function reloadScenarios(selectId?: string) {
+    const { items } = await api.scenarios();
+    const known = items.filter((item) => item.bom_version === BOM_VERSION);
+    setScenarios(known);
+    if (selectId) await selectScenario(selectId, known);
+  }
+
+  /**
+   * Un autre scénario : on repart sans calcul. Garder le total précédent
+   * afficherait les chiffres d'un scénario sous le nom d'un autre.
+   */
+  async function selectScenario(id: string, list: Scenario[] = scenarios) {
+    setFailure(null);
+    try {
+      await open(list.find((item) => item.id === id) ?? (await api.scenario(id)));
+    } catch (error) {
+      setFailure(describe(error));
+    }
+  }
+
+  /**
+   * Affiche un scénario avec son dernier calcul, relu et non relancé. S'il est
+   * obsolète, la synthèse le grise comme après une modification.
+   */
+  async function open(next: Scenario) {
+    const last = next.last_calculation_id
+      ? await api.calculation(next.last_calculation_id)
+      : null;
+    setScenario(next);
+    setCalculation(last);
+    setJournal(null);
+    if (last) {
+      api
+        .quarantine(last.price_snapshot.id)
+        .then(setJournal)
+        .catch(() => setJournal(null));
+    }
+    setExpandTo(undefined);
+    setTreeKey((key) => key + 1);
+    setRoot(await api.root(BOM_VERSION, last?.id ?? null));
+  }
+
+  async function duplicate(name: string) {
+    if (!scenario) return;
+    try {
+      const copy = await api.duplicateScenario(scenario.id, name);
+      await reloadScenarios(copy.id);
+    } catch (error) {
+      setFailure(describe(error));
+    }
+  }
+
+  async function removeScenario() {
+    if (!scenario) return;
+    try {
+      await api.deleteScenario(scenario.id);
+      const { items } = await api.scenarios();
+      const known = items.filter((item) => item.bom_version === BOM_VERSION);
+      setScenarios(known);
+      if (known.length > 0) await selectScenario(known[0].id, known);
+    } catch (error) {
+      setFailure(describe(error));
+    }
+  }
 
   async function recalculate() {
     if (!scenario) return;
@@ -82,7 +162,7 @@ export function App() {
         .quarantine(result.price_snapshot.id)
         .then(setJournal)
         .catch(() => setJournal(null));
-      setScenario(await api.scenario(scenario.id));
+      await refreshScenario();
       // Les lignes déjà dépliées portent les chiffres de l'ancien calcul :
       // on remonte l'arbre pour qu'elles redemandent les nouveaux.
       setTreeKey((key) => key + 1);
@@ -130,6 +210,14 @@ export function App() {
           />
           <button type="submit">Chercher</button>
         </form>
+        <ScenarioBar
+          scenarios={scenarios}
+          current={scenario}
+          onSelect={(id) => selectScenario(id)}
+          onDuplicate={duplicate}
+          onDelete={removeScenario}
+          onOpenDecision={() => setDeciding(true)}
+        />
         <p className="disclaimer">
           Prix, masses et facteurs carbone <strong>synthétiques</strong> — aucune
           donnée constructeur.
@@ -189,6 +277,23 @@ export function App() {
           onGoToPart={goToPart}
         />
       </main>
+
+      {deciding && scenario && (
+        <DecisionDialog
+          scenarios={scenarios}
+          current={scenario}
+          onClose={() => setDeciding(false)}
+          onGoToPart={(partRef) => {
+            setDeciding(false);
+            goToPart(partRef);
+          }}
+          onCreated={() => reloadScenarios()}
+          onOpenScenario={(id) => {
+            setDeciding(false);
+            selectScenario(id);
+          }}
+        />
+      )}
 
       {whereUsed && (
         <WhereUsed

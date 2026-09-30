@@ -1,4 +1,4 @@
-# ADR-0012 — Une version de nomenclature validée est immuable, et se garde en mémoire
+# ADR-0013 — Une version de nomenclature validée est immuable, et se garde en mémoire
 
 - **Date** : 2026-09-28
 - **Statut** : proposé

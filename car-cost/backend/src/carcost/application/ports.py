@@ -113,6 +113,10 @@ class PriceSnapshotRepository(Protocol):
         """Le dernier snapshot pris, même périmé — ou None s'il n'y en a aucun."""
         ...
 
+    def list_all(self):  # pragma: no cover - contrat
+        """Liste les snapshots du plus récent au plus ancien."""
+        ...
+
     def get(self, snapshot_id: str):  # pragma: no cover - contrat
         """Lève PriceSnapshotNotFound si l'identifiant est inconnu."""
         ...
@@ -144,9 +148,22 @@ class ScenarioNotFound(Exception):
 
 class ScenarioRepository(Protocol):
     def create(self, scenario) -> None:  # pragma: no cover - contrat
+        """Insère le scénario et tous ses paramètres dans une seule transaction."""
         ...
 
     def get(self, scenario_id: str):  # pragma: no cover - contrat
+        ...
+
+    def list_all(self):  # pragma: no cover - contrat
+        """Liste les scénarios du plus récent au plus ancien."""
+        ...
+
+    def delete(self, scenario_id: str) -> None:  # pragma: no cover - contrat
+        """Supprime le scénario et ses données dépendantes."""
+        ...
+
+    def parameter_ids(self, scenario_id: str):  # pragma: no cover - contrat
+        """Associe chaque cible de paramètre à son identifiant persistant."""
         ...
 
     def put_parameter(self, scenario_id: str, parameter) -> str:  # pragma: no cover

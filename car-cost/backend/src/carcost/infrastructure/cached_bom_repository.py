@@ -2,7 +2,7 @@
 
 Sans cache, chaque dépliage relisait 474 pièces et 689 arêtes, sur une connexion
 neuve. Garder le graphe en mémoire n'est juste que parce qu'une version validée
-ne change plus : la base le refuse (ADR-0012). Le cache n'a donc pas
+ne change plus : la base le refuse (ADR-0013). Le cache n'a donc pas
 d'expiration, et n'en a pas besoin.
 
 Seuls les succès sont gardés : une version inconnue ou pas encore validée peut

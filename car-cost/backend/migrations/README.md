@@ -5,7 +5,19 @@ chacun terminé par son `INSERT INTO schema_migration`.
 
 ```
 0001_initial_schema.sql
-0002_validated_bom_is_frozen.sql
+0002_calculation_context_cost.sql   coûts par occurrence quand une surcharge de chemin existe
+0003_validated_bom_is_frozen.sql    une version validée ne change plus (ADR-0013)
+```
+
+Postgres ne les exécute qu'à la **création** du volume. Le conteneur `backend` rattrape à chaque
+démarrage celles qui manquent dans `schema_migration` (`carcost.infrastructure.startup`). Hors
+conteneur, sur une base existante, les appliquer à la main :
+
+```bash
+docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+  < backend/migrations/0002_calculation_context_cost.sql
+docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+  < backend/migrations/0003_validated_bom_is_frozen.sql
 ```
 
 ## Règles
@@ -43,7 +55,7 @@ for migration in 0*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migrati
 | L'usine choisie appartient au fournisseur choisi | Clé étrangère composite vers `supplier_plant (id, supplier_id)` |
 | Un prix forcé porte une justification | `CHECK` sur `scenario_parameter` |
 | Un snapshot n'est jamais modifié | Déclencheur `forbid_mutation` |
-| Une version validée n'est plus modifiée ni supprimée (ADR-0012) | Déclencheurs `*_frozen_once_validated` (0002) |
+| Une version validée n'est plus modifiée ni supprimée (ADR-0013) | Déclencheurs `*_frozen_once_validated` (0003) |
 | **Acyclicité** | ❌ Impossible en déclaratif — tri topologique au chargement |
 | **Racine unique** | ❌ Contrôle au chargement |
 | **Aucun orphelin** | ❌ Contrôle au chargement |

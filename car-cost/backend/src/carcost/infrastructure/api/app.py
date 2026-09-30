@@ -56,6 +56,11 @@ def create_app(repositories: Repositories) -> FastAPI:
         version="0.1.0",
     )
 
+    @app.get("/health")
+    def health():
+        """Sonde de vie ; Compose attend aussi la fin de l’initialisation."""
+        return {"status": "ok"}
+
     @app.exception_handler(BomVersionNotFound)
     async def _version_not_found(_: Request, error: BomVersionNotFound):
         return _error(404, "BOM_VERSION_NOT_FOUND", str(error))
