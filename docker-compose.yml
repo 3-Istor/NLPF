@@ -1,0 +1,4 @@
+# Le même projet depuis la racine ou car-cost/ conserve le volume existant.
+name: car-cost
+include:
+  - car-cost/docker-compose.yml

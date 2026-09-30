@@ -15,7 +15,49 @@ d'une API qui tombe.
 
 ---
 
-## Prérequis
+## Lancer avec Docker
+
+Depuis la racine du dépôt, Docker démarré :
+
+```bash
+docker-compose up
+```
+
+Ouvrir **http://localhost:5173** lorsque les services sont prêts. Le premier
+lancement construit les images, initialise PostgreSQL, charge la nomenclature
+synthétique validée et prend le premier snapshot de prix. Cliquer sur
+**Calculer** pour obtenir le coût.
+
+Seuls Docker et Compose **2.20.3 ou supérieur** sont nécessaires : aucune
+installation locale de Python ou Node, ni création de `.env`.
+`docker compose up` fonctionne également. Les services écoutent sur les ports
+5173 (écran), 8000 (API), 8099 (simulateur) et 5432 (PostgreSQL).
+
+`Ctrl+C` arrête les services. Les données restent dans le volume `db-data` :
+les relancements ne rechargent pas la nomenclature et ne créent pas de snapshot
+supplémentaire. `docker-compose down` conserve également ce volume.
+**`docker-compose down -v` détruit les données.**
+
+Pour consulter un échec : `docker-compose logs backend db mock-api`.
+Une nomenclature non validée ou un premier snapshot impossible bloque le
+backend avec un diagnostic, sans effacer les données existantes.
+
+Après une modification du code, reconstruire avec `docker-compose up --build`.
+Si le port 5432 est déjà occupé par une autre application, lancer
+`POSTGRES_PORT=55432 docker-compose up` ; seuls les accès PostgreSQL depuis
+l'hôte changent, les services continuent à communiquer sur le réseau Docker.
+Les ports peuvent être personnalisés avec `FRONTEND_PORT`, `BACKEND_PORT`,
+`PRICE_API_PORT` et `POSTGRES_PORT` dans l'environnement du terminal.
+
+---
+
+## Développement sans conteneurs applicatifs
+
+Les étapes suivantes sont l'alternative pour lancer Python et Node localement.
+Pour lancer uniquement PostgreSQL, utiliser `docker compose up -d db` depuis
+`car-cost/`.
+
+### Prérequis
 
 | Outil | Version | Pourquoi |
 |---|---|---|
@@ -70,7 +112,7 @@ suivant. Depuis une session WSL interactive, le problème ne se produit pas.
 
 ---
 
-## Lancer l'application
+## Lancer l'application manuellement
 
 Cinq étapes. Les trois premières ne servent qu'une fois.
 
@@ -101,14 +143,14 @@ activation ne franchit pas les fenêtres — une variable posée ailleurs non pl
 
 ```bash
 cd car-cost
-docker compose up -d
+docker compose up -d db
 ```
 
 Le schéma est appliqué au premier démarrage : les migrations sont montées dans
 `docker-entrypoint-initdb.d`. Pour repartir de zéro :
 
 ```bash
-docker compose down -v && docker compose up -d
+docker compose down -v && docker compose up -d db
 ```
 
 ### 2. L'environnement Python
@@ -195,7 +237,7 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 201 tests
+# backend — 209 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
 # front — 15 tests
