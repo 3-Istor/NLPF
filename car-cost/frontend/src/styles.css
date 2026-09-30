@@ -68,6 +68,7 @@ ul.children { list-style: none; margin: 0; padding: 0; }
   white-space: nowrap;
 }
 .row:hover { background: #f6f9ff; }
+.row--selected { background: #eaf1ff; }
 .row--in-modified-path { box-shadow: inset 2px 0 0 #d9c7ef; }
 .row--modified { box-shadow: inset 3px 0 0 var(--modified); }
 

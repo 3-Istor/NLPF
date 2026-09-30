@@ -7,91 +7,72 @@
  * (ADR-0009).
  */
 
-import { useContext, useState } from "react";
-import { api } from "../api/client";
-import type { Page, TreeLine } from "../api/types";
+import { useContext } from "react";
+import type { Scenario, TreeLine } from "../api/types";
 import { money, quantity } from "../format";
 import { describeRefusal, Refusals } from "../quarantine";
+import type { TreeState } from "../tree/useTreeState";
 import { NodePanel } from "./NodePanel";
+import { rowId } from "./Tree";
 
 type Props = {
   line: TreeLine;
-  version: string;
-  scenarioId: string | null;
-  calculationId: string | null;
   depth: number;
-  expandTo?: string[];
+  state: TreeState;
+  version: string;
+  scenario: Scenario | null;
   onParameterChanged: () => void;
   onShowWhereUsed: (partRef: string) => void;
 };
 
+/**
+ * Un paramètre du scénario vise-t-il cette ligne ? Une recherche, pas un
+ * calcul : la portée pièce vise toutes les occurrences de la référence, la
+ * portée chemin cette occurrence seulement. La ligne est marquée dès la
+ * saisie, sans attendre le recalcul.
+ */
+function isTargeted(line: TreeLine, scenario: Scenario | null): boolean {
+  return (scenario?.parameters ?? []).some((parameter) =>
+    parameter.scope === "part"
+      ? parameter.part_ref === line.part_ref
+      : parameter.path === line.path,
+  );
+}
+
 export function TreeNode({
   line,
-  version,
-  scenarioId,
-  calculationId,
   depth,
-  expandTo,
+  state,
+  version,
+  scenario,
   onParameterChanged,
   onShowWhereUsed,
 }: Props) {
-  const [children, setChildren] = useState<TreeLine[] | null>(null);
-  const [open, setOpen] = useState(false);
-  // Le panneau s'ouvre indépendamment des enfants : une pièce achetée est une
+  // Un nœud n'est rendu que si son parent est déplié : un sous-niveau resté
+  // déplié sous un parent replié n'est donc jamais affiché.
+  const open = state.isExpanded(line.path);
+  const entry = open ? state.childrenOf(line.path) : undefined;
+  // Le panneau suit la sélection, pas le dépliage : une pièce achetée est une
   // feuille, et c'est précisément elle qui porte fournisseur, usine et prix.
-  // Le lier au dépliage rendrait inaccessible le réglage le plus utile.
-  const [panelOpen, setPanelOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [failure, setFailure] = useState<string | null>(null);
+  const selected = state.selected === line.path;
 
-  const shouldFollow = expandTo?.[0] === line.part_ref;
-  const remainder = shouldFollow ? expandTo!.slice(1) : undefined;
-
-  async function toggle() {
-    setPanelOpen(true);
-    if (open) {
-      setOpen(false);
-      return;
-    }
-    setOpen(true);
-    if (children !== null) return;
-
-    setLoading(true);
-    setFailure(null);
-    try {
-      const page: Page<TreeLine> = await api.children(
-        version,
-        line.path,
-        calculationId,
-      );
-      setChildren([...page.items]);
-    } catch (error) {
-      setFailure(error instanceof Error ? error.message : "échec du dépliage");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // Recherche : le serveur a renvoyé le chemin, on le suit de proche en proche.
-  if (shouldFollow && remainder?.length && !open) {
-    void toggle();
-  }
-
-  const modified = line.is_modified === true;
+  const modified = line.is_modified === true || isTargeted(line, scenario);
   const inPath = line.has_modified_descendant === true;
   const refused = useContext(Refusals).get(line.part_ref);
 
   return (
     <li className="node">
       <div
+        id={rowId(line.path)}
+        aria-selected={selected}
         className={`row${modified ? " row--modified" : ""}${
           inPath ? " row--in-modified-path" : ""
-        }`}
+        }${selected ? " row--selected" : ""}`}
         style={{ paddingLeft: `${depth * 18 + 8}px` }}
       >
         <button
           className="chevron"
-          onClick={toggle}
+          onClick={() => state.toggle(line.path)}
           disabled={!line.has_children}
           aria-expanded={open}
           aria-label={open ? "Replier" : "Déplier"}
@@ -101,9 +82,8 @@ export function TreeNode({
 
         <button
           className="label"
-          onClick={() => setPanelOpen((shown) => !shown)}
+          onClick={() => state.select(line.path)}
           title="Régler cette pièce"
-          aria-expanded={panelOpen}
         >
           {line.label}
         </button>
@@ -162,11 +142,11 @@ export function TreeNode({
         </span>
       </div>
 
-      {panelOpen && scenarioId && (
+      {selected && scenario && (
         <NodePanel
           line={line}
           version={version}
-          scenarioId={scenarioId}
+          scenarioId={scenario.id}
           depth={depth}
           onChanged={onParameterChanged}
         />
@@ -174,19 +154,25 @@ export function TreeNode({
 
       {open && (
         <>
-          {loading && <p className="hint">chargement…</p>}
-          {failure && <p className="hint hint--danger">{failure}</p>}
-          {children && children.length > 0 && (
+          {(entry === undefined || entry.status === "loading") && (
+            <p className="hint">chargement…</p>
+          )}
+          {entry?.status === "error" && (
+            <p className="hint hint--danger">
+              {entry.message}{" "}
+              <button onClick={() => state.retry(line.path)}>Réessayer</button>
+            </p>
+          )}
+          {entry?.status === "ready" && entry.page.items.length > 0 && (
             <ul className="children">
-              {children.map((child) => (
+              {entry.page.items.map((child) => (
                 <TreeNode
                   key={child.path}
                   line={child}
-                  version={version}
-                  scenarioId={scenarioId}
-                  calculationId={calculationId}
                   depth={depth + 1}
-                  expandTo={remainder}
+                  state={state}
+                  version={version}
+                  scenario={scenario}
                   onParameterChanged={onParameterChanged}
                   onShowWhereUsed={onShowWhereUsed}
                 />

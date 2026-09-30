@@ -4,22 +4,34 @@
  * ne doit additionner aucun montant.
  */
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Page, QuarantineEntry, TreeLine } from "../api/types";
+import type {
+  Page,
+  QuarantineEntry,
+  Scenario,
+  ScenarioParameter,
+  TreeLine,
+} from "../api/types";
 import { Refusals } from "../quarantine";
-import { TreeNode } from "./TreeNode";
+import { useTreeState, type TreeState } from "../tree/useTreeState";
+import { rowId, Tree } from "./Tree";
 
 const calls: string[] = [];
+// Réponses propres à un test ; vidée avant chaque test, pour que les autres
+// reçoivent exactement les réponses par défaut.
+const served = new Map<string, TreeLine[]>();
 
 vi.mock("../api/client", () => ({
   ApiFailure: class extends Error {},
   api: {
     children: async (_version: string, path: string): Promise<Page<TreeLine>> => {
       calls.push(path);
+      const items =
+        served.get(path) ?? (path === "V" ? [child("V/A", "A"), child("V/B", "B")] : []);
       return {
-        items: path === "V" ? [child("V/A", "A"), child("V/B", "B")] : [],
-        total: path === "V" ? 2 : 0,
+        items,
+        total: items.length,
         limit: 50,
         offset: 0,
       };
@@ -48,6 +60,7 @@ function line(overrides: Partial<TreeLine> = {}): TreeLine {
 const LABELS: Record<string, string> = {
   A: "Groupe motopropulseur",
   B: "Châssis",
+  M: "Module de fixation",
 };
 
 function child(path: string, ref: string): TreeLine {
@@ -63,29 +76,75 @@ function child(path: string, ref: string): TreeLine {
   });
 }
 
+let tree: TreeState;
+
+function Harness({ root, scenario }: { root: TreeLine; scenario: Scenario | null }) {
+  const state = useTreeState({ version: "bom-test", calculationId: null });
+  tree = state;
+  return (
+    <Tree
+      root={root}
+      state={state}
+      version="bom-test"
+      scenario={scenario}
+      onParameterChanged={() => {}}
+      onShowWhereUsed={() => {}}
+    />
+  );
+}
+
 function mount(
   overrides: Partial<TreeLine> = {},
   refusals: ReadonlyMap<string, QuarantineEntry> = new Map(),
+  scenario: Scenario | null = null,
 ) {
   return render(
     <Refusals.Provider value={refusals}>
-      <ul>
-        <TreeNode
-          line={line(overrides)}
-          version="bom-test"
-          scenarioId={null}
-          calculationId={null}
-          depth={0}
-          onParameterChanged={() => {}}
-          onShowWhereUsed={() => {}}
-        />
-      </ul>
+      <Harness root={line(overrides)} scenario={scenario} />
     </Refusals.Provider>,
   );
 }
 
+function parameter(overrides: Partial<ScenarioParameter>): ScenarioParameter {
+  return {
+    parameter_id: "prm-1",
+    part_ref: "A",
+    scope: "part",
+    path: null,
+    supplier_id: null,
+    plant_id: null,
+    price_override: null,
+    price_override_justification: null,
+    ...overrides,
+  };
+}
+
+function scenarioWith(parameters: ScenarioParameter[] = []): Scenario {
+  return {
+    id: "scn-1",
+    name: "Scénario de test",
+    bom_version: "bom-test",
+    display_currency: "EUR",
+    labour_rate: "42.00",
+    active_rules: [],
+    parameters,
+    calculation_state: "NEVER_RUN",
+    stale_reason: null,
+    last_calculation_id: null,
+  };
+}
+
+const row = (path: string) => document.getElementById(rowId(path));
+
+async function expand(path: string) {
+  (row(path)!.querySelector("button.chevron") as HTMLButtonElement).click();
+  await waitFor(() => expect(row(path)!.querySelector("button.chevron")).toHaveAttribute("aria-expanded", "true"));
+}
+
 beforeEach(() => {
   calls.length = 0;
+  served.clear();
+  localStorage.clear();
 });
 
 describe("dépliage", () => {
@@ -203,4 +262,90 @@ describe("prix dégradés", () => {
       "« -42.000000 » refusé : prix négatif. Référence retenue : 4,20 € (snapshot snp-hier).",
     );
   });
+});
+
+describe("panneau de saisie", () => {
+  it("déplier n'ouvre pas le panneau", async () => {
+    const { container } = mount({}, new Map(), scenarioWith());
+
+    (container.querySelector("button.chevron") as HTMLButtonElement).click();
+
+    await waitFor(() =>
+      expect(screen.getByText("Groupe motopropulseur")).toBeInTheDocument(),
+    );
+    expect(screen.queryByText(/Ensemble fabriqué — V/)).toBeNull();
+  });
+
+  it("le panneau suit la ligne sélectionnée", async () => {
+    const { container } = mount({}, new Map(), scenarioWith());
+    await expand("V");
+    await waitFor(() => expect(screen.getByText("Châssis")).toBeInTheDocument());
+
+    act(() => screen.getByText("Véhicule complet").click());
+    act(() => screen.getByText("Châssis").click());
+
+    const panels = container.querySelectorAll(".panel");
+    expect(panels).toHaveLength(1);
+    expect(panels[0].textContent).toContain("Ensemble fabriqué — B");
+    expect(row("V/B")).toHaveAttribute("aria-selected", "true");
+    expect(row("V")).toHaveAttribute("aria-selected", "false");
+  });
+});
+
+describe("marque de modification", () => {
+  it("une ligne visée par un paramètre de portée pièce est marquée sans recalcul", async () => {
+    mount({}, new Map(), scenarioWith([parameter({ scope: "part", part_ref: "A", path: null })]));
+    await expand("V");
+    await waitFor(() => expect(row("V/A")).not.toBeNull());
+
+    expect(row("V/A")!.querySelector('[title="Paramètre modifié"]')).not.toBeNull();
+    expect(row("V/B")!.querySelector('[title="Paramètre modifié"]')).toBeNull();
+  });
+
+  it("une portée chemin ne marque que son occurrence", async () => {
+    served.set("V/A", [child("V/A/M", "M")]);
+    served.set("V/B", [child("V/B/M", "M")]);
+    mount(
+      {},
+      new Map(),
+      scenarioWith([parameter({ scope: "path", part_ref: "M", path: "V/A/M" })]),
+    );
+    await expand("V");
+    await waitFor(() => expect(row("V/B")).not.toBeNull());
+    await expand("V/A");
+    await expand("V/B");
+    await waitFor(() => expect(row("V/B/M")).not.toBeNull());
+
+    expect(row("V/A/M")!.querySelector('[title="Paramètre modifié"]')).not.toBeNull();
+    expect(row("V/B/M")!.querySelector('[title="Paramètre modifié"]')).toBeNull();
+  });
+});
+
+describe("suivi d'un chemin", () => {
+  it("un ancêtre replié après reveal reste replié", async () => {
+    served.set("V/A", [child("V/A/M", "M")]);
+    mount();
+
+    await act(() => tree.reveal("V/A/M"));
+    await waitFor(() => expect(screen.getByText("Module de fixation")).toBeInTheDocument());
+
+    act(() => (row("V/A")!.querySelector("button.chevron") as HTMLButtonElement).click());
+
+    await waitFor(() =>
+      expect(screen.queryByText("Module de fixation")).not.toBeInTheDocument(),
+    );
+    await expect(
+      waitFor(() => expect(screen.getByText("Module de fixation")).toBeInTheDocument(), {
+        timeout: 100,
+      }),
+    ).rejects.toThrow();
+  });
+});
+
+it("chaque ligne a un id dérivé du chemin", async () => {
+  mount();
+
+  await expand("V");
+
+  await waitFor(() => expect(document.getElementById("node-V/A")).not.toBeNull());
 });
