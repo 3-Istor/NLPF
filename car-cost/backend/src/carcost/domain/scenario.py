@@ -27,3 +27,6 @@ class CalculationInput:
     #: scénarios (ADR-0013).
     labour_minutes_by_part: Mapping[str, Decimal] = field(default_factory=dict)
     labour_minutes_by_path: Mapping[str, Decimal] = field(default_factory=dict)
+    #: kg CO2e par kg transporté jusqu'au site d'assemblage, par pièce achetée —
+    #: l'usine retenue pour le prix (ADR-0010), pas une constante de la pièce.
+    transport_co2_per_kg: Mapping[str, Decimal] = field(default_factory=dict)

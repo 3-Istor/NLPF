@@ -412,8 +412,9 @@ pièce partagée est donc pondérée par sa quantité totale, jamais par une seu
 Une comparaison est refusée avec `422 INCOMPARABLE_SCENARIOS` si l'un des calculs est incomplet :
 une contribution sans prix ne doit jamais être assimilée à zéro.
 
-`co2_delta_kg` vaut `null` tant que le calcul ne porte pas les projections carbone de NLPF-47/48.
-Le champ est déjà stable et devient numérique dès que les deux calculs portent `total_co2`.
+`co2_delta_kg` vaut `null` si l'un des deux calculs a été enregistré avant que le moteur ne porte le
+CO2 (`total_co2` alors `NULL` en base) ; sinon c'est `B - A` en kg CO2e, sur la même portée que
+`cost_delta`.
 
 ### 3.9 `POST /scenarios/{id}/recommend-sourcing` — recommandation contrainte
 
@@ -747,6 +748,5 @@ asynchrone le rendrait observable, et que l'écran doit déjà savoir l'afficher
 - Elle n'expose aucune écriture sur la nomenclature : la BOM vient du seed (périmètre §2.4).
 - Elle ne renvoie jamais le graphe entier en une réponse.
 - Elle ne renvoie aucun montant en nombre flottant.
-- Elle ne calcule pas encore la projection carbone : ce moteur appartient à NLPF-47/48.
 - Elle ne convertit pas une devise à l'exécution ; les taux courants rendraient le calcul
   irreproductible.

@@ -226,6 +226,26 @@ class TestCalculationLines:
         assert read.issue_counts() == saved["written"].issue_counts()
         assert read.issue_counts()["missing_price"] > 0
 
+    def test_co2_survives_the_round_trip_to_postgres(self, saved):
+        """`own_co2_contribution` par ligne et `co2`/`co2_share_pct` par système
+        sont des colonnes à part : rien ne garantit qu'elles soient écrites et
+        relues, sinon qu'un test contre une vraie base."""
+        written, read = saved["written"], saved["read"]
+        fresh_ref = saved["fresh_ref"]
+
+        # Sur la vraie Multipla, chaque pièce porte un facteur carbone réel :
+        # un total à zéro trahirait une colonne jamais écrite ou jamais relue.
+        assert written.total_co2 is not None and written.total_co2 > 0
+        assert read.total_co2 == written.total_co2
+
+        written_line = written.lines_by_ref[fresh_ref]
+        read_line = read.lines_by_ref[fresh_ref]
+        assert written_line.own_co2_contribution is not None
+        assert read_line.own_co2_contribution == written_line.own_co2_contribution
+
+        assert read.systems == written.systems
+        assert any(system.co2 > 0 for system in read.systems)
+
     def test_a_price_read_back_is_explained_by_factors_that_reproduce_it(
         self, saved
     ):

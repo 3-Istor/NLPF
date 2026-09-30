@@ -61,6 +61,9 @@ class PriceExplanation:
     plant_coefficient: Decimal | None = None
     origin_country: str | None = None
     override_justification: str | None = None
+    #: kg CO2e/kg transporté par l'usine retenue. `None` sur un prix forcé :
+    #: aucune usine n'est retenue, donc aucun transport à annoncer.
+    transport_co2_per_kg: Decimal | None = None
 
     @property
     def is_overridden(self) -> bool:
@@ -75,6 +78,7 @@ class ResolvedPrices:
     missing: tuple[str, ...]
     path_prices: dict[str, Decimal] = field(default_factory=dict)
     path_explanations: dict[str, PriceExplanation] = field(default_factory=dict)
+    transport_co2_per_kg: dict[str, Decimal] = field(default_factory=dict)
 
 
 def resolve_unit_prices(
@@ -117,12 +121,22 @@ def resolve_unit_prices(
             path_prices[parameter.path] = resolved.unit_price
             path_explanations[parameter.path] = resolved
 
+    # Portée pièce seulement pour l'instant : une surcharge de chemin change de
+    # fournisseur pour une occurrence, mais le moteur ne répercute pas encore
+    # cet écart sur le CO2 (limite connue, à lever si le besoin se confirme).
+    transport_co2_per_kg = {
+        ref: explanation.transport_co2_per_kg
+        for ref, explanation in explanations.items()
+        if explanation.transport_co2_per_kg is not None
+    }
+
     return ResolvedPrices(
         prices=prices,
         explanations=explanations,
         missing=tuple(sorted(missing)),
         path_prices=path_prices,
         path_explanations=path_explanations,
+        transport_co2_per_kg=transport_co2_per_kg,
     )
 
 
@@ -155,6 +169,7 @@ def resolve_purchase_price(
         plant_id=plant.plant_id,
         plant_coefficient=plant.price_coefficient,
         origin_country=plant.origin_country,
+        transport_co2_per_kg=plant.transport_co2_kg_per_kg,
     )
 
 

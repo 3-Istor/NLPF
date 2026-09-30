@@ -41,12 +41,16 @@ class PartLine:
     own_unit_cost: Decimal | None
     own_contribution: Decimal | None
     full_unit_cost: Decimal | None
+    own_unit_co2: Decimal | None = None
+    own_co2_contribution: Decimal | None = None
+    full_unit_co2: Decimal | None = None
 
 
 @dataclass(frozen=True)
 class CalculationResult:
     lines: tuple[PartLine, ...]
     total_cost: Decimal
+    total_co2: Decimal
     parts_without_price: tuple[str, ...]
     path_own_unit_costs: dict[str, Decimal | None]
     path_full_unit_costs: dict[str, Decimal | None]
@@ -99,6 +103,20 @@ def compute(inputs: CalculationInput) -> CalculationResult:
     # complet — un total partiel n'est pas le coût du véhicule.
     if full_unit_cost[bom.root_ref] is not None:
         full_unit_cost[bom.root_ref] = total
+
+    own_unit_co2 = _own_unit_co2(inputs)
+    full_unit_co2 = _roll_up(bom, order, own_unit_co2)
+    co2_contributions: dict[str, Decimal | None] = {}
+    total_co2 = Decimal(0)
+    for ref in order:
+        own_co2 = own_unit_co2[ref]
+        contribution = None if own_co2 is None else cumulative[ref] * own_co2
+        co2_contributions[ref] = contribution
+        if contribution is not None:
+            total_co2 += contribution
+    if full_unit_co2[bom.root_ref] is not None:
+        full_unit_co2[bom.root_ref] = total_co2
+
     lines = tuple(
         PartLine(
             part_ref=ref,
@@ -107,12 +125,16 @@ def compute(inputs: CalculationInput) -> CalculationResult:
             own_unit_cost=own_unit_cost[ref],
             own_contribution=contributions[ref],
             full_unit_cost=full_unit_cost[ref],
+            own_unit_co2=own_unit_co2[ref],
+            own_co2_contribution=co2_contributions[ref],
+            full_unit_co2=full_unit_co2[ref],
         )
         for ref in order
     )
     return CalculationResult(
         lines=lines,
         total_cost=total,
+        total_co2=total_co2,
         parts_without_price=tuple(missing),
         path_own_unit_costs=path_own,
         path_full_unit_costs=path_full,
@@ -176,6 +198,31 @@ def _own_unit_costs(
             costs[ref] = Decimal(0)
 
     return costs, sorted(missing)
+
+
+def _own_unit_co2(inputs: CalculationInput) -> dict[str, Decimal | None]:
+    """Le CO2 PROPRE d'une unité : jamais les enfants, sinon il serait compté
+    deux fois — exactement comme `own_unit_cost`.
+
+    `carbon_factor` porte le même sens sur les deux modes de valorisation : le
+    matériau (extraction → sortie d'usine) sur une pièce achetée, le procédé
+    d'assemblage sur un ensemble fabriqué. Seule la pièce achetée ajoute le
+    transport jusqu'au site d'assemblage (cadrage.md A10).
+
+    Un prix manquant signifie qu'aucune offre n'a été retenue pour cette
+    pièce : le CO2 de transport n'est pas zéro dans ce cas, il est inconnu —
+    même règle que pour un prix manquant, appliquée à la même cause.
+    """
+    co2: dict[str, Decimal | None] = {}
+    for ref, part in inputs.bom.parts.items():
+        if not part.is_purchased:
+            co2[ref] = part.carbon_factor
+        elif ref in inputs.unit_prices:
+            transport_per_kg = inputs.transport_co2_per_kg.get(ref, Decimal(0))
+            co2[ref] = part.carbon_factor + (part.mass_kg or Decimal(0)) * transport_per_kg
+        else:
+            co2[ref] = None
+    return co2
 
 
 def _average_path_overrides(

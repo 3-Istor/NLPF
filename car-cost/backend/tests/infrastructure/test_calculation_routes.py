@@ -210,6 +210,62 @@ class TestCalculation:
         ) == Decimal("395")
 
 
+class TestCarbon:
+    """S est la seule pièce à porter du CO2 dans cette nomenclature : sa
+    matière est nulle par défaut, seul son transport compte (usine par défaut
+    de `FakeSourcingRepository`, 0.021 kg CO2e/kg, pour 1 kg et 23 vis
+    cumulées) : 0.021 × 1 × 23 = 0.483.
+    """
+
+    def test_total_co2_is_the_hand_computed_value(self, client):
+        scenario_id = make_scenario(client)
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert body["total_co2"]["kg_co2e"] == "0.483000"
+
+    def test_the_system_co2_sums_to_the_total(self, client):
+        scenario_id = make_scenario(client)
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert sum(
+            Decimal(system["co2"]["kg_co2e"]) for system in body["systems"]
+        ) == Decimal(body["total_co2"]["kg_co2e"])
+
+    def test_top_co2_contributors_names_the_only_emitter(self, client):
+        scenario_id = make_scenario(client)
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert body["top_co2_contributors"][0]["part_ref"] == "S"
+        assert (
+            body["top_co2_contributors"][0]["own_co2_contribution"]["kg_co2e"]
+            == "0.483000"
+        )
+
+    def test_the_aggregated_view_exposes_each_line_s_co2(self, client):
+        scenario_id = make_scenario(client)
+        calculation = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        body = client.get(
+            f"/api/v1/calculations/{calculation['id']}/aggregated",
+            params={"limit": 500},
+        ).json()
+
+        by_ref = {item["part_ref"]: item for item in body["items"]}
+        assert by_ref["S"]["own_co2_contribution"]["kg_co2e"] == "0.483000"
+        assert Decimal(by_ref["V"]["own_co2_contribution"]["kg_co2e"]) == Decimal(0)
+
+
 class TestStaleness:
     def test_changing_a_parameter_makes_the_totals_obsolete(self, client):
         scenario_id = make_scenario(client)

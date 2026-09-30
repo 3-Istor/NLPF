@@ -237,16 +237,16 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 363 tests
+# backend — 378 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
 # front — 19 tests
 cd car-cost/frontend && npm test
 ```
 
-Les vingt-et-un tests d'intégration se **sautent** si Postgres n'est pas
+Les vingt-deux tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Vérifié sous NixOS (Python 3.12) :
-`342 passed, 21 skipped` hors ligne, `363 passed` avec la base chargée. Les
+`356 passed, 22 skipped` hors ligne, `378 passed` avec la base chargée. Les
 tests d'intégration qui écrivent le font dans une transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
 l'écran utilise.
@@ -296,6 +296,11 @@ entièrement distinct.
   parents multiples**, générateur déterministe, rapport de validation à zéro erreur
 - Moteur de coût par programmation dynamique sur le DAG : une évaluation par pièce dans le cas
   courant, et seulement les préfixes concernés réévalués lorsqu'une surcharge de chemin existe
+- Empreinte carbone calculée par le même moteur, sur le même parcours que le coût : facteur matière
+  ou procédé par pièce, transport ajouté pour une pièce achetée depuis l'usine retenue pour son
+  prix. Un prix manquant laisse le CO2 inconnu, jamais zéro — même règle que pour le coût. Décomposée
+  par système et par dix principaux contributeurs, comme le coût ; alimente `co2_delta_kg` de la
+  comparaison. Portée chemin non encore prise en compte pour le CO2 (limite connue)
 - Schéma Postgres dont les contraintes rendent la double comptabilisation
   impossible, vérifié sur une vraie base
 - Snapshot de prix immuable, repli sur timeout, quarantaine des valeurs
@@ -328,8 +333,9 @@ entièrement distinct.
       (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
 - [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
       existe ; aucun panneau ne l'affiche.
-- [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
-      pièce, CO₂ de transport par usine — mais ne calcule que le coût.
+- [ ] **Empreinte carbone à l'écran.** Le moteur et l'API la calculent
+      (`total_co2`, décomposition par système, dix principaux contributeurs) ;
+      aucun panneau ne l'affiche encore.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
       l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
       persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).
@@ -339,10 +345,9 @@ entièrement distinct.
 
 **Tranche T3 — « l'outil aide à décider »**
 
-- [ ] **Ajouter le CO₂e aux calculs et aux comparaisons.** Le delta de coût, les
-      dix principaux écarts et la recommandation de sourcing sont disponibles,
-      à l'écran comme dans l'API ; la projection carbone dépend encore de
-      NLPF-46 à NLPF-48. L'écran affiche l'écart CO₂ « non calculé ».
+- [ ] **CO₂e aux comparaisons, à l'écran.** `co2_delta_kg` est calculé et
+      renvoyé par l'API (`POST /scenarios/compare`) ; l'écran affiche encore
+      l'écart CO₂ comme « non calculé ».
 - [ ] **Valider l'ADR-0012** (comparaison sur snapshot commun, recommandation
       pièce par pièce), rédigé en revue au statut « proposé ».
 
