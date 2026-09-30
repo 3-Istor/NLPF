@@ -200,6 +200,13 @@ def _costed_payload(costed, currency: str) -> dict:
             "rolled_up_contribution": _money(costed.rolled_up_contribution, currency),
             # La seule grandeur qui se somme au total.
             "own_contribution": _money(costed.own_contribution, currency),
+            # Poids de cette occurrence dans le total. Ne se somme pas entre
+            # niveaux ; absent si la ligne n'a pas de prix.
+            **(
+                {"share_of_total_pct": str(costed.share_of_total_pct)}
+                if costed.share_of_total_pct is not None
+                else {}
+            ),
             "price_status": costed.price_status,
             "is_modified": costed.is_modified,
             "has_modified_descendant": costed.has_modified_descendant,

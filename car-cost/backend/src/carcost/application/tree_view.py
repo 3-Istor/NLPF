@@ -19,7 +19,7 @@ from decimal import Decimal
 
 from ..domain.bom import Bom
 from .browse_bom import PATH_SEPARATOR, PathNotFound, TreeNode
-from .run_calculation import Calculation
+from .run_calculation import Calculation, _share
 from .scenario import Scenario
 
 
@@ -33,6 +33,9 @@ class CostedNode:
     own_unit_cost: Decimal | None
     rolled_up_contribution: Decimal | None
     own_contribution: Decimal | None
+    #: Ce que pèse cette occurrence dans le total, en % à une décimale.
+    #: `None` sans prix : jamais 0. Ne se somme pas entre niveaux.
+    share_of_total_pct: Decimal | None
     price_status: str
     is_modified: bool
     has_modified_descendant: bool
@@ -116,17 +119,21 @@ def with_costs(
             ),
         )
 
+        rolled_up = quantity * unit_cost if unit_cost is not None else None
         costed.append(
             CostedNode(
                 node=node,
                 quantity_on_path=quantity,
                 unit_cost=unit_cost,
                 own_unit_cost=own_unit_cost,
-                rolled_up_contribution=(
-                    quantity * unit_cost if unit_cost is not None else None
-                ),
+                rolled_up_contribution=rolled_up,
                 own_contribution=(
                     quantity * own_unit_cost if own_unit_cost is not None else None
+                ),
+                share_of_total_pct=(
+                    _share(rolled_up, calculation.total_cost)
+                    if rolled_up is not None
+                    else None
                 ),
                 # Un prix manquant se dit ; il ne se remplace pas par zéro, qui
                 # se lirait comme « cette pièce est gratuite ». Un prix de repli

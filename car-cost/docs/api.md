@@ -180,6 +180,10 @@ Points de contrat :
   deux sont renvoyés parce qu'ils diffèrent dès qu'un sous-ensemble est lui-même monté plusieurs fois.
 - `rolled_up_contribution` est ce que pèse **cette occurrence**, enfants inclus. Sur un nœud acheté,
   elle est égale à `own_contribution` : une feuille n'a rien en dessous d'elle.
+- `share_of_total_pct` est `rolled_up_contribution / total × 100`, en chaîne, à une décimale (même
+  arrondi que `share_pct`). Ces parts **ne se somment pas entre niveaux** : un parent contient ses
+  enfants, et sa main-d'œuvre propre n'est dans aucun d'eux. La clé est absente sans `calculation_id`
+  et quand la ligne n'a pas de prix.
 - `has_modified_descendant` est calculé **côté serveur** : le front ne connaît pas le graphe et ne
   peut pas le déduire (ADR-0009).
 - Sans `calculation_id`, les champs monétaires sont absents — jamais `null` déguisé en zéro.
