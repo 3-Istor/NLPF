@@ -41,7 +41,6 @@ export function App() {
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<SearchHit[] | null>(null);
-  const [treeKey, setTreeKey] = useState(0);
   const tree = useTreeState({
     version: BOM_VERSION,
     calculationId: calculation?.id ?? null,
@@ -109,7 +108,8 @@ export function App() {
 
   /**
    * Affiche un scénario avec son dernier calcul, relu et non relancé. S'il est
-   * obsolète, la synthèse le grise comme après une modification.
+   * obsolète, la synthèse le grise comme après une modification. L'arbre garde
+   * son dépliage et sa sélection : ses pages sont relues pour ce calcul.
    */
   async function open(next: Scenario) {
     const last = next.last_calculation_id
@@ -124,7 +124,6 @@ export function App() {
         .then(setJournal)
         .catch(() => setJournal(null));
     }
-    setTreeKey((key) => key + 1);
     setRoot(await api.root(BOM_VERSION, last?.id ?? null));
   }
 
@@ -166,9 +165,8 @@ export function App() {
         .then(setJournal)
         .catch(() => setJournal(null));
       await refreshScenario();
-      // Les lignes déjà dépliées portent les chiffres de l'ancien calcul :
-      // on remonte l'arbre pour qu'elles redemandent les nouveaux.
-      setTreeKey((key) => key + 1);
+      // Les lignes dépliées redemandent leurs chiffres d'elles-mêmes, sur le
+      // changement de calcul ; seule la racine est relue ici.
       setRoot(await api.root(BOM_VERSION, result.id));
     } catch (error) {
       setFailure(describe(error));
@@ -187,7 +185,6 @@ export function App() {
   function goToPath(path: string) {
     setHits(null);
     void tree.reveal(path);
-    setTreeKey((key) => key + 1);
   }
 
   /** Une pièce du journal : le serveur dit où elle est montée, on y va. */
@@ -251,7 +248,6 @@ export function App() {
           {root ? (
             <Refusals.Provider value={refusals}>
               <Tree
-                key={treeKey}
                 root={root}
                 state={tree}
                 version={BOM_VERSION}

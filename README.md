@@ -348,9 +348,6 @@ entièrement distinct.
 
 **Dette assumée, nommée**
 
-- **Recalculer replie l'arbre.** On remonte le composant pour que les lignes
-  redemandent les nouveaux chiffres, et on perd sa place. Sur 474 pièces c'est
-  pénible ; la correction est de rafraîchir les nœuds ouverts en place.
 - **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
   périmètre figé par l'ADR-0013 : le modifier change l'explication d'un calcul
   ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
@@ -370,9 +367,6 @@ entièrement distinct.
   L'ajouter fait passer le contrôle du schéma de 21 à 22 refus.
 - **Le motif de quarantaine est une phrase**, pas le code prévu par le contrat
   initial (docs/api.md §5.3). Suffisant pour l'écran ; pas pour trier.
-- **Déplier jusqu'à une pièce ouvre le panneau de chaque ancêtre** (journal,
-  contributeurs, recherche) : l'arbre se remplit de panneaux qu'on n'a pas
-  demandés.
 - **Comparer et recommander enregistrent de nouveaux calculs** à chaque appel,
   même quand un calcul de même empreinte existe déjà sur ce snapshot : la table
   `calculation` grossit plus vite que nécessaire.
