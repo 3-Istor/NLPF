@@ -168,3 +168,12 @@ class TestConstruction:
     def test_an_unknown_root_is_refused(self, diamond):
         with pytest.raises(ValueError, match="NOWHERE"):
             Bom(root_ref="NOWHERE", parts=diamond.parts, edges=diamond.edges)
+
+
+def test_a_reference_containing_the_path_separator_is_reported(diamond):
+    bom = with_edges(
+        with_part(diamond, purchased("S/X")), Edge("A", "S/X", Decimal("1"))
+    )
+    assert [(v.code, v.part_ref) for v in validate_bom(bom)] == [
+        ("PATH_SEPARATOR_IN_REF", "S/X")
+    ]
