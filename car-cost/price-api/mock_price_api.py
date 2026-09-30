@@ -107,7 +107,10 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
 
-def make_server(catalog_path: Path, port: int = 0, slow_seconds: float | None = None):
+def make_server(
+    catalog_path: Path, port: int = 0, slow_seconds: float | None = None,
+    host: str = "127.0.0.1",
+):
     handler = type(
         "BoundHandler",
         (Handler,),
@@ -116,16 +119,17 @@ def make_server(catalog_path: Path, port: int = 0, slow_seconds: float | None = 
             "slow_seconds": SLOW_RESPONSE_SECONDS if slow_seconds is None else slow_seconds,
         },
     )
-    return ThreadingHTTPServer(("127.0.0.1", port), handler)
+    return ThreadingHTTPServer((host, port), handler)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8099)
+    parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--catalog", type=Path, default=Path("seeds/price_catalog.json"))
     arguments = parser.parse_args()
 
-    server = make_server(arguments.catalog, arguments.port)
+    server = make_server(arguments.catalog, arguments.port, host=arguments.host)
     host, port = server.server_address[:2]
     print(f"API de prix simulée sur http://{host}:{port}/prices (données synthétiques)")
     try:

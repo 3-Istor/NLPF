@@ -8,6 +8,8 @@
 #
 # Le README.md du dossier est ignoré : l'entrypoint ne traite que .sql, .sh et .sql.gz.
 
+name: car-cost
+
 services:
   db:
     image: postgres:16-alpine
@@ -25,11 +27,59 @@ services:
       - db-data:/var/lib/postgresql/data
       - ./backend/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-3istor} -d ${POSTGRES_DB:-3istor}"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U ${POSTGRES_USER:-3istor} -d ${POSTGRES_DB:-3istor}"]
       interval: 5s
       timeout: 3s
       retries: 10
       start_period: 10s
+
+  mock-api:
+    build:
+      context: .
+      dockerfile: price-api/Dockerfile
+    ports:
+      - "${PRICE_API_PORT:-8099}:8099"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8099/prices?refs=FIX-M6-16&currency=EUR', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      CARCOST_DSN: postgresql://${POSTGRES_USER:-3istor}:${POSTGRES_PASSWORD:-3istor}@db:5432/${POSTGRES_DB:-3istor}
+      CARCOST_PRICE_API: http://mock-api:8099
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      mock-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+
+  frontend:
+    build: ./frontend
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5173').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
 volumes:
   db-data:
