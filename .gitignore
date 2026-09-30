@@ -223,3 +223,8 @@ dist/
 .vite/
 coverage/
 *.tsbuildinfo
+
+# Fichiers de travail locaux : agents, skills, dossiers de livraison et notes de cadrage
+.claude/
+car-cost/docs/perimetre-5-interface.md
+car-cost/docs/plan-vues.md
