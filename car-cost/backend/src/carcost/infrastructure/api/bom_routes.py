@@ -19,6 +19,7 @@ from ...application.browse_bom import (
     children_of_path,
     root_node,
     search_parts,
+    search_summary,
     where_used,
 )
 from ...application.tree_view import with_costs
@@ -154,8 +155,11 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         version: str,
         q: str = Query(..., min_length=1),
         limit: int = Query(20, ge=1, le=100),
+        max_paths: int = Query(50, ge=1, le=200),
     ):
-        hits = search_parts(repository.load(version), q, limit=limit)
+        bom = repository.load(version)
+        hits = search_parts(bom, q, limit=limit, max_paths=max_paths)
+        summary = search_summary(bom, q)
         return {
             "items": [
                 {
@@ -167,7 +171,9 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                     "paths_truncated": hit.paths_truncated,
                 }
                 for hit in hits
-            ]
+            ],
+            "total_parts": summary.total_parts,
+            "total_occurrences": summary.total_occurrences,
         }
 
 

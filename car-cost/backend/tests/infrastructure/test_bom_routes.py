@@ -271,3 +271,23 @@ class TestVersions:
         item = client.get("/api/v1/bom/versions").json()["items"][0]
 
         assert item["validated_at"] is None
+
+
+class TestSearchTotalsAndBounds:
+    def test_search_reports_its_totals(self, client):
+        body = client.get(f"/api/v1/bom/{VERSION}/search", params={"q": "S"}).json()
+
+        assert isinstance(body["total_parts"], int)
+        assert isinstance(body["total_occurrences"], int)
+        assert body["total_parts"] == 1
+        assert body["total_occurrences"] == 2
+
+    def test_max_paths_is_bounded(self, client):
+        url = f"/api/v1/bom/{VERSION}/search"
+
+        assert client.get(url, params={"q": "S", "max_paths": 201}).status_code == 422
+        assert client.get(url, params={"q": "S", "max_paths": 0}).status_code == 422
+
+        body = client.get(url, params={"q": "S", "max_paths": 1}).json()
+        assert len(body["items"][0]["paths"]) == 1
+        assert body["items"][0]["paths_truncated"] is True

@@ -6,6 +6,7 @@ possède pas le graphe et ne peut donc rien en déduire (ADR-0009).
 
 from __future__ import annotations
 
+from dataclasses import replace
 from decimal import Decimal
 
 import pytest
@@ -15,6 +16,8 @@ from carcost.application.browse_bom import (
     children_of_path,
     root_node,
     search_parts,
+    search_summary,
+    SearchSummary,
     where_used,
 )
 from carcost.domain.bom import Bom, Edge
@@ -147,3 +150,62 @@ class TestSearch:
 
         assert len(hits[0].paths) == 1
         assert hits[0].paths_truncated is True
+
+
+@pytest.fixture
+def labelled() -> Bom:
+    """Libellés accentués, différents des références (sinon le test ne peut pas échouer).
+
+    SCREW est monté deux fois : sous HARNESS et sous RACK.
+    """
+    def named(part, label):
+        return replace(part, label=label)
+
+    return Bom(
+        root_ref="VEH",
+        parts={
+            "VEH": named(manufactured("VEH", labour="1"), "Véhicule"),
+            "HARNESS": named(manufactured("HARNESS", labour="1"), "Faisceau électrique"),
+            "RACK": named(manufactured("RACK", labour="1"), "Crémaillère de direction"),
+            "SCREW": named(purchased("SCREW"), "vis M6"),
+        },
+        edges=(
+            Edge("VEH", "HARNESS", Decimal("1")),
+            Edge("VEH", "RACK", Decimal("1")),
+            Edge("HARNESS", "SCREW", Decimal("2")),
+            Edge("RACK", "SCREW", Decimal("2")),
+        ),
+    )
+
+
+class TestSearchFolding:
+    @pytest.mark.parametrize("query", ["electrique", "électrique", "ÉLECTRIQUE"])
+    def test_accents_and_case_do_not_matter(self, labelled, query):
+        assert [h.part_ref for h in search_parts(labelled, query)] == ["HARNESS"]
+
+    def test_cremaillere_finds_the_rack(self, labelled):
+        assert [h.part_ref for h in search_parts(labelled, "cremaillere")] == ["RACK"]
+
+    def test_upper_case_finds_lower_case(self, labelled):
+        assert [h.part_ref for h in search_parts(labelled, "VIS")] == ["SCREW"]
+
+    def test_the_summary_counts_beyond_the_limit(self, labelled):
+        # « e » trouve les quatre pièces (VEH, HARNESS, RACK, et SCREW par sa
+        # référence) : 1 + 1 + 1 + 2 emplacements = 5.
+        hits = search_parts(labelled, "e", limit=2)
+        summary = search_summary(labelled, "e")
+
+        assert len(hits) == 2
+        assert summary.total_parts == 4
+        assert summary.total_occurrences == 5
+
+    def test_the_summary_sums_the_mountings_of_a_shared_part(self, labelled):
+        # SCREW est montée sous HARNESS et sous RACK : 2 emplacements.
+        assert search_summary(labelled, "vis") == SearchSummary(1, 2)
+
+    def test_an_empty_query_finds_nothing(self, labelled):
+        assert search_parts(labelled, "   ") == []
+        assert search_summary(labelled, "   ") == SearchSummary(0, 0)
+
+    def test_the_default_keeps_up_to_50_paths(self, labelled):
+        assert search_parts.__kwdefaults__["max_paths"] == 50

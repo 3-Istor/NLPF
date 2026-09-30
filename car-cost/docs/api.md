@@ -219,8 +219,13 @@ Points de contrat :
 ### 2.5 `GET /bom/{bom_version}/search`
 
 ```
-?q=vis m6&limit=20
+?q=vis m6&limit=20&max_paths=50
 ```
+
+La recherche ignore les accents et la casse (`crémaillère`, `cremaillere` et `CREMAILLERE` trouvent la
+même pièce) ; la correspondance reste une sous-chaîne de la référence ou du libellé. `max_paths` vaut
+50 par défaut, 200 au maximum (au-delà : 422) ; `paths_truncated` dit quand la liste des chemins d'une
+pièce est coupée.
 
 Chaque résultat porte **ses chemins**, pour que le front puisse déplier de proche en proche jusqu'à
 la pièce (ADR-0009) :
@@ -228,8 +233,12 @@ la pièce (ADR-0009) :
 ```json
 { "items": [ { "part_ref": "FIX-M6-16", "label": "Vis M6×16", "system": "FIX",
   "occurrence_count": 12, "paths": ["VEH-MULTIPLA-16V/GMP-ASSY/FIX-M6-16", "…"],
-  "paths_truncated": true } ] }
+  "paths_truncated": true } ],
+  "total_parts": 3, "total_occurrences": 27 }
 ```
+
+`total_parts` et `total_occurrences` portent sur **toutes** les pièces trouvées, pas seulement sur les
+`limit` renvoyées : ils permettent de dire « 3 pièces, 27 emplacements » quand la liste est coupée.
 
 ### 2.6 `GET /bom/{bom_version}/parts/{part_ref}`
 
