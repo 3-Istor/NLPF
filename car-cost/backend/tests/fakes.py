@@ -36,6 +36,9 @@ class FakeBomRepository:
             raise BomVersionNotValidated(version)
         return self.bom
 
+    def versions(self):
+        return ()
+
 
 class FakeSourcingRepository:
     def __init__(self, sourcing: Sourcing | None = None):

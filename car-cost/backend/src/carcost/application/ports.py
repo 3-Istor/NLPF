@@ -55,9 +55,28 @@ class BomVersionNotValidated(Exception):
     """
 
 
+@dataclass(frozen=True)
+class BomVersionSummary:
+    """Ce qu'il faut pour choisir une version, sans charger son graphe."""
+
+    id: str
+    label: str
+    root_part_ref: str
+    part_count: int
+    edge_count: int
+    #: None tant que la version n'a pas passé ses contrôles : elle est listée,
+    #: mais ni lue ni calculée.
+    validated_at: datetime | None
+    is_synthetic: bool
+
+
 class BomRepository(Protocol):
     def load(self, version: str):  # pragma: no cover - contrat
         """Renvoie la nomenclature complète d'une version validée."""
+        ...
+
+    def versions(self) -> Sequence[BomVersionSummary]:  # pragma: no cover
+        """Toutes les versions, validées ou non, la plus récente d'abord."""
         ...
 
 

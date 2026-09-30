@@ -20,7 +20,12 @@ import pytest
 
 from carcost.application.ports import PriceSnapshotNotFound
 from carcost.application.price_resolution import resolve_unit_prices
-from carcost.application.run_calculation import PriceStatus, run_calculation
+from carcost.application.explain_calculation import explain_line
+from carcost.application.run_calculation import (
+    PriceStatus,
+    first_path_of_each_part,
+    run_calculation,
+)
 from carcost.application.scenario import Scenario
 from carcost.application.take_snapshot import QuarantinedPrice
 from carcost.domain.prices import PriceSnapshot, SnapshotStatus
@@ -66,7 +71,7 @@ def held(repository, connection):
 
 @pytest.fixture
 def snapshots(connection):
-    from carcost.infrastructure.postgres_repositories import (
+    from carcost.infrastructure.postgres.snapshots import (
         PostgresPriceSnapshotRepository,
     )
 
@@ -165,14 +170,20 @@ class TestReadingBack:
 
 
 class TestCalculationLines:
-    def test_each_line_keeps_the_origin_of_its_price(self, connection, two_purchased):
-        from carcost.infrastructure.postgres_bom_repository import (
-            PostgresBomRepository,
-        )
-        from carcost.infrastructure.postgres_repositories import (
+    @pytest.fixture
+    def saved(self, connection, two_purchased):
+        """Un calcul écrit puis relu en base, avec ce qu'il faut pour l'expliquer."""
+        from carcost.infrastructure.postgres.bom import PostgresBomRepository
+        from carcost.infrastructure.postgres.calculations import (
             PostgresCalculationRepository,
-            PostgresPriceSnapshotRepository,
+        )
+        from carcost.infrastructure.postgres.scenarios import (
             PostgresScenarioRepository,
+        )
+        from carcost.infrastructure.postgres.snapshots import (
+            PostgresPriceSnapshotRepository,
+        )
+        from carcost.infrastructure.postgres.sourcing import (
             PostgresSourcingRepository,
         )
 
@@ -198,14 +209,38 @@ class TestCalculationLines:
         calculations = held(PostgresCalculationRepository(DSN), connection)
         calculations.save(calculation)
 
-        read = calculations.get("calc-test-quarantaine")
+        return {
+            "written": calculation,
+            "read": calculations.get("calc-test-quarantaine"),
+            "bom": bom, "sourcing": sourcing, "scenario": scenario,
+            "snapshot": snapshot, "fresh_ref": fresh_ref, "refused_ref": refused_ref,
+        }
 
-        assert read.price_status_of(fresh_ref) is PriceStatus.OK
-        assert read.price_status_of(refused_ref) is PriceStatus.QUARANTINED
+    def test_each_line_keeps_the_origin_of_its_price(self, saved):
+        read = saved["read"]
+
+        assert read.price_status_of(saved["fresh_ref"]) is PriceStatus.OK
+        assert read.price_status_of(saved["refused_ref"]) is PriceStatus.QUARANTINED
         # Toutes les autres pièces achetées sont sans prix dans ce snapshot de
         # deux lignes : elles le restent à la relecture, et aucune n'a pris zéro.
-        assert read.issue_counts() == calculation.issue_counts()
+        assert read.issue_counts() == saved["written"].issue_counts()
         assert read.issue_counts()["missing_price"] > 0
+
+    def test_a_price_read_back_is_explained_by_factors_that_reproduce_it(
+        self, saved
+    ):
+        """Relu en base, le calcul n'a plus les trois facteurs : /explain les
+        retrouve dans le snapshot et le sourcing figés, et vérifie qu'ils
+        redonnent le prix enregistré (ADR-0013)."""
+        bom, ref = saved["bom"], saved["fresh_ref"]
+
+        explanation = explain_line(
+            calculation=saved["read"], bom=bom, scenario=saved["scenario"],
+            snapshot=saved["snapshot"], sourcing=saved["sourcing"],
+            path=first_path_of_each_part(bom)[ref],
+        )
+
+        assert explanation.breakdown.reproduced is True
 
     def test_a_path_override_keeps_its_own_cost_once_read_back(
         self, connection, two_purchased
@@ -215,13 +250,17 @@ class TestCalculationLines:
         de la ligne agrégée, et l'écran contredirait la surcharge de chemin."""
         from carcost.application.browse_bom import where_used
         from carcost.application.scenario import ScenarioParameter
-        from carcost.infrastructure.postgres_bom_repository import (
-            PostgresBomRepository,
-        )
-        from carcost.infrastructure.postgres_repositories import (
+        from carcost.infrastructure.postgres.bom import PostgresBomRepository
+        from carcost.infrastructure.postgres.calculations import (
             PostgresCalculationRepository,
-            PostgresPriceSnapshotRepository,
+        )
+        from carcost.infrastructure.postgres.scenarios import (
             PostgresScenarioRepository,
+        )
+        from carcost.infrastructure.postgres.snapshots import (
+            PostgresPriceSnapshotRepository,
+        )
+        from carcost.infrastructure.postgres.sourcing import (
             PostgresSourcingRepository,
         )
 

@@ -7,7 +7,13 @@ from decimal import Decimal
 import pytest
 from fastapi.testclient import TestClient
 
-from carcost.application.ports import BomVersionNotFound, BomVersionNotValidated
+from datetime import datetime, timezone
+
+from carcost.application.ports import (
+    BomVersionNotFound,
+    BomVersionNotValidated,
+    BomVersionSummary,
+)
 from carcost.domain.bom import Bom, Edge
 from carcost.infrastructure.api.app import Repositories, create_app
 from factories import manufactured, purchased
@@ -30,6 +36,23 @@ class FakeRepository:
         if not self.validated:
             raise BomVersionNotValidated(version)
         return self.bom
+
+    def versions(self):
+        return (
+            BomVersionSummary(
+                id=VERSION,
+                label="Losange de test",
+                root_part_ref="V",
+                part_count=4,
+                edge_count=4,
+                validated_at=(
+                    datetime(2026, 9, 22, 10, 4, 11, tzinfo=timezone.utc)
+                    if self.validated
+                    else None
+                ),
+                is_synthetic=True,
+            ),
+        )
 
 
 @pytest.fixture
@@ -154,3 +177,36 @@ class TestErrors:
         response = client.get(f"/api/v1/bom/{VERSION}/children")
 
         assert response.status_code == 422
+
+
+class TestVersions:
+    """Le client dit sur quelle version il travaille : il faut donc qu'il
+    puisse les connaître."""
+
+    def test_lists_the_versions_with_their_counts(self, client):
+        body = client.get("/api/v1/bom/versions").json()
+
+        assert body == {
+            "items": [
+                {
+                    "id": VERSION,
+                    "label": "Losange de test",
+                    "root_part_ref": "V",
+                    "part_count": 4,
+                    "edge_count": 4,
+                    "validated_at": "2026-09-22T10:04:11+00:00",
+                    "is_synthetic": True,
+                }
+            ]
+        }
+
+    def test_a_version_not_yet_validated_is_listed_as_such(self, bom):
+        """Elle apparaît, pour que l'écran puisse dire pourquoi on ne peut pas
+        l'ouvrir, plutôt que de la faire disparaître."""
+        client = TestClient(
+            create_app(Repositories(bom=FakeRepository(bom, validated=False)))
+        )
+
+        item = client.get("/api/v1/bom/versions").json()["items"][0]
+
+        assert item["validated_at"] is None

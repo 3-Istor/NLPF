@@ -28,12 +28,13 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 | [0008](0008-mode-de-valorisation-exclusif.md) | Mode de valorisation exclusif : achetée ou fabriquée | accepté |
 | [0009](0009-depliage-paresseux-du-dag-a-l-ecran.md) | Dépliage nœud par nœud, pièce partagée répétée et badgée | accepté |
 | [0010](0010-prix-decompose-fournisseur-et-usine.md) | Prix = référence × multiplicateur fournisseur × coefficient d'usine | accepté |
+| [0011](0011-decimal-exact-et-arrondi-a-l-affichage.md) | Décimal exact ; l'arrondi est un acte d'affichage | accepté |
 | [0012](0012-comparaison-et-recommandation-par-piece.md) | Comparer sur un snapshot commun ; recommander le sourcing pièce par pièce | proposé |
+| [0013](0013-version-de-nomenclature-validee-immuable.md) | Une version de nomenclature validée est immuable, et se garde en mémoire | proposé |
 
 ## Ce qui reste à décider
 
 | Sujet | Déclencheur de l'ADR |
 |---|---|
-| Règle d'arrondi et précision monétaire | À trancher avant le premier calcul persisté (ambiguïté A3 du cadrage) — candidat ADR-0011 |
 | Politique de prise de snapshot (manuelle, planifiée, à la demande) | Si la prise manuelle laisse l'utilisateur en `STALE` permanent (ADR-0003) |
 | Make or buy (devis attaché à un nœud fabriqué) | À la première demande réelle (ADR-0008) |

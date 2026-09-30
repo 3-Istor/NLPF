@@ -90,7 +90,7 @@ proposer une réponse, attendre. Les hypothèses déjà prises sont listées dan
 - **les tests d'intégration sont sautés** — une suite verte parce qu'elle s'est
   sautée ne prouve rien ;
 - une contrainte du schéma ne tient plus, ou le nombre d'écritures interdites
-  refusées n'est plus 15 — un contrôle supprimé ne doit pas passer inaperçu ;
+  refusées n'est plus 21 — un contrôle supprimé ne doit pas passer inaperçu ;
 - le générateur n'est plus déterministe — sinon rien n'empêche de modifier
   `seeds/` à la main et de faire mentir les valeurs de contrôle du moteur.
 

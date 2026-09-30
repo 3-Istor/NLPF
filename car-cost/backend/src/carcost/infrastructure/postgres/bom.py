@@ -13,10 +13,13 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-import psycopg
-
-from ..application.ports import BomVersionNotFound, BomVersionNotValidated
-from ..domain.bom import Bom, Edge, Part, ValuationMode
+from ...application.ports import (
+    BomVersionNotFound,
+    BomVersionNotValidated,
+    BomVersionSummary,
+)
+from ...domain.bom import Bom, Edge, Part, ValuationMode
+from .connection import PostgresRepository
 
 VERSION_QUERY = """
     SELECT validated_at, root_part_ref
@@ -40,12 +43,17 @@ EDGES_QUERY = """
 """
 
 
-class PostgresBomRepository:
-    def __init__(self, dsn: str) -> None:
-        self.dsn = dsn
+VERSIONS_QUERY = """
+    SELECT id, label, root_part_ref, part_count, edge_count, validated_at,
+           is_synthetic
+    FROM bom_version
+    ORDER BY created_at DESC, id
+"""
 
+
+class PostgresBomRepository(PostgresRepository):
     def load(self, version: str) -> Bom:
-        with psycopg.connect(self.dsn) as connection, connection.cursor() as cursor:
+        with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(VERSION_QUERY, (version,))
             row = cursor.fetchone()
             if row is None:
@@ -77,3 +85,8 @@ class PostgresBomRepository:
             )
 
         return Bom(root_ref=root_ref, parts=parts, edges=edges)
+
+    def versions(self) -> list[BomVersionSummary]:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(VERSIONS_QUERY)
+            return [BomVersionSummary(*row) for row in cursor.fetchall()]

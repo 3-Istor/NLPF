@@ -6,7 +6,7 @@
 --
 --   docker compose exec -T db psql -U 3istor -d 3istor -q --       < backend/migrations/checks/contraintes.sql
 --
--- Attendu : 15 refus, 0 WARNING, 2 paramètres valides acceptés.
+-- Attendu : 21 refus, 0 WARNING, 2 paramètres valides acceptés.
 \set ON_ERROR_STOP on
 \pset pager off
 
@@ -150,6 +150,39 @@ SELECT doit_refuser(
     'deux paramètres sur la même cible',
     $q$INSERT INTO scenario_parameter (id, scenario_id, scope, part_ref, path)
        VALUES ('dup', 'scn', 'path', 'SCREW', 'ROOT/SCREW')$q$);
+
+-- Une version validée est figée (ADR-0013). On la valide ici, ce qui doit
+-- passer, puis on tente de la retoucher par chaque table qui la compose.
+INSERT INTO part_supplier (bom_version_id, part_ref, part_valuation_mode,
+    supplier_id, price_multiplier, is_default)
+VALUES ('t', 'SCREW', 'purchased', 'SUP', 1.0, true);
+UPDATE bom_version SET validated_at = now() WHERE id = 't';
+
+SELECT doit_refuser(
+    'quantité changée sur une version validée (ADR-0013)',
+    $q$UPDATE bom_edge SET quantity = 5 WHERE bom_version_id = 't'$q$);
+
+SELECT doit_refuser(
+    'arête ajoutée à une version validée (ADR-0013)',
+    $q$INSERT INTO bom_edge (bom_version_id, parent_ref, child_ref,
+        parent_valuation_mode, quantity, unit)
+       VALUES ('t', 'ROOT', 'SUBASM', 'manufactured', 1, 'pce')$q$);
+
+SELECT doit_refuser(
+    'pièce retirée d''une version validée (ADR-0013)',
+    $q$DELETE FROM part WHERE bom_version_id = 't' AND part_ref = 'SUBASM'$q$);
+
+SELECT doit_refuser(
+    'multiplicateur fournisseur changé sur une version validée (ADR-0013)',
+    $q$UPDATE part_supplier SET price_multiplier = 2 WHERE bom_version_id = 't'$q$);
+
+SELECT doit_refuser(
+    'version validée retouchée (ADR-0013)',
+    $q$UPDATE bom_version SET root_part_ref = 'SUBASM' WHERE id = 't'$q$);
+
+SELECT doit_refuser(
+    'version validée supprimée (ADR-0013)',
+    $q$DELETE FROM bom_version WHERE id = 't'$q$);
 
 SELECT '  accepté (comme attendu) : ' || count(*)::text ||
        ' paramètres valides' AS resultat

@@ -237,18 +237,19 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 209 tests
+# backend — 363 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 15 tests
+# front — 19 tests
 cd car-cost/frontend && npm test
 ```
 
-Les onze tests d'intégration se **sautent** si Postgres n'est pas joignable : la
-suite reste verte hors ligne. Vérifié sous WSL (Python 3.12) : `190 passed,
-11 skipped` hors ligne, `201 passed` avec la base chargée. Les tests
-d'intégration qui écrivent le font dans une transaction annulée : un snapshot ne
-se supprime pas, et un snapshot de test deviendrait celui que l'écran utilise.
+Les vingt-et-un tests d'intégration se **sautent** si Postgres n'est pas
+joignable : la suite reste verte hors ligne. Vérifié sous NixOS (Python 3.12) :
+`342 passed, 21 skipped` hors ligne, `363 passed` avec la base chargée. Les
+tests d'intégration qui écrivent le font dans une transaction annulée : un
+snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
+l'écran utilise.
 
 Deux contrôles valent d'être lancés à la main :
 
@@ -256,7 +257,7 @@ Deux contrôles valent d'être lancés à la main :
 # le schéma refuse-t-il vraiment ce qu'il prétend refuser ?
 docker compose exec -T db psql -U 3istor -d 3istor -q \
   < backend/migrations/checks/contraintes.sql
-# attendu : 15 refus, 0 WARNING
+# attendu : 21 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
 python -m tools.bom_generator --check
@@ -306,6 +307,16 @@ entièrement distinct.
   `--fail outlier` et `--fail missing`
 - API de dépliage nœud par nœud, where-used, recherche, calcul, scénarios, comparaison et
   recommandation de sourcing
+- Contrôle d'intégrité de la nomenclature dans le domaine
+  (`domain/bom_validation.py`) : cycle, orphelin, racine sous un parent, arête
+  en double, quantité non positive, valorisation. Le chargeur passe par lui et
+  nomme toutes les fautes d'un coup
+- Plusieurs nomenclatures : `GET /bom/versions`, version validée figée en base
+  (ADR-0013), gardée en mémoire par l'API — un dépliage ne relit plus la base
+- `GET /calculations/{id}/explain` (facteurs du prix, vérifiés contre le prix
+  enregistré ; enfants et main-d'œuvre d'un ensemble) et
+  `GET /calculations/{id}/issues` (lignes au prix malsain, avec un chemin).
+  Côté API seulement : l'écran ne les appelle pas encore
 - Écran : arbre dépliable, synthèse permanente, panneau de saisie contextuel,
   marquage des modifications, totaux obsolètes signalés
 
@@ -313,10 +324,10 @@ entièrement distinct.
 
 **Tranche T2 — « l'outil dit la vérité sur ses prix »**
 
-- [ ] **Lister les prix de repli.** La synthèse les compte, mais seules les
-      valeurs en quarantaine sont cliquables (par le journal). Sur une panne
-      qui touche trente pièces, les trouver dans l'arbre reste une chasse. La
-      route prévue est `GET /calculations/{id}/issues` (docs/api.md §4.5).
+- [ ] **Lister les prix de repli à l'écran.** La route existe
+      (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
+- [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
+      existe ; aucun panneau ne l'affiche.
 - [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
       pièce, CO₂ de transport par usine — mais ne calcule que le coût.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
@@ -340,10 +351,10 @@ entièrement distinct.
 - **Recalculer replie l'arbre.** On remonte le composant pour que les lignes
   redemandent les nouveaux chiffres, et on perd sa place. Sur 474 pièces c'est
   pénible ; la correction est de rafraîchir les nœuds ouverts en place.
-- **Les trois facteurs du prix ne survivent pas au redémarrage.** Le fournisseur
-  et l'usine retenus sont persistés ; la décomposition
-  `référence × multiplicateur × coefficient` sera recalculée par une route
-  `/explain`, pas stockée en double.
+- **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
+  périmètre figé par l'ADR-0013 : le modifier change l'explication d'un calcul
+  ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
+  l'ancienne valeur.
 - **Un snapshot relu oublie ses pièces sans prix.** Elles n'ont pas de ligne en
   base, seulement un compte. Relu, un snapshot où une pièce n'avait aucun prix
   s'affiche `fresh` ; le calcul, lui, reste `INCOMPLETE` et nomme la pièce —
@@ -352,11 +363,11 @@ entièrement distinct.
 - **La date d'un prix de repli est fausse.** `as_of` vaut la date du snapshot
   qui reprend le prix, pas celle du prix. Sur une chaîne de replis, seul
   `fallback_from_snapshot_id`, remonté de proche en proche, dit d'où vient la
-  valeur. La route `/explain` devra le faire ; les lignes déjà écrites sont
-  immuables.
+  valeur. En attendant, `/explain` renvoie `as_of: null` sur ces lignes plutôt
+  qu'une date fausse ; les lignes déjà écrites sont immuables.
 - **Le journal de quarantaine n'est pas protégé en écriture.** Snapshot et
   lignes de prix ont leur déclencheur d'immutabilité ; `price_quarantine` non.
-  L'ajouter fait passer le contrôle du schéma de 15 à 16 refus.
+  L'ajouter fait passer le contrôle du schéma de 21 à 22 refus.
 - **Le motif de quarantaine est une phrase**, pas le code prévu par le contrat
   initial (docs/api.md §5.3). Suffisant pour l'écran ; pas pour trier.
 - **Déplier jusqu'à une pièce ouvre le panneau de chaque ancêtre** (journal,

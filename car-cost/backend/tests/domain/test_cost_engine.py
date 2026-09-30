@@ -89,6 +89,37 @@ class TestConservation:
         assert result.total_cost == Decimal("395")
 
 
+class TestLabourTimeFromTheScenario:
+    def test_it_replaces_the_bom_time_on_every_unit(self, diamond):
+        """A passe de 30 à 90 min, et il y a deux A : 2 × 60 min de plus à
+        60 €/h, soit 120 €. 395 + 120 = 515."""
+        result = compute(
+            CalculationInput(
+                bom=diamond,
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                labour_minutes_by_part={"A": Decimal("90")},
+            )
+        )
+
+        assert result.total_cost == Decimal("515")
+
+    def test_without_the_labour_rule_it_costs_nothing_either(self, diamond):
+        """Désactiver la règle coupe toute la main-d'œuvre, celle du scénario
+        comprise : 23 vis à 10 €."""
+        result = compute(
+            CalculationInput(
+                bom=diamond,
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                active_rules=frozenset(),
+                labour_minutes_by_part={"A": Decimal("90")},
+            )
+        )
+
+        assert result.total_cost == Decimal("230")
+
+
 class TestPrecision:
     def test_amounts_carry_no_more_precision_than_the_data(self, diamond):
         """Une division par soixante produit vingt-huit chiffres ; la donnée

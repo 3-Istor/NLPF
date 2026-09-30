@@ -12,10 +12,9 @@ from carcost.application import manage_scenarios
 from carcost.application.ports import ScenarioNotFound
 from carcost.application.scenario import Scenario, ScenarioParameter
 from carcost.infrastructure.api.app import Repositories, create_app
-from carcost.infrastructure.postgres_bom_repository import PostgresBomRepository
-from carcost.infrastructure.postgres_repositories import (
-    PostgresScenarioRepository, PostgresSourcingRepository,
-)
+from carcost.infrastructure.postgres.bom import PostgresBomRepository
+from carcost.infrastructure.postgres.scenarios import PostgresScenarioRepository
+from carcost.infrastructure.postgres.sourcing import PostgresSourcingRepository
 from fakes import FakeCalculationRepository, FakeSnapshotRepository
 
 DSN = os.environ.get("CARCOST_DSN", "postgresql://3istor:3istor@127.0.0.1:5432/3istor")

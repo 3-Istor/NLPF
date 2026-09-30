@@ -89,8 +89,8 @@ jobs:
           fi
           refus=$(grep -c "refusé" <<<"$rapport" || true)
           echo "écritures interdites refusées : $refus"
-          if [ "$refus" -ne 15 ]; then
-            echo "::error::15 refus attendus, $refus obtenus — un contrôle a disparu"
+          if [ "$refus" -ne 21 ]; then
+            echo "::error::21 refus attendus, $refus obtenus — un contrôle a disparu"
             exit 1
           fi
 

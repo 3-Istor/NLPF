@@ -6,6 +6,7 @@ chacun terminé par son `INSERT INTO schema_migration`.
 ```
 0001_initial_schema.sql
 0002_calculation_context_cost.sql   coûts par occurrence quand une surcharge de chemin existe
+0003_validated_bom_is_frozen.sql    une version validée ne change plus (ADR-0013)
 ```
 
 Postgres ne les exécute qu'à la **création** du volume. Le conteneur `backend` rattrape à chaque
@@ -15,6 +16,8 @@ conteneur, sur une base existante, les appliquer à la main :
 ```bash
 docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
   < backend/migrations/0002_calculation_context_cost.sql
+docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+  < backend/migrations/0003_validated_bom_is_frozen.sql
 ```
 
 ## Règles
@@ -38,7 +41,7 @@ perdu. Ce n'est pas une décision structurante, donc pas d'ADR.
 ## Application
 
 ```bash
-psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f 0001_initial_schema.sql
+for migration in 0*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
 ```
 
 ## Ce que le schéma garantit, et ce qu'il ne garantit pas
@@ -52,6 +55,7 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f 0001_initial_schema.sql
 | L'usine choisie appartient au fournisseur choisi | Clé étrangère composite vers `supplier_plant (id, supplier_id)` |
 | Un prix forcé porte une justification | `CHECK` sur `scenario_parameter` |
 | Un snapshot n'est jamais modifié | Déclencheur `forbid_mutation` |
+| Une version validée n'est plus modifiée ni supprimée (ADR-0013) | Déclencheurs `*_frozen_once_validated` (0003) |
 | **Acyclicité** | ❌ Impossible en déclaratif — tri topologique au chargement |
 | **Racine unique** | ❌ Contrôle au chargement |
 | **Aucun orphelin** | ❌ Contrôle au chargement |
@@ -67,12 +71,13 @@ Le tableau ci-dessus est vérifié, pas affirmé :
 docker compose exec -T db psql -U 3istor -d 3istor -q < backend/migrations/checks/contraintes.sql
 ```
 
-Quinze écritures interdites, chacune annoncée « refusé » avec la contrainte qui
-l'a arrêtée, et deux paramètres valides acceptés — dont une portée pièce et une
+Vingt-et-une écritures interdites, chacune annoncée « refusé » avec la
+contrainte qui l'a arrêtée — dont les six qui protègent une version validée
+(ADR-0013) — et deux paramètres valides acceptés, dont une portée pièce et une
 portée chemin sur la même pièce, le cas de précédence de l'ADR-0002. Un
 `WARNING` dans la sortie signale une contrainte qui ne tient plus.
 
-Exécuté sur Postgres 16.15 le 2026-09-23 : 15 refus, 0 WARNING.
+Exécuté sur Postgres 16.15 le 2026-09-30 : 21 refus, 0 WARNING.
 
 ## Chargement du jeu de données
 

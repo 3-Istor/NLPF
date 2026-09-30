@@ -107,6 +107,9 @@ Toute réponse de calcul porte : `bom_version`, `price_snapshot_id`, `rules_vers
 
 `is_synthetic: true` est **toujours** renvoyé et affiché : les données sont plausibles mais inventées.
 
+Une version pas encore validée est listée avec `validated_at: null` : l'écran peut dire pourquoi
+elle ne s'ouvre pas. Une version validée ne change plus (ADR-0013).
+
 ### 2.2 `GET /bom/{bom_version}/root`
 
 Renvoie la ligne racine, au même format qu'un enfant (§2.3), avec `path` de longueur 1.
@@ -536,38 +539,74 @@ compte exact dans `details`, pour que l'utilisateur descende d'un cran.
 ### 4.4 `GET /calculations/{id}/explain` — d'où vient ce montant
 
 ```
-?path=VEH-MULTIPLA-16V/GMP-ASSY/FIX-M6-16
+?path=VEH-MULTIPLA-16V/GMP-ASSY/ENG-BLOCK-ASSY/ENG-OIL-PAN-ASSY/FIX-M6-16
 ```
 
 ```json
 {
-  "path": "VEH-MULTIPLA-16V/GMP-ASSY/FIX-M6-16",
+  "path": "VEH-MULTIPLA-16V/GMP-ASSY/ENG-BLOCK-ASSY/ENG-OIL-PAN-ASSY/FIX-M6-16",
   "part_ref": "FIX-M6-16", "valuation_mode": "purchased",
   "unit_cost_breakdown": {
-    "reference_price": { "amount": "42.000000", "currency": "EUR" },
-    "reference_unit": "1000 pce",
-    "supplier": { "supplier_id": "SUP-BULLONI", "name": "Bulloni SpA", "multiplier": "1.080000" },
-    "plant": { "plant_id": "PLT-BULLONI-TR", "origin": "TR", "coefficient": "0.920000" },
-    "formula": "42.000000 × 1.080000 × 0.920000 ÷ 1000",
-    "unit_cost": { "amount": "0.042000", "currency": "EUR" }
+    "kind": "catalogue",
+    "reference_price": { "amount": "0.039000", "currency": "EUR" },
+    "supplier": { "supplier_id": "SUP-FIXPRO", "name": "FixPro Verbindungstechnik", "multiplier": "1.061720" },
+    "plant": { "plant_id": "PLT-FIXPRO-DE", "origin": "DE", "coefficient": "1.000000" },
+    "formula": "0.039000 × 1.061720 × 1.000000",
+    "unit_cost": { "amount": "0.041407", "currency": "EUR" },
+    "reproduced": true
   },
-  "quantity": { "on_path": "8.000000", "cumulative_in_vehicle": "148.000000", "unit": "pce" },
-  "applied_parameter": { "parameter_id": "prm-77c…", "scope": "part",
-    "scope_label": "S'applique aux 12 occurrences de cette pièce" },
+  "quantity": { "on_path": "16.000000", "cumulative_in_vehicle": "68.000000", "unit": "pce" },
+  "occurrence_count": 9,
+  "applied_parameter": null,
+  "parameters_changed_since_calculation": false,
   "applied_rules": ["labour"],
-  "price_source": { "snapshot_id": "snp-19a…", "status": "FALLBACK",
-    "as_of": "2026-09-20T06:00:00Z",
-    "reason": "L'API n'a pas répondu ; dernière valeur saine du 2026-09-20" }
+  "price_source": { "snapshot_id": "snp-fd6b…", "status": "OK",
+    "as_of": "2026-09-28T05:44:48Z", "reason": null }
 }
 ```
 
-Sur un nœud `manufactured`, `unit_cost_breakdown` contient à la place la somme des enfants et la
-ligne de main-d'œuvre (`labour_minutes`, `labour_rate`, montant), **et aucun prix**.
+`unit_cost_breakdown.kind` dit laquelle des trois formes on lit :
+
+| `kind` | Sur | Contenu |
+|---|---|---|
+| `catalogue` | pièce achetée, prix du snapshot | Les trois facteurs (ADR-0010), la formule, le prix unitaire **enregistré**, et `reproduced` |
+| `override` | pièce achetée, prix forcé | Le prix et sa `justification` (`null` si le scénario a changé depuis : elle n'est pas conservée avec le calcul) |
+| `assembly` | ensemble fabriqué | `children` (quantité, coût unitaire, contribution), `children_cost`, `labour` (`labour_minutes`, `labour_rate`, `amount`), `unit_cost` — **et aucun prix** |
+
+`unit_cost_breakdown` vaut `null` sur une pièce sans prix : `price_source.status` vaut alors `MISSING`.
+
+Ce qui s'écarte de la première version de ce contrat, et pourquoi :
+
+- **`reproduced`** : le calcul ne stocke que le fournisseur et l'usine retenus. Les facteurs sont
+  relus dans le snapshot et le sourcing de la version, figés (ADR-0003, ADR-0013), puis on vérifie
+  qu'ils redonnent le prix enregistré. Le coefficient d'usine n'est pas versionné : s'il a changé,
+  `reproduced` vaut `false` plutôt que d'afficher une formule dont le résultat n'est pas celui de la
+  ligne.
+- **`applied_parameter`** n'est donné que si le scénario n'a pas changé depuis le calcul ; sinon il
+  vaut `null` et `parameters_changed_since_calculation` vaut `true`. Le paramètre actuel n'est pas
+  forcément celui qui a servi. Il ne porte pas d'identifiant : le dépôt n'en expose pas.
+- **`price_source.as_of`** vaut `null` sur un prix de repli ou en quarantaine : la seule date connue
+  est celle du snapshot qui reprend le prix, pas celle du prix. Remonter la chaîne des replis reste
+  à faire.
+- Pas de `reference_unit` ni de division : le moteur ne lit pas `price_per`, le prix de référence
+  est déjà unitaire.
 
 ### 4.5 `GET /calculations/{id}/issues`
 
-Les pièces sans prix, les prix en quarantaine et les prix de repli, avec leur chemin — c'est la
-source du bandeau d'alerte et la liste cliquable exigée par le mode de panne P3.
+Les pièces sans prix, les prix en quarantaine et les prix de repli, avec un chemin — c'est la
+source du bandeau d'alerte et la liste cliquable exigée par le mode de panne P3. Triées du plus
+grave au moins grave (`MISSING_PRICE`, `QUARANTINED`, `FALLBACK`), puis par référence. Paginée
+(§1.4).
+
+```json
+{ "items": [ { "kind": "MISSING_PRICE", "part_ref": "FIX-M6-16", "label": "Vis M6×16",
+    "system": "FIX", "path": "VEH-MULTIPLA-16V/GMP-ASSY/…/FIX-M6-16",
+    "cumulative_quantity": "68.000000", "occurrence_count": 9 } ],
+  "total": 1, "limit": 50, "offset": 0 }
+```
+
+`path` est **un** chemin parmi d'autres, pour déplier l'arbre jusqu'à la pièce ; le where-used
+(§2.4) donne les autres.
 
 ---
 
