@@ -485,7 +485,7 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         sourcing = repositories.sourcing.load(base.bom_version)
         snapshot = _snapshot(repositories, payload.price_snapshot_id)
         baseline = _execute_calculation(repositories, base.id, snapshot)
-        recommendations = recommend(
+        report = recommend(
             bom=bom,
             sourcing=sourcing,
             snapshot=snapshot,
@@ -496,6 +496,7 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
                 max_lead_time_days=payload.max_lead_time_days,
             ),
         )
+        recommendations = report.recommendations
         available = {item.part_ref for item in recommendations}
         accepted = (
             available
@@ -540,6 +541,20 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
                     item, item.part_ref in accepted, base.display_currency
                 )
                 for item in recommendations
+            ],
+            # Une pièce dont le sourcing viole une contrainte sans remède reste
+            # telle quelle dans la variante : on le dit plutôt que de le taire.
+            "unresolved": [
+                {
+                    "part_ref": item.part_ref,
+                    "current": {
+                        "supplier_id": item.current_supplier_id,
+                        "plant_id": item.current_plant_id,
+                        "origin_country": item.current_origin,
+                    },
+                    "reason": item.reason,
+                }
+                for item in report.unresolved
             ],
         }
 
@@ -787,6 +802,7 @@ def _recommendation_payload(item, accepted: bool, currency: str) -> dict:
     return {
         "part_ref": item.part_ref,
         "accepted": accepted,
+        "required_by_constraint": item.required_by_constraint,
         "current": {
             "supplier_id": item.current_supplier_id,
             "plant_id": item.current_plant_id,

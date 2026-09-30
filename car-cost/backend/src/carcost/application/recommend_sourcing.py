@@ -38,6 +38,28 @@ class SourcingRecommendation:
     affected_quantity: Decimal
     estimated_saving: Decimal
     parameter: ScenarioParameter
+    #: L'option actuelle viole une contrainte : le changement est imposé, même
+    #: s'il coûte plus cher (économie négative).
+    required_by_constraint: bool = False
+
+
+@dataclass(frozen=True)
+class UnresolvedPart:
+    """Une pièce dont le sourcing actuel viole une contrainte sans remède."""
+
+    part_ref: str
+    current_supplier_id: str
+    current_plant_id: str
+    current_origin: str
+    reason: str
+
+
+@dataclass(frozen=True)
+class SourcingReport:
+    recommendations: tuple[SourcingRecommendation, ...]
+    #: Jamais omises : une variante créée sans elles garderait une provenance
+    #: interdite sous un nom qui laisse croire le contraire.
+    unresolved: tuple[UnresolvedPart, ...] = ()
 
 
 def recommend(
@@ -48,12 +70,13 @@ def recommend(
     scenario: Scenario,
     baseline: Calculation,
     constraints: SourcingConstraints,
-) -> tuple[SourcingRecommendation, ...]:
+) -> SourcingReport:
     if baseline.status is CalculationStatus.INCOMPLETE:
         raise IncompleteBaseline(
             "recommandation impossible : un prix manquant ne peut pas être traité comme zéro"
         )
     recommendations = []
+    unresolved = []
     for part_ref in sorted(bom.parts):
         if not bom.parts[part_ref].is_purchased:
             continue
@@ -87,13 +110,26 @@ def recommend(
             )
             if explanation is not None:
                 priced.append((explanation.unit_price, offer, plant, parameter))
+        current_is_allowed = _plant_is_allowed(current_plant, constraints)
         if not priced:
+            if not current_is_allowed:
+                unresolved.append(
+                    UnresolvedPart(
+                        part_ref=part_ref,
+                        current_supplier_id=current.supplier_id,
+                        current_plant_id=current.plant_id,
+                        current_origin=current_plant.origin_country,
+                        reason=(
+                            "le sourcing actuel viole une contrainte et aucune "
+                            "option autorisée n'existe pour cette pièce"
+                        ),
+                    )
+                )
             continue
         price, offer, plant, parameter = min(
             priced,
             key=lambda item: (item[0], item[1].supplier_id, item[2].plant_id),
         )
-        current_is_allowed = _plant_is_allowed(current_plant, constraints)
         if (
             price >= current.unit_price
             and current_is_allowed
@@ -122,10 +158,13 @@ def recommend(
                 affected_quantity=quantity,
                 estimated_saving=saving,
                 parameter=parameter,
+                required_by_constraint=not current_is_allowed,
             )
         )
     recommendations.sort(key=lambda item: (-item.estimated_saving, item.part_ref))
-    return tuple(recommendations)
+    return SourcingReport(
+        recommendations=tuple(recommendations), unresolved=tuple(unresolved)
+    )
 
 
 def apply_recommendations(

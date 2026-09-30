@@ -132,7 +132,27 @@ def test_forbidden_origin_is_visible_and_respected(client):
     body = response.json()
     assert body["constraints"]["forbidden_origins"] == ["TR"]
     assert body["recommendations"] == []
+    assert body["unresolved"] == []
     assert body["savings"]["amount"] == "0.000000"
+
+
+def test_a_violation_without_remedy_is_named_in_the_response(client):
+    baseline = create_scenario(client, "Base")
+
+    response = client.post(
+        f"/api/v1/scenarios/{baseline}/recommend-sourcing",
+        json={
+            "name": "Tout interdit",
+            "forbidden_origins": ["IT", "TR", "DE"],
+            "price_snapshot_id": "snp",
+        },
+    )
+
+    assert response.status_code == 201, response.text
+    body = response.json()
+    assert body["recommendations"] == []
+    assert [item["part_ref"] for item in body["unresolved"]] == ["S"]
+    assert body["unresolved"][0]["current"]["origin_country"] == "IT"
 
 
 def test_invalid_origin_constraint_is_rejected(client):

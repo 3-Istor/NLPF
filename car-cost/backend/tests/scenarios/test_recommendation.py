@@ -28,6 +28,10 @@ def base_scenario():
 
 
 def recommendations(diamond, constraints=SourcingConstraints()):
+    return report(diamond, constraints).recommendations
+
+
+def report(diamond, constraints=SourcingConstraints()):
     return recommend(
         bom=diamond,
         sourcing=FakeSourcingRepository().sourcing,
@@ -52,6 +56,7 @@ def test_cheapest_allowed_option_is_explained_with_vehicle_saving(diamond):
     assert item.recommended_origin == "TR"
     assert item.affected_quantity == Decimal("23")
     assert item.estimated_saving == Decimal("23.000000")
+    assert not item.required_by_constraint
 
 
 def test_forbidden_origin_is_never_recommended(diamond):
@@ -86,8 +91,27 @@ def test_constraint_can_force_a_more_expensive_allowed_option(diamond):
         constraints=SourcingConstraints(forbidden_origins=frozenset({"TR"})),
     )
 
-    assert result[0].recommended_origin == "IT"
-    assert result[0].estimated_saving == Decimal("-23.000000")
+    assert result.recommendations[0].recommended_origin == "IT"
+    assert result.recommendations[0].estimated_saving == Decimal("-23.000000")
+    assert result.recommendations[0].required_by_constraint
+    assert result.unresolved == ()
+
+
+def test_a_violation_without_allowed_option_is_reported_not_skipped(diamond):
+    """Toutes les usines de S sont interdites, y compris l'actuelle (IT).
+
+    Ignorer la pièce en silence créerait une variante qui garde une provenance
+    interdite, sous un nom qui laisse croire qu'elle respecte les contraintes.
+    """
+    result = report(
+        diamond, SourcingConstraints(forbidden_origins=frozenset({"IT", "TR", "DE"}))
+    )
+
+    assert result.recommendations == ()
+    assert len(result.unresolved) == 1
+    unresolved = result.unresolved[0]
+    assert (unresolved.part_ref, unresolved.current_origin) == ("S", "IT")
+    assert "aucune option autorisée" in unresolved.reason
 
 
 def test_maximum_lead_time_is_explicitly_enforced(diamond):
@@ -110,7 +134,7 @@ def test_maximum_lead_time_is_explicitly_enforced(diamond):
         ),
         scenario=base_scenario(), baseline=calculate(diamond),
         constraints=constrained,
-    ) == ()
+    ).recommendations == ()
 
 
 def test_only_selected_parts_are_applied(diamond):
