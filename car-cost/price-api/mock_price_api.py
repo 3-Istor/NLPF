@@ -97,11 +97,19 @@ class Handler(BaseHTTPRequestHandler):
 
     def _send(self, status: int, payload: dict) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            # Panne « timeout » : le client a abandonné pendant le sommeil, et ce
+            # thread daemon répond des secondes plus tard à une connexion qui
+            # n'existe plus. Non rattrapée, l'exception s'imprime sur stderr
+            # depuis un thread qui peut encore tourner à la fermeture de
+            # l'interpréteur (fin de suite de tests) et fait planter le process.
+            pass
 
     def log_message(self, *args) -> None:  # noqa: D102 - silence en test
         pass
