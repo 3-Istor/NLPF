@@ -133,7 +133,6 @@ button.label:hover { text-decoration: underline dotted; }
 .scope { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; }
 .scope legend { font-size: 11px; color: var(--muted); padding: 0 4px; }
 .scope label { flex-direction: row; align-items: center; gap: 6px; }
-.scope--disabled { opacity: .45; }
 
 button { font: inherit; }
 .panel__actions button, .recalc, .search button {
@@ -216,3 +215,62 @@ button { font: inherit; }
 }
 .quarantine__why { flex: 1; }
 .quarantine__kept { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Scénario courant */
+.scenario-bar { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.scenario-bar label { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.scenario-bar select, .scenario-bar input {
+  padding: 3px 6px; border: 1px solid var(--line); border-radius: 4px; font: inherit; max-width: 260px;
+}
+.scenario-bar button {
+  border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 3px 10px; cursor: pointer;
+}
+.scenario-bar button:disabled { opacity: .45; cursor: default; }
+.scenario-bar__copy { display: flex; gap: 6px; }
+.scenario-bar__danger { color: var(--danger); }
+.scenario-bar .scenario-bar__decide { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+/* Aide à la décision */
+.dialog--wide { width: min(980px, 92vw); max-width: 92vw; max-height: 86vh; }
+.tabs { display: flex; gap: 4px; }
+.tabs button {
+  border: 1px solid var(--line); background: #f4f6f9; border-radius: 4px 4px 0 0;
+  padding: 4px 12px; cursor: pointer; color: var(--muted);
+}
+.tabs .tabs__on { background: #fff; color: var(--ink); border-bottom-color: #fff; font-weight: 600; }
+.decision { padding-top: 10px; }
+.decision__lead { margin-left: 0; }
+.decision__form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; margin: 8px 0; }
+.decision__form label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+.decision__form input, .decision__form select {
+  padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; font: inherit; min-width: 180px;
+}
+.decision__name input { min-width: 320px; }
+.decision__form button {
+  border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 4px 12px; cursor: pointer;
+}
+.decision__form .decision__go { border-color: var(--accent); background: var(--accent); color: #fff; }
+.decision__form button:disabled { opacity: .5; cursor: default; }
+.decision__totals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0 4px; }
+.decision__totals dt { font-size: 12px; color: var(--muted); }
+.decision__totals dd { margin: 2px 0 0; font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.decision__muted { color: var(--muted); font-weight: 400 !important; font-size: 14px !important; }
+.decision__table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+.decision__table caption { text-align: left; color: var(--muted); padding-bottom: 4px; }
+.decision__table th { text-align: left; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--line); padding: 4px 6px; }
+.decision__table td { border-bottom: 1px solid #f2f4f7; padding: 4px 6px; vertical-align: top; font-variant-numeric: tabular-nums; }
+.decision__table .chip { margin-left: 6px; }
+.decision__unresolved { margin: 6px 0 0; padding-left: 18px; }
+.linkish {
+  border: 0; background: none; padding: 0; cursor: pointer;
+  font-family: ui-monospace, monospace; color: var(--accent); text-decoration: underline;
+}
+.delta--up { color: var(--danger); }
+.delta--down { color: #1e6b35; }
+.banner--ok { background: #e8f5ec; color: #1e6b35; }
+.banner--ok p { margin: 0 0 6px; }
+
+@media (max-width: 900px) {
+  .app__header { flex-wrap: wrap; }
+  .decision__totals { grid-template-columns: repeat(2, 1fr); }
+}

@@ -84,6 +84,7 @@ export type CalculationState =
 
 export type Scenario = {
   readonly id: string;
+  readonly name: string;
   readonly bom_version: string;
   readonly display_currency: string;
   readonly labour_rate: string;
@@ -91,9 +92,12 @@ export type Scenario = {
   readonly parameters: readonly ScenarioParameter[];
   readonly calculation_state: CalculationState;
   readonly stale_reason: string | null;
+  /** Le dernier calcul enregistré, à relire plutôt qu'à relancer. */
+  readonly last_calculation_id: string | null;
 };
 
 export type ScenarioParameter = {
+  readonly parameter_id: string;
   readonly part_ref: string;
   readonly scope: "part" | "path";
   readonly path: string | null;
@@ -185,6 +189,73 @@ export type Supplier = {
     readonly lead_time_days: number;
     readonly is_default: boolean;
   }[];
+};
+
+/** B moins A, sur un seul snapshot. Chaque écart est calculé par le serveur. */
+export type Comparison = {
+  readonly calculation_a_id: string;
+  readonly calculation_b_id: string;
+  readonly price_snapshot_id: string;
+  readonly total_a: Money;
+  readonly total_b: Money;
+  readonly cost_delta: Money;
+  /** `null` tant que le CO₂ n'est pas calculé : ce n'est pas un zéro. */
+  readonly co2_delta_kg: string | null;
+  readonly top_differences: readonly {
+    readonly part_ref: string;
+    readonly contribution_a: Money;
+    readonly contribution_b: Money;
+    readonly delta: Money;
+    readonly cumulative_quantity_a: string;
+    readonly cumulative_quantity_b: string;
+  }[];
+};
+
+export type SourcingOption = {
+  readonly supplier_id: string;
+  readonly plant_id: string;
+  readonly origin_country: string;
+  readonly unit_price: Money;
+};
+
+export type Recommendation = {
+  readonly part_ref: string;
+  readonly accepted: boolean;
+  /** L'option actuelle viole une contrainte : le changement est imposé. */
+  readonly required_by_constraint: boolean;
+  readonly current: SourcingOption;
+  readonly recommended: SourcingOption & { readonly lead_time_days: number };
+  readonly affected_quantity: string;
+  /** Négative quand une contrainte impose une option plus chère. */
+  readonly estimated_saving: Money;
+};
+
+export type UnresolvedPart = {
+  readonly part_ref: string;
+  readonly current: {
+    readonly supplier_id: string;
+    readonly plant_id: string;
+    readonly origin_country: string;
+  };
+  readonly reason: string;
+};
+
+export type SourcingConstraints = {
+  readonly forbidden_origins: readonly string[];
+  readonly max_lead_time_days: number | null;
+};
+
+export type SourcingPreview = {
+  readonly base_scenario_id: string;
+  readonly price_snapshot_id: string;
+  readonly constraints: SourcingConstraints;
+  readonly recommendations: readonly Recommendation[];
+  readonly unresolved: readonly UnresolvedPart[];
+};
+
+export type SourcingVariant = Omit<SourcingPreview, "price_snapshot_id"> & {
+  readonly optimized_scenario: Scenario;
+  readonly savings: Money;
 };
 
 export type ApiError = {
