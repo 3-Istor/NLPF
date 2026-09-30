@@ -7,12 +7,16 @@
 
 import type {
   Calculation,
+  Comparison,
   Occurrence,
   Page,
   ParameterAck,
   QuarantineJournal,
   Scenario,
   SearchHit,
+  SourcingConstraints,
+  SourcingPreview,
+  SourcingVariant,
   TreeLine,
 } from "./types";
 
@@ -41,8 +45,15 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
       response.status,
     );
   }
+  // Une suppression répond 204, sans corps à lire.
+  if (response.status === 204) return undefined as T;
   return (await response.json()) as T;
 }
+
+const post = (body: unknown): RequestInit => ({
+  method: "POST",
+  body: JSON.stringify(body),
+});
 
 const withCalculation = (calculationId: string | null) =>
   calculationId ? `&calculation_id=${encodeURIComponent(calculationId)}` : "";
@@ -82,6 +93,50 @@ export const api = {
     call<Scenario>("/scenarios", { method: "POST", body: JSON.stringify(body) }),
 
   scenario: (id: string) => call<Scenario>(`/scenarios/${id}`),
+
+  /** Du plus récent au plus ancien. */
+  scenarios: () =>
+    call<{ items: Scenario[]; total: number }>("/scenarios"),
+
+  duplicateScenario: (id: string, name: string) =>
+    call<Scenario>(`/scenarios/${id}/duplicate`, post({ name })),
+
+  deleteScenario: (id: string) =>
+    call<void>(`/scenarios/${id}`, { method: "DELETE" }),
+
+  deleteParameter: (scenarioId: string, parameterId: string) =>
+    call<{ calculation_state: string; stale_reason: string | null }>(
+      `/scenarios/${scenarioId}/parameters/${parameterId}`,
+      { method: "DELETE" },
+    ),
+
+  /** Recalcule A et B sur un même snapshot ; le delta vaut B − A. */
+  compare: (scenarioA: string, scenarioB: string) =>
+    call<Comparison>(
+      "/scenarios/compare",
+      post({ scenario_a_id: scenarioA, scenario_b_id: scenarioB }),
+    ),
+
+  /** Les recommandations, sans rien créer. */
+  previewSourcing: (scenarioId: string, constraints: SourcingConstraints) =>
+    call<SourcingPreview>(
+      `/scenarios/${scenarioId}/recommend-sourcing/preview`,
+      post(constraints),
+    ),
+
+  /** Crée la variante avec les seules lignes acceptées. */
+  createSourcingVariant: (
+    scenarioId: string,
+    body: SourcingConstraints & {
+      name: string;
+      accepted_part_refs: readonly string[];
+      price_snapshot_id: string;
+    },
+  ) =>
+    call<SourcingVariant>(
+      `/scenarios/${scenarioId}/recommend-sourcing`,
+      post(body),
+    ),
 
   putParameter: (
     scenarioId: string,

@@ -13,7 +13,37 @@ from .seed_loader import build_load_script, read_seeds
 from .snapshot_cli import DEFAULT_DSN, main as take_first_snapshot
 
 
+MIGRATIONS_DIR = Path("backend/migrations")
+
+
+def apply_pending_migrations(dsn: str, directory: Path = MIGRATIONS_DIR) -> None:
+    """Rattrape les migrations absentes d'une base déjà initialisée.
+
+    Postgres n'exécute `docker-entrypoint-initdb.d` qu'à la création du volume :
+    une migration ajoutée ensuite n'atteindrait jamais une base existante.
+    Chaque fichier inscrit sa version dans `schema_migration` et tourne dans
+    sa propre transaction ; rejouer le démarrage ne réapplique donc rien.
+    """
+    with psycopg.connect(dsn) as connection:
+        applied = {
+            row[0]
+            for row in connection.execute(
+                "SELECT version FROM schema_migration"
+            ).fetchall()
+        }
+    for migration in sorted(directory.glob("[0-9]*.sql")):
+        if migration.name.split("_", 1)[0] in applied:
+            continue
+        subprocess.run(
+            ["psql", "--dbname", dsn, "-v", "ON_ERROR_STOP=1", "-q",
+             "-f", str(migration)],
+            check=True,
+        )
+        print(f"migration {migration.name} appliquée", flush=True)
+
+
 def initialize(dsn: str, seeds_dir: Path = Path("seeds")) -> None:
+    apply_pending_migrations(dsn)
     seeds = read_seeds(seeds_dir)
     version = seeds["metadata"]["bom_version_id"]
     with psycopg.connect(dsn) as connection:

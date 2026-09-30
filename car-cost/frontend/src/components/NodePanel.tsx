@@ -34,6 +34,7 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
   const [scope, setScope] = useState<"part" | "path">("part");
   const [override, setOverride] = useState("");
   const [justification, setJustification] = useState("");
+  const [labourMinutes, setLabourMinutes] = useState("");
   const [ack, setAck] = useState<string | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
 
@@ -136,10 +137,22 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
           </label>
         </>
       ) : (
-        <p className="panel__note">
-          Un ensemble n'a ni fournisseur, ni prix propre : son coût est la somme
-          de ses composants et de sa main-d'œuvre.
-        </p>
+        <>
+          <p className="panel__note">
+            Un ensemble n'a ni fournisseur, ni prix propre : son coût est la
+            somme de ses composants et de sa main-d'œuvre.
+          </p>
+          <label>
+            Temps de main-d'œuvre (min)
+            <input
+              type="text"
+              inputMode="decimal"
+              placeholder="ex. 12.5"
+              value={labourMinutes}
+              onChange={(event) => setLabourMinutes(event.target.value)}
+            />
+          </label>
+        </>
       )}
 
       <fieldset className="scope">
@@ -152,8 +165,12 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
           />
           toutes les occurrences ({line.occurrence_count})
         </label>
-        <label className="scope--disabled" title="Disponible en tranche T2">
-          <input type="radio" checked={scope === "path"} disabled readOnly />
+        <label>
+          <input
+            type="radio"
+            checked={scope === "path"}
+            onChange={() => setScope("path")}
+          />
           cette occurrence uniquement
         </label>
       </fieldset>
@@ -161,14 +178,17 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
       <div className="panel__actions">
         <button
           onClick={() =>
-            apply({
-              supplier_id: supplierId || null,
-              plant_id: plantId || null,
-              price_override: override || null,
-              price_override_justification: justification || null,
-            })
+            apply(
+              purchased
+                ? {
+                    supplier_id: supplierId || null,
+                    plant_id: plantId || null,
+                    price_override: override || null,
+                    price_override_justification: justification || null,
+                  }
+                : { labour_minutes: labourMinutes || null },
+            )
           }
-          disabled={!purchased}
         >
           Appliquer
         </button>

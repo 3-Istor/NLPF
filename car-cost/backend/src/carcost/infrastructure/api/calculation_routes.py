@@ -10,13 +10,26 @@ from __future__ import annotations
 
 import uuid
 from decimal import Decimal
+from typing import Annotated
 
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, Path, Query, Request
 from pydantic import BaseModel, Field
 
+from ...application import manage_scenarios
+from ...application.compare_scenarios import (
+    IncomparableCalculations,
+    compare_calculations,
+)
+from ...application.recommend_sourcing import (
+    IncompleteBaseline,
+    SourcingConstraints,
+    apply_recommendations,
+    recommend,
+)
 from ...application.browse_bom import where_used
 from ...application.calculation_state import scope_label, state_of
 from ...application.price_resolution import (
+    NoSupplierForPart,
     ParameterNotApplicable,
     PlantNotAvailableForSupplier,
     PriceOverrideNeedsJustification,
@@ -27,7 +40,7 @@ from ...application.run_calculation import (
     run_calculation,
     with_contributors,
 )
-from ...application.scenario import Scenario, ScenarioParameter
+from ...application.scenario import Scenario, ScenarioParameter, Scope
 from .errors import error_response
 
 SCALE = Decimal("0.000001")
@@ -37,30 +50,142 @@ class NoPriceSnapshot(Exception):
     """Aucun snapshot, même périmé : rien ne peut être calculé."""
 
 
-class NewScenario(BaseModel):
-    bom_version: str
-    name: str
-    display_currency: str = "EUR"
-    labour_rate: Decimal
-    active_rules: list[str] = Field(default_factory=lambda: ["labour"])
-
-
 class NewParameter(BaseModel):
-    scope: str = "part"
-    path: str | None = None
-    supplier_id: str | None = None
-    plant_id: str | None = None
-    price_override: Decimal | None = None
-    price_override_justification: str | None = None
-    labour_minutes: Decimal | None = None
+    scope: Scope = Field(
+        default="part",
+        description="`part` cible toutes les occurrences de la pièce ; `path` une seule occurrence.",
+    )
+    path: str | None = Field(
+        default=None,
+        description="Chemin complet depuis la racine, obligatoire uniquement avec `scope = path`.",
+        examples=["VEH-MULTIPLA-16V/GMP-ASSY/ENG-BLOCK-ASSY/FIX-M6-16"],
+    )
+    supplier_id: str | None = Field(
+        default=None, description="Fournisseur choisi pour une pièce achetée.",
+        examples=["SUP-BULLONI"],
+    )
+    plant_id: str | None = Field(
+        default=None, description="Usine du fournisseur choisi, donc provenance de la pièce.",
+        examples=["PLT-BULLONI-TR"],
+    )
+    price_override: Decimal | None = Field(
+        default=None, description="Prix unitaire forcé ; exige une justification non vide.",
+    )
+    price_override_justification: str | None = Field(
+        default=None, description="Motif obligatoire lorsqu'un prix unitaire est forcé.",
+    )
+    labour_minutes: Decimal | None = Field(
+        default=None, description="Temps de main-d'œuvre, applicable uniquement à un ensemble fabriqué.",
+    )
+    purchase_currency: str | None = Field(
+        default=None, description="Devise d'achat de la pièce, distincte de la devise d'affichage.",
+        examples=["EUR"],
+    )
+
+
+class StoredParameter(NewParameter):
+    part_ref: str = Field(
+        description="Référence de la pièce ciblée dans la nomenclature.",
+        examples=["FIX-M6-16"],
+    )
+
+
+class NewScenario(BaseModel):
+    bom_version: str = Field(
+        description="Version de nomenclature utilisée par le scénario.",
+        examples=["bom-multipla-2026-09-22"],
+    )
+    name: str = Field(
+        description="Nom humain permettant de retrouver le scénario dans la liste.",
+        examples=["RECETTE - Base"],
+    )
+    display_currency: str = Field(
+        default="EUR", description="Devise d'affichage des résultats.",
+    )
+    labour_rate: Decimal = Field(
+        description="Coût d'une heure de main-d'œuvre.", examples=["42.000000"],
+    )
+    active_rules: list[str] = Field(
+        default_factory=lambda: ["labour"],
+        description="Règles actives. Une liste vide désactive notamment la main-d'œuvre.",
+    )
+    parameters: list[StoredParameter] = Field(
+        default_factory=list, description="Paramètres initiaux, éventuellement vides.",
+    )
+
+
+class DuplicateScenario(BaseModel):
+    name: str = Field(
+        description="Nom de la copie. La copie recevra automatiquement un nouvel identifiant.",
+        examples=["RECETTE - Variante Turquie"],
+    )
 
 
 class NewCalculation(BaseModel):
-    scenario_id: str
-    price_snapshot_id: str | None = None
+    scenario_id: str = Field(
+        description="Identifiant `scn-…` du scénario à calculer, obtenu à la création ou dans la liste.",
+        examples=["scn-123456789abc"],
+    )
+    price_snapshot_id: str | None = Field(
+        default=None,
+        description="Identifiant `snp-…` retourné par la liste des snapshots. `null` utilise le plus récent.",
+        examples=["snp-7a9947ddac59"],
+    )
+
+
+class CompareScenarios(BaseModel):
+    scenario_a_id: str = Field(
+        description="Identifiant du scénario de référence A, par exemple l'id renvoyé par `POST /scenarios`.",
+        examples=["scn-111111111111"],
+    )
+    scenario_b_id: str = Field(
+        description="Identifiant de la variante B, par exemple l'id renvoyé par `POST /scenarios/{id}/duplicate`.",
+        examples=["scn-222222222222"],
+    )
+    price_snapshot_id: str | None = Field(
+        default=None,
+        description="Snapshot commun aux deux calculs. `null` sélectionne automatiquement le plus récent.",
+        examples=["snp-7a9947ddac59"],
+    )
+
+
+class SourcingQuery(BaseModel):
+    forbidden_origins: list[str] = Field(
+        default_factory=list,
+        description="Codes pays ISO à deux lettres interdits, par exemple `RU`.",
+    )
+    max_lead_time_days: int | None = Field(
+        default=None, ge=0,
+        description="Délai fournisseur maximal. `null` n'impose aucune limite.",
+    )
+    price_snapshot_id: str | None = Field(
+        default=None,
+        description="Snapshot utilisé pour évaluer les options. `null` utilise le plus récent.",
+        examples=["snp-7a9947ddac59"],
+    )
+
+
+class RecommendSourcing(SourcingQuery):
+    name: str = Field(
+        description="Nom du nouveau scénario optimisé qui sera créé.",
+        examples=["RECETTE - Optimisé"],
+    )
+    accepted_part_refs: list[str] | None = Field(
+        default=None,
+        description="`null` applique tout, `[]` rien, une liste applique seulement ces pièces.",
+        examples=[["FIX-M6-16"]],
+    )
 
 
 def register_calculation_routes(app: FastAPI, repositories) -> None:
+    @app.exception_handler(manage_scenarios.InvalidScenario)
+    async def _invalid_scenario(_: Request, error: manage_scenarios.InvalidScenario):
+        return error_response(422, "INVALID_SCENARIO", str(error))
+
+    @app.exception_handler(NoSupplierForPart)
+    async def _no_supplier(_: Request, error: NoSupplierForPart):
+        return error_response(422, "NO_SUPPLIER_FOR_PART", str(error))
+
     @app.exception_handler(ParameterNotApplicable)
     async def _not_applicable(_: Request, error: ParameterNotApplicable):
         return error_response(422, "PARAMETER_NOT_APPLICABLE", str(error))
@@ -79,7 +204,22 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
     async def _no_snapshot(_: Request, error: NoPriceSnapshot):
         return error_response(409, "NO_PRICE_SNAPSHOT", str(error))
 
-    @app.post("/api/v1/scenarios", status_code=201)
+    @app.exception_handler(IncomparableCalculations)
+    async def _incomparable(_: Request, error: IncomparableCalculations):
+        return error_response(422, "INCOMPARABLE_SCENARIOS", str(error))
+
+    @app.exception_handler(IncompleteBaseline)
+    async def _incomplete_baseline(_: Request, error: IncompleteBaseline):
+        return error_response(409, "INCOMPLETE_CALCULATION", str(error))
+
+    @app.post(
+        "/api/v1/scenarios", status_code=201, tags=["Scénarios"],
+        summary="Créer un scénario",
+        description=(
+            "Crée un scénario nommé et renvoie son identifiant `scn-…`. "
+            "Cet identifiant sert ensuite à le lire, le dupliquer ou le calculer."
+        ),
+    )
     def create_scenario(payload: NewScenario):
         scenario = Scenario(
             id=f"scn-{uuid.uuid4().hex[:12]}",
@@ -87,22 +227,132 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             display_currency=payload.display_currency,
             labour_rate=payload.labour_rate,
             active_rules=frozenset(payload.active_rules),
+            name=payload.name,
+            parameters=tuple(
+                ScenarioParameter(**p.model_dump()) for p in payload.parameters
+            ),
         )
-        repositories.scenarios.create(scenario)
+        scenario = manage_scenarios.create_scenario(
+            scenario, repositories.bom, repositories.scenarios, repositories.sourcing,
+        )
         return _scenario_payload(repositories, scenario)
 
-    @app.get("/api/v1/scenarios/{scenario_id}")
-    def read_scenario(scenario_id: str):
+    @app.get(
+        "/api/v1/scenarios", tags=["Scénarios"],
+        summary="Lister les scénarios",
+        description=(
+            "Retourne tous les scénarios du plus récent au plus ancien. "
+            "Utilisez cette route pour retrouver les identifiants `scn-…` sans les mémoriser."
+        ),
+    )
+    def list_scenarios():
+        scenarios = repositories.scenarios.list_all()
+        return {
+            "items": [
+                _scenario_payload(repositories, scenario)
+                for scenario in scenarios
+            ],
+            "total": len(scenarios),
+        }
+
+    @app.post(
+        "/api/v1/scenarios/{scenario_id}/duplicate", status_code=201,
+        tags=["Scénarios"], summary="Dupliquer un scénario",
+        description=(
+            "Copie le scénario source et renvoie un nouvel identifiant `scn-…`. "
+            "Ce nouvel identifiant est celui de la variante à utiliser comme `scenario_b_id` "
+            "dans une comparaison."
+        ),
+    )
+    def duplicate_scenario(
+        scenario_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `scn-…` du scénario source à copier.",
+                examples=["scn-111111111111"],
+            ),
+        ],
+        payload: DuplicateScenario,
+    ):
+        copied = manage_scenarios.duplicate_scenario(
+            scenario_id, name=payload.name, scenario_id=f"scn-{uuid.uuid4().hex[:12]}",
+            boms=repositories.bom, scenarios=repositories.scenarios,
+            sourcing=repositories.sourcing,
+        )
+        return _scenario_payload(repositories, copied)
+
+    @app.get(
+        "/api/v1/scenarios/{scenario_id}", tags=["Scénarios"],
+        summary="Lire un scénario",
+        description="Relit un scénario, ses paramètres et l'état de son calcul.",
+    )
+    def read_scenario(
+        scenario_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `scn-…` obtenu à la création, à la duplication ou dans la liste.",
+                examples=["scn-111111111111"],
+            ),
+        ],
+    ):
         return _scenario_payload(
             repositories, repositories.scenarios.get(scenario_id)
         )
 
-    @app.put("/api/v1/scenarios/{scenario_id}/parameters/{target}")
-    def put_parameter(scenario_id: str, target: str, payload: NewParameter):
+    @app.delete(
+        "/api/v1/scenarios/{scenario_id}", status_code=204,
+        tags=["Scénarios"], summary="Supprimer un scénario",
+        description=(
+            "Supprime définitivement le scénario. Ses paramètres et ses calculs "
+            "sont supprimés en cascade ; la nomenclature et les snapshots sont conservés."
+        ),
+    )
+    def delete_scenario(
+        scenario_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `scn-…` du scénario à supprimer.",
+                examples=["scn-111111111111"],
+            ),
+        ],
+    ):
+        repositories.scenarios.delete(scenario_id)
+
+    @app.put(
+        "/api/v1/scenarios/{scenario_id}/parameters/{target:path}",
+        tags=["Scénarios"], summary="Ajouter ou remplacer un paramètre",
+        description=(
+            "`target` est une référence de pièce avec `scope = part`, par exemple `FIX-M6-16`, "
+            "ou un chemin complet avec `scope = path`. La réponse renvoie le `parameter_id` "
+            "nécessaire uniquement pour supprimer ensuite ce paramètre."
+        ),
+    )
+    def put_parameter(
+        scenario_id: Annotated[
+            str,
+            Path(description="Identifiant `scn-…` du scénario à modifier."),
+        ],
+        target: Annotated[
+            str,
+            Path(
+                description=(
+                    "Référence de pièce (`FIX-M6-16`) ou chemin complet de l'occurrence ciblée."
+                ),
+                examples=["FIX-M6-16"],
+            ),
+        ],
+        payload: NewParameter,
+    ):
         scenario = repositories.scenarios.get(scenario_id)
         bom = repositories.bom.load(scenario.bom_version)
 
-        part_ref = target.split("/")[-1]
+        if payload.path is not None and (
+            payload.scope != "path" or payload.path != target
+        ):
+            raise manage_scenarios.InvalidScenario(
+                "le chemin doit correspondre à la cible de portée chemin"
+            )
+        part_ref = target.split("/")[-1] if payload.scope == "path" else target
         parameter = ScenarioParameter(
             part_ref=part_ref,
             scope=payload.scope,
@@ -112,20 +362,18 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             price_override=payload.price_override,
             price_override_justification=payload.price_override_justification,
             labour_minutes=payload.labour_minutes,
+            purchase_currency=payload.purchase_currency,
         )
 
         # On valide avant d'écrire : un paramètre refusé ne doit pas laisser de
         # trace, sinon l'écran afficherait un réglage qui n'a jamais pris.
-        candidate = _with_parameter(scenario, parameter)
-        snapshot = _snapshot_or_none(repositories)
-        if snapshot is not None:
-            resolve_unit_prices(
-                bom, repositories.sourcing.load(scenario.bom_version), snapshot,
-                candidate,
-            )
-
-        parameter_id = repositories.scenarios.put_parameter(scenario_id, parameter)
-        occurrences = where_used(bom, part_ref, limit=1).total
+        parameter_id = manage_scenarios.put_parameter(
+            scenario_id, parameter, repositories.bom,
+            repositories.scenarios, repositories.sourcing,
+        )
+        occurrences = (
+            1 if parameter.scope == "path" else where_used(bom, part_ref, limit=1).total
+        )
         state, reason = _state(repositories, repositories.scenarios.get(scenario_id))
 
         return {
@@ -138,33 +386,174 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             "stale_reason": reason,
         }
 
-    @app.delete("/api/v1/scenarios/{scenario_id}/parameters/{parameter_id}")
-    def delete_parameter(scenario_id: str, parameter_id: str):
+    @app.delete(
+        "/api/v1/scenarios/{scenario_id}/parameters/{parameter_id}",
+        tags=["Scénarios"], summary="Supprimer un paramètre",
+        description=(
+            "Supprime le paramètre identifié par le `parameter_id` renvoyé par le `PUT` "
+            "ou par la lecture du scénario."
+        ),
+    )
+    def delete_parameter(
+        scenario_id: Annotated[
+            str, Path(description="Identifiant `scn-…` du scénario à modifier.")
+        ],
+        parameter_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `prm-…` renvoyé lors de la création du paramètre.",
+                examples=["prm-123456789abc"],
+            ),
+        ],
+    ):
         repositories.scenarios.delete_parameter(scenario_id, parameter_id)
         state, reason = _state(repositories, repositories.scenarios.get(scenario_id))
         return {"calculation_state": state.value, "stale_reason": reason}
 
-    @app.post("/api/v1/calculations", status_code=201)
+    @app.post(
+        "/api/v1/calculations", status_code=201, tags=["Calculs"],
+        summary="Calculer un scénario",
+        description=(
+            "Calcule le coût du scénario indiqué. `price_snapshot_id = null` utilise automatiquement "
+            "le snapshot de prix le plus récent et la réponse indique l'identifiant réellement utilisé."
+        ),
+    )
     def create_calculation(payload: NewCalculation):
-        scenario = repositories.scenarios.get(payload.scenario_id)
-        bom = repositories.bom.load(scenario.bom_version)
-        sourcing = repositories.sourcing.load(scenario.bom_version)
         snapshot = _snapshot(repositories, payload.price_snapshot_id)
-
-        resolved = resolve_unit_prices(bom, sourcing, snapshot, scenario)
-        calculation = run_calculation(
-            bom=bom,
-            scenario=scenario,
-            snapshot=snapshot,
-            resolved=resolved,
-            now=repositories.clock(),
-            calculation_id=f"calc-{uuid.uuid4().hex[:12]}",
+        calculation = _execute_calculation(
+            repositories, payload.scenario_id, snapshot
         )
-        repositories.calculations.save(calculation)
         return _calculation_payload(calculation)
 
-    @app.get("/api/v1/calculations/{calculation_id}")
-    def read_calculation(calculation_id: str):
+    @app.post(
+        "/api/v1/scenarios/compare", tags=["Scénarios"],
+        summary="Comparer deux scénarios A et B",
+        description=(
+            "A est le scénario de référence (`scenario_a_id`) et B la variante "
+            "(`scenario_b_id`, souvent l'id renvoyé par la duplication). "
+            "Le delta retourné vaut B moins A. Un calcul incomplet est refusé : "
+            "un prix manquant n'est jamais assimilé à zéro."
+        ),
+    )
+    def compare_scenarios(payload: CompareScenarios):
+        scenario_a = repositories.scenarios.get(payload.scenario_a_id)
+        scenario_b = repositories.scenarios.get(payload.scenario_b_id)
+        if scenario_a.bom_version != scenario_b.bom_version:
+            raise IncomparableCalculations(
+                "les scénarios doivent utiliser la même version de nomenclature"
+            )
+        if scenario_a.display_currency != scenario_b.display_currency:
+            raise IncomparableCalculations(
+                "les scénarios doivent utiliser la même devise d'affichage"
+            )
+        snapshot = _snapshot(repositories, payload.price_snapshot_id)
+        calculation_a = _execute_calculation(
+            repositories, payload.scenario_a_id, snapshot
+        )
+        calculation_b = _execute_calculation(
+            repositories, payload.scenario_b_id, snapshot
+        )
+        return _comparison_payload(
+            compare_calculations(calculation_a, calculation_b)
+        )
+
+    @app.post(
+        "/api/v1/scenarios/{scenario_id}/recommend-sourcing/preview",
+        tags=["Scénarios"], summary="Prévisualiser les recommandations de sourcing",
+        description=(
+            "Évalue les fournisseurs et usines autorisés et explique chaque recommandation, "
+            "sans créer de scénario. L'écran s'en sert pour laisser l'utilisateur choisir les "
+            "lignes avant `POST /scenarios/{id}/recommend-sourcing`."
+        ),
+    )
+    def preview_sourcing(
+        scenario_id: Annotated[
+            str,
+            Path(description="Identifiant `scn-…` du scénario servant de point de départ."),
+        ],
+        payload: SourcingQuery,
+    ):
+        base, snapshot, _, report = _evaluate_sourcing(repositories, scenario_id, payload)
+        return {
+            "base_scenario_id": base.id,
+            "price_snapshot_id": snapshot.id,
+            **_report_payload(report, payload, set(), base.display_currency),
+        }
+
+    @app.post(
+        "/api/v1/scenarios/{scenario_id}/recommend-sourcing", status_code=201,
+        tags=["Scénarios"], summary="Créer une variante de sourcing optimisée",
+        description=(
+            "Évalue les fournisseurs et usines autorisés, explique les recommandations, puis crée "
+            "un nouveau scénario indépendant avec un nouvel identifiant `scn-…`. "
+            "Le calcul de base doit être complet pour que l'économie annoncée soit fiable."
+        ),
+    )
+    def recommend_sourcing(
+        scenario_id: Annotated[
+            str,
+            Path(description="Identifiant `scn-…` du scénario servant de point de départ."),
+        ],
+        payload: RecommendSourcing,
+    ):
+        base, snapshot, baseline, report = _evaluate_sourcing(
+            repositories, scenario_id, payload
+        )
+        recommendations = report.recommendations
+        available = {item.part_ref for item in recommendations}
+        accepted = (
+            available
+            if payload.accepted_part_refs is None
+            else set(payload.accepted_part_refs)
+        )
+        unknown = accepted - available
+        if unknown:
+            raise manage_scenarios.InvalidScenario(
+                "aucune recommandation applicable pour : "
+                + ", ".join(sorted(unknown))
+            )
+        optimized = apply_recommendations(
+            base,
+            recommendations,
+            frozenset(accepted),
+            scenario_id=f"scn-{uuid.uuid4().hex[:12]}",
+            name=payload.name,
+        )
+        optimized = manage_scenarios.create_scenario(
+            optimized,
+            repositories.bom,
+            repositories.scenarios,
+            repositories.sourcing,
+        )
+        optimized_calculation = _execute_calculation(
+            repositories, optimized.id, snapshot
+        )
+        comparison = compare_calculations(baseline, optimized_calculation)
+        return {
+            "base_scenario_id": base.id,
+            "optimized_scenario": _scenario_payload(repositories, optimized),
+            "savings": _money(-comparison.cost_delta, comparison.display_currency),
+            **_report_payload(report, payload, accepted, base.display_currency),
+        }
+
+    @app.get(
+        "/api/v1/calculations/{calculation_id}", tags=["Calculs"],
+        summary="Relire un calcul enregistré",
+        description=(
+            "Retourne exactement le calcul identifié par `calc-…`, avec son total, son snapshot, "
+            "son statut et ses principaux contributeurs. L'identifiant est renvoyé par "
+            "`POST /api/v1/calculations`."
+        ),
+    )
+    def read_calculation(
+        calculation_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `calc-…` renvoyé lors du lancement du calcul.",
+                examples=["calc-123456789abc"],
+            ),
+        ],
+    ):
         calculation = repositories.calculations.get(calculation_id)
         if not calculation.top_contributors:
             calculation = with_contributors(
@@ -172,11 +561,29 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             )
         return _calculation_payload(calculation)
 
-    @app.get("/api/v1/calculations/{calculation_id}/aggregated")
+    @app.get(
+        "/api/v1/calculations/{calculation_id}/aggregated", tags=["Calculs"],
+        summary="Décomposer un calcul par pièce",
+        description=(
+            "Retourne une ligne agrégée par référence de pièce. La somme de toutes les "
+            "`own_contribution` est exactement égale au coût total du calcul."
+        ),
+    )
     def read_aggregated(
-        calculation_id: str,
-        limit: int = Query(50, ge=1, le=500),
-        offset: int = Query(0, ge=0),
+        calculation_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `calc-…` renvoyé par `POST /api/v1/calculations`.",
+                examples=["calc-123456789abc"],
+            ),
+        ],
+        limit: int = Query(
+            50, ge=1, le=500,
+            description="Nombre maximal de pièces renvoyées sur cette page.",
+        ),
+        offset: int = Query(
+            0, ge=0, description="Nombre de pièces à ignorer avant cette page.",
+        ),
     ):
         calculation = repositories.calculations.get(calculation_id)
         priced = [line for line in calculation.lines if line.own_contribution is not None]
@@ -198,19 +605,62 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
 # ---------------------------------------------------------------- assemblage
 
 
-def _with_parameter(scenario: Scenario, parameter: ScenarioParameter) -> Scenario:
-    from dataclasses import replace
-
-    kept = tuple(
-        existing
-        for existing in scenario.parameters
-        if not (
-            existing.part_ref == parameter.part_ref
-            and existing.scope == parameter.scope
-            and (existing.path or "") == (parameter.path or "")
+def _evaluate_sourcing(repositories, scenario_id: str, query: SourcingQuery):
+    invalid_origins = [
+        origin
+        for origin in query.forbidden_origins
+        if len(origin) != 2 or not origin.isalpha()
+    ]
+    if invalid_origins:
+        raise manage_scenarios.InvalidScenario(
+            "codes de provenance invalides : " + ", ".join(sorted(invalid_origins))
         )
+    base = repositories.scenarios.get(scenario_id)
+    bom = repositories.bom.load(base.bom_version)
+    sourcing = repositories.sourcing.load(base.bom_version)
+    snapshot = _snapshot(repositories, query.price_snapshot_id)
+    baseline = _execute_calculation(repositories, base.id, snapshot)
+    report = recommend(
+        bom=bom,
+        sourcing=sourcing,
+        snapshot=snapshot,
+        scenario=base,
+        baseline=baseline,
+        constraints=SourcingConstraints(
+            forbidden_origins=frozenset(query.forbidden_origins),
+            max_lead_time_days=query.max_lead_time_days,
+        ),
     )
-    return replace(scenario, parameters=kept + (parameter,))
+    return base, snapshot, baseline, report
+
+
+def _report_payload(report, query: SourcingQuery, accepted: set, currency: str) -> dict:
+    return {
+        "constraints": {
+            "forbidden_origins": sorted(
+                origin.upper() for origin in query.forbidden_origins
+            ),
+            "max_lead_time_days": query.max_lead_time_days,
+        },
+        "recommendations": [
+            _recommendation_payload(item, item.part_ref in accepted, currency)
+            for item in report.recommendations
+        ],
+        # Une pièce dont le sourcing viole une contrainte sans remède reste
+        # telle quelle dans la variante : on le dit plutôt que de le taire.
+        "unresolved": [
+            {
+                "part_ref": item.part_ref,
+                "current": {
+                    "supplier_id": item.current_supplier_id,
+                    "plant_id": item.current_plant_id,
+                    "origin_country": item.current_origin,
+                },
+                "reason": item.reason,
+            }
+            for item in report.unresolved
+        ],
+    }
 
 
 def _snapshot_or_none(repositories):
@@ -228,8 +678,26 @@ def _snapshot(repositories, snapshot_id: str | None):
     return snapshot
 
 
-def _state(repositories, scenario: Scenario):
-    latest = repositories.calculations.latest_for(scenario.id)
+def _execute_calculation(repositories, scenario_id: str, snapshot):
+    scenario = repositories.scenarios.get(scenario_id)
+    bom = repositories.bom.load(scenario.bom_version)
+    sourcing = repositories.sourcing.load(scenario.bom_version)
+    resolved = resolve_unit_prices(bom, sourcing, snapshot, scenario)
+    calculation = run_calculation(
+        bom=bom,
+        scenario=scenario,
+        snapshot=snapshot,
+        resolved=resolved,
+        now=repositories.clock(),
+        calculation_id=f"calc-{uuid.uuid4().hex[:12]}",
+    )
+    repositories.calculations.save(calculation)
+    return calculation
+
+
+def _state(repositories, scenario: Scenario, latest=None):
+    if latest is None:
+        latest = repositories.calculations.latest_for(scenario.id)
     return state_of(
         scenario,
         _snapshot_or_none(repositories),
@@ -249,20 +717,30 @@ def _money(amount: Decimal, currency: str) -> dict:
 
 
 def _scenario_payload(repositories, scenario: Scenario) -> dict:
-    state, reason = _state(repositories, scenario)
+    latest = repositories.calculations.latest_for(scenario.id)
+    state, reason = _state(repositories, scenario, latest)
+    parameter_ids = repositories.scenarios.parameter_ids(scenario.id)
     return {
         "id": scenario.id,
+        "name": scenario.name,
         "bom_version": scenario.bom_version,
         "display_currency": scenario.display_currency,
         "labour_rate": str(scenario.labour_rate),
         "active_rules": sorted(scenario.active_rules),
         "parameters": [
             {
+                "parameter_id": parameter_ids[(parameter.part_ref, parameter.path or "")],
                 "part_ref": parameter.part_ref,
                 "scope": parameter.scope,
                 "path": parameter.path,
                 "supplier_id": parameter.supplier_id,
                 "plant_id": parameter.plant_id,
+                "purchase_currency": parameter.purchase_currency,
+                "labour_minutes": (
+                    str(parameter.labour_minutes)
+                    if parameter.labour_minutes is not None
+                    else None
+                ),
                 "price_override": (
                     str(parameter.price_override)
                     if parameter.price_override is not None
@@ -274,6 +752,9 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         ],
         "calculation_state": state.value,
         "stale_reason": reason,
+        # Relire ce calcul suffit pour réafficher un scénario « à jour » ; en
+        # relancer un à chaque ouverture remplirait la table pour rien.
+        "last_calculation_id": latest.id if latest else None,
     }
 
 
@@ -291,6 +772,11 @@ def _calculation_payload(calculation) -> dict:
         "input_digest": calculation.input_digest,
         "display_currency": currency,
         "total_cost": _money(calculation.total_cost, currency),
+        "total_co2": (
+            {"kg_co2e": str(calculation.total_co2)}
+            if calculation.total_co2 is not None
+            else None
+        ),
         "price_snapshot": {
             "id": calculation.snapshot_id,
             "age_seconds": int(calculation.snapshot_age.total_seconds()),
@@ -320,6 +806,63 @@ def _calculation_payload(calculation) -> dict:
         # Compté ici plutôt que dans le navigateur : chaque ligne relève d'une
         # seule catégorie, et c'est le serveur qui sait laquelle.
         "issue_counts": calculation.issue_counts(),
+    }
+
+
+def _comparison_payload(comparison) -> dict:
+    currency = comparison.display_currency
+    return {
+        "calculation_a_id": comparison.calculation_a_id,
+        "calculation_b_id": comparison.calculation_b_id,
+        "price_snapshot_id": comparison.snapshot_id,
+        "total_a": _money(comparison.total_a, currency),
+        "total_b": _money(comparison.total_b, currency),
+        "cost_delta": _money(comparison.cost_delta, currency),
+        # NLPF-48 fournira les deux projections au Calculation. Le contrat de
+        # comparaison est prêt sans inventer ici un second moteur carbone.
+        "co2_delta_kg": (
+            str(comparison.co2_delta)
+            if comparison.co2_delta is not None
+            else None
+        ),
+        "top_differences": [
+            {
+                "part_ref": item.part_ref,
+                "contribution_a": _money(item.contribution_a, currency),
+                "contribution_b": _money(item.contribution_b, currency),
+                "delta": _money(item.delta, currency),
+                "cumulative_quantity_a": str(item.cumulative_quantity_a),
+                "cumulative_quantity_b": str(item.cumulative_quantity_b),
+            }
+            for item in comparison.top_differences
+        ],
+    }
+
+
+def _recommendation_payload(item, accepted: bool, currency: str) -> dict:
+    return {
+        "part_ref": item.part_ref,
+        "accepted": accepted,
+        "required_by_constraint": item.required_by_constraint,
+        "current": {
+            "supplier_id": item.current_supplier_id,
+            "plant_id": item.current_plant_id,
+            "origin_country": item.current_origin,
+            "unit_price": _money(item.current_unit_price, currency),
+        },
+        "recommended": {
+            "supplier_id": item.recommended_supplier_id,
+            "plant_id": item.recommended_plant_id,
+            "origin_country": item.recommended_origin,
+            "lead_time_days": item.recommended_lead_time_days,
+            "unit_price": _money(item.recommended_unit_price, currency),
+        },
+        "affected_quantity": str(item.affected_quantity),
+        "estimated_saving": _money(item.estimated_saving, currency),
+        "explanation": (
+            f"{item.affected_quantity} unité(s) : {item.current_unit_price} - "
+            f"{item.recommended_unit_price} par unité"
+        ),
     }
 
 

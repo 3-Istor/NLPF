@@ -28,6 +28,7 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 | [0008](0008-mode-de-valorisation-exclusif.md) | Mode de valorisation exclusif : achetée ou fabriquée | accepté |
 | [0009](0009-depliage-paresseux-du-dag-a-l-ecran.md) | Dépliage nœud par nœud, pièce partagée répétée et badgée | accepté |
 | [0010](0010-prix-decompose-fournisseur-et-usine.md) | Prix = référence × multiplicateur fournisseur × coefficient d'usine | accepté |
+| [0012](0012-comparaison-et-recommandation-par-piece.md) | Comparer sur un snapshot commun ; recommander le sourcing pièce par pièce | proposé |
 
 ## Ce qui reste à décider
 
@@ -36,4 +37,3 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 | Règle d'arrondi et précision monétaire | À trancher avant le premier calcul persisté (ambiguïté A3 du cadrage) — candidat ADR-0011 |
 | Politique de prise de snapshot (manuelle, planifiée, à la demande) | Si la prise manuelle laisse l'utilisateur en `STALE` permanent (ADR-0003) |
 | Make or buy (devis attaché à un nœud fabriqué) | À la première demande réelle (ADR-0008) |
-| Comparaison de deux scénarios enregistrés | Si la question « qu'est-ce qui a changé depuis lundi ? » est activée (périmètre §3.5) |

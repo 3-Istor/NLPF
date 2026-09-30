@@ -18,7 +18,9 @@ from carcost.application.ports import (
     QuarantineRecord,
     ScenarioNotFound,
 )
-from carcost.application.scenario import Plant, Scenario, Sourcing, SupplierOffer
+from carcost.application.scenario import (
+    Plant, Scenario, ScenarioParameter, Sourcing, SupplierOffer,
+)
 
 
 class FakeBomRepository:
@@ -74,6 +76,9 @@ class FakeSnapshotRepository:
     def latest(self):
         return self.snapshots[-1] if self.snapshots else None
 
+    def list_all(self):
+        return tuple(reversed(self.snapshots))
+
     def get(self, snapshot_id: str):
         for snapshot in self.snapshots:
             if snapshot.id == snapshot_id:
@@ -108,15 +113,40 @@ class FakeScenarioRepository:
     def __init__(self):
         self.scenarios: dict[str, Scenario] = {}
         self._sequence = 0
+        self._ids: dict[str, tuple[str, ScenarioParameter]] = {}
 
     def create(self, scenario: Scenario) -> None:
-        self.scenarios[scenario.id] = scenario
+        if scenario.id in self.scenarios:
+            raise AssertionError("un scénario créé doit avoir sa propre identité")
+        self.scenarios[scenario.id] = replace(scenario, parameters=())
+        for parameter in scenario.parameters:
+            self.put_parameter(scenario.id, parameter)
 
     def get(self, scenario_id: str) -> Scenario:
         try:
             return self.scenarios[scenario_id]
         except KeyError as missing:
             raise ScenarioNotFound(scenario_id) from missing
+
+    def list_all(self) -> tuple[Scenario, ...]:
+        return tuple(reversed(tuple(self.scenarios.values())))
+
+    def delete(self, scenario_id: str) -> None:
+        self.get(scenario_id)
+        del self.scenarios[scenario_id]
+        self._ids = {
+            identifier: entry
+            for identifier, entry in self._ids.items()
+            if entry[0] != scenario_id
+        }
+
+    def parameter_ids(self, scenario_id: str) -> dict[tuple[str, str], str]:
+        self.get(scenario_id)
+        return {
+            (parameter.part_ref, parameter.path or ""): identifier
+            for identifier, (owner, parameter) in self._ids.items()
+            if owner == scenario_id
+        }
 
     def put_parameter(self, scenario_id: str, parameter) -> str:
         scenario = self.get(scenario_id)
@@ -129,20 +159,26 @@ class FakeScenarioRepository:
                 and (existing.path or "") == (parameter.path or "")
             )
         )
-        self._sequence += 1
-        identifier = f"prm-{self._sequence}"
+        identifier = next((
+            identifier for identifier, (owner, existing) in self._ids.items()
+            if owner == scenario_id and existing.part_ref == parameter.part_ref
+            and existing.scope == parameter.scope and existing.path == parameter.path
+        ), None)
+        if identifier is None:
+            self._sequence += 1
+            identifier = f"prm-{self._sequence}"
         self.scenarios[scenario_id] = replace(
             scenario, parameters=kept + (parameter,)
         )
-        self._ids = getattr(self, "_ids", {})
-        self._ids[identifier] = parameter
+        self._ids[identifier] = (scenario_id, parameter)
         return identifier
 
     def delete_parameter(self, scenario_id: str, parameter_id: str) -> None:
-        parameter = getattr(self, "_ids", {}).get(parameter_id)
-        if parameter is None:
-            return
         scenario = self.get(scenario_id)
+        entry = self._ids.get(parameter_id)
+        if entry is None or entry[0] != scenario_id:
+            return
+        _, parameter = self._ids.pop(parameter_id)
         self.scenarios[scenario_id] = replace(
             scenario,
             parameters=tuple(p for p in scenario.parameters if p is not parameter),

@@ -7,7 +7,9 @@ l'on regarde le total, sinon le repli est silencieux (ADR-0003, mode de panne P2
 
 from __future__ import annotations
 
-from fastapi import FastAPI, Request
+from typing import Annotated
+
+from fastapi import FastAPI, Path, Request
 
 from ...application.ports import PriceSnapshotNotFound
 from .errors import error_response
@@ -20,8 +22,53 @@ def register_snapshot_routes(app: FastAPI, repositories) -> None:
             404, "PRICE_SNAPSHOT_NOT_FOUND", f"snapshot inconnu : {error.args[0]}"
         )
 
-    @app.get("/api/v1/price-snapshots/{snapshot_id}/quarantine")
-    def read_quarantine(snapshot_id: str):
+    @app.get(
+        "/api/v1/price-snapshots", tags=["Prix"],
+        summary="Lister les snapshots de prix",
+        description=(
+            "Retourne les snapshots du plus récent au plus ancien. Copiez l'identifiant `snp-…` "
+            "du premier élément pour imposer ce snapshot, ou envoyez `null` dans les autres routes "
+            "pour sélectionner automatiquement le plus récent."
+        ),
+    )
+    def list_snapshots():
+        snapshots = repositories.snapshots.list_all()
+        now = repositories.clock()
+        return {
+            "items": [
+                {
+                    "id": snapshot.id,
+                    "taken_at": snapshot.taken_at.isoformat(),
+                    "source": snapshot.source,
+                    "currency": snapshot.currency,
+                    "status": snapshot.status(now).value,
+                    "age_seconds": int(snapshot.age(now).total_seconds()),
+                    "counts": {
+                        "prices": len(snapshot.prices),
+                        "fallback": len(snapshot.fallback_refs),
+                        "quarantined": len(snapshot.quarantined_refs),
+                        "missing": len(snapshot.missing_refs),
+                    },
+                }
+                for snapshot in snapshots
+            ],
+            "total": len(snapshots),
+        }
+
+    @app.get(
+        "/api/v1/price-snapshots/{snapshot_id}/quarantine", tags=["Prix"],
+        summary="Lire le journal de quarantaine d'un snapshot",
+        description="Explique les prix refusés et les éventuelles valeurs de remplacement.",
+    )
+    def read_quarantine(
+        snapshot_id: Annotated[
+            str,
+            Path(
+                description="Identifiant `snp-…` obtenu avec `GET /api/v1/price-snapshots`.",
+                examples=["snp-7a9947ddac59"],
+            ),
+        ],
+    ):
         records = repositories.snapshots.quarantine_of(snapshot_id)
         return {
             "snapshot_id": snapshot_id,

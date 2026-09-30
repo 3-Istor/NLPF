@@ -65,10 +65,14 @@ jobs:
         working-directory: car-cost/backend
         run: pip install -e ".[dev]"
 
+      # Toutes les migrations, dans l'ordre : n'appliquer que la première
+      # laisserait passer un code qui lit une table que la CI n'a jamais créée.
       - name: Appliquer le schéma
         run: |
-          psql -h 127.0.0.1 -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
-            -f backend/migrations/0001_initial_schema.sql
+          for migration in backend/migrations/[0-9]*.sql; do
+            psql -h 127.0.0.1 -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+              -f "$migration"
+          done
 
       # Le script annonce « refusé » pour chaque écriture interdite qu'il a
       # tentée, et WARNING pour une contrainte qui n'a pas tenu. Il sort

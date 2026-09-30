@@ -21,3 +21,6 @@ class CalculationInput:
     unit_prices: Mapping[str, Decimal]
     labour_rate: Decimal
     active_rules: frozenset[str] = field(default_factory=lambda: frozenset({"labour"}))
+    unit_prices_by_path: Mapping[str, Decimal] = field(default_factory=dict)
+    labour_minutes_by_part: Mapping[str, Decimal] = field(default_factory=dict)
+    labour_minutes_by_path: Mapping[str, Decimal] = field(default_factory=dict)

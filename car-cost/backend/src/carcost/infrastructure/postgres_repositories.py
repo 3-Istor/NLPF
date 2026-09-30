@@ -127,6 +127,18 @@ class PostgresPriceSnapshotRepository(_PostgresRepository):
     def latest(self) -> PriceSnapshot | None:
         return self._read(None)
 
+    def list_all(self) -> tuple[PriceSnapshot, ...]:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT id
+                FROM price_snapshot
+                ORDER BY taken_at DESC, id DESC
+                """
+            )
+            identifiers = tuple(row[0] for row in cursor.fetchall())
+        return tuple(self.get(identifier) for identifier in identifiers)
+
     def get(self, snapshot_id: str) -> PriceSnapshot:
         snapshot = self._read(snapshot_id)
         if snapshot is None:
@@ -291,7 +303,7 @@ class PostgresScenarioRepository(_PostgresRepository):
                 (
                     scenario.id,
                     scenario.bom_version,
-                    scenario.id,
+                    scenario.name,
                     scenario.display_currency,
                     scenario.labour_rate,
                     scenario.display_currency,
@@ -299,11 +311,14 @@ class PostgresScenarioRepository(_PostgresRepository):
                 ),
             )
 
+            for parameter in scenario.parameters:
+                self._put_parameter(cursor, scenario.id, parameter)
+
     def get(self, scenario_id: str) -> Scenario:
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(
                 """
-                SELECT bom_version_id, display_currency, labour_rate, active_rules
+                SELECT bom_version_id, display_currency, labour_rate, active_rules, name
                 FROM scenario WHERE id = %s
                 """,
                 (scenario_id,),
@@ -311,12 +326,12 @@ class PostgresScenarioRepository(_PostgresRepository):
             head = cursor.fetchone()
             if head is None:
                 raise ScenarioNotFound(scenario_id)
-            bom_version, currency, labour_rate, active_rules = head
+            bom_version, currency, labour_rate, active_rules, name = head
 
             cursor.execute(
                 """
                 SELECT part_ref, scope, path, supplier_id, plant_id, price_override,
-                       price_override_justification, labour_minutes
+                       price_override_justification, labour_minutes, purchase_currency
                 FROM scenario_parameter
                 WHERE scenario_id = %s
                 ORDER BY part_ref, coalesce(path, '')
@@ -333,10 +348,11 @@ class PostgresScenarioRepository(_PostgresRepository):
                     price_override=override,
                     price_override_justification=justification,
                     labour_minutes=labour_minutes,
+                    purchase_currency=purchase_currency,
                 )
                 for (
                     part_ref, scope, path, supplier_id, plant_id, override,
-                    justification, labour_minutes,
+                    justification, labour_minutes, purchase_currency,
                 ) in cursor.fetchall()
             )
 
@@ -347,44 +363,92 @@ class PostgresScenarioRepository(_PostgresRepository):
             labour_rate=labour_rate,
             active_rules=frozenset(active_rules),
             parameters=parameters,
+            name=name,
         )
 
-    def put_parameter(self, scenario_id: str, parameter: ScenarioParameter) -> str:
-        import uuid
-
-        identifier = f"prm-{uuid.uuid4().hex[:12]}"
+    def list_all(self) -> tuple[Scenario, ...]:
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(
                 """
-                INSERT INTO scenario_parameter
-                    (id, scenario_id, scope, part_ref, path, supplier_id, plant_id,
-                     price_override, price_override_justification, labour_minutes)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                ON CONFLICT (scenario_id, part_ref, coalesce(path, ''))
-                DO UPDATE SET
-                    scope = EXCLUDED.scope,
-                    supplier_id = EXCLUDED.supplier_id,
-                    plant_id = EXCLUDED.plant_id,
-                    price_override = EXCLUDED.price_override,
-                    price_override_justification =
-                        EXCLUDED.price_override_justification,
-                    labour_minutes = EXCLUDED.labour_minutes
-                RETURNING id
-                """,
-                (
-                    identifier,
-                    scenario_id,
-                    parameter.scope,
-                    parameter.part_ref,
-                    parameter.path,
-                    parameter.supplier_id,
-                    parameter.plant_id,
-                    parameter.price_override,
-                    parameter.price_override_justification,
-                    parameter.labour_minutes,
-                ),
+                SELECT id
+                FROM scenario
+                ORDER BY created_at DESC, id DESC
+                """
             )
-            return cursor.fetchone()[0]
+            identifiers = tuple(row[0] for row in cursor.fetchall())
+        return tuple(self.get(identifier) for identifier in identifiers)
+
+    def delete(self, scenario_id: str) -> None:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                "DELETE FROM scenario WHERE id = %s RETURNING id", (scenario_id,)
+            )
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
+
+    def parameter_ids(self, scenario_id: str) -> dict[tuple[str, str], str]:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM scenario WHERE id = %s", (scenario_id,))
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
+            cursor.execute(
+                """
+                SELECT part_ref, coalesce(path, ''), id
+                FROM scenario_parameter
+                WHERE scenario_id = %s
+                """,
+                (scenario_id,),
+            )
+            return {
+                (part_ref, path): identifier
+                for part_ref, path, identifier in cursor.fetchall()
+            }
+
+    def put_parameter(self, scenario_id: str, parameter: ScenarioParameter) -> str:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM scenario WHERE id = %s", (scenario_id,))
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
+            return self._put_parameter(cursor, scenario_id, parameter)
+
+    @staticmethod
+    def _put_parameter(cursor, scenario_id: str, parameter: ScenarioParameter) -> str:
+        import uuid
+
+        identifier = f"prm-{uuid.uuid4().hex[:12]}"
+        cursor.execute(
+            """
+            INSERT INTO scenario_parameter
+                (id, scenario_id, scope, part_ref, path, supplier_id, plant_id,
+                 price_override, price_override_justification, labour_minutes,
+                 purchase_currency)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (scenario_id, part_ref, coalesce(path, ''))
+            DO UPDATE SET
+                scope = EXCLUDED.scope,
+                supplier_id = EXCLUDED.supplier_id,
+                plant_id = EXCLUDED.plant_id,
+                price_override = EXCLUDED.price_override,
+                price_override_justification = EXCLUDED.price_override_justification,
+                labour_minutes = EXCLUDED.labour_minutes,
+                purchase_currency = EXCLUDED.purchase_currency
+            RETURNING id
+            """,
+            (
+                identifier,
+                scenario_id,
+                parameter.scope,
+                parameter.part_ref,
+                parameter.path,
+                parameter.supplier_id,
+                parameter.plant_id,
+                parameter.price_override,
+                parameter.price_override_justification,
+                parameter.labour_minutes,
+                parameter.purchase_currency,
+            ),
+        )
+        return cursor.fetchone()[0]
 
     def delete_parameter(self, scenario_id: str, parameter_id: str) -> None:
         with self._connect() as connection, connection.cursor() as cursor:
@@ -405,9 +469,9 @@ class PostgresCalculationRepository(_PostgresRepository):
                 INSERT INTO calculation
                     (id, scenario_id, bom_version_id, price_snapshot_id,
                      rules_version, engine_version, active_rules, status,
-                     display_currency, total_cost, input_digest,
+                     display_currency, total_cost, total_co2, input_digest,
                      started_at, finished_at)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     calculation.id,
@@ -420,6 +484,7 @@ class PostgresCalculationRepository(_PostgresRepository):
                     calculation.status.value,
                     calculation.display_currency,
                     calculation.total_cost,
+                    calculation.total_co2,
                     calculation.input_digest,
                     calculation.computed_at,
                     calculation.computed_at,
@@ -476,6 +541,15 @@ class PostgresCalculationRepository(_PostgresRepository):
                     (calculation.id, part_ref, "aucun prix connu pour cette pièce"),
                 )
 
+            context_rows = _context_cost_rows(calculation)
+            if context_rows:
+                with cursor.copy(
+                    "COPY calculation_context_cost (calculation_id, scope, target, "
+                    "own_unit_cost, full_unit_cost) FROM STDIN"
+                ) as copy:
+                    for row in context_rows:
+                        copy.write_row((calculation.id, *row))
+
     def get(self, calculation_id: str) -> Calculation:
         calculation = self._read(calculation_id)
         if calculation is None:
@@ -506,7 +580,7 @@ class PostgresCalculationRepository(_PostgresRepository):
                 """
                 SELECT c.scenario_id, c.bom_version_id, c.price_snapshot_id,
                        c.rules_version, c.engine_version, c.active_rules, c.status,
-                       c.display_currency, c.total_cost, c.input_digest,
+                       c.display_currency, c.total_cost, c.total_co2, c.input_digest,
                        c.finished_at, s.taken_at, s.status
                 FROM calculation c
                 LEFT JOIN price_snapshot s ON s.id = c.price_snapshot_id
@@ -519,7 +593,7 @@ class PostgresCalculationRepository(_PostgresRepository):
                 return None
             (
                 scenario_id, bom_version, snapshot_id, rules_version, engine_version,
-                active_rules, status, currency, total, digest, finished_at,
+                active_rules, status, currency, total, total_co2, digest, finished_at,
                 snapshot_taken_at, snapshot_status,
             ) = head
 
@@ -594,7 +668,25 @@ class PostgresCalculationRepository(_PostgresRepository):
             )
             missing = tuple(row[0] for row in cursor.fetchall())
 
-        age = (finished_at - snapshot_taken_at) if snapshot_taken_at else timedelta(0)
+            cursor.execute(
+                """
+                SELECT scope, target, own_unit_cost, full_unit_cost
+                FROM calculation_context_cost
+                WHERE calculation_id = %s
+                """,
+                (calculation_id,),
+            )
+            contexts = cursor.fetchall()
+
+        costs: dict[tuple[str, str], dict[str, Decimal | None]] = {
+            ("part", "own"): {}, ("part", "full"): {},
+            ("path", "own"): {}, ("path", "full"): {},
+        }
+        for scope, target, own_unit, full_unit in contexts:
+            costs[(scope, "own")][target] = own_unit
+            costs[(scope, "full")][target] = full_unit
+
+        age =(finished_at - snapshot_taken_at) if snapshot_taken_at else timedelta(0)
         return Calculation(
             id=calculation_id,
             scenario_id=scenario_id,
@@ -608,6 +700,7 @@ class PostgresCalculationRepository(_PostgresRepository):
             display_currency=currency,
             status=CalculationStatus(status),
             total_cost=total,
+            total_co2=total_co2,
             computed_at=finished_at,
             input_digest=digest,
             lines=lines,
@@ -621,4 +714,36 @@ class PostgresCalculationRepository(_PostgresRepository):
             parts_without_price=missing,
             explanations=explanations,
             price_statuses=price_statuses,
+            path_own_unit_costs=costs[("path", "own")],
+            path_full_unit_costs=costs[("path", "full")],
+            part_own_unit_costs=costs[("part", "own")],
+            part_full_unit_costs=costs[("part", "full")],
         )
+
+
+def _context_cost_rows(calculation: Calculation) -> list[tuple]:
+    """Les coûts de contexte qui ne se déduisent pas des lignes agrégées.
+
+    Sans surcharge de chemin, rien : chaque occurrence porte le coût de sa
+    ligne. Avec, les préfixes surchargés, et le coût de référence des seules
+    pièces dont la ligne porte une moyenne différente.
+    """
+    if not calculation.path_own_unit_costs and not calculation.path_full_unit_costs:
+        return []
+    rows = [
+        (
+            "path",
+            path,
+            calculation.path_own_unit_costs.get(path),
+            calculation.path_full_unit_costs.get(path),
+        )
+        for path in sorted(
+            set(calculation.path_own_unit_costs) | set(calculation.path_full_unit_costs)
+        )
+    ]
+    for line in calculation.lines:
+        own = calculation.part_own_unit_costs.get(line.part_ref, line.own_unit_cost)
+        full = calculation.part_full_unit_costs.get(line.part_ref, line.full_unit_cost)
+        if own != line.own_unit_cost or full != line.full_unit_cost:
+            rows.append(("part", line.part_ref, own, full))
+    return rows
