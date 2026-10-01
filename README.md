@@ -257,7 +257,7 @@ Deux contrôles valent d'être lancés à la main :
 # le schéma refuse-t-il vraiment ce qu'il prétend refuser ?
 docker compose exec -T db psql -U 3istor -d 3istor -q \
   < backend/migrations/checks/contraintes.sql
-# attendu : 21 refus, 0 WARNING
+# attendu : 25 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
 python -m tools.bom_generator --check
@@ -368,7 +368,7 @@ entièrement distinct.
   qu'une date fausse ; les lignes déjà écrites sont immuables.
 - **Le journal de quarantaine n'est pas protégé en écriture.** Snapshot et
   lignes de prix ont leur déclencheur d'immutabilité ; `price_quarantine` non.
-  L'ajouter fait passer le contrôle du schéma de 21 à 22 refus.
+  L'ajouter fait passer le contrôle du schéma de 25 à 26 refus.
 - **Le motif de quarantaine est une phrase**, pas le code prévu par le contrat
   initial (docs/api.md §5.3). Suffisant pour l'écran ; pas pour trier.
 - **Comparer et recommander enregistrent de nouveaux calculs** à chaque appel,
