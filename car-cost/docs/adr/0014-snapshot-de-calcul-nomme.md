@@ -89,3 +89,33 @@ Règles retenues :
   dont le gel produit un nouveau snapshot (`derived_from`, « partir de ce snapshot »), au lot 3,
   comme l'export et l'import. Les marques ●/○ d'un snapshot ouvert viennent du scénario vivant.
 - Le glossaire (§6) distingue « snapshot de prix » et « snapshot de calcul ».
+
+## Complément du 01/10/2026
+
+Ajouté en revue finale du lot 1, sans réécrire ce qui précède : la vue d'un snapshot ouvert laissait
+croire qu'on le retouchait (panneau de saisie actif sur le scénario vivant, synthèse « à jour »,
+marques ●/○ du scénario vivant). Décision de l'utilisateur : lecture seule, et « Repartir de ce
+snapshot » dès le lot 1. Ce complément remplace, pour le lot 1, les phrases des « Conséquences » qui
+renvoyaient `derived_from` au lot 3 et faisaient venir les marques du scénario vivant.
+
+- **Un snapshot ouvert est en lecture seule.** L'écran n'offre aucun panneau de saisie : la ligne
+  sélectionnée montre les réglages **copiés** (portée, fournisseur, usine, prix forcé et
+  justification, main-d'œuvre). La synthèse dit « figé », ni « à jour » ni « obsolète ». Les
+  marques ●/○ sont calculées par le serveur d'après la copie : les routes de l'arbre acceptent
+  `calculation_snapshot_id` ; sans lui, rien ne change, et toujours aucun paramètre de profondeur.
+  « Recalculer » et « Revenir au scénario » ramènent au scénario vivant, éditable.
+- **« Repartir de ce snapshot »** (`POST /calculation-snapshots/{id}/derive`, `{name}`) crée un
+  scénario neuf : même version de BOM, devise, taux horaire, règles actives, et **exactement** les
+  paramètres copiés. L'écran propose « {nom du snapshot} — repris », modifiable. Le snapshot
+  d'origine ne change pas ; figer le scénario dérivé produit un **nouveau** snapshot, calculé aux
+  prix courants. Usage visé : refaire la configuration d'il y a trois mois et la recapturer.
+- **`derived_from`** (migration 0005) : le scénario porte l'identifiant du snapshot d'où il part ;
+  le gel le **recopie** dans le nouveau snapshot, figé avec le reste de la ligne, pour que le
+  snapshot reste autonome à l'export. Dupliquer un scénario dérivé garde son `derived_from`. La
+  base n'en garantit que l'existence (clé étrangère, contrôle n° 26 de `contraintes.sql`).
+- **Refus sans reprise partielle.** Chaque réglage copié repasse les contrôles de la saisie, sans
+  règle nouvelle. Si l'un ne s'applique plus (fournisseur ou usine disparus, combinaison refusée),
+  rien n'est créé : `422 SNAPSHOT_SETTINGS_NOT_APPLICABLE`, et `details.parts` nomme toutes les
+  pièces en cause. Au lot 1, la base interdit de supprimer un fournisseur ou une usine qu'un
+  snapshot copie : ce refus n'est exercé que sur des doubles de test, et deviendra réel avec
+  l'import (lot 3), qui réutilisera le même bouton.

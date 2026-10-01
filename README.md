@@ -237,19 +237,19 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 450 tests
+# backend — 471 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 100 tests
+# front — 117 tests
 cd car-cost/frontend && npm test
 ```
 
-Les trente-neuf tests d'intégration se **sautent** si Postgres n'est pas
+Les quarante-trois tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
-`411 passed, 39 skipped` hors ligne, `450 passed` avec la base chargée et
+`428 passed, 43 skipped` hors ligne, `471 passed` avec la base chargée et
 migrée jusqu'à 0005 (le démarrage de l'API rattrape les migrations
-manquantes). Les
-tests d'intégration qui écrivent le font dans une transaction annulée : un
+manquantes). Les tests d'intégration qui écrivent le font dans une
+transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
 l'écran utilise.
 
@@ -336,7 +336,11 @@ entièrement distinct.
   surlignage, au plus 50 chemins par pièce (`max_paths`)
 - **Lot 1d — le snapshot de calcul nommé** (ADR-0014). Figer un calcul sous un
   nom, lister et ouvrir les snapshots, comparer deux snapshots entre eux sans
-  recalcul ; un scénario qui porte un snapshot ne se supprime pas
+  recalcul ; un scénario qui porte un snapshot ne se supprime pas. Un snapshot
+  ouvert est en lecture seule (réglages de sa copie, marques ●/○ de sa copie,
+  synthèse « figé ») ; « Repartir de ce snapshot » crée un scénario éditable
+  avec exactement sa copie (`derived_from`), dont le gel produit un nouveau
+  snapshot aux prix du jour
 
 ### Ce qu'il reste à faire
 
@@ -347,8 +351,10 @@ entièrement distinct.
 - [ ] **Lot 2.3 — décomposition de l'écart.** Deux snapshots de calcul pris sur
       des snapshots de prix différents ne se comparent pas aujourd'hui (422) ;
       les comparer, c'est décomposer l'écart entre prix et hypothèses.
-- [ ] **Lot 3 — export et import de snapshots de calcul**, `derived_from` et
-      « partir de ce snapshot ».
+- [ ] **Lot 3 — export et import de snapshots de calcul.** « Repartir de ce
+      snapshot » et `derived_from` existent depuis le lot 1 ; le refus d'un
+      réglage copié qui ne s'applique plus n'est exercé que sur des doubles
+      de test tant qu'aucun snapshot n'est importé.
 - [ ] **Renommer un snapshot depuis l'écran.** `PATCH /calculation-snapshots/{id}`
       existe ; aucun contrôle ne l'appelle.
 - [ ] **Route groupée `children:batch`** pour rafraîchir l'arbre en une requête
@@ -384,8 +390,8 @@ entièrement distinct.
   395–448 ms pour 12 nœuds dépliés, au-dessus des 300 ms visés par l'ADR-0009 :
   l'arbre relit chaque nœud ouvert, un par un. Un indicateur « mise à jour… »
   l'annonce ; la route groupée `children:batch` est différée.
-- **Les marques ●/○ d'un snapshot ouvert viennent du scénario vivant**, pas du
-  snapshot : si les réglages ont changé depuis le gel, elles ne le disent pas.
+- **L'URL ne garde pas le snapshot ouvert** : un F5 rouvre le scénario vivant
+  du snapshot, pas le snapshot.
 - **Deux snapshots de calcul sur des snapshots de prix différents ne se
   comparent pas** (ADR-0012, ADR-0014) : l'API refuse (422), l'écran le dit.
 - **Le pliage des accents diverge entre Python et TS.** `casefold` côté API,
