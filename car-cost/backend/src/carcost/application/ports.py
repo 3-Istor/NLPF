@@ -188,3 +188,52 @@ class CalculationRepository(Protocol):
     def latest_for(self, scenario_id: str):  # pragma: no cover - contrat
         """Le dernier calcul de ce scénario, ou None."""
         ...
+
+
+class CalculationSnapshotNotFound(Exception):
+    """Snapshot de calcul inconnu."""
+
+
+class SnapshotNameTaken(Exception):
+    """Le nom est déjà pris dans cette version de nomenclature (ADR-0014).
+
+    La comparaison se fait sans casse ni accents : « Référence » et
+    « reference » désigneraient le même résultat retenu.
+    """
+
+    def __init__(self, name: str, existing_id: str):
+        super().__init__(f"le nom « {name} » est déjà pris ({existing_id})")
+        self.name = name
+        self.existing_id = existing_id
+
+
+class CalculationSnapshotRepository(Protocol):
+    """Pas de suppression : un snapshot de calcul ne disparaît pas."""
+
+    def save(self, snapshot) -> None:  # pragma: no cover - contrat
+        """Lève SnapshotNameTaken si la clé du nom est prise dans la version."""
+        ...
+
+    def get(self, snapshot_id: str):  # pragma: no cover - contrat
+        """Lève CalculationSnapshotNotFound si l'identifiant est inconnu."""
+        ...
+
+    def list_for(self, bom_version: str):  # pragma: no cover - contrat
+        """Les snapshots d'une version, du plus récent au plus ancien."""
+        ...
+
+    def for_scenario(self, scenario_id: str):  # pragma: no cover - contrat
+        """Les snapshots figés depuis ce scénario."""
+        ...
+
+    def rename(
+        self, snapshot_id: str, name: str, renamed_at: datetime
+    ) -> None:  # pragma: no cover - contrat
+        """Change le nom seul et trace le renommage ; SnapshotNameTaken."""
+        ...
+
+    def name_history(
+        self, snapshot_id: str
+    ) -> Sequence[tuple[str, datetime]]:  # pragma: no cover - contrat
+        """Les noms successifs depuis la création, dans l'ordre."""
+        ...
