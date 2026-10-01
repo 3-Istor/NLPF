@@ -90,6 +90,15 @@ button.label {
   font: inherit; color: inherit; cursor: pointer; white-space: nowrap;
 }
 button.label:hover { text-decoration: underline dotted; }
+/* « régler » : discret, il n'apparaît que sur la ligne survolée ou sélectionnée,
+   pour ne pas répéter un bouton sur chaque ligne de l'arbre. */
+.row-action {
+  flex: none; margin-left: 6px; padding: 0 6px;
+  border: 1px solid var(--line); border-radius: 4px; background: var(--panel);
+  font-size: 11px; color: var(--accent); cursor: pointer;
+  visibility: hidden;
+}
+.row:hover .row-action, .row--selected .row-action, .row-action:focus-visible { visibility: visible; }
 .ref { flex: none; }
 .qty { flex: none; color: var(--muted); font-variant-numeric: tabular-nums; }
 

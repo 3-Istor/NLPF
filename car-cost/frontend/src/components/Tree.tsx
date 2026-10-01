@@ -138,6 +138,10 @@ export function Tree({
         tabStop={tabStop}
         browsed={browsed}
         onOpenPanel={() => setBrowsed(null)}
+        onBrowse={(path) => {
+          state.select(path);
+          setBrowsed(path);
+        }}
         onParameterChanged={onParameterChanged}
         onShowWhereUsed={onShowWhereUsed}
         query={query}

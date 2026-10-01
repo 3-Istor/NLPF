@@ -33,6 +33,8 @@ type Props = {
   /** La ligne atteinte au clavier dont le panneau attend Entrée. */
   browsed: string | null;
   onOpenPanel: () => void;
+  /** Sélectionne la ligne sans ouvrir son panneau : on la parcourt. */
+  onBrowse: (path: string) => void;
   onParameterChanged: () => void;
   onShowWhereUsed: (partRef: string) => void;
   /** La recherche courante : ses correspondances sont surlignées. */
@@ -66,6 +68,7 @@ export function TreeNode({
   tabStop,
   browsed,
   onOpenPanel,
+  onBrowse,
   onParameterChanged,
   onShowWhereUsed,
   query = "",
@@ -114,16 +117,37 @@ export function TreeNode({
           >
             {line.has_children ? (open ? "▾" : "▸") : "·"}
           </button>
+          {/* Le libellé fait ce qu'on attend de lui : un ensemble se déplie, une
+              feuille (rien à déplier) ouvre son panneau. Déplier n'ouvre pas le
+              panneau d'un ensemble : suivre un chemin en ouvrirait un à chaque
+              niveau. */}
           <button
             className="label"
+            onClick={() => {
+              if (line.has_children) {
+                onBrowse(line.path);
+                state.toggle(line.path);
+              } else {
+                state.select(line.path);
+                onOpenPanel();
+              }
+            }}
+            tabIndex={-1}
+            title={line.has_children ? (open ? "Replier" : "Déplier") : undefined}
+          >
+            <Highlight text={line.label} query={query} />
+          </button>
+          <button
+            className="row-action"
             onClick={() => {
               state.select(line.path);
               onOpenPanel();
             }}
             tabIndex={-1}
+            aria-label={frozen ? "Voir les réglages figés" : "Régler cette pièce"}
             title={frozen ? "Voir les réglages figés" : "Régler cette pièce"}
           >
-            <Highlight text={line.label} query={query} />
+            {frozen ? "réglages" : "régler"}
           </button>
         </div>
 
@@ -241,6 +265,7 @@ export function TreeNode({
                   tabStop={tabStop}
                   browsed={browsed}
                   onOpenPanel={onOpenPanel}
+                  onBrowse={onBrowse}
                   onParameterChanged={onParameterChanged}
                   onShowWhereUsed={onShowWhereUsed}
                   query={query}

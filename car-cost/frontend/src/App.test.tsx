@@ -229,6 +229,16 @@ beforeEach(() => {
 
 const row = (path: string) => document.getElementById(`node-${path}`);
 
+/**
+ * Ouvre le panneau d'une ligne. Le libellé d'un ensemble le déplie ; c'est le
+ * bouton « régler » (ou « réglages », pour un snapshot ouvert) qui ouvre le panneau.
+ */
+function openSettings(path: string) {
+  fireEvent.click(
+    within(row(path)!).getByRole("button", { name: /Régler cette pièce|Voir les réglages figés/ }),
+  );
+}
+
 function chevron(path: string) {
   return within(row(path)!).getByRole("button", { name: /Déplier|Replier/ });
 }
@@ -268,7 +278,7 @@ describe("l'écran garde l'arbre", () => {
     await expandScrew();
     const kept = document.getElementById("node-V/A");
 
-    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+    openSettings("V/A");
     fireEvent.click(await screen.findByRole("button", { name: "Appliquer" }));
 
     await screen.findByText("toutes les occurrences");
@@ -533,7 +543,7 @@ describe("un snapshot ouvert est en lecture seule", () => {
     await expandScrew();
     await openSnapshot("csn-2");
 
-    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+    openSettings("V/A");
 
     const copied = await screen.findByRole("region", { name: "Réglages figés — GMP" });
     expect(within(copied).getByText("toutes les occurrences")).toBeInTheDocument();
@@ -598,7 +608,7 @@ describe("un snapshot ouvert est en lecture seule", () => {
     await waitFor(() =>
       expect(screen.queryByText("Snapshot de calcul :", { exact: false })).toBeNull(),
     );
-    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+    openSettings("V/A");
     expect(await screen.findByRole("button", { name: "Appliquer" })).toBeInTheDocument();
     expect(api.root).toHaveBeenLastCalledWith(VERSION, "calc-3");
   });
@@ -646,7 +656,7 @@ describe("repartir d'un snapshot de calcul", () => {
       "Variante Turquie — reprise d'octobre",
     );
     expect(screen.getByLabelText("Scénario")).toHaveValue("scn-repris");
-    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+    openSettings("V/A");
     expect(await screen.findByRole("button", { name: "Appliquer" })).toBeInTheDocument();
   });
 

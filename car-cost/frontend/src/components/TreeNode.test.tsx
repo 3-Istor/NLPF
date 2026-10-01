@@ -281,8 +281,11 @@ describe("panneau de saisie", () => {
     await expand("V");
     await waitFor(() => expect(screen.getByText("Châssis")).toBeInTheDocument());
 
-    act(() => screen.getByText("Véhicule complet").click());
-    act(() => screen.getByText("Châssis").click());
+    // Le libellé d'un ensemble le déplie ; c'est « régler » qui ouvre le panneau.
+    const settle = (path: string) =>
+      (row(path)!.querySelector("button.row-action") as HTMLButtonElement).click();
+    act(() => settle("V"));
+    act(() => settle("V/B"));
 
     const panels = container.querySelectorAll(".panel");
     expect(panels).toHaveLength(1);
@@ -348,4 +351,48 @@ it("chaque ligne a un id dérivé du chemin", async () => {
   await expand("V");
 
   await waitFor(() => expect(document.getElementById("node-V/A")).not.toBeNull());
+});
+
+describe("clic sur le libellé", () => {
+  it("déplie un ensemble, sans ouvrir son panneau", async () => {
+    mount({}, new Map(), scenarioWith());
+
+    act(() => screen.getByText("Véhicule complet").click());
+
+    await waitFor(() => expect(screen.getByText("Groupe motopropulseur")).toBeInTheDocument());
+    expect(row("V")).toHaveAttribute("aria-expanded", "true");
+    expect(row("V")).toHaveAttribute("aria-selected", "true");
+    expect(screen.queryByText(/Ensemble fabriqué — V/)).toBeNull();
+  });
+
+  it("replie un ensemble déplié", async () => {
+    mount({}, new Map(), scenarioWith());
+    await expand("V");
+
+    act(() => screen.getByText("Véhicule complet").click());
+
+    await waitFor(() => expect(row("V")).toHaveAttribute("aria-expanded", "false"));
+    expect(screen.queryByText("Groupe motopropulseur")).toBeNull();
+  });
+
+  it("ouvre le panneau d'une feuille, qui n'a rien à déplier", async () => {
+    mount(
+      { has_children: false, child_count: 0, valuation_mode: "purchased" },
+      new Map(),
+      scenarioWith(),
+    );
+
+    act(() => screen.getByText("Véhicule complet").click());
+
+    expect(await screen.findByText(/Pièce achetée — V/)).toBeInTheDocument();
+  });
+
+  it("le bouton « Régler » ouvre le panneau d'un ensemble, sans le déplier", async () => {
+    mount({}, new Map(), scenarioWith());
+
+    act(() => screen.getByRole("button", { name: "Régler cette pièce" }).click());
+
+    expect(await screen.findByText(/Ensemble fabriqué — V/)).toBeInTheDocument();
+    expect(row("V")).toHaveAttribute("aria-expanded", "false");
+  });
 });
