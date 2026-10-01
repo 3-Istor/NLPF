@@ -138,6 +138,25 @@ def compare_snapshots(
     return comparison, snapshot_a, snapshot_b
 
 
+def frozen_scenario(snapshot: CalculationSnapshot) -> Scenario:
+    """Le scénario que la copie décrit, sans relire le scénario vivant."""
+    return Scenario(
+        id=snapshot.scenario_id,
+        bom_version=snapshot.bom_version,
+        display_currency=snapshot.display_currency,
+        labour_rate=snapshot.labour_rate,
+        active_rules=snapshot.active_rules,
+        parameters=tuple(
+            ScenarioParameter(
+                **{name: getattr(parameter, name) for name in _FROZEN_FIELDS}
+            )
+            for parameter in snapshot.parameters
+        ),
+        name=snapshot.scenario_name,
+        derived_from=snapshot.derived_from,
+    )
+
+
 def derive_scenario(
     snapshot_id: str,
     name: str,
@@ -154,19 +173,8 @@ def derive_scenario(
     créé est indépendant, et son gel en produira un nouveau (ADR-0014).
     """
     snapshot = snapshots_repo.get(snapshot_id)
-    derived = Scenario(
-        id=scenario_id,
-        bom_version=snapshot.bom_version,
-        display_currency=snapshot.display_currency,
-        labour_rate=snapshot.labour_rate,
-        active_rules=snapshot.active_rules,
-        parameters=tuple(
-            ScenarioParameter(
-                **{name: getattr(parameter, name) for name in _FROZEN_FIELDS}
-            )
-            for parameter in snapshot.parameters
-        ),
-        name=name,
+    derived = replace(
+        frozen_scenario(snapshot), id=scenario_id, name=name,
         derived_from=snapshot.id,
     )
     # L'en-tête d'abord : un nom vide n'est pas un défaut de chaque réglage.

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Request
 
 from ...application.browse_bom import (
     PathNotFound,
@@ -22,13 +22,28 @@ from ...application.browse_bom import (
     search_summary,
     where_used,
 )
+from ...application.freeze_calculation import frozen_scenario
 from ...application.tree_view import with_costs
+from .errors import error_response
 
 SCALE = Decimal("0.000001")
+
+_FROZEN = (
+    "Snapshot de calcul ouvert : chiffres de son calcul figé, marques ●/○ "
+    "d'après sa copie des réglages"
+)
+
+
+class CalculationSnapshotMismatch(ValueError):
+    """`calculation_id` et `calculation_snapshot_id` désignent deux calculs."""
 
 
 def register_bom_routes(app: FastAPI, repositories) -> None:
     repository = repositories.bom
+
+    @app.exception_handler(CalculationSnapshotMismatch)
+    async def _mismatch(_: Request, error: CalculationSnapshotMismatch):
+        return error_response(422, "CALCULATION_SNAPSHOT_MISMATCH", str(error))
 
     @app.get("/api/v1/bom/versions")
     def read_versions():
@@ -52,9 +67,16 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         }
 
     @app.get("/api/v1/bom/{version}/root")
-    def read_root(version: str, calculation_id: str | None = Query(None)):
+    def read_root(
+        version: str,
+        calculation_id: str | None = Query(None),
+        calculation_snapshot_id: str | None = Query(None, description=_FROZEN),
+    ):
         bom = repository.load(version)
-        return _render(repositories, bom, (root_node(bom),), calculation_id)[0]
+        return _render(
+            repositories, bom, (root_node(bom),), calculation_id,
+            calculation_snapshot_id,
+        )[0]
 
     @app.get("/api/v1/bom/{version}/children")
     def read_children(
@@ -63,6 +85,7 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         calculation_id: str | None = Query(
             None, description="Enrichit chaque ligne des chiffres de ce calcul"
         ),
+        calculation_snapshot_id: str | None = Query(None, description=_FROZEN),
         limit: int = Query(50, ge=1, le=500),
         offset: int = Query(0, ge=0),
     ):
@@ -72,7 +95,10 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         page = children_of_path(bom, path, limit=limit, offset=offset)
         return {
             "path": path,
-            "items": _render(repositories, bom, page.items, calculation_id),
+            "items": _render(
+                repositories, bom, page.items, calculation_id,
+                calculation_snapshot_id,
+            ),
             "total": page.total,
             "limit": page.limit,
             "offset": page.offset,
@@ -177,17 +203,33 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         }
 
 
-def _render(repositories, bom, nodes, calculation_id: str | None) -> list[dict]:
+def _render(
+    repositories, bom, nodes, calculation_id: str | None,
+    calculation_snapshot_id: str | None = None,
+) -> list[dict]:
     """Les lignes, avec ou sans les chiffres d'un calcul.
 
-    Sans `calculation_id`, aucun champ monétaire n'est renvoyé — pas même à
-    zéro : un zéro se lit comme un prix.
-    """
-    if calculation_id is None:
-        return [_node_payload(node) for node in nodes]
+    Sans `calculation_id` ni snapshot, aucun champ monétaire n'est renvoyé —
+    pas même à zéro : un zéro se lit comme un prix.
 
-    calculation = repositories.calculations.get(calculation_id)
-    scenario = repositories.scenarios.get(calculation.scenario_id)
+    Un snapshot de calcul ouvert apporte son calcul figé **et** sa copie des
+    réglages : les marques ●/○ disent ce que le gel contenait, pas ce que le
+    scénario vivant est devenu depuis (ADR-0014).
+    """
+    if calculation_snapshot_id is not None:
+        snapshot = repositories.calculation_snapshots.get(calculation_snapshot_id)
+        if calculation_id is not None and calculation_id != snapshot.calculation_id:
+            raise CalculationSnapshotMismatch(
+                f"le snapshot {snapshot.id} fige le calcul {snapshot.calculation_id},"
+                f" pas {calculation_id}"
+            )
+        calculation = repositories.calculations.get(snapshot.calculation_id)
+        scenario = frozen_scenario(snapshot)
+    elif calculation_id is None:
+        return [_node_payload(node) for node in nodes]
+    else:
+        calculation = repositories.calculations.get(calculation_id)
+        scenario = repositories.scenarios.get(calculation.scenario_id)
     return [
         _costed_payload(costed, calculation.display_currency)
         for costed in with_costs(bom, tuple(nodes), calculation, scenario)

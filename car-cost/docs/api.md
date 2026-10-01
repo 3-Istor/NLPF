@@ -84,6 +84,7 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `INVALID_SNAPSHOT_NAME` | 422 | Nom de snapshot de calcul vide (§3.11) |
 | `SNAPSHOT_NAME_TAKEN` | 409 | Le nom est déjà pris dans cette version, sans casse ni accents ; `details: {name, existing_id}` (§3.11) |
 | `CALCULATION_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot de calcul inconnu (§3.11) |
+| `CALCULATION_SNAPSHOT_MISMATCH` | 422 | Lignes d'arbre demandées avec un `calculation_id` qui n'est pas celui du `calculation_snapshot_id` (§2.3) |
 | `SCENARIO_HAS_SNAPSHOTS` | 409 | Suppression d'un scénario qui porte des snapshots de calcul ; `details.snapshots` les nomme (§3.6) |
 | `SNAPSHOT_SETTINGS_NOT_APPLICABLE` | 422 | Repartir d'un snapshot de calcul dont un réglage copié ne s'applique plus ; `details.parts` nomme chaque pièce, `[{part_ref, path, reason}]`, et aucun scénario n'est créé (§3.11) |
 | `NO_PRICE_SNAPSHOT` | 409 | Aucun snapshot disponible, même périmé |
@@ -127,6 +128,7 @@ C'est la route centrale de l'écran. Elle renvoie **les enfants directs et rien 
 |---|---|---|
 | `path` | oui | Le nœud à déplier |
 | `calculation_id` | non | Enrichit chaque ligne des chiffres de ce calcul |
+| `calculation_snapshot_id` | non | Snapshot de calcul ouvert : chiffres de son calcul figé, et marques `is_modified` / `has_modified_descendant` d'après **sa copie** des réglages, pas d'après le scénario vivant. Avec `calculation_id`, les deux doivent désigner le même calcul (`422 CALCULATION_SNAPSHOT_MISMATCH` sinon) ; inconnu : `404 CALCULATION_SNAPSHOT_NOT_FOUND`. Aussi accepté par `/root` |
 | `limit`, `offset` | non | Pagination des enfants |
 
 ```json

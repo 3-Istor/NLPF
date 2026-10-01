@@ -318,3 +318,77 @@ def test_a_blank_name_for_the_derived_scenario_is_refused(client):
 
     assert response.status_code == 422
     assert response.json()["error"]["code"] == "INVALID_SCENARIO"
+
+
+@pytest.fixture
+def frozen_then_changed(client):
+    """Un gel réglé sur S, puis le scénario vivant réglé sur A et plus sur S."""
+    live = make_scenario(client)
+    origin = freeze(client, live["id"], "Référence T3").json()
+    client.put(
+        f"/api/v1/scenarios/{live['id']}/parameters/A",
+        json={"scope": "part", "labour_minutes": "7"},
+    )
+    on_s = next(p for p in live["parameters"] if p["part_ref"] == "S")
+    deleted = client.delete(
+        f"/api/v1/scenarios/{live['id']}/parameters/{on_s['parameter_id']}"
+    )
+    assert deleted.status_code == 200, deleted.text
+    return origin
+
+
+def rows(response) -> dict:
+    assert response.status_code == 200, response.text
+    return {item["part_ref"]: item for item in response.json()["items"]}
+
+
+def test_an_open_snapshot_marks_its_rows_from_its_copy(client, frozen_then_changed):
+    origin = frozen_then_changed
+    tree = f"/api/v1/bom/{VERSION}"
+    frozen = {"calculation_snapshot_id": origin["id"]}
+
+    under_root = rows(client.get(f"{tree}/children", params={"path": "V", **frozen}))
+    under_a = rows(client.get(f"{tree}/children", params={"path": "V/A", **frozen}))
+    root = client.get(f"{tree}/root", params=frozen).json()
+
+    assert under_root["A"]["is_modified"] is False
+    assert under_root["A"]["has_modified_descendant"] is True
+    assert under_a["S"]["is_modified"] is True
+    assert root["has_modified_descendant"] is True
+    assert "rolled_up_contribution" in root
+
+
+def test_without_a_snapshot_the_rows_keep_the_live_marks(client, frozen_then_changed):
+    origin = frozen_then_changed
+    tree = f"/api/v1/bom/{VERSION}"
+    live = {"calculation_id": origin["calculation_id"]}
+
+    under_root = rows(client.get(f"{tree}/children", params={"path": "V", **live}))
+    under_a = rows(client.get(f"{tree}/children", params={"path": "V/A", **live}))
+
+    assert under_root["A"]["is_modified"] is True
+    assert under_a["S"]["is_modified"] is False
+
+
+def test_the_snapshot_and_the_calculation_must_agree(client, frozen_then_changed):
+    origin = frozen_then_changed
+    other = client.post(
+        "/api/v1/calculations", json={"scenario_id": origin["scenario_id"]},
+    ).json()
+
+    response = client.get(
+        f"/api/v1/bom/{VERSION}/root",
+        params={"calculation_snapshot_id": origin["id"], "calculation_id": other["id"]},
+    )
+
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "CALCULATION_SNAPSHOT_MISMATCH"
+
+
+def test_an_unknown_open_snapshot_is_a_named_404(client):
+    response = client.get(
+        f"/api/v1/bom/{VERSION}/root", params={"calculation_snapshot_id": "csn-inconnu"},
+    )
+
+    assert response.status_code == 404
+    assert response.json()["error"]["code"] == "CALCULATION_SNAPSHOT_NOT_FOUND"
