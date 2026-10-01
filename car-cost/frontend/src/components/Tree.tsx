@@ -26,6 +26,8 @@ type Props = {
   scenario: Scenario | null;
   onParameterChanged: () => void;
   onShowWhereUsed: (partRef: string) => void;
+  /** La recherche courante, surlignée dans les lignes visibles. */
+  query?: string;
 };
 
 type VisibleRow = { line: TreeLine; parent: string | null };
@@ -56,6 +58,7 @@ export function Tree({
   scenario,
   onParameterChanged,
   onShowWhereUsed,
+  query = "",
 }: Props) {
   // La ligne atteinte au clavier et pas encore ouverte : la sélection suit le
   // focus, mais le panneau attend Entrée pour ne pas s'ouvrir à chaque flèche.
@@ -133,6 +136,7 @@ export function Tree({
         onOpenPanel={() => setBrowsed(null)}
         onParameterChanged={onParameterChanged}
         onShowWhereUsed={onShowWhereUsed}
+        query={query}
       />
     </ul>
   );

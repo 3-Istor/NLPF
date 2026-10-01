@@ -12,6 +12,7 @@ import type { Scenario, TreeLine } from "../api/types";
 import { money, percent, quantity } from "../format";
 import { describeRefusal, Refusals } from "../quarantine";
 import type { TreeState } from "../tree/useTreeState";
+import { Highlight } from "./Highlight";
 import { NodePanel } from "./NodePanel";
 import { rowId } from "./rowId";
 
@@ -28,6 +29,8 @@ type Props = {
   onOpenPanel: () => void;
   onParameterChanged: () => void;
   onShowWhereUsed: (partRef: string) => void;
+  /** La recherche courante : ses correspondances sont surlignées. */
+  query?: string;
 };
 
 /** L'id DOM de la liste des enfants d'une ligne, que la ligne possède (aria-owns). */
@@ -58,6 +61,7 @@ export function TreeNode({
   onOpenPanel,
   onParameterChanged,
   onShowWhereUsed,
+  query = "",
 }: Props) {
   // Un nœud n'est rendu que si son parent est déplié : un sous-niveau resté
   // déplié sous un parent replié n'est donc jamais affiché.
@@ -112,11 +116,13 @@ export function TreeNode({
             tabIndex={-1}
             title="Régler cette pièce"
           >
-            {line.label}
+            <Highlight text={line.label} query={query} />
           </button>
         </div>
 
-        <code className="cell ref">{line.part_ref}</code>
+        <code className="cell ref">
+          <Highlight text={line.part_ref} query={query} />
+        </code>
 
         <span className="cell num qty">
           × {quantity(line.edge_quantity)} {line.unit}
@@ -225,6 +231,7 @@ export function TreeNode({
                   onOpenPanel={onOpenPanel}
                   onParameterChanged={onParameterChanged}
                   onShowWhereUsed={onShowWhereUsed}
+                  query={query}
                 />
               ))}
               {entry.page.items.length === 0 && (

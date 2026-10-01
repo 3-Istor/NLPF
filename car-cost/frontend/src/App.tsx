@@ -60,6 +60,8 @@ export function App() {
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
+  // La recherche en cours, surlignée dans l'arbre.
+  const [query, setQuery] = useState("");
   const [initial] = useState(readLocation);
   const tree = useTreeState({
     version: BOM_VERSION,
@@ -277,6 +279,7 @@ export function App() {
                   <SearchBar
                     version={BOM_VERSION}
                     onNavigate={goToResult}
+                    onQueryChange={setQuery}
                   />
                 </TreeToolbar>
                 <TreeHeader />
@@ -288,6 +291,7 @@ export function App() {
                 scenario={scenario}
                 onParameterChanged={refreshScenario}
                 onShowWhereUsed={setWhereUsed}
+                query={query}
               />
             </Refusals.Provider>
           ) : (

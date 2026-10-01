@@ -324,4 +324,34 @@ describe("l'écran garde l'arbre", () => {
     const call = scrollIntoView.mock.contexts.indexOf(row("V/A/X"));
     expect(scrollIntoView.mock.calls[call]).toEqual([{ block: "center" }]);
   });
+
+  it("le terme cherché est surligné dans l'arbre, accents compris", async () => {
+    vi.mocked(api.root).mockResolvedValueOnce(
+      line({ path: "V", part_ref: "HARN-01", label: "Faisceau électrique", has_children: false }),
+    );
+    vi.mocked(api.search).mockResolvedValue({
+      items: [
+        {
+          part_ref: "HARN-01",
+          label: "Faisceau électrique",
+          system: "ELE",
+          occurrence_count: 1,
+          paths: ["V"],
+          paths_truncated: false,
+        },
+      ],
+      total_parts: 1,
+      total_occurrences: 1,
+    });
+    render(<App />);
+    const input = await screen.findByRole("searchbox");
+    await waitFor(() => expect(row("V")).not.toBeNull());
+
+    fireEvent.change(input, { target: { value: "electrique" } });
+    fireEvent.keyDown(input, { key: "Enter" });
+
+    await waitFor(() =>
+      expect(row("V")!.querySelector("mark")?.textContent).toBe("électrique"),
+    );
+  });
 });

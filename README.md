@@ -319,6 +319,12 @@ entièrement distinct.
   Côté API seulement : l'écran ne les appelle pas encore
 - Écran : arbre dépliable, synthèse permanente, panneau de saisie contextuel,
   marquage des modifications, totaux obsolètes signalés
+- Recherche dans l'arbre, sans accents ni casse : le compteur parle en
+  occurrences (« 1 / 3 résultats (2 pièces) »), Entrée et F3 passent au
+  résultat suivant, Maj+Entrée et Maj+F3 reviennent ; aller à un résultat
+  déplie ses ancêtres, le sélectionne et le centre ; les correspondances sont
+  surlignées sans jamais injecter de HTML. Au plus 50 chemins parcourables par
+  pièce, le compteur le dit quand il y en a plus
 
 ### Ce qu'il reste à faire
 
@@ -334,8 +340,6 @@ entièrement distinct.
       l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
       persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).
 - [ ] **Vue par occurrence** — une ligne par chemin, bornée à un sous-arbre.
-- [ ] **Recherche à l'écran** : l'API renvoie les chemins, le front ne déplie
-      pas encore automatiquement jusqu'au résultat.
 
 **Tranche T3 — « l'outil aide à décider »**
 
