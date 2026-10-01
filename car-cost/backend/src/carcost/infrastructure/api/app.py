@@ -20,6 +20,7 @@ from ...application.ports import (
     BomVersionNotValidated,
     CalculationNotFound,
     CalculationRepository,
+    CalculationSnapshotRepository,
     PriceSnapshotRepository,
     ScenarioNotFound,
     ScenarioRepository,
@@ -43,6 +44,7 @@ class Repositories:
     snapshots: PriceSnapshotRepository | None = None
     scenarios: ScenarioRepository | None = None
     calculations: CalculationRepository | None = None
+    calculation_snapshots: CalculationSnapshotRepository | None = None
     clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
 
 
