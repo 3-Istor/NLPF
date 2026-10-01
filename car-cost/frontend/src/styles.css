@@ -324,3 +324,4 @@ button { font: inherit; }
 
 .node-status { margin: 4px 0 4px 34px; color: var(--muted); font-size: 12px; list-style: none; }
 .node-status--danger { color: var(--danger); }
+.scenario-bar__error { color: var(--danger); font-size: 12px; }

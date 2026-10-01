@@ -18,6 +18,8 @@ type Props = {
   onOpenDecision: () => void;
   /** Les snapshots de calcul de cette version, du plus récent au plus ancien. */
   snapshots: readonly CalculationSnapshotSummary[];
+  /** La liste n'a pas pu être lue : ce n'est pas une liste vide. */
+  snapshotsError?: string | null;
   /** Le snapshot de calcul ouvert, s'il y en a un. */
   openSnapshotId: string | null;
   /** Fige sous ce nom ; `false` garde le champ ouvert (refus du serveur). */
@@ -41,6 +43,7 @@ export function ScenarioBar({
   onDelete,
   onOpenDecision,
   snapshots,
+  snapshotsError = null,
   openSnapshotId,
   onFreeze,
   onOpenSnapshot,
@@ -142,9 +145,11 @@ export function ScenarioBar({
         }}
       >
         <option value="">
-          {snapshots.length === 0
-            ? "Aucun snapshot de calcul"
-            : "Ouvrir un snapshot de calcul…"}
+          {snapshotsError
+            ? "Snapshots de calcul indisponibles"
+            : snapshots.length === 0
+              ? "Aucun snapshot de calcul"
+              : "Ouvrir un snapshot de calcul…"}
         </option>
         {snapshots.map((snapshot) => (
           <option key={snapshot.id} value={snapshot.id}>
@@ -152,6 +157,12 @@ export function ScenarioBar({
           </option>
         ))}
       </select>
+
+      {snapshotsError && (
+        <span role="alert" className="scenario-bar__error">
+          Liste des snapshots de calcul illisible : {snapshotsError}
+        </span>
+      )}
 
       <button
         className="scenario-bar__danger"

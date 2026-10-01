@@ -671,3 +671,55 @@ describe("repartir d'un snapshot de calcul", () => {
     expect(screen.getByLabelText("Scénario")).toHaveValue("scn-2");
   });
 });
+
+describe("des messages d'erreur fiables", () => {
+  it("une liste de snapshots illisible est une erreur, pas une liste vide", async () => {
+    vi.mocked(api.calculationSnapshots).mockRejectedValueOnce(
+      new ApiFailure("UNKNOWN", "relation calculation_snapshot inexistante", 500),
+    );
+
+    await start();
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("relation calculation_snapshot inexistante");
+    expect(screen.queryByText("Aucun snapshot de calcul")).toBeNull();
+  });
+
+  it("un gel réussi ferme le champ même si la liste ne se relit pas", async () => {
+    await start();
+    vi.mocked(api.calculationSnapshots).mockRejectedValueOnce(
+      new ApiFailure("UNKNOWN", "réseau coupé", 503),
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Figer sous un nom" }));
+    fireEvent.change(screen.getByLabelText("Nom du snapshot de calcul"), {
+      target: { value: "Référence T3" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Figer" }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("« Référence T3 » figé");
+    expect(alert).toHaveTextContent("réseau coupé");
+    expect(screen.queryByLabelText("Nom du snapshot de calcul")).toBeNull();
+    expect(document.querySelector(".snapshot-title")).toHaveTextContent(
+      "Snapshot de calcul : Référence T3",
+    );
+  });
+
+  it("supprimer efface l'erreur précédente avant d'appeler le serveur", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    await start();
+    vi.mocked(api.freezeCalculation).mockRejectedValueOnce(
+      new ApiFailure("SNAPSHOT_NAME_TAKEN", "nom déjà pris", 409),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Figer sous un nom" }));
+    fireEvent.click(screen.getByRole("button", { name: "Figer" }));
+    await screen.findByText(/nom déjà pris/);
+    vi.mocked(api.deleteScenario).mockReturnValueOnce(new Promise(() => {}));
+
+    fireEvent.click(screen.getByRole("button", { name: "Supprimer" }));
+
+    await waitFor(() => expect(screen.queryByText(/nom déjà pris/)).toBeNull());
+    expect(api.deleteScenario).toHaveBeenCalledWith("scn-1");
+  });
+});

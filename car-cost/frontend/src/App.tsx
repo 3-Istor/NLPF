@@ -56,6 +56,8 @@ export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [snapshots, setSnapshots] = useState<CalculationSnapshotSummary[]>([]);
+  // Une liste illisible n'est pas une liste vide : on le dit.
+  const [snapshotsError, setSnapshotsError] = useState<string | null>(null);
   // Le snapshot de calcul dont l'écran montre le calcul figé, en lecture
   // seule ; sinon, le scénario vivant, éditable.
   const [openSnapshot, setOpenSnapshot] = useState<CalculationSnapshot | null>(null);
@@ -105,8 +107,12 @@ export function App() {
         setScenarios(known);
         api
           .calculationSnapshots(BOM_VERSION)
-          .then((page) => alive && setSnapshots(page.items))
-          .catch(() => undefined);
+          .then((page) => {
+            if (!alive) return;
+            setSnapshots(page.items);
+            setSnapshotsError(null);
+          })
+          .catch((error) => alive && setSnapshotsError(describe(error)));
         await open(known.find((item) => item.id === initial.scenario) ?? known[0]);
       } catch (error) {
         if (alive) setFailure(describe(error));
@@ -209,14 +215,23 @@ export function App() {
   /**
    * Lance un calcul sur le scénario vivant et le fige sous ce nom. Le résultat
    * affiché ensuite est celui du gel. Renvoie `false` si le serveur refuse
-   * (nom déjà pris…) : le champ reste ouvert pour corriger le nom.
+   * (nom déjà pris…) : le champ reste ouvert pour corriger le nom. Une fois le
+   * gel fait, le champ se ferme quoi qu'il arrive : le rouvrir inviterait à
+   * figer une seconde fois, et le serveur répondrait « nom déjà pris ».
    */
   async function freeze(name: string): Promise<boolean> {
     if (!scenario) return false;
     setBusy(true);
     setFailure(null);
+    let frozen: CalculationSnapshot;
     try {
-      const frozen = await api.freezeCalculation(scenario.id, name);
+      frozen = await api.freezeCalculation(scenario.id, name);
+    } catch (error) {
+      setFailure(describe(error));
+      setBusy(false);
+      return false;
+    }
+    try {
       const fresh = await api.scenario(scenario.id);
       setScenarios((list) =>
         list.map((item) => (item.id === fresh.id ? fresh : item)),
@@ -224,13 +239,16 @@ export function App() {
       await open(fresh, frozen);
       const page = await api.calculationSnapshots(BOM_VERSION);
       setSnapshots(page.items);
-      return true;
+      setSnapshotsError(null);
     } catch (error) {
-      setFailure(describe(error));
-      return false;
+      setFailure(
+        `Snapshot de calcul « ${frozen.name} » figé, mais l'écran n'a pas pu ` +
+          `le rouvrir ou relire la liste : ${describe(error)}`,
+      );
     } finally {
       setBusy(false);
     }
+    return true;
   }
 
   /** Ouvre un calcul figé : son scénario, son calcul, son nom en en-tête. */
@@ -280,6 +298,7 @@ export function App() {
 
   async function removeScenario() {
     if (!scenario) return;
+    setFailure(null);
     try {
       await api.deleteScenario(scenario.id);
       const { items } = await api.scenarios();
@@ -355,6 +374,7 @@ export function App() {
           onDelete={removeScenario}
           onOpenDecision={() => setDeciding(true)}
           snapshots={snapshots}
+          snapshotsError={snapshotsError}
           openSnapshotId={openSnapshot?.id ?? null}
           onFreeze={freeze}
           onOpenSnapshot={openFrozen}

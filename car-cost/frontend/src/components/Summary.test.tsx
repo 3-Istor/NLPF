@@ -126,3 +126,23 @@ describe("aucun prix disponible", () => {
     expect(screen.queryByText(NO_PRICES_TEXT)).not.toBeInTheDocument();
   });
 });
+
+describe("un échec se dit à voix haute", () => {
+  it("la bannière d'erreur est une alerte", () => {
+    render(
+      <Summary
+        calculation={degraded}
+        journal={journal}
+        state="UP_TO_DATE"
+        staleReason={null}
+        busy={false}
+        failure="SNAPSHOT_NAME_TAKEN — le nom est déjà pris"
+        onRecalculate={() => {}}
+        onGoToPath={() => {}}
+        onGoToPart={() => {}}
+      />,
+    );
+
+    expect(screen.getByRole("alert")).toHaveTextContent("le nom est déjà pris");
+  });
+});

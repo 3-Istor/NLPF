@@ -77,7 +77,11 @@ export function Summary({
           Aucun snapshot de prix disponible : aucun calcul n'est possible.
         </p>
       )}
-      {failure && <p className="banner banner--danger">{failure}</p>}
+      {failure && (
+        <p className="banner banner--danger" role="alert">
+          {failure}
+        </p>
+      )}
 
       <button className="recalc" onClick={onRecalculate} disabled={busy}>
         {calculation ? "Recalculer" : "Calculer"}
