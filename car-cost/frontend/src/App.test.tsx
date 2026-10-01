@@ -760,3 +760,12 @@ describe("supprimer un scénario porteur de snapshots", () => {
     expect(screen.getByLabelText("Scénario")).toHaveValue("scn-1");
   });
 });
+
+describe("données synthétiques", () => {
+  it("l'en-tête ne répète plus l'avertissement, la synthèse le porte à côté des chiffres", async () => {
+    await start();
+
+    expect(screen.queryByText(/aucune\s+donnée constructeur/)).toBeNull();
+    expect(await screen.findByText("plausibles mais synthétiques")).toBeInTheDocument();
+  });
+});

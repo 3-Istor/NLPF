@@ -388,10 +388,6 @@ export function App() {
             onDerive={deriveFromSnapshot}
           />
         )}
-        <p className="disclaimer">
-          Prix, masses et facteurs carbone <strong>synthétiques</strong> — aucune
-          donnée constructeur.
-        </p>
       </header>
 
       <main className="app__body">

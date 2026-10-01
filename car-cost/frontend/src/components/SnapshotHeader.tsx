@@ -22,7 +22,7 @@ export function SnapshotHeader({ snapshot, busy, onBack, onDerive }: Props) {
   const [refusal, setRefusal] = useState<string | null>(null);
 
   return (
-    <div className="snapshot-title">
+    <div className="snapshot-title" role="region" aria-label="Snapshot de calcul ouvert">
       <p>
         Snapshot de calcul : <strong>{snapshot.name}</strong> — lecture seule,
         les réglages montrés sont ceux du gel.{" "}
