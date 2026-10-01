@@ -79,6 +79,7 @@ class ResolvedPrices:
     path_prices: dict[str, Decimal] = field(default_factory=dict)
     path_explanations: dict[str, PriceExplanation] = field(default_factory=dict)
     transport_co2_per_kg: dict[str, Decimal] = field(default_factory=dict)
+    path_transport_co2_per_kg: dict[str, Decimal | None] = field(default_factory=dict)
 
 
 def resolve_unit_prices(
@@ -121,13 +122,18 @@ def resolve_unit_prices(
             path_prices[parameter.path] = resolved.unit_price
             path_explanations[parameter.path] = resolved
 
-    # Portée pièce seulement pour l'instant : une surcharge de chemin change de
-    # fournisseur pour une occurrence, mais le moteur ne répercute pas encore
-    # cet écart sur le CO2 (limite connue, à lever si le besoin se confirme).
+    # Un prix forcé n'a pas d'usine : la pièce reste hors du dictionnaire et le
+    # moteur la lit comme « transport inconnu ». Sur un chemin, l'absence ne
+    # suffirait pas — elle voudrait dire « même usine que la pièce » — d'où le
+    # `None` explicite.
     transport_co2_per_kg = {
         ref: explanation.transport_co2_per_kg
         for ref, explanation in explanations.items()
         if explanation.transport_co2_per_kg is not None
+    }
+    path_transport_co2_per_kg = {
+        path: explanation.transport_co2_per_kg
+        for path, explanation in path_explanations.items()
     }
 
     return ResolvedPrices(
@@ -137,6 +143,7 @@ def resolve_unit_prices(
         path_prices=path_prices,
         path_explanations=path_explanations,
         transport_co2_per_kg=transport_co2_per_kg,
+        path_transport_co2_per_kg=path_transport_co2_per_kg,
     )
 
 

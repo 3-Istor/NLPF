@@ -237,7 +237,7 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 378 tests
+# backend — 390 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
 # front — 19 tests
@@ -246,7 +246,7 @@ cd car-cost/frontend && npm test
 
 Les vingt-deux tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Vérifié sous NixOS (Python 3.12) :
-`356 passed, 22 skipped` hors ligne, `378 passed` avec la base chargée. Les
+`368 passed, 22 skipped` hors ligne, `390 passed` avec la base chargée. Les
 tests d'intégration qui écrivent le font dans une transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
 l'écran utilise.
@@ -298,9 +298,10 @@ entièrement distinct.
   courant, et seulement les préfixes concernés réévalués lorsqu'une surcharge de chemin existe
 - Empreinte carbone calculée par le même moteur, sur le même parcours que le coût : facteur matière
   ou procédé par pièce, transport ajouté pour une pièce achetée depuis l'usine retenue pour son
-  prix. Un prix manquant laisse le CO2 inconnu, jamais zéro — même règle que pour le coût. Décomposée
-  par système et par dix principaux contributeurs, comme le coût ; alimente `co2_delta_kg` de la
-  comparaison. Portée chemin non encore prise en compte pour le CO2 (limite connue)
+  prix, surcharges de chemin comprises. Sans prix, sans masse ou à prix forcé (aucune usine retenue),
+  le CO2 d'une pièce est inconnu, jamais zéro, et la pièce est nommée (`parts_without_co2`).
+  Décomposée par système et par quinze principaux contributeurs, comme le coût ; alimente
+  `co2_delta_kg` de la comparaison, qui reste `null` tant qu'un des deux CO2 est incomplet
 - Schéma Postgres dont les contraintes rendent la double comptabilisation
   impossible, vérifié sur une vraie base
 - Snapshot de prix immuable, repli sur timeout, quarantaine des valeurs
@@ -334,8 +335,16 @@ entièrement distinct.
 - [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
       existe ; aucun panneau ne l'affiche.
 - [ ] **Empreinte carbone à l'écran.** Le moteur et l'API la calculent
-      (`total_co2`, décomposition par système, dix principaux contributeurs) ;
-      aucun panneau ne l'affiche encore.
+      (`total_co2`, décomposition par système, quinze principaux contributeurs,
+      `parts_without_co2`) ; aucun panneau ne l'affiche encore.
+- [ ] **CO₂ dans l'arbre.** `rolled_up_co2` est au contrat de dépliage
+      (docs/api.md §2) mais n'est pas servi : le CO2 unitaire complet n'est
+      pas enregistré par ligne. Demande une colonne, donc une migration.
+- [ ] **Statut carbone distinct.** Le statut du calcul ne parle que des prix :
+      un prix forcé donne `OK` avec un CO2 incomplet. `parts_without_co2` le
+      dit ; un `co2_status` le rendrait lisible d'un coup d'œil.
+- [ ] **CO₂ dans `/explain` et dans la recommandation de sourcing**, qui ne
+      raisonnent encore qu'en euros.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
       l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
       persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).

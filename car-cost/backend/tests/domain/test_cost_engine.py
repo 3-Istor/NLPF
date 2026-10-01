@@ -15,11 +15,15 @@ from carcost.domain.scenario import CalculationInput
 
 
 def inputs(bom, *, prices=None, labour_rate="60") -> CalculationInput:
+    prices = {"S": Decimal("10")} if prices is None else prices
     return CalculationInput(
         bom=bom,
-        unit_prices={"S": Decimal("10")} if prices is None else prices,
+        unit_prices=prices,
         labour_rate=Decimal(labour_rate),
         active_rules=frozenset({"labour"}),
+        # Une usine retenue pour chaque prix, sans transport : les tests de coût
+        # n'ont pas à porter un CO2 inconnu qui ne les concerne pas.
+        transport_co2_per_kg={ref: Decimal(0) for ref in prices},
     )
 
 
@@ -256,6 +260,96 @@ class TestCarbon:
         result = compute(inputs(diamond))
 
         assert result.total_co2 == Decimal(0)
+
+    def test_a_price_without_a_retained_plant_leaves_its_co2_unknown(self, diamond):
+        """Un prix forcé ne retient aucune usine : le transport n'est pas nul,
+        il est inconnu. Le compter à zéro minorerait l'empreinte en silence.
+        """
+        result = compute(
+            CalculationInput(
+                bom=_with_part_overrides(diamond, carbon={"S": "2"}, mass={"S": "2"}),
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                transport_co2_per_kg={},
+            )
+        )
+
+        assert result.line("S").own_co2_contribution is None
+        assert result.parts_without_co2 == ("S",)
+        assert result.line("V").full_unit_co2 is None
+        # Le coût, lui, est connu : les deux incomplétudes sont distinctes.
+        assert result.parts_without_price == ()
+
+    def test_a_purchased_part_without_mass_leaves_its_co2_unknown(self, diamond):
+        """Sans masse, le transport ne se calcule pas ; zéro serait un mensonge."""
+        from dataclasses import replace
+
+        bom = _with_part_overrides(diamond, carbon={"S": "2"})
+        bom = replace(
+            bom, parts={**bom.parts, "S": replace(bom.parts["S"], mass_kg=None)}
+        )
+        result = compute(
+            CalculationInput(
+                bom=bom,
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                transport_co2_per_kg={"S": Decimal("3")},
+            )
+        )
+
+        assert result.line("S").own_co2_contribution is None
+        assert result.parts_without_co2 == ("S",)
+
+    def test_a_complete_calculation_has_no_part_without_co2(self, diamond):
+        result = compute(inputs(diamond))
+
+        assert result.parts_without_co2 == ()
+
+
+class TestCarbonPathScope:
+    """Une surcharge de chemin peut changer d'usine pour une seule occurrence :
+    le transport de cette occurrence change, et elle seule."""
+
+    def test_a_path_plant_change_moves_co2_for_that_occurrence_only(self, diamond):
+        """S : 2 + 2 kg × 3 = 8 partout, sauf sous V/B où l'usine émet 1 → 4.
+
+        V/B/S représente 3 × 5 = 15 vis sur 23 : 23 × 8 − 15 × (8 − 4) = 124.
+        Un moteur qui ignore le chemin trouve 184 ; un qui applique la
+        surcharge à toutes les occurrences trouve 92.
+        """
+        result = compute(
+            CalculationInput(
+                bom=_with_part_overrides(diamond, carbon={"S": "2"}, mass={"S": "2"}),
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                unit_prices_by_path={"V/B/S": Decimal("10")},
+                transport_co2_per_kg={"S": Decimal("3")},
+                transport_co2_per_kg_by_path={"V/B/S": Decimal("1")},
+            )
+        )
+
+        assert result.line("S").own_co2_contribution == Decimal("124")
+        assert result.total_co2 == Decimal("124")
+        assert result.line("V").full_unit_co2 == Decimal("124")
+
+    def test_an_unknown_transport_on_one_path_makes_the_part_s_co2_unknown(
+        self, diamond
+    ):
+        """Prix forcé sur une occurrence : son transport est inconnu, donc la
+        contribution de la pièce l'est aussi — pas seulement celle du chemin."""
+        result = compute(
+            CalculationInput(
+                bom=_with_part_overrides(diamond, carbon={"S": "2"}, mass={"S": "2"}),
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                unit_prices_by_path={"V/B/S": Decimal("12")},
+                transport_co2_per_kg={"S": Decimal("3")},
+                transport_co2_per_kg_by_path={"V/B/S": None},
+            )
+        )
+
+        assert result.line("S").own_co2_contribution is None
+        assert result.parts_without_co2 == ("S",)
 
 
 def _with_part_overrides(bom, *, carbon: dict[str, str] | None = None, mass: dict[str, str] | None = None):

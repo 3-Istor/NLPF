@@ -265,6 +265,41 @@ class TestCarbon:
         assert by_ref["S"]["own_co2_contribution"]["kg_co2e"] == "0.483000"
         assert Decimal(by_ref["V"]["own_co2_contribution"]["kg_co2e"]) == Decimal(0)
 
+    def test_a_complete_calculation_names_no_part_without_co2(self, client):
+        scenario_id = make_scenario(client)
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert body["parts_without_co2"] == []
+
+    def test_a_forced_price_leaves_the_cost_complete_and_the_co2_unknown(
+        self, client
+    ):
+        """Le prix forcé ne retient aucune usine : le transport de S est
+        inconnu. Le total CO2 ne doit pas se lire comme celui du véhicule."""
+        scenario_id = make_scenario(client)
+        response = client.put(
+            f"/api/v1/scenarios/{scenario_id}/parameters/S",
+            json={
+                "scope": "part",
+                "price_override": "9.99",
+                "price_override_justification": "devis du 2026-09-20",
+            },
+        )
+        assert response.status_code in (200, 201), response.text
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert body["parts_without_price"] == []
+        assert body["parts_without_co2"] == ["S"]
+        assert body["top_co2_contributors"] == [] or all(
+            item["part_ref"] != "S" for item in body["top_co2_contributors"]
+        )
+
 
 class TestStaleness:
     def test_changing_a_parameter_makes_the_totals_obsolete(self, client):

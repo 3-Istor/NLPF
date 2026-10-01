@@ -261,3 +261,34 @@ class TestCarbon:
         resolved = resolve_unit_prices(bom, sourcing, empty, scenario())
 
         assert "S" not in resolved.transport_co2_per_kg
+
+    def test_a_path_plant_change_carries_its_own_intensity(
+        self, bom, sourcing, snapshot
+    ):
+        """Une seule occurrence change d'usine : son transport doit suivre,
+        sinon le coût bouge et le CO2 non."""
+        resolved = resolve_unit_prices(
+            bom, sourcing, snapshot,
+            scenario(parameter(
+                scope="path", path="V/S", supplier_id="SUP-IT", plant_id="PLT-TR"
+            )),
+        )
+
+        assert resolved.path_transport_co2_per_kg["V/S"] == Decimal("0.142000")
+        assert resolved.transport_co2_per_kg["S"] == Decimal("0.021000")
+
+    def test_a_forced_price_on_a_path_has_an_explicitly_unknown_transport(
+        self, bom, sourcing, snapshot
+    ):
+        """Absent voudrait dire « même usine que la pièce » : il faut `None`."""
+        resolved = resolve_unit_prices(
+            bom, sourcing, snapshot,
+            scenario(parameter(
+                scope="path", path="V/S",
+                price_override=Decimal("29.990000"),
+                price_override_justification="devis du 2026-09-20",
+            )),
+        )
+
+        assert "V/S" in resolved.path_transport_co2_per_kg
+        assert resolved.path_transport_co2_per_kg["V/S"] is None

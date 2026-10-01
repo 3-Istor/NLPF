@@ -26,7 +26,9 @@ from ..domain.scenario import CalculationInput
 from .price_resolution import PriceExplanation, ResolvedPrices
 from .scenario import Scenario
 
-ENGINE_VERSION = "engine-0.1.0"
+#: Entre dans l'empreinte des entrées : la changer rend obsolètes les calculs
+#: produits par une version précédente. 0.2.0 ajoute le CO2.
+ENGINE_VERSION = "engine-0.2.0"
 RULES_VERSION = "rules-1"
 PERCENT = Decimal("0.1")
 
@@ -133,6 +135,29 @@ class Calculation:
     def lines_by_ref(self) -> dict[str, PartLine]:
         return {line.part_ref: line for line in self.lines}
 
+    @property
+    def parts_without_co2(self) -> tuple[str, ...]:
+        """Les pièces dont le CO2 propre est inconnu.
+
+        Relu des lignes plutôt que stocké : la contribution NULL en base dit
+        déjà la même chose. Vide pour un calcul enregistré avant que le moteur
+        ne porte le CO2 — il n'a pas de CO2 du tout, pas un CO2 partiel.
+        """
+        if self.total_co2 is None:
+            return ()
+        return tuple(
+            sorted(
+                line.part_ref
+                for line in self.lines
+                if line.own_co2_contribution is None
+            )
+        )
+
+    @property
+    def co2_is_complete(self) -> bool:
+        """Le total CO2 est celui du véhicule, pas une somme partielle."""
+        return self.total_co2 is not None and not self.parts_without_co2
+
     def price_status_of(self, part_ref: str) -> PriceStatus:
         return self.price_statuses.get(part_ref, PriceStatus.OK)
 
@@ -176,6 +201,7 @@ def run_calculation(
                 is not None
             },
             transport_co2_per_kg=resolved.transport_co2_per_kg,
+            transport_co2_per_kg_by_path=resolved.path_transport_co2_per_kg,
         )
     )
 

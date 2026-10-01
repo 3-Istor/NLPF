@@ -412,9 +412,10 @@ pièce partagée est donc pondérée par sa quantité totale, jamais par une seu
 Une comparaison est refusée avec `422 INCOMPARABLE_SCENARIOS` si l'un des calculs est incomplet :
 une contribution sans prix ne doit jamais être assimilée à zéro.
 
-`co2_delta_kg` vaut `null` si l'un des deux calculs a été enregistré avant que le moteur ne porte le
-CO2 (`total_co2` alors `NULL` en base) ; sinon c'est `B - A` en kg CO2e, sur la même portée que
-`cost_delta`.
+`co2_delta_kg` est `B - A` en kg CO2e, sur la même portée que `cost_delta`, surcharges de chemin
+comprises. Il vaut `null` si l'un des deux calculs n'a pas de CO2 complet : enregistré avant que le
+moteur ne porte le CO2 (`total_co2` alors `NULL`), ou `parts_without_co2` non vide (§4.1). Un écart
+entre deux sommes partielles mesurerait la pièce manquante, pas le choix de sourcing.
 
 ### 3.9 `POST /scenarios/{id}/recommend-sourcing` — recommandation contrainte
 
@@ -471,7 +472,7 @@ pour que l'économie annoncée porte sur les prix que l'utilisateur a vus.
   "bom_version": "bom-multipla-2026-09-22",
   "price_snapshot": { "id": "snp-19a…", "taken_at": "2026-09-21T06:00:00Z",
     "age_seconds": 97200, "status": "STALE", "is_fallback": true },
-  "rules_version": "rules-1", "engine_version": "engine-0.1.0",
+  "rules_version": "rules-1", "engine_version": "engine-0.2.0",
   "computed_at": "2026-09-22T09:03:44Z",
   "input_digest": "sha256:7c1e…",
   "display_currency": "EUR",
@@ -488,6 +489,8 @@ pour que l'économie annoncée porte sur les prix que l'utilisateur a vus.
       "first_path": "VEH-MULTIPLA-16V/GMP-ASSY/ENG-BLOCK-ASSY/ENG-BLOCK-RAW" }
   ],
   "top_co2_contributors": [ … ],
+  "parts_without_price": [],
+  "parts_without_co2": [],
   "issue_counts": { "missing_price": 0, "quarantined": 2, "fallback": 37 }
 }
 ```
@@ -495,6 +498,12 @@ pour que l'économie annoncée porte sur les prix que l'utilisateur a vus.
 - La somme des `systems[].cost` est **exactement** `total_cost` (ADR-0011). Les pourcentages, eux,
   sont arrondis à une décimale et peuvent ne pas totaliser 100.
 - `first_path` permet au front de déplier jusqu'au contributeur en un clic.
+- `parts_without_co2` nomme les pièces dont le CO2 propre est **inconnu**, jamais compté zéro : sans
+  prix, sans masse, ou à **prix forcé** — un prix forcé ne retient aucune usine, donc aucun
+  transport. Le coût peut alors être complet et le CO2 non : `total_co2` est une somme partielle tant
+  que la liste n'est pas vide, et le statut du calcul, qui ne parle que des prix, ne le dit pas.
+- `engine_version` entre dans `input_digest` : un calcul produit par une version antérieure du
+  moteur apparaît obsolète.
 - `issue_counts` compte les **pièces** selon leur `price_status` (§2.3) : les trois catégories sont
   disjointes. Ce n'est pas le `counts` d'un snapshot (§5.1), où `fallback` inclut les valeurs mises
   en quarantaine puis remplacées.

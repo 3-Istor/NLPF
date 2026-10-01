@@ -871,6 +871,10 @@ def _calculation_payload(calculation) -> dict:
             for contributor in calculation.top_co2_contributors
         ],
         "parts_without_price": list(calculation.parts_without_price),
+        # Un prix forcé ou une masse absente laisse le coût complet et le CO2
+        # incomplet : `total_co2` est alors une somme partielle, et le dire est
+        # le seul moyen qu'elle ne soit pas lue comme l'empreinte du véhicule.
+        "parts_without_co2": list(calculation.parts_without_co2),
         # Compté ici plutôt que dans le navigateur : chaque ligne relève d'une
         # seule catégorie, et c'est le serveur qui sait laquelle.
         "issue_counts": calculation.issue_counts(),
