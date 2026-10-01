@@ -81,6 +81,10 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `PRICE_OVERRIDE_JUSTIFICATION_REQUIRED` | 422 | Prix forcé sans justification |
 | `SCOPE_PATH_REQUIRES_PATH` | 422 | `scope = "path"` sans chemin, ou `scope = "part"` avec chemin |
 | `OCCURRENCE_VIEW_TOO_LARGE` | 422 | La vue par occurrence demandée dépasse la borne (voir §4.3) |
+| `INVALID_SNAPSHOT_NAME` | 422 | Nom de snapshot de calcul vide (§3.11) |
+| `SNAPSHOT_NAME_TAKEN` | 409 | Le nom est déjà pris dans cette version, sans casse ni accents ; `details: {name, existing_id}` (§3.11) |
+| `CALCULATION_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot de calcul inconnu (§3.11) |
+| `SCENARIO_HAS_SNAPSHOTS` | 409 | Suppression d'un scénario qui porte des snapshots de calcul ; `details.snapshots` les nomme (§3.6) |
 | `NO_PRICE_SNAPSHOT` | 409 | Aucun snapshot disponible, même périmé |
 | `PRICE_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot inconnu (journal de quarantaine, ou `price_snapshot_id` d'un calcul) |
 | `CALCULATION_FAILED` | 500 | Échec interne ; le calcul est persisté avec `status = "FAILED"` |
@@ -398,6 +402,10 @@ résultats persistés de ce scénario sont supprimés en cascade. La nomenclatur
 de prix sont conservés, car ils peuvent être utilisés par d'autres scénarios. Un identifiant inconnu
 provoque `404 SCENARIO_NOT_FOUND`.
 
+Un scénario qui porte au moins un snapshot de calcul (§3.11) ne se supprime pas :
+`409 SCENARIO_HAS_SNAPSHOTS`. Le message nomme les snapshots et `details.snapshots` en donne la
+liste, du plus récent au plus ancien. Le scénario reste lisible.
+
 ### 3.7 `POST /scenarios/{id}/duplicate` — préparer un autre scénario
 
 ```json
@@ -463,6 +471,29 @@ Même corps que §3.9, sans `name` ni `accepted_part_refs`. Réponse `200` : `ba
 **Aucun scénario n'est créé** ; seul le calcul de base est enregistré. L'écran s'en sert pour faire
 cocher les lignes, puis appelle §3.9 avec les lignes retenues et **le même `price_snapshot_id`**,
 pour que l'économie annoncée porte sur les prix que l'utilisateur a vus.
+
+### 3.11 `/calculation-snapshots` — figer un calcul sous un nom
+
+Un snapshot de calcul est un calcul nommé, figé avec une copie des hypothèses appliquées
+(ADR-0014). À ne pas confondre avec le snapshot de prix (§5). Seul son nom change.
+
+| Route | Rôle |
+|---|---|
+| `POST /calculation-snapshots` `{scenario_id, name}` | `201`. Lance le calcul (réglages et snapshot de prix courants) puis le fige. `404 SCENARIO_NOT_FOUND`, `409 NO_PRICE_SNAPSHOT`, `409 BOM_VERSION_NOT_VALIDATED`, `422 INVALID_SNAPSHOT_NAME`, `409 SNAPSHOT_NAME_TAKEN` |
+| `GET /calculation-snapshots?bom_version=…` | `{items, total}`, du plus récent au plus ancien. `bom_version` est obligatoire (`422` sinon). Un élément porte les huit premiers champs ci-dessous |
+| `GET /calculation-snapshots/{id}` | Payload complet. `404 CALCULATION_SNAPSHOT_NOT_FOUND` |
+| `PATCH /calculation-snapshots/{id}` `{name}` | `200`, payload complet. Le nom seul : tout autre champ du corps donne `422` |
+| `POST /calculation-snapshots/compare` `{snapshot_a_id, snapshot_b_id}` | `200`. Comparaison des calculs figés, sans recalcul ni enregistrement |
+
+Payload complet : `id`, `name`, `bom_version`, `scenario_id`, `scenario_name`, `calculation_id`,
+`price_snapshot_id`, `created_at` (ISO 8601) ; puis `display_currency`, `labour_rate` (chaîne),
+`active_rules` (liste triée), `parameters` (comme ceux d'un scénario, sans `parameter_id`) et
+`name_history` (`[{name, renamed_at}]`, le nom de création en premier).
+
+La comparaison renvoie le payload de §3.8 (`total_a`, `total_b`, `cost_delta` = B - A,
+`top_differences`) plus `snapshot_a: {id, name}` et `snapshot_b: {id, name}`. Deux gels pris sur des
+snapshots de prix différents, ou un calcul incomplet, donnent `422 INCOMPARABLE_SCENARIOS` (même
+code que §3.8).
 
 ---
 

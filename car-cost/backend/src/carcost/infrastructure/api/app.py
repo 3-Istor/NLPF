@@ -28,6 +28,7 @@ from ...application.ports import (
 )
 from .bom_routes import register_bom_routes
 from .calculation_routes import register_calculation_routes
+from .calculation_snapshot_routes import register_calculation_snapshot_routes
 from .errors import error_response
 from .snapshot_routes import register_snapshot_routes
 
@@ -90,6 +91,7 @@ def create_app(repositories: Repositories) -> FastAPI:
 
     register_calculation_routes(app, repositories)
     register_snapshot_routes(app, repositories)
+    register_calculation_snapshot_routes(app, repositories)
     register_bom_routes(app, repositories)
 
     return app
