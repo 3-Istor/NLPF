@@ -102,12 +102,23 @@ function openedBelow(root: string, paths: ReadonlySet<string>): string[] {
 /** Les parents avant les enfants : l'écran se remplit de haut en bas. */
 const byDepth = (a: string, b: string) => a.split("/").length - b.split("/").length;
 
+/**
+ * D'où viennent les pages : un calcul, et le snapshot de calcul ouvert s'il y
+ * en a un. Le même calcul se lit avec les marques du scénario vivant ou avec
+ * celles de la copie figée : ce sont deux pages différentes.
+ */
+const sourceOf = (calculationId: string | null, snapshotId: string | null) =>
+  snapshotId ? `${calculationId}#${snapshotId}` : calculationId;
+
 export function useTreeState(options: {
   version: string;
   calculationId: string | null;
+  /** Le snapshot de calcul ouvert : ses lignes sont marquées d'après sa copie. */
+  snapshotId?: string | null;
   initialSelected?: string | null;
 }): TreeState {
   const { version, calculationId } = options;
+  const snapshotId = options.snapshotId ?? null;
 
   const [expansion, setExpansion] = useState<Expansion>(() => ({
     version,
@@ -122,9 +133,9 @@ export function useTreeState(options: {
 
   // Ce que le rendu courant considère comme la vérité ; lu par les réponses
   // asynchrones pour savoir si elles sont encore attendues.
-  const current = useRef({ version, calculationId });
+  const current = useRef({ version, calculationId, snapshotId });
   const expandedRef = useRef(expansion.paths);
-  // Pour chaque chemin, le calcul de la dernière demande lancée ou servie.
+  // Pour chaque chemin, la source de la dernière demande lancée ou servie.
   const requested = useRef(new Map<string, string | null>());
 
   useEffect(() => {
@@ -159,14 +170,19 @@ export function useTreeState(options: {
   const needsLoad = useCallback(
     (path: string) =>
       !requested.current.has(path) ||
-      requested.current.get(path) !== current.current.calculationId,
+      requested.current.get(path) !==
+        sourceOf(current.current.calculationId, current.current.snapshotId),
     [],
   );
 
   const load = useCallback(
     async (path: string): Promise<Outcome> => {
-      const { version: forVersion, calculationId: forCalculation } = current.current;
-      requested.current.set(path, forCalculation);
+      const {
+        version: forVersion,
+        calculationId: forCalculation,
+        snapshotId: forSnapshot,
+      } = current.current;
+      requested.current.set(path, sourceOf(forCalculation, forSnapshot));
       // Au rafraîchissement, l'ancienne page reste affichée jusqu'à la nouvelle.
       setEntries((previous) => {
         if (previous.get(path)?.status === "ready") return previous;
@@ -175,10 +191,13 @@ export function useTreeState(options: {
 
       const stillCurrent = () =>
         current.current.version === forVersion &&
-        current.current.calculationId === forCalculation;
+        current.current.calculationId === forCalculation &&
+        current.current.snapshotId === forSnapshot;
 
       try {
-        const page = await api.children(forVersion, path, forCalculation);
+        const page = forSnapshot
+          ? await api.children(forVersion, path, forCalculation, forSnapshot)
+          : await api.children(forVersion, path, forCalculation);
         if (!stillCurrent()) return "stale";
         setEntry(path, { status: "ready", page, calculationId: forCalculation });
         return "ready";
@@ -203,13 +222,18 @@ export function useTreeState(options: {
   // REFRESH_CONCURRENCY à la fois. S'arrête si le calcul change entre-temps.
   const refresh = useCallback(
     (paths: readonly string[]) => {
-      const { version: forVersion, calculationId: forCalculation } = current.current;
+      const {
+        version: forVersion,
+        calculationId: forCalculation,
+        snapshotId: forSnapshot,
+      } = current.current;
       const queue = paths.filter(needsLoad).sort(byDepth);
       const worker = async () => {
         while (queue.length > 0) {
           if (
             current.current.version !== forVersion ||
-            current.current.calculationId !== forCalculation
+            current.current.calculationId !== forCalculation ||
+            current.current.snapshotId !== forSnapshot
           ) {
             return;
           }
@@ -224,11 +248,12 @@ export function useTreeState(options: {
     [load, needsLoad],
   );
 
-  // Au montage, à chaque changement de calcul ou de nomenclature : on
+  // Au montage, à chaque changement de calcul, de snapshot ouvert ou de
+  // nomenclature : on
   // redemande les pages visibles. Les cachées attendent leur réouverture.
   useEffect(() => {
     const versionChanged = current.current.version !== version;
-    current.current = { version, calculationId };
+    current.current = { version, calculationId, snapshotId };
 
     let paths = expandedRef.current;
     if (versionChanged) {
@@ -239,7 +264,7 @@ export function useTreeState(options: {
     }
 
     refresh(visiblePaths(paths));
-  }, [version, calculationId, refresh]);
+  }, [version, calculationId, snapshotId, refresh]);
 
   const expand = useCallback((path: string) => {
     setExpansion((previous) =>

@@ -6,7 +6,13 @@
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Calculation, Page, Scenario, TreeLine } from "./api/types";
+import type {
+  Calculation,
+  CalculationSnapshot,
+  Page,
+  Scenario,
+  TreeLine,
+} from "./api/types";
 import { App } from "./App";
 import { api, ApiFailure } from "./api/client";
 
@@ -122,7 +128,7 @@ function frozen(id: string, name: string, scenarioId: string, calculationId: str
     display_currency: "EUR",
     labour_rate: "42.00",
     active_rules: [] as string[],
-    parameters: [],
+    parameters: [] as CalculationSnapshot["parameters"],
     name_history: [{ name, renamed_at: "2026-10-01T09:00:00+00:00" }],
   };
 }
@@ -425,8 +431,8 @@ describe("les snapshots de calcul", () => {
       within(screen.getByLabelText("Snapshots de calcul")).getByText("Référence T3"),
     ).toBeInTheDocument();
     await waitFor(() => {
-      expect(children).toHaveBeenCalledWith(VERSION, "V", "calc-9");
-      expect(children).toHaveBeenCalledWith(VERSION, "V/A", "calc-9");
+      expect(children).toHaveBeenCalledWith(VERSION, "V", "calc-9", "csn-9");
+      expect(children).toHaveBeenCalledWith(VERSION, "V/A", "calc-9", "csn-9");
     });
   });
 
@@ -482,5 +488,107 @@ describe("les snapshots de calcul", () => {
 
     await screen.findByText(/est déjà pris dans cette version/);
     expect(screen.queryByText("Snapshot de calcul :", { exact: false })).toBeNull();
+  });
+});
+
+describe("un snapshot ouvert est en lecture seule", () => {
+  const onEngine = {
+    part_ref: "GMP",
+    scope: "part" as const,
+    path: null,
+    supplier_id: null,
+    plant_id: null,
+    price_override: null,
+    price_override_justification: null,
+    labour_minutes: "12.5",
+    purchase_currency: null,
+  };
+
+  async function openSnapshot(id: string) {
+    fireEvent.change(screen.getByLabelText("Snapshots de calcul"), {
+      target: { value: id },
+    });
+    await screen.findByText("Snapshot de calcul :", { exact: false });
+  }
+
+  beforeEach(() => {
+    storedSnapshots = [
+      { ...frozen("csn-2", "Variante Turquie", "scn-2", "calc-2"), parameters: [onEngine] },
+    ];
+  });
+
+  it("n'offre aucun panneau de saisie, mais les réglages copiés de la ligne", async () => {
+    await start();
+    await expandScrew();
+    await openSnapshot("csn-2");
+
+    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+
+    const copied = await screen.findByRole("region", { name: "Réglages figés — GMP" });
+    expect(within(copied).getByText("toutes les occurrences")).toBeInTheDocument();
+    expect(within(copied).getByText("12.5 min")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Appliquer" })).toBeNull();
+    expect(screen.queryByRole("radio")).toBeNull();
+  });
+
+  it("dit qu'une ligne n'a aucun réglage dans le snapshot", async () => {
+    await start();
+    await expandScrew();
+    await openSnapshot("csn-2");
+
+    fireEvent.click(screen.getByText("Châssis"));
+
+    const copied = await screen.findByRole("region", { name: "Réglages figés — CHS" });
+    expect(within(copied).getByText(/Aucun réglage/)).toBeInTheDocument();
+  });
+
+  it("la synthèse dit « figé », ni « à jour » ni « obsolète »", async () => {
+    stored = [
+      stored[0],
+      { ...scenario("scn-2", "Scénario ancien", "calc-3"), calculation_state: "PARAMETERS_CHANGED", stale_reason: "parameters" },
+    ];
+    await start();
+    await openSnapshot("csn-2");
+
+    const summary = document.querySelector("aside.summary") as HTMLElement;
+    expect(within(summary).getByText("figé")).toBeInTheDocument();
+    expect(within(summary).queryByText("à jour")).toBeNull();
+    expect(within(summary).queryByText("totaux obsolètes")).toBeNull();
+    expect(within(summary).queryByText(/ne sont plus à jour/)).toBeNull();
+  });
+
+  it("les marques viennent de la copie, servie par le serveur, pas du scénario vivant", async () => {
+    stored = [
+      stored[0],
+      {
+        ...scenario("scn-2", "Scénario ancien", "calc-3"),
+        parameters: [{ ...onEngine, part_ref: "CHS", parameter_id: "prm-9" }],
+      },
+    ];
+    await start();
+    fireEvent.click(chevron("V"));
+    await screen.findByText("Châssis");
+    await openSnapshot("csn-2");
+
+    expect(api.root).toHaveBeenLastCalledWith(VERSION, "calc-2", "csn-2");
+    await waitFor(() =>
+      expect(children).toHaveBeenCalledWith(VERSION, "V", "calc-2", "csn-2"),
+    );
+    expect(row("V/B")).not.toHaveClass("row--modified");
+  });
+
+  it("« Revenir au scénario » rend le scénario vivant éditable", async () => {
+    await start();
+    await expandScrew();
+    await openSnapshot("csn-2");
+
+    fireEvent.click(screen.getByRole("button", { name: "Revenir au scénario" }));
+
+    await waitFor(() =>
+      expect(screen.queryByText("Snapshot de calcul :", { exact: false })).toBeNull(),
+    );
+    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+    expect(await screen.findByRole("button", { name: "Appliquer" })).toBeInTheDocument();
+    expect(api.root).toHaveBeenLastCalledWith(VERSION, "calc-3");
   });
 });

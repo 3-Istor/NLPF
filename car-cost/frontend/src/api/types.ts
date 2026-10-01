@@ -103,6 +103,8 @@ export type Scenario = {
   readonly stale_reason: string | null;
   /** Le dernier calcul enregistré, à relire plutôt qu'à relancer. */
   readonly last_calculation_id: string | null;
+  /** Le snapshot de calcul dont le scénario est reparti, s'il y en a un. */
+  readonly derived_from?: string | null;
 };
 
 export type ScenarioParameter = {
@@ -114,6 +116,8 @@ export type ScenarioParameter = {
   readonly plant_id: string | null;
   readonly price_override: string | null;
   readonly price_override_justification: string | null;
+  readonly labour_minutes?: string | null;
+  readonly purchase_currency?: string | null;
 };
 
 /** Un calcul figé sous un nom (ADR-0014) ; l'élément d'une liste. */
@@ -126,6 +130,8 @@ export type CalculationSnapshotSummary = {
   readonly calculation_id: string;
   readonly price_snapshot_id: string;
   readonly created_at: string;
+  /** Le snapshot d'où repartait le scénario figé, s'il y en a un. */
+  readonly derived_from?: string | null;
 };
 
 /** La comparaison de deux calculs figés : les noms viennent du serveur. */

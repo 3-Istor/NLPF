@@ -8,10 +8,11 @@
  */
 
 import { useContext } from "react";
-import type { Scenario, TreeLine } from "../api/types";
+import type { CalculationSnapshot, Scenario, TreeLine } from "../api/types";
 import { money, percent, quantity } from "../format";
 import { describeRefusal, Refusals } from "../quarantine";
 import type { TreeState } from "../tree/useTreeState";
+import { FrozenSettings } from "./FrozenSettings";
 import { Highlight } from "./Highlight";
 import { NodePanel } from "./NodePanel";
 import { rowId } from "./rowId";
@@ -22,6 +23,11 @@ type Props = {
   state: TreeState;
   version: string;
   scenario: Scenario | null;
+  /**
+   * Le snapshot de calcul ouvert : la ligne sélectionnée montre ses réglages
+   * copiés, en lecture seule, au lieu du panneau de saisie.
+   */
+  frozen?: CalculationSnapshot | null;
   /** La seule ligne atteignable par Tab (roving tabindex). */
   tabStop: string;
   /** La ligne atteinte au clavier dont le panneau attend Entrée. */
@@ -56,6 +62,7 @@ export function TreeNode({
   state,
   version,
   scenario,
+  frozen = null,
   tabStop,
   browsed,
   onOpenPanel,
@@ -114,7 +121,7 @@ export function TreeNode({
               onOpenPanel();
             }}
             tabIndex={-1}
-            title="Régler cette pièce"
+            title={frozen ? "Voir les réglages figés" : "Régler cette pièce"}
           >
             <Highlight text={line.label} query={query} />
           </button>
@@ -193,7 +200,11 @@ export function TreeNode({
         </span>
       </div>
 
-      {selected && scenario && browsed !== line.path && (
+      {selected && frozen && browsed !== line.path && (
+        <FrozenSettings line={line} snapshot={frozen} version={version} depth={depth} />
+      )}
+
+      {selected && !frozen && scenario && browsed !== line.path && (
         <NodePanel
           line={line}
           version={version}
@@ -226,6 +237,7 @@ export function TreeNode({
                   state={state}
                   version={version}
                   scenario={scenario}
+                  frozen={frozen}
                   tabStop={tabStop}
                   browsed={browsed}
                   onOpenPanel={onOpenPanel}

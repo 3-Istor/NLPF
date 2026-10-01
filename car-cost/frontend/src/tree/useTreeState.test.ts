@@ -481,3 +481,40 @@ describe("useTreeState", () => {
     });
   });
 });
+
+describe("useTreeState, snapshot de calcul ouvert", () => {
+  function mountWithSnapshot(snapshotId: string | null) {
+    return renderHook(
+      (props: { snapshotId: string | null }) =>
+        useTreeState({
+          version: "bom-test",
+          calculationId: "calc-1",
+          snapshotId: props.snapshotId,
+        }),
+      { initialProps: { snapshotId } },
+    );
+  }
+
+  it("demande les pages avec le snapshot ouvert", async () => {
+    answerAtOnce();
+    const { result } = mountWithSnapshot("csn-1");
+
+    await act(async () => result.current.toggle("V"));
+
+    expect(children.mock.calls).toEqual([["bom-test", "V", "calc-1", "csn-1"]]);
+  });
+
+  it("quitter le snapshot relit les pages, même sur le même calcul", async () => {
+    answerAtOnce();
+    const { result, rerender } = mountWithSnapshot("csn-1");
+    await act(async () => result.current.toggle("V"));
+
+    rerender({ snapshotId: null });
+
+    await waitFor(() =>
+      expect(children).toHaveBeenLastCalledWith("bom-test", "V", "calc-1"),
+    );
+    expect(children).toHaveBeenCalledTimes(2);
+    expect(result.current.isExpanded("V")).toBe(true);
+  });
+});

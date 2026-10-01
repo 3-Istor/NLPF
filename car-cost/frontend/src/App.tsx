@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiFailure } from "./api/client";
 import type {
   Calculation,
+  CalculationSnapshot,
   CalculationSnapshotSummary,
   QuarantineJournal,
   Scenario,
@@ -54,10 +55,9 @@ export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [snapshots, setSnapshots] = useState<CalculationSnapshotSummary[]>([]);
-  // Le snapshot de calcul dont l'écran montre le calcul figé ; sinon, le
-  // scénario vivant.
-  const [openSnapshot, setOpenSnapshot] =
-    useState<CalculationSnapshotSummary | null>(null);
+  // Le snapshot de calcul dont l'écran montre le calcul figé, en lecture
+  // seule ; sinon, le scénario vivant, éditable.
+  const [openSnapshot, setOpenSnapshot] = useState<CalculationSnapshot | null>(null);
   const [deciding, setDeciding] = useState(false);
   const [root, setRoot] = useState<TreeLine | null>(null);
   const [calculation, setCalculation] = useState<Calculation | null>(null);
@@ -72,6 +72,7 @@ export function App() {
   const tree = useTreeState({
     version: BOM_VERSION,
     calculationId: calculation?.id ?? null,
+    snapshotId: openSnapshot?.id ?? null,
     initialSelected: initial.node,
   });
   // La ligne de l'URL, à rouvrir puis à amener à l'écran une fois l'arbre là.
@@ -172,7 +173,7 @@ export function App() {
    * obsolète, la synthèse le grise comme après une modification. L'arbre garde
    * son dépliage et sa sélection : ses pages sont relues pour ce calcul.
    */
-  async function open(next: Scenario, frozen: CalculationSnapshotSummary | null = null) {
+  async function open(next: Scenario, frozen: CalculationSnapshot | null = null) {
     const calculationId = frozen?.calculation_id ?? next.last_calculation_id;
     const last = calculationId ? await api.calculation(calculationId) : null;
     setScenario(next);
@@ -185,7 +186,23 @@ export function App() {
         .then(setJournal)
         .catch(() => setJournal(null));
     }
-    setRoot(await api.root(BOM_VERSION, last?.id ?? null));
+    // Ouvert, un snapshot marque ses lignes d'après sa copie des réglages.
+    setRoot(
+      await (frozen
+        ? api.root(BOM_VERSION, last?.id ?? null, frozen.id)
+        : api.root(BOM_VERSION, last?.id ?? null)),
+    );
+  }
+
+  /** Quitte le snapshot ouvert : le scénario vivant, relu, redevient éditable. */
+  async function backToScenario() {
+    if (!scenario) return;
+    setFailure(null);
+    try {
+      await open(await api.scenario(scenario.id));
+    } catch (error) {
+      setFailure(describe(error));
+    }
   }
 
   /**
@@ -322,7 +339,11 @@ export function App() {
         />
         {openSnapshot && (
           <p className="snapshot-title">
-            Snapshot de calcul : <strong>{openSnapshot.name}</strong>
+            Snapshot de calcul : <strong>{openSnapshot.name}</strong> — lecture
+            seule, les réglages montrés sont ceux du gel.{" "}
+            <button onClick={backToScenario} disabled={busy}>
+              Revenir au scénario
+            </button>
           </p>
         )}
         <p className="disclaimer">
@@ -349,7 +370,8 @@ export function App() {
                 root={root}
                 state={tree}
                 version={BOM_VERSION}
-                scenario={scenario}
+                scenario={openSnapshot ? null : scenario}
+                frozen={openSnapshot}
                 onParameterChanged={refreshScenario}
                 onShowWhereUsed={setWhereUsed}
                 query={query}
@@ -364,7 +386,7 @@ export function App() {
           calculation={calculation}
           journal={journal}
           state={
-            openSnapshot ? "UP_TO_DATE" : (scenario?.calculation_state ?? "NEVER_RUN")
+            openSnapshot ? "FROZEN" : (scenario?.calculation_state ?? "NEVER_RUN")
           }
           staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
           busy={busy}

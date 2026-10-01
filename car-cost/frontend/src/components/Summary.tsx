@@ -19,7 +19,8 @@ type Props = {
   calculation: Calculation | null;
   /** `null` tant qu'il n'est pas lu, ou s'il n'a pas pu l'être. */
   journal: QuarantineJournal | null;
-  state: CalculationState;
+  /** `FROZEN` : un snapshot de calcul ouvert, ni à jour ni obsolète. */
+  state: CalculationState | "FROZEN";
   staleReason: string | null;
   busy: boolean;
   failure: string | null;
@@ -28,7 +29,8 @@ type Props = {
   onGoToPart: (partRef: string) => void;
 };
 
-const STATE_LABELS: Record<CalculationState, string> = {
+const STATE_LABELS: Record<CalculationState | "FROZEN", string> = {
+  FROZEN: "figé",
   NEVER_RUN: "jamais calculé",
   UP_TO_DATE: "à jour",
   PARAMETERS_CHANGED: "totaux obsolètes",
@@ -46,13 +48,18 @@ export function Summary({
   onGoToPath,
   onGoToPart,
 }: Props) {
-  const stale = state !== "UP_TO_DATE";
+  // Un calcul figé ne vieillit pas : il ne se compare pas au scénario vivant.
+  const stale = state !== "UP_TO_DATE" && state !== "FROZEN";
 
   return (
     <aside className="summary">
       <header className="summary__header">
         <h2>Synthèse</h2>
-        <span className={`state state--${stale ? "stale" : "fresh"}`}>
+        <span
+          className={`state state--${
+            state === "FROZEN" ? "frozen" : stale ? "stale" : "fresh"
+          }`}
+        >
           {busy ? "calcul en cours…" : STATE_LABELS[state]}
         </span>
       </header>

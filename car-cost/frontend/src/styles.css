@@ -136,6 +136,10 @@ button.label:hover { text-decoration: underline dotted; }
 .panel__actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
 .panel__ack { color: var(--accent); font-size: 12px; }
 .panel__failure { color: var(--danger); font-size: 12px; }
+.panel--frozen { border-style: dashed; }
+.panel__frozen { grid-column: 1 / -1; display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 0; font-size: 12px; }
+.panel__frozen dt { color: var(--muted); }
+.panel__frozen dd { margin: 0; }
 
 .scope { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; }
 .scope legend { font-size: 11px; color: var(--muted); padding: 0 4px; }
@@ -156,6 +160,7 @@ button { font: inherit; }
 .state { font-size: 12px; border-radius: 10px; padding: 1px 8px; }
 .state--fresh { background: #e8f5ec; color: #1e6b35; }
 .state--stale { background: var(--warn-bg); color: var(--warn); }
+.state--frozen { background: #e8eef8; color: #24467a; }
 
 .banner { margin: 10px 0; padding: 7px 10px; border-radius: 4px; font-size: 12px; }
 .banner--warn { background: var(--warn-bg); color: var(--warn); }

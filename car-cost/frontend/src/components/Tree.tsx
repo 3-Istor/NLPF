@@ -11,7 +11,7 @@
  */
 
 import { useState, type KeyboardEvent } from "react";
-import type { Scenario, TreeLine } from "../api/types";
+import type { CalculationSnapshot, Scenario, TreeLine } from "../api/types";
 import type { TreeState } from "../tree/useTreeState";
 import { rowId } from "./rowId";
 import { TreeNode } from "./TreeNode";
@@ -24,6 +24,8 @@ type Props = {
   state: TreeState;
   version: string;
   scenario: Scenario | null;
+  /** Le snapshot de calcul ouvert : l'arbre est alors en lecture seule. */
+  frozen?: CalculationSnapshot | null;
   onParameterChanged: () => void;
   onShowWhereUsed: (partRef: string) => void;
   /** La recherche courante, surlignée dans les lignes visibles. */
@@ -56,6 +58,7 @@ export function Tree({
   state,
   version,
   scenario,
+  frozen = null,
   onParameterChanged,
   onShowWhereUsed,
   query = "",
@@ -131,6 +134,7 @@ export function Tree({
         state={state}
         version={version}
         scenario={scenario}
+        frozen={frozen}
         tabStop={tabStop}
         browsed={browsed}
         onOpenPanel={() => setBrowsed(null)}

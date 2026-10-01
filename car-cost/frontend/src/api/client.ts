@@ -58,20 +58,30 @@ const post = (body: unknown): RequestInit => ({
   body: JSON.stringify(body),
 });
 
-const withCalculation = (calculationId: string | null) =>
-  calculationId ? `&calculation_id=${encodeURIComponent(calculationId)}` : "";
+const withCalculation = (calculationId: string | null, snapshotId?: string | null) =>
+  (calculationId ? `&calculation_id=${encodeURIComponent(calculationId)}` : "") +
+  (snapshotId ? `&calculation_snapshot_id=${encodeURIComponent(snapshotId)}` : "");
 
 export const api = {
-  root: (version: string, calculationId: string | null) =>
+  /**
+   * `snapshotId` : le snapshot de calcul ouvert. Le serveur marque alors les
+   * lignes d'après sa copie des réglages, pas d'après le scénario vivant.
+   */
+  root: (version: string, calculationId: string | null, snapshotId?: string | null) =>
     call<TreeLine>(
-      `/bom/${version}/root?${withCalculation(calculationId).slice(1)}`,
+      `/bom/${version}/root?${withCalculation(calculationId, snapshotId).slice(1)}`,
     ),
 
   /** Les enfants directs d'un nœud. Il n'existe pas de paramètre de profondeur. */
-  children: (version: string, path: string, calculationId: string | null) =>
+  children: (
+    version: string,
+    path: string,
+    calculationId: string | null,
+    snapshotId?: string | null,
+  ) =>
     call<Page<TreeLine> & { path: string }>(
       `/bom/${version}/children?path=${encodeURIComponent(path)}` +
-        withCalculation(calculationId),
+        withCalculation(calculationId, snapshotId),
     ),
 
   whereUsed: (version: string, partRef: string) =>
