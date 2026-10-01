@@ -14,6 +14,7 @@ import type {
   Page,
   ParameterAck,
   QuarantineJournal,
+  SnapshotComparison,
   Scenario,
   SearchResponse,
   SourcingConstraints,
@@ -170,6 +171,13 @@ export const api = {
   calculationSnapshots: (version: string) =>
     call<{ items: CalculationSnapshotSummary[]; total: number }>(
       `/calculation-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
+
+  /** Compare deux calculs figés : aucun recalcul, rien d'enregistré. */
+  compareCalculationSnapshots: (snapshotA: string, snapshotB: string) =>
+    call<SnapshotComparison>(
+      "/calculation-snapshots/compare",
+      post({ snapshot_a_id: snapshotA, snapshot_b_id: snapshotB }),
     ),
 
   calculationSnapshot: (id: string) =>

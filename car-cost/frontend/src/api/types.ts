@@ -128,6 +128,12 @@ export type CalculationSnapshotSummary = {
   readonly created_at: string;
 };
 
+/** La comparaison de deux calculs figés : les noms viennent du serveur. */
+export type SnapshotComparison = Comparison & {
+  readonly snapshot_a: { readonly id: string; readonly name: string };
+  readonly snapshot_b: { readonly id: string; readonly name: string };
+};
+
 export type CalculationSnapshot = CalculationSnapshotSummary & {
   readonly display_currency: string;
   readonly labour_rate: string;

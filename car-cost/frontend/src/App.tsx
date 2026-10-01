@@ -379,6 +379,7 @@ export function App() {
         <DecisionDialog
           scenarios={scenarios}
           current={scenario}
+          bomVersion={BOM_VERSION}
           onClose={() => setDeciding(false)}
           onGoToPart={(partRef) => {
             setDeciding(false);

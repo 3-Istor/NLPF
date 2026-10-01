@@ -6,21 +6,25 @@
  * variante est annoncée par le serveur une fois la variante calculée.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api, ApiFailure } from "../api/client";
 import type {
+  CalculationSnapshotSummary,
   Comparison,
+  SnapshotComparison,
   Scenario,
   SourcingPreview,
   SourcingVariant,
 } from "../api/types";
 import { money, quantity } from "../format";
 
-type Tab = "compare" | "recommend";
+type Tab = "compare" | "recommend" | "snapshots";
 
 type Props = {
   scenarios: readonly Scenario[];
   current: Scenario;
+  /** La version dont on liste les snapshots de calcul. */
+  bomVersion: string;
   onClose: () => void;
   onGoToPart: (partRef: string) => void;
   /** Une variante vient d'être créée : la liste des scénarios a changé. */
@@ -54,12 +58,20 @@ export function DecisionDialog(props: Props) {
             >
               Recommander un sourcing
             </button>
+            <button
+              className={tab === "snapshots" ? "tabs__on" : ""}
+              onClick={() => setTab("snapshots")}
+            >
+              Comparer deux snapshots de calcul
+            </button>
           </nav>
           <button onClick={props.onClose}>Fermer</button>
         </header>
 
         {tab === "compare" ? (
           <ComparePane {...props} initial={pair} />
+        ) : tab === "snapshots" ? (
+          <SnapshotComparePane {...props} />
         ) : (
           <RecommendPane
             {...props}
@@ -190,6 +202,188 @@ function ComparePane({
         </>
       )}
     </section>
+  );
+}
+
+/**
+ * Deux calculs figés, comparés tels quels : aucun recalcul, rien d'enregistré.
+ * Les noms viennent du serveur ; ils sont ceux saisis au moment de figer.
+ */
+function SnapshotComparePane({ bomVersion, onGoToPart }: Props) {
+  const [items, setItems] = useState<readonly CalculationSnapshotSummary[] | null>(null);
+  const [a, setA] = useState("");
+  const [b, setB] = useState("");
+  const [result, setResult] = useState<SnapshotComparison | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    api
+      .calculationSnapshots(bomVersion)
+      .then((page) => {
+        if (!alive) return;
+        setItems(page.items);
+        // Les plus récents d'abord : A est le plus ancien des deux premiers.
+        setA(page.items[1]?.id ?? page.items[0]?.id ?? "");
+        setB(page.items[0]?.id ?? "");
+      })
+      .catch((error) => {
+        if (!alive) return;
+        setItems([]);
+        setFailure(describe(error));
+      });
+    return () => {
+      alive = false;
+    };
+  }, [bomVersion]);
+
+  async function compare() {
+    setBusy(true);
+    setFailure(null);
+    setResult(null);
+    try {
+      setResult(await api.compareCalculationSnapshots(a, b));
+    } catch (error) {
+      setFailure(describe(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const list = items ?? [];
+  const tooFew = items !== null && list.length < 2;
+  const priceOf = (id: string) =>
+    list.find((item) => item.id === id)?.price_snapshot_id;
+
+  return (
+    <section className="decision">
+      <div className="decision__form">
+        <SnapshotSelect label="A — référence" value={a} onChange={setA} items={list} />
+        <SnapshotSelect label="B — variante" value={b} onChange={setB} items={list} />
+        <button
+          className="decision__go"
+          onClick={compare}
+          disabled={busy || tooFew || items === null || a === b}
+        >
+          {busy ? "Comparaison…" : "Comparer"}
+        </button>
+      </div>
+      {tooFew && <p className="hint">Il faut au moins deux snapshots de calcul.</p>}
+      {!tooFew && a === b && a !== "" && (
+        <p className="hint">Choisir deux snapshots différents.</p>
+      )}
+      {failure && (
+        <div className="banner banner--danger">
+          <p>{failure}</p>
+          {a !== "" && b !== "" && (
+            <p>
+              Snapshot de prix de A : <code>{priceOf(a)}</code> ; de B :{" "}
+              <code>{priceOf(b)}</code>. Deux snapshots ne se comparent que sur
+              le même snapshot de prix.
+            </p>
+          )}
+        </div>
+      )}
+
+      {result && (
+        <>
+          <dl className="decision__totals">
+            <div>
+              <dt>{result.snapshot_a.name}</dt>
+              <dd>{money(result.total_a)}</dd>
+            </div>
+            <div>
+              <dt>{result.snapshot_b.name}</dt>
+              <dd>{money(result.total_b)}</dd>
+            </div>
+            <div>
+              <dt>Écart B − A</dt>
+              <dd className={deltaClass(result.cost_delta.amount)}>
+                {signed(result.cost_delta.amount)}
+                {money(result.cost_delta)}
+              </dd>
+            </div>
+            <div>
+              <dt>Écart CO₂</dt>
+              <dd className="decision__muted">
+                {result.co2_delta_kg === null
+                  ? "non calculé"
+                  : `${result.co2_delta_kg} kg CO₂e`}
+              </dd>
+            </div>
+          </dl>
+          <p className="provenance">
+            Calculs figés, non recalculés, sur le même snapshot de prix{" "}
+            <code>{result.price_snapshot_id}</code>.
+          </p>
+
+          {result.top_differences.length === 0 ? (
+            <p className="hint">
+              Aucun écart : les deux snapshots coûtent la même chose.
+            </p>
+          ) : (
+            <table className="decision__table">
+              <caption>Principaux écarts, par contribution propre</caption>
+              <thead>
+                <tr>
+                  <th>Pièce</th>
+                  <th>Qté A</th>
+                  <th>A</th>
+                  <th>Qté B</th>
+                  <th>B</th>
+                  <th>B − A</th>
+                </tr>
+              </thead>
+              <tbody>
+                {result.top_differences.map((item) => (
+                  <tr key={item.part_ref}>
+                    <td>
+                      <button className="linkish" onClick={() => onGoToPart(item.part_ref)}>
+                        {item.part_ref}
+                      </button>
+                    </td>
+                    <td>{quantity(item.cumulative_quantity_a)}</td>
+                    <td>{money(item.contribution_a)}</td>
+                    <td>{quantity(item.cumulative_quantity_b)}</td>
+                    <td>{money(item.contribution_b)}</td>
+                    <td className={deltaClass(item.delta.amount)}>
+                      {signed(item.delta.amount)}
+                      {money(item.delta)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </>
+      )}
+    </section>
+  );
+}
+
+function SnapshotSelect({
+  label,
+  value,
+  onChange,
+  items,
+}: {
+  label: string;
+  value: string;
+  onChange: (id: string) => void;
+  items: readonly CalculationSnapshotSummary[];
+}) {
+  return (
+    <label>
+      {label}
+      <select value={value} onChange={(event) => onChange(event.target.value)}>
+        {items.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.name} — prix {item.price_snapshot_id}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
