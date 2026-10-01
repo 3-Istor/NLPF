@@ -839,6 +839,8 @@ def _calculation_payload(calculation) -> dict:
                 "system": system.system,
                 "cost": _money(system.cost, currency),
                 "cost_share_pct": str(system.share_pct),
+                "co2": {"kg_co2e": str(system.co2)},
+                "co2_share_pct": str(system.co2_share_pct),
             }
             for system in calculation.systems
         ],
@@ -854,7 +856,25 @@ def _calculation_payload(calculation) -> dict:
             }
             for contributor in calculation.top_contributors
         ],
+        "top_co2_contributors": [
+            {
+                "part_ref": contributor.part_ref,
+                "label": contributor.label,
+                "system": contributor.system,
+                "cumulative_quantity": str(contributor.cumulative_quantity),
+                "own_co2_contribution": {
+                    "kg_co2e": str(contributor.own_co2_contribution)
+                },
+                "share_pct": str(contributor.share_pct),
+                "first_path": contributor.first_path,
+            }
+            for contributor in calculation.top_co2_contributors
+        ],
         "parts_without_price": list(calculation.parts_without_price),
+        # Un prix forcé ou une masse absente laisse le coût complet et le CO2
+        # incomplet : `total_co2` est alors une somme partielle, et le dire est
+        # le seul moyen qu'elle ne soit pas lue comme l'empreinte du véhicule.
+        "parts_without_co2": list(calculation.parts_without_co2),
         # Compté ici plutôt que dans le navigateur : chaque ligne relève d'une
         # seule catégorie, et c'est le serveur qui sait laquelle.
         "issue_counts": calculation.issue_counts(),
@@ -870,8 +890,8 @@ def _comparison_payload(comparison) -> dict:
         "total_a": _money(comparison.total_a, currency),
         "total_b": _money(comparison.total_b, currency),
         "cost_delta": _money(comparison.cost_delta, currency),
-        # NLPF-48 fournira les deux projections au Calculation. Le contrat de
-        # comparaison est prêt sans inventer ici un second moteur carbone.
+        # `None` seulement pour un calcul enregistré avant que le moteur ne
+        # porte le CO2 (`total_co2` alors NULL en base).
         "co2_delta_kg": (
             str(comparison.co2_delta)
             if comparison.co2_delta is not None
@@ -927,6 +947,11 @@ def _line_payload(line, calculation) -> dict:
         "occurrence_count": line.occurrence_count,
         "own_unit_cost": _money(line.own_unit_cost, currency),
         "own_contribution": _money(line.own_contribution, currency),
+        "own_co2_contribution": (
+            {"kg_co2e": str(line.own_co2_contribution)}
+            if line.own_co2_contribution is not None
+            else None
+        ),
         "unit_cost": (
             _money(line.full_unit_cost, currency)
             if line.full_unit_cost is not None

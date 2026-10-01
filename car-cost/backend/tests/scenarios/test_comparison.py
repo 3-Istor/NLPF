@@ -46,6 +46,60 @@ def test_co2_delta_is_exposed_when_the_carbon_projection_is_available(diamond):
     assert comparison.co2_delta == Decimal("-1.250000")
 
 
+def test_changing_plant_moves_the_co2_delta(diamond):
+    """L'usine turque émet plus au transport (0,142 contre 0,021 kg CO2e/kg)."""
+    baseline = calculate(diamond)
+    turkey = calculate(
+        diamond,
+        ScenarioParameter("S", supplier_id="SUP-IT", plant_id="PLT-TR"),
+    )
+
+    comparison = compare_calculations(baseline, turkey)
+
+    # 23 vis × 1 kg × (0,142 − 0,021).
+    assert comparison.co2_delta == Decimal("2.783000")
+
+
+def test_a_path_plant_change_moves_the_co2_of_that_occurrence_only(diamond):
+    """V/B/S passe en Turquie : 15 vis sur 23 changent de transport.
+
+    15 × 1 kg × (0,142 − 0,021) = 1,815. Avant correction le coût bougeait et
+    le CO2 non : l'écart CO2 valait zéro.
+    """
+    baseline = calculate(diamond)
+    one_path = calculate(
+        diamond,
+        ScenarioParameter(
+            "S", scope="path", path="V/B/S",
+            supplier_id="SUP-IT", plant_id="PLT-TR",
+        ),
+    )
+
+    comparison = compare_calculations(baseline, one_path)
+
+    assert comparison.co2_delta == Decimal("1.815000")
+
+
+def test_no_co2_delta_when_one_side_has_an_unknown_co2(diamond):
+    """Un prix forcé laisse le transport inconnu : l'écart entre une somme
+    complète et une somme partielle mesurerait la pièce manquante, pas le
+    choix de sourcing."""
+    baseline = calculate(diamond)
+    forced = calculate(
+        diamond,
+        ScenarioParameter(
+            "S",
+            price_override=Decimal("9.000000"),
+            price_override_justification="devis",
+        ),
+    )
+
+    comparison = compare_calculations(baseline, forced)
+
+    assert comparison.cost_delta == Decimal("-23.000000")
+    assert comparison.co2_delta is None
+
+
 def test_ties_are_ordered_by_part_reference(diamond):
     first = calculate(diamond)
     lines = tuple(

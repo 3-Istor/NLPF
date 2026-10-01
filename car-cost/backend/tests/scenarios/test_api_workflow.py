@@ -75,7 +75,9 @@ def test_compare_endpoint_uses_one_snapshot_and_explains_exact_delta(client):
     assert body["price_snapshot_id"] == "snp"
     assert body["top_differences"][0]["part_ref"] == "S"
     assert body["top_differences"][0]["delta"]["amount"] == "-23.000000"
-    assert body["co2_delta_kg"] is None
+    # PLT-IT transporte à 0.021, PLT-TR à 0.142 kg CO2e/kg ; S pèse 1 kg et sa
+    # quantité cumulée est 23 : (0.142 - 0.021) × 1 × 23 = 2.783.
+    assert body["co2_delta_kg"] == "2.783000"
 
 
 def test_recommendation_creates_a_calculable_optimized_scenario(client):
