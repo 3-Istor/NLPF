@@ -14,11 +14,11 @@ import type {
   Calculation,
   QuarantineJournal,
   Scenario,
-  SearchHit,
   TreeLine,
 } from "./api/types";
 import { DecisionDialog } from "./components/DecisionDialog";
 import { ScenarioBar } from "./components/ScenarioBar";
+import { SearchBar } from "./components/SearchBar";
 import { Summary } from "./components/Summary";
 import { TreeHeader } from "./components/TreeHeader";
 import { TreeToolbar } from "./components/TreeToolbar";
@@ -60,8 +60,6 @@ export function App() {
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
-  const [query, setQuery] = useState("");
-  const [hits, setHits] = useState<SearchHit[] | null>(null);
   const [initial] = useState(readLocation);
   const tree = useTreeState({
     version: BOM_VERSION,
@@ -226,16 +224,20 @@ export function App() {
     }
   }
 
-  async function search(event: React.FormEvent) {
-    event.preventDefault();
-    if (!query.trim()) return;
-    const { items } = await api.search(BOM_VERSION, query.trim());
-    setHits(items);
+  function goToPath(path: string) {
+    void reveal(path);
   }
 
-  function goToPath(path: string) {
-    setHits(null);
-    void reveal(path);
+  /**
+   * Un résultat de recherche : déplier, sélectionner, puis centrer la ligne.
+   * Si elle n'est pas encore rendue au retour de `reveal`, l'effet de
+   * défilement la centre dès qu'elle l'est.
+   */
+  async function goToResult(path: string) {
+    await reveal(path);
+    const row = document.getElementById(rowId(path));
+    if (row) row.scrollIntoView({ block: "center" });
+    else pendingScroll.current = path;
   }
 
   /** Une pièce du journal : le serveur dit où elle est montée, on y va. */
@@ -252,15 +254,6 @@ export function App() {
     <div className="app">
       <header className="app__header">
         <h1>3istor — Fiat Multipla 1.6 16V</h1>
-        <form className="search" onSubmit={search}>
-          <input
-            type="search"
-            placeholder="Chercher une référence ou un libellé…"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-          <button type="submit">Chercher</button>
-        </form>
         <ScenarioBar
           scenarios={scenarios}
           current={scenario}
@@ -277,29 +270,15 @@ export function App() {
 
       <main className="app__body">
         <section className="tree">
-          {hits && (
-            <div className="hits">
-              <p>
-                {hits.length} résultat(s)
-                <button onClick={() => setHits(null)}>fermer</button>
-              </p>
-              <ul>
-                {hits.map((hit) => (
-                  <li key={hit.part_ref}>
-                    <button onClick={() => goToPath(hit.paths[0])}>
-                      {hit.label} <code>{hit.part_ref}</code>
-                    </button>
-                    <span>{hit.occurrence_count} emplacement(s)</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           {root ? (
             <Refusals.Provider value={refusals}>
               <div className="tree-head">
-                <TreeToolbar onCollapseAll={tree.collapseAll} />
+                <TreeToolbar onCollapseAll={tree.collapseAll}>
+                  <SearchBar
+                    version={BOM_VERSION}
+                    onNavigate={goToResult}
+                  />
+                </TreeToolbar>
                 <TreeHeader />
               </div>
               <Tree

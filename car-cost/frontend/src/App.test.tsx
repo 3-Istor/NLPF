@@ -152,6 +152,7 @@ vi.mock("./api/client", () => ({
       stale_reason: "parameters",
     })),
     part: vi.fn(async () => ({ suppliers: [] })),
+    search: vi.fn(),
   },
 }));
 
@@ -289,5 +290,38 @@ describe("l'écran garde l'arbre", () => {
     expect(within(treeSection()).queryByText("Vis de culasse")).toBeNull();
     await new Promise((resolve) => setTimeout(resolve, 50));
     expect(within(treeSection()).queryByText("Vis de culasse")).toBeNull();
+  });
+
+  it("aller à un résultat déplie ses ancêtres, sélectionne et fait défiler", async () => {
+    vi.mocked(api.search).mockResolvedValue({
+      items: [
+        {
+          part_ref: "VIS-12",
+          label: "Vis de culasse",
+          system: "MOT",
+          occurrence_count: 1,
+          paths: ["V/A/X"],
+          paths_truncated: false,
+        },
+      ],
+      total_parts: 1,
+      total_occurrences: 1,
+    });
+    await start();
+
+    const input = screen.getByRole("searchbox");
+    fireEvent.change(input, { target: { value: "culasse" } });
+    fireEvent.keyDown(input, { key: "Enter" });
+
+    await waitFor(() =>
+      expect(row("V/A/X")).toHaveAttribute("aria-selected", "true"),
+    );
+    expect(chevron("V")).toHaveAttribute("aria-expanded", "true");
+    expect(chevron("V/A")).toHaveAttribute("aria-expanded", "true");
+    await waitFor(() =>
+      expect(scrollIntoView.mock.contexts).toContain(row("V/A/X")),
+    );
+    const call = scrollIntoView.mock.contexts.indexOf(row("V/A/X"));
+    expect(scrollIntoView.mock.calls[call]).toEqual([{ block: "center" }]);
   });
 });

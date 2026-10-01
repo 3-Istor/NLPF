@@ -78,6 +78,13 @@ export type SearchHit = {
   readonly paths_truncated: boolean;
 };
 
+/** Les totaux comptent tout ce qui correspond, au-delà des chemins servis. */
+export type SearchResponse = {
+  readonly items: readonly SearchHit[];
+  readonly total_parts: number;
+  readonly total_occurrences: number;
+};
+
 export type CalculationState =
   | "NEVER_RUN"
   | "UP_TO_DATE"

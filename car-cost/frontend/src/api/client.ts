@@ -13,7 +13,7 @@ import type {
   ParameterAck,
   QuarantineJournal,
   Scenario,
-  SearchHit,
+  SearchResponse,
   SourcingConstraints,
   SourcingPreview,
   SourcingVariant,
@@ -76,9 +76,10 @@ export const api = {
       `/bom/${version}/where-used?part_ref=${encodeURIComponent(partRef)}`,
     ),
 
-  search: (version: string, query: string) =>
-    call<{ items: SearchHit[] }>(
-      `/bom/${version}/search?q=${encodeURIComponent(query)}`,
+  /** Au plus `maxPaths` chemins par pièce ; les totaux comptent tout. */
+  search: (version: string, query: string, maxPaths = 50) =>
+    call<SearchResponse>(
+      `/bom/${version}/search?q=${encodeURIComponent(query)}&max_paths=${maxPaths}`,
     ),
 
   part: (version: string, partRef: string) =>
