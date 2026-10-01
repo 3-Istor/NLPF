@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiFailure } from "./api/client";
 import type {
   Calculation,
+  CalculationSnapshotSummary,
   QuarantineJournal,
   Scenario,
   TreeLine,
@@ -52,6 +53,11 @@ function writeLocation(scenario: string, node: string | null) {
 export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
+  const [snapshots, setSnapshots] = useState<CalculationSnapshotSummary[]>([]);
+  // Le snapshot de calcul dont l'écran montre le calcul figé ; sinon, le
+  // scénario vivant.
+  const [openSnapshot, setOpenSnapshot] =
+    useState<CalculationSnapshotSummary | null>(null);
   const [deciding, setDeciding] = useState(false);
   const [root, setRoot] = useState<TreeLine | null>(null);
   const [calculation, setCalculation] = useState<Calculation | null>(null);
@@ -95,6 +101,10 @@ export function App() {
         }
         if (!alive) return;
         setScenarios(known);
+        api
+          .calculationSnapshots(BOM_VERSION)
+          .then((page) => alive && setSnapshots(page.items))
+          .catch(() => undefined);
         await open(known.find((item) => item.id === initial.scenario) ?? known[0]);
       } catch (error) {
         if (alive) setFailure(describe(error));
@@ -162,11 +172,11 @@ export function App() {
    * obsolète, la synthèse le grise comme après une modification. L'arbre garde
    * son dépliage et sa sélection : ses pages sont relues pour ce calcul.
    */
-  async function open(next: Scenario) {
-    const last = next.last_calculation_id
-      ? await api.calculation(next.last_calculation_id)
-      : null;
+  async function open(next: Scenario, frozen: CalculationSnapshotSummary | null = null) {
+    const calculationId = frozen?.calculation_id ?? next.last_calculation_id;
+    const last = calculationId ? await api.calculation(calculationId) : null;
     setScenario(next);
+    setOpenSnapshot(frozen);
     setCalculation(last);
     setJournal(null);
     if (last) {
@@ -176,6 +186,47 @@ export function App() {
         .catch(() => setJournal(null));
     }
     setRoot(await api.root(BOM_VERSION, last?.id ?? null));
+  }
+
+  /**
+   * Lance un calcul sur le scénario vivant et le fige sous ce nom. Le résultat
+   * affiché ensuite est celui du gel. Renvoie `false` si le serveur refuse
+   * (nom déjà pris…) : le champ reste ouvert pour corriger le nom.
+   */
+  async function freeze(name: string): Promise<boolean> {
+    if (!scenario) return false;
+    setBusy(true);
+    setFailure(null);
+    try {
+      const frozen = await api.freezeCalculation(scenario.id, name);
+      const fresh = await api.scenario(scenario.id);
+      setScenarios((list) =>
+        list.map((item) => (item.id === fresh.id ? fresh : item)),
+      );
+      await open(fresh, frozen);
+      const page = await api.calculationSnapshots(BOM_VERSION);
+      setSnapshots(page.items);
+      return true;
+    } catch (error) {
+      setFailure(describe(error));
+      return false;
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  /** Ouvre un calcul figé : son scénario, son calcul, son nom en en-tête. */
+  async function openFrozen(id: string) {
+    setFailure(null);
+    try {
+      const frozen = await api.calculationSnapshot(id);
+      const owner =
+        scenarios.find((item) => item.id === frozen.scenario_id) ??
+        (await api.scenario(frozen.scenario_id));
+      await open(owner, frozen);
+    } catch (error) {
+      setFailure(describe(error));
+    }
   }
 
   async function duplicate(name: string) {
@@ -208,6 +259,7 @@ export function App() {
     try {
       const result = await api.calculate(scenario.id);
       setCalculation(result);
+      setOpenSnapshot(null);
       // Le journal éclaire le calcul sans le conditionner : s'il ne se lit
       // pas, la synthèse le dit, mais le total reste affiché.
       setJournal(null);
@@ -263,7 +315,16 @@ export function App() {
           onDuplicate={duplicate}
           onDelete={removeScenario}
           onOpenDecision={() => setDeciding(true)}
+          snapshots={snapshots}
+          openSnapshotId={openSnapshot?.id ?? null}
+          onFreeze={freeze}
+          onOpenSnapshot={openFrozen}
         />
+        {openSnapshot && (
+          <p className="snapshot-title">
+            Snapshot de calcul : <strong>{openSnapshot.name}</strong>
+          </p>
+        )}
         <p className="disclaimer">
           Prix, masses et facteurs carbone <strong>synthétiques</strong> — aucune
           donnée constructeur.
@@ -302,8 +363,10 @@ export function App() {
         <Summary
           calculation={calculation}
           journal={journal}
-          state={scenario?.calculation_state ?? "NEVER_RUN"}
-          staleReason={scenario?.stale_reason ?? null}
+          state={
+            openSnapshot ? "UP_TO_DATE" : (scenario?.calculation_state ?? "NEVER_RUN")
+          }
+          staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
           busy={busy}
           failure={failure}
           onRecalculate={recalculate}

@@ -116,6 +116,26 @@ export type ScenarioParameter = {
   readonly price_override_justification: string | null;
 };
 
+/** Un calcul figé sous un nom (ADR-0014) ; l'élément d'une liste. */
+export type CalculationSnapshotSummary = {
+  readonly id: string;
+  readonly name: string;
+  readonly bom_version: string;
+  readonly scenario_id: string;
+  readonly scenario_name: string;
+  readonly calculation_id: string;
+  readonly price_snapshot_id: string;
+  readonly created_at: string;
+};
+
+export type CalculationSnapshot = CalculationSnapshotSummary & {
+  readonly display_currency: string;
+  readonly labour_rate: string;
+  readonly active_rules: readonly string[];
+  readonly parameters: readonly Omit<ScenarioParameter, "parameter_id">[];
+  readonly name_history: readonly { name: string; renamed_at: string }[];
+};
+
 export type ParameterAck = {
   readonly parameter_id: string;
   readonly scope: string;

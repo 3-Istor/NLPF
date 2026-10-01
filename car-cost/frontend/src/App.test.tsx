@@ -8,7 +8,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Calculation, Page, Scenario, TreeLine } from "./api/types";
 import { App } from "./App";
-import { api } from "./api/client";
+import { api, ApiFailure } from "./api/client";
 
 const VERSION = import.meta.env.VITE_BOM_VERSION ?? "bom-multipla-2026-09-22";
 
@@ -107,9 +107,36 @@ function calculation(id: string, scenarioId: string): Calculation {
 
 // Du plus récent au plus ancien, comme l'API.
 let stored: Scenario[] = [];
+let storedSnapshots: ReturnType<typeof frozen>[] = [];
+
+function frozen(id: string, name: string, scenarioId: string, calculationId: string) {
+  return {
+    id,
+    name,
+    bom_version: VERSION,
+    scenario_id: scenarioId,
+    scenario_name: "Scénario figé",
+    calculation_id: calculationId,
+    price_snapshot_id: "snp-1",
+    created_at: "2026-10-01T09:00:00+00:00",
+    display_currency: "EUR",
+    labour_rate: "42.00",
+    active_rules: [] as string[],
+    parameters: [],
+    name_history: [{ name, renamed_at: "2026-10-01T09:00:00+00:00" }],
+  };
+}
 
 vi.mock("./api/client", () => ({
-  ApiFailure: class extends Error {},
+  ApiFailure: class extends Error {
+    constructor(
+      readonly code: string,
+      message: string,
+      readonly status: number,
+    ) {
+      super(message);
+    }
+  },
   api: {
     scenarios: vi.fn(async () => ({ items: stored, total: stored.length })),
     scenario: vi.fn(async (id: string) => {
@@ -151,6 +178,18 @@ vi.mock("./api/client", () => ({
       calculation_state: "PARAMETERS_CHANGED",
       stale_reason: "parameters",
     })),
+    freezeCalculation: vi.fn(async (scenarioId: string, name: string) => ({
+      ...frozen("csn-9", name, scenarioId, "calc-9"),
+    })),
+    calculationSnapshots: vi.fn(async () => ({
+      items: storedSnapshots,
+      total: storedSnapshots.length,
+    })),
+    calculationSnapshot: vi.fn(async (id: string) => {
+      const found = storedSnapshots.find((item) => item.id === id);
+      if (!found) throw new Error("snapshot de calcul inconnu");
+      return found;
+    }),
     part: vi.fn(async () => ({ suppliers: [] })),
     search: vi.fn(),
   },
@@ -168,6 +207,7 @@ beforeEach(() => {
     scenario("scn-1", "Scénario récent", "calc-1"),
     scenario("scn-2", "Scénario ancien", "calc-3"),
   ];
+  storedSnapshots = [];
 });
 
 const row = (path: string) => document.getElementById(`node-${path}`);
@@ -353,5 +393,94 @@ describe("l'écran garde l'arbre", () => {
     await waitFor(() =>
       expect(row("V")!.querySelector("mark")?.textContent).toBe("électrique"),
     );
+  });
+});
+
+describe("les snapshots de calcul", () => {
+  const freezeAs = async (name: string) => {
+    fireEvent.click(screen.getByRole("button", { name: "Figer sous un nom" }));
+    fireEvent.change(screen.getByLabelText("Nom du snapshot de calcul"), {
+      target: { value: name },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Figer" }));
+  };
+
+  it("figer affiche le nom dans l'en-tête et dans la liste", async () => {
+    await start();
+    await expandScrew();
+    vi.mocked(api.freezeCalculation).mockImplementationOnce(async (id, name) => {
+      const created = frozen("csn-9", name, id, "calc-9");
+      storedSnapshots = [created];
+      return created;
+    });
+
+    await freezeAs("Référence T3");
+
+    await screen.findByText("Snapshot de calcul :", { exact: false });
+    expect(api.freezeCalculation).toHaveBeenCalledWith("scn-1", "Référence T3");
+    expect(document.querySelector(".snapshot-title")).toHaveTextContent(
+      "Snapshot de calcul : Référence T3",
+    );
+    expect(
+      within(screen.getByLabelText("Snapshots de calcul")).getByText("Référence T3"),
+    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(children).toHaveBeenCalledWith(VERSION, "V", "calc-9");
+      expect(children).toHaveBeenCalledWith(VERSION, "V/A", "calc-9");
+    });
+  });
+
+  it("ouvrir un snapshot affiche son calcul figé et son nom", async () => {
+    storedSnapshots = [
+      frozen("csn-1", "Référence T3", "scn-1", "calc-1"),
+      frozen("csn-2", "Variante Turquie", "scn-2", "calc-2"),
+    ];
+    await start();
+    await expandScrew();
+
+    fireEvent.change(screen.getByLabelText("Snapshots de calcul"), {
+      target: { value: "csn-2" },
+    });
+
+    await waitFor(() =>
+      expect(document.querySelector(".snapshot-title")).toHaveTextContent(
+        "Snapshot de calcul : Variante Turquie",
+      ),
+    );
+    expect(api.calculation).toHaveBeenCalledWith("calc-2");
+    expect(screen.getByLabelText("Scénario")).toHaveValue("scn-2");
+    await screen.findByText("99,00 €");
+    expect(screen.getByText("Vis de culasse")).toBeInTheDocument();
+  });
+
+  it("recalculer revient au scénario vivant", async () => {
+    storedSnapshots = [frozen("csn-2", "Variante Turquie", "scn-2", "calc-2")];
+    await start();
+    fireEvent.change(screen.getByLabelText("Snapshots de calcul"), {
+      target: { value: "csn-2" },
+    });
+    await screen.findByText("Snapshot de calcul :", { exact: false });
+
+    fireEvent.click(screen.getByRole("button", { name: "Recalculer" }));
+
+    await waitFor(() =>
+      expect(screen.queryByText("Snapshot de calcul :", { exact: false })).toBeNull(),
+    );
+  });
+
+  it("un nom déjà pris est expliqué", async () => {
+    await start();
+    vi.mocked(api.freezeCalculation).mockRejectedValueOnce(
+      new ApiFailure(
+        "SNAPSHOT_NAME_TAKEN",
+        "le nom « Référence T3 » est déjà pris dans cette version",
+        409,
+      ),
+    );
+
+    await freezeAs("Référence T3");
+
+    await screen.findByText(/est déjà pris dans cette version/);
+    expect(screen.queryByText("Snapshot de calcul :", { exact: false })).toBeNull();
   });
 });

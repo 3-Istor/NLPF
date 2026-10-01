@@ -7,7 +7,7 @@
  */
 
 import { useState } from "react";
-import type { Scenario } from "../api/types";
+import type { CalculationSnapshotSummary, Scenario } from "../api/types";
 
 type Props = {
   scenarios: readonly Scenario[];
@@ -16,7 +16,22 @@ type Props = {
   onDuplicate: (name: string) => void;
   onDelete: () => void;
   onOpenDecision: () => void;
+  /** Les snapshots de calcul de cette version, du plus récent au plus ancien. */
+  snapshots: readonly CalculationSnapshotSummary[];
+  /** Le snapshot de calcul ouvert, s'il y en a un. */
+  openSnapshotId: string | null;
+  /** Fige sous ce nom ; `false` garde le champ ouvert (refus du serveur). */
+  onFreeze: (name: string) => Promise<boolean | void> | boolean | void;
+  onOpenSnapshot: (id: string) => void;
 };
+
+const two = (value: number) => String(value).padStart(2, "0");
+
+/** « Base — 01/10/2026 14:05 », à l'heure locale : une proposition, modifiable. */
+function defaultSnapshotName(scenarioName: string, now: Date): string {
+  const day = `${two(now.getDate())}/${two(now.getMonth() + 1)}/${now.getFullYear()}`;
+  return `${scenarioName} — ${day} ${two(now.getHours())}:${two(now.getMinutes())}`;
+}
 
 export function ScenarioBar({
   scenarios,
@@ -25,8 +40,14 @@ export function ScenarioBar({
   onDuplicate,
   onDelete,
   onOpenDecision,
+  snapshots,
+  openSnapshotId,
+  onFreeze,
+  onOpenSnapshot,
 }: Props) {
   const [copyName, setCopyName] = useState<string | null>(null);
+  const [freezeName, setFreezeName] = useState<string | null>(null);
+  const [freezeError, setFreezeError] = useState<string | null>(null);
 
   if (!current) return null;
 
@@ -73,6 +94,64 @@ export function ScenarioBar({
           </button>
         </form>
       )}
+
+      {freezeName === null ? (
+        <button
+          onClick={() => {
+            setFreezeError(null);
+            setFreezeName(defaultSnapshotName(current.name, new Date()));
+          }}
+        >
+          Figer sous un nom
+        </button>
+      ) : (
+        <form
+          className="scenario-bar__copy"
+          onSubmit={async (event) => {
+            event.preventDefault();
+            const name = freezeName.trim();
+            if (!name) {
+              setFreezeError("Le nom est obligatoire.");
+              return;
+            }
+            setFreezeError(null);
+            const result = await onFreeze(name);
+            if (result !== false) setFreezeName(null);
+          }}
+        >
+          <input
+            aria-label="Nom du snapshot de calcul"
+            value={freezeName}
+            onChange={(event) => setFreezeName(event.target.value)}
+            autoFocus
+          />
+          <button type="submit">Figer</button>
+          <button type="button" onClick={() => setFreezeName(null)}>
+            Annuler
+          </button>
+          {freezeError && <span role="alert">{freezeError}</span>}
+        </form>
+      )}
+
+      <select
+        aria-label="Snapshots de calcul"
+        value={openSnapshotId ?? ""}
+        disabled={snapshots.length === 0}
+        onChange={(event) => {
+          if (event.target.value) onOpenSnapshot(event.target.value);
+        }}
+      >
+        <option value="">
+          {snapshots.length === 0
+            ? "Aucun snapshot de calcul"
+            : "Ouvrir un snapshot de calcul…"}
+        </option>
+        {snapshots.map((snapshot) => (
+          <option key={snapshot.id} value={snapshot.id}>
+            {snapshot.name}
+          </option>
+        ))}
+      </select>
 
       <button
         className="scenario-bar__danger"

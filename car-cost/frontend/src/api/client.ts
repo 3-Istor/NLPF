@@ -7,6 +7,8 @@
 
 import type {
   Calculation,
+  CalculationSnapshot,
+  CalculationSnapshotSummary,
   Comparison,
   Occurrence,
   Page,
@@ -156,6 +158,24 @@ export const api = {
     }),
 
   calculation: (id: string) => call<Calculation>(`/calculations/${id}`),
+
+  /** Lance un calcul sur le scénario et le fige sous ce nom. */
+  freezeCalculation: (scenarioId: string, name: string) =>
+    call<CalculationSnapshot>(
+      "/calculation-snapshots",
+      post({ scenario_id: scenarioId, name }),
+    ),
+
+  /** Du plus récent au plus ancien. */
+  calculationSnapshots: (version: string) =>
+    call<{ items: CalculationSnapshotSummary[]; total: number }>(
+      `/calculation-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
+
+  calculationSnapshot: (id: string) =>
+    call<CalculationSnapshot>(
+      `/calculation-snapshots/${encodeURIComponent(id)}`,
+    ),
 
   /** Les valeurs refusées à la prise de ce snapshot ; vide s'il est sain. */
   quarantine: (snapshotId: string) =>
