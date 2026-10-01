@@ -396,3 +396,15 @@ describe("clic sur le libellé", () => {
     expect(row("V")).toHaveAttribute("aria-expanded", "false");
   });
 });
+
+describe("champs du panneau", () => {
+  it("s'ouvrent vides, sans valeur d'exemple", async () => {
+    mount({}, new Map(), scenarioWith());
+
+    act(() => screen.getByRole("button", { name: "Régler cette pièce" }).click());
+
+    const minutes = await screen.findByLabelText("Temps de main-d'œuvre (min)");
+    expect(minutes).toHaveValue("");
+    expect(minutes).not.toHaveAttribute("placeholder");
+  });
+});

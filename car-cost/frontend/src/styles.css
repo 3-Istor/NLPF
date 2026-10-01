@@ -21,6 +21,9 @@ body {
   background: var(--bg);
 }
 
+/* Un texte indicatif ne doit jamais se lire comme une valeur saisie. */
+input::placeholder { color: #a7adb7; font-style: italic; opacity: 1; }
+
 code { font: 12px/1 ui-monospace, "Cascadia Mono", monospace; color: var(--muted); }
 
 .app { display: flex; flex-direction: column; height: 100vh; }

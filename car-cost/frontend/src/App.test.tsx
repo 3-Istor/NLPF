@@ -644,7 +644,7 @@ describe("repartir d'un snapshot de calcul", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Repartir de ce snapshot" }));
     const field = screen.getByLabelText("Nom du scénario repris");
-    expect(field).toHaveValue("Variante Turquie — repris");
+    expect(field).toHaveValue("");
     fireEvent.change(field, { target: { value: "Variante Turquie — reprise d'octobre" } });
     fireEvent.click(screen.getByRole("button", { name: "Créer le scénario" }));
 
@@ -672,6 +672,9 @@ describe("repartir d'un snapshot de calcul", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Repartir de ce snapshot" }));
+    fireEvent.change(screen.getByLabelText("Nom du scénario repris"), {
+      target: { value: "Reprise d'octobre" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "Créer le scénario" }));
 
     const alert = await screen.findByRole("alert");
@@ -723,6 +726,9 @@ describe("des messages d'erreur fiables", () => {
       new ApiFailure("SNAPSHOT_NAME_TAKEN", "nom déjà pris", 409),
     );
     fireEvent.click(screen.getByRole("button", { name: "Figer sous un nom" }));
+    fireEvent.change(screen.getByLabelText("Nom du snapshot de calcul"), {
+      target: { value: "Référence T3" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "Figer" }));
     await screen.findByText(/nom déjà pris/);
     vi.mocked(api.deleteScenario).mockReturnValueOnce(new Promise(() => {}));

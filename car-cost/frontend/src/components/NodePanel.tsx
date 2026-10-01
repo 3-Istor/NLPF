@@ -123,12 +123,12 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
               <input
                 type="text"
                 inputMode="decimal"
-                placeholder="ex. 29.99"
                 value={override}
                 onChange={(event) => setOverride(event.target.value)}
               />
               <input
                 type="text"
+                aria-label="Justification du prix forcé"
                 placeholder="justification (obligatoire)"
                 value={justification}
                 onChange={(event) => setJustification(event.target.value)}
@@ -147,7 +147,6 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
             <input
               type="text"
               inputMode="decimal"
-              placeholder="ex. 12.5"
               value={labourMinutes}
               onChange={(event) => setLabourMinutes(event.target.value)}
             />

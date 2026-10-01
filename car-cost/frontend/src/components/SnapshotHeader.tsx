@@ -33,7 +33,7 @@ export function SnapshotHeader({ snapshot, busy, onBack, onDerive }: Props) {
           <button
             onClick={() => {
               setRefusal(null);
-              setName(`${snapshot.name} — repris`);
+              setName("");
             }}
             disabled={busy}
           >
@@ -58,6 +58,7 @@ export function SnapshotHeader({ snapshot, busy, onBack, onDerive }: Props) {
         >
           <input
             aria-label="Nom du scénario repris"
+            placeholder="Nom du nouveau scénario (obligatoire)"
             value={name}
             onChange={(event) => setName(event.target.value)}
             autoFocus

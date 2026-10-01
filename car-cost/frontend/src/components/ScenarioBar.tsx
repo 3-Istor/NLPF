@@ -27,14 +27,6 @@ type Props = {
   onOpenSnapshot: (id: string) => void;
 };
 
-const two = (value: number) => String(value).padStart(2, "0");
-
-/** « Base — 01/10/2026 14:05 », à l'heure locale : une proposition, modifiable. */
-function defaultSnapshotName(scenarioName: string, now: Date): string {
-  const day = `${two(now.getDate())}/${two(now.getMonth() + 1)}/${now.getFullYear()}`;
-  return `${scenarioName} — ${day} ${two(now.getHours())}:${two(now.getMinutes())}`;
-}
-
 export function ScenarioBar({
   scenarios,
   current,
@@ -72,7 +64,7 @@ export function ScenarioBar({
       </label>
 
       {copyName === null ? (
-        <button onClick={() => setCopyName(`${current.name} — variante`)}>
+        <button onClick={() => setCopyName("")}>
           Dupliquer
         </button>
       ) : (
@@ -87,6 +79,7 @@ export function ScenarioBar({
         >
           <input
             aria-label="Nom de la copie"
+            placeholder="Nom de la copie"
             value={copyName}
             onChange={(event) => setCopyName(event.target.value)}
             autoFocus
@@ -102,10 +95,14 @@ export function ScenarioBar({
         <button
           onClick={() => {
             setFreezeError(null);
-            setFreezeName(defaultSnapshotName(current.name, new Date()));
+            // Le champ s'ouvre vide : le nom est celui que l'utilisateur
+            // choisit, pas une proposition à corriger.
+            setFreezeName("");
           }}
         >
-          Figer sous un nom
+          {/* Un snapshot ouvert ne se fige pas une seconde fois : figer capture
+              toujours le scénario vivant, et le bouton le dit. */}
+          {openSnapshotId ? "Figer le scénario vivant" : "Figer sous un nom"}
         </button>
       ) : (
         <form
@@ -124,6 +121,7 @@ export function ScenarioBar({
         >
           <input
             aria-label="Nom du snapshot de calcul"
+            placeholder="Nom du snapshot (obligatoire)"
             value={freezeName}
             onChange={(event) => setFreezeName(event.target.value)}
             autoFocus

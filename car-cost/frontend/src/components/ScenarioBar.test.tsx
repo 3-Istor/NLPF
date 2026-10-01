@@ -56,14 +56,29 @@ const field = () => screen.getByLabelText("Nom du snapshot de calcul");
 afterEach(() => vi.useRealTimers());
 
 describe("figer sous un nom", () => {
-  it("le nom proposé par défaut est le scénario et l'heure", () => {
-    vi.useFakeTimers({ toFake: ["Date"] });
-    vi.setSystemTime(new Date(2026, 9, 1, 14, 5));
+  it("le champ s'ouvre vide : aucun nom n'est proposé à la place de l'utilisateur", () => {
     bar();
 
     openForm();
 
-    expect(field()).toHaveValue("Base — 01/10/2026 14:05");
+    expect(field()).toHaveValue("");
+    expect(field()).toHaveAttribute("placeholder", "Nom du snapshot (obligatoire)");
+  });
+
+  it("un snapshot ouvert : le bouton dit qu'il fige le scénario vivant", () => {
+    bar({ openSnapshotId: "csn-1" });
+
+    expect(screen.queryByRole("button", { name: "Figer sous un nom" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Figer le scénario vivant" }));
+    expect(field()).toHaveValue("");
+  });
+
+  it("dupliquer s'ouvre aussi sur un champ vide", () => {
+    bar();
+
+    fireEvent.click(screen.getByRole("button", { name: "Dupliquer" }));
+
+    expect(screen.getByLabelText("Nom de la copie")).toHaveValue("");
   });
 
   it("le nom saisi est envoyé, rogné", () => {
