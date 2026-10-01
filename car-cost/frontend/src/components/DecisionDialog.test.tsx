@@ -295,3 +295,56 @@ describe("comparer deux snapshots de calcul", () => {
     expect(options.length).toBeGreaterThan(0);
   });
 });
+
+describe("comparer deux snapshots de calcul : les refus", () => {
+  async function openTab() {
+    mount();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Comparer deux snapshots de calcul" }),
+    );
+    await screen.findAllByRole("option", { name: /Variante Turquie/ });
+  }
+
+  it("un refus 422 montre le snapshot de prix de A et celui de B", async () => {
+    calculationSnapshots.mockResolvedValue({
+      items: [
+        { ...frozen("csn-2", "Prix d'octobre"), price_snapshot_id: "snp-oct" },
+        { ...frozen("csn-1", "Prix de septembre"), price_snapshot_id: "snp-sept" },
+      ],
+      total: 2,
+    });
+    compareCalculationSnapshots.mockRejectedValue(
+      new ApiFailure(
+        "INCOMPARABLE_SCENARIOS",
+        "les scénarios doivent être calculés avec le même snapshot de prix",
+        422,
+      ),
+    );
+    mount();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Comparer deux snapshots de calcul" }),
+    );
+    await screen.findAllByRole("option", { name: /Prix d'octobre/ });
+
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+
+    const refusal = (await screen.findByText(/Snapshot de prix de A/)).closest("p")!;
+    expect(refusal.textContent).toMatch(/de A : snp-sept ; de B : snp-oct/);
+  });
+
+  it("le bouton est désactivé quand A et B sont le même snapshot", async () => {
+    await openTab();
+
+    fireEvent.change(screen.getByLabelText("B — variante"), {
+      target: { value: "csn-1" },
+    });
+    fireEvent.change(screen.getByLabelText("A — référence"), {
+      target: { value: "csn-1" },
+    });
+
+    expect(screen.getByRole("button", { name: "Comparer" })).toBeDisabled();
+    expect(screen.getByText("Choisir deux snapshots différents.")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+    expect(compareCalculationSnapshots).not.toHaveBeenCalled();
+  });
+});

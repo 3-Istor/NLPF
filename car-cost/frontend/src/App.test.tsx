@@ -723,3 +723,24 @@ describe("des messages d'erreur fiables", () => {
     expect(api.deleteScenario).toHaveBeenCalledWith("scn-1");
   });
 });
+
+describe("supprimer un scénario porteur de snapshots", () => {
+  it("le refus 409 nomme les snapshots qui le retiennent", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    vi.mocked(api.deleteScenario).mockRejectedValueOnce(
+      new ApiFailure(
+        "SCENARIO_HAS_SNAPSHOTS",
+        "le scénario porte des snapshots de calcul : Référence T3, Variante Turquie",
+        409,
+      ),
+    );
+    await start();
+
+    fireEvent.click(screen.getByRole("button", { name: "Supprimer" }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("SCENARIO_HAS_SNAPSHOTS");
+    expect(alert).toHaveTextContent("Référence T3, Variante Turquie");
+    expect(screen.getByLabelText("Scénario")).toHaveValue("scn-1");
+  });
+});
