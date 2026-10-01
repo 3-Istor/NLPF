@@ -21,9 +21,17 @@ type Props = {
   state: TreeState;
   version: string;
   scenario: Scenario | null;
+  /** La seule ligne atteignable par Tab (roving tabindex). */
+  tabStop: string;
+  /** La ligne atteinte au clavier dont le panneau attend Entrée. */
+  browsed: string | null;
+  onOpenPanel: () => void;
   onParameterChanged: () => void;
   onShowWhereUsed: (partRef: string) => void;
 };
+
+/** L'id DOM de la liste des enfants d'une ligne, que la ligne possède (aria-owns). */
+const groupId = (path: string) => `group-${path}`;
 
 /**
  * Un paramètre du scénario vise-t-il cette ligne ? Une recherche, pas un
@@ -45,6 +53,9 @@ export function TreeNode({
   state,
   version,
   scenario,
+  tabStop,
+  browsed,
+  onOpenPanel,
   onParameterChanged,
   onShowWhereUsed,
 }: Props) {
@@ -65,10 +76,15 @@ export function TreeNode({
   const refused = useContext(Refusals).get(line.part_ref);
 
   return (
-    <li className="node">
+    <li className="node" role="none">
       <div
         id={rowId(line.path)}
+        role="treeitem"
+        aria-level={depth + 1}
+        aria-expanded={line.has_children ? open : undefined}
+        aria-owns={open ? groupId(line.path) : undefined}
         aria-selected={selected}
+        tabIndex={line.path === tabStop ? 0 : -1}
         className={`row row-grid${modified ? " row--modified" : ""}${
           inPath ? " row--in-modified-path" : ""
         }${selected ? " row--selected" : ""}${depth === 1 ? " row--level1" : ""}`}
@@ -80,6 +96,7 @@ export function TreeNode({
           <button
             className="chevron"
             onClick={() => state.toggle(line.path)}
+            tabIndex={-1}
             disabled={!line.has_children}
             aria-expanded={open}
             aria-label={open ? "Replier" : "Déplier"}
@@ -88,7 +105,11 @@ export function TreeNode({
           </button>
           <button
             className="label"
-            onClick={() => state.select(line.path)}
+            onClick={() => {
+              state.select(line.path);
+              onOpenPanel();
+            }}
+            tabIndex={-1}
             title="Régler cette pièce"
           >
             {line.label}
@@ -166,7 +187,7 @@ export function TreeNode({
         </span>
       </div>
 
-      {selected && scenario && (
+      {selected && scenario && browsed !== line.path && (
         <NodePanel
           line={line}
           version={version}
@@ -177,7 +198,7 @@ export function TreeNode({
       )}
 
       {open && (
-        <ul className="children">
+        <ul className="children" role="group" id={groupId(line.path)}>
           {(entry === undefined || entry.status === "loading") && (
             <li className="node-status" role="status">
               chargement…
@@ -199,6 +220,9 @@ export function TreeNode({
                   state={state}
                   version={version}
                   scenario={scenario}
+                  tabStop={tabStop}
+                  browsed={browsed}
+                  onOpenPanel={onOpenPanel}
                   onParameterChanged={onParameterChanged}
                   onShowWhereUsed={onShowWhereUsed}
                 />

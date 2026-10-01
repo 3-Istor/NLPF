@@ -71,6 +71,8 @@ ul.children { list-style: none; margin: 0; padding: 0; }
 .row--selected { background: #eaf1ff; }
 .row--in-modified-path { box-shadow: inset 2px 0 0 #d9c7ef; }
 .row--modified { box-shadow: inset 3px 0 0 var(--modified); }
+.row:focus { outline: none; }
+.row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
 .chevron {
   width: 20px; height: 20px; flex: none;
