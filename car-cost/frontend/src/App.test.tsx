@@ -198,6 +198,17 @@ vi.mock("./api/client", () => ({
     }),
     part: vi.fn(async () => ({ suppliers: [] })),
     search: vi.fn(),
+    deriveScenario: vi.fn(async (snapshotId: string, name: string) => {
+      const created = {
+        ...scenario("scn-repris", name, "calc-1"),
+        calculation_state: "NEVER_RUN" as const,
+        last_calculation_id: null,
+        derived_from: snapshotId,
+      };
+      stored = [created, ...stored];
+      return created;
+    }),
+    deleteScenario: vi.fn(),
   },
 }));
 
@@ -590,5 +601,73 @@ describe("un snapshot ouvert est en lecture seule", () => {
     fireEvent.click(screen.getByText("Groupe motopropulseur"));
     expect(await screen.findByRole("button", { name: "Appliquer" })).toBeInTheDocument();
     expect(api.root).toHaveBeenLastCalledWith(VERSION, "calc-3");
+  });
+});
+
+describe("repartir d'un snapshot de calcul", () => {
+  beforeEach(() => {
+    storedSnapshots = [frozen("csn-2", "Variante Turquie", "scn-2", "calc-2")];
+  });
+
+  async function openSnapshot() {
+    fireEvent.change(screen.getByLabelText("Snapshots de calcul"), {
+      target: { value: "csn-2" },
+    });
+    await screen.findByText("Snapshot de calcul :", { exact: false });
+  }
+
+  it("le bouton n'existe que sur un snapshot ouvert", async () => {
+    await start();
+    expect(screen.queryByRole("button", { name: "Repartir de ce snapshot" })).toBeNull();
+
+    await openSnapshot();
+
+    expect(
+      screen.getByRole("button", { name: "Repartir de ce snapshot" }),
+    ).toBeInTheDocument();
+  });
+
+  it("crée un scénario au nom proposé, modifiable, et l'ouvre éditable", async () => {
+    await start();
+    await expandScrew();
+    await openSnapshot();
+
+    fireEvent.click(screen.getByRole("button", { name: "Repartir de ce snapshot" }));
+    const field = screen.getByLabelText("Nom du scénario repris");
+    expect(field).toHaveValue("Variante Turquie — repris");
+    fireEvent.change(field, { target: { value: "Variante Turquie — reprise d'octobre" } });
+    fireEvent.click(screen.getByRole("button", { name: "Créer le scénario" }));
+
+    await waitFor(() =>
+      expect(screen.queryByText("Snapshot de calcul :", { exact: false })).toBeNull(),
+    );
+    expect(api.deriveScenario).toHaveBeenCalledWith(
+      "csn-2",
+      "Variante Turquie — reprise d'octobre",
+    );
+    expect(screen.getByLabelText("Scénario")).toHaveValue("scn-repris");
+    fireEvent.click(screen.getByText("Groupe motopropulseur"));
+    expect(await screen.findByRole("button", { name: "Appliquer" })).toBeInTheDocument();
+  });
+
+  it("un réglage qui ne s'applique plus est refusé en nommant les pièces", async () => {
+    await start();
+    await openSnapshot();
+    vi.mocked(api.deriveScenario).mockRejectedValueOnce(
+      new ApiFailure(
+        "SNAPSHOT_SETTINGS_NOT_APPLICABLE",
+        "réglages du snapshot inapplicables : VIS-12 (fournisseur indisponible); V/A/X (usine refusée)",
+        422,
+      ),
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Repartir de ce snapshot" }));
+    fireEvent.click(screen.getByRole("button", { name: "Créer le scénario" }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("VIS-12");
+    expect(alert).toHaveTextContent("V/A/X");
+    expect(screen.getByText("Snapshot de calcul :", { exact: false })).toBeInTheDocument();
+    expect(screen.getByLabelText("Scénario")).toHaveValue("scn-2");
   });
 });

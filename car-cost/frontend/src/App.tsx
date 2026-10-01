@@ -21,6 +21,7 @@ import type {
 import { DecisionDialog } from "./components/DecisionDialog";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { SearchBar } from "./components/SearchBar";
+import { SnapshotHeader } from "./components/SnapshotHeader";
 import { Summary } from "./components/Summary";
 import { TreeHeader } from "./components/TreeHeader";
 import { TreeToolbar } from "./components/TreeToolbar";
@@ -246,6 +247,27 @@ export function App() {
     }
   }
 
+  /**
+   * « Repartir de ce snapshot » : le scénario créé reprend exactement la copie
+   * et s'ouvre éditable. Le snapshot d'origine n'est pas touché.
+   */
+  async function deriveFromSnapshot(name: string): Promise<string | null> {
+    if (!openSnapshot) return null;
+    let derived: Scenario;
+    try {
+      derived = await api.deriveScenario(openSnapshot.id, name);
+    } catch (error) {
+      return describe(error);
+    }
+    try {
+      await reloadScenarios(derived.id);
+    } catch (error) {
+      // Le scénario existe : le dire, sans faire croire que la reprise a échoué.
+      setFailure(`Scénario « ${derived.name} » créé ; ${describe(error)}`);
+    }
+    return null;
+  }
+
   async function duplicate(name: string) {
     if (!scenario) return;
     try {
@@ -338,13 +360,13 @@ export function App() {
           onOpenSnapshot={openFrozen}
         />
         {openSnapshot && (
-          <p className="snapshot-title">
-            Snapshot de calcul : <strong>{openSnapshot.name}</strong> — lecture
-            seule, les réglages montrés sont ceux du gel.{" "}
-            <button onClick={backToScenario} disabled={busy}>
-              Revenir au scénario
-            </button>
-          </p>
+          <SnapshotHeader
+            key={openSnapshot.id}
+            snapshot={openSnapshot}
+            busy={busy}
+            onBack={backToScenario}
+            onDerive={deriveFromSnapshot}
+          />
         )}
         <p className="disclaimer">
           Prix, masses et facteurs carbone <strong>synthétiques</strong> — aucune

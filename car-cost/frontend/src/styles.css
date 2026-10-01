@@ -236,6 +236,8 @@ button { font: inherit; }
 .scenario-bar__copy { display: flex; gap: 6px; }
 .scenario-bar [role="alert"] { color: var(--danger); align-self: center; }
 .snapshot-title { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
+.snapshot-title p { margin: 0; }
+.snapshot-title form { margin-top: 4px; }
 .scenario-bar__danger { color: var(--danger); }
 .scenario-bar .scenario-bar__decide { border-color: var(--accent); background: var(--accent); color: #fff; }
 

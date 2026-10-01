@@ -195,6 +195,16 @@ export const api = {
       `/calculation-snapshots/${encodeURIComponent(id)}`,
     ),
 
+  /**
+   * « Repartir de ce snapshot » : un scénario neuf avec exactement sa copie.
+   * Refus `SNAPSHOT_SETTINGS_NOT_APPLICABLE` : le message nomme les pièces.
+   */
+  deriveScenario: (snapshotId: string, name: string) =>
+    call<Scenario>(
+      `/calculation-snapshots/${encodeURIComponent(snapshotId)}/derive`,
+      post({ name }),
+    ),
+
   /** Les valeurs refusées à la prise de ce snapshot ; vide s'il est sain. */
   quarantine: (snapshotId: string) =>
     call<QuarantineJournal>(
