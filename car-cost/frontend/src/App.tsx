@@ -27,6 +27,12 @@ import { byPart, Refusals } from "./quarantine";
 const BOM_VERSION =
   import.meta.env.VITE_BOM_VERSION ?? "bom-multipla-2026-09-22";
 
+const SCENARIO_DEFAULTS = {
+  bom_version: BOM_VERSION,
+  display_currency: "EUR",
+  labour_rate: "42.00",
+};
+
 export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
@@ -55,10 +61,8 @@ export function App() {
         if (known.length === 0) {
           known = [
             await api.createScenario({
-              bom_version: BOM_VERSION,
+              ...SCENARIO_DEFAULTS,
               name: "Scénario de travail",
-              display_currency: "EUR",
-              labour_rate: "42.00",
             }),
           ];
         }
@@ -123,6 +127,30 @@ export function App() {
     setExpandTo(undefined);
     setTreeKey((key) => key + 1);
     setRoot(await api.root(BOM_VERSION, last?.id ?? null));
+  }
+
+  /**
+   * Le point de départ sans aucun réglage doit rester accessible même après
+   * avoir réglé ou supprimé le scénario vide du démarrage. On rouvre le plus
+   * récent qui existe et on n'en crée un que s'il n'y en a plus, pour ne pas
+   * empiler des scénarios vides identiques.
+   */
+  async function selectBlank() {
+    setFailure(null);
+    try {
+      const existing = scenarios.find((item) => item.parameters.length === 0);
+      if (existing) {
+        await open(existing);
+        return;
+      }
+      const created = await api.createScenario({
+        ...SCENARIO_DEFAULTS,
+        name: "Catalogue — sans réglage",
+      });
+      await reloadScenarios(created.id);
+    } catch (error) {
+      setFailure(describe(error));
+    }
   }
 
   async function duplicate(name: string) {
@@ -214,6 +242,7 @@ export function App() {
           scenarios={scenarios}
           current={scenario}
           onSelect={(id) => selectScenario(id)}
+          onSelectBlank={selectBlank}
           onDuplicate={duplicate}
           onDelete={removeScenario}
           onOpenDecision={() => setDeciding(true)}
