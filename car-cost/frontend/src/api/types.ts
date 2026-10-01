@@ -49,6 +49,8 @@ export type TreeLine = {
   readonly rolled_up_contribution?: Money | null;
   /** La contribution propre : celle qui se somme au total. */
   readonly own_contribution?: Money | null;
+  /** Part du total, déjà calculée par l'API (chaîne décimale) ; absente sans prix. */
+  readonly share_of_total_pct?: string | null;
   readonly price_status?: PriceStatus;
   readonly is_modified?: boolean;
   readonly has_modified_descendant?: boolean;

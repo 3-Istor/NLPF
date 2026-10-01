@@ -20,6 +20,8 @@ import type {
 import { DecisionDialog } from "./components/DecisionDialog";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { Summary } from "./components/Summary";
+import { TreeHeader } from "./components/TreeHeader";
+import { TreeToolbar } from "./components/TreeToolbar";
 import { rowId, Tree } from "./components/Tree";
 import { WhereUsed } from "./components/WhereUsed";
 import { byPart, Refusals } from "./quarantine";
@@ -296,6 +298,10 @@ export function App() {
 
           {root ? (
             <Refusals.Provider value={refusals}>
+              <div className="tree-head">
+                <TreeToolbar onCollapseAll={tree.collapseAll} />
+                <TreeHeader />
+              </div>
               <Tree
                 root={root}
                 state={tree}

@@ -42,7 +42,7 @@ code { font: 12px/1 ui-monospace, "Cascadia Mono", monospace; color: var(--muted
 /* Deux zones simultanément visibles : on ne quitte jamais l'arbre pour voir
    l'effet de ce qu'on vient de saisir. */
 .app__body { display: flex; flex: 1; min-height: 0; }
-.tree { flex: 1; overflow: auto; padding: 8px 0 40px; }
+.tree { flex: 1; overflow: auto; padding: 0 0 40px; }
 .summary {
   width: 380px;
   flex: none;
@@ -275,3 +275,42 @@ button { font: inherit; }
   .app__header { flex-wrap: wrap; }
   .decision__totals { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Arbre-tableau : une grille de colonnes fixes, partagée par l'en-tête et les lignes. */
+.row-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 84px 84px 84px 104px 112px 112px minmax(150px, 230px);
+  column-gap: 8px;
+  align-items: center;
+}
+.row-grid > * { min-width: 0; }
+.row-grid .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.tree-head { position: sticky; top: 0; z-index: 3; background: var(--bg); }
+.tree-toolbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 6px 12px;
+}
+.tree-toolbar__search { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+.tree-header {
+  padding: 4px 12px 4px 8px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .03em;
+}
+
+.row.row-grid { padding: 3px 12px 3px 8px; }
+.cell--label { display: flex; align-items: center; min-width: 0; }
+.guide { flex: none; width: 18px; align-self: stretch; margin-left: 0; border-left: 1px solid var(--line); }
+.row--level1 button.label { font-weight: 600; }
+.cell--status { display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; overflow: hidden; }
+.cell--status > * { flex: none; }
+
+.cell--share { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.bar { display: block; width: 100%; height: 3px; background: #eef1f5; border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+
+.node-status { margin: 4px 0 4px 34px; color: var(--muted); font-size: 12px; list-style: none; }
+.node-status--danger { color: var(--danger); }

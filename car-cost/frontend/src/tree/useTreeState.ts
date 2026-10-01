@@ -24,6 +24,8 @@ export type ChildrenEntry =
 export type TreeState = {
   expanded: ReadonlySet<string>;
   selected: string | null;
+  /** Le calcul que l'écran affiche ; une page d'un autre calcul est en cours de relecture. */
+  calculationId: string | null;
   isExpanded(path: string): boolean;
   childrenOf(path: string): ChildrenEntry | undefined;
   toggle(path: string): void;
@@ -294,6 +296,7 @@ export function useTreeState(options: {
     () => ({
       expanded,
       selected,
+      calculationId,
       isExpanded: (path: string) => expanded.has(path),
       childrenOf: (path: string) => entries.get(path),
       toggle,
@@ -302,6 +305,6 @@ export function useTreeState(options: {
       retry,
       reveal,
     }),
-    [expanded, selected, entries, toggle, collapseAll, retry, reveal],
+    [expanded, selected, calculationId, entries, toggle, collapseAll, retry, reveal],
   );
 }

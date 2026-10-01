@@ -10,8 +10,8 @@ import type { Scenario, TreeLine } from "../api/types";
 import type { TreeState } from "../tree/useTreeState";
 import { TreeNode } from "./TreeNode";
 
-/** L'id DOM d'une ligne : son chemin, qui est son identité (DAG). */
-export const rowId = (path: string) => `node-${path}`;
+// Défini à part pour que Tree et TreeNode ne s'importent pas mutuellement.
+export { rowId } from "./rowId";
 
 type Props = {
   root: TreeLine;

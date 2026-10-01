@@ -9,11 +9,11 @@
 
 import { useContext } from "react";
 import type { Scenario, TreeLine } from "../api/types";
-import { money, quantity } from "../format";
+import { money, percent, quantity } from "../format";
 import { describeRefusal, Refusals } from "../quarantine";
 import type { TreeState } from "../tree/useTreeState";
 import { NodePanel } from "./NodePanel";
-import { rowId } from "./Tree";
+import { rowId } from "./rowId";
 
 type Props = {
   line: TreeLine;
@@ -58,6 +58,10 @@ export function TreeNode({
 
   const modified = line.is_modified === true || isTargeted(line, scenario);
   const inPath = line.has_modified_descendant === true;
+  // L'ancienne page reste affichée le temps que la nouvelle arrive : on le
+  // dit, sans toucher aux montants.
+  const refreshing =
+    entry?.status === "ready" && entry.calculationId !== state.calculationId;
   const refused = useContext(Refusals).get(line.part_ref);
 
   return (
@@ -65,80 +69,100 @@ export function TreeNode({
       <div
         id={rowId(line.path)}
         aria-selected={selected}
-        className={`row${modified ? " row--modified" : ""}${
+        className={`row row-grid${modified ? " row--modified" : ""}${
           inPath ? " row--in-modified-path" : ""
-        }${selected ? " row--selected" : ""}`}
-        style={{ paddingLeft: `${depth * 18 + 8}px` }}
+        }${selected ? " row--selected" : ""}${depth === 1 ? " row--level1" : ""}`}
       >
-        <button
-          className="chevron"
-          onClick={() => state.toggle(line.path)}
-          disabled={!line.has_children}
-          aria-expanded={open}
-          aria-label={open ? "Replier" : "Déplier"}
-        >
-          {line.has_children ? (open ? "▾" : "▸") : "·"}
-        </button>
+        <div className="cell cell--label">
+          {Array.from({ length: depth }, (_, level) => (
+            <span key={level} className="guide" aria-hidden="true" />
+          ))}
+          <button
+            className="chevron"
+            onClick={() => state.toggle(line.path)}
+            disabled={!line.has_children}
+            aria-expanded={open}
+            aria-label={open ? "Replier" : "Déplier"}
+          >
+            {line.has_children ? (open ? "▾" : "▸") : "·"}
+          </button>
+          <button
+            className="label"
+            onClick={() => state.select(line.path)}
+            title="Régler cette pièce"
+          >
+            {line.label}
+          </button>
+        </div>
 
-        <button
-          className="label"
-          onClick={() => state.select(line.path)}
-          title="Régler cette pièce"
-        >
-          {line.label}
-        </button>
-        <code className="ref">{line.part_ref}</code>
+        <code className="cell ref">{line.part_ref}</code>
 
-        <span className="qty">
+        <span className="cell num qty">
           × {quantity(line.edge_quantity)} {line.unit}
         </span>
+        <span className="cell num cell--path-qty">{quantity(line.quantity_on_path)}</span>
 
-        {line.occurrence_count > 1 && (
-          <button
-            className="badge"
-            onClick={() => onShowWhereUsed(line.part_ref)}
-            title="Voir tous les emplacements de montage"
-          >
-            utilisée à {line.occurrence_count} endroits
-          </button>
-        )}
-
-        {modified && <span className="mark" title="Paramètre modifié">●</span>}
-        {!modified && inPath && (
-          <span className="mark mark--faint" title="Contient une modification">
-            ○
-          </span>
-        )}
-
-        {line.price_status === "MISSING" && (
-          <span className="chip chip--danger">prix manquant</span>
-        )}
-        {line.price_status === "FALLBACK" && (
-          <span
-            className="chip chip--warn"
-            title="Absent de la réponse de l'API : le dernier prix connu a été retenu."
-          >
-            prix de repli
-          </span>
-        )}
-        {line.price_status === "QUARANTINED" && (
-          <span
-            className="chip chip--warn"
-            title={
-              refused
-                ? describeRefusal(refused)
-                : "Valeur refusée par le contrôle : le dernier prix sain a été retenu."
-            }
-          >
-            prix en quarantaine
-          </span>
-        )}
-
-        <span className="cost" title="Coût unitaire">
+        <span className="cell num cost" title="Coût unitaire">
           {money(line.unit_cost)}
         </span>
-        <span className="cost cost--strong" title="Ce que pèse cette occurrence">
+        <span className="cell num cost cost--strong" title="Ce que pèse cette occurrence">
           {money(line.rolled_up_contribution)}
+        </span>
+
+        <span className="cell num cell--share">
+          {line.share_of_total_pct ? (
+            <>
+              <span>{percent(line.share_of_total_pct)}</span>
+              <span className="bar" aria-hidden="true">
+                <i style={{ width: `${line.share_of_total_pct}%` }} />
+              </span>
+            </>
+          ) : (
+            "—"
+          )}
+        </span>
+
+        <span className="cell cell--status">
+          {modified && <span className="mark" title="Paramètre modifié">●</span>}
+          {!modified && inPath && (
+            <span className="mark mark--faint" title="Contient une modification">
+              ○
+            </span>
+          )}
+          {refreshing && <span className="chip">mise à jour…</span>}
+
+          {line.price_status === "MISSING" && (
+            <span className="chip chip--danger">prix manquant</span>
+          )}
+          {line.price_status === "FALLBACK" && (
+            <span
+              className="chip chip--warn"
+              title="Absent de la réponse de l'API : le dernier prix connu a été retenu."
+            >
+              prix de repli
+            </span>
+          )}
+          {line.price_status === "QUARANTINED" && (
+            <span
+              className="chip chip--warn"
+              title={
+                refused
+                  ? describeRefusal(refused)
+                  : "Valeur refusée par le contrôle : le dernier prix sain a été retenu."
+              }
+            >
+              prix en quarantaine
+            </span>
+          )}
+          {line.occurrence_count > 1 && (
+            <button
+              className="badge"
+              onClick={() => onShowWhereUsed(line.part_ref)}
+              title="Voir tous les emplacements de montage"
+            >
+              utilisée à {line.occurrence_count} endroits
+            </button>
+          )}
         </span>
       </div>
 
@@ -153,18 +177,20 @@ export function TreeNode({
       )}
 
       {open && (
-        <>
+        <ul className="children">
           {(entry === undefined || entry.status === "loading") && (
-            <p className="hint">chargement…</p>
+            <li className="node-status" role="status">
+              chargement…
+            </li>
           )}
           {entry?.status === "error" && (
-            <p className="hint hint--danger">
+            <li className="node-status node-status--danger">
               {entry.message}{" "}
-              <button onClick={() => state.retry(line.path)}>Réessayer</button>
-            </p>
+              <button onClick={() => state.retry(line.path)}>réessayer</button>
+            </li>
           )}
-          {entry?.status === "ready" && entry.page.items.length > 0 && (
-            <ul className="children">
+          {entry?.status === "ready" && (
+            <>
               {entry.page.items.map((child) => (
                 <TreeNode
                   key={child.path}
@@ -177,9 +203,18 @@ export function TreeNode({
                   onShowWhereUsed={onShowWhereUsed}
                 />
               ))}
-            </ul>
+              {entry.page.items.length === 0 && (
+                <li className="node-status">aucun enfant</li>
+              )}
+              {entry.page.total > entry.page.items.length &&
+                entry.page.items.length > 0 && (
+                  <li className="node-status">
+                    {entry.page.items.length} enfants sur {entry.page.total}
+                  </li>
+                )}
+            </>
           )}
-        </>
+        </ul>
       )}
     </li>
   );
