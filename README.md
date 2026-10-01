@@ -386,6 +386,14 @@ entièrement distinct.
 
 **Dette assumée, nommée**
 
+- **L'arbre-tableau manque de place à 1 280 px.** Les colonnes fixes et la
+  synthèse (380 px) laissent au libellé une centaine de pixels : les libellés
+  sont tronqués et la colonne « état » rogne ses pastilles (« utilisée à N
+  endroits »). Les références longues sont coupées proprement, avec le texte
+  entier au survol. À trancher : resserrer les colonnes, raccourcir la pastille,
+  ou laisser l'arbre défiler horizontalement.
+- **Un test de la recherche a échoué une fois sur dix lancements** (« F3 passe
+  au suivant et boucle »), sans se reproduire ensuite. Cause non trouvée.
 - **Le rafraîchissement après recalcul est plus lent que le seuil.** Mesuré à
   395–448 ms pour 12 nœuds dépliés, au-dessus des 300 ms visés par l'ADR-0009 :
   l'arbre relit chaque nœud ouvert, un par un. Un indicateur « mise à jour… »
