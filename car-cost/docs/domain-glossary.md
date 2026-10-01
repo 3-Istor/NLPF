@@ -118,6 +118,7 @@ seul un jeu de valeurs de contrôle les révèle.
 | **Calcul** (`calculation`) | L'exécution du moteur sur un scénario et un snapshot. Persisté avec ses versions (BOM, snapshot, règles), son horodatage et sa devise. |
 | **Devise d'achat** | Celle dans laquelle une pièce est payée. |
 | **Devise d'affichage** | Celle dans laquelle le résultat est présenté. |
+| **Snapshot de calcul** (`CalculationSnapshot`) | Un calcul **nommé et figé** avec les hypothèses qui l'ont produit (copie des paramètres, taux horaire, devise, règles actives), et des références vers le calcul, le snapshot de prix et la version de BOM validée. Immuable, sauf son nom (ADR-0014). À ne pas confondre avec le **snapshot de prix** (§5), qui photographie les prix et est partagé par tous les calculs. |
 | **Reproductibilité** | Mêmes entrées + même snapshot ⇒ même résultat, **au centime**. |
 | **Explicabilité** | Pouvoir descendre du total jusqu'au prix unitaire d'une pièce et à sa source. |
 | **État du calcul** | `à jour` · `paramètres modifiés depuis le dernier calcul` (totaux **obsolètes**) · `calcul en cours` · `échec`. Donnée renvoyée par l'API, pas une décoration du front. |
