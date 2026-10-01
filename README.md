@@ -237,16 +237,18 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 363 tests
+# backend — 450 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 19 tests
+# front — 100 tests
 cd car-cost/frontend && npm test
 ```
 
-Les vingt-et-un tests d'intégration se **sautent** si Postgres n'est pas
-joignable : la suite reste verte hors ligne. Vérifié sous NixOS (Python 3.12) :
-`342 passed, 21 skipped` hors ligne, `363 passed` avec la base chargée. Les
+Les trente-neuf tests d'intégration se **sautent** si Postgres n'est pas
+joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
+`411 passed, 39 skipped` hors ligne, `450 passed` avec la base chargée et
+migrée jusqu'à 0004 (le démarrage de l'API rattrape les migrations
+manquantes). Les
 tests d'intégration qui écrivent le font dans une transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
 l'écran utilise.
@@ -273,7 +275,7 @@ python -m tools.bom_generator --check
 | [docs/cadrage.md](car-cost/docs/cadrage.md) | Le problème, les acteurs, 5 questions métier, 5 invariants, 3 modes de panne, 11 ambiguïtés |
 | [docs/perimetre.md](car-cost/docs/perimetre.md) | Ce qu'on fait, ce qu'on ne fait pas, ce qu'on reporte, la tranche verticale |
 | [docs/domain-glossary.md](car-cost/docs/domain-glossary.md) | Pièce, occurrence, quantité unitaire, quantité cumulée — les quatre mots qu'on confond |
-| [docs/adr/](car-cost/docs/adr) | Onze décisions d'architecture, avec les options écartées et ce qui nous y ferait revenir |
+| [docs/adr/](car-cost/docs/adr) | Quatorze décisions d'architecture, avec les options écartées et ce qui nous y ferait revenir |
 | [docs/api.md](car-cost/docs/api.md) | Les contrats d'API, écrits avant l'implémentation |
 | [backend/migrations/](car-cost/backend/migrations) | Le schéma, et ce qu'il garantit ou non |
 | [seeds/validation_report.json](car-cost/seeds/validation_report.json) | Le rapport du générateur : 474 pièces, 689 arêtes, 65 partagées |
@@ -325,8 +327,34 @@ entièrement distinct.
   déplie ses ancêtres, le sélectionne et le centre ; les correspondances sont
   surlignées sans jamais injecter de HTML. Au plus 50 chemins parcourables par
   pièce, le compteur le dit quand il y en a plus
+- **Lot 1a — l'arbre garde son état.** Dépliage, sélection et défilement
+  survivent à un recalcul et au F5 ; recalculer ne replie plus rien
+- **Lot 1b — un arbre-tableau lisible.** Colonnes alignées, en-tête collant,
+  navigation au clavier (↓ ↑ → ← Entrée), indicateur « mise à jour… » pendant
+  le rafraîchissement
+- **Lot 1c — une recherche sans accents.** Compteur, Suivant et Précédent,
+  surlignage, au plus 50 chemins par pièce (`max_paths`)
+- **Lot 1d — le snapshot de calcul nommé** (ADR-0014). Figer un calcul sous un
+  nom, lister et ouvrir les snapshots, comparer deux snapshots entre eux sans
+  recalcul ; un scénario qui porte un snapshot ne se supprime pas
 
 ### Ce qu'il reste à faire
+
+**Suite du lot 1 et lots suivants (vues)**
+
+- [ ] **Lot 1-bis** : panneau de saisie pré-rempli et suppression d'un réglage,
+      sélecteur de version de BOM, types générés depuis l'OpenAPI, `test:e2e`.
+- [ ] **Lot 2.3 — décomposition de l'écart.** Deux snapshots de calcul pris sur
+      des snapshots de prix différents ne se comparent pas aujourd'hui (422) ;
+      les comparer, c'est décomposer l'écart entre prix et hypothèses.
+- [ ] **Lot 3 — export et import de snapshots de calcul**, `derived_from` et
+      « partir de ce snapshot ».
+- [ ] **Renommer un snapshot depuis l'écran.** `PATCH /calculation-snapshots/{id}`
+      existe ; aucun contrôle ne l'appelle.
+- [ ] **Route groupée `children:batch`** pour rafraîchir l'arbre en une requête
+      (voir la dette sur la durée du rafraîchissement).
+- [ ] **Décision d'équipe sur l'emplacement des ports** (D8) : les nouveaux
+      ports vivent dans `application/ports.py` en attendant.
 
 **Tranche T2 — « l'outil dit la vérité sur ses prix »**
 
@@ -352,6 +380,22 @@ entièrement distinct.
 
 **Dette assumée, nommée**
 
+- **Le rafraîchissement après recalcul est plus lent que le seuil.** Mesuré à
+  395–448 ms pour 12 nœuds dépliés, au-dessus des 300 ms visés par l'ADR-0009 :
+  l'arbre relit chaque nœud ouvert, un par un. Un indicateur « mise à jour… »
+  l'annonce ; la route groupée `children:batch` est différée.
+- **Les marques ●/○ d'un snapshot ouvert viennent du scénario vivant**, pas du
+  snapshot : si les réglages ont changé depuis le gel, elles ne le disent pas.
+- **Deux snapshots de calcul sur des snapshots de prix différents ne se
+  comparent pas** (ADR-0012, ADR-0014) : l'API refuse (422), l'écran le dit.
+- **Le pliage des accents diverge entre Python et TS.** `casefold` côté API,
+  `toLowerCase` côté écran : `ß` donne `ss` d'un côté et reste `ß` de l'autre.
+  Sans effet hors surlignage.
+- **Un calcul orphelin peut rester** si deux gels simultanés visent le même
+  nom : le second est refusé (409) mais son calcul a déjà été écrit.
+- **La base doit porter les migrations 0003 et 0004** (snapshots de calcul). Le
+  démarrage de l'API les rattrape ; une base qui n'a jamais démarré avec cette
+  version n'a que 0001 et 0002.
 - **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
   périmètre figé par l'ADR-0013 : le modifier change l'explication d'un calcul
   ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
