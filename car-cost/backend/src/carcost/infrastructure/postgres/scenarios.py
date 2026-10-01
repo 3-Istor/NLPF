@@ -15,8 +15,9 @@ class PostgresScenarioRepository(PostgresRepository):
             cursor.execute(
                 """
                 INSERT INTO scenario (id, bom_version_id, name, display_currency,
-                                      labour_rate, labour_rate_currency, active_rules)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                                      labour_rate, labour_rate_currency, active_rules,
+                                      derived_from)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     scenario.id,
@@ -26,6 +27,7 @@ class PostgresScenarioRepository(PostgresRepository):
                     scenario.labour_rate,
                     scenario.display_currency,
                     sorted(scenario.active_rules),
+                    scenario.derived_from,
                 ),
             )
 
@@ -36,7 +38,8 @@ class PostgresScenarioRepository(PostgresRepository):
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(
                 """
-                SELECT bom_version_id, display_currency, labour_rate, active_rules, name
+                SELECT bom_version_id, display_currency, labour_rate, active_rules, name,
+                       derived_from
                 FROM scenario WHERE id = %s
                 """,
                 (scenario_id,),
@@ -44,7 +47,9 @@ class PostgresScenarioRepository(PostgresRepository):
             head = cursor.fetchone()
             if head is None:
                 raise ScenarioNotFound(scenario_id)
-            bom_version, currency, labour_rate, active_rules, name = head
+            (
+                bom_version, currency, labour_rate, active_rules, name, derived_from,
+            ) = head
 
             cursor.execute(
                 """
@@ -82,6 +87,7 @@ class PostgresScenarioRepository(PostgresRepository):
             active_rules=frozenset(active_rules),
             parameters=parameters,
             name=name,
+            derived_from=derived_from,
         )
 
     def list_all(self) -> tuple[Scenario, ...]:

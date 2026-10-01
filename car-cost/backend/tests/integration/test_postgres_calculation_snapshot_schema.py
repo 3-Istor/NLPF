@@ -207,3 +207,27 @@ def test_the_name_history_is_append_only(frozen):
         "DELETE FROM calculation_snapshot_name WHERE snapshot_id = %s",
         (frozen.snapshot_id,),
     )
+
+
+def test_a_scenario_cannot_derive_from_an_unknown_snapshot(frozen):
+    import psycopg
+
+    refused(
+        frozen.connection,
+        psycopg.errors.ForeignKeyViolation,
+        "UPDATE scenario SET derived_from = 'csn-inconnu' WHERE id = %s",
+        (frozen.scenario_id,),
+    )
+
+
+def test_the_origin_of_a_snapshot_is_frozen(frozen):
+    import psycopg
+
+    other = frozen.insert_snapshot(frozen.calculation_ids[1], "Autre gel", "autre gel")
+
+    refused(
+        frozen.connection,
+        psycopg.errors.InsufficientPrivilege,
+        "UPDATE calculation_snapshot SET derived_from = %s WHERE id = %s",
+        (other, frozen.snapshot_id),
+    )

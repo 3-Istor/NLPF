@@ -267,3 +267,17 @@ def test_a_scenario_without_snapshot_is_deleted(repositories):
 
     with pytest.raises(ScenarioNotFound):
         scenarios.get(original.id)
+
+
+def test_duplicating_a_derived_scenario_keeps_the_snapshot_it_came_from(repositories):
+    boms, scenarios, sourcing = repositories
+    original = scenario(derived_from="csn-origine")
+    manage_scenarios.create_scenario(original, boms, scenarios, sourcing)
+
+    copied = manage_scenarios.duplicate_scenario(
+        original.id, name="Variante", scenario_id="scn-copy",
+        boms=boms, scenarios=scenarios, sourcing=sourcing,
+    )
+
+    assert copied.derived_from == "csn-origine"
+    assert scenarios.get("scn-copy").derived_from == "csn-origine"

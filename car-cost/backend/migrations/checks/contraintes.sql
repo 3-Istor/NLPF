@@ -6,7 +6,7 @@
 --
 --   docker compose exec -T db psql -U 3istor -d 3istor -q --       < backend/migrations/checks/contraintes.sql
 --
--- Attendu : 25 refus, 0 WARNING, 2 paramètres valides acceptés, un renommage
+-- Attendu : 26 refus, 0 WARNING, 2 paramètres valides acceptés, un renommage
 -- de snapshot de calcul accepté.
 \set ON_ERROR_STOP on
 \pset pager off
@@ -229,6 +229,10 @@ SELECT doit_refuser(
 SELECT doit_refuser(
     'scénario porteur d''un snapshot de calcul supprimé (ADR-0014)',
     $q$DELETE FROM scenario WHERE id = 'scn'$q$);
+
+SELECT doit_refuser(
+    'scénario reparti d''un snapshot de calcul inexistant (ADR-0014, 0005)',
+    $q$UPDATE scenario SET derived_from = 'cs-inconnu' WHERE id = 'scn'$q$);
 
 SELECT '  accepté (comme attendu) : ' || count(*)::text ||
        ' paramètres valides' AS resultat

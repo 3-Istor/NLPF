@@ -8,6 +8,7 @@ chacun terminé par son `INSERT INTO schema_migration`.
 0002_calculation_context_cost.sql   coûts par occurrence quand une surcharge de chemin existe
 0003_validated_bom_is_frozen.sql    une version validée ne change plus (ADR-0013)
 0004_calculation_snapshot.sql       un snapshot de calcul nommé, figé sauf son nom (ADR-0014)
+0005_derived_from_calculation_snapshot.sql  le snapshot d'où repart un scénario, recopié au gel (ADR-0014)
 ```
 
 Postgres ne les exécute qu'à la **création** du volume. Le conteneur `backend` rattrape à chaque
@@ -21,6 +22,8 @@ docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
   < backend/migrations/0003_validated_bom_is_frozen.sql
 docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
   < backend/migrations/0004_calculation_snapshot.sql
+docker compose exec -T db psql -U 3istor -d 3istor -v ON_ERROR_STOP=1 -q \
+  < backend/migrations/0005_derived_from_calculation_snapshot.sql
 ```
 
 ## Règles
@@ -64,6 +67,7 @@ for migration in 0*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migrati
 | La trace des noms d'un snapshot de calcul est en ajout seul (ADR-0014) | Déclencheur `forbid_mutation` sur `calculation_snapshot_name` (0004) |
 | Deux snapshots de calcul d'une même version n'ont pas le même nom, sans casse ni accents (ADR-0014) | `UNIQUE (bom_version_id, name_key)` ; `name_key` est plié par l'application (0004) |
 | Un scénario qui porte un snapshot de calcul ne se supprime pas (ADR-0014) | Clés étrangères sans cascade de `calculation_snapshot` vers `scenario` et `calculation` (0004) |
+| Un scénario ne repart que d'un snapshot de calcul qui existe ; le lien recopié au gel est figé (ADR-0014) | Clés étrangères `derived_from` vers `calculation_snapshot` ; déclencheur `calculation_snapshot_only_name_changes` (0005) |
 | **Acyclicité** | ❌ Impossible en déclaratif — tri topologique au chargement |
 | **Racine unique** | ❌ Contrôle au chargement |
 | **Aucun orphelin** | ❌ Contrôle au chargement |
@@ -79,17 +83,17 @@ Le tableau ci-dessus est vérifié, pas affirmé :
 docker compose exec -T db psql -U 3istor -d 3istor -q < backend/migrations/checks/contraintes.sql
 ```
 
-Vingt-cinq écritures interdites, chacune annoncée « refusé » avec la
+Vingt-six écritures interdites, chacune annoncée « refusé » avec la
 contrainte qui l'a arrêtée — dont les six qui protègent une version validée
-(ADR-0013) et les quatre qui protègent un snapshot de calcul (ADR-0014) : colonne
+(ADR-0013) et les cinq qui protègent un snapshot de calcul (ADR-0014) : colonne
 figée modifiée, suppression, nom en double dans la version, scénario porteur
-supprimé. Sont aussi montrés acceptés : deux paramètres valides, dont une portée
+supprimé, scénario reparti d'un snapshot inexistant. Sont aussi montrés acceptés : deux paramètres valides, dont une portée
 pièce et une portée chemin sur la même pièce, le cas de précédence de
 l'ADR-0002, et le renommage d'un snapshot de calcul. Un `WARNING` dans la sortie
 signale une contrainte qui ne tient plus.
 
 Exécuté sur Postgres 16.15 le 2026-10-01, sur la base locale et sur une base
-neuve : 25 refus, 0 WARNING.
+neuve : 26 refus, 0 WARNING (après la migration 0005).
 
 ## Chargement du jeu de données
 

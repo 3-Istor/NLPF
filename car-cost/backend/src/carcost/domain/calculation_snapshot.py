@@ -61,6 +61,8 @@ class CalculationSnapshot:
     active_rules: frozenset[str]
     parameters: tuple[FrozenParameter, ...]
     created_at: datetime
+    #: Le snapshot dont le scénario figé était reparti, recopié au gel.
+    derived_from: str | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "name", snapshot_name(self.name))

@@ -320,3 +320,22 @@ def test_an_unknown_snapshot_is_reported(world):
             "csn-inconnu", known.id,
             snapshots_repo=world.snapshots_repo, calculations=world.calculations,
         )
+
+
+def test_a_scenario_freezes_with_no_origin_by_default(world):
+    snapshot = world.freeze("Référence T3", world.calculator(prices(S="10.000000")))
+
+    assert snapshot.derived_from is None
+
+
+def test_freezing_a_derived_scenario_copies_the_snapshot_it_came_from(diamond):
+    world = World(diamond)
+    manage_scenarios.create_scenario(
+        study(derived_from="csn-origine"), world.boms, world.scenarios,
+        world.sourcing,
+    )
+
+    snapshot = world.freeze("Reprise", world.calculator(prices(S="10.000000")))
+
+    assert snapshot.derived_from == "csn-origine"
+    assert world.snapshots_repo.get(snapshot.id).derived_from == "csn-origine"

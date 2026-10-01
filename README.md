@@ -247,7 +247,7 @@ cd car-cost/frontend && npm test
 Les trente-neuf tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
 `411 passed, 39 skipped` hors ligne, `450 passed` avec la base chargée et
-migrée jusqu'à 0004 (le démarrage de l'API rattrape les migrations
+migrée jusqu'à 0005 (le démarrage de l'API rattrape les migrations
 manquantes). Les
 tests d'intégration qui écrivent le font dans une transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
@@ -259,7 +259,7 @@ Deux contrôles valent d'être lancés à la main :
 # le schéma refuse-t-il vraiment ce qu'il prétend refuser ?
 docker compose exec -T db psql -U 3istor -d 3istor -q \
   < backend/migrations/checks/contraintes.sql
-# attendu : 25 refus, 0 WARNING
+# attendu : 26 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
 python -m tools.bom_generator --check
@@ -393,9 +393,9 @@ entièrement distinct.
   Sans effet hors surlignage.
 - **Un calcul orphelin peut rester** si deux gels simultanés visent le même
   nom : le second est refusé (409) mais son calcul a déjà été écrit.
-- **La base doit porter les migrations 0003 et 0004** (snapshots de calcul). Le
-  démarrage de l'API les rattrape ; une base qui n'a jamais démarré avec cette
-  version n'a que 0001 et 0002.
+- **La base doit porter les migrations 0003 à 0005** (snapshots de calcul et
+  scénarios qui en repartent). Le démarrage de l'API les rattrape ; une base qui
+  n'a jamais démarré avec cette version n'a que 0001 et 0002.
 - **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
   périmètre figé par l'ADR-0013 : le modifier change l'explication d'un calcul
   ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
@@ -412,7 +412,7 @@ entièrement distinct.
   qu'une date fausse ; les lignes déjà écrites sont immuables.
 - **Le journal de quarantaine n'est pas protégé en écriture.** Snapshot et
   lignes de prix ont leur déclencheur d'immutabilité ; `price_quarantine` non.
-  L'ajouter fait passer le contrôle du schéma de 25 à 26 refus.
+  L'ajouter fait passer le contrôle du schéma de 26 à 27 refus.
 - **Le motif de quarantaine est une phrase**, pas le code prévu par le contrat
   initial (docs/api.md §5.3). Suffisant pour l'écran ; pas pour trier.
 - **Comparer et recommander enregistrent de nouveaux calculs** à chaque appel,

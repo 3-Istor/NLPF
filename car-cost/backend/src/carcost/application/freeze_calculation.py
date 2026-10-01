@@ -59,6 +59,7 @@ def freeze_scenario(
         active_rules=scenario.active_rules,
         parameters=tuple(_frozen(p) for p in scenario.parameters),
         created_at=now,
+        derived_from=scenario.derived_from,
     )
     snapshots_repo.save(snapshot)
     return snapshot

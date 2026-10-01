@@ -230,3 +230,25 @@ def test_for_scenario_lists_the_snapshots_carried(world):
 
     assert [s.id for s in carried] == [second.id, first.id]
     assert world.snapshots_repo.for_scenario("scn-sans-gel") == ()
+
+
+def test_a_derived_scenario_and_its_freeze_keep_the_origin_in_postgres(
+    world, connection,
+):
+    origin = world.freeze("Gel d'origine")
+    derived = replace(
+        world.scenario, id=f"scn-test-{uuid.uuid4().hex[:12]}",
+        name="Gel d'origine — repris", derived_from=origin.id,
+    )
+    world.scenarios.create(derived)
+    world.scenario = derived
+
+    reader = held(PostgresScenarioRepository(DSN), connection)
+    assert reader.get(derived.id).derived_from == origin.id
+    assert reader.get(origin.scenario_id).derived_from is None
+
+    recaptured = world.freeze("Gel repris")
+
+    assert recaptured.derived_from == origin.id
+    assert world.snapshots_repo.get(recaptured.id) == recaptured
+    assert world.snapshots_repo.get(origin.id).derived_from is None
