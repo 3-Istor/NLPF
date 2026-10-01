@@ -8,12 +8,24 @@
  * nombreux que les occurrences.
  */
 
-import { useCallback, useEffect, useState, type FormEvent, type KeyboardEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 import { api, ApiFailure } from "../api/client";
 import type { SearchResponse } from "../api/types";
 
 /** Chemins servis par pièce : la valeur par défaut du serveur, demandée explicitement. */
 const MAX_PATHS = 50;
+
+/** La recherche suit la frappe, après ce délai de calme. */
+const TYPING_DELAY_MS = 250;
+/** En dessous, presque tout correspond : on attend une lettre de plus. */
+const MIN_LENGTH = 2;
 
 type Props = {
   version: string;
@@ -58,6 +70,16 @@ export function SearchBar({ version, onNavigate, onQueryChange }: Props) {
   const [result, setResult] = useState<Result | null>(null);
   const [index, setIndex] = useState(0);
   const [failure, setFailure] = useState<string | null>(null);
+  // Chaque requête porte un numéro : une réponse plus ancienne que la
+  // dernière demandée arrive trop tard et ne doit rien écraser.
+  const latest = useRef(0);
+  const typing = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelTyping = () => {
+    if (typing.current !== null) clearTimeout(typing.current);
+    typing.current = null;
+  };
+  useEffect(() => cancelTyping, []);
 
   const step = useCallback(
     (delta: 1 | -1) => {
@@ -71,14 +93,18 @@ export function SearchBar({ version, onNavigate, onQueryChange }: Props) {
   );
 
   async function run(query: string) {
+    const ticket = ++latest.current;
     setFailure(null);
     try {
-      const fresh = toResult(query, await api.search(version, query, MAX_PATHS));
+      const response = await api.search(version, query, MAX_PATHS);
+      if (ticket !== latest.current) return;
+      const fresh = toResult(query, response);
       setResult(fresh);
       setIndex(0);
       onQueryChange?.(query);
       if (fresh.paths.length > 0) void onNavigate(fresh.paths[0]);
     } catch (error) {
+      if (ticket !== latest.current) return;
       setResult(null);
       onQueryChange?.("");
       setFailure(describe(error));
@@ -89,6 +115,7 @@ export function SearchBar({ version, onNavigate, onQueryChange }: Props) {
   function submit(backwards: boolean) {
     const query = text.trim();
     if (!query) return;
+    cancelTyping();
     if (result && result.query === query) step(backwards ? -1 : 1);
     else void run(query);
   }
@@ -104,13 +131,23 @@ export function SearchBar({ version, onNavigate, onQueryChange }: Props) {
     submit(false);
   }
 
+  /** Chaque frappe relance la recherche, une fois la saisie calmée. */
   function onChange(value: string) {
     setText(value);
-    if (value.trim() === "") {
+    cancelTyping();
+    const query = value.trim();
+    if (query === "") {
+      latest.current += 1;
       setResult(null);
       setFailure(null);
       onQueryChange?.("");
+      return;
     }
+    if (query.length < MIN_LENGTH) return;
+    typing.current = setTimeout(() => {
+      typing.current = null;
+      void run(query);
+    }, TYPING_DELAY_MS);
   }
 
   // F3 et Maj+F3 sur toute la fenêtre, comme la recherche d'un navigateur.
