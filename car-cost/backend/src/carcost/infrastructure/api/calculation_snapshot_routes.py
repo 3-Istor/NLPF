@@ -21,6 +21,7 @@ from ...domain.calculation_snapshot import CalculationSnapshot, InvalidSnapshotN
 from .calculation_routes import (
     _comparison_payload,
     _execute_calculation,
+    _scenario_payload,
     _snapshot,
 )
 from .errors import error_response
@@ -45,6 +46,13 @@ class RenameCalculationSnapshot(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     name: str = Field(description="Nouveau nom.", examples=["Gel retenu"])
+
+
+class DeriveScenario(BaseModel):
+    name: str = Field(
+        description="Nom du scénario créé ; l'écran propose « {snapshot} — repris ».",
+        examples=["Référence T3 — repris"],
+    )
 
 
 class CompareCalculationSnapshots(BaseModel):
@@ -73,6 +81,24 @@ def register_calculation_snapshot_routes(app: FastAPI, repositories) -> None:
         return error_response(
             409, "SCENARIO_HAS_SNAPSHOTS", str(error),
             {"snapshots": list(error.names)},
+        )
+
+    @app.exception_handler(freeze_calculation.SnapshotSettingsNotApplicable)
+    async def _not_applicable(
+        _: Request, error: freeze_calculation.SnapshotSettingsNotApplicable,
+    ):
+        return error_response(
+            422, "SNAPSHOT_SETTINGS_NOT_APPLICABLE", str(error),
+            {
+                "parts": [
+                    {
+                        "part_ref": refusal.part_ref,
+                        "path": refusal.path,
+                        "reason": refusal.reason,
+                    }
+                    for refusal in error.refusals
+                ]
+            },
         )
 
     @app.post(
@@ -150,6 +176,31 @@ def register_calculation_snapshot_routes(app: FastAPI, repositories) -> None:
             repositories, repositories.calculation_snapshots.get(snapshot_id)
         )
 
+    @app.post(
+        "/api/v1/calculation-snapshots/{snapshot_id}/derive", status_code=201,
+        tags=[_TAG], summary="Repartir d'un snapshot de calcul",
+        description=(
+            "Crée un scénario neuf avec exactement les réglages copiés dans le "
+            "snapshot, et `derived_from` = son identifiant. Le snapshot n'est pas "
+            "modifié ; figer ensuite le scénario produit un nouveau snapshot. "
+            "Si un réglage copié ne s'applique plus, rien n'est créé : "
+            "422 `SNAPSHOT_SETTINGS_NOT_APPLICABLE` nomme chaque pièce en cause."
+        ),
+    )
+    def derive(
+        snapshot_id: Annotated[str, Path(description="Identifiant `csn-…`.")],
+        payload: DeriveScenario,
+    ):
+        scenario = freeze_calculation.derive_scenario(
+            snapshot_id, payload.name,
+            scenario_id=f"scn-{uuid.uuid4().hex[:12]}",
+            snapshots_repo=repositories.calculation_snapshots,
+            boms=repositories.bom,
+            scenarios=repositories.scenarios,
+            sourcing=repositories.sourcing,
+        )
+        return _scenario_payload(repositories, scenario)
+
     @app.patch(
         "/api/v1/calculation-snapshots/{snapshot_id}", tags=[_TAG],
         summary="Renommer un snapshot de calcul",
@@ -177,6 +228,7 @@ def _summary_payload(snapshot: CalculationSnapshot) -> dict:
         "calculation_id": snapshot.calculation_id,
         "price_snapshot_id": snapshot.price_snapshot_id,
         "created_at": snapshot.created_at.isoformat(),
+        "derived_from": snapshot.derived_from,
     }
 
 

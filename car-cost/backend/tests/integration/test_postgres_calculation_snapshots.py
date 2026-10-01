@@ -7,13 +7,15 @@ la transaction : la base de CI n'en contient aucun.
 
 import os
 import uuid
-from dataclasses import replace
+from dataclasses import asdict, replace
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 import pytest
 
-from carcost.application.freeze_calculation import freeze_scenario, rename_snapshot
+from carcost.application.freeze_calculation import (
+    derive_scenario, freeze_scenario, rename_snapshot,
+)
 from carcost.application.ports import CalculationSnapshotNotFound, SnapshotNameTaken
 from carcost.application.price_resolution import resolve_unit_prices
 from carcost.application.run_calculation import run_calculation
@@ -252,3 +254,34 @@ def test_a_derived_scenario_and_its_freeze_keep_the_origin_in_postgres(
     assert recaptured.derived_from == origin.id
     assert world.snapshots_repo.get(recaptured.id) == recaptured
     assert world.snapshots_repo.get(origin.id).derived_from is None
+
+
+def test_starting_from_a_snapshot_in_postgres_copies_it_exactly(world, connection):
+    # Le scénario du monde porte un chemin qui ne part pas de la racine, posé
+    # sans validation : la reprise le refuserait, à raison.
+    world.scenario = replace(
+        world.scenario, id=f"scn-test-{uuid.uuid4().hex[:12]}",
+        parameters=tuple(p for p in world.scenario.parameters if p.scope == "part"),
+    )
+    world.scenarios.create(world.scenario)
+    origin = world.freeze("Gel à reprendre")
+    assert len(origin.parameters) == 2
+    world.scenarios.put_parameter(
+        world.scenario.id,
+        replace(world.scenario.parameters[0], purchase_currency="EUR"),
+    )
+
+    derived = derive_scenario(
+        origin.id, "Gel à reprendre — repris",
+        scenario_id=f"scn-test-{uuid.uuid4().hex[:12]}",
+        snapshots_repo=world.snapshots_repo, boms=world.bom,
+        scenarios=world.scenarios, sourcing=world.sourcing,
+    )
+
+    read = held(PostgresScenarioRepository(DSN), connection).get(derived.id)
+    assert read == derived
+    assert read.derived_from == origin.id
+    assert [asdict(p) for p in read.parameters] == [
+        asdict(p) for p in origin.parameters
+    ]
+    assert world.snapshots_repo.get(origin.id) == origin

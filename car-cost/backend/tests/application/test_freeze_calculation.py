@@ -11,7 +11,8 @@ import pytest
 from carcost.application import manage_scenarios
 from carcost.application.compare_scenarios import IncomparableCalculations
 from carcost.application.freeze_calculation import (
-    compare_snapshots, freeze_scenario, rename_snapshot,
+    SnapshotSettingsNotApplicable, compare_snapshots, derive_scenario,
+    freeze_scenario, rename_snapshot,
 )
 from carcost.application.ports import (
     BomVersionNotValidated, CalculationSnapshotNotFound, SnapshotNameTaken,
@@ -21,7 +22,7 @@ from carcost.application.run_calculation import (
     CalculationStatus, input_digest, run_calculation,
 )
 from carcost.application.scenario import Scenario, ScenarioParameter
-from carcost.domain.calculation_snapshot import InvalidSnapshotName
+from carcost.domain.calculation_snapshot import FrozenParameter, InvalidSnapshotName
 from carcost.domain.prices import PriceSnapshot
 from fakes import (
     FakeBomRepository, FakeCalculationRepository,
@@ -339,3 +340,90 @@ def test_freezing_a_derived_scenario_copies_the_snapshot_it_came_from(diamond):
 
     assert snapshot.derived_from == "csn-origine"
     assert world.snapshots_repo.get(snapshot.id).derived_from == "csn-origine"
+
+
+def derive(world, snapshot_id: str, name: str = "Référence T3 — repris",
+           scenario_id: str = "scn-repris"):
+    return derive_scenario(
+        snapshot_id, name, scenario_id=scenario_id,
+        snapshots_repo=world.snapshots_repo, boms=world.boms,
+        scenarios=world.scenarios, sourcing=world.sourcing,
+    )
+
+
+def test_starting_from_a_snapshot_creates_a_scenario_with_exactly_its_copy(world):
+    origin = world.freeze("Référence T3", world.calculator(prices(S="10.000000")))
+    manage_scenarios.put_parameter(
+        "scn-etude", ScenarioParameter(part_ref="A", labour_minutes=Decimal("7")),
+        world.boms, world.scenarios, world.sourcing,
+    )
+
+    derived = derive(world, origin.id)
+
+    assert derived == replace(
+        rebuilt(origin), id="scn-repris", name="Référence T3 — repris",
+        derived_from=origin.id,
+    )
+    assert world.scenarios.get("scn-repris") == derived
+    assert all(p.part_ref != "A" for p in derived.parameters)
+
+
+def test_the_derived_scenario_is_editable_and_its_freeze_is_a_new_snapshot(world):
+    calculate = world.calculator(prices(S="10.000000"))
+    origin = world.freeze("Référence T3", calculate, snapshot_id="csn-1")
+    derive(world, origin.id)
+
+    manage_scenarios.put_parameter(
+        "scn-repris", ScenarioParameter(part_ref="S", supplier_id="SUP-DE"),
+        world.boms, world.scenarios, world.sourcing,
+    )
+    recaptured = world.freeze(
+        "Référence T3 recapturée", calculate, snapshot_id="csn-2",
+        scenario_id="scn-repris",
+    )
+
+    assert recaptured.derived_from == origin.id
+    assert recaptured.calculation_id != origin.calculation_id
+    assert world.snapshots_repo.get(origin.id) == origin
+    assert {p.supplier_id for p in recaptured.parameters if p.scope == "part"} == {
+        "SUP-DE"
+    }
+
+
+def test_settings_that_no_longer_apply_are_refused_naming_every_part(world):
+    origin = world.freeze("Référence T3", world.calculator(prices(S="10.000000")))
+    world.snapshots_repo.snapshots[origin.id] = replace(
+        origin,
+        parameters=(
+            FrozenParameter(part_ref="S", supplier_id="SUP-DISPARU"),
+            FrozenParameter(
+                part_ref="S", scope="path", path="V/B/S",
+                supplier_id="SUP-IT", plant_id="PLT-DE",
+            ),
+            FrozenParameter(part_ref="A", labour_minutes=Decimal("7")),
+        ),
+    )
+
+    with pytest.raises(SnapshotSettingsNotApplicable) as refused:
+        derive(world, origin.id)
+
+    assert [(r.part_ref, r.path) for r in refused.value.refusals] == [
+        ("S", None), ("S", "V/B/S"),
+    ]
+    assert all(r.reason for r in refused.value.refusals)
+    assert "S" in str(refused.value)
+    assert set(world.scenarios.scenarios) == {"scn-etude"}
+
+
+def test_a_blank_name_for_the_derived_scenario_is_refused(world):
+    origin = world.freeze("Référence T3", world.calculator(prices(S="10.000000")))
+
+    with pytest.raises(manage_scenarios.InvalidScenario, match="nom"):
+        derive(world, origin.id, name="  ")
+
+    assert set(world.scenarios.scenarios) == {"scn-etude"}
+
+
+def test_starting_from_an_unknown_snapshot_is_reported(world):
+    with pytest.raises(CalculationSnapshotNotFound):
+        derive(world, "csn-inconnu")

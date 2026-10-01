@@ -85,6 +85,7 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `SNAPSHOT_NAME_TAKEN` | 409 | Le nom est déjà pris dans cette version, sans casse ni accents ; `details: {name, existing_id}` (§3.11) |
 | `CALCULATION_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot de calcul inconnu (§3.11) |
 | `SCENARIO_HAS_SNAPSHOTS` | 409 | Suppression d'un scénario qui porte des snapshots de calcul ; `details.snapshots` les nomme (§3.6) |
+| `SNAPSHOT_SETTINGS_NOT_APPLICABLE` | 422 | Repartir d'un snapshot de calcul dont un réglage copié ne s'applique plus ; `details.parts` nomme chaque pièce, `[{part_ref, path, reason}]`, et aucun scénario n'est créé (§3.11) |
 | `NO_PRICE_SNAPSHOT` | 409 | Aucun snapshot disponible, même périmé |
 | `PRICE_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot inconnu (journal de quarantaine, ou `price_snapshot_id` d'un calcul) |
 | `CALCULATION_FAILED` | 500 | Échec interne ; le calcul est persisté avec `status = "FAILED"` |
@@ -320,7 +321,7 @@ Renvoie le scénario, ses paramètres, et **l'état du calcul**, qui est une don
 { "id": "scn-8f2…", "name": "Sourcing Turquie",
   "bom_version": "bom-multipla-2026-09-22", "display_currency": "EUR",
   "labour_rate": "42.000000",
-  "active_rules": ["labour"], "parameters": [ … ],
+  "active_rules": ["labour"], "derived_from": null, "parameters": [ … ],
   "calculation_state": "PARAMETERS_CHANGED",
   "stale_reason": "parameters",
   "last_calculation_id": "calc-41b…" }
@@ -328,6 +329,9 @@ Renvoie le scénario, ses paramètres, et **l'état du calcul**, qui est une don
 
 `last_calculation_id` désigne le dernier calcul enregistré (`null` s'il n'y en a aucun). L'écran le
 relit avec `GET /calculations/{id}` pour réafficher un scénario rouvert, sans relancer de calcul.
+
+`derived_from` est l'identifiant `csn-…` du snapshot de calcul dont le scénario est reparti (§3.11),
+ou `null`. C'est une trace : le scénario reste librement modifiable, et sa copie (§3.7) la garde.
 
 Chaque paramètre expose `parameter_id`, `part_ref`, `scope`, `path`, `supplier_id`, `plant_id`,
 `purchase_currency`, `price_override`, `price_override_justification` et `labour_minutes`.
@@ -480,13 +484,15 @@ Un snapshot de calcul est un calcul nommé, figé avec une copie des hypothèses
 | Route | Rôle |
 |---|---|
 | `POST /calculation-snapshots` `{scenario_id, name}` | `201`. Lance le calcul (réglages et snapshot de prix courants) puis le fige. `404 SCENARIO_NOT_FOUND`, `409 NO_PRICE_SNAPSHOT`, `409 BOM_VERSION_NOT_VALIDATED`, `422 INVALID_SNAPSHOT_NAME`, `409 SNAPSHOT_NAME_TAKEN` |
-| `GET /calculation-snapshots?bom_version=…` | `{items, total}`, du plus récent au plus ancien. `bom_version` est obligatoire (`422` sinon). Un élément porte les huit premiers champs ci-dessous |
+| `GET /calculation-snapshots?bom_version=…` | `{items, total}`, du plus récent au plus ancien. `bom_version` est obligatoire (`422` sinon). Un élément porte les neuf premiers champs ci-dessous |
 | `GET /calculation-snapshots/{id}` | Payload complet. `404 CALCULATION_SNAPSHOT_NOT_FOUND` |
 | `PATCH /calculation-snapshots/{id}` `{name}` | `200`, payload complet. Le nom seul : tout autre champ du corps donne `422` |
 | `POST /calculation-snapshots/compare` `{snapshot_a_id, snapshot_b_id}` | `200`. Comparaison des calculs figés, sans recalcul ni enregistrement |
+| `POST /calculation-snapshots/{id}/derive` `{name}` | `201`, le scénario créé (payload de §3.3). « Repartir de ce snapshot ». `404 CALCULATION_SNAPSHOT_NOT_FOUND`, `422 INVALID_SCENARIO` (nom vide), `422 SNAPSHOT_SETTINGS_NOT_APPLICABLE` |
 
 Payload complet : `id`, `name`, `bom_version`, `scenario_id`, `scenario_name`, `calculation_id`,
-`price_snapshot_id`, `created_at` (ISO 8601) ; puis `display_currency`, `labour_rate` (chaîne),
+`price_snapshot_id`, `created_at` (ISO 8601), `derived_from` (le snapshot d'où repartait le
+scénario figé, ou `null`) ; puis `display_currency`, `labour_rate` (chaîne),
 `active_rules` (liste triée), `parameters` (comme ceux d'un scénario, sans `parameter_id`) et
 `name_history` (`[{name, renamed_at}]`, le nom de création en premier).
 
@@ -494,6 +500,16 @@ La comparaison renvoie le payload de §3.8 (`total_a`, `total_b`, `cost_delta` =
 `top_differences`) plus `snapshot_a: {id, name}` et `snapshot_b: {id, name}`. Deux gels pris sur des
 snapshots de prix différents, ou un calcul incomplet, donnent `422 INCOMPARABLE_SCENARIOS` (même
 code que §3.8).
+
+**Repartir d'un snapshot** crée un scénario neuf : même version de BOM, devise, taux horaire et
+règles actives, **exactement** les paramètres copiés, et `derived_from` = l'identifiant du
+snapshot. Le snapshot n'est pas modifié ; figer ensuite ce scénario produit un **nouveau** snapshot,
+calculé avec les prix courants, qui recopie `derived_from`. Chaque réglage copié repasse les
+contrôles de la saisie (§3.4) ; si l'un ne s'applique plus (fournisseur ou usine disparus,
+combinaison refusée), la reprise est refusée en bloc et `details.parts` nomme toutes les pièces en
+cause : il n'y a pas de reprise partielle. Au lot 1, la base interdit de supprimer un fournisseur ou
+une usine qu'un snapshot copie : ce refus n'est exercé que sur des doubles de test, il deviendra
+réel avec l'import de snapshots (lot 3).
 
 ---
 

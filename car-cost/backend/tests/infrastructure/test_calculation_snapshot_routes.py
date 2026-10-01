@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import datetime, timezone
 from decimal import Decimal
 
 import pytest
 from fastapi.testclient import TestClient
 
+from carcost.domain.calculation_snapshot import FrozenParameter
 from carcost.domain.prices import PriceSnapshot
 from carcost.infrastructure.api.app import Repositories, create_app
 from fakes import (
@@ -229,3 +231,90 @@ def test_freezing_an_unknown_scenario_is_a_named_404(client):
 
     assert response.status_code == 404
     assert response.json()["error"]["code"] == "SCENARIO_NOT_FOUND"
+
+
+def derive(client, snapshot_id: str, name: str):
+    return client.post(f"{BASE}/{snapshot_id}/derive", json={"name": name})
+
+
+def test_a_snapshot_says_where_it_came_from(client):
+    origin = freeze(client, make_scenario(client)["id"], "Référence T3").json()
+
+    assert origin["derived_from"] is None
+    scenario = client.get(f"/api/v1/scenarios/{origin['scenario_id']}").json()
+    assert scenario["derived_from"] is None
+
+
+def test_starting_from_a_snapshot_creates_a_scenario_with_its_copy(client):
+    live = make_scenario(client)
+    origin = freeze(client, live["id"], "Référence T3").json()
+    client.put(
+        f"/api/v1/scenarios/{live['id']}/parameters/S",
+        json={"scope": "part", "supplier_id": "SUP-DE"},
+    )
+
+    response = derive(client, origin["id"], "Référence T3 — repris")
+
+    assert response.status_code == 201, response.text
+    body = response.json()
+    assert body["id"] != live["id"]
+    assert body["name"] == "Référence T3 — repris"
+    assert body["derived_from"] == origin["id"]
+    assert body["bom_version"] == origin["bom_version"]
+    assert body["display_currency"] == origin["display_currency"]
+    assert body["labour_rate"] == origin["labour_rate"]
+    assert body["active_rules"] == origin["active_rules"]
+    assert [
+        {k: v for k, v in p.items() if k != "parameter_id"}
+        for p in body["parameters"]
+    ] == origin["parameters"]
+    assert client.get(f"{BASE}/{origin['id']}").json() == origin
+
+    recaptured = freeze(client, body["id"], "Référence T3 recapturée").json()
+    assert recaptured["derived_from"] == origin["id"]
+    assert recaptured["id"] != origin["id"]
+
+
+def test_settings_that_no_longer_apply_are_refused_with_every_part_named(
+    client, repositories,
+):
+    origin = freeze(client, make_scenario(client)["id"], "Référence T3").json()
+    stored = repositories.calculation_snapshots.snapshots[origin["id"]]
+    repositories.calculation_snapshots.snapshots[origin["id"]] = replace(
+        stored,
+        parameters=(
+            FrozenParameter(part_ref="S", supplier_id="SUP-DISPARU"),
+            FrozenParameter(
+                part_ref="S", scope="path", path="V/A/S",
+                supplier_id="SUP-IT", plant_id="PLT-DE",
+            ),
+        ),
+    )
+    before = len(repositories.scenarios.scenarios)
+
+    response = derive(client, origin["id"], "Référence T3 — repris")
+
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["code"] == "SNAPSHOT_SETTINGS_NOT_APPLICABLE"
+    assert [(p["part_ref"], p["path"]) for p in error["details"]["parts"]] == [
+        ("S", None), ("S", "V/A/S"),
+    ]
+    assert all(p["reason"] for p in error["details"]["parts"])
+    assert len(repositories.scenarios.scenarios) == before
+
+
+def test_starting_from_an_unknown_snapshot_is_a_named_404(client):
+    response = derive(client, "csn-inconnu", "Repris")
+
+    assert response.status_code == 404
+    assert response.json()["error"]["code"] == "CALCULATION_SNAPSHOT_NOT_FOUND"
+
+
+def test_a_blank_name_for_the_derived_scenario_is_refused(client):
+    origin = freeze(client, make_scenario(client)["id"], "Référence T3").json()
+
+    response = derive(client, origin["id"], "  ")
+
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "INVALID_SCENARIO"

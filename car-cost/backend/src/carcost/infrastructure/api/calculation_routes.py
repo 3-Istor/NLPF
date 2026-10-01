@@ -791,6 +791,8 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         "display_currency": scenario.display_currency,
         "labour_rate": str(scenario.labour_rate),
         "active_rules": sorted(scenario.active_rules),
+        # Le snapshot de calcul d'où le scénario est reparti, ou null.
+        "derived_from": scenario.derived_from,
         "parameters": [
             {
                 "parameter_id": parameter_ids[(parameter.part_ref, parameter.path or "")],
