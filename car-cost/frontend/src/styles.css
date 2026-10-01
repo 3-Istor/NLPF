@@ -323,6 +323,9 @@ button { font: inherit; }
 }
 .row-grid > * { min-width: 0; }
 .row-grid .num { text-align: right; font-variant-numeric: tabular-nums; }
+/* Une référence longue est coupée dans sa colonne (le survol la donne en
+   entier) : sinon elle déborde sur la quantité voisine. */
+.row-grid .ref { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .tree-head { position: sticky; top: 0; z-index: 3; background: var(--bg); }
 .tree-toolbar {

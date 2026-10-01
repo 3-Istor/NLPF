@@ -151,7 +151,7 @@ export function TreeNode({
           </button>
         </div>
 
-        <code className="cell ref">
+        <code className="cell ref" title={line.part_ref}>
           <Highlight text={line.part_ref} query={query} />
         </code>
 

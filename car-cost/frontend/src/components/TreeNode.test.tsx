@@ -408,3 +408,11 @@ describe("champs du panneau", () => {
     expect(minutes).not.toHaveAttribute("placeholder");
   });
 });
+
+describe("colonne référence", () => {
+  it("une référence coupée à l'écran reste lisible en entier au survol", () => {
+    mount({ part_ref: "CAR-BUMPER-FRONT-ASSY", label: "Pare-chocs avant" });
+
+    expect(row("V")!.querySelector("code.ref")).toHaveAttribute("title", "CAR-BUMPER-FRONT-ASSY");
+  });
+});
