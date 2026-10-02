@@ -162,3 +162,26 @@ class TestPriceHistory:
     def test_an_unknown_part_is_named(self, client):
         response = client.get("/api/v1/bom/bom-test/parts/NOPE/price-history")
         assert response.status_code == 404
+
+
+class TestSuppliers:
+    def test_lists_the_suppliers_of_the_bom(self, client):
+        body = client.get("/api/v1/bom/bom-test/suppliers").json()
+        names = {item["supplier_id"]: item for item in body["items"]}
+        assert set(names) == {"SUP-IT", "SUP-DE"}
+        assert names["SUP-IT"]["default_count"] == 1
+        assert [p["plant_id"] for p in names["SUP-IT"]["plants"]] == ["PLT-IT", "PLT-TR"]
+
+    def test_lists_the_parts_a_supplier_sells(self, client):
+        client.post("/api/v1/price-snapshots", json={"bom_version": "bom-test"})
+        body = client.get("/api/v1/bom/bom-test/suppliers/SUP-DE/parts").json()
+        (part,) = body["items"]
+        assert part["part_ref"] == "S"
+        assert part["price_multiplier"] == "1.200000"
+        assert part["is_default"] is False
+        assert part["reference_price"]["currency"] == "EUR"
+
+    def test_an_unknown_supplier_is_named(self, client):
+        response = client.get("/api/v1/bom/bom-test/suppliers/SUP-NOPE/parts")
+        assert response.status_code == 404
+        assert response.json()["error"]["code"] == "SUPPLIER_NOT_FOUND"

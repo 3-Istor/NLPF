@@ -23,6 +23,7 @@ from ...application.browse_bom import (
     where_used,
 )
 from ...application.freeze_calculation import frozen_scenario
+from ...application.supplier_catalog import suppliers_of
 from ...application.tree_view import with_costs
 from .errors import error_response
 from .price_source import price_source
@@ -70,6 +71,82 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                 }
                 for summary in repository.versions()
             ]
+        }
+
+    def _catalog(version: str):
+        if repositories.sourcing is None:
+            return ()
+        return suppliers_of(repository.load(version), repositories.sourcing.load(version))
+
+    @app.get("/api/v1/bom/{version}/suppliers")
+    def read_suppliers(version: str):
+        """Les fournisseurs qui vendent au moins une pièce de cette nomenclature."""
+        return {
+            "items": [
+                {
+                    "supplier_id": entry.supplier_id,
+                    "name": entry.name,
+                    "part_count": len(entry.parts),
+                    "default_count": entry.default_count,
+                    "plants": [_plant_payload(plant) for plant in entry.plants],
+                }
+                for entry in _catalog(version)
+            ]
+        }
+
+    @app.get("/api/v1/bom/{version}/suppliers/{supplier_id}/parts")
+    def read_supplier_parts(version: str, supplier_id: str):
+        """Les pièces que ce fournisseur vend pour cette nomenclature.
+
+        Le prix de référence est celui du dernier snapshot de la nomenclature,
+        tel quel : le multiplicateur et l'usine s'y appliquent au calcul
+        (ADR-0010), pas ici.
+        """
+        entry = next(
+            (e for e in _catalog(version) if e.supplier_id == supplier_id), None
+        )
+        if entry is None:
+            return error_response(
+                404, "SUPPLIER_NOT_FOUND",
+                f"{supplier_id} ne vend aucune pièce de {version}",
+            )
+        snapshot = (
+            repositories.snapshots.latest(version)
+            if repositories.snapshots is not None
+            else None
+        )
+        return {
+            "supplier_id": entry.supplier_id,
+            "name": entry.name,
+            "plants": [_plant_payload(plant) for plant in entry.plants],
+            "price_snapshot": (
+                {
+                    "id": snapshot.id,
+                    "taken_at": snapshot.taken_at.isoformat(),
+                    "currency": snapshot.currency,
+                }
+                if snapshot
+                else None
+            ),
+            "items": [
+                {
+                    "part_ref": part.part_ref,
+                    "label": part.label,
+                    "unit": part.unit,
+                    "system": part.system,
+                    "price_multiplier": str(part.price_multiplier),
+                    "is_default": part.is_default,
+                    "reference_price": (
+                        {
+                            "amount": str(snapshot.prices[part.part_ref]),
+                            "currency": snapshot.currency,
+                        }
+                        if snapshot and part.part_ref in snapshot.prices
+                        else None
+                    ),
+                }
+                for part in entry.parts
+            ],
         }
 
     @app.get("/api/v1/bom/{version}/parts/{part_ref}/price-history")
@@ -326,6 +403,18 @@ def _money(amount: Decimal | None, currency: str) -> dict | None:
 
 def _decimal(value: Decimal) -> str:
     return str(value.quantize(SCALE))
+
+
+def _plant_payload(plant) -> dict:
+    return {
+        "plant_id": plant.plant_id,
+        "label": plant.label,
+        "origin_country": plant.origin_country,
+        "price_coefficient": str(plant.price_coefficient),
+        "lead_time_days": plant.lead_time_days,
+        "transport_co2_kg_per_kg": str(plant.transport_co2_kg_per_kg),
+        "is_default": plant.is_default,
+    }
 
 
 def _node_payload(node) -> dict:

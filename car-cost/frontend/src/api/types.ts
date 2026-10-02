@@ -361,3 +361,58 @@ export interface PriceSnapshotSummary {
   age_seconds: number;
   counts: { prices: number; fallback: number; quarantined: number; missing: number };
 }
+
+export interface SupplierPlant {
+  plant_id: string;
+  label: string;
+  origin_country: string;
+  price_coefficient: string;
+  lead_time_days: number;
+  transport_co2_kg_per_kg: string;
+  is_default: boolean;
+}
+
+/** Un fournisseur qui vend au moins une pièce de la nomenclature ouverte. */
+export interface SupplierSummary {
+  supplier_id: string;
+  name: string;
+  part_count: number;
+  /** Pièces pour lesquelles il est le fournisseur retenu par défaut. */
+  default_count: number;
+  plants: SupplierPlant[];
+}
+
+export interface SuppliedPart {
+  part_ref: string;
+  label: string;
+  unit: string;
+  system: string;
+  price_multiplier: string;
+  is_default: boolean;
+  /** Prix du dernier snapshot de la nomenclature, ou null s'il n'en a pas. */
+  reference_price: Money | null;
+}
+
+export interface SupplierParts {
+  supplier_id: string;
+  name: string;
+  plants: SupplierPlant[];
+  price_snapshot: { id: string; taken_at: string; currency: string } | null;
+  items: SuppliedPart[];
+}
+
+/** L'année de marché simulée d'une pièce, et ses prix figés. */
+export interface PriceHistoryResponse {
+  part_ref: string;
+  label: string;
+  unit: string;
+  currency: string;
+  profile: string | null;
+  drivers: Record<string, string>;
+  origin_currency: string | null;
+  reference: string;
+  points: { date: string; price: string }[];
+  now: { at: string; price: string };
+  snapshots: { id: string; taken_at: string; price: string; origin: string }[];
+  is_synthetic: boolean;
+}

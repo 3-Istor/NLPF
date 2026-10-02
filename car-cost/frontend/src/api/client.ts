@@ -8,7 +8,10 @@
 import type {
   BomVersion,
   Calculation,
+  PriceHistoryResponse,
   PriceSnapshotSummary,
+  SupplierParts,
+  SupplierSummary,
   CalculationSnapshot,
   CalculationSnapshotSummary,
   Comparison,
@@ -65,6 +68,21 @@ const withCalculation = (calculationId: string | null, snapshotId?: string | nul
   (snapshotId ? `&calculation_snapshot_id=${encodeURIComponent(snapshotId)}` : "");
 
 export const api = {
+  suppliers: (version: string) =>
+    call<{ items: SupplierSummary[] }>(`/bom/${version}/suppliers`),
+
+  supplierParts: (version: string, supplierId: string) =>
+    call<SupplierParts>(
+      `/bom/${version}/suppliers/${encodeURIComponent(supplierId)}/parts`,
+    ),
+
+  /** L'année simulée d'une pièce achetée, et ses prix figés. */
+  priceHistory: (version: string, partRef: string, currency = "EUR") =>
+    call<PriceHistoryResponse>(
+      `/bom/${version}/parts/${encodeURIComponent(partRef)}/price-history` +
+        `?currency=${encodeURIComponent(currency)}`,
+    ),
+
   /** Les nomenclatures chargées, la plus récente d'abord. */
   bomVersions: () => call<{ items: BomVersion[] }>("/bom/versions"),
 
