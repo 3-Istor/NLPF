@@ -7,12 +7,18 @@ fait que les réunir et traduire les exceptions des cas d'usage en codes nommés
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from pathlib import Path
+import time
 from typing import Callable
 
 from fastapi import FastAPI, Request
 
+from ...application.price_simulation import PriceSimulation
+from ..price_data import load_boms, load_history
+from .price_routes import router as price_router
 from ...application.browse_bom import PathNotFound
 from ...application.ports import (
     BomRepository,
@@ -46,7 +52,20 @@ class Repositories:
     clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
 
 
-def create_app(repositories: Repositories) -> FastAPI:
+def create_app(
+    repositories: Repositories, *, price_bom_dir: Path | None = None,
+    price_clock: Callable[[], float] = time.time,
+) -> FastAPI:
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        if price_bom_dir is not None:
+            models = load_boms(price_bom_dir)
+            history, start_date = load_history()
+            app.state.price_simulation = PriceSimulation(
+                models, history, start_date=start_date, clock=price_clock,
+            )
+        yield
+
     app = FastAPI(
         title="3istor",
         description=(
@@ -54,6 +73,7 @@ def create_app(repositories: Repositories) -> FastAPI:
             "sont plausibles mais synthétiques."
         ),
         version="0.1.0",
+        lifespan=lifespan,
     )
 
     @app.get("/health")
@@ -85,6 +105,8 @@ def create_app(repositories: Repositories) -> FastAPI:
     @app.exception_handler(CalculationNotFound)
     async def _calculation_not_found(_: Request, error: CalculationNotFound):
         return _error(404, "CALCULATION_NOT_FOUND", str(error))
+
+    app.include_router(price_router)
 
     register_calculation_routes(app, repositories)
     register_snapshot_routes(app, repositories)

@@ -29,3 +29,6 @@ where = ["src"]
 pythonpath = ["src", "tests"]
 testpaths = ["tests"]
 addopts = "-q --strict-markers"
+
+[tool.setuptools.package-data]
+carcost = ["infrastructure/data/*.json", "infrastructure/data/boms/*.json"]
