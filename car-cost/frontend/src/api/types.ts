@@ -39,6 +39,8 @@ export type TreeLine = {
   readonly valuation_mode: ValuationMode;
   readonly unit: string;
   readonly edge_quantity: string;
+  /** Pièces de rechange portées par l'arête, en plus de la quantité montée. */
+  readonly after_sales_quantity?: string;
   readonly has_children: boolean;
   readonly child_count: number;
   /** Nombre de parents directs. */
@@ -110,6 +112,10 @@ export type Scenario = {
   readonly last_calculation_id: string | null;
   /** Le snapshot de calcul dont le scénario est reparti, s'il y en a un. */
   readonly derived_from?: string | null;
+  /** Les pièces de rechange (SAV) sont-elles comptées ? */
+  readonly include_after_sales?: boolean;
+  /** La nomenclature porte-t-elle du SAV ? Sinon l'interrupteur ne change rien. */
+  readonly after_sales_available?: boolean;
 };
 
 export type ScenarioParameter = {

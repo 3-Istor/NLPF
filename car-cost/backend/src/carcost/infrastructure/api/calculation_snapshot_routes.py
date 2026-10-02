@@ -238,6 +238,7 @@ def _full_payload(repositories, snapshot: CalculationSnapshot) -> dict:
         **_summary_payload(snapshot),
         "display_currency": snapshot.display_currency,
         "labour_rate": str(snapshot.labour_rate),
+        "include_after_sales": snapshot.include_after_sales,
         "active_rules": sorted(snapshot.active_rules),
         "parameters": [
             {

@@ -292,6 +292,7 @@ def _node_payload(node) -> dict:
         "valuation_mode": node.valuation_mode,
         "unit": node.unit,
         "edge_quantity": _decimal(node.edge_quantity),
+        "after_sales_quantity": _decimal(node.after_sales_quantity),
         "has_children": node.has_children,
         "child_count": node.child_count,
         "parent_count": node.parent_count,

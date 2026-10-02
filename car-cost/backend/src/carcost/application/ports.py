@@ -154,6 +154,12 @@ class ScenarioNotFound(Exception):
 
 
 class ScenarioRepository(Protocol):
+    def set_after_sales(
+        self, scenario_id: str, include: bool
+    ) -> None:  # pragma: no cover - contrat
+        """Bascule le SAV. Lève ScenarioNotFound si le scénario n'existe pas."""
+        ...
+
     def create(self, scenario) -> None:  # pragma: no cover - contrat
         """Insère le scénario et tous ses paramètres dans une seule transaction."""
         ...

@@ -255,3 +255,27 @@ def test_parameter_identity_is_stable_and_cannot_delete_another_scenario_setting
     )
     assert response.status_code == 200
     assert client.get(f"/api/v1/scenarios/{copied['id']}").json() == copied
+
+
+class TestAfterSales:
+    def test_a_new_scenario_does_not_count_spares(self, client):
+        saved = create(client)
+        assert saved["include_after_sales"] is False
+        # Le losange de test n'a aucune pièce de rechange.
+        assert saved["after_sales_available"] is False
+
+    def test_switching_spares_is_saved(self, client):
+        saved = create(client)
+        response = client.patch(
+            f"/api/v1/scenarios/{saved['id']}", json={"include_after_sales": True}
+        )
+        assert response.status_code == 200, response.text
+        assert response.json()["include_after_sales"] is True
+        reloaded = client.get(f"/api/v1/scenarios/{saved['id']}").json()
+        assert reloaded["include_after_sales"] is True
+
+    def test_an_unknown_scenario_is_named(self, client):
+        response = client.patch(
+            "/api/v1/scenarios/scn-inconnu", json={"include_after_sales": True}
+        )
+        assert response.status_code == 404

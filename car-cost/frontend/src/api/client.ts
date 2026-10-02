@@ -112,6 +112,13 @@ export const api = {
 
   scenario: (id: string) => call<Scenario>(`/scenarios/${id}`),
 
+  /** Compter ou non le SAV. Le dernier calcul devient obsolète. */
+  setAfterSales: (id: string, include: boolean) =>
+    call<Scenario>(`/scenarios/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ include_after_sales: include }),
+    }),
+
   /** Du plus récent au plus ancien. */
   scenarios: () =>
     call<{ items: Scenario[]; total: number }>("/scenarios"),

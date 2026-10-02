@@ -30,6 +30,10 @@ code { font: 12px/1 ui-monospace, "Cascadia Mono", monospace; color: var(--muted
 .app { display: flex; flex-direction: column; height: 100vh; }
 .workspace { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 
+.after-sales { display: flex; align-items: center; gap: 4px; font-size: 13px; }
+.after-sales__none { color: var(--muted); }
+.qty__sav { color: var(--warn); font-size: 12px; }
+
 /* Le bandeau du haut : la nomenclature ouverte et la page affichée. */
 .shell {
   display: flex;

@@ -120,6 +120,19 @@ class NewScenario(BaseModel):
     parameters: list[StoredParameter] = Field(
         default_factory=list, description="Paramètres initiaux, éventuellement vides.",
     )
+    include_after_sales: bool = Field(
+        default=False,
+        description="Compter les pièces de rechange livrées avec le véhicule (SAV).",
+    )
+
+
+class ScenarioSettings(BaseModel):
+    include_after_sales: bool = Field(
+        description=(
+            "Compter les pièces de rechange livrées avec le véhicule (SAV) en plus "
+            "des pièces montées. Basculer rend le dernier calcul obsolète."
+        ),
+    )
 
 
 class DuplicateScenario(BaseModel):
@@ -239,11 +252,27 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             parameters=tuple(
                 ScenarioParameter(**p.model_dump()) for p in payload.parameters
             ),
+            include_after_sales=payload.include_after_sales,
         )
         scenario = manage_scenarios.create_scenario(
             scenario, repositories.bom, repositories.scenarios, repositories.sourcing,
         )
         return _scenario_payload(repositories, scenario)
+
+    @app.patch(
+        "/api/v1/scenarios/{scenario_id}", tags=["Scénarios"],
+        summary="Régler le SAV d'un scénario",
+        description=(
+            "Active ou désactive le comptage des pièces de rechange (SAV). Le "
+            "dernier calcul devient obsolète : l'empreinte des entrées change."
+        ),
+    )
+    def update_settings(
+        scenario_id: Annotated[str, Path(description="Identifiant `scn-…`.")],
+        payload: ScenarioSettings,
+    ):
+        repositories.scenarios.set_after_sales(scenario_id, payload.include_after_sales)
+        return _scenario_payload(repositories, repositories.scenarios.get(scenario_id))
 
     @app.get(
         "/api/v1/scenarios", tags=["Scénarios"],
@@ -802,6 +831,10 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         "active_rules": sorted(scenario.active_rules),
         # Le snapshot de calcul d'où le scénario est reparti, ou null.
         "derived_from": scenario.derived_from,
+        "include_after_sales": scenario.include_after_sales,
+        # La nomenclature porte-t-elle du SAV ? Sinon l'interrupteur ne change
+        # rien, et l'écran le dit au lieu de le laisser basculer pour rien.
+        "after_sales_available": _has_after_sales(repositories, scenario.bom_version),
         "parameters": [
             {
                 "parameter_id": parameter_ids[(parameter.part_ref, parameter.path or "")],
@@ -831,6 +864,13 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         # relancer un à chaque ouverture remplirait la table pour rien.
         "last_calculation_id": latest.id if latest else None,
     }
+
+
+def _has_after_sales(repositories, bom_version: str) -> bool:
+    try:
+        return repositories.bom.load(bom_version).has_after_sales
+    except Exception:  # noqa: BLE001 - une version illisible n'a pas de SAV à offrir
+        return False
 
 
 def _calculation_payload(calculation) -> dict:

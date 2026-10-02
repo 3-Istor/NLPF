@@ -19,6 +19,7 @@ import type {
   Scenario,
   TreeLine,
 } from "./api/types";
+import { AfterSalesToggle } from "./components/AfterSalesToggle";
 import { DecisionDialog } from "./components/DecisionDialog";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { SearchBar } from "./components/SearchBar";
@@ -319,6 +320,24 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
     }
   }
 
+  /**
+   * Le SAV change les quantités, donc le total : le calcul affiché devient
+   * obsolète et la synthèse le grise, comme après tout réglage.
+   */
+  async function switchAfterSales(include: boolean) {
+    if (!scenario) return;
+    setFailure(null);
+    try {
+      const fresh = await api.setAfterSales(scenario.id, include);
+      setScenario(fresh);
+      setScenarios((list) =>
+        list.map((item) => (item.id === fresh.id ? fresh : item)),
+      );
+    } catch (error) {
+      setFailure(describe(error));
+    }
+  }
+
   async function duplicate(name: string) {
     if (!scenario) return;
     try {
@@ -412,6 +431,13 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
           onFreeze={freeze}
           onOpenSnapshot={openFrozen}
         />
+        {scenario && (
+          <AfterSalesToggle
+            scenario={scenario}
+            frozen={openSnapshot !== null}
+            onChange={switchAfterSales}
+          />
+        )}
         {openSnapshot && (
           <SnapshotHeader
             key={openSnapshot.id}

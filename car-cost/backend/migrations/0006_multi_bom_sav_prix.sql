@@ -37,6 +37,13 @@ CREATE INDEX price_snapshot_bom_idx ON price_snapshot (bom_version_id, taken_at 
 ALTER TABLE scenario
     ADD COLUMN include_after_sales boolean NOT NULL DEFAULT false;
 
+-- La copie figée dit si le SAV était compté (ADR-0014 : un snapshot de calcul
+-- s'explique sans relire le scénario vivant). Ajoutée par défaut à false, ce
+-- que valaient tous les gels antérieurs : le déclencheur qui fige la ligne ne
+-- voit passer aucune écriture.
+ALTER TABLE calculation_snapshot
+    ADD COLUMN include_after_sales boolean NOT NULL DEFAULT false;
+
 -- Le taux horaire de référence de la nomenclature, proposé à la création d'un
 -- scénario (42 EUR/h à Turin, 60 EUR/h à Gaydon). Le défaut ne sert qu'à
 -- remplir la seule version qui pouvait exister avant cette migration, le

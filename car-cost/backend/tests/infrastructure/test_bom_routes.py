@@ -257,6 +257,9 @@ class TestVersions:
                     "edge_count": 4,
                     "validated_at": "2026-09-22T10:04:11+00:00",
                     "is_synthetic": True,
+                    # Une version qui ne dit pas son taux : l'écran propose
+                    # alors le sien, sans que le serveur invente un chiffre.
+                    "reference_labour_rate": None,
                 }
             ]
         }

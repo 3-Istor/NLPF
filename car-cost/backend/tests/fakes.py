@@ -126,6 +126,13 @@ class FakeSnapshotRepository:
 
 
 class FakeScenarioRepository:
+    def set_after_sales(self, scenario_id: str, include: bool) -> None:
+        from dataclasses import replace
+
+        self.scenarios[scenario_id] = replace(
+            self.get(scenario_id), include_after_sales=include
+        )
+
     def __init__(self):
         self.scenarios: dict[str, Scenario] = {}
         self._sequence = 0
