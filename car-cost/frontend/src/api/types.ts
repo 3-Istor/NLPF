@@ -325,3 +325,17 @@ export type ApiError = {
     readonly details: Record<string, unknown>;
   };
 };
+
+/** Une nomenclature au choix : le Multipla ou l'une des trois Valhalla. */
+export interface BomVersion {
+  id: string;
+  label: string;
+  root_part_ref: string;
+  part_count: number;
+  edge_count: number;
+  /** null tant que la version n'a pas passé ses contrôles : elle ne s'ouvre pas. */
+  validated_at: string | null;
+  is_synthetic: boolean;
+  /** Taux horaire proposé à la création d'un scénario, ou null s'il est inconnu. */
+  reference_labour_rate: string | null;
+}

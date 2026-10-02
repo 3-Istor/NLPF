@@ -111,7 +111,7 @@ def register_calculation_snapshot_routes(app: FastAPI, repositories) -> None:
     )
     def freeze(payload: NewCalculationSnapshot):
         def calculate(scenario):
-            price_snapshot = _snapshot(repositories, None)
+            price_snapshot = _snapshot(repositories, None, scenario.bom_version)
             return _execute_calculation(
                 repositories, scenario.id, price_snapshot, scenario
             )

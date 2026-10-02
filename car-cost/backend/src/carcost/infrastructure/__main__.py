@@ -2,7 +2,10 @@
 
     python -m carcost.infrastructure seeds | psql ...
 
-Le script n'est émis que si le jeu de données passe tous les contrôles : un
+Toutes les nomenclatures du dossier sont émises : le Multipla à la racine, puis
+chaque Valhalla de `seeds/valhalla/`. Chacune dans sa transaction.
+
+Le script n'est émis que si **tous** les jeux passent leurs contrôles : un
 fichier refusé ne produit rien, et rien n'entre en base.
 """
 
@@ -11,7 +14,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from .seed_loader import SeedRejected, build_load_script, read_seeds
+from .seed_loader import SeedRejected, build_load_script, read_seeds, seed_directories
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -19,14 +22,16 @@ def main(argv: list[str] | None = None) -> int:
     seeds_dir = Path(arguments[0]) if arguments else Path("seeds")
 
     try:
-        seeds = read_seeds(seeds_dir)
-        script = build_load_script(**seeds)
+        scripts = [
+            build_load_script(**read_seeds(directory))
+            for directory in seed_directories(seeds_dir)
+        ]
     except SeedRejected as rejection:
         print(f"jeu de données refusé : {rejection}", file=sys.stderr)
         return 1
 
     sys.stdout.reconfigure(encoding="utf-8", newline="\n")
-    sys.stdout.write(script)
+    sys.stdout.write("\n".join(scripts))
     return 0
 
 

@@ -435,9 +435,12 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         ),
     )
     def create_calculation(payload: NewCalculation):
-        snapshot = _snapshot(repositories, payload.price_snapshot_id)
+        scenario = repositories.scenarios.get(payload.scenario_id)
+        snapshot = _snapshot(
+            repositories, payload.price_snapshot_id, scenario.bom_version
+        )
         calculation = _execute_calculation(
-            repositories, payload.scenario_id, snapshot
+            repositories, payload.scenario_id, snapshot, scenario
         )
         return _calculation_payload(calculation)
 
@@ -462,7 +465,9 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             raise IncomparableCalculations(
                 "les scénarios doivent utiliser la même devise d'affichage"
             )
-        snapshot = _snapshot(repositories, payload.price_snapshot_id)
+        snapshot = _snapshot(
+            repositories, payload.price_snapshot_id, scenario_a.bom_version
+        )
         calculation_a = _execute_calculation(
             repositories, payload.scenario_a_id, snapshot
         )
@@ -678,7 +683,7 @@ def _evaluate_sourcing(repositories, scenario_id: str, query: SourcingQuery):
     base = repositories.scenarios.get(scenario_id)
     bom = repositories.bom.load(base.bom_version)
     sourcing = repositories.sourcing.load(base.bom_version)
-    snapshot = _snapshot(repositories, query.price_snapshot_id)
+    snapshot = _snapshot(repositories, query.price_snapshot_id, base.bom_version)
     baseline = _execute_calculation(repositories, base.id, snapshot)
     report = recommend(
         bom=bom,
@@ -723,14 +728,18 @@ def _report_payload(report, query: SourcingQuery, accepted: set, currency: str) 
     }
 
 
-def _snapshot_or_none(repositories):
-    return repositories.snapshots.latest() if repositories.snapshots else None
+def _snapshot_or_none(repositories, bom_version: str):
+    """Le dernier snapshot **de cette nomenclature** : celui d'une autre
+    laisserait toutes les pièces sans prix (ADR-0015)."""
+    if not repositories.snapshots:
+        return None
+    return repositories.snapshots.latest(bom_version)
 
 
-def _snapshot(repositories, snapshot_id: str | None):
+def _snapshot(repositories, snapshot_id: str | None, bom_version: str):
     if snapshot_id is not None:
         return repositories.snapshots.get(snapshot_id)
-    snapshot = _snapshot_or_none(repositories)
+    snapshot = _snapshot_or_none(repositories, bom_version)
     if snapshot is None:
         raise NoPriceSnapshot(
             "aucun snapshot de prix, même périmé : prenez-en un avant de calculer"
@@ -764,7 +773,7 @@ def _state(repositories, scenario: Scenario, latest=None):
         latest = repositories.calculations.latest_for(scenario.id)
     return state_of(
         scenario,
-        _snapshot_or_none(repositories),
+        _snapshot_or_none(repositories, scenario.bom_version),
         last_digest=latest.input_digest if latest else None,
         last_snapshot_id=latest.snapshot_id if latest else None,
     )

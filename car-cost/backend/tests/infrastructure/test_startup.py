@@ -1,6 +1,7 @@
 """Le démarrage préserve les données et refuse une préparation incomplète."""
 
 from datetime import datetime, timezone
+from pathlib import Path
 from unittest.mock import MagicMock, Mock
 
 import pytest
@@ -16,6 +17,7 @@ def prepared(monkeypatch):
     queries = connection.__enter__.return_value.execute.return_value.fetchone
     seeds = {"metadata": {"bom_version_id": "test-version"}}
     monkeypatch.setattr(startup, "read_seeds", Mock(return_value=seeds))
+    monkeypatch.setattr(startup, "seed_directories", Mock(return_value=[Path("seeds")]))
     script = Mock(return_value="BEGIN; COMMIT;")
     monkeypatch.setattr(startup, "build_load_script", script)
     load = Mock()
@@ -149,3 +151,21 @@ def test_failed_initialization_does_not_launch_server(monkeypatch, capsys):
     assert startup.main() == 1
     launch.assert_not_called()
     assert "initialisation refusée : prix indisponibles" in capsys.readouterr().err
+
+
+def test_every_bom_is_loaded_and_gets_its_own_first_snapshot(prepared, monkeypatch):
+    """Un snapshot du Multipla ne donne aucun prix à une Valhalla : chacune
+    doit recevoir le sien, même si un snapshot existe déjà ailleurs."""
+    queries, script, load, snapshot = prepared
+    versions = iter(["bom-a", "bom-b"])
+    monkeypatch.setattr(
+        startup, "read_seeds",
+        Mock(side_effect=lambda _: {"metadata": {"bom_version_id": next(versions)}}),
+    )
+    monkeypatch.setattr(
+        startup, "seed_directories", Mock(return_value=[Path("a"), Path("b")])
+    )
+    queries.side_effect = [None, None, None, None]
+    startup.initialize("test-dsn")
+    assert script.call_count == 2
+    assert [call.args[0][-1] for call in snapshot.call_args_list] == ["bom-a", "bom-b"]

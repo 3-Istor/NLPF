@@ -215,8 +215,8 @@ def build_sourcing(bom: Bom) -> dict[str, list[dict]]:
     return sourcing
 
 
-def _supplier_by_id(supplier_id: str) -> dict:
-    for supplier in SUPPLIERS:
+def _supplier_by_id(supplier_id: str, suppliers: tuple[dict, ...] = SUPPLIERS) -> dict:
+    for supplier in suppliers:
         if supplier["id"] == supplier_id:
             return supplier
     raise KeyError(supplier_id)
@@ -265,7 +265,11 @@ def unit_purchase_price(part, offer: dict, plant: dict) -> Decimal:
 
 
 def reference_costing(
-    bom: Bom, cumulative: dict[str, Decimal], sourcing: dict[str, list[dict]]
+    bom: Bom,
+    cumulative: dict[str, Decimal],
+    sourcing: dict[str, list[dict]],
+    suppliers: tuple[dict, ...] = SUPPLIERS,
+    labour_rate: Decimal = REFERENCE_LABOUR_RATE,
 ) -> dict:
     """Le coût du scénario vide : fournisseur et usine par défaut, règle `labour`.
 
@@ -299,7 +303,7 @@ def reference_costing(
 
         if part.valuation_mode == PURCHASED:
             offer = next(o for o in sourcing[ref] if o["is_default"])
-            supplier = _supplier_by_id(offer["supplier_id"])
+            supplier = _supplier_by_id(offer["supplier_id"], suppliers)
             plant = default_plant(supplier)
             unit_cost = unit_purchase_price(part, offer, plant)
             contribution = quantity * unit_cost
@@ -317,7 +321,7 @@ def reference_costing(
             }
         else:
             assert part.labour_minutes is not None
-            unit_cost = part.labour_minutes / Decimal(60) * REFERENCE_LABOUR_RATE
+            unit_cost = part.labour_minutes / Decimal(60) * labour_rate
             contribution = quantity * unit_cost
             labour_cost += contribution
             per_part[ref] = {
@@ -346,7 +350,7 @@ def reference_costing(
         "root_full_cost": full_cost[bom.root_ref],
         "root_full_co2": full_co2[bom.root_ref],
         "per_part": per_part,
-        "labour_rate": REFERENCE_LABOUR_RATE,
+        "labour_rate": labour_rate,
     }
 
 

@@ -100,6 +100,11 @@ jobs:
       - name: Vérifier le déterminisme du générateur
         run: python -m tools.bom_generator --check
 
+      # Même garantie pour les trois Valhalla : masses, carbone et fournisseurs
+      # alternatifs sont générés, ils ne doivent pas se retoucher à la main.
+      - name: Vérifier le déterminisme de l'import Valhalla
+        run: python -m tools.valhalla_import --check
+
       - name: Charger la nomenclature
         run: |
           python -m carcost.infrastructure seeds \

@@ -25,7 +25,14 @@ def validate(
     catalog: dict[str, dict],
     costing: dict,
     control_values: dict[str, str],
+    *,
+    require_volume: bool = True,
+    min_suppliers: int = MIN_SUPPLIERS_PER_PART,
+    currencies: tuple[str, ...] = ("EUR", "USD", "RUB"),
 ) -> list[str]:
+    """`require_volume` porte les minimums du sujet (taille, profondeur,
+    partage) : ils valent pour le Multipla généré, pas pour une nomenclature
+    importée telle qu'un constructeur la fournit."""
     errors: list[str] = []
 
     # -- structure ----------------------------------------------------------
@@ -48,16 +55,16 @@ def validate(
             errors.append(f"arête en double : {pair[0]} → {pair[1]} ({count} fois)")
 
     # -- volumétrie exigée --------------------------------------------------
-    if len(bom.parts) < MIN_PARTS:
+    if require_volume and len(bom.parts) < MIN_PARTS:
         errors.append(f"{len(bom.parts)} pièces, minimum attendu {MIN_PARTS}")
 
     depth = graph.max_depth(bom)
-    if depth < MIN_DEPTH:
+    if require_volume and depth < MIN_DEPTH:
         errors.append(f"profondeur {depth}, minimum attendu {MIN_DEPTH}")
 
     parents = graph.parents_index(bom)
     shared = [ref for ref in bom.parts if len(set(parents.get(ref, []))) >= 2]
-    if len(shared) < MIN_SHARED_PARTS:
+    if require_volume and len(shared) < MIN_SHARED_PARTS:
         errors.append(
             f"{len(shared)} pièces à parents multiples, minimum attendu "
             f"{MIN_SHARED_PARTS} — sans elles la nomenclature est un arbre déguisé"
@@ -138,15 +145,17 @@ def validate(
         if part.valuation_mode != PURCHASED:
             continue
         offers = sourcing.get(ref, [])
-        if len(offers) < MIN_SUPPLIERS_PER_PART:
-            errors.append(f"{ref} : {len(offers)} fournisseur(s), minimum 2")
+        if len(offers) < min_suppliers:
+            errors.append(
+                f"{ref} : {len(offers)} fournisseur(s), minimum {min_suppliers}"
+            )
         if sum(1 for offer in offers if offer["is_default"]) != 1:
             errors.append(f"{ref} : il faut exactement un fournisseur par défaut")
         entry = catalog.get(ref)
         if entry is None:
             errors.append(f"{ref} : absente du catalogue de prix")
             continue
-        for code in ("EUR", "USD", "RUB"):
+        for code in currencies:
             if code not in entry["prices"]:
                 errors.append(f"{ref} : pas de prix en {code}")
                 continue

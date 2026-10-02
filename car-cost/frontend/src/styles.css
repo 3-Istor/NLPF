@@ -28,6 +28,33 @@ input::placeholder { color: #a7adb7; font-style: italic; opacity: 1; }
 code { font: 12px/1 ui-monospace, "Cascadia Mono", monospace; color: var(--muted); }
 
 .app { display: flex; flex-direction: column; height: 100vh; }
+.workspace { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+/* Le bandeau du haut : la nomenclature ouverte et la page affichée. */
+.shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: #fff;
+}
+.shell h1 { font-size: 16px; margin: 0; }
+.shell label { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.shell select { max-width: min(420px, 70vw); padding: 3px 6px; border-radius: 4px; border: 1px solid #4b5563; }
+.shell__tabs { display: flex; gap: 4px; margin-left: auto; }
+.shell__tabs button {
+  padding: 4px 12px;
+  border: 1px solid #4b5563;
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+.shell__tabs button[aria-selected="true"] { background: #fff; color: var(--ink); }
+.shell__synthetic { font-size: 12px; color: #d1d5db; }
+.shell__error { color: #fecaca; font-size: 12px; }
 
 .app__header {
   display: flex;

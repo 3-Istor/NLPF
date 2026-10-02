@@ -43,7 +43,7 @@ def main(argv: list[str] | None = None) -> int:
     purchased = sorted(ref for ref, part in bom.parts.items() if part.is_purchased)
 
     snapshots = PostgresPriceSnapshotRepository(arguments.dsn)
-    previous = snapshots.latest()
+    previous = snapshots.latest(arguments.bom_version)
     source = HttpPriceSource(
         arguments.api,
         timeout_seconds=arguments.timeout,
@@ -58,6 +58,7 @@ def main(argv: list[str] | None = None) -> int:
             previous=previous,
             now=datetime.now(timezone.utc),
             snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
+            bom_version=arguments.bom_version,
         )
     except NoPriceAvailable as refusal:
         print(f"refus : {refusal}", file=sys.stderr)

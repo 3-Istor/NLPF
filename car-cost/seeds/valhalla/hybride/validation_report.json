@@ -1,0 +1,181 @@
+{
+  "parts": 659,
+  "edges": 658,
+  "purchased": 635,
+  "manufactured": 24,
+  "max_depth": 3,
+  "deepest_part": "VALH-BOM-0374",
+  "shared_parts": 0,
+  "total_paths": 659,
+  "most_shared": [],
+  "systems": {
+    "CAR": {
+      "parts": 86,
+      "cost": "300147.46",
+      "co2": "6994.75"
+    },
+    "CHS": {
+      "parts": 102,
+      "cost": "149015.95",
+      "co2": "1412.75"
+    },
+    "ELE": {
+      "parts": 50,
+      "cost": "46321.42",
+      "co2": "742.25"
+    },
+    "FIX": {
+      "parts": 173,
+      "cost": "3654.40",
+      "co2": "127.26"
+    },
+    "FLU": {
+      "parts": 23,
+      "cost": "2581.55",
+      "co2": "129.65"
+    },
+    "GMP": {
+      "parts": 148,
+      "cost": "419618.62",
+      "co2": "6665.40"
+    },
+    "INT": {
+      "parts": 55,
+      "cost": "61123.42",
+      "co2": "1216.71"
+    },
+    "TRN": {
+      "parts": 17,
+      "cost": "100186.36",
+      "co2": "735.28"
+    },
+    "VEH": {
+      "parts": 5,
+      "cost": "10198.68",
+      "co2": "220.70"
+    }
+  },
+  "top_contributors": [
+    {
+      "part_ref": "VALH-BOM-0006",
+      "label": "Monocoque carbone – cuve inférieure",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "58554.00"
+    },
+    {
+      "part_ref": "VALH-BOM-0224",
+      "label": "Paliers principaux vilebrequin",
+      "system": "GMP",
+      "cumulative_quantity": "5.0",
+      "own_contribution": "35132.40"
+    },
+    {
+      "part_ref": "VALH-BOM-0309",
+      "label": "Boîte DCT 8 rapports",
+      "system": "TRN",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "35132.40"
+    },
+    {
+      "part_ref": "VALH-BOM-0007",
+      "label": "Structure supérieure carbone / cellule sécurité",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "29277.00"
+    },
+    {
+      "part_ref": "VALH-BOM-0347",
+      "label": "EDU avant – ensemble",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "21079.44"
+    },
+    {
+      "part_ref": "VALH-BOM-0359",
+      "label": "Refroidissement EDU avant",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "21079.44"
+    },
+    {
+      "part_ref": "VALH-BOM-0043",
+      "label": "Panneaux d'accès sous caisse",
+      "system": "CAR",
+      "cumulative_quantity": "6.0",
+      "own_contribution": "17566.20"
+    },
+    {
+      "part_ref": "VALH-BOM-0215",
+      "label": "Bloc-cylindres V8",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "17566.20"
+    },
+    {
+      "part_ref": "VALH-BOM-0327",
+      "label": "Pack batterie HV 400 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "17566.20"
+    },
+    {
+      "part_ref": "VALH-BOM-0060",
+      "label": "Éléments aile avant active",
+      "system": "CAR",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "14052.96"
+    },
+    {
+      "part_ref": "VALH-BOM-0328",
+      "label": "Modules batterie HV",
+      "system": "GMP",
+      "cumulative_quantity": "6.0",
+      "own_contribution": "14052.96"
+    },
+    {
+      "part_ref": "VALH-BOM-0360",
+      "label": "Moteur électrique arrière intégré DCT",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "11710.80"
+    },
+    {
+      "part_ref": "VALH-BOM-0342",
+      "label": "Plaque froide/échangeur batterie",
+      "system": "GMP",
+      "cumulative_quantity": "6.0",
+      "own_contribution": "10539.72"
+    },
+    {
+      "part_ref": "VALH-BOM-0064",
+      "label": "Aileron arrière actif",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "9368.64"
+    },
+    {
+      "part_ref": "VALH-BOM-0313",
+      "label": "Pignons rapports avant",
+      "system": "TRN",
+      "cumulative_quantity": "8.0",
+      "own_contribution": "9368.64"
+    }
+  ],
+  "control_values": [],
+  "costing": {
+    "labour_rate_eur_per_hour": "60.00",
+    "material_cost": "1070199.86",
+    "labour_cost": "22648.00",
+    "total_cost": "1092847.86",
+    "total_cost_exact": "1092847.858000000000000000000",
+    "own_co2": "18233.71",
+    "transport_co2": "11.05",
+    "total_co2": "18244.76"
+  },
+  "mass": {
+    "vehicle_kg": "1654.9",
+    "target_kg": "1655",
+    "free_mass_scale": "0.5415"
+  }
+}

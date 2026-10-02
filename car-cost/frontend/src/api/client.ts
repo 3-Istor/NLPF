@@ -6,6 +6,7 @@
  */
 
 import type {
+  BomVersion,
   Calculation,
   CalculationSnapshot,
   CalculationSnapshotSummary,
@@ -63,6 +64,9 @@ const withCalculation = (calculationId: string | null, snapshotId?: string | nul
   (snapshotId ? `&calculation_snapshot_id=${encodeURIComponent(snapshotId)}` : "");
 
 export const api = {
+  /** Les nomenclatures chargées, la plus récente d'abord. */
+  bomVersions: () => call<{ items: BomVersion[] }>("/bom/versions"),
+
   /**
    * `snapshotId` : le snapshot de calcul ouvert. Le serveur marque alors les
    * lignes d'après sa copie des réglages, pas d'après le scénario vivant.

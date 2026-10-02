@@ -61,6 +61,11 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                         else None
                     ),
                     "is_synthetic": summary.is_synthetic,
+                    "reference_labour_rate": (
+                        str(summary.reference_labour_rate)
+                        if summary.reference_labour_rate is not None
+                        else None
+                    ),
                 }
                 for summary in repository.versions()
             ]

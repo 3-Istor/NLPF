@@ -69,6 +69,7 @@ def take_snapshot(
     previous: PriceSnapshot | None,
     now: datetime,
     snapshot_id: str,
+    bom_version: str | None = None,
 ) -> SnapshotTaken | TookFallback:
     try:
         quotes = {quote.part_ref: quote for quote in source.fetch(refs, currency)}
@@ -121,6 +122,7 @@ def take_snapshot(
             fallback_refs=frozenset(fallback),
             missing_refs=frozenset(missing),
             quarantined_refs=frozenset(entry.part_ref for entry in quarantined),
+            bom_version=bom_version,
         ),
         quarantined=tuple(quarantined),
         missing=tuple(sorted(missing)),

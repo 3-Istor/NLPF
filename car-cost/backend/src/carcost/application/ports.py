@@ -68,6 +68,8 @@ class BomVersionSummary:
     #: mais ni lue ni calculée.
     validated_at: datetime | None
     is_synthetic: bool
+    #: Taux horaire proposé à la création d'un scénario sur cette version.
+    reference_labour_rate: Decimal | None = None
 
 
 class BomRepository(Protocol):
@@ -109,12 +111,17 @@ class QuarantineRecord:
 
 
 class PriceSnapshotRepository(Protocol):
-    def latest(self):  # pragma: no cover - contrat
-        """Le dernier snapshot pris, même périmé — ou None s'il n'y en a aucun."""
+    def latest(self, bom_version: str | None = None):  # pragma: no cover - contrat
+        """Le dernier snapshot pris pour cette nomenclature, même périmé — ou None.
+
+        À défaut, le dernier snapshot pris avant que les snapshots ne portent
+        leur nomenclature (ADR-0015). `None` : le dernier, toutes confondues.
+        """
         ...
 
-    def list_all(self):  # pragma: no cover - contrat
-        """Liste les snapshots du plus récent au plus ancien."""
+    def list_all(self, bom_version: str | None = None):  # pragma: no cover - contrat
+        """Liste les snapshots du plus récent au plus ancien, de cette
+        nomenclature (et les anciens, sans nomenclature) si elle est donnée."""
         ...
 
     def get(self, snapshot_id: str):  # pragma: no cover - contrat

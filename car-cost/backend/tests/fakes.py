@@ -79,11 +79,21 @@ class FakeSnapshotRepository:
         self.snapshots = list(snapshots)
         self.journals: dict[str, tuple[QuarantineRecord, ...]] = {}
 
-    def latest(self):
-        return self.snapshots[-1] if self.snapshots else None
+    def latest(self, bom_version=None):
+        candidates = self._for(bom_version)
+        own = [s for s in candidates if s.bom_version is not None]
+        legacy = [s for s in candidates if s.bom_version is None]
+        if own:
+            return own[-1]
+        return legacy[-1] if legacy else None
 
-    def list_all(self):
-        return tuple(reversed(self.snapshots))
+    def list_all(self, bom_version=None):
+        return tuple(reversed(self._for(bom_version)))
+
+    def _for(self, bom_version):
+        if bom_version is None:
+            return list(self.snapshots)
+        return [s for s in self.snapshots if s.bom_version in (None, bom_version)]
 
     def get(self, snapshot_id: str):
         for snapshot in self.snapshots:
