@@ -15,6 +15,11 @@ export type Money = {
   readonly currency: string;
 };
 
+/** Une masse de CO₂ équivalent, en kg. Comme `Money` : une chaîne, jamais sommée ici. */
+export type Co2 = {
+  readonly kg_co2e: string;
+};
+
 export type ValuationMode = "purchased" | "manufactured";
 
 /**
@@ -163,6 +168,8 @@ export type SystemTotal = {
   readonly system: string;
   readonly cost: Money;
   readonly cost_share_pct: string;
+  readonly co2: Co2;
+  readonly co2_share_pct: string;
 };
 
 export type Contributor = {
@@ -173,6 +180,10 @@ export type Contributor = {
   readonly own_contribution: Money;
   readonly share_pct: string;
   readonly first_path: string;
+};
+
+export type Co2Contributor = Omit<Contributor, "own_contribution"> & {
+  readonly own_co2_contribution: Co2;
 };
 
 export type Calculation = {
@@ -191,7 +202,15 @@ export type Calculation = {
   };
   readonly systems: readonly SystemTotal[];
   readonly top_cost_contributors: readonly Contributor[];
+  /**
+   * `null` : calcul enregistré avant que le moteur ne porte le CO₂. Les
+   * chiffres carbone du calcul ne veulent alors rien dire, pas même zéro.
+   */
+  readonly total_co2: Co2 | null;
+  readonly top_co2_contributors: readonly Co2Contributor[];
   readonly parts_without_price: readonly string[];
+  /** Non vide : `total_co2` est une somme partielle, pas l'empreinte du véhicule. */
+  readonly parts_without_co2: readonly string[];
   /** Une ligne compte dans une seule catégorie. Compté par le serveur. */
   readonly issue_counts: {
     readonly missing_price: number;

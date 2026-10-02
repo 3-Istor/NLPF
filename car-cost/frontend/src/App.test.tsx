@@ -106,7 +106,10 @@ function calculation(id: string, scenarioId: string): Calculation {
         first_path: "V/A/X",
       },
     ],
+    total_co2: { kg_co2e: "980.000000" },
+    top_co2_contributors: [],
     parts_without_price: [],
+    parts_without_co2: [],
     issue_counts: { missing_price: 0, quarantined: 0, fallback: 0 },
   };
 }
@@ -549,7 +552,9 @@ describe("un snapshot ouvert est en lecture seule", () => {
     expect(within(copied).getByText("toutes les occurrences")).toBeInTheDocument();
     expect(within(copied).getByText("12.5 min")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Appliquer" })).toBeNull();
-    expect(screen.queryByRole("radio")).toBeNull();
+    // Aucun choix de portée : la synthèse, elle, garde son choix Coût / CO₂.
+    expect(screen.queryByRole("group", { name: "Portée du réglage" })).toBeNull();
+    expect(screen.queryByRole("radio", { name: /occurrence/ })).toBeNull();
   });
 
   it("dit qu'une ligne n'a aucun réglage dans le snapshot", async () => {

@@ -173,9 +173,17 @@ describe("comparer", () => {
 
     expect(await screen.findByText("Écart B − A")).toBeInTheDocument();
     expect(compare).toHaveBeenCalledWith("scn-a", "scn-b");
-    expect(screen.getByText("non calculé")).toBeInTheDocument();
+    expect(screen.getByText(/^inconnu/)).toBeInTheDocument();
     expect(screen.queryByText(/0,00 kg/)).not.toBeInTheDocument();
     expect(screen.getAllByText("-23,00 €").length).toBeGreaterThan(0);
+  });
+
+  it("un écart CO₂ connu s'affiche arrondi, signe compris", async () => {
+    compare.mockResolvedValue({ ...comparison, co2_delta_kg: "-12.345600" });
+    mount();
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+
+    expect(await screen.findByText("-12,35 kg CO₂e")).toBeInTheDocument();
   });
 
   it("mène à la pièce depuis un écart", async () => {
