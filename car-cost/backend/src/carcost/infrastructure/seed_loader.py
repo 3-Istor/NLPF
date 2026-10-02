@@ -51,6 +51,7 @@ EDGE_COLUMNS = (
     "parent_valuation_mode",
     "quantity",
     "unit",
+    "after_sales_quantity",
 )
 
 
@@ -62,6 +63,11 @@ def build_load_script(
     suppliers: Mapping,
 ) -> str:
     """Valide d'abord, émet ensuite. Un fichier refusé ne produit aucun SQL."""
+    # Un fichier antérieur au SAV n'a pas la colonne : aucune pièce de rechange.
+    edges = [
+        {**row, "after_sales_quantity": row.get("after_sales_quantity") or "0"}
+        for row in edges
+    ]
     bom = _to_domain(metadata, parts, edges)
     _reject_if_invalid(bom, parts)
 
@@ -115,7 +121,12 @@ def _to_domain(
         for row in parts
     }
     domain_edges = tuple(
-        Edge(row["parent_ref"], row["child_ref"], Decimal(row["quantity"]))
+        Edge(
+            row["parent_ref"],
+            row["child_ref"],
+            Decimal(row["quantity"]),
+            Decimal(row.get("after_sales_quantity") or 0),
+        )
         for row in edges
     )
     try:
@@ -235,15 +246,26 @@ def _insert_bom_version(
 ) -> str:
     return (
         "INSERT INTO bom_version (id, label, root_part_ref, generator_version, "
-        "seed_checksum, is_synthetic, part_count, edge_count) VALUES ("
+        "seed_checksum, is_synthetic, part_count, edge_count, "
+        "reference_labour_rate) VALUES ("
         f"{_quote(metadata['bom_version_id'])}, "
         f"{_quote(metadata['vehicle'])}, "
         f"{_quote(metadata['root_part_ref'])}, "
         f"{_quote(metadata['generator_version'])}, "
         f"{_quote(metadata['seed_checksum'])}, "
         f"{'true' if metadata['is_synthetic'] else 'false'}, "
-        f"{len(parts)}, {len(edges)});"
+        f"{len(parts)}, {len(edges)}, "
+        f"{_labour_rate(metadata)});"
     )
+
+
+def _labour_rate(metadata: Mapping) -> str:
+    rate = metadata.get("labour_rate_eur_per_hour")
+    if rate is None:
+        return "NULL"
+    # Un nombre, pas du texte cité : refuser ici ce qui ne se lit pas comme tel
+    # plutôt que de laisser psql échouer au milieu de la transaction.
+    return str(Decimal(str(rate)))
 
 
 def _supplier_blocks(version: str, suppliers: Mapping) -> str:
@@ -287,10 +309,24 @@ def _supplier_blocks(version: str, suppliers: Mapping) -> str:
         lines.append("\\.")
         return "\n".join(lines)
 
+    def shared(table: str, columns: str, rows: list[list]) -> str:
+        """Un fournisseur sert plusieurs nomenclatures (les trois Valhalla) :
+        le deuxième chargement le retrouve en base et ne le réécrit pas."""
+        staging = f"{table}_seed"
+        return "\n".join(
+            [
+                f"CREATE TEMP TABLE {staging} (LIKE {table} INCLUDING DEFAULTS) "
+                "ON COMMIT DROP;",
+                block(staging, columns, rows),
+                f"INSERT INTO {table} ({columns}) SELECT {columns} FROM {staging} "
+                "ON CONFLICT (id) DO NOTHING;",
+            ]
+        )
+
     return "\n\n".join(
         [
-            block("supplier", "id, name, home_country", supplier_rows),
-            block(
+            shared("supplier", "id, name, home_country", supplier_rows),
+            shared(
                 "supplier_plant",
                 "id, supplier_id, label, origin_country, price_coefficient, "
                 "lead_time_days, transport_co2_kg_per_kg, is_default",
@@ -309,8 +345,26 @@ def _supplier_blocks(version: str, suppliers: Mapping) -> str:
 # ------------------------------------------------------------------- lecture
 
 
+def seed_directories(root: Path) -> list[Path]:
+    """Le Multipla à la racine de `seeds/`, puis chaque Valhalla.
+
+    L'ordre est fixe : la première nomenclature chargée est celle que l'écran
+    ouvre par défaut.
+    """
+    nested = sorted(
+        path.parent for path in (root / "valhalla").glob("*/bom_*.json")
+    )
+    return [root, *nested]
+
+
 def read_seeds(seeds_dir: Path) -> dict:
-    bom = json.loads((seeds_dir / "bom_multipla.json").read_text(encoding="utf-8"))
+    candidates = sorted(seeds_dir.glob("bom_*.json"))
+    if len(candidates) != 1:
+        raise SeedRejected(
+            f"{seeds_dir} : un seul fichier bom_*.json attendu, "
+            f"{len(candidates)} trouvé(s)"
+        )
+    bom = json.loads(candidates[0].read_text(encoding="utf-8"))
     suppliers = json.loads((seeds_dir / "suppliers.json").read_text(encoding="utf-8"))
     return {
         "metadata": bom["metadata"],

@@ -1,0 +1,186 @@
+{
+  "parts": 535,
+  "edges": 534,
+  "purchased": 514,
+  "manufactured": 21,
+  "max_depth": 3,
+  "deepest_part": "VALE-BOM-0633",
+  "shared_parts": 0,
+  "total_paths": 535,
+  "most_shared": [],
+  "systems": {
+    "CAR": {
+      "parts": 86,
+      "cost": "311998.77",
+      "co2": "9969.14"
+    },
+    "CHS": {
+      "parts": 102,
+      "cost": "149015.95",
+      "co2": "1759.48"
+    },
+    "ELE": {
+      "parts": 49,
+      "cost": "44498.24",
+      "co2": "1439.53"
+    },
+    "FIX": {
+      "parts": 148,
+      "cost": "3220.68",
+      "co2": "155.96"
+    },
+    "FLU": {
+      "parts": 19,
+      "cost": "2018.05",
+      "co2": "71.32"
+    },
+    "GMP": {
+      "parts": 62,
+      "cost": "517619.71",
+      "co2": "14195.49"
+    },
+    "INT": {
+      "parts": 56,
+      "cost": "63239.36",
+      "co2": "1521.06"
+    },
+    "TRN": {
+      "parts": 8,
+      "cost": "45680.14",
+      "co2": "83.11"
+    },
+    "VEH": {
+      "parts": 5,
+      "cost": "10198.68",
+      "co2": "220.12"
+    }
+  },
+  "top_contributors": [
+    {
+      "part_ref": "VALE-BOM-0006",
+      "label": "Monocoque carbone – cuve inférieure",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "58554.00"
+    },
+    {
+      "part_ref": "VALE-BOM-0329",
+      "label": "Cellules batterie haute énergie",
+      "system": "GMP",
+      "cumulative_quantity": "384.0",
+      "own_contribution": "45054.72"
+    },
+    {
+      "part_ref": "VALE-BOM-0342",
+      "label": "Plaques froides batterie",
+      "system": "GMP",
+      "cumulative_quantity": "12.0",
+      "own_contribution": "36201.36"
+    },
+    {
+      "part_ref": "VALE-BOM-0601",
+      "label": "Moteur électrique arrière gauche",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "33519.82"
+    },
+    {
+      "part_ref": "VALE-BOM-0602",
+      "label": "Moteur électrique arrière droit",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "33519.82"
+    },
+    {
+      "part_ref": "VALE-BOM-0007",
+      "label": "Structure supérieure carbone / cellule sécurité",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "29277.00"
+    },
+    {
+      "part_ref": "VALE-BOM-0348",
+      "label": "Moteur électrique avant gauche",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "28491.85"
+    },
+    {
+      "part_ref": "VALE-BOM-0349",
+      "label": "Moteur électrique avant droit",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "28491.85"
+    },
+    {
+      "part_ref": "VALE-BOM-0327",
+      "label": "Pack batterie HV 800 V 100 kWh",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "26815.86"
+    },
+    {
+      "part_ref": "VALE-BOM-0603",
+      "label": "Inverter moteur AR gauche 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "20111.89"
+    },
+    {
+      "part_ref": "VALE-BOM-0604",
+      "label": "Inverter moteur AR droit 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "20111.89"
+    },
+    {
+      "part_ref": "VALE-BOM-0355",
+      "label": "Inverter moteur AV gauche 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "18435.90"
+    },
+    {
+      "part_ref": "VALE-BOM-0356",
+      "label": "Inverter moteur AV droit 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "18435.90"
+    },
+    {
+      "part_ref": "VALE-BOM-0043",
+      "label": "Panneaux d'accès sous caisse",
+      "system": "CAR",
+      "cumulative_quantity": "6.0",
+      "own_contribution": "17566.20"
+    },
+    {
+      "part_ref": "VALE-BOM-0330",
+      "label": "Boîtier batterie HV 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "16759.91"
+    }
+  ],
+  "control_values": [],
+  "costing": {
+    "labour_rate_eur_per_hour": "60.00",
+    "material_cost": "1127633.58",
+    "labour_cost": "19856.00",
+    "total_cost": "1147489.58",
+    "total_cost_exact": "1147489.578000000000000000000",
+    "own_co2": "29402.22",
+    "transport_co2": "12.99",
+    "total_co2": "29415.22"
+  },
+  "mass": {
+    "vehicle_kg": "1960.0",
+    "target_kg": "1960",
+    "free_mass_scale": "0.9219"
+  },
+  "calibration": {
+    "category": "motorisation",
+    "price_factor": "2.8623",
+    "target_cost_ratio_to_hybrid": "1.05"
+  }
+}

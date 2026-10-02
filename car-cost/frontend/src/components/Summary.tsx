@@ -20,8 +20,11 @@ type Props = {
   calculation: Calculation | null;
   /** `null` tant qu'il n'est pas lu, ou s'il n'a pas pu l'être. */
   journal: QuarantineJournal | null;
-  /** `FROZEN` : un snapshot de calcul ouvert, ni à jour ni obsolète. */
-  state: CalculationState | "FROZEN";
+  /**
+   * `FROZEN` : un snapshot de calcul ouvert, ni à jour ni obsolète.
+   * `LIVE` : un calcul aux prix actuels de l'API, rafraîchi, jamais enregistré.
+   */
+  state: CalculationState | "FROZEN" | "LIVE";
   staleReason: string | null;
   busy: boolean;
   failure: string | null;
@@ -30,8 +33,9 @@ type Props = {
   onGoToPart: (partRef: string) => void;
 };
 
-const STATE_LABELS: Record<CalculationState | "FROZEN", string> = {
+const STATE_LABELS: Record<CalculationState | "FROZEN" | "LIVE", string> = {
   FROZEN: "figé",
+  LIVE: "prix en direct",
   NEVER_RUN: "jamais calculé",
   UP_TO_DATE: "à jour",
   PARAMETERS_CHANGED: "totaux obsolètes",
@@ -50,7 +54,7 @@ export function Summary({
   onGoToPart,
 }: Props) {
   // Un calcul figé ne vieillit pas : il ne se compare pas au scénario vivant.
-  const stale = state !== "UP_TO_DATE" && state !== "FROZEN";
+  const stale = state !== "UP_TO_DATE" && state !== "FROZEN" && state !== "LIVE";
   const [chosenMetric, setMetric] = useState<"cost" | "co2">("cost");
   // Sans `total_co2`, les CO₂ par système sont des zéros de remplissage : on
   // ne propose pas de les regarder.
@@ -63,7 +67,7 @@ export function Summary({
         <h2>Synthèse</h2>
         <span
           className={`state state--${
-            state === "FROZEN" ? "frozen" : stale ? "stale" : "fresh"
+            state === "FROZEN" ? "frozen" : state === "LIVE" ? "live" : stale ? "stale" : "fresh"
           }`}
         >
           {busy ? "calcul en cours…" : STATE_LABELS[state]}
@@ -76,6 +80,12 @@ export function Summary({
             ? "Les prix ont changé depuis ce calcul."
             : "Des paramètres ont changé depuis ce calcul."}{" "}
           Les montants ci-dessous ne sont plus à jour.
+        </p>
+      )}
+      {state === "LIVE" && (
+        <p className="banner banner--live">
+          Prix lus en direct sur l'API, rafraîchis toutes les 5 s : ce total
+          n'est pas enregistré. Figez les prix pour le garder.
         </p>
       )}
       {state === "NO_PRICES" && (

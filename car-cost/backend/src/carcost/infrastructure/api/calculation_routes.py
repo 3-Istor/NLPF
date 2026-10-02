@@ -49,7 +49,9 @@ from ...application.run_calculation import (
     with_contributors,
 )
 from ...application.scenario import Scenario, ScenarioParameter, Scope
+from ...application.take_snapshot import TookFallback, snapshot_for_bom
 from .errors import error_response
+from .price_source import previous_for, price_source
 
 SCALE = Decimal("0.000001")
 
@@ -119,6 +121,25 @@ class NewScenario(BaseModel):
     )
     parameters: list[StoredParameter] = Field(
         default_factory=list, description="Paramètres initiaux, éventuellement vides.",
+    )
+    include_after_sales: bool = Field(
+        default=False,
+        description="Compter les pièces de rechange livrées avec le véhicule (SAV).",
+    )
+
+
+class ScenarioSettings(BaseModel):
+    include_after_sales: bool = Field(
+        description=(
+            "Compter les pièces de rechange livrées avec le véhicule (SAV) en plus "
+            "des pièces montées. Basculer rend le dernier calcul obsolète."
+        ),
+    )
+
+
+class LiveCalculation(BaseModel):
+    scenario_id: str = Field(
+        description="Identifiant `scn-…` du scénario à calculer aux prix actuels de l'API.",
     )
 
 
@@ -239,11 +260,27 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             parameters=tuple(
                 ScenarioParameter(**p.model_dump()) for p in payload.parameters
             ),
+            include_after_sales=payload.include_after_sales,
         )
         scenario = manage_scenarios.create_scenario(
             scenario, repositories.bom, repositories.scenarios, repositories.sourcing,
         )
         return _scenario_payload(repositories, scenario)
+
+    @app.patch(
+        "/api/v1/scenarios/{scenario_id}", tags=["Scénarios"],
+        summary="Régler le SAV d'un scénario",
+        description=(
+            "Active ou désactive le comptage des pièces de rechange (SAV). Le "
+            "dernier calcul devient obsolète : l'empreinte des entrées change."
+        ),
+    )
+    def update_settings(
+        scenario_id: Annotated[str, Path(description="Identifiant `scn-…`.")],
+        payload: ScenarioSettings,
+    ):
+        repositories.scenarios.set_after_sales(scenario_id, payload.include_after_sales)
+        return _scenario_payload(repositories, repositories.scenarios.get(scenario_id))
 
     @app.get(
         "/api/v1/scenarios", tags=["Scénarios"],
@@ -435,11 +472,53 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         ),
     )
     def create_calculation(payload: NewCalculation):
-        snapshot = _snapshot(repositories, payload.price_snapshot_id)
+        scenario = repositories.scenarios.get(payload.scenario_id)
+        snapshot = _snapshot(
+            repositories, payload.price_snapshot_id, scenario.bom_version
+        )
         calculation = _execute_calculation(
-            repositories, payload.scenario_id, snapshot
+            repositories, payload.scenario_id, snapshot, scenario
         )
         return _calculation_payload(calculation)
+
+    @app.post(
+        "/api/v1/calculations/live", tags=["Calculs"],
+        summary="Calculer aux prix actuels de l'API, sans rien enregistrer",
+        description=(
+            "Interroge l'API de prix, calcule le scénario avec ces prix et renvoie le "
+            "résultat marqué `price_mode = LIVE`. Rien n'est enregistré (ADR-0015) : ni "
+            "calcul, ni snapshot de prix. Pour garder un chiffre, figer les prix "
+            "(`POST /price-snapshots`) puis calculer. API muette : 503."
+        ),
+    )
+    def create_live_calculation(payload: LiveCalculation):
+        scenario = repositories.scenarios.get(payload.scenario_id)
+        bom = repositories.bom.load(scenario.bom_version)
+        now = repositories.clock()
+        outcome = snapshot_for_bom(
+            price_source(repositories), bom,
+            bom_version=scenario.bom_version, currency=scenario.display_currency,
+            previous=previous_for(repositories, scenario.bom_version, scenario.display_currency),
+            now=now, snapshot_id=f"live-{uuid.uuid4().hex[:12]}",
+        )
+        if isinstance(outcome, TookFallback):
+            # En direct, le dernier snapshot n'est pas « le prix actuel » : on
+            # le dit plutôt que de l'afficher sous ce nom.
+            raise PriceSourceError(outcome.reason)
+        sourcing = repositories.sourcing.load(scenario.bom_version)
+        calculation = run_calculation(
+            bom=bom,
+            scenario=scenario,
+            snapshot=outcome.snapshot,
+            resolved=resolve_unit_prices(bom, sourcing, outcome.snapshot, scenario),
+            now=now,
+            calculation_id=f"live-{uuid.uuid4().hex[:12]}",
+        )
+        repositories.live.keep(calculation)
+        return {
+            **_calculation_payload(calculation, price_mode="LIVE"),
+            "prices_taken_at": now.isoformat(),
+        }
 
     @app.post(
         "/api/v1/scenarios/compare", tags=["Scénarios"],
@@ -462,7 +541,9 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             raise IncomparableCalculations(
                 "les scénarios doivent utiliser la même devise d'affichage"
             )
-        snapshot = _snapshot(repositories, payload.price_snapshot_id)
+        snapshot = _snapshot(
+            repositories, payload.price_snapshot_id, scenario_a.bom_version
+        )
         calculation_a = _execute_calculation(
             repositories, payload.scenario_a_id, snapshot
         )
@@ -678,7 +759,7 @@ def _evaluate_sourcing(repositories, scenario_id: str, query: SourcingQuery):
     base = repositories.scenarios.get(scenario_id)
     bom = repositories.bom.load(base.bom_version)
     sourcing = repositories.sourcing.load(base.bom_version)
-    snapshot = _snapshot(repositories, query.price_snapshot_id)
+    snapshot = _snapshot(repositories, query.price_snapshot_id, base.bom_version)
     baseline = _execute_calculation(repositories, base.id, snapshot)
     report = recommend(
         bom=bom,
@@ -723,14 +804,18 @@ def _report_payload(report, query: SourcingQuery, accepted: set, currency: str) 
     }
 
 
-def _snapshot_or_none(repositories):
-    return repositories.snapshots.latest() if repositories.snapshots else None
+def _snapshot_or_none(repositories, bom_version: str):
+    """Le dernier snapshot **de cette nomenclature** : celui d'une autre
+    laisserait toutes les pièces sans prix (ADR-0015)."""
+    if not repositories.snapshots:
+        return None
+    return repositories.snapshots.latest(bom_version)
 
 
-def _snapshot(repositories, snapshot_id: str | None):
+def _snapshot(repositories, snapshot_id: str | None, bom_version: str):
     if snapshot_id is not None:
         return repositories.snapshots.get(snapshot_id)
-    snapshot = _snapshot_or_none(repositories)
+    snapshot = _snapshot_or_none(repositories, bom_version)
     if snapshot is None:
         raise NoPriceSnapshot(
             "aucun snapshot de prix, même périmé : prenez-en un avant de calculer"
@@ -764,7 +849,7 @@ def _state(repositories, scenario: Scenario, latest=None):
         latest = repositories.calculations.latest_for(scenario.id)
     return state_of(
         scenario,
-        _snapshot_or_none(repositories),
+        _snapshot_or_none(repositories, scenario.bom_version),
         last_digest=latest.input_digest if latest else None,
         last_snapshot_id=latest.snapshot_id if latest else None,
     )
@@ -793,6 +878,10 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         "active_rules": sorted(scenario.active_rules),
         # Le snapshot de calcul d'où le scénario est reparti, ou null.
         "derived_from": scenario.derived_from,
+        "include_after_sales": scenario.include_after_sales,
+        # La nomenclature porte-t-elle du SAV ? Sinon l'interrupteur ne change
+        # rien, et l'écran le dit au lieu de le laisser basculer pour rien.
+        "after_sales_available": _has_after_sales(repositories, scenario.bom_version),
         "parameters": [
             {
                 "parameter_id": parameter_ids[(parameter.part_ref, parameter.path or "")],
@@ -824,10 +913,19 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
     }
 
 
-def _calculation_payload(calculation) -> dict:
+def _has_after_sales(repositories, bom_version: str) -> bool:
+    try:
+        return repositories.bom.load(bom_version).has_after_sales
+    except Exception:  # noqa: BLE001 - une version illisible n'a pas de SAV à offrir
+        return False
+
+
+def _calculation_payload(calculation, price_mode: str = "SNAPSHOT") -> dict:
     currency = calculation.display_currency
     return {
         "id": calculation.id,
+        # LIVE : prix lus à l'instant, résultat non enregistré (ADR-0015).
+        "price_mode": price_mode,
         "scenario_id": calculation.scenario_id,
         "status": calculation.status.value,
         "bom_version": calculation.bom_version,

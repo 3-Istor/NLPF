@@ -9,7 +9,7 @@ from pathlib import Path
 
 import psycopg
 
-from .seed_loader import build_load_script, read_seeds
+from .seed_loader import build_load_script, read_seeds, seed_directories
 from .snapshot_cli import DEFAULT_DSN, main as take_first_snapshot
 
 
@@ -44,6 +44,16 @@ def apply_pending_migrations(dsn: str, directory: Path = MIGRATIONS_DIR) -> None
 
 def initialize(dsn: str, seeds_dir: Path = Path("seeds")) -> None:
     apply_pending_migrations(dsn)
+    for directory in seed_directories(seeds_dir):
+        _initialize_bom(dsn, directory)
+
+
+def _initialize_bom(dsn: str, seeds_dir: Path) -> None:
+    """Une nomenclature : la charger si elle manque, puis lui donner ses prix.
+
+    Chaque nomenclature a son premier snapshot (ADR-0015) : un snapshot pris
+    pour une autre laisserait toutes ses pièces sans prix.
+    """
     seeds = read_seeds(seeds_dir)
     version = seeds["metadata"]["bom_version_id"]
     with psycopg.connect(dsn) as connection:
@@ -68,12 +78,17 @@ def initialize(dsn: str, seeds_dir: Path = Path("seeds")) -> None:
         print(f"nomenclature {version} conservée", flush=True)
 
     with psycopg.connect(dsn) as connection:
-        snapshot = connection.execute("SELECT id FROM price_snapshot LIMIT 1").fetchone()
+        snapshot = connection.execute(
+            "SELECT id FROM price_snapshot WHERE bom_version_id = %s LIMIT 1",
+            (version,),
+        ).fetchone()
     if snapshot is None:
         if take_first_snapshot(["--dsn", dsn, "--bom-version", version]) != 0:
-            raise RuntimeError("impossible de prendre le premier snapshot de prix")
+            raise RuntimeError(
+                f"impossible de prendre le premier snapshot de prix de {version}"
+            )
     else:
-        print("snapshots de prix conservés", flush=True)
+        print(f"snapshots de prix de {version} conservés", flush=True)
 
 
 def main() -> int:

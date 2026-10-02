@@ -39,6 +39,8 @@ export type TreeLine = {
   readonly valuation_mode: ValuationMode;
   readonly unit: string;
   readonly edge_quantity: string;
+  /** Pièces de rechange portées par l'arête, en plus de la quantité montée. */
+  readonly after_sales_quantity?: string;
   readonly has_children: boolean;
   readonly child_count: number;
   /** Nombre de parents directs. */
@@ -110,6 +112,10 @@ export type Scenario = {
   readonly last_calculation_id: string | null;
   /** Le snapshot de calcul dont le scénario est reparti, s'il y en a un. */
   readonly derived_from?: string | null;
+  /** Les pièces de rechange (SAV) sont-elles comptées ? */
+  readonly include_after_sales?: boolean;
+  /** La nomenclature porte-t-elle du SAV ? Sinon l'interrupteur ne change rien. */
+  readonly after_sales_available?: boolean;
 };
 
 export type ScenarioParameter = {
@@ -188,6 +194,10 @@ export type Co2Contributor = Omit<Contributor, "own_contribution"> & {
 
 export type Calculation = {
   readonly id: string;
+  /** LIVE : prix lus à l'instant, résultat jamais enregistré (ADR-0015). */
+  readonly price_mode?: "SNAPSHOT" | "LIVE";
+  /** En direct : l'heure réelle à laquelle les prix ont été lus. */
+  readonly prices_taken_at?: string;
   readonly scenario_id: string;
   readonly status: "OK" | "DEGRADED" | "INCOMPLETE" | "FAILED";
   readonly bom_version: string;
@@ -325,3 +335,84 @@ export type ApiError = {
     readonly details: Record<string, unknown>;
   };
 };
+
+/** Une nomenclature au choix : le Multipla ou l'une des trois Valhalla. */
+export interface BomVersion {
+  id: string;
+  label: string;
+  root_part_ref: string;
+  part_count: number;
+  edge_count: number;
+  /** null tant que la version n'a pas passé ses contrôles : elle ne s'ouvre pas. */
+  validated_at: string | null;
+  is_synthetic: boolean;
+  /** Taux horaire proposé à la création d'un scénario, ou null s'il est inconnu. */
+  reference_labour_rate: string | null;
+}
+
+/** Un snapshot de prix enregistré, tel que la liste le résume. */
+export interface PriceSnapshotSummary {
+  id: string;
+  taken_at: string;
+  source: string;
+  currency: string;
+  bom_version: string | null;
+  status: "FRESH" | "STALE" | "DEGRADED";
+  age_seconds: number;
+  counts: { prices: number; fallback: number; quarantined: number; missing: number };
+}
+
+export interface SupplierPlant {
+  plant_id: string;
+  label: string;
+  origin_country: string;
+  price_coefficient: string;
+  lead_time_days: number;
+  transport_co2_kg_per_kg: string;
+  is_default: boolean;
+}
+
+/** Un fournisseur qui vend au moins une pièce de la nomenclature ouverte. */
+export interface SupplierSummary {
+  supplier_id: string;
+  name: string;
+  part_count: number;
+  /** Pièces pour lesquelles il est le fournisseur retenu par défaut. */
+  default_count: number;
+  plants: SupplierPlant[];
+}
+
+export interface SuppliedPart {
+  part_ref: string;
+  label: string;
+  unit: string;
+  system: string;
+  price_multiplier: string;
+  is_default: boolean;
+  /** Prix du dernier snapshot de la nomenclature, ou null s'il n'en a pas. */
+  reference_price: Money | null;
+}
+
+export interface SupplierParts {
+  supplier_id: string;
+  name: string;
+  plants: SupplierPlant[];
+  price_snapshot: { id: string; taken_at: string; currency: string } | null;
+  items: SuppliedPart[];
+}
+
+/** L'année de marché simulée d'une pièce, et ses prix figés. */
+export interface PriceHistoryResponse {
+  part_ref: string;
+  label: string;
+  unit: string;
+  currency: string;
+  profile: string | null;
+  drivers: Record<string, string>;
+  origin_currency: string | null;
+  reference: string;
+  points: { date: string; price: string }[];
+  now: { at: string; price: string };
+  snapshots: { id: string; taken_at: string; price: string; origin: string }[];
+  is_synthetic: boolean;
+}

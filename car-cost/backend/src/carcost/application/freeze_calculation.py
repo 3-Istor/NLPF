@@ -98,6 +98,7 @@ def freeze_scenario(
         parameters=tuple(_frozen(p) for p in scenario.parameters),
         created_at=now,
         derived_from=scenario.derived_from,
+        include_after_sales=scenario.include_after_sales,
     )
     snapshots_repo.save(snapshot)
     return snapshot
@@ -154,6 +155,7 @@ def frozen_scenario(snapshot: CalculationSnapshot) -> Scenario:
         ),
         name=snapshot.scenario_name,
         derived_from=snapshot.derived_from,
+        include_after_sales=snapshot.include_after_sales,
     )
 
 

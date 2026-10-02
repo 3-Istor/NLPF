@@ -40,6 +40,9 @@ class Edge:
     parent_ref: str
     child_ref: str
     quantity: Decimal
+    #: Pièces de rechange livrées avec le véhicule (SAV), en plus de celles
+    #: montées. Le moteur ne les voit que dans `Bom.with_after_sales()`.
+    after_sales_quantity: Decimal = Decimal(0)
 
 
 @dataclass(frozen=True)
@@ -79,6 +82,31 @@ class Bom:
 
     def children_of(self, ref: str) -> tuple[tuple[str, Decimal], ...]:
         return self._children[ref]
+
+    @property
+    def has_after_sales(self) -> bool:
+        return any(edge.after_sales_quantity for edge in self.edges)
+
+    def with_after_sales(self) -> Bom:
+        """La même nomenclature, chaque arête comptant montée + SAV.
+
+        Une copie : la version validée est partagée entre scénarios
+        (ADR-0013), activer le SAV sur l'un ne la change pas pour les autres.
+        Le SAV s'ajoute **sur l'arête** et se multiplie donc avec les
+        quantités des parents, comme toute quantité.
+        """
+        return Bom(
+            root_ref=self.root_ref,
+            parts=self.parts,
+            edges=tuple(
+                Edge(
+                    edge.parent_ref,
+                    edge.child_ref,
+                    edge.quantity + edge.after_sales_quantity,
+                )
+                for edge in self.edges
+            ),
+        )
 
     def topological_order(self) -> tuple[str, ...]:
         """Parents avant enfants. Lève si le graphe contient un cycle.

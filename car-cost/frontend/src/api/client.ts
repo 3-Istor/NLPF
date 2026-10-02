@@ -6,7 +6,12 @@
  */
 
 import type {
+  BomVersion,
   Calculation,
+  PriceHistoryResponse,
+  PriceSnapshotSummary,
+  SupplierParts,
+  SupplierSummary,
   CalculationSnapshot,
   CalculationSnapshotSummary,
   Comparison,
@@ -63,6 +68,24 @@ const withCalculation = (calculationId: string | null, snapshotId?: string | nul
   (snapshotId ? `&calculation_snapshot_id=${encodeURIComponent(snapshotId)}` : "");
 
 export const api = {
+  suppliers: (version: string) =>
+    call<{ items: SupplierSummary[] }>(`/bom/${version}/suppliers`),
+
+  supplierParts: (version: string, supplierId: string) =>
+    call<SupplierParts>(
+      `/bom/${version}/suppliers/${encodeURIComponent(supplierId)}/parts`,
+    ),
+
+  /** L'année simulée d'une pièce achetée, et ses prix figés. */
+  priceHistory: (version: string, partRef: string, currency = "EUR") =>
+    call<PriceHistoryResponse>(
+      `/bom/${version}/parts/${encodeURIComponent(partRef)}/price-history` +
+        `?currency=${encodeURIComponent(currency)}`,
+    ),
+
+  /** Les nomenclatures chargées, la plus récente d'abord. */
+  bomVersions: () => call<{ items: BomVersion[] }>("/bom/versions"),
+
   /**
    * `snapshotId` : le snapshot de calcul ouvert. Le serveur marque alors les
    * lignes d'après sa copie des réglages, pas d'après le scénario vivant.
@@ -107,6 +130,13 @@ export const api = {
     call<Scenario>("/scenarios", { method: "POST", body: JSON.stringify(body) }),
 
   scenario: (id: string) => call<Scenario>(`/scenarios/${id}`),
+
+  /** Compter ou non le SAV. Le dernier calcul devient obsolète. */
+  setAfterSales: (id: string, include: boolean) =>
+    call<Scenario>(`/scenarios/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ include_after_sales: include }),
+    }),
 
   /** Du plus récent au plus ancien. */
   scenarios: () =>
@@ -169,6 +199,22 @@ export const api = {
     }),
 
   calculation: (id: string) => call<Calculation>(`/calculations/${id}`),
+
+  /** Aux prix actuels de l'API ; rien n'est enregistré. */
+  calculateLive: (scenarioId: string) =>
+    call<Calculation>("/calculations/live", post({ scenario_id: scenarioId })),
+
+  /** Fige les prix actuels de l'API pour cette nomenclature. */
+  takePriceSnapshot: (version: string, currency = "EUR") =>
+    call<PriceSnapshotSummary>(
+      "/price-snapshots",
+      post({ bom_version: version, currency }),
+    ),
+
+  priceSnapshots: (version: string) =>
+    call<{ items: PriceSnapshotSummary[]; total: number }>(
+      `/price-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
 
   /** Lance un calcul sur le scénario et le fige sous ce nom. */
   freezeCalculation: (scenarioId: string, name: string) =>

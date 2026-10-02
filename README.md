@@ -356,12 +356,47 @@ entièrement distinct.
   deux CO₂ est incomplet. Vérifié à l'écran contre la vraie nomenclature,
   avec et sans prix forcé
 
+- **Quatre nomenclatures au choix** (ADR-0015) : le Multipla et trois Aston
+  Martin Valhalla (hybride, thermique et électrique hypothétiques), importées
+  des fichiers de la PR #6 par `tools/valhalla_import` au format du Multipla.
+  Masse, carbone, main-d'œuvre, usines, délais et fournisseurs alternatifs y
+  sont **générés** (synthétiques, déterministes, vérifiés en CI). Sélecteur
+  de véhicule dans le bandeau ; un snapshot de prix appartient à sa
+  nomenclature. Migration 0006 vérifiée sur une base existante.
+- **SAV** : un scénario peut compter les pièces de rechange livrées avec le
+  véhicule ; l'arbre affiche « + n SAV » à côté de la quantité montée.
+- **Prix qui varient** : l'API simulée rejoue une année de marché en 40 min.
+  Mode **direct** (calcul aux prix de l'instant, jamais enregistré, rafraîchi
+  toutes les 5 s) ou **snapshot** ; « Figer les prix maintenant » depuis
+  l'écran.
+- **Page Fournisseurs** : par véhicule, chaque fournisseur, ses usines et ses
+  pièces ; un clic sur une pièce affiche la courbe de son prix sur l'année
+  simulée et ses prix figés. Vérifié dans le navigateur sur une pile isolée.
+
 ### Ce qu'il reste à faire
 
 **Suite du lot 1 et lots suivants (vues)**
 
 - [ ] **Lot 1-bis** : panneau de saisie pré-rempli et suppression d'un réglage,
-      sélecteur de version de BOM, types générés depuis l'OpenAPI, `test:e2e`.
+      types générés depuis l'OpenAPI, `test:e2e`. (Le sélecteur de version
+      de BOM est fait.)
+- [ ] **Valider l'ADR-0015** (plusieurs nomenclatures, prix en direct jamais
+      enregistrés), rédigé au statut « proposé », et fermer la PR #6 qu'il
+      remplace.
+- [ ] **Relire les fourchettes générées pour la Valhalla**
+      (`tools/valhalla_import/enrich.py`, `suppliers.py`) : masse, carbone,
+      heures d'assemblage et usines sont des ordres de grandeur, à discuter.
+      Environ un quart des pièces gardent le profil de prix « défaut ».
+      Les prix de motorisation du thermique (×1,34) et de l'électrique
+      (×2,86) sont recalés pour tenir leur coût à −5 % / +5 % de l'hybride ;
+      l'électrique y gagne des moteurs à ~33 k€ pièce et un pack à ~27 k€,
+      à confronter à un ordre de grandeur réel.
+- [ ] **Placer les snapshots sur la courbe de prix.** Ils sont datés en temps
+      réel, la courbe en temps simulé : ils sont listés à côté. Il faudrait
+      enregistrer la date simulée (`as_of` de l'API) avec chaque snapshot.
+- [ ] **Les Valhalla ne partagent aucune pièce** : le fichier source est un
+      arbre (catégories → lignes). Les fixations du même type, répétées par
+      interface, pourraient devenir une pièce partagée.
 - [ ] **Lot 2.3 — décomposition de l'écart.** Deux snapshots de calcul pris sur
       des snapshots de prix différents ne se comparent pas aujourd'hui (422) ;
       les comparer, c'est décomposer l'écart entre prix et hypothèses.

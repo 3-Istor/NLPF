@@ -147,6 +147,41 @@ vi.mock("./api/client", () => ({
     }
   },
   api: {
+    bomVersions: vi.fn(async () => ({
+      items: [
+        {
+          id: "bom-valhalla-hybride-2026-10-02",
+          label: "Aston Martin Valhalla — hybride rechargeable (PHEV)",
+          root_part_ref: "VEH-VALHALLA-HYB",
+          part_count: 659,
+          edge_count: 658,
+          validated_at: "2026-10-02T08:00:00+00:00",
+          is_synthetic: true,
+          reference_labour_rate: "60.00",
+        },
+        {
+          id: VERSION,
+          label: "Fiat Multipla 1.6 16V",
+          root_part_ref: "VEH",
+          part_count: 474,
+          edge_count: 689,
+          validated_at: "2026-09-22T08:00:00+00:00",
+          is_synthetic: true,
+          reference_labour_rate: "42.00",
+        },
+      ],
+    })),
+    createScenario: vi.fn(async (body: { bom_version: string; name: string; labour_rate: string }) => {
+      const created = {
+        ...scenario("scn-neuf", body.name, "calc-1"),
+        bom_version: body.bom_version,
+        labour_rate: body.labour_rate,
+        last_calculation_id: null,
+        calculation_state: "NEVER_RUN" as const,
+      };
+      stored = [created, ...stored];
+      return created;
+    }),
     scenarios: vi.fn(async () => ({ items: stored, total: stored.length })),
     scenario: vi.fn(async (id: string) => {
       const found = stored.find((item) => item.id === id);
@@ -154,6 +189,12 @@ vi.mock("./api/client", () => ({
       return found;
     }),
     calculation: vi.fn(async (id: string) => calculation(id, "scn-?")),
+    calculateLive: vi.fn(async (scenarioId: string) => ({
+      ...calculation("live-1", scenarioId),
+      price_mode: "LIVE" as const,
+      prices_taken_at: "2026-10-02T09:00:00+00:00",
+    })),
+    takePriceSnapshot: vi.fn(async () => ({ id: "snp-figé" })),
     quarantine: vi.fn(async (snapshotId: string) => ({ snapshot_id: snapshotId, items: [] })),
     root: vi.fn(async () => line({})),
     children: vi.fn(
@@ -772,5 +813,58 @@ describe("données synthétiques", () => {
 
     expect(screen.queryByText(/aucune\s+donnée constructeur/)).toBeNull();
     expect(await screen.findByText("plausibles mais synthétiques")).toBeInTheDocument();
+  });
+});
+
+describe("choix de la nomenclature", () => {
+  it("ouvre le Multipla par défaut, avant les Valhalla", async () => {
+    render(<App />);
+    const select = await screen.findByLabelText("Nomenclature ouverte");
+    expect((select as HTMLSelectElement).value).toBe(VERSION);
+  });
+
+  it("changer de véhicule rouvre l'espace sur sa nomenclature, avec son taux", async () => {
+    render(<App />);
+    const select = await screen.findByLabelText("Nomenclature ouverte");
+    await waitFor(() => expect(api.root).toHaveBeenCalledWith(VERSION, "calc-1"));
+
+    fireEvent.change(select, { target: { value: "bom-valhalla-hybride-2026-10-02" } });
+
+    // Aucun scénario n'existe pour la Valhalla : un scénario de travail est
+    // créé au taux de sa nomenclature, pas à celui du Multipla.
+    await waitFor(() =>
+      expect(api.createScenario).toHaveBeenCalledWith(
+        expect.objectContaining({
+          bom_version: "bom-valhalla-hybride-2026-10-02",
+          labour_rate: "60.00",
+        }),
+      ),
+    );
+    expect(new URLSearchParams(window.location.search).get("bom")).toBe(
+      "bom-valhalla-hybride-2026-10-02",
+    );
+  });
+});
+
+describe("prix en direct ou figés", () => {
+  it("en direct, le calcul vient de l'API et la synthèse dit qu'il n'est pas enregistré", async () => {
+    render(<App />);
+    fireEvent.click(await screen.findByLabelText("En direct"));
+    await waitFor(() => expect(api.calculateLive).toHaveBeenCalledWith("scn-1"));
+    expect(await screen.findByText("prix en direct")).toBeInTheDocument();
+    expect(screen.getByText(/ce total\s+n'est pas enregistré/)).toBeInTheDocument();
+    await waitFor(() => expect(api.root).toHaveBeenCalledWith(VERSION, "live-1"));
+  });
+
+  it("figer les prix prend un snapshot puis calcule dessus", async () => {
+    render(<App />);
+    fireEvent.click(await screen.findByLabelText("En direct"));
+    await waitFor(() => expect(api.calculateLive).toHaveBeenCalled());
+
+    fireEvent.click(screen.getByRole("button", { name: "Figer les prix maintenant" }));
+
+    await waitFor(() => expect(api.takePriceSnapshot).toHaveBeenCalledWith(VERSION, "EUR"));
+    await waitFor(() => expect(api.calculate).toHaveBeenCalledWith("scn-1"));
+    expect((screen.getByLabelText("Snapshot") as HTMLInputElement).checked).toBe(true);
   });
 });

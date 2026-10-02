@@ -31,7 +31,7 @@ _NAME_UNIQUE = "calculation_snapshot_name_uq"
 _COLUMNS = """
     id, name, bom_version_id, scenario_id, scenario_name, calculation_id,
     price_snapshot_id, display_currency, labour_rate, active_rules, created_at,
-    derived_from
+    derived_from, include_after_sales
 """
 
 
@@ -121,8 +121,8 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
             INSERT INTO calculation_snapshot
                 (id, name, name_key, bom_version_id, scenario_id, calculation_id,
                  price_snapshot_id, scenario_name, display_currency, labour_rate,
-                 active_rules, created_at, derived_from)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                 active_rules, created_at, derived_from, include_after_sales)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 snapshot.id, snapshot.name, snapshot.name_key, snapshot.bom_version,
@@ -130,7 +130,7 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
                 snapshot.price_snapshot_id, snapshot.scenario_name,
                 snapshot.display_currency, snapshot.labour_rate,
                 sorted(snapshot.active_rules), snapshot.created_at,
-                snapshot.derived_from,
+                snapshot.derived_from, snapshot.include_after_sales,
             ),
         )
         for parameter in snapshot.parameters:
@@ -160,7 +160,7 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
         (
             identifier, name, bom_version, scenario_id, scenario_name,
             calculation_id, price_snapshot_id, currency, labour_rate,
-            active_rules, created_at, derived_from,
+            active_rules, created_at, derived_from, include_after_sales,
         ) = row
         parameters = connection.execute(
             """
@@ -198,6 +198,7 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
             ),
             created_at=created_at,
             derived_from=derived_from,
+            include_after_sales=include_after_sales,
         )
 
     @staticmethod

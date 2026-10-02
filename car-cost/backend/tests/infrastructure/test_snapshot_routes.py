@@ -123,6 +123,7 @@ class TestQuarantineJournal:
                     "taken_at": "2026-09-23T12:00:00+00:00",
                     "source": "mock",
                     "currency": "EUR",
+                    "bom_version": None,
                     "status": "DEGRADED",
                     "age_seconds": 0,
                     "counts": {
@@ -137,6 +138,7 @@ class TestQuarantineJournal:
                     "taken_at": "2026-09-23T12:00:00+00:00",
                     "source": "mock",
                     "currency": "EUR",
+                    "bom_version": None,
                     "status": "FRESH",
                     "age_seconds": 0,
                     "counts": {

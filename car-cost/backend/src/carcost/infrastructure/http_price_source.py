@@ -19,7 +19,14 @@ from decimal import Decimal, InvalidOperation
 from typing import Sequence
 from urllib.parse import urlencode
 
-from ..application.ports import PriceSourceError, PriceSourceTimeout, Quote
+from ..application.ports import (
+    PriceHistory,
+    PriceNotQuoted,
+    PricePoint,
+    PriceSourceError,
+    PriceSourceTimeout,
+    Quote,
+)
 
 
 class HttpPriceSource:
@@ -40,8 +47,24 @@ class HttpPriceSource:
 
     def fetch(self, refs: Sequence[str], currency: str) -> Sequence[Quote]:
         query = urlencode({"refs": ",".join(refs), "currency": currency})
+        try:
+            return _to_quotes(self._get(f"/prices?{query}"))
+        except urllib.error.HTTPError as refused:
+            raise PriceSourceError(f"la source de prix a refusé ({refused.code})") from refused
+
+    def history(self, ref: str, currency: str) -> PriceHistory:
+        query = urlencode({"ref": ref, "currency": currency})
+        try:
+            payload = self._get(f"/history?{query}")
+        except urllib.error.HTTPError as refused:
+            if refused.code == 404:
+                raise PriceNotQuoted(f"{ref} n'est pas coté en {currency}") from refused
+            raise PriceSourceError(f"historique refusé ({refused.code})") from refused
+        return _to_history(payload)
+
+    def _get(self, path: str) -> dict:
         request = urllib.request.Request(
-            f"{self.base_url}/prices?{query}",
+            f"{self.base_url}{path}",
             headers={"X-Mock-Failure": self.failure_mode},
         )
 
@@ -54,6 +77,9 @@ class HttpPriceSource:
             raise PriceSourceTimeout(
                 f"aucune réponse en {self.timeout_seconds} s"
             ) from failure
+        except urllib.error.HTTPError:
+            # Une réponse, même un refus : à l'appelant de dire ce qu'elle vaut.
+            raise
         except urllib.error.URLError as failure:
             # Port fermé, DNS, connexion refusée : du point de vue de
             # l'application, c'est la même chose qu'un silence.
@@ -65,7 +91,36 @@ class HttpPriceSource:
                 f"réponse illisible de la source de prix : {failure}"
             ) from failure
 
-        return _to_quotes(payload)
+        return payload
+
+
+def _to_history(payload: dict) -> PriceHistory:
+    """Comme une cotation : ramenée à l'unité, `per` divisé une fois, ici."""
+    try:
+        per = Decimal(str(payload.get("per", 1)))
+        if per <= 0:
+            raise PriceSourceError(f"quantité de référence {per}")
+        unit = lambda value: Decimal(str(value)) / per  # noqa: E731
+        return PriceHistory(
+            part_ref=payload["ref"],
+            currency=payload["currency"],
+            unit=payload.get("unit", ""),
+            reference=unit(payload["reference"]),
+            points=tuple(
+                PricePoint(day=point["date"], price=unit(point["price"]))
+                for point in payload["points"]
+            ),
+            now_at=payload["now"]["at"],
+            now_price=unit(payload["now"]["price"]),
+            profile=payload.get("profile"),
+            drivers={
+                name: Decimal(str(weight))
+                for name, weight in (payload.get("drivers") or {}).items()
+            },
+            origin_currency=payload.get("origin_currency"),
+        )
+    except (KeyError, TypeError, InvalidOperation) as unreadable:
+        raise PriceSourceError(f"historique illisible : {unreadable}") from unreadable
 
 
 def _to_quotes(payload: dict) -> list[Quote]:
