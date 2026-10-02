@@ -237,16 +237,16 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 471 tests
+# backend — 554 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 117 tests
+# front — 138 tests
 cd car-cost/frontend && npm test
 ```
 
-Les quarante-trois tests d'intégration se **sautent** si Postgres n'est pas
+Les quarante-quatre tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
-`428 passed, 43 skipped` hors ligne, `471 passed` avec la base chargée et
+`510 passed, 44 skipped` hors ligne, `554 passed` avec la base chargée et
 migrée jusqu'à 0005 (le démarrage de l'API rattrape les migrations
 manquantes). Les tests d'intégration qui écrivent le font dans une
 transaction annulée : un
@@ -347,6 +347,14 @@ entièrement distinct.
   synthèse « figé ») ; « Repartir de ce snapshot » crée un scénario éditable
   avec exactement sa copie (`derived_from`), dont le gel produit un nouveau
   snapshot aux prix du jour
+- **Empreinte carbone à l'écran.** La synthèse affiche `total_co2` sous le
+  coût ; une somme partielle s'intitule « Empreinte carbone partielle » et dit
+  combien de pièces n'ont pas de CO₂ connu ; un calcul antérieur au CO₂
+  n'affiche ni total ni zéro. « Répartir par Coût / CO₂ » bascule la
+  décomposition par système et les principaux contributeurs. L'écart CO₂ des
+  comparaisons est arrondi à l'affichage et dit « inconnu » quand l'un des
+  deux CO₂ est incomplet. Vérifié à l'écran contre la vraie nomenclature,
+  avec et sans prix forcé
 
 ### Ce qu'il reste à faire
 
@@ -374,9 +382,6 @@ entièrement distinct.
       (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
 - [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
       existe ; aucun panneau ne l'affiche.
-- [ ] **Empreinte carbone à l'écran.** Le moteur et l'API la calculent
-      (`total_co2`, décomposition par système, quinze principaux contributeurs,
-      `parts_without_co2`) ; aucun panneau ne l'affiche encore.
 - [ ] **CO₂ dans l'arbre.** `rolled_up_co2` est au contrat de dépliage
       (docs/api.md §2) mais n'est pas servi : le CO2 unitaire complet n'est
       pas enregistré par ligne. Demande une colonne, donc une migration.
@@ -392,9 +397,6 @@ entièrement distinct.
 
 **Tranche T3 — « l'outil aide à décider »**
 
-- [ ] **CO₂e aux comparaisons, à l'écran.** `co2_delta_kg` est calculé et
-      renvoyé par l'API (`POST /scenarios/compare`) ; l'écran affiche encore
-      l'écart CO₂ comme « non calculé ».
 - [ ] **Valider l'ADR-0012** (comparaison sur snapshot commun, recommandation
       pièce par pièce), rédigé en revue au statut « proposé ».
 
