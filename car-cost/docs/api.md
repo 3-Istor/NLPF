@@ -299,6 +299,17 @@ fournisseur (ADR-0010). La devise d'achat est distincte de la devise d'affichage
 conservée ici. Un snapshot porte aujourd'hui une seule devise : la sélection d'un prix dans une
 autre devise attend le catalogue multi-devise du périmètre prix, sans conversion à taux courant.
 
+### 3.1 bis `PATCH /scenarios/{id}` — compter ou non le SAV
+
+```json
+{ "include_after_sales": true }
+```
+
+Le scénario compte alors, sur chaque arête, les pièces de rechange livrées avec le véhicule en
+plus des pièces montées. Le réglage entre dans l'empreinte des entrées : le dernier calcul devient
+obsolète. Un scénario expose `include_after_sales` et `after_sales_available` (la nomenclature
+porte-t-elle du SAV ?). Une ligne d'arbre porte `after_sales_quantity` à côté d'`edge_quantity`.
+
 ### 3.2 `GET /scenarios` — lister les scénarios
 
 Renvoie tous les scénarios du plus récent au plus ancien. Chaque élément utilise le même format que
@@ -684,15 +695,34 @@ grave au moins grave (`MISSING_PRICE`, `QUARANTINED`, `FALLBACK`), puis par réf
 
 ## 5. Prix
 
-### 5.1 `POST /price-snapshots` — prendre un snapshot
+### 5.1 `POST /price-snapshots` — figer les prix actuels de l'API
 
 ```json
-{ "id": "snp-20b…", "taken_at": "2026-09-22T09:00:00Z", "status": "FRESH",
-  "counts": { "from_api": 210, "fallback": 3, "quarantined": 2, "missing": 0 } }
+{ "bom_version": "bom-valhalla-hybride-2026-10-02", "currency": "EUR" }
 ```
 
-### 5.2 `GET /price-snapshots` — retrouver les snapshots disponibles
+Interroge l'API pour toutes les pièces achetées de la nomenclature, avec quarantaine et repli
+comme la ligne de commande, et enregistre le snapshot (`201`, même forme qu'un élément de §5.2).
+Si l'API ne répond pas, **rien n'est créé** : `503 PRICE_SOURCE_UNAVAILABLE`, et le dernier
+snapshot reste en vigueur (ADR-0003). Un snapshot **appartient à sa nomenclature** (ADR-0015) :
+un calcul sans `price_snapshot_id` prend le dernier snapshot de la nomenclature de son scénario.
 
+### 5.1 bis `POST /calculations/live` — calculer aux prix actuels, sans rien enregistrer
+
+```json
+{ "scenario_id": "scn-…" }
+```
+
+Même réponse que `POST /calculations` (§4.1), avec `price_mode: "LIVE"` et `prices_taken_at`.
+**Rien n'est enregistré** : ni calcul, ni snapshot de prix. Le calcul reste lisible quelques
+instants par `GET /calculations/{id}` et l'arbre, le temps de l'afficher ; il n'est jamais « le
+dernier calcul » du scénario. API muette : `503 PRICE_SOURCE_UNAVAILABLE`, jamais le prix d'un
+ancien snapshot présenté comme actuel. Les calculs enregistrés portent `price_mode: "SNAPSHOT"`.
+
+### 5.2 `GET /price-snapshots?bom_version=…` — retrouver les snapshots disponibles
+
+`bom_version` (facultatif) limite la liste à cette nomenclature et aux snapshots pris avant la
+migration 0006, qui ne disaient pas pour quelle nomenclature ils l'étaient (`bom_version: null`).
 Les snapshots sont triés du plus récent au plus ancien afin que le premier identifiant puisse être
 repris dans un calcul ou une comparaison :
 
@@ -704,6 +734,7 @@ repris dans un calcul ou une comparaison :
       "taken_at": "2026-09-22T09:00:00+00:00",
       "source": "mock-price-api",
       "currency": "EUR",
+      "bom_version": "bom-multipla-2026-09-22",
       "status": "FRESH",
       "age_seconds": 120,
       "counts": { "prices": 302, "fallback": 0, "quarantined": 0, "missing": 0 }
@@ -746,17 +777,43 @@ Ce n'est pas notre API : c'est le service qu'on interroge, et qu'on a écrit pou
 tomber à la demande.
 
 ```
-GET /prices?refs=FIX-M6-16,ELE-ECU-MAIN&currency=EUR
-X-Mock-Failure: none | timeout | outlier | missing | partial
+GET /prices?refs=FIX-M6-16,VALH-BOM-0006&currency=EUR
+X-Mock-Failure: none | timeout | outlier | missing | garbage
 ```
 
 ```json
-{ "as_of": "2026-09-22T09:00:00Z",
-  "prices": [ { "ref": "FIX-M6-16", "currency": "EUR", "price": 42.0, "per": 1000 } ] }
+{ "as_of": "2026-03-14T07:12:00+00:00",
+  "prices": [ { "ref": "FIX-M6-16", "currency": "EUR", "price": "4.064785", "per": "100" } ] }
 ```
 
 Le déclenchement de panne est un **en-tête**, pas un hasard : la démonstration doit être
 reproductible.
+
+Les prix **varient** : une année de neuf indices synthétiques défile en 40 minutes
+(`--year-minutes`, 0 fige les prix à leur référence). `as_of` est la **date simulée** de la
+cotation ; toutes les pièces d'un appel sont cotées au même instant. Le simulateur sert les
+catalogues des quatre nomenclatures.
+
+```
+GET /history?ref=VALH-BOM-0006&currency=EUR
+```
+
+L'année jour par jour (`points`, 365), l'instant présent (`now`), la référence, le profil
+(`profile`, `drivers`) et la devise du fournisseur (`origin_currency`). Pièce non cotée : `404`.
+
+### 5.5 `GET /bom/{bom_version}/parts/{part_ref}/price-history?currency=EUR`
+
+La courbe de §5.4 ramenée **à l'unité** (`per` divisé une fois, côté serveur), et les prix figés
+de la pièce dans les snapshots de sa nomenclature (`snapshots`, du plus récent au plus ancien).
+Les deux ne partagent pas d'axe : la courbe est datée en temps simulé, les snapshots en temps
+réel. Ensemble fabriqué : `409 PART_HAS_NO_PRICE` ; pièce inconnue : `404 PART_NOT_FOUND`.
+
+### 5.6 `GET /bom/{bom_version}/suppliers` et `…/suppliers/{supplier_id}/parts`
+
+Les fournisseurs qui vendent au moins une pièce de la nomenclature (nombre de pièces, nombre où
+ils sont retenus par défaut, usines), puis les pièces d'un fournisseur : multiplicateur, retenu
+ou non, et prix de référence du dernier snapshot de la nomenclature (`null` s'il n'y figure pas).
+Rien n'est recalculé : multiplicateur et usine s'appliquent au calcul (ADR-0010).
 
 ---
 
