@@ -237,7 +237,14 @@ def write_all(
                     "conversion d'un prix pivot : aucun taux de change n'est lu "
                     "à l'exécution (ADR-0003)."
                 ),
-                "year_min_max": "Bornes observées sur l'année, servant au contrôle d'aberration.",
+                "year_min_max": (
+                    "Bornes que le prix parcourt sur l'année simulée par l'API "
+                    "de prix (indices de marché × drivers)."
+                ),
+                "drivers": (
+                    "Exposition du prix aux indices de marché simulés : facteur "
+                    "= 1 + Σ poids × variation de l'indice."
+                ),
                 "price_per": "Le prix s'entend pour price_per unités (la visserie s'achète par 100).",
             },
         },

@@ -222,13 +222,47 @@ def _supplier_by_id(supplier_id: str, suppliers: tuple[dict, ...] = SUPPLIERS) -
     raise KeyError(supplier_id)
 
 
-def build_price_catalog(bom: Bom) -> dict[str, dict]:
+# Matières premières : le profil de prix se lit sur la référence, plus fiable
+# que le libellé (« Fil de cuivre émaillé » n'est pas un câble, mais il suit
+# le cuivre comme un câble).
+_MATERIAL_PROFILES = (
+    ("COPPER", "cable"), ("BRASS", "cable"),
+    ("ALU", "aluminium"),
+    ("STEEL", "steel"), ("IRON", "steel"), ("STAINLESS", "steel"),
+    ("WELD", "steel"), ("ZINC", "steel"), ("LEAD", "steel"),
+    ("RUBBER", "rubber"),
+    ("PCB", "electronics"), ("SOLDER", "electronics"),
+)
+
+
+def multipla_profile(ref: str, part) -> str:
+    """À quels marchés le prix de cette pièce du Multipla est exposé."""
+    from .price_drivers import classify
+
+    if part.category == "fastener":
+        return "steel"
+    if part.category == "material":
+        return next((p for token, p in _MATERIAL_PROFILES if token in ref), "default")
+    profile = classify(part.label)
+    if profile == "default" and part.category == "electrical":
+        return "electronics"
+    return profile
+
+
+def build_price_catalog(bom: Bom, indices: dict | None = None) -> dict[str, dict]:
     """Prix de référence et bornes annuelles, dans les trois devises.
 
     Les prix USD et RUB ne sont pas la conversion exacte du prix EUR : un écart
     déterministe de quelques pourcents est introduit, parce que le modèle les
     traite comme trois prix indépendants et non comme une conversion.
+
+    Chaque pièce porte son profil d'exposition aux indices de marché simulés
+    (`drivers`). Avec l'historique des indices, les bornes annuelles sont
+    celles que l'API simulée parcourra réellement ; sans lui, elles restent un
+    écart déterministe autour de la référence.
     """
+    from .price_drivers import daily_factors, weights
+
     catalog: dict[str, dict] = {}
     for ref, part in bom.parts.items():
         if part.valuation_mode != PURCHASED:
@@ -240,15 +274,30 @@ def build_price_catalog(bom: Bom) -> dict[str, dict]:
             "USD": (eur * EUR_TO_USD * _spread(ref, "usd", "0.970000", "1.030000")),
             "RUB": (eur * EUR_TO_RUB * _spread(ref, "rub", "0.950000", "1.050000")),
         }
-        entry = {"unit": part.unit, "price_per": str(part.price_per), "prices": {}}
+        profile = multipla_profile(ref, part)
+        drivers = weights(profile)
+        factors = daily_factors(drivers, indices) if indices else None
+        entry = {
+            "unit": part.unit,
+            "price_per": str(part.price_per),
+            "profile": profile,
+            "drivers": drivers,
+            "prices": {},
+        }
         for code, value in currencies.items():
             reference = value.quantize(Decimal("0.000001"))
-            low = _spread(ref, "low-" + code, "0.780000", "0.960000")
-            high = _spread(ref, "high-" + code, "1.040000", "1.260000")
+            if factors:
+                series = [reference * f for f in factors]
+                bounds = (min(series), max(series))
+            else:
+                bounds = (
+                    reference * _spread(ref, "low-" + code, "0.780000", "0.960000"),
+                    reference * _spread(ref, "high-" + code, "1.040000", "1.260000"),
+                )
             entry["prices"][code] = {
                 "reference": str(reference),
-                "year_min": str((reference * low).quantize(Decimal("0.000001"))),
-                "year_max": str((reference * high).quantize(Decimal("0.000001"))),
+                "year_min": str(bounds[0].quantize(Decimal("0.000001"))),
+                "year_max": str(bounds[1].quantize(Decimal("0.000001"))),
             }
         catalog[ref] = entry
     return catalog

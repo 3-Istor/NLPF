@@ -95,6 +95,7 @@ def _format_report(report: dict, checksum: str) -> str:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seeds-dir", default="seeds", type=Path)
+    parser.add_argument("--indices", default="price-api/data/price_indices.json", type=Path)
     parser.add_argument(
         "--check",
         action="store_true",
@@ -112,7 +113,9 @@ def main(argv: list[str] | None = None) -> int:
     cumulative = graph.cumulative_quantities(bom)
     mass = graph.rolled_up_mass(bom)
     sourcing = build_sourcing(bom)
-    catalog = build_price_catalog(bom)
+    from .price_drivers import load_indices
+
+    catalog = build_price_catalog(bom, load_indices(args.indices))
     costing = reference_costing(bom, cumulative, sourcing)
 
     errors = validation.validate(
