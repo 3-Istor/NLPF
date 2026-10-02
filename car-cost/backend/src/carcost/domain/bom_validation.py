@@ -64,6 +64,17 @@ def _structure(bom: Bom) -> list[Violation]:
                 )
             )
 
+    for ref in sorted(bom.parts):
+        if "/" in ref:
+            violations.append(
+                Violation(
+                    "PATH_SEPARATOR_IN_REF",
+                    f"la référence {ref} contient « / » : le chemin d'une ligne, "
+                    f"formé des références jointes par « / », serait ambigu",
+                    ref,
+                )
+            )
+
     pairs = Counter((edge.parent_ref, edge.child_ref) for edge in bom.edges)
     for (parent, child), count in sorted(pairs.items()):
         if count > 1:

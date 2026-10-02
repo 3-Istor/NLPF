@@ -15,6 +15,11 @@ export type Money = {
   readonly currency: string;
 };
 
+/** Une masse de CO₂ équivalent, en kg. Comme `Money` : une chaîne, jamais sommée ici. */
+export type Co2 = {
+  readonly kg_co2e: string;
+};
+
 export type ValuationMode = "purchased" | "manufactured";
 
 /**
@@ -49,6 +54,8 @@ export type TreeLine = {
   readonly rolled_up_contribution?: Money | null;
   /** La contribution propre : celle qui se somme au total. */
   readonly own_contribution?: Money | null;
+  /** Part du total, déjà calculée par l'API (chaîne décimale) ; absente sans prix. */
+  readonly share_of_total_pct?: string | null;
   readonly price_status?: PriceStatus;
   readonly is_modified?: boolean;
   readonly has_modified_descendant?: boolean;
@@ -76,6 +83,13 @@ export type SearchHit = {
   readonly paths_truncated: boolean;
 };
 
+/** Les totaux comptent tout ce qui correspond, au-delà des chemins servis. */
+export type SearchResponse = {
+  readonly items: readonly SearchHit[];
+  readonly total_parts: number;
+  readonly total_occurrences: number;
+};
+
 export type CalculationState =
   | "NEVER_RUN"
   | "UP_TO_DATE"
@@ -94,6 +108,8 @@ export type Scenario = {
   readonly stale_reason: string | null;
   /** Le dernier calcul enregistré, à relire plutôt qu'à relancer. */
   readonly last_calculation_id: string | null;
+  /** Le snapshot de calcul dont le scénario est reparti, s'il y en a un. */
+  readonly derived_from?: string | null;
 };
 
 export type ScenarioParameter = {
@@ -105,6 +121,36 @@ export type ScenarioParameter = {
   readonly plant_id: string | null;
   readonly price_override: string | null;
   readonly price_override_justification: string | null;
+  readonly labour_minutes?: string | null;
+  readonly purchase_currency?: string | null;
+};
+
+/** Un calcul figé sous un nom (ADR-0014) ; l'élément d'une liste. */
+export type CalculationSnapshotSummary = {
+  readonly id: string;
+  readonly name: string;
+  readonly bom_version: string;
+  readonly scenario_id: string;
+  readonly scenario_name: string;
+  readonly calculation_id: string;
+  readonly price_snapshot_id: string;
+  readonly created_at: string;
+  /** Le snapshot d'où repartait le scénario figé, s'il y en a un. */
+  readonly derived_from?: string | null;
+};
+
+/** La comparaison de deux calculs figés : les noms viennent du serveur. */
+export type SnapshotComparison = Comparison & {
+  readonly snapshot_a: { readonly id: string; readonly name: string };
+  readonly snapshot_b: { readonly id: string; readonly name: string };
+};
+
+export type CalculationSnapshot = CalculationSnapshotSummary & {
+  readonly display_currency: string;
+  readonly labour_rate: string;
+  readonly active_rules: readonly string[];
+  readonly parameters: readonly Omit<ScenarioParameter, "parameter_id">[];
+  readonly name_history: readonly { name: string; renamed_at: string }[];
 };
 
 export type ParameterAck = {
@@ -122,6 +168,8 @@ export type SystemTotal = {
   readonly system: string;
   readonly cost: Money;
   readonly cost_share_pct: string;
+  readonly co2: Co2;
+  readonly co2_share_pct: string;
 };
 
 export type Contributor = {
@@ -132,6 +180,10 @@ export type Contributor = {
   readonly own_contribution: Money;
   readonly share_pct: string;
   readonly first_path: string;
+};
+
+export type Co2Contributor = Omit<Contributor, "own_contribution"> & {
+  readonly own_co2_contribution: Co2;
 };
 
 export type Calculation = {
@@ -150,7 +202,15 @@ export type Calculation = {
   };
   readonly systems: readonly SystemTotal[];
   readonly top_cost_contributors: readonly Contributor[];
+  /**
+   * `null` : calcul enregistré avant que le moteur ne porte le CO₂. Les
+   * chiffres carbone du calcul ne veulent alors rien dire, pas même zéro.
+   */
+  readonly total_co2: Co2 | null;
+  readonly top_co2_contributors: readonly Co2Contributor[];
   readonly parts_without_price: readonly string[];
+  /** Non vide : `total_co2` est une somme partielle, pas l'empreinte du véhicule. */
+  readonly parts_without_co2: readonly string[];
   /** Une ligne compte dans une seule catégorie. Compté par le serveur. */
   readonly issue_counts: {
     readonly missing_price: number;

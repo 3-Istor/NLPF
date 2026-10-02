@@ -216,3 +216,68 @@ def test_purchase_currency_change_marks_previous_calculation_stale():
     assert reason == "parameters"
     renamed_copy = replace(before, id="scn-copy", name="Autre nom")
     assert input_digest(renamed_copy, snapshot) == input_digest(before, snapshot)
+
+
+def carried_snapshot(name: str, scenario_id: str):
+    from datetime import datetime, timezone
+
+    from carcost.domain.calculation_snapshot import CalculationSnapshot
+
+    return CalculationSnapshot(
+        id="csn-porte", name=name, bom_version="bom-test",
+        scenario_id=scenario_id, scenario_name="Sourcing Turquie",
+        calculation_id="calc-fige", price_snapshot_id="snp-prix",
+        display_currency="EUR", labour_rate=Decimal("42.123456"),
+        active_rules=frozenset(), parameters=(),
+        created_at=datetime(2026, 10, 1, 9, 0, tzinfo=timezone.utc),
+    )
+
+
+def test_a_scenario_carrying_snapshots_cannot_be_deleted(repositories):
+    from fakes import FakeCalculationSnapshotRepository
+
+    boms, scenarios, sourcing = repositories
+    original = scenario()
+    manage_scenarios.create_scenario(original, boms, scenarios, sourcing)
+    snapshots_repo = FakeCalculationSnapshotRepository()
+    snapshots_repo.save(carried_snapshot("Référence T3", original.id))
+
+    with pytest.raises(manage_scenarios.ScenarioHasSnapshots) as refused:
+        manage_scenarios.delete_scenario(
+            original.id, scenarios=scenarios, snapshots_repo=snapshots_repo,
+        )
+
+    assert refused.value.names == ("Référence T3",)
+    assert scenarios.get(original.id) == original
+
+
+def test_a_scenario_without_snapshot_is_deleted(repositories):
+    from carcost.application.ports import ScenarioNotFound
+    from fakes import FakeCalculationSnapshotRepository
+
+    boms, scenarios, sourcing = repositories
+    original = scenario()
+    manage_scenarios.create_scenario(original, boms, scenarios, sourcing)
+    snapshots_repo = FakeCalculationSnapshotRepository()
+    snapshots_repo.save(carried_snapshot("Autre étude", "scn-autre"))
+
+    manage_scenarios.delete_scenario(
+        original.id, scenarios=scenarios, snapshots_repo=snapshots_repo,
+    )
+
+    with pytest.raises(ScenarioNotFound):
+        scenarios.get(original.id)
+
+
+def test_duplicating_a_derived_scenario_keeps_the_snapshot_it_came_from(repositories):
+    boms, scenarios, sourcing = repositories
+    original = scenario(derived_from="csn-origine")
+    manage_scenarios.create_scenario(original, boms, scenarios, sourcing)
+
+    copied = manage_scenarios.duplicate_scenario(
+        original.id, name="Variante", scenario_id="scn-copy",
+        boms=boms, scenarios=scenarios, sourcing=sourcing,
+    )
+
+    assert copied.derived_from == "csn-origine"
+    assert scenarios.get("scn-copy").derived_from == "csn-origine"

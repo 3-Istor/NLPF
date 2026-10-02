@@ -12,6 +12,7 @@ import os
 
 from ..cached_bom_repository import CachedBomRepository
 from ..postgres.bom import PostgresBomRepository
+from ..postgres.calculation_snapshots import PostgresCalculationSnapshotRepository
 from ..postgres.calculations import PostgresCalculationRepository
 from ..postgres.scenarios import PostgresScenarioRepository
 from ..postgres.snapshots import PostgresPriceSnapshotRepository
@@ -27,5 +28,6 @@ app = create_app(
         snapshots=PostgresPriceSnapshotRepository(DSN),
         scenarios=PostgresScenarioRepository(DSN),
         calculations=PostgresCalculationRepository(DSN),
+        calculation_snapshots=PostgresCalculationSnapshotRepository(DSN),
     )
 )

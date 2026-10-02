@@ -324,7 +324,15 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             ),
         ],
     ):
-        repositories.scenarios.delete(scenario_id)
+        if repositories.calculation_snapshots is None:
+            # Câblage sans snapshots de calcul : rien ne peut retenir le scénario.
+            repositories.scenarios.delete(scenario_id)
+            return
+        manage_scenarios.delete_scenario(
+            scenario_id,
+            scenarios=repositories.scenarios,
+            snapshots_repo=repositories.calculation_snapshots,
+        )
 
     @app.put(
         "/api/v1/scenarios/{scenario_id}/parameters/{target:path}",
@@ -730,8 +738,12 @@ def _snapshot(repositories, snapshot_id: str | None):
     return snapshot
 
 
-def _execute_calculation(repositories, scenario_id: str, snapshot):
-    scenario = repositories.scenarios.get(scenario_id)
+def _execute_calculation(
+    repositories, scenario_id: str, snapshot, scenario: Scenario | None = None,
+):
+    """Lance et enregistre un calcul ; `scenario` évite de relire un scénario déjà chargé."""
+    if scenario is None:
+        scenario = repositories.scenarios.get(scenario_id)
     bom = repositories.bom.load(scenario.bom_version)
     sourcing = repositories.sourcing.load(scenario.bom_version)
     resolved = resolve_unit_prices(bom, sourcing, snapshot, scenario)
@@ -779,6 +791,8 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
         "display_currency": scenario.display_currency,
         "labour_rate": str(scenario.labour_rate),
         "active_rules": sorted(scenario.active_rules),
+        # Le snapshot de calcul d'où le scénario est reparti, ou null.
+        "derived_from": scenario.derived_from,
         "parameters": [
             {
                 "parameter_id": parameter_ids[(parameter.part_ref, parameter.path or "")],

@@ -12,22 +12,38 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Request
 
 from ...application.browse_bom import (
     PathNotFound,
     children_of_path,
     root_node,
     search_parts,
+    search_summary,
     where_used,
 )
+from ...application.freeze_calculation import frozen_scenario
 from ...application.tree_view import with_costs
+from .errors import error_response
 
 SCALE = Decimal("0.000001")
+
+_FROZEN = (
+    "Snapshot de calcul ouvert : chiffres de son calcul figé, marques ●/○ "
+    "d'après sa copie des réglages"
+)
+
+
+class CalculationSnapshotMismatch(ValueError):
+    """`calculation_id` et `calculation_snapshot_id` désignent deux calculs."""
 
 
 def register_bom_routes(app: FastAPI, repositories) -> None:
     repository = repositories.bom
+
+    @app.exception_handler(CalculationSnapshotMismatch)
+    async def _mismatch(_: Request, error: CalculationSnapshotMismatch):
+        return error_response(422, "CALCULATION_SNAPSHOT_MISMATCH", str(error))
 
     @app.get("/api/v1/bom/versions")
     def read_versions():
@@ -51,9 +67,16 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         }
 
     @app.get("/api/v1/bom/{version}/root")
-    def read_root(version: str, calculation_id: str | None = Query(None)):
+    def read_root(
+        version: str,
+        calculation_id: str | None = Query(None),
+        calculation_snapshot_id: str | None = Query(None, description=_FROZEN),
+    ):
         bom = repository.load(version)
-        return _render(repositories, bom, (root_node(bom),), calculation_id)[0]
+        return _render(
+            repositories, bom, (root_node(bom),), calculation_id,
+            calculation_snapshot_id,
+        )[0]
 
     @app.get("/api/v1/bom/{version}/children")
     def read_children(
@@ -62,6 +85,7 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         calculation_id: str | None = Query(
             None, description="Enrichit chaque ligne des chiffres de ce calcul"
         ),
+        calculation_snapshot_id: str | None = Query(None, description=_FROZEN),
         limit: int = Query(50, ge=1, le=500),
         offset: int = Query(0, ge=0),
     ):
@@ -71,7 +95,10 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         page = children_of_path(bom, path, limit=limit, offset=offset)
         return {
             "path": path,
-            "items": _render(repositories, bom, page.items, calculation_id),
+            "items": _render(
+                repositories, bom, page.items, calculation_id,
+                calculation_snapshot_id,
+            ),
             "total": page.total,
             "limit": page.limit,
             "offset": page.offset,
@@ -154,8 +181,11 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         version: str,
         q: str = Query(..., min_length=1),
         limit: int = Query(20, ge=1, le=100),
+        max_paths: int = Query(50, ge=1, le=200),
     ):
-        hits = search_parts(repository.load(version), q, limit=limit)
+        bom = repository.load(version)
+        hits = search_parts(bom, q, limit=limit, max_paths=max_paths)
+        summary = search_summary(bom, q)
         return {
             "items": [
                 {
@@ -167,21 +197,39 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                     "paths_truncated": hit.paths_truncated,
                 }
                 for hit in hits
-            ]
+            ],
+            "total_parts": summary.total_parts,
+            "total_occurrences": summary.total_occurrences,
         }
 
 
-def _render(repositories, bom, nodes, calculation_id: str | None) -> list[dict]:
+def _render(
+    repositories, bom, nodes, calculation_id: str | None,
+    calculation_snapshot_id: str | None = None,
+) -> list[dict]:
     """Les lignes, avec ou sans les chiffres d'un calcul.
 
-    Sans `calculation_id`, aucun champ monétaire n'est renvoyé — pas même à
-    zéro : un zéro se lit comme un prix.
-    """
-    if calculation_id is None:
-        return [_node_payload(node) for node in nodes]
+    Sans `calculation_id` ni snapshot, aucun champ monétaire n'est renvoyé —
+    pas même à zéro : un zéro se lit comme un prix.
 
-    calculation = repositories.calculations.get(calculation_id)
-    scenario = repositories.scenarios.get(calculation.scenario_id)
+    Un snapshot de calcul ouvert apporte son calcul figé **et** sa copie des
+    réglages : les marques ●/○ disent ce que le gel contenait, pas ce que le
+    scénario vivant est devenu depuis (ADR-0014).
+    """
+    if calculation_snapshot_id is not None:
+        snapshot = repositories.calculation_snapshots.get(calculation_snapshot_id)
+        if calculation_id is not None and calculation_id != snapshot.calculation_id:
+            raise CalculationSnapshotMismatch(
+                f"le snapshot {snapshot.id} fige le calcul {snapshot.calculation_id},"
+                f" pas {calculation_id}"
+            )
+        calculation = repositories.calculations.get(snapshot.calculation_id)
+        scenario = frozen_scenario(snapshot)
+    elif calculation_id is None:
+        return [_node_payload(node) for node in nodes]
+    else:
+        calculation = repositories.calculations.get(calculation_id)
+        scenario = repositories.scenarios.get(calculation.scenario_id)
     return [
         _costed_payload(costed, calculation.display_currency)
         for costed in with_costs(bom, tuple(nodes), calculation, scenario)
@@ -200,6 +248,13 @@ def _costed_payload(costed, currency: str) -> dict:
             "rolled_up_contribution": _money(costed.rolled_up_contribution, currency),
             # La seule grandeur qui se somme au total.
             "own_contribution": _money(costed.own_contribution, currency),
+            # Poids de cette occurrence dans le total. Ne se somme pas entre
+            # niveaux ; absent si la ligne n'a pas de prix.
+            **(
+                {"share_of_total_pct": str(costed.share_of_total_pct)}
+                if costed.share_of_total_pct is not None
+                else {}
+            ),
             "price_status": costed.price_status,
             "is_modified": costed.is_modified,
             "has_modified_descendant": costed.has_modified_descendant,
