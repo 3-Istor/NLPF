@@ -41,17 +41,25 @@ class PartLine:
     own_unit_cost: Decimal | None
     own_contribution: Decimal | None
     full_unit_cost: Decimal | None
+    own_unit_co2: Decimal | None = None
+    own_co2_contribution: Decimal | None = None
+    full_unit_co2: Decimal | None = None
 
 
 @dataclass(frozen=True)
 class CalculationResult:
     lines: tuple[PartLine, ...]
     total_cost: Decimal
+    total_co2: Decimal
     parts_without_price: tuple[str, ...]
     path_own_unit_costs: dict[str, Decimal | None]
     path_full_unit_costs: dict[str, Decimal | None]
     part_own_unit_costs: dict[str, Decimal | None]
     part_full_unit_costs: dict[str, Decimal | None]
+    #: Pièces dont le CO2 propre est inconnu : sans prix, sans usine retenue ou
+    #: sans masse. Distinct de `parts_without_price` : un prix forcé donne un
+    #: coût complet et un carbone incomplet.
+    parts_without_co2: tuple[str, ...] = ()
 
     def line(self, part_ref: str) -> PartLine:
         for line in self.lines:
@@ -99,6 +107,42 @@ def compute(inputs: CalculationInput) -> CalculationResult:
     # complet — un total partiel n'est pas le coût du véhicule.
     if full_unit_cost[bom.root_ref] is not None:
         full_unit_cost[bom.root_ref] = total
+
+    # Même parcours que le coût, surcharges de chemin comprises : une occurrence
+    # qui change d'usine change de transport, et elle seule.
+    base_own_unit_co2 = _own_unit_co2(inputs)
+    co2_adjustments = _co2_path_adjustments(inputs, base_own_unit_co2)
+    for ref, adjustment in co2_adjustments.items():
+        if adjustment is None:
+            base_own_unit_co2[ref] = None
+    known_co2_adjustments = {
+        ref: adjustment
+        for ref, adjustment in co2_adjustments.items()
+        if adjustment is not None
+    }
+    own_unit_co2 = _average_path_overrides(
+        cumulative, base_own_unit_co2, known_co2_adjustments
+    )
+    full_unit_co2 = _roll_up(bom, order, own_unit_co2)
+    co2_contributions: dict[str, Decimal | None] = {}
+    total_co2 = Decimal(0)
+    for ref in order:
+        base_co2 = base_own_unit_co2[ref]
+        contribution = (
+            None
+            if base_co2 is None
+            else cumulative[ref] * base_co2
+            + known_co2_adjustments.get(ref, Decimal(0))
+        )
+        co2_contributions[ref] = contribution
+        if contribution is not None:
+            total_co2 += contribution
+    parts_without_co2 = tuple(
+        sorted(ref for ref, value in co2_contributions.items() if value is None)
+    )
+    if full_unit_co2[bom.root_ref] is not None:
+        full_unit_co2[bom.root_ref] = total_co2
+
     lines = tuple(
         PartLine(
             part_ref=ref,
@@ -107,13 +151,18 @@ def compute(inputs: CalculationInput) -> CalculationResult:
             own_unit_cost=own_unit_cost[ref],
             own_contribution=contributions[ref],
             full_unit_cost=full_unit_cost[ref],
+            own_unit_co2=own_unit_co2[ref],
+            own_co2_contribution=co2_contributions[ref],
+            full_unit_co2=full_unit_co2[ref],
         )
         for ref in order
     )
     return CalculationResult(
         lines=lines,
         total_cost=total,
+        total_co2=total_co2,
         parts_without_price=tuple(missing),
+        parts_without_co2=parts_without_co2,
         path_own_unit_costs=path_own,
         path_full_unit_costs=path_full,
         part_own_unit_costs=base_own_unit_cost,
@@ -176,6 +225,64 @@ def _own_unit_costs(
             costs[ref] = Decimal(0)
 
     return costs, sorted(missing)
+
+
+def _own_unit_co2(inputs: CalculationInput) -> dict[str, Decimal | None]:
+    """Le CO2 PROPRE d'une unité : jamais les enfants, sinon il serait compté
+    deux fois — exactement comme `own_unit_cost`.
+
+    `carbon_factor` porte le même sens sur les deux modes de valorisation : le
+    matériau (extraction → sortie d'usine) sur une pièce achetée, le procédé
+    d'assemblage sur un ensemble fabriqué. Seule la pièce achetée ajoute le
+    transport jusqu'au site d'assemblage (cadrage.md A10).
+
+    Le transport est inconnu, pas nul, dans trois cas : aucun prix (aucune
+    offre retenue), un prix forcé (aucune usine retenue), une masse absente.
+    Même règle que pour un prix manquant : un zéro minorerait l'empreinte
+    sans que personne ne le voie.
+    """
+    co2: dict[str, Decimal | None] = {}
+    for ref, part in inputs.bom.parts.items():
+        if not part.is_purchased:
+            co2[ref] = part.carbon_factor
+        elif ref in inputs.unit_prices:
+            co2[ref] = _purchased_unit_co2(part, inputs.transport_co2_per_kg.get(ref))
+        else:
+            co2[ref] = None
+    return co2
+
+
+def _purchased_unit_co2(part, transport_per_kg: Decimal | None) -> Decimal | None:
+    if transport_per_kg is None or part.mass_kg is None:
+        return None
+    return part.carbon_factor + part.mass_kg * transport_per_kg
+
+
+def _co2_path_adjustments(
+    inputs: CalculationInput, base: dict[str, Decimal | None]
+) -> dict[str, Decimal | None]:
+    """L'écart de CO2 des occurrences qui ont leur propre usine.
+
+    `None` pour une pièce dont une occurrence a un transport inconnu : la
+    contribution de la pièce est la somme de ses occurrences, une seule
+    inconnue la rend inconnue.
+    """
+    adjustments: dict[str, Decimal | None] = {}
+    for path, transport_per_kg in inputs.transport_co2_per_kg_by_path.items():
+        ref = path.rsplit("/", 1)[-1]
+        baseline = base[ref]
+        if baseline is None:
+            continue
+        own = _purchased_unit_co2(inputs.bom.parts[ref], transport_per_kg)
+        if own is None:
+            adjustments[ref] = None
+            continue
+        if ref in adjustments and adjustments[ref] is None:
+            continue
+        adjustments[ref] = adjustments.get(ref, Decimal(0)) + (
+            _path_quantity(inputs.bom, path) * (own - baseline)
+        )
+    return adjustments
 
 
 def _average_path_overrides(

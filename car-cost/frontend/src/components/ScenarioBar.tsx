@@ -4,15 +4,23 @@
  * Changer de scénario change tout ce qui est affiché : l'arbre, les marques
  * de modification, le total. L'écran repart donc sans calcul plutôt que de
  * montrer les chiffres d'un autre scénario sous un nouveau nom.
+ *
+ * La première entrée mène toujours à un scénario sans réglage : c'est la
+ * référence contre laquelle on lit les variantes, elle ne doit pas disparaître
+ * parce qu'on a réglé ou supprimé le scénario vide.
  */
 
 import { useState } from "react";
 import type { CalculationSnapshotSummary, Scenario } from "../api/types";
 
+/** Aucun identifiant de scénario n'est vide : pas de collision possible. */
+const BLANK_CHOICE = "";
+
 type Props = {
   scenarios: readonly Scenario[];
   current: Scenario | null;
   onSelect: (id: string) => void;
+  onSelectBlank: () => void;
   onDuplicate: (name: string) => void;
   onDelete: () => void;
   onOpenDecision: () => void;
@@ -31,6 +39,7 @@ export function ScenarioBar({
   scenarios,
   current,
   onSelect,
+  onSelectBlank,
   onDuplicate,
   onDelete,
   onOpenDecision,
@@ -52,8 +61,13 @@ export function ScenarioBar({
         Scénario
         <select
           value={current.id}
-          onChange={(event) => onSelect(event.target.value)}
+          onChange={(event) =>
+            event.target.value === BLANK_CHOICE
+              ? onSelectBlank()
+              : onSelect(event.target.value)
+          }
         >
+          <option value={BLANK_CHOICE}>Catalogue — sans réglage</option>
           {scenarios.map((scenario) => (
             <option key={scenario.id} value={scenario.id}>
               {scenario.name} ({scenario.parameters.length} réglage

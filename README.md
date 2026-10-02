@@ -298,6 +298,12 @@ entièrement distinct.
   parents multiples**, générateur déterministe, rapport de validation à zéro erreur
 - Moteur de coût par programmation dynamique sur le DAG : une évaluation par pièce dans le cas
   courant, et seulement les préfixes concernés réévalués lorsqu'une surcharge de chemin existe
+- Empreinte carbone calculée par le même moteur, sur le même parcours que le coût : facteur matière
+  ou procédé par pièce, transport ajouté pour une pièce achetée depuis l'usine retenue pour son
+  prix, surcharges de chemin comprises. Sans prix, sans masse ou à prix forcé (aucune usine retenue),
+  le CO2 d'une pièce est inconnu, jamais zéro, et la pièce est nommée (`parts_without_co2`).
+  Décomposée par système et par quinze principaux contributeurs, comme le coût ; alimente
+  `co2_delta_kg` de la comparaison, qui reste `null` tant qu'un des deux CO2 est incomplet
 - Schéma Postgres dont les contraintes rendent la double comptabilisation
   impossible, vérifié sur une vraie base
 - Snapshot de prix immuable, repli sur timeout, quarantaine des valeurs
@@ -368,8 +374,17 @@ entièrement distinct.
       (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
 - [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
       existe ; aucun panneau ne l'affiche.
-- [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
-      pièce, CO₂ de transport par usine — mais ne calcule que le coût.
+- [ ] **Empreinte carbone à l'écran.** Le moteur et l'API la calculent
+      (`total_co2`, décomposition par système, quinze principaux contributeurs,
+      `parts_without_co2`) ; aucun panneau ne l'affiche encore.
+- [ ] **CO₂ dans l'arbre.** `rolled_up_co2` est au contrat de dépliage
+      (docs/api.md §2) mais n'est pas servi : le CO2 unitaire complet n'est
+      pas enregistré par ligne. Demande une colonne, donc une migration.
+- [ ] **Statut carbone distinct.** Le statut du calcul ne parle que des prix :
+      un prix forcé donne `OK` avec un CO2 incomplet. `parts_without_co2` le
+      dit ; un `co2_status` le rendrait lisible d'un coup d'œil.
+- [ ] **CO₂ dans `/explain` et dans la recommandation de sourcing**, qui ne
+      raisonnent encore qu'en euros.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
       l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
       persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).
@@ -377,10 +392,9 @@ entièrement distinct.
 
 **Tranche T3 — « l'outil aide à décider »**
 
-- [ ] **Ajouter le CO₂e aux calculs et aux comparaisons.** Le delta de coût, les
-      dix principaux écarts et la recommandation de sourcing sont disponibles,
-      à l'écran comme dans l'API ; la projection carbone dépend encore de
-      NLPF-46 à NLPF-48. L'écran affiche l'écart CO₂ « non calculé ».
+- [ ] **CO₂e aux comparaisons, à l'écran.** `co2_delta_kg` est calculé et
+      renvoyé par l'API (`POST /scenarios/compare`) ; l'écran affiche encore
+      l'écart CO₂ comme « non calculé ».
 - [ ] **Valider l'ADR-0012** (comparaison sur snapshot commun, recommandation
       pièce par pièce), rédigé en revue au statut « proposé ».
 

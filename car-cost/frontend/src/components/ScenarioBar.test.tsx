@@ -1,4 +1,8 @@
-/** Figer sous un nom : le nom est obligatoire, proposé, rogné ; la liste ouvre. */
+/**
+ * Figer sous un nom : le nom est obligatoire, proposé, rogné ; la liste ouvre.
+ * Le scénario sans réglage reste toujours atteignable depuis la liste, même
+ * quand tous les scénarios existants portent des réglages.
+ */
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -16,6 +20,27 @@ const base: Scenario = {
   calculation_state: "UP_TO_DATE",
   stale_reason: null,
   last_calculation_id: "calc-1",
+};
+
+const tuned: Scenario = {
+  ...base,
+  id: "scn-tuned",
+  name: "Variante fournisseur",
+  active_rules: ["labour"],
+  parameters: [
+    {
+      parameter_id: "prm-1",
+      part_ref: "ALT-BEARING",
+      scope: "part",
+      path: null,
+      supplier_id: "sup-1",
+      plant_id: null,
+      price_override: null,
+      price_override_justification: null,
+    },
+  ],
+  calculation_state: "NEVER_RUN",
+  last_calculation_id: null,
 };
 
 function snapshot(id: string, name: string): CalculationSnapshotSummary {
@@ -36,6 +61,7 @@ function bar(overrides: Partial<React.ComponentProps<typeof ScenarioBar>> = {}) 
     scenarios: [base],
     current: base,
     onSelect: vi.fn(),
+    onSelectBlank: vi.fn(),
     onDuplicate: vi.fn(),
     onDelete: vi.fn(),
     onOpenDecision: vi.fn(),
@@ -113,5 +139,21 @@ describe("figer sous un nom", () => {
     fireEvent.change(list, { target: { value: "csn-2" } });
 
     expect(props.onOpenSnapshot).toHaveBeenCalledWith("csn-2");
+  });
+});
+
+describe("le scénario sans réglage", () => {
+  it("est proposé même si aucun n'existe", () => {
+    bar({ scenarios: [tuned], current: tuned });
+    expect(
+      screen.getByRole("option", { name: "Catalogue — sans réglage" }),
+    ).toBeInTheDocument();
+  });
+
+  it("le choisir demande le scénario vierge, pas un identifiant", () => {
+    const props = bar({ scenarios: [tuned], current: tuned });
+    fireEvent.change(screen.getByLabelText("Scénario"), { target: { value: "" } });
+    expect(props.onSelectBlank).toHaveBeenCalledOnce();
+    expect(props.onSelect).not.toHaveBeenCalled();
   });
 });

@@ -52,6 +52,12 @@ function writeLocation(scenario: string, node: string | null) {
   window.history.replaceState(window.history.state, "", url);
 }
 
+const SCENARIO_DEFAULTS = {
+  bom_version: BOM_VERSION,
+  display_currency: "EUR",
+  labour_rate: "42.00",
+};
+
 export function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
@@ -96,10 +102,8 @@ export function App() {
         if (known.length === 0) {
           known = [
             await api.createScenario({
-              bom_version: BOM_VERSION,
+              ...SCENARIO_DEFAULTS,
               name: "Scénario de travail",
-              display_currency: "EUR",
-              labour_rate: "42.00",
             }),
           ];
         }
@@ -286,6 +290,30 @@ export function App() {
     return null;
   }
 
+  /**
+   * Le point de départ sans aucun réglage doit rester accessible même après
+   * avoir réglé ou supprimé le scénario vide du démarrage. On rouvre le plus
+   * récent qui existe et on n'en crée un que s'il n'y en a plus, pour ne pas
+   * empiler des scénarios vides identiques.
+   */
+  async function selectBlank() {
+    setFailure(null);
+    try {
+      const existing = scenarios.find((item) => item.parameters.length === 0);
+      if (existing) {
+        await open(existing);
+        return;
+      }
+      const created = await api.createScenario({
+        ...SCENARIO_DEFAULTS,
+        name: "Catalogue — sans réglage",
+      });
+      await reloadScenarios(created.id);
+    } catch (error) {
+      setFailure(describe(error));
+    }
+  }
+
   async function duplicate(name: string) {
     if (!scenario) return;
     try {
@@ -370,6 +398,7 @@ export function App() {
           scenarios={scenarios}
           current={scenario}
           onSelect={(id) => selectScenario(id)}
+          onSelectBlank={selectBlank}
           onDuplicate={duplicate}
           onDelete={removeScenario}
           onOpenDecision={() => setDeciding(true)}
