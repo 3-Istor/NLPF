@@ -211,52 +211,52 @@ bom-valhalla-electrique-2026-10-02,VALE-BOM-0211,Pneu AR droit 335/30 ZR21,chass
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0212,Capteur TPMS,chassis,CHS,pce,purchased,,80.000000,1,,0.068423,2.142776,4.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0213,Valve pneu,chassis,CHS,pce,purchased,,10.000000,1,,1.053234,4.210724,4.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0214,Fixation roue / centre-lock ou boulons,chassis,CHS,pce,purchased,,175.660000,1,,1.835355,4.328318,4.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0320,Demi-arbre arrière gauche,transmission,TRN,pce,purchased,,1756.620000,1,,3.144638,7.728828,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0321,Demi-arbre arrière droit,transmission,TRN,pce,purchased,,1756.620000,1,,1.252567,2.906657,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0322,Joints homocinétiques AR,transmission,TRN,pce,purchased,,468.430000,1,,0.895460,2.395338,4.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0327,Pack batterie HV 800 V 100 kWh,engine,GMP,pce,purchased,,9368.640000,1,,22.872000,508.064885,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0328,Modules batterie HV 800 V,engine,GMP,pce,purchased,,409.880000,1,,3.482864,74.331980,12.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0329,Cellules batterie haute énergie,engine,GMP,pce,purchased,,40.990000,1,,1.069080,19.353983,384.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0330,Boîtier batterie HV 800 V,engine,GMP,pce,purchased,,5855.400000,1,,66.519200,1279.776193,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0331,BMS master 800 V,engine,GMP,pce,purchased,,2927.700000,1,,0.431781,17.289720,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0332,BMS cell monitoring units,engine,GMP,pce,purchased,,409.880000,1,,0.900097,37.006408,12.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0333,Contacteur HV positif,engine,GMP,pce,purchased,,292.770000,1,,0.388415,14.194859,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0334,Contacteur HV négatif,engine,GMP,pce,purchased,,292.770000,1,,0.929040,27.706574,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0335,Circuit précharge HV,engine,GMP,pce,purchased,,234.220000,1,,0.875994,34.843012,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0336,Fusible principal HV,engine,GMP,pce,purchased,,175.660000,1,,2.195634,11.419053,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0337,Service disconnect HV,engine,GMP,pce,purchased,,292.770000,1,,2.205369,9.706270,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0338,HV junction box / PDU,engine,GMP,pce,purchased,,2342.160000,1,,0.653839,22.412032,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0339,Capteur courant HV,engine,GMP,pce,purchased,,234.220000,1,,0.071101,2.116947,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0340,Isolation monitoring device,engine,GMP,pce,purchased,,585.540000,1,,1.252327,6.213295,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0341,Capteurs température cellules,engine,GMP,pce,purchased,,35.130000,1,,0.021294,0.374161,24.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0342,Plaques froides batterie,engine,GMP,pce,purchased,,1053.970000,1,,0.899323,25.201189,12.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0343,Pompes refroidissement batterie,engine,GMP,pce,purchased,,409.880000,1,,0.624200,3.026246,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0344,Vannes circuit batterie,engine,GMP,pce,purchased,,210.790000,1,,1.503010,7.821063,6.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0345,Durites circuit batterie,engine,GMP,pce,purchased,,105.400000,1,,0.553845,1.722956,16.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0346,Évents/surpression pack,engine,GMP,pce,purchased,,140.530000,1,,2.046360,10.592369,4.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0347,Carter/structure EDU avant,engine,GMP,pce,purchased,,4098.780000,1,,2.789669,33.002900,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0348,Moteur électrique avant gauche,engine,GMP,pce,purchased,,9954.180000,1,,29.491200,410.600079,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0349,Moteur électrique avant droit,engine,GMP,pce,purchased,,9954.180000,1,,30.603600,396.867485,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0350,Réducteur avant gauche,engine,GMP,pce,purchased,,3513.240000,1,,3.614586,9.161891,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0351,Réducteur avant droit,engine,GMP,pce,purchased,,3513.240000,1,,3.413464,7.552084,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0352,Arbre sortie EDU gauche,engine,GMP,pce,purchased,,819.760000,1,,2.585008,34.401286,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0353,Arbre sortie EDU droit,engine,GMP,pce,purchased,,819.760000,1,,4.950787,59.559948,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0354,Joints homocinétiques avant,engine,GMP,pce,purchased,,468.430000,1,,2.581431,5.638775,4.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0355,Inverter moteur AV gauche 800 V,engine,GMP,pce,purchased,,6440.940000,1,,10.120400,111.162474,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0356,Inverter moteur AV droit 800 V,engine,GMP,pce,purchased,,6440.940000,1,,8.091200,108.554776,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0357,Capteurs position rotor AV,engine,GMP,pce,purchased,,292.770000,1,,0.085504,3.199252,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0358,Capteurs température moteurs AV,engine,GMP,pce,purchased,,70.260000,1,,0.035866,1.197013,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0359,Refroidissement EDU avant,engine,GMP,pce,purchased,,1756.620000,1,,3.301877,37.261022,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0365,Prise de charge BEV CCS 800 V,engine,GMP,pce,purchased,,761.200000,1,,0.443305,2.979187,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0366,Trappe prise de charge,engine,GMP,pce,purchased,,585.540000,1,,2.806706,79.578535,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0367,On-board charger (OBC) 22 kW,engine,GMP,pce,purchased,,3513.240000,1,,0.527032,15.945564,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0368,DC/DC HV -> 12 V 800 V,engine,GMP,pce,purchased,,2107.940000,1,,1.993830,11.570195,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0369,Câble HV batterie -> PDU 800 V,engine,GMP,pce,purchased,,468.430000,1,,1.331371,7.961599,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0370,Câbles HV PDU -> inverters AV,engine,GMP,pce,purchased,,409.880000,1,,2.035832,15.003268,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0371,Câbles HV PDU -> inverters AR,engine,GMP,pce,purchased,,409.880000,1,,0.635060,4.296435,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0372,Câbles HV OBC/charge -> batterie,engine,GMP,pce,purchased,,374.750000,1,,2.072026,13.656723,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0373,Boucle HVIL,engine,GMP,pce,purchased,,175.660000,1,,1.142806,6.106012,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0374,Connecteurs HV blindés 800 V,engine,GMP,pce,purchased,,111.250000,1,,0.021922,0.159048,24.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0320,Demi-arbre arrière gauche,transmission,TRN,pce,purchased,,5027.970000,1,,3.144638,7.728828,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0321,Demi-arbre arrière droit,transmission,TRN,pce,purchased,,5027.970000,1,,1.252567,2.906657,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0322,Joints homocinétiques AR,transmission,TRN,pce,purchased,,1340.790000,1,,0.895460,2.395338,4.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0327,Pack batterie HV 800 V 100 kWh,engine,GMP,pce,purchased,,26815.860000,1,,22.872000,508.064885,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0328,Modules batterie HV 800 V,engine,GMP,pce,purchased,,1173.200000,1,,3.482864,74.331980,12.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0329,Cellules batterie haute énergie,engine,GMP,pce,purchased,,117.330000,1,,1.069080,19.353983,384.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0330,Boîtier batterie HV 800 V,engine,GMP,pce,purchased,,16759.910000,1,,66.519200,1279.776193,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0331,BMS master 800 V,engine,GMP,pce,purchased,,8379.960000,1,,0.431781,17.289720,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0332,BMS cell monitoring units,engine,GMP,pce,purchased,,1173.200000,1,,0.900097,37.006408,12.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0333,Contacteur HV positif,engine,GMP,pce,purchased,,838.000000,1,,0.388415,14.194859,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0334,Contacteur HV négatif,engine,GMP,pce,purchased,,838.000000,1,,0.929040,27.706574,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0335,Circuit précharge HV,engine,GMP,pce,purchased,,670.410000,1,,0.875994,34.843012,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0336,Fusible principal HV,engine,GMP,pce,purchased,,502.790000,1,,2.195634,11.419053,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0337,Service disconnect HV,engine,GMP,pce,purchased,,838.000000,1,,2.205369,9.706270,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0338,HV junction box / PDU,engine,GMP,pce,purchased,,6703.960000,1,,0.653839,22.412032,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0339,Capteur courant HV,engine,GMP,pce,purchased,,670.410000,1,,0.071101,2.116947,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0340,Isolation monitoring device,engine,GMP,pce,purchased,,1675.990000,1,,1.252327,6.213295,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0341,Capteurs température cellules,engine,GMP,pce,purchased,,100.550000,1,,0.021294,0.374161,24.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0342,Plaques froides batterie,engine,GMP,pce,purchased,,3016.780000,1,,0.899323,25.201189,12.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0343,Pompes refroidissement batterie,engine,GMP,pce,purchased,,1173.200000,1,,0.624200,3.026246,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0344,Vannes circuit batterie,engine,GMP,pce,purchased,,603.340000,1,,1.503010,7.821063,6.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0345,Durites circuit batterie,engine,GMP,pce,purchased,,301.690000,1,,0.553845,1.722956,16.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0346,Évents/surpression pack,engine,GMP,pce,purchased,,402.240000,1,,2.046360,10.592369,4.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0347,Carter/structure EDU avant,engine,GMP,pce,purchased,,11731.940000,1,,2.789669,33.002900,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0348,Moteur électrique avant gauche,engine,GMP,pce,purchased,,28491.850000,1,,29.491200,410.600079,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0349,Moteur électrique avant droit,engine,GMP,pce,purchased,,28491.850000,1,,30.603600,396.867485,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0350,Réducteur avant gauche,engine,GMP,pce,purchased,,10055.950000,1,,3.614586,9.161891,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0351,Réducteur avant droit,engine,GMP,pce,purchased,,10055.950000,1,,3.413464,7.552084,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0352,Arbre sortie EDU gauche,engine,GMP,pce,purchased,,2346.400000,1,,2.585008,34.401286,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0353,Arbre sortie EDU droit,engine,GMP,pce,purchased,,2346.400000,1,,4.950787,59.559948,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0354,Joints homocinétiques avant,engine,GMP,pce,purchased,,1340.790000,1,,2.581431,5.638775,4.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0355,Inverter moteur AV gauche 800 V,engine,GMP,pce,purchased,,18435.900000,1,,10.120400,111.162474,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0356,Inverter moteur AV droit 800 V,engine,GMP,pce,purchased,,18435.900000,1,,8.091200,108.554776,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0357,Capteurs position rotor AV,engine,GMP,pce,purchased,,838.000000,1,,0.085504,3.199252,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0358,Capteurs température moteurs AV,engine,GMP,pce,purchased,,201.110000,1,,0.035866,1.197013,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0359,Refroidissement EDU avant,engine,GMP,pce,purchased,,5027.970000,1,,3.301877,37.261022,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0365,Prise de charge BEV CCS 800 V,engine,GMP,pce,purchased,,2178.780000,1,,0.443305,2.979187,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0366,Trappe prise de charge,engine,GMP,pce,purchased,,1675.990000,1,,2.806706,79.578535,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0367,On-board charger (OBC) 22 kW,engine,GMP,pce,purchased,,10055.950000,1,,0.527032,15.945564,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0368,DC/DC HV -> 12 V 800 V,engine,GMP,pce,purchased,,6033.560000,1,,1.993830,11.570195,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0369,Câble HV batterie -> PDU 800 V,engine,GMP,pce,purchased,,1340.790000,1,,1.331371,7.961599,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0370,Câbles HV PDU -> inverters AV,engine,GMP,pce,purchased,,1173.200000,1,,2.035832,15.003268,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0371,Câbles HV PDU -> inverters AR,engine,GMP,pce,purchased,,1173.200000,1,,0.635060,4.296435,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0372,Câbles HV OBC/charge -> batterie,engine,GMP,pce,purchased,,1072.650000,1,,2.072026,13.656723,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0373,Boucle HVIL,engine,GMP,pce,purchased,,502.790000,1,,1.142806,6.106012,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0374,Connecteurs HV blindés 800 V,engine,GMP,pce,purchased,,318.430000,1,,0.021922,0.159048,24.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0380,Batterie 12 V auxiliaire,electrical,ELE,pce,purchased,,351.320000,1,,8.191200,261.658055,1.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0381,Boîte fusibles principale,electrical,ELE,pce,purchased,,702.650000,1,,1.088450,5.076313,1.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0382,Boîte relais/PDC,electrical,ELE,pce,purchased,,702.650000,1,,2.021210,9.136678,2.0
@@ -343,26 +343,26 @@ bom-valhalla-electrique-2026-10-02,VALE-BOM-0469,Joints toriques circuits fluide
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0470,Colliers durites,fluid,FLU,pce,purchased,,1.500000,1,,0.028096,0.018132,70.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0471,Clips tuyauteries,fluid,FLU,pce,purchased,,0.350000,1,,0.004024,0.004463,100.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0472,Passe-fils/grommets,fluid,FLU,pce,purchased,,1.200000,1,,0.013087,0.009854,80.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0601,Moteur électrique arrière gauche,engine,GMP,pce,purchased,,11710.800000,1,,31.059900,432.515319,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0602,Moteur électrique arrière droit,engine,GMP,pce,purchased,,11710.800000,1,,28.549800,345.943637,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0603,Inverter moteur AR gauche 800 V,engine,GMP,pce,purchased,,7026.480000,1,,10.465700,110.304292,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0604,Inverter moteur AR droit 800 V,engine,GMP,pce,purchased,,7026.480000,1,,8.265200,113.279525,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0605,Capteurs position rotor AR,engine,GMP,pce,purchased,,292.770000,1,,0.090969,3.752690,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0606,Capteurs température moteurs AR,engine,GMP,pce,purchased,,70.260000,1,,0.051873,1.971257,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0607,Module contacteurs charge rapide DC,engine,GMP,pce,purchased,,1053.970000,1,,0.977246,27.810271,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0608,Filtre EMI haute tension,engine,GMP,pce,purchased,,585.540000,1,,0.812881,32.644488,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0620,Radiateur basse température batterie,engine,GMP,pce,purchased,,1053.970000,1,,2.218165,20.618953,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0621,Radiateur e-motors/inverters,engine,GMP,pce,purchased,,1053.970000,1,,3.913097,39.753935,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0622,Chiller batterie-HVAC,engine,GMP,pce,purchased,,1639.510000,1,,3.372402,39.391342,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0623,Vase expansion circuit HV,engine,GMP,pce,purchased,,210.790000,1,,0.583434,2.733622,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0624,Pompe circuit e-motors/inverters,engine,GMP,pce,purchased,,409.880000,1,,5.160427,61.918931,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0625,Vannes thermiques multi-voies,engine,GMP,pce,purchased,,210.790000,1,,1.768905,9.601970,4.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0626,Durites refroidissement traction,engine,GMP,pce,purchased,,105.400000,1,,0.032909,0.124876,20.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0627,Ventilateurs radiateurs BEV,engine,GMP,pce,purchased,,526.990000,1,,4.465462,44.818949,2.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0630,Réducteur arrière gauche,transmission,TRN,pce,purchased,,3747.460000,1,,3.165878,7.348889,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0631,Réducteur arrière droit,transmission,TRN,pce,purchased,,3747.460000,1,,2.422458,5.964043,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0632,Verrouillage parking électrique,transmission,TRN,pce,purchased,,761.200000,1,,0.849531,4.947159,1.0
-bom-valhalla-electrique-2026-10-02,VALE-BOM-0633,ECU e-axle arrière,transmission,TRN,pce,purchased,,2107.940000,1,,0.523063,14.774647,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0601,Moteur électrique arrière gauche,engine,GMP,pce,purchased,,33519.820000,1,,31.059900,432.515319,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0602,Moteur électrique arrière droit,engine,GMP,pce,purchased,,33519.820000,1,,28.549800,345.943637,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0603,Inverter moteur AR gauche 800 V,engine,GMP,pce,purchased,,20111.890000,1,,10.465700,110.304292,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0604,Inverter moteur AR droit 800 V,engine,GMP,pce,purchased,,20111.890000,1,,8.265200,113.279525,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0605,Capteurs position rotor AR,engine,GMP,pce,purchased,,838.000000,1,,0.090969,3.752690,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0606,Capteurs température moteurs AR,engine,GMP,pce,purchased,,201.110000,1,,0.051873,1.971257,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0607,Module contacteurs charge rapide DC,engine,GMP,pce,purchased,,3016.780000,1,,0.977246,27.810271,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0608,Filtre EMI haute tension,engine,GMP,pce,purchased,,1675.990000,1,,0.812881,32.644488,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0620,Radiateur basse température batterie,engine,GMP,pce,purchased,,3016.780000,1,,2.218165,20.618953,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0621,Radiateur e-motors/inverters,engine,GMP,pce,purchased,,3016.780000,1,,3.913097,39.753935,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0622,Chiller batterie-HVAC,engine,GMP,pce,purchased,,4692.770000,1,,3.372402,39.391342,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0623,Vase expansion circuit HV,engine,GMP,pce,purchased,,603.340000,1,,0.583434,2.733622,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0624,Pompe circuit e-motors/inverters,engine,GMP,pce,purchased,,1173.200000,1,,5.160427,61.918931,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0625,Vannes thermiques multi-voies,engine,GMP,pce,purchased,,603.340000,1,,1.768905,9.601970,4.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0626,Durites refroidissement traction,engine,GMP,pce,purchased,,301.690000,1,,0.032909,0.124876,20.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0627,Ventilateurs radiateurs BEV,engine,GMP,pce,purchased,,1508.400000,1,,4.465462,44.818949,2.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0630,Réducteur arrière gauche,transmission,TRN,pce,purchased,,10726.350000,1,,3.165878,7.348889,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0631,Réducteur arrière droit,transmission,TRN,pce,purchased,,10726.350000,1,,2.422458,5.964043,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0632,Verrouillage parking électrique,transmission,TRN,pce,purchased,,2178.780000,1,,0.849531,4.947159,1.0
+bom-valhalla-electrique-2026-10-02,VALE-BOM-0633,ECU e-axle arrière,transmission,TRN,pce,purchased,,6033.560000,1,,0.523063,14.774647,1.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0634,Faisceau e-axle arrière,electrical,ELE,pce,purchased,,1639.510000,1,,2.458892,13.654227,1.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0635,Module pompe à chaleur réversible,interior,INT,pce,purchased,,2107.940000,1,,0.445720,16.600485,1.0
 bom-valhalla-electrique-2026-10-02,VALE-BOM-0636,Huile réducteurs électriques,fluid,FLU,L,purchased,,30.000000,1,,0.870000,0.725858,4.0

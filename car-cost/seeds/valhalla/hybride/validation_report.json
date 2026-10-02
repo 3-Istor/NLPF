@@ -177,5 +177,10 @@
     "vehicle_kg": "1654.9",
     "target_kg": "1655",
     "free_mass_scale": "0.5415"
+  },
+  "calibration": {
+    "category": "motorisation",
+    "price_factor": "1",
+    "target_cost_ratio_to_hybrid": null
   }
 }

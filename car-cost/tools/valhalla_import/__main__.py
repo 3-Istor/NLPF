@@ -57,6 +57,9 @@ class Variant:
     #: Masse à sec visée, en kg. L'hybride reprend l'ordre de grandeur annoncé
     #: publiquement ; les deux autres variantes sont hypothétiques.
     target_mass_kg: Decimal
+    #: Coût de référence visé, rapporté à celui de l'hybride. None : les prix
+    #: du fichier source tels quels (l'hybride, la seule variante réelle).
+    target_cost_ratio: Decimal | None = None
 
     @property
     def bom_version(self) -> str:
@@ -69,10 +72,10 @@ VARIANTS = (
             Decimal("1655")),
     Variant("thermique", "aston_martin_valhalla_thermique.json", "VALT",
             "VEH-VALHALLA-THE", "Aston Martin Valhalla — thermique V8 (hypothétique)",
-            Decimal("1540")),
+            Decimal("1540"), Decimal("0.95")),
     Variant("electrique", "aston_martin_valhalla_electrique.json", "VALE",
             "VEH-VALHALLA-ELE", "Aston Martin Valhalla — électrique 800 V (hypothétique)",
-            Decimal("1960")),
+            Decimal("1960"), Decimal("1.05")),
 )
 
 # clé de catégorie → (système, catégorie, libellé). Systèmes et catégories sont
@@ -143,10 +146,46 @@ def _profiles(row: dict, category: str) -> tuple[str, str, str]:
     return price_profile, price_profile, price_profile
 
 
-def build_variant(variant: Variant, source_dir: Path, indices: dict) -> dict:
+#: La seule catégorie dont les prix sont recalés : celle qui distingue les
+#: variantes. Structure, châssis, habitacle… gardent le prix du fichier source.
+CALIBRATED = "motorisation"
+
+
+def _calibrate(document: dict, factor: Decimal) -> None:
+    """Met à l'échelle les prix de la motorisation, dans les deux devises.
+
+    Arrondi au centime comme le fichier source : le coût obtenu tombe à
+    quelques euros de la cible, ce qui suffit pour un écart « de l'ordre de ».
+    """
+    for rows in document["categories"][CALIBRATED].values():
+        for row in rows:
+            for price in (row["prix_unitaire"], row["prix_final"]):
+                for key in ("prix", "prix_eur"):
+                    price[key] = (price[key] * factor).quantize(Decimal("0.01"))
+
+
+def _calibrated_part(document: dict) -> Decimal:
+    """Ce que la motorisation pèse dans le coût de référence : quantité montée
+    × prix, le fournisseur source étant retenu à multiplicateur et usine 1."""
+    return sum(
+        (
+            dec(row["quantite"]) * row["prix_unitaire"]["prix_eur"]
+            for rows in document["categories"][CALIBRATED].values()
+            for row in rows
+        ),
+        Decimal(0),
+    )
+
+
+def build_variant(
+    variant: Variant, source_dir: Path, indices: dict,
+    motor_factor: Decimal = Decimal(1),
+) -> dict:
     document = json.loads(
         (source_dir / variant.source).read_text(encoding="utf-8"), parse_float=Decimal
     )
+    if motor_factor != 1:
+        _calibrate(document, motor_factor)
     groups = _groups(document["categories"])
 
     # -- les lignes achetées, avec leur masse brute ---------------------------
@@ -226,7 +265,10 @@ def build_variant(variant: Variant, source_dir: Path, indices: dict) -> dict:
     }
     catalog = {line["ref"]: _catalog_entry(line, indices) for line in lines}
 
-    return {"bom": bom, "sourcing": sourcing, "catalog": catalog, "mass_factor": factor}
+    return {
+        "bom": bom, "sourcing": sourcing, "catalog": catalog, "mass_factor": factor,
+        "calibrated_part": _calibrated_part(document),
+    }
 
 
 def _bounds(reference: Decimal, factors: list[Decimal]) -> dict[str, str]:
@@ -294,6 +336,14 @@ def dataset_for(variant: Variant) -> dict:
                 "l'arête, hors quantité montée : elles n'entrent dans le calcul "
                 "que si le scénario active le SAV."
             ),
+            "calibration": (
+                "Thermique et électrique sont hypothétiques : les prix de leur "
+                "motorisation sont mis à l'échelle pour que leur coût de "
+                "référence se tienne à ±5 % de celui de l'hybride (thermique "
+                "0,95, électrique 1,05). Le facteur appliqué est dans "
+                "validation_report.json (calibration). Les autres pièces gardent "
+                "le prix du fichier source."
+            ),
             "drivers": (
                 "Exposition du prix aux indices de marché simulés : facteur = "
                 "1 + Σ poids × variation. Le change GBP/EUR s'applique en plus "
@@ -303,14 +353,44 @@ def dataset_for(variant: Variant) -> dict:
     }
 
 
-def generate(variant: Variant, source_dir: Path, indices: dict, out_dir: Path) -> dict:
+def _costing(built: dict) -> dict:
+    bom = built["bom"]
+    return reference_costing(
+        bom, graph.cumulative_quantities(bom), built["sourcing"], ALL_SUPPLIERS,
+        LABOUR_RATE_EUR_PER_HOUR,
+    )
+
+
+def motor_factor_for(
+    variant: Variant, source_dir: Path, indices: dict, reference_cost: Decimal | None
+) -> Decimal:
+    """Le facteur qui amène le coût de la variante à sa cible.
+
+    Le coût est affine en ce facteur : seule la motorisation bouge, le reste
+    (pièces communes, main-d'œuvre) est fixe. Un calcul suffit, sans
+    tâtonnement : facteur = 1 + (cible − coût actuel) / part de la motorisation.
+    """
+    if variant.target_cost_ratio is None or reference_cost is None:
+        return Decimal(1)
     built = build_variant(variant, source_dir, indices)
+    current = _costing(built)["total_cost"]
+    target = reference_cost * variant.target_cost_ratio
+    factor = 1 + (target - current) / built["calibrated_part"]
+    if factor <= 0:
+        raise SystemExit(f"{variant.key} : cible de coût inatteignable (facteur {factor})")
+    return factor.quantize(Decimal("0.0001"))
+
+
+def generate(
+    variant: Variant, source_dir: Path, indices: dict, out_dir: Path,
+    reference_cost: Decimal | None = None,
+) -> dict:
+    factor = motor_factor_for(variant, source_dir, indices, reference_cost)
+    built = build_variant(variant, source_dir, indices, factor)
     bom = built["bom"]
     cumulative = graph.cumulative_quantities(bom)
     mass = graph.rolled_up_mass(bom)
-    costing = reference_costing(
-        bom, cumulative, built["sourcing"], ALL_SUPPLIERS, LABOUR_RATE_EUR_PER_HOUR
-    )
+    costing = _costing(built)
     errors = validation.validate(
         bom, cumulative, built["sourcing"], built["catalog"], costing, {},
         require_volume=False, currencies=("EUR", "GBP", "USD", "RUB"),
@@ -325,13 +405,22 @@ def generate(variant: Variant, source_dir: Path, indices: dict, out_dir: Path) -
         "target_kg": str(variant.target_mass_kg),
         "free_mass_scale": str(built["mass_factor"]),
     }
+    report["calibration"] = {
+        "category": CALIBRATED,
+        "price_factor": str(factor),
+        "target_cost_ratio_to_hybrid": (
+            str(variant.target_cost_ratio) if variant.target_cost_ratio else None
+        ),
+    }
     used = {offer["supplier_id"] for offers in built["sourcing"].values() for offer in offers}
     suppliers = tuple(s for s in ALL_SUPPLIERS if s["id"] in used)
     written = writers.write_all(
         out_dir, bom, variant.bom_version, cumulative, mass, built["sourcing"],
         built["catalog"], suppliers, report, dataset_for(variant),
     )
-    return {"report": report, "files": written["files"]}
+    return {
+        "report": report, "files": written["files"], "total_cost": costing["total_cost"],
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -347,11 +436,14 @@ def main(argv: list[str] | None = None) -> int:
     source_dir = args.seeds_dir / "valhalla" / "source"
     indices = load_indices(args.indices)
     differences: list[str] = []
+    # L'hybride d'abord : son coût est la référence des deux autres.
+    reference_cost: Decimal | None = None
     for variant in VARIANTS:
         target = args.seeds_dir / "valhalla" / variant.key
         if args.check:
             with tempfile.TemporaryDirectory() as tmp:
-                result = generate(variant, source_dir, indices, Path(tmp))
+                result = generate(variant, source_dir, indices, Path(tmp), reference_cost)
+                reference_cost = reference_cost or result["total_cost"]
                 for name in result["files"]:
                     existing = target / name
                     if not existing.exists():
@@ -359,14 +451,16 @@ def main(argv: list[str] | None = None) -> int:
                     elif existing.read_bytes() != (Path(tmp) / name).read_bytes():
                         differences.append(f"{variant.key}/{name} : diffère de la régénération")
             continue
-        result = generate(variant, source_dir, indices, target)
+        result = generate(variant, source_dir, indices, target, reference_cost)
+        reference_cost = reference_cost or result["total_cost"]
         report = result["report"]
         print(
             f"{variant.key:<11} {report['parts']:>4} pièces  {report['edges']:>4} arêtes  "
             f"coût {report['costing']['total_cost']:>12} EUR  "
             f"CO2 {report['costing']['total_co2']:>10} kg  "
             f"masse {report['mass']['vehicle_kg']} kg (échelle {report['mass']['free_mass_scale']})  "
-            f"main-d'œuvre {report['costing']['labour_cost']} EUR"
+            f"main-d'œuvre {report['costing']['labour_cost']} EUR  "
+            f"motorisation ×{report['calibration']['price_factor']}"
         )
     if args.check:
         if differences:

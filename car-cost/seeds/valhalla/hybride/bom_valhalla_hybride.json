@@ -20,6 +20,7 @@
       "decimals": "Échelle 6 partout, aucun arrondi dans les données (ADR-0011).",
       "provenance": "Lignes, prix et fournisseurs principaux viennent des fichiers Valhalla fournis, eux-mêmes synthétiques. Masses, facteurs carbone, temps d'assemblage, usines, délais et fournisseurs alternatifs sont générés ici.",
       "after_sales_quantity": "Pièces de rechange livrées avec le véhicule (SAV). Portées par l'arête, hors quantité montée : elles n'entrent dans le calcul que si le scénario active le SAV.",
+      "calibration": "Thermique et électrique sont hypothétiques : les prix de leur motorisation sont mis à l'échelle pour que leur coût de référence se tienne à ±5 % de celui de l'hybride (thermique 0,95, électrique 1,05). Le facteur appliqué est dans validation_report.json (calibration). Les autres pièces gardent le prix du fichier source.",
       "drivers": "Exposition du prix aux indices de marché simulés : facteur = 1 + Σ poids × variation. Le change GBP/EUR s'applique en plus selon origin_currency."
     },
     "seed_checksum": "sha256:1aae3c798765c1c34b4ffe09b961c8724f99ea6d1623405c55d30eb677d1e144",

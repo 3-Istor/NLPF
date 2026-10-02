@@ -36,7 +36,7 @@
     },
     "GMP": {
       "parts": 62,
-      "cost": "182411.79",
+      "cost": "517619.71",
       "co2": "14195.49"
     },
     "INT": {
@@ -46,7 +46,7 @@
     },
     "TRN": {
       "parts": 8,
-      "cost": "16347.02",
+      "cost": "45680.14",
       "co2": "83.11"
     },
     "VEH": {
@@ -64,11 +64,88 @@
       "own_contribution": "58554.00"
     },
     {
+      "part_ref": "VALE-BOM-0329",
+      "label": "Cellules batterie haute énergie",
+      "system": "GMP",
+      "cumulative_quantity": "384.0",
+      "own_contribution": "45054.72"
+    },
+    {
+      "part_ref": "VALE-BOM-0342",
+      "label": "Plaques froides batterie",
+      "system": "GMP",
+      "cumulative_quantity": "12.0",
+      "own_contribution": "36201.36"
+    },
+    {
+      "part_ref": "VALE-BOM-0601",
+      "label": "Moteur électrique arrière gauche",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "33519.82"
+    },
+    {
+      "part_ref": "VALE-BOM-0602",
+      "label": "Moteur électrique arrière droit",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "33519.82"
+    },
+    {
       "part_ref": "VALE-BOM-0007",
       "label": "Structure supérieure carbone / cellule sécurité",
       "system": "CAR",
       "cumulative_quantity": "1.0",
       "own_contribution": "29277.00"
+    },
+    {
+      "part_ref": "VALE-BOM-0348",
+      "label": "Moteur électrique avant gauche",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "28491.85"
+    },
+    {
+      "part_ref": "VALE-BOM-0349",
+      "label": "Moteur électrique avant droit",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "28491.85"
+    },
+    {
+      "part_ref": "VALE-BOM-0327",
+      "label": "Pack batterie HV 800 V 100 kWh",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "26815.86"
+    },
+    {
+      "part_ref": "VALE-BOM-0603",
+      "label": "Inverter moteur AR gauche 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "20111.89"
+    },
+    {
+      "part_ref": "VALE-BOM-0604",
+      "label": "Inverter moteur AR droit 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "20111.89"
+    },
+    {
+      "part_ref": "VALE-BOM-0355",
+      "label": "Inverter moteur AV gauche 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "18435.90"
+    },
+    {
+      "part_ref": "VALE-BOM-0356",
+      "label": "Inverter moteur AV droit 800 V",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "18435.90"
     },
     {
       "part_ref": "VALE-BOM-0043",
@@ -78,97 +155,20 @@
       "own_contribution": "17566.20"
     },
     {
-      "part_ref": "VALE-BOM-0329",
-      "label": "Cellules batterie haute énergie",
-      "system": "GMP",
-      "cumulative_quantity": "384.0",
-      "own_contribution": "15740.16"
-    },
-    {
-      "part_ref": "VALE-BOM-0060",
-      "label": "Éléments aile avant active",
-      "system": "CAR",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "14052.96"
-    },
-    {
-      "part_ref": "VALE-BOM-0342",
-      "label": "Plaques froides batterie",
-      "system": "GMP",
-      "cumulative_quantity": "12.0",
-      "own_contribution": "12647.64"
-    },
-    {
-      "part_ref": "VALE-BOM-0601",
-      "label": "Moteur électrique arrière gauche",
+      "part_ref": "VALE-BOM-0330",
+      "label": "Boîtier batterie HV 800 V",
       "system": "GMP",
       "cumulative_quantity": "1.0",
-      "own_contribution": "11710.80"
-    },
-    {
-      "part_ref": "VALE-BOM-0602",
-      "label": "Moteur électrique arrière droit",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "11710.80"
-    },
-    {
-      "part_ref": "VALE-BOM-0348",
-      "label": "Moteur électrique avant gauche",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9954.18"
-    },
-    {
-      "part_ref": "VALE-BOM-0349",
-      "label": "Moteur électrique avant droit",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9954.18"
-    },
-    {
-      "part_ref": "VALE-BOM-0064",
-      "label": "Aileron arrière actif",
-      "system": "CAR",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9368.64"
-    },
-    {
-      "part_ref": "VALE-BOM-0327",
-      "label": "Pack batterie HV 800 V 100 kWh",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9368.64"
-    },
-    {
-      "part_ref": "VALE-BOM-0023",
-      "label": "Protections structurelles batterie HV 800 V",
-      "system": "CAR",
-      "cumulative_quantity": "5.0",
-      "own_contribution": "8197.55"
-    },
-    {
-      "part_ref": "VALE-BOM-0012",
-      "label": "Sous-cadre arrière aluminium",
-      "system": "CAR",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "7612.02"
-    },
-    {
-      "part_ref": "VALE-BOM-0011",
-      "label": "Sous-cadre avant aluminium",
-      "system": "CAR",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "7026.48"
+      "own_contribution": "16759.91"
     }
   ],
   "control_values": [],
   "costing": {
     "labour_rate_eur_per_hour": "60.00",
-    "material_cost": "763092.54",
+    "material_cost": "1127633.58",
     "labour_cost": "19856.00",
-    "total_cost": "782948.54",
-    "total_cost_exact": "782948.5380000000000000000000",
+    "total_cost": "1147489.58",
+    "total_cost_exact": "1147489.578000000000000000000",
     "own_co2": "29402.22",
     "transport_co2": "12.99",
     "total_co2": "29415.22"
@@ -177,5 +177,10 @@
     "vehicle_kg": "1960.0",
     "target_kg": "1960",
     "free_mass_scale": "0.9219"
+  },
+  "calibration": {
+    "category": "motorisation",
+    "price_factor": "2.8623",
+    "target_cost_ratio_to_hybrid": "1.05"
   }
 }

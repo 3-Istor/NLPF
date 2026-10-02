@@ -387,6 +387,10 @@ entièrement distinct.
       (`tools/valhalla_import/enrich.py`, `suppliers.py`) : masse, carbone,
       heures d'assemblage et usines sont des ordres de grandeur, à discuter.
       Environ un quart des pièces gardent le profil de prix « défaut ».
+      Les prix de motorisation du thermique (×1,34) et de l'électrique
+      (×2,86) sont recalés pour tenir leur coût à −5 % / +5 % de l'hybride ;
+      l'électrique y gagne des moteurs à ~33 k€ pièce et un pack à ~27 k€,
+      à confronter à un ordre de grandeur réel.
 - [ ] **Placer les snapshots sur la courbe de prix.** Ils sont datés en temps
       réel, la courbe en temps simulé : ils sont listés à côté. Il faudrait
       enregistrer la date simulée (`as_of` de l'API) avec chaque snapshot.
