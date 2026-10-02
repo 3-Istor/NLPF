@@ -9,6 +9,7 @@ Le reste du code ne sait pas qu'il existe un Postgres (ADR-0004).
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from ..cached_bom_repository import CachedBomRepository
 from ..postgres.bom import PostgresBomRepository
@@ -20,6 +21,8 @@ from .app import Repositories, create_app
 
 DSN = os.environ.get("CARCOST_DSN", "postgresql://3istor:3istor@127.0.0.1:5432/3istor")
 
+PRICE_BOM_PATH = os.environ.get("CARCOST_PRICE_BOM")
+
 app = create_app(
     Repositories(
         bom=CachedBomRepository(PostgresBomRepository(DSN)),
@@ -27,5 +30,6 @@ app = create_app(
         snapshots=PostgresPriceSnapshotRepository(DSN),
         scenarios=PostgresScenarioRepository(DSN),
         calculations=PostgresCalculationRepository(DSN),
-    )
+    ),
+    price_bom_path=Path(PRICE_BOM_PATH) if PRICE_BOM_PATH else None,
 )
