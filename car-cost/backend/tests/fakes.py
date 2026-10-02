@@ -90,6 +90,18 @@ class FakeSnapshotRepository:
     def list_all(self, bom_version=None):
         return tuple(reversed(self._for(bom_version)))
 
+    def history_of(self, part_ref, bom_version, currency, limit=20):
+        from carcost.application.ports import FrozenPrice
+
+        return [
+            FrozenPrice(
+                s.id, s.taken_at, s.prices[part_ref],
+                "FALLBACK" if part_ref in s.fallback_refs else "API",
+            )
+            for s in reversed(self._for(bom_version))
+            if part_ref in s.prices and s.currency == currency
+        ][:limit]
+
     def _for(self, bom_version):
         if bom_version is None:
             return list(self.snapshots)

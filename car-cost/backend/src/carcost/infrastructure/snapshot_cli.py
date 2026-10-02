@@ -16,7 +16,7 @@ import sys
 import uuid
 from datetime import datetime, timezone
 
-from ..application.take_snapshot import NoPriceAvailable, TookFallback, take_snapshot
+from ..application.take_snapshot import NoPriceAvailable, TookFallback, snapshot_for_bom
 from .http_price_source import HttpPriceSource
 from .postgres.bom import PostgresBomRepository
 from .postgres.snapshots import PostgresPriceSnapshotRepository
@@ -40,7 +40,6 @@ def main(argv: list[str] | None = None) -> int:
     arguments = parser.parse_args(argv)
 
     bom = PostgresBomRepository(arguments.dsn).load(arguments.bom_version)
-    purchased = sorted(ref for ref, part in bom.parts.items() if part.is_purchased)
 
     snapshots = PostgresPriceSnapshotRepository(arguments.dsn)
     previous = snapshots.latest(arguments.bom_version)
@@ -51,14 +50,14 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     try:
-        outcome = take_snapshot(
+        outcome = snapshot_for_bom(
             source,
-            refs=purchased,
+            bom,
+            bom_version=arguments.bom_version,
             currency=arguments.currency,
             previous=previous,
             now=datetime.now(timezone.utc),
             snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
-            bom_version=arguments.bom_version,
         )
     except NoPriceAvailable as refusal:
         print(f"refus : {refusal}", file=sys.stderr)

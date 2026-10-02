@@ -25,6 +25,7 @@ from ...application.browse_bom import (
 from ...application.freeze_calculation import frozen_scenario
 from ...application.tree_view import with_costs
 from .errors import error_response
+from .price_source import price_source
 
 SCALE = Decimal("0.000001")
 
@@ -69,6 +70,55 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                 }
                 for summary in repository.versions()
             ]
+        }
+
+    @app.get("/api/v1/bom/{version}/parts/{part_ref}/price-history")
+    def read_price_history(
+        version: str,
+        part_ref: str,
+        currency: str = Query("EUR", description="Devise de la courbe."),
+    ):
+        """L'année de marché simulée d'une pièce achetée, et les prix figés.
+
+        Les snapshots sont datés en temps réel, la courbe en temps simulé :
+        on ne les place pas sur le même axe, on les donne à côté.
+        """
+        bom = repository.load(version)
+        part = bom.parts.get(part_ref)
+        if part is None:
+            return error_response(404, "PART_NOT_FOUND", f"{part_ref} n'est pas dans {version}")
+        if not part.is_purchased:
+            return error_response(
+                409, "PART_HAS_NO_PRICE",
+                f"{part_ref} est fabriquée : son coût est celui de ses enfants (ADR-0008)",
+            )
+        history = price_source(repositories).history(part_ref, currency)
+        frozen = (
+            repositories.snapshots.history_of(part_ref, version, currency)
+            if repositories.snapshots is not None
+            else ()
+        )
+        return {
+            "part_ref": part_ref,
+            "label": part.label,
+            "unit": part.unit,
+            "currency": history.currency,
+            "profile": history.profile,
+            "drivers": {name: str(weight) for name, weight in (history.drivers or {}).items()},
+            "origin_currency": history.origin_currency,
+            "reference": str(history.reference),
+            "points": [{"date": p.day, "price": str(p.price)} for p in history.points],
+            "now": {"at": history.now_at, "price": str(history.now_price)},
+            "snapshots": [
+                {
+                    "id": item.snapshot_id,
+                    "taken_at": item.taken_at.isoformat(),
+                    "price": str(item.price),
+                    "origin": item.origin,
+                }
+                for item in frozen
+            ],
+            "is_synthetic": True,
         }
 
     @app.get("/api/v1/bom/{version}/root")

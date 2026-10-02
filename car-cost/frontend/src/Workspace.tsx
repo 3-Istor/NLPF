@@ -21,6 +21,7 @@ import type {
 } from "./api/types";
 import { AfterSalesToggle } from "./components/AfterSalesToggle";
 import { DecisionDialog } from "./components/DecisionDialog";
+import { PriceModeBar, type PriceMode } from "./components/PriceModeBar";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { SearchBar } from "./components/SearchBar";
 import { SnapshotHeader } from "./components/SnapshotHeader";
@@ -81,6 +82,9 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const [whereUsed, setWhereUsed] = useState<string | null>(null);
+  // D'où viennent les prix : le snapshot (rejouable) ou l'API en direct.
+  const [priceMode, setPriceMode] = useState<PriceMode>("SNAPSHOT");
+  const [liveAt, setLiveAt] = useState<string | null>(null);
   // La recherche en cours, surlignée dans l'arbre.
   const [query, setQuery] = useState("");
   const [initial] = useState(readLocation);
@@ -136,6 +140,34 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
   useEffect(() => {
     if (scenario) writeLocation(scenario.id, tree.selected);
   }, [scenario, tree.selected]);
+
+  // En direct : un calcul aux prix actuels de l'API toutes les 5 s, tant que
+  // le mode dure et qu'aucun calcul figé n'est ouvert. Un changement de
+  // scénario ou de réglage relance aussitôt la lecture.
+  useEffect(() => {
+    if (priceMode !== "LIVE" || !scenario || openSnapshot) return;
+    let alive = true;
+    const tick = async () => {
+      try {
+        const result = await api.calculateLive(scenario.id);
+        if (!alive) return;
+        setCalculation(result);
+        setLiveAt(result.prices_taken_at ?? null);
+        setJournal(null);
+        setFailure(null);
+        const fresh = await api.root(version, result.id);
+        if (alive) setRoot(fresh);
+      } catch (error) {
+        if (alive) setFailure(describe(error));
+      }
+    };
+    void tick();
+    const timer = window.setInterval(() => void tick(), 5000);
+    return () => {
+      alive = false;
+      window.clearInterval(timer);
+    };
+  }, [priceMode, scenario, openSnapshot, version]);
 
   // Déplier jusqu'à la ligne de l'URL attend la racine : avant, le calcul du
   // scénario ouvert n'est pas encore celui de l'arbre, et les pages demandées
@@ -338,6 +370,40 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
     }
   }
 
+  /**
+   * Revenir au mode snapshot rouvre le dernier calcul enregistré : un total
+   * en direct ne doit pas rester affiché sous l'étiquette « à jour ».
+   */
+  async function changePriceMode(mode: PriceMode) {
+    setPriceMode(mode);
+    setLiveAt(null);
+    if (mode === "SNAPSHOT" && scenario) {
+      try {
+        await open(await api.scenario(scenario.id));
+      } catch (error) {
+        setFailure(describe(error));
+      }
+    }
+  }
+
+  /** Fige les prix actuels de l'API, puis calcule dessus : un total rejouable. */
+  async function freezePrices() {
+    if (!scenario) return;
+    setBusy(true);
+    setFailure(null);
+    try {
+      await api.takePriceSnapshot(version, scenario.display_currency);
+    } catch (error) {
+      setFailure(describe(error));
+      setBusy(false);
+      return;
+    }
+    setPriceMode("SNAPSHOT");
+    setLiveAt(null);
+    setBusy(false);
+    await recalculate();
+  }
+
   async function duplicate(name: string) {
     if (!scenario) return;
     try {
@@ -364,6 +430,10 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
 
   async function recalculate() {
     if (!scenario) return;
+    // « Recalculer » calcule sur le dernier snapshot : en direct, on en sort,
+    // sinon le prochain rafraîchissement écraserait ce total.
+    setPriceMode("SNAPSHOT");
+    setLiveAt(null);
     setBusy(true);
     setFailure(null);
     try {
@@ -432,6 +502,16 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
           onOpenSnapshot={openFrozen}
         />
         {scenario && (
+          <PriceModeBar
+            mode={priceMode}
+            frozen={openSnapshot !== null}
+            busy={busy}
+            liveAt={liveAt}
+            onModeChange={(mode) => void changePriceMode(mode)}
+            onFreezePrices={() => void freezePrices()}
+          />
+        )}
+        {scenario && (
           <AfterSalesToggle
             scenario={scenario}
             frozen={openSnapshot !== null}
@@ -483,7 +563,11 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
           calculation={calculation}
           journal={journal}
           state={
-            openSnapshot ? "FROZEN" : (scenario?.calculation_state ?? "NEVER_RUN")
+            openSnapshot
+              ? "FROZEN"
+              : priceMode === "LIVE"
+                ? "LIVE"
+                : (scenario?.calculation_state ?? "NEVER_RUN")
           }
           staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
           busy={busy}

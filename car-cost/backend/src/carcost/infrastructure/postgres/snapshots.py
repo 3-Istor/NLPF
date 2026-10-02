@@ -10,7 +10,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal
 
-from ...application.ports import PriceSnapshotNotFound, QuarantineRecord
+from ...application.ports import FrozenPrice, PriceSnapshotNotFound, QuarantineRecord
 from ...domain.prices import PriceSnapshot
 from .connection import PostgresRepository
 
@@ -44,6 +44,24 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
     QUARANTINED_REFS = """
         SELECT DISTINCT part_ref FROM price_quarantine WHERE snapshot_id = %s
     """
+
+    def history_of(
+        self, part_ref: str, bom_version: str, currency: str, limit: int = 20
+    ) -> list[FrozenPrice]:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT s.id, s.taken_at, l.price, l.origin
+                FROM price_snapshot_line l
+                JOIN price_snapshot s ON s.id = l.snapshot_id
+                WHERE l.part_ref = %s AND l.currency = %s
+                  AND (s.bom_version_id = %s OR s.bom_version_id IS NULL)
+                ORDER BY s.taken_at DESC, s.id DESC
+                LIMIT %s
+                """,
+                (part_ref, currency, bom_version, limit),
+            )
+            return [FrozenPrice(*row) for row in cursor.fetchall()]
 
     def latest(self, bom_version: str | None = None) -> PriceSnapshot | None:
         return self._read(None, bom_version)

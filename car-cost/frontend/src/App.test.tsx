@@ -189,6 +189,12 @@ vi.mock("./api/client", () => ({
       return found;
     }),
     calculation: vi.fn(async (id: string) => calculation(id, "scn-?")),
+    calculateLive: vi.fn(async (scenarioId: string) => ({
+      ...calculation("live-1", scenarioId),
+      price_mode: "LIVE" as const,
+      prices_taken_at: "2026-10-02T09:00:00+00:00",
+    })),
+    takePriceSnapshot: vi.fn(async () => ({ id: "snp-figé" })),
     quarantine: vi.fn(async (snapshotId: string) => ({ snapshot_id: snapshotId, items: [] })),
     root: vi.fn(async () => line({})),
     children: vi.fn(
@@ -837,5 +843,28 @@ describe("choix de la nomenclature", () => {
     expect(new URLSearchParams(window.location.search).get("bom")).toBe(
       "bom-valhalla-hybride-2026-10-02",
     );
+  });
+});
+
+describe("prix en direct ou figés", () => {
+  it("en direct, le calcul vient de l'API et la synthèse dit qu'il n'est pas enregistré", async () => {
+    render(<App />);
+    fireEvent.click(await screen.findByLabelText("En direct"));
+    await waitFor(() => expect(api.calculateLive).toHaveBeenCalledWith("scn-1"));
+    expect(await screen.findByText("prix en direct")).toBeInTheDocument();
+    expect(screen.getByText(/ce total\s+n'est pas enregistré/)).toBeInTheDocument();
+    await waitFor(() => expect(api.root).toHaveBeenCalledWith(VERSION, "live-1"));
+  });
+
+  it("figer les prix prend un snapshot puis calcule dessus", async () => {
+    render(<App />);
+    fireEvent.click(await screen.findByLabelText("En direct"));
+    await waitFor(() => expect(api.calculateLive).toHaveBeenCalled());
+
+    fireEvent.click(screen.getByRole("button", { name: "Figer les prix maintenant" }));
+
+    await waitFor(() => expect(api.takePriceSnapshot).toHaveBeenCalledWith(VERSION, "EUR"));
+    await waitFor(() => expect(api.calculate).toHaveBeenCalledWith("scn-1"));
+    expect((screen.getByLabelText("Snapshot") as HTMLInputElement).checked).toBe(true);
   });
 });

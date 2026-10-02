@@ -49,7 +49,9 @@ from ...application.run_calculation import (
     with_contributors,
 )
 from ...application.scenario import Scenario, ScenarioParameter, Scope
+from ...application.take_snapshot import TookFallback, snapshot_for_bom
 from .errors import error_response
+from .price_source import previous_for, price_source
 
 SCALE = Decimal("0.000001")
 
@@ -132,6 +134,12 @@ class ScenarioSettings(BaseModel):
             "Compter les pièces de rechange livrées avec le véhicule (SAV) en plus "
             "des pièces montées. Basculer rend le dernier calcul obsolète."
         ),
+    )
+
+
+class LiveCalculation(BaseModel):
+    scenario_id: str = Field(
+        description="Identifiant `scn-…` du scénario à calculer aux prix actuels de l'API.",
     )
 
 
@@ -472,6 +480,45 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             repositories, payload.scenario_id, snapshot, scenario
         )
         return _calculation_payload(calculation)
+
+    @app.post(
+        "/api/v1/calculations/live", tags=["Calculs"],
+        summary="Calculer aux prix actuels de l'API, sans rien enregistrer",
+        description=(
+            "Interroge l'API de prix, calcule le scénario avec ces prix et renvoie le "
+            "résultat marqué `price_mode = LIVE`. Rien n'est enregistré (ADR-0015) : ni "
+            "calcul, ni snapshot de prix. Pour garder un chiffre, figer les prix "
+            "(`POST /price-snapshots`) puis calculer. API muette : 503."
+        ),
+    )
+    def create_live_calculation(payload: LiveCalculation):
+        scenario = repositories.scenarios.get(payload.scenario_id)
+        bom = repositories.bom.load(scenario.bom_version)
+        now = repositories.clock()
+        outcome = snapshot_for_bom(
+            price_source(repositories), bom,
+            bom_version=scenario.bom_version, currency=scenario.display_currency,
+            previous=previous_for(repositories, scenario.bom_version, scenario.display_currency),
+            now=now, snapshot_id=f"live-{uuid.uuid4().hex[:12]}",
+        )
+        if isinstance(outcome, TookFallback):
+            # En direct, le dernier snapshot n'est pas « le prix actuel » : on
+            # le dit plutôt que de l'afficher sous ce nom.
+            raise PriceSourceError(outcome.reason)
+        sourcing = repositories.sourcing.load(scenario.bom_version)
+        calculation = run_calculation(
+            bom=bom,
+            scenario=scenario,
+            snapshot=outcome.snapshot,
+            resolved=resolve_unit_prices(bom, sourcing, outcome.snapshot, scenario),
+            now=now,
+            calculation_id=f"live-{uuid.uuid4().hex[:12]}",
+        )
+        repositories.live.keep(calculation)
+        return {
+            **_calculation_payload(calculation, price_mode="LIVE"),
+            "prices_taken_at": now.isoformat(),
+        }
 
     @app.post(
         "/api/v1/scenarios/compare", tags=["Scénarios"],
@@ -873,10 +920,12 @@ def _has_after_sales(repositories, bom_version: str) -> bool:
         return False
 
 
-def _calculation_payload(calculation) -> dict:
+def _calculation_payload(calculation, price_mode: str = "SNAPSHOT") -> dict:
     currency = calculation.display_currency
     return {
         "id": calculation.id,
+        # LIVE : prix lus à l'instant, résultat non enregistré (ADR-0015).
+        "price_mode": price_mode,
         "scenario_id": calculation.scenario_id,
         "status": calculation.status.value,
         "bom_version": calculation.bom_version,

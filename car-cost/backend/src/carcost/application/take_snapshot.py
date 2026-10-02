@@ -129,6 +129,39 @@ def take_snapshot(
     )
 
 
+def purchased_refs(bom) -> list[str]:
+    """Les pièces dont on demande le prix : les achetées, et elles seules.
+    Un ensemble fabriqué n'a pas de prix (ADR-0008)."""
+    return sorted(ref for ref, part in bom.parts.items() if part.is_purchased)
+
+
+def snapshot_for_bom(
+    source: PriceSource,
+    bom,
+    *,
+    bom_version: str,
+    currency: str,
+    previous: PriceSnapshot | None,
+    now: datetime,
+    snapshot_id: str,
+) -> SnapshotTaken | TookFallback:
+    """Les prix de toutes les pièces achetées d'une nomenclature.
+
+    Le même chemin sert la ligne de commande, le démarrage, le bouton
+    « Figer les prix » et le mode direct : un seul endroit décide de ce qui
+    est quarantaine, repli ou manque.
+    """
+    return take_snapshot(
+        source,
+        refs=purchased_refs(bom),
+        currency=currency,
+        previous=previous,
+        now=now,
+        snapshot_id=snapshot_id,
+        bom_version=bom_version,
+    )
+
+
 def _fall_back(
     ref: str,
     known: Decimal | None,

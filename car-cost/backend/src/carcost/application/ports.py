@@ -36,10 +36,44 @@ class Quote:
     reason: str | None = None
 
 
+class PriceNotQuoted(Exception):
+    """La source ne cote pas cette pièce dans cette devise."""
+
+
+@dataclass(frozen=True)
+class PricePoint:
+    day: str
+    #: Prix ramené à l'unité, comme une cotation (`per` déjà divisé).
+    price: Decimal
+
+
+@dataclass(frozen=True)
+class PriceHistory:
+    """L'année de marché d'une pièce, telle que la source la simule."""
+
+    part_ref: str
+    currency: str
+    unit: str
+    reference: Decimal
+    points: tuple[PricePoint, ...]
+    now_at: str
+    now_price: Decimal
+    profile: str | None = None
+    drivers: Mapping[str, Decimal] = None  # type: ignore[assignment]
+    origin_currency: str | None = None
+
+
 class PriceSource(Protocol):
     def fetch(
         self, refs: Sequence[str], currency: str
     ) -> Sequence[Quote]:  # pragma: no cover - contrat
+        ...
+
+    def history(
+        self, ref: str, currency: str
+    ) -> PriceHistory:  # pragma: no cover - contrat
+        """Lève PriceNotQuoted si la pièce n'est pas cotée, PriceSourceError
+        si la source ne répond pas."""
         ...
 
 
@@ -110,7 +144,24 @@ class QuarantineRecord:
     detected_at: datetime
 
 
+@dataclass(frozen=True)
+class FrozenPrice:
+    """Le prix d'une pièce dans un snapshot enregistré."""
+
+    snapshot_id: str
+    taken_at: datetime
+    price: Decimal
+    #: API, ou FALLBACK quand le prix venait du snapshot précédent.
+    origin: str
+
+
 class PriceSnapshotRepository(Protocol):
+    def history_of(
+        self, part_ref: str, bom_version: str, currency: str, limit: int = 20
+    ) -> Sequence[FrozenPrice]:  # pragma: no cover - contrat
+        """Les prix figés d'une pièce, du plus récent au plus ancien."""
+        ...
+
     def latest(self, bom_version: str | None = None):  # pragma: no cover - contrat
         """Le dernier snapshot pris pour cette nomenclature, même périmé — ou None.
 

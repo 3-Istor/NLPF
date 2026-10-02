@@ -8,6 +8,7 @@
 import type {
   BomVersion,
   Calculation,
+  PriceSnapshotSummary,
   CalculationSnapshot,
   CalculationSnapshotSummary,
   Comparison,
@@ -180,6 +181,22 @@ export const api = {
     }),
 
   calculation: (id: string) => call<Calculation>(`/calculations/${id}`),
+
+  /** Aux prix actuels de l'API ; rien n'est enregistré. */
+  calculateLive: (scenarioId: string) =>
+    call<Calculation>("/calculations/live", post({ scenario_id: scenarioId })),
+
+  /** Fige les prix actuels de l'API pour cette nomenclature. */
+  takePriceSnapshot: (version: string, currency = "EUR") =>
+    call<PriceSnapshotSummary>(
+      "/price-snapshots",
+      post({ bom_version: version, currency }),
+    ),
+
+  priceSnapshots: (version: string) =>
+    call<{ items: PriceSnapshotSummary[]; total: number }>(
+      `/price-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
 
   /** Lance un calcul sur le scénario et le fige sous ce nom. */
   freezeCalculation: (scenarioId: string, name: string) =>

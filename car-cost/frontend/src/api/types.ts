@@ -194,6 +194,10 @@ export type Co2Contributor = Omit<Contributor, "own_contribution"> & {
 
 export type Calculation = {
   readonly id: string;
+  /** LIVE : prix lus à l'instant, résultat jamais enregistré (ADR-0015). */
+  readonly price_mode?: "SNAPSHOT" | "LIVE";
+  /** En direct : l'heure réelle à laquelle les prix ont été lus. */
+  readonly prices_taken_at?: string;
   readonly scenario_id: string;
   readonly status: "OK" | "DEGRADED" | "INCOMPLETE" | "FAILED";
   readonly bom_version: string;
@@ -344,4 +348,16 @@ export interface BomVersion {
   is_synthetic: boolean;
   /** Taux horaire proposé à la création d'un scénario, ou null s'il est inconnu. */
   reference_labour_rate: string | null;
+}
+
+/** Un snapshot de prix enregistré, tel que la liste le résume. */
+export interface PriceSnapshotSummary {
+  id: string;
+  taken_at: string;
+  source: string;
+  currency: string;
+  bom_version: string | null;
+  status: "FRESH" | "STALE" | "DEGRADED";
+  age_seconds: number;
+  counts: { prices: number; fallback: number; quarantined: number; missing: number };
 }

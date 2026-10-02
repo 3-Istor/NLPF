@@ -30,6 +30,11 @@ code { font: 12px/1 ui-monospace, "Cascadia Mono", monospace; color: var(--muted
 .app { display: flex; flex-direction: column; height: 100vh; }
 .workspace { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 
+.price-mode { display: flex; align-items: center; gap: 8px; font-size: 13px; flex-wrap: wrap; }
+.price-mode label { display: flex; align-items: center; gap: 3px; }
+.price-mode__at { color: var(--muted); }
+.state--live { background: #e7f0ff; color: var(--accent); }
+.banner--live { background: #e7f0ff; color: var(--accent); }
 .after-sales { display: flex; align-items: center; gap: 4px; font-size: 13px; }
 .after-sales__none { color: var(--muted); }
 .qty__sav { color: var(--warn); font-size: 12px; }

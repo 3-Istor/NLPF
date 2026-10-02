@@ -169,3 +169,22 @@ class TestHistoryRoute:
         status, body = _get(f"{served}/prices?refs=VALH-BOM-0006&currency=EUR")
         assert status == 200
         assert body["as_of"].startswith("2026-02-01")
+
+
+class TestHttpHistory:
+    def test_the_client_brings_the_curve_back_to_one_unit(self, served):
+        """La visserie se cote par 100 : la courbe aussi, et le client la
+        ramène à la pièce une fois, comme une cotation."""
+        from carcost.infrastructure.http_price_source import HttpPriceSource
+
+        history = HttpPriceSource(served).history("FIX-M6-16", "EUR")
+        assert history.reference == Decimal("0.039")
+        assert history.points[0].price == Decimal("0.039")
+        assert len(history.points) == 365
+
+    def test_an_unquoted_part_is_not_a_breakdown(self, served):
+        from carcost.application.ports import PriceNotQuoted
+        from carcost.infrastructure.http_price_source import HttpPriceSource
+
+        with pytest.raises(PriceNotQuoted):
+            HttpPriceSource(served).history("NOPE", "EUR")
