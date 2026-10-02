@@ -39,3 +39,20 @@ def test_description_is_used_when_name_is_unknown():
 
 def test_partial_words_do_not_classify_as_screws():
     assert classify_drivers('Pare-brise', 'Visibilité améliorée', 'GBP')['GBP_EUR'] == D('0.25')
+
+
+@pytest.mark.parametrize('name,driver,weight', [
+    ('Démarreur 12 V V8', 'cuivre', '0.25'),
+    ('Alternateur 12 V', 'cuivre', '0.25'),
+    ('Réducteur arrière gauche', 'acier', '0.50'),
+    ('Pignon intermédiaire marche arrière', 'acier', '0.50'),
+    ("Train d'engrenages marche arrière", 'acier', '0.50'),
+    ('Chargeur embarqué 22 kW', 'semi_conducteurs', '0.55'),
+    ('Module contacteurs charge rapide DC', 'semi_conducteurs', '0.55'),
+    ('Filtre EMI haute tension', 'semi_conducteurs', '0.55'),
+    ('Pack batterie traction 800 V', 'lithium', '0.25'),
+    ('Moteur électrique arrière gauche', 'cuivre', '0.25'),
+    ('Huile réducteurs électriques', 'energie', '0.35'),
+])
+def test_new_variant_components(name, driver, weight):
+    assert classify_drivers(name, '', 'GBP')[driver] == D(weight)

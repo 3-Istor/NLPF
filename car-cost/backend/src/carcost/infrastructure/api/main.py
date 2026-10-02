@@ -18,10 +18,11 @@ from ..postgres.scenarios import PostgresScenarioRepository
 from ..postgres.snapshots import PostgresPriceSnapshotRepository
 from ..postgres.sourcing import PostgresSourcingRepository
 from .app import Repositories, create_app
+from ..price_data import DEFAULT_BOM_DIR
 
 DSN = os.environ.get("CARCOST_DSN", "postgresql://3istor:3istor@127.0.0.1:5432/3istor")
 
-PRICE_BOM_PATH = os.environ.get("CARCOST_PRICE_BOM")
+PRICE_BOM_DIR = Path(os.environ.get("CARCOST_PRICE_BOM_DIR", str(DEFAULT_BOM_DIR)))
 
 app = create_app(
     Repositories(
@@ -31,5 +32,5 @@ app = create_app(
         scenarios=PostgresScenarioRepository(DSN),
         calculations=PostgresCalculationRepository(DSN),
     ),
-    price_bom_path=Path(PRICE_BOM_PATH) if PRICE_BOM_PATH else None,
+    price_bom_dir=PRICE_BOM_DIR,
 )

@@ -1,44 +1,40 @@
 # ADR-0014 — Simulation locale des prix Valhalla
 
 - **Date** : 2026-10-02
-- **Statut** : proposé
+- **Statut** : proposé, actualisé selon le nouveau contrat demandé sur `prix`
 
-## Contexte et décision
+## Décision
 
-La demande Valhalla impose une simulation sans réseau ni persistance, avec une
-année en 40 minutes. Les routes FastAPI sont toujours enregistrées ; le chemin
-`CARCOST_PRICE_BOM` active leur simulation (sinon réponse 503 explicite). Le fichier fourni reste à son emplacement, sans copie.
-Les catégories imbriquées regroupent des lignes dont les quantités sont déjà
-exprimées pour une voiture ; elles ne constituent pas les arêtes du DAG Multipla.
+Une seule route pricing : `GET /api/prices?model=hybride|thermique|electrique`.
+Les trois fichiers fournis sont conservés tels quels dans les données du paquet
+backend, lus une fois au démarrage, validés puis figés récursivement en mémoire.
+`CARCOST_PRICE_BOM_DIR` permet de choisir un autre dossier contenant les mêmes
+noms de fichiers. Les historiques sont chargés une seule fois et l'horloge est
+commune aux trois modèles. Aucun accès réseau, disque ou base pendant un GET.
 
-Le domaine calcule prix et quantités SAV en `Decimal`. L'application calcule
-l'instant simulé une fois par requête. L'infrastructure charge et valide BOM et
-365 observations par indice au démarrage. Aucune tâche périodique n'est créée.
-Les données et indices sont synthétiques, sans prétention de prix constructeur.
+La réponse copie la structure complète du modèle sélectionné. Seuls les montants
+`prix` et `prix_eur` dans `prix_unitaire` et `prix_final` sont remplacés.
+Le domaine calcule depuis les deux prix de base et le facteur pondéré existant ;
+chaque prix final vaut son prix unitaire dynamique multiplié par la
+`quantite_totale` fournie. `quantite + quantite_sav = quantite_totale` est validé
+au chargement. La garantie est informative : aucun taux SAV ni plafond calculé.
 
-## Options et conséquences
+Sur demande explicite, **ce contrat pricing uniquement** retourne les montants
+en nombres JSON arrondis à deux décimales (`ROUND_HALF_UP`). Le calcul conserve
+les `Decimal` non arrondis ; le prix final est calculé avant l'arrondi de sortie.
+Cette exception à l'ADR-0011 n'affecte pas les API historiques ni le moteur DAG.
+Les anciennes routes ajoutées pour la première simulation sont supprimées.
 
-Étendre les snapshots PostgreSQL ajouterait une persistance contraire au besoin.
-Remplacer le moteur DAG casserait son contrat : la simulation reste un cas
-d'usage distinct, dans les mêmes couches et la même application FastAPI.
-Les routes historiques conservent leurs adaptateurs ; les nouvelles routes
-n'en dépendent pas. Le redémarrage réinitialise la simulation, commune aux
-requêtes d'un processus : lancer un seul worker.
+## Continuités et conséquences
 
-Les valeurs monétaires sont sérialisées en chaînes sans arrondi d'affichage.
-Le SAV suit exclusivement `ceil(quantité × véhicules × 1.03)` pour les pièces
-sous garantie ; le prix unitaire reste inchangé.
+Les neuf profils synthétiques et le traitement GBP/EUR sont conservés : poids FX
+nul et autres poids renormalisés pour EUR, exposition GBP/EUR pour GBP. Le même
+facteur de simulation s'applique aux deux prix de base fournis ; il ne s'agit pas
+d'une conversion au cours de change instantané. Les valeurs ne sont pas des
+prix constructeur. Les variantes thermique et électrique sont hypothétiques.
 
-## Paramètres validés pour cette simulation
-
-Les neuf profils du module `domain/price_drivers.py` reprennent les poids
-fournis par le demandeur. Le libellé est classé avant la description, avec
-priorité aux fixations pour ne pas confondre une vis et son organe de montage.
-La devise fournisseur détermine le FX : GBP/EUR pour GBP, poids nul et
-renormalisation proportionnelle des autres coefficients pour EUR.
-Les matières plastiques et le caoutchouc utilisent l'indice énergie.
-
-La position temporelle fournit directement la fraction de jour. Chaque indice
-est interpolé linéairement entre deux observations ; le jour 364 rejoint le
-jour 0 pour garantir la continuité au bouclage. La date repart du 1er janvier
-2026, origine de l'historique synthétique. Aucun prix de base n'est réécrit.
+La simulation reste une année de 365 jours en 40 minutes, avec interpolation
+linéaire jusqu'au retour du jour 364 au jour 0. Chaque requête échantillonne
+l'horloge une fois. Le redémarrage remet le cycle à zéro ; utiliser un worker.
+Aucune tâche périodique, dépendance ou persistance supplémentaire. Les routes
+historiques et leurs adaptateurs ne sont pas modifiés.

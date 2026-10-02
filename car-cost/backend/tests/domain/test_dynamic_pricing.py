@@ -1,32 +1,32 @@
-"""Prix et stock SAV : exemples indépendants du réseau et du fichier fourni."""
+"""Prix de base immuables et quantités totales imposées par la BOM."""
 from decimal import Decimal as D
 
-from carcost.domain.dynamic_pricing import Component, current_price, production_quantities
+from carcost.domain.dynamic_pricing import Component, current_prices
 
 
-def component(warranty=False):
-    return Component('P', 'Câble', D('10.25'), D('2.5'), warranty,
+def component(total='5'):
+    return Component('P', D('100'), D('120'), D(total),
                      {'cuivre': D('0.6'), 'energie': D('0.4')})
 
 
-def test_price_changes_and_base_is_preserved():
+def test_both_currencies_and_totals_use_the_same_factor():
     part = component()
-    assert current_price(part, {'cuivre': D('0'), 'energie': D('0')}) == D('10.25')
-    assert current_price(part, {'cuivre': D('0.1'), 'energie': D('-0.05')}) == D('10.66')
-    assert part.base_price == D('10.25')
+    result = current_prices(part, {'cuivre': D('0.1'), 'energie': D('0.05')})
+    assert result.unit_price == D('108')
+    assert result.unit_price_eur == D('129.6')
+    assert result.final_price == D('540')
+    assert result.final_price_eur == D('648')
+    assert part.base_price == D('100')
+    assert part.base_price_eur == D('120')
 
 
-def test_line_cost_is_price_times_quantity():
-    part = component()
-    price = current_price(part, {'cuivre': D('0.1'), 'energie': D('-0.05')})
-    assert price * part.quantity == D('26.650')
+def test_supplied_total_is_used_without_percentage_or_ceiling():
+    result = current_prices(component('6.25'), {'cuivre': D(0), 'energie': D(0)})
+    assert result.final_price == D('625')
+    assert result.final_price_eur == D('750')
 
 
-def test_warranty_adds_stock_rounded_up_without_changing_unit_price():
-    part = component(True)
-    assert production_quantities(part, 100) == (D('250'), D('258'))
-    assert part.base_price == D('10.25')
-
-
-def test_no_warranty_preserves_fractional_quantity():
-    assert production_quantities(component(), 3) == (D('7.5'), D('7.5'))
+def test_calculations_do_not_round_money():
+    result = current_prices(component('3'), {'cuivre': D('0.0001'), 'energie': D(0)})
+    assert result.unit_price == D('100.006')
+    assert result.final_price == D('300.018')

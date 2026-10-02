@@ -1,29 +1,50 @@
-"""Valorisation d'une nomenclature plate et stock SAV, sans effet de bord."""
+"""Valorisation depuis les bases immuables et la quantité totale fournie."""
+from collections.abc import Mapping
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_CEILING
-from typing import Mapping
-
-SAV_RATE = Decimal('0.03')
+from decimal import Decimal
 
 
 @dataclass(frozen=True)
 class Component:
     id: str
-    name: str
     base_price: Decimal
-    quantity: Decimal
-    warranty: bool
+    base_price_eur: Decimal
+    total_quantity: Decimal
     drivers_prix: Mapping[str, Decimal]
 
 
-def current_price(component: Component, variations: Mapping[str, Decimal]) -> Decimal:
+@dataclass(frozen=True)
+class PricingBom:
+    document: Mapping
+    components: Mapping[str, Component]
+
+
+@dataclass(frozen=True)
+class ComponentPrices:
+    unit_price: Decimal
+    unit_price_eur: Decimal
+    final_price: Decimal
+    final_price_eur: Decimal
+
+
+def current_prices(component: Component, variations: Mapping[str, Decimal]) -> ComponentPrices:
     factor = 1 + sum(weight * variations[name]
                      for name, weight in component.drivers_prix.items())
-    return component.base_price * factor
+    price = component.base_price * factor
+    price_eur = component.base_price_eur * factor
+    return ComponentPrices(price, price_eur, price * component.total_quantity,
+                           price_eur * component.total_quantity)
 
 
-def production_quantities(component: Component, vehicles: int) -> tuple[Decimal, Decimal]:
-    production = component.quantity * vehicles
-    purchase = ((production * (1 + SAV_RATE)).to_integral_value(rounding=ROUND_CEILING)
-                if component.warranty else production)
-    return production, purchase
+def component_rows(categories):
+    """Les catégories regroupent les lignes ; elles ne portent pas de quantités."""
+    if isinstance(categories, Mapping):
+        for child in categories.values():
+            yield from component_rows(child)
+    elif isinstance(categories, (list, tuple)):
+        for row in categories:
+            if not isinstance(row, Mapping) or 'id' not in row:
+                raise ValueError('ligne de nomenclature sans identifiant')
+            yield row
+    else:
+        raise ValueError('catégorie de nomenclature invalide')

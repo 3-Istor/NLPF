@@ -17,7 +17,7 @@ from typing import Callable
 from fastapi import FastAPI, Request
 
 from ...application.price_simulation import PriceSimulation
-from ..price_data import load_components, load_history
+from ..price_data import load_boms, load_history
 from .price_routes import router as price_router
 from ...application.browse_bom import PathNotFound
 from ...application.ports import (
@@ -53,16 +53,16 @@ class Repositories:
 
 
 def create_app(
-    repositories: Repositories, *, price_bom_path: Path | None = None,
+    repositories: Repositories, *, price_bom_dir: Path | None = None,
     price_clock: Callable[[], float] = time.time,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        if price_bom_path is not None:
-            components = load_components(price_bom_path)
+        if price_bom_dir is not None:
+            models = load_boms(price_bom_dir)
             history, start_date = load_history()
             app.state.price_simulation = PriceSimulation(
-                components, history, start_date=start_date, clock=price_clock,
+                models, history, start_date=start_date, clock=price_clock,
             )
         yield
 

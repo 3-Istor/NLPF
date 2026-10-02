@@ -21,12 +21,13 @@ PROFILE_WEIGHTS = {
 
 # Une fixation reste une fixation, même si elle mentionne l'organe qu'elle fixe.
 RULES = tuple((profile, re.compile(pattern)) for profile, pattern in (
+    ('default', r'^(?:huile|ldr|refrigerant)\b'),
     ('steel', r'\b(?:vis|visserie|boulons?|ecrous?|rondelles?|goujons?|rivets?|colliers?|agrafes?)\b'),
     ('cable', r'\b(?:cables?|faisceaux?|wiring|harness)\b'),
-    ('electronics', r'\b(?:ecu|tcu|vcu|bcm|bms|adas|capteurs?|sensors?|electronique|radars?|cameras?|calculateurs?|tpms)\b'),
-    ('motor', r'\b(?:moteurs? electriques?|electric motors?|emotor|inverters?|onduleurs?)\b'),
+    ('electronics', r'\b(?:ecu|tcu|vcu|bcm|bms|adas|capteurs?|sensors?|electronique|radars?|cameras?|calculateurs?|tpms|chargeurs?|obc|pdu|contacteurs?|filtre emi)\b'),
+    ('motor', r'\b(?:moteurs? electriques?|electric motors?|emotor|inverters?|onduleurs?|demarreurs?|alternateurs?)\b'),
     ('aluminium', r'\b(?:aluminium|aluminum|jantes?)\b'),
-    ('steel', r'\b(?:acier|steel|chassis|sous cadres?|supports?|berceaux?|triangles?|biellettes?|bras de suspension)\b'),
+    ('steel', r'\b(?:acier|steel|chassis|sous cadres?|supports?|berceaux?|triangles?|biellettes?|bras de suspension|reducteurs?|pignons?|engrenages?)\b'),
     ('battery', r'\b(?:batterie hv|pack hv|(?:pack|modules?|cellules?) (?:de )?batterie)\b'),
     ('rubber', r'\b(?:pneus?|pneumatiques?|caoutchouc|rubber|tires?|tyres?)\b'),
     ('composite', r'\b(?:carbone|carbon|composites?|carrosserie|monocoque|ailes?|capot|pare chocs|portes?)\b'),

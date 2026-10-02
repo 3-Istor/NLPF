@@ -1,156 +1,124 @@
 # Dynamic Pricing Backend
 
-Référence d'utilisation du backend de la branche `prix`. Les données et indices
-sont **synthétiques** : ils ne représentent pas des prix constructeur.
+## Endpoint unique
 
-## 1. Rôle du backend prix
-
-Le backend gère les prix dynamiques de la BOM Aston Martin Valhalla, soit environ
-635 lignes de composants. Chaque composant possède notamment un `id`, un `nom`,
-une quantité, un fournisseur, un prix de base et une garantie.
-
-Le moteur calcule le prix courant à partir d'indices économiques simulés.
-Les autres équipes n'ont pas besoin de connaître sa logique interne : elles
-appellent uniquement les endpoints de la section 7 et utilisent les coûts retournés.
-
-```text
-request API
-→ temps simulé
-→ indices économiques courants
-→ drivers du composant
-→ prix unitaire dynamique
-→ quantité
-→ coût retourné
+```http
+GET /api/prices?model={model}
 ```
 
-## 2. Fonctionnement de la simulation
+| Valeur exacte de `model` | Fichier chargé au démarrage | Lignes |
+|---|---|---:|
+| `hybride` | `aston_martin_valhalla_hybride_phev.json` | 635 |
+| `thermique` | `aston_martin_valhalla_thermique.json` | 575 |
+| `electrique` | `aston_martin_valhalla_electrique.json` | 514 |
 
-**1 année simulée = 40 minutes réelles.** La simulation boucle après 365 jours.
-Le temps simulé vient du temps réel ; aucune boucle de recalcul permanente ne
-fonctionne en arrière-plan. Le calcul se fait à chaque requête : deux appels
-espacés de quelques secondes peuvent donc retourner des prix différents.
+Aucun alias (`essence`, `hybrid`, `electric`, etc.). Les composants d'un modèle
+ne sont pas mélangés avec ceux des autres. Les variantes thermique et électrique
+sont hypothétiques ; toutes les données et tous les indices sont synthétiques.
+
+## Utiliser la réponse
+
+La réponse est le **JSON complet** du modèle, avec `vehicule` et `categories`.
+Les catégories imbriquées, IDs, descriptions, fournisseurs, unités, garanties et
+quantités restent identiques au fichier source. Seuls quatre montants changent :
+
+- `prix_unitaire.prix` : prix dynamique dans la devise d'origine ;
+- `prix_unitaire.prix_eur` : prix dynamique en EUR ;
+- `prix_final.prix` : prix unitaire dynamique × `quantite_totale` ;
+- `prix_final.prix_eur` : prix unitaire dynamique EUR × `quantite_totale`.
+
+Les montants retournés sont des **nombres JSON**, arrondis à deux décimales
+(`ROUND_HALF_UP`), jamais des chaînes. Les calculs internes utilisent des décimaux
+non arrondis : le prix final est calculé avant l'arrondi de sortie, donc il peut
+différer de quelques centimes du produit du prix unitaire déjà affiché.
+Un nombre JSON comme `108` est équivalent à `108.00` ; les zéros d'affichage sont
+à la charge du client.
+
+## SAV : utiliser les quantités fournies
+
+Le fichier fournit `quantite`, `quantite_sav` et `quantite_totale`, avec
+`quantite_totale = quantite + quantite_sav`. La garantie est informative.
+Aucun taux, arrondi de quantité ou supplément automatique n'est appliqué.
+Par exemple : quantité 4, SAV 1, total 5 et prix dynamique 120 donnent un prix
+final de 600. Le champ `prix_final` est recalculé depuis le prix unitaire de base,
+jamais depuis le prix final de la réponse précédente.
+
+Pour les autres équipes :
+
+- **ne pas recalculer les prix dans le frontend** ;
+- **ne pas recalculer le SAV, ni appliquer +3 %** ;
+- utiliser directement `quantite_totale` et `prix_final` ;
+- changer uniquement `model` lorsque l'utilisateur choisit une motorisation.
+
+## Simulation et polling
+
+Une année de 365 jours dure **40 minutes réelles**, puis boucle. Les neuf indices
+locaux (`cuivre`, `aluminium`, `acier`, `lithium`, `nickel`, `energie`, `transport`,
+`semi_conducteurs`, `GBP_EUR`) sont interpolés linéairement entre les jours,
+y compris du dernier au premier. Le calcul a lieu uniquement à la requête ;
+il n'existe ni boucle permanente ni WebSocket.
 
 ```text
-SECONDS_YEAR = 365 * 24 * 60 * 60
-SIM_DURATION = 40 * 60
-SPEED = SECONDS_YEAR / SIM_DURATION
-
-temps_simule = (time.time() - start_time) * SPEED
-position_dans_annee = temps_simule % SECONDS_YEAR
-```
-
-La date simulée commence au 1er janvier 2026 UTC. Un redémarrage remet la
-simulation à zéro. Chaque requête utilise un même instant pour tous ses calculs ;
-deux requêtes distinctes peuvent correspondre à des instants différents.
-
-## 3. Indices économiques utilisés
-
-- `cuivre`
-- `aluminium`
-- `acier`
-- `lithium`
-- `nickel`
-- `energie`
-- `transport`
-- `semi_conducteurs`
-- `GBP_EUR`
-
-Les historiques locaux contiennent 365 valeurs par indice. Ils sont chargés en
-RAM au démarrage, comme la BOM. Aucun accès Internet n'est nécessaire pendant
-l'exécution ; les GET prix ne lisent ni disque ni base de données.
-
-Les valeurs sont interpolées linéairement entre deux jours pour faire évoluer
-les prix continuellement : `indice_J + progression * (indice_J1 - indice_J)`.
-La progression vient directement de l'horloge simulée. Le dernier jour rejoint
-le premier pour conserver la continuité au bouclage.
-
-## 4. Calcul du prix dynamique
-
-```text
+SPEED = (365 * 24 * 60 * 60) / (40 * 60)
+temps_simule = ((time.time() - start_time) * SPEED) % (365 * 24 * 60 * 60)
 variation_indice = indice_actuel / indice_initial - 1
-facteur_prix = 1 + somme(coefficient_driver * variation_indice)
-prix_unitaire_actuel_eur = prix_unitaire_base_eur * facteur_prix
-cout_par_voiture = prix_unitaire_actuel_eur * quantite
+facteur = 1 + somme(poids_driver * variation_indice)
+prix_unitaire_dynamique = prix_unitaire_base * facteur
+prix_final_dynamique = prix_unitaire_dynamique * quantite_totale
 ```
 
-Le prix de base du JSON n'est jamais modifié. Les coefficients dépendent du type
-de composant et sont normalisés : leur somme vaut 1. L'énergie sert également
-d'approximation pour les matières plastiques et le caoutchouc.
+Les poids dépendent du type de pièce et totalisent 1. Le FX utilise la devise
+fournisseur : poids GBP/EUR pour GBP, poids nul et autres poids renormalisés pour
+EUR. Le même facteur s'applique aux prix de base d'origine et EUR fournis par
+le fichier ; ce n'est pas une conversion au cours de change instantané.
 
-`GBP_EUR` intervient uniquement lorsque la **devise du fournisseur est GBP**.
-Pour un fournisseur en EUR, son poids est nul et les autres coefficients sont
-renormalisés proportionnellement : aucun effet GBP/EUR n'est appliqué.
+Les trois BOM et l'historique sont lus une seule fois au démarrage puis gardés
+en RAM. Aucun accès disque, réseau ni base pendant les GET. Chaque réponse est
+une copie : les données de base restent immuables. L'horloge est commune aux
+modèles ; changer de modèle ne nécessite aucun redémarrage. À temps identique,
+les prix sont identiques quel que soit le nombre d'appels.
 
-## 5. Garantie et stock SAV
-
-La garantie **ne modifie pas le prix unitaire** : elle augmente uniquement la
-quantité à acheter. Le taux SAV par défaut est `SAV_RATE = 0.03`, soit 3 %.
-
-```text
-quantite_production = quantite_par_voiture * nombre_voitures
-
-si garantie == true :
-    quantite_achat = ceil(quantite_production * 1.03)
-sinon :
-    quantite_achat = quantite_production
-
-cout_total_ligne = quantite_achat * prix_unitaire_actuel_eur
+```javascript
+const model = "hybride"; // ou "thermique", "electrique"
+const response = await fetch(`/api/prices?model=${model}`);
+if (!response.ok) throw new Error(`Pricing HTTP ${response.status}`);
+const bom = await response.json();
+console.log(bom.categories);
 ```
 
-Le plafond est appliqué par composant sous garantie, après multiplication par
-le nombre de voitures. Il constitue une réserve SAV sans augmenter artificiellement
-le prix d'une pièce. Le coût du stock SAV correspond uniquement aux unités
-supplémentaires ; le coût BOM d'une voiture exclut cette réserve.
+Le frontend peut refaire cet appel environ toutes les **5 secondes**. Plusieurs
+prix peuvent alors changer, tandis que structure et quantités restent identiques.
 
-## 6. Démarrage local
+## Démarrage et exemples
 
-Depuis la racine du dépôt, dans un environnement où le backend et ses dépendances
-existantes sont installés :
+Depuis la racine du dépôt, dans un environnement où le backend est installé :
 
 ```bash
-export CARCOST_PRICE_BOM=/chemin/vers/aston_martin_valhalla_bom_simple.json
 python -m uvicorn carcost.infrastructure.api.main:app --port 8000 --workers 1
 ```
 
-Le JSON reste à cet emplacement, sans copie. Utiliser `export` pour transmettre
-la variable à Python. Garder un seul worker pour partager la même horloge de
-simulation. Redémarrer après un changement de configuration ou de fichier.
-
-Base locale : `http://localhost:8000`. Documentation interactive :
-`http://localhost:8000/docs`.
-
-## 7. API à appeler
-
-Tous les endpoints ci-dessous utilisent **GET**, avec un seul préfixe `/api`.
-Les montants, indices, pourcentages et quantités sont des **chaînes décimales**,
-par exemple `"10.25"`, sans arrondi d'affichage. `vehicles` est un entier JSON ;
-`date_simulee` est une date et heure ISO 8601 en UTC.
-
-| Endpoint | Utilisation et réponse |
-|---|---|
-| `/api/prices` | Tableau JSON de tous les composants, avec les champs décrits ci-dessous. |
-| `/api/prices/{component_id}` | Même information pour un seul composant, sous forme d'objet JSON. Utiliser son ID inchangé, par exemple `BOM-0003`. |
-| `/api/vehicle-cost` | Coût BOM d'une voiture, hors réserve SAV : `date_simulee`, `cout_bom_eur`, `variation_pct_depuis_debut`. |
-| `/api/production-cost?vehicles=100` | Coût de fabrication et réserve SAV pour N voitures : `vehicles`, `cout_production_eur`, `cout_stock_sav_eur`, `cout_total_eur`, `date_simulee`. `vehicles` est un entier ≥ 0, égal à 100 par défaut. |
-| `/api/indices` | Objet contenant `date_simulee` et `indices`, dictionnaire des neuf valeurs courantes. |
-
-Champs de chaque composant renvoyé par les deux routes prix :
-`id`, `nom`, `prix_unitaire_base_eur`, `prix_unitaire_actuel_eur`,
-`variation_pct`, `quantite`, `cout_par_voiture_eur`.
-`variation_pct` est la variation par rapport au prix de base, en pourcentage
-(`"5"` signifie +5 %). `quantite` est la quantité pour une voiture.
-
-Pour la production, `cout_production_eur` exclut le SAV ; `cout_stock_sav_eur`
-est son supplément et `cout_total_eur` est leur somme. Utiliser les totaux
-retournés par le backend sans recalculer les règles métier côté client.
+Les trois JSON fournis sont inclus dans
+`src/carcost/infrastructure/data/boms/`. Facultativement, pour utiliser un autre
+dossier contenant ces trois mêmes noms :
 
 ```bash
-curl http://localhost:8000/api/prices/BOM-0003
-curl http://localhost:8000/api/vehicle-cost
-curl 'http://localhost:8000/api/production-cost?vehicles=100'
+export CARCOST_PRICE_BOM_DIR=/chemin/vers/les_trois_json
+python -m uvicorn carcost.infrastructure.api.main:app --port 8000 --workers 1
 ```
 
-Erreurs utiles : **404** avec le code `COMPONENT_NOT_FOUND` pour un ID inconnu ;
-**422** pour un nombre de voitures invalide ; **503** avec un message mentionnant
-`CARCOST_PRICE_BOM` si la simulation n'est pas configurée. Un chemin de fichier
-inaccessible ou des données invalides empêchent le démarrage.
+L'ancienne variable `CARCOST_PRICE_BOM` n'est plus utilisée. Un redémarrage
+recharge les fichiers et remet l'horloge à zéro. Garder un seul worker pour une
+horloge commune. Documentation interactive : `http://127.0.0.1:8000/docs`.
+
+```bash
+curl 'http://127.0.0.1:8000/api/prices?model=hybride'
+curl 'http://127.0.0.1:8000/api/prices?model=thermique'
+curl 'http://127.0.0.1:8000/api/prices?model=electrique'
+```
+
+Modèle absent : **422**. Modèle inconnu : **400**, avec
+`{"detail":"Unknown model. Allowed values: hybride, thermique, electrique"}`.
+Un fichier requis absent ou invalide empêche le démarrage.
+Les anciennes routes `/api/prices/{component_id}`, `/api/vehicle-cost`,
+`/api/production-cost` et `/api/indices` sont supprimées. Les routes historiques
+`/api/v1/...` du projet restent inchangées.

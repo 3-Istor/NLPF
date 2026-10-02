@@ -1,7 +1,5 @@
-"""L'application existante charge une fois les fichiers, puis ne fait que calculer."""
+"""Trois lectures de BOM et une d'indices, puis aucun accès disque ou réseau."""
 import builtins
-import json
-from decimal import Decimal
 from pathlib import Path
 import socket
 from unittest.mock import Mock
@@ -9,17 +7,13 @@ from unittest.mock import Mock
 from fastapi.testclient import TestClient
 
 from carcost.infrastructure.api.app import Repositories, create_app
-from carcost.infrastructure import price_data
+from carcost.infrastructure.price_data import HISTORY_PATH, MODEL_FILES
+from infrastructure.test_price_data import write_models
 
 
-def test_startup_loads_once_and_routes_use_only_memory(tmp_path, monkeypatch):
-    path = tmp_path / 'bom.json'
-    path.write_text(json.dumps({'categories': {'electricite': [{
-        'id': 'ORIGINAL-42', 'nom': 'Faisceau HV', 'description': 'Cuivre',
-        'quantite': 2.5, 'garantie': True, 'fournisseur': {'devise': 'EUR'},
-        'prix_unitaire': {'prix_eur': 10.25, 'devise': 'EUR'},
-    }]}}))
-    original = path.read_bytes()
+def test_startup_loads_all_files_once_then_only_uses_memory(tmp_path, monkeypatch):
+    write_models(tmp_path)
+    original = {p: p.read_bytes() for p in tmp_path.iterdir()}
     reads = []
     original_open = Path.open
     def tracked_open(self, *args, **kwargs):
@@ -27,7 +21,7 @@ def test_startup_loads_once_and_routes_use_only_memory(tmp_path, monkeypatch):
         return original_open(self, *args, **kwargs)
     monkeypatch.setattr(Path, 'open', tracked_open)
     now = [0.0]
-    app = create_app(Repositories(bom=Mock()), price_bom_path=path,
+    app = create_app(Repositories(bom=Mock()), price_bom_dir=tmp_path,
                      price_clock=lambda: now[0])
     assert reads == []
     def forbidden(*args, **kwargs):
@@ -35,18 +29,14 @@ def test_startup_loads_once_and_routes_use_only_memory(tmp_path, monkeypatch):
     monkeypatch.setattr(socket.socket, 'connect', forbidden)
     monkeypatch.setattr(socket, 'getaddrinfo', forbidden)
     with TestClient(app) as client:
-        assert reads == [path, price_data.HISTORY_PATH]
+        expected = [tmp_path / name for name in MODEL_FILES.values()] + [HISTORY_PATH]
+        assert reads == expected
         with monkeypatch.context() as guard:
             guard.setattr(Path, 'open', forbidden)
             guard.setattr(builtins, 'open', forbidden)
-            for route in ('/api/prices', '/api/prices/ORIGINAL-42', '/api/vehicle-cost',
-                          '/api/production-cost?vehicles=100', '/api/indices'):
-                assert client.get(route).status_code == 200
-                assert client.get(route).status_code == 200
-            part = client.get('/api/prices/ORIGINAL-42').json()
-            assert Decimal(part['prix_unitaire_actuel_eur']) == Decimal('10.25')
-            now[0] += 0.1
-            changed = client.get('/api/prices/ORIGINAL-42').json()
-            assert part['prix_unitaire_actuel_eur'] != changed['prix_unitaire_actuel_eur']
-        assert reads == [path, price_data.HISTORY_PATH]
-    assert path.read_bytes() == original
+            for _ in range(3):
+                now[0] += 5
+                for model in MODEL_FILES:
+                    assert client.get('/api/prices', params={'model': model}).status_code == 200
+        assert reads == expected
+    assert original == {p: p.read_bytes() for p in original}

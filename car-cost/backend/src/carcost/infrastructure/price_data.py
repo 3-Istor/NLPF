@@ -1,80 +1,94 @@
-"""Lecture et validation des deux fichiers au démarrage uniquement."""
+"""Chargement unique des trois BOM et des historiques au démarrage."""
 from datetime import date
 from decimal import Decimal, InvalidOperation
 import json
 from pathlib import Path
 from types import MappingProxyType
-from typing import Callable, Mapping
 
-from ..domain.dynamic_pricing import Component
+from ..domain.dynamic_pricing import Component, PricingBom, component_rows
 from ..domain.price_drivers import classify_drivers
 
 INDEX_NAMES = frozenset(('cuivre', 'aluminium', 'acier', 'lithium', 'nickel',
                          'energie', 'transport', 'semi_conducteurs', 'GBP_EUR'))
 HISTORY_PATH = Path(__file__).with_name('data') / 'price_indices.json'
+DEFAULT_BOM_DIR = Path(__file__).with_name('data') / 'boms'
+MODEL_FILES = MappingProxyType({
+    'hybride': 'aston_martin_valhalla_hybride_phev.json',
+    'thermique': 'aston_martin_valhalla_thermique.json',
+    'electrique': 'aston_martin_valhalla_electrique.json',
+})
 
 
-def _positive(value) -> Decimal:
-    if isinstance(value, bool):
-        raise ValueError('un booléen ne constitue pas une valeur numérique')
+def _number(value, *, allow_zero=False) -> Decimal:
+    if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
+        raise ValueError('nombre requis')
     number = Decimal(str(value))
-    if not number.is_finite() or number <= 0:
-        raise ValueError('valeur strictement positive et finie requise')
+    if not number.is_finite() or number < 0 or (number == 0 and not allow_zero):
+        raise ValueError('valeur positive et finie requise')
     return number
 
 
-def _rows(node):
-    if isinstance(node, list):
-        for row in node:
-            if not isinstance(row, dict) or 'id' not in row:
-                raise ValueError('ligne de nomenclature sans identifiant')
-            yield row
-    elif isinstance(node, dict):
-        for child in node.values():
-            yield from _rows(child)
-    else:
-        raise ValueError('catégorie de nomenclature invalide')
+def _positive(value) -> Decimal:
+    # L'historique versionné stocke ses décimaux sous forme de chaînes.
+    return _number(Decimal(str(value)))
 
 
-def load_components(path: Path, classify: Callable[[str, str, str], Mapping[str, Decimal]] = classify_drivers
-                    ) -> tuple[Component, ...]:
+def _freeze(value):
+    if isinstance(value, dict):
+        return MappingProxyType({key: _freeze(child) for key, child in value.items()})
+    if isinstance(value, list):
+        return tuple(_freeze(child) for child in value)
+    return value
+
+
+def _load_bom(path: Path) -> PricingBom:
     with path.open(encoding='utf-8') as source:
-        data = json.load(source, parse_float=Decimal)
-    parts = []
-    seen = set()
+        data = json.load(source)
+    parts = {}
     try:
-        rows = _rows(data['categories'])
-        for row in rows:
+        for row in component_rows(data['categories']):
             identifier = row.get('id')
             try:
-                if not isinstance(identifier, str) or not identifier or identifier in seen:
+                if not isinstance(identifier, str) or not identifier or identifier in parts:
                     raise ValueError('identifiant vide ou dupliqué')
-                name = row['nom']
-                if not isinstance(name, str) or not name.strip():
+                if not isinstance(row['nom'], str) or not row['nom'].strip():
                     raise ValueError('nom requis')
-                warranty = row['garantie']
-                if not isinstance(warranty, bool):
+                if not isinstance(row['description'], str):
+                    raise ValueError('description textuelle requise')
+                if not isinstance(row['garantie'], bool):
                     raise ValueError('garantie doit être un booléen')
-                price = _positive(row['prix_unitaire']['prix_eur'])
-                quantity = _positive(row['quantite'])
-                currency = row['fournisseur']['devise']
-                if currency not in ('GBP', 'EUR'):
-                    raise ValueError('devise sans indice de change disponible')
-                drivers = dict(classify(name, row.get('description', ''), currency))
+                quantity = _number(row['quantite'])
+                stock = _number(row['quantite_sav'], allow_zero=True)
+                total = _number(row['quantite_totale'])
+                if total != quantity + stock:
+                    raise ValueError('quantite_totale doit valoir quantite + quantite_sav')
+                price = _number(row['prix_unitaire']['prix'])
+                price_eur = _number(row['prix_unitaire']['prix_eur'])
+                if row['prix_unitaire']['devise'] not in ('GBP', 'EUR'):
+                    raise ValueError('devise de prix non prise en charge')
+                if row['prix_final']['devise'] != row['prix_unitaire']['devise']:
+                    raise ValueError('les devises unitaire et finale doivent coïncider')
+                _number(row['prix_final']['prix'])
+                _number(row['prix_final']['prix_eur'])
+                drivers = classify_drivers(row['nom'], row['description'], row['fournisseur']['devise'])
                 if (not drivers or not drivers.keys() <= INDEX_NAMES
                         or any(not w.is_finite() or w < 0 for w in drivers.values())
                         or sum(drivers.values()) != 1):
                     raise ValueError('coefficients invalides : somme attendue 1')
-                parts.append(Component(identifier, name, price, quantity, warranty,
-                                       MappingProxyType(drivers)))
-                seen.add(identifier)
+                parts[identifier] = Component(identifier, price, price_eur, total,
+                                              MappingProxyType(drivers))
             except (KeyError, TypeError, InvalidOperation, ValueError) as error:
-                raise ValueError(f'Composant {identifier!r} invalide : {error}') from error
-    except KeyError as error:
-        raise ValueError('nomenclature sans catégories') from error
+                raise ValueError(f'{path.name} : composant {identifier!r} invalide : {error}') from error
+    except (KeyError, TypeError) as error:
+        raise ValueError(f'{path.name} : nomenclature sans catégories valides') from error
     if not parts:
-        raise ValueError('nomenclature vide')
-    return tuple(parts)
+        raise ValueError(f'{path.name} : nomenclature vide')
+    return PricingBom(_freeze(data), MappingProxyType(parts))
+
+
+def load_boms(directory: Path = DEFAULT_BOM_DIR):
+    return MappingProxyType({model: _load_bom(directory / filename)
+                             for model, filename in MODEL_FILES.items()})
 
 
 def load_history(path: Path = HISTORY_PATH):
