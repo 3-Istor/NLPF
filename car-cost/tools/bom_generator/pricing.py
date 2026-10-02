@@ -215,20 +215,54 @@ def build_sourcing(bom: Bom) -> dict[str, list[dict]]:
     return sourcing
 
 
-def _supplier_by_id(supplier_id: str) -> dict:
-    for supplier in SUPPLIERS:
+def _supplier_by_id(supplier_id: str, suppliers: tuple[dict, ...] = SUPPLIERS) -> dict:
+    for supplier in suppliers:
         if supplier["id"] == supplier_id:
             return supplier
     raise KeyError(supplier_id)
 
 
-def build_price_catalog(bom: Bom) -> dict[str, dict]:
+# Matières premières : le profil de prix se lit sur la référence, plus fiable
+# que le libellé (« Fil de cuivre émaillé » n'est pas un câble, mais il suit
+# le cuivre comme un câble).
+_MATERIAL_PROFILES = (
+    ("COPPER", "cable"), ("BRASS", "cable"),
+    ("ALU", "aluminium"),
+    ("STEEL", "steel"), ("IRON", "steel"), ("STAINLESS", "steel"),
+    ("WELD", "steel"), ("ZINC", "steel"), ("LEAD", "steel"),
+    ("RUBBER", "rubber"),
+    ("PCB", "electronics"), ("SOLDER", "electronics"),
+)
+
+
+def multipla_profile(ref: str, part) -> str:
+    """À quels marchés le prix de cette pièce du Multipla est exposé."""
+    from .price_drivers import classify
+
+    if part.category == "fastener":
+        return "steel"
+    if part.category == "material":
+        return next((p for token, p in _MATERIAL_PROFILES if token in ref), "default")
+    profile = classify(part.label)
+    if profile == "default" and part.category == "electrical":
+        return "electronics"
+    return profile
+
+
+def build_price_catalog(bom: Bom, indices: dict | None = None) -> dict[str, dict]:
     """Prix de référence et bornes annuelles, dans les trois devises.
 
     Les prix USD et RUB ne sont pas la conversion exacte du prix EUR : un écart
     déterministe de quelques pourcents est introduit, parce que le modèle les
     traite comme trois prix indépendants et non comme une conversion.
+
+    Chaque pièce porte son profil d'exposition aux indices de marché simulés
+    (`drivers`). Avec l'historique des indices, les bornes annuelles sont
+    celles que l'API simulée parcourra réellement ; sans lui, elles restent un
+    écart déterministe autour de la référence.
     """
+    from .price_drivers import daily_factors, weights
+
     catalog: dict[str, dict] = {}
     for ref, part in bom.parts.items():
         if part.valuation_mode != PURCHASED:
@@ -240,15 +274,30 @@ def build_price_catalog(bom: Bom) -> dict[str, dict]:
             "USD": (eur * EUR_TO_USD * _spread(ref, "usd", "0.970000", "1.030000")),
             "RUB": (eur * EUR_TO_RUB * _spread(ref, "rub", "0.950000", "1.050000")),
         }
-        entry = {"unit": part.unit, "price_per": str(part.price_per), "prices": {}}
+        profile = multipla_profile(ref, part)
+        drivers = weights(profile)
+        factors = daily_factors(drivers, indices) if indices else None
+        entry = {
+            "unit": part.unit,
+            "price_per": str(part.price_per),
+            "profile": profile,
+            "drivers": drivers,
+            "prices": {},
+        }
         for code, value in currencies.items():
             reference = value.quantize(Decimal("0.000001"))
-            low = _spread(ref, "low-" + code, "0.780000", "0.960000")
-            high = _spread(ref, "high-" + code, "1.040000", "1.260000")
+            if factors:
+                series = [reference * f for f in factors]
+                bounds = (min(series), max(series))
+            else:
+                bounds = (
+                    reference * _spread(ref, "low-" + code, "0.780000", "0.960000"),
+                    reference * _spread(ref, "high-" + code, "1.040000", "1.260000"),
+                )
             entry["prices"][code] = {
                 "reference": str(reference),
-                "year_min": str((reference * low).quantize(Decimal("0.000001"))),
-                "year_max": str((reference * high).quantize(Decimal("0.000001"))),
+                "year_min": str(bounds[0].quantize(Decimal("0.000001"))),
+                "year_max": str(bounds[1].quantize(Decimal("0.000001"))),
             }
         catalog[ref] = entry
     return catalog
@@ -265,7 +314,11 @@ def unit_purchase_price(part, offer: dict, plant: dict) -> Decimal:
 
 
 def reference_costing(
-    bom: Bom, cumulative: dict[str, Decimal], sourcing: dict[str, list[dict]]
+    bom: Bom,
+    cumulative: dict[str, Decimal],
+    sourcing: dict[str, list[dict]],
+    suppliers: tuple[dict, ...] = SUPPLIERS,
+    labour_rate: Decimal = REFERENCE_LABOUR_RATE,
 ) -> dict:
     """Le coût du scénario vide : fournisseur et usine par défaut, règle `labour`.
 
@@ -299,7 +352,7 @@ def reference_costing(
 
         if part.valuation_mode == PURCHASED:
             offer = next(o for o in sourcing[ref] if o["is_default"])
-            supplier = _supplier_by_id(offer["supplier_id"])
+            supplier = _supplier_by_id(offer["supplier_id"], suppliers)
             plant = default_plant(supplier)
             unit_cost = unit_purchase_price(part, offer, plant)
             contribution = quantity * unit_cost
@@ -317,7 +370,7 @@ def reference_costing(
             }
         else:
             assert part.labour_minutes is not None
-            unit_cost = part.labour_minutes / Decimal(60) * REFERENCE_LABOUR_RATE
+            unit_cost = part.labour_minutes / Decimal(60) * labour_rate
             contribution = quantity * unit_cost
             labour_cost += contribution
             per_part[ref] = {
@@ -346,7 +399,7 @@ def reference_costing(
         "root_full_cost": full_cost[bom.root_ref],
         "root_full_co2": full_co2[bom.root_ref],
         "per_part": per_part,
-        "labour_rate": REFERENCE_LABOUR_RATE,
+        "labour_rate": labour_rate,
     }
 
 

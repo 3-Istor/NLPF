@@ -44,6 +44,9 @@ class PriceSnapshot:
     #: qu'absente. La différence se lit sur la ligne : une valeur refusée
     #: renvoie au journal de quarantaine, une absence renvoie à la source.
     quarantined_refs: frozenset[str] = field(default_factory=frozenset)
+    #: La nomenclature pour laquelle les prix ont été demandés. None pour un
+    #: snapshot antérieur à la coexistence de plusieurs nomenclatures.
+    bom_version: str | None = None
 
     def age(self, now: datetime) -> timedelta:
         return now - self.taken_at

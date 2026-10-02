@@ -179,6 +179,10 @@ def run_calculation(
     snapshot_is_fallback: bool = False,
     top: int = 15,
 ) -> Calculation:
+    # Le SAV s'ajoute sur les arêtes, avant le moteur : il n'existe qu'une
+    # façon de cumuler les quantités, et elle ne sait rien du SAV.
+    if scenario.include_after_sales:
+        bom = bom.with_after_sales()
     result = compute(
         CalculationInput(
             bom=bom,
@@ -316,6 +320,9 @@ def input_digest(scenario: Scenario, snapshot: PriceSnapshot) -> str:
     # d'achat explicite ; il ne réalise aucune conversion de prix.
     if purchase_currencies:
         payload["purchase_currencies"] = purchase_currencies
+    # Même précaution : sans SAV, l'empreinte d'un calcul ancien ne change pas.
+    if scenario.include_after_sales:
+        payload["include_after_sales"] = True
     canonical = json.dumps(payload, sort_keys=True, ensure_ascii=False)
     return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 

@@ -16,6 +16,7 @@ from decimal import Decimal
 import pytest
 
 from carcost.application.browse_bom import children_of_path
+from carcost.application.browse_bom import root_node
 from carcost.application.price_resolution import resolve_unit_prices
 from carcost.application.run_calculation import run_calculation
 from carcost.application.scenario import Scenario, ScenarioParameter
@@ -129,6 +130,56 @@ class TestCostedLines:
 
         assert nodes[0].price_status == "MISSING"
         assert nodes[0].own_contribution is None
+
+    def test_the_share_is_what_this_occurrence_weighs_in_the_total(
+        self, bom, calculation
+    ):
+        """Total : 60 + 60 + 45 + 230 = 395. A pèse 140, B 195, S sous B 150."""
+        result = calculation()
+        under_v = {
+            node.node.part_ref: node
+            for node in with_costs(
+                bom, children_of_path(bom, "V").items, result, a_scenario()
+            )
+        }
+        under_b = with_costs(
+            bom, children_of_path(bom, "V/B").items, result, a_scenario()
+        )
+        root = with_costs(bom, (root_node(bom),), result, a_scenario())[0]
+
+        assert under_v["A"].rolled_up_contribution == Decimal("140")
+        assert under_v["A"].share_of_total_pct == Decimal("35.4")
+        assert under_v["B"].rolled_up_contribution == Decimal("195")
+        assert under_v["B"].share_of_total_pct == Decimal("49.4")
+        assert under_b[0].rolled_up_contribution == Decimal("150")
+        assert under_b[0].share_of_total_pct == Decimal("38.0")
+        assert root.share_of_total_pct == Decimal("100.0")
+
+    def test_shares_do_not_sum_between_levels(self, bom, calculation):
+        """La main-d'oeuvre propre de V (60 euros, 15,2 %) n'est dans aucun
+        enfant : les parts des enfants ne font pas 100."""
+        nodes = with_costs(
+            bom, children_of_path(bom, "V").items, calculation(), a_scenario()
+        )
+
+        assert sum(node.share_of_total_pct for node in nodes) != Decimal("100.0")
+
+    def test_a_line_without_price_has_no_share(self, bom):
+        scenario = a_scenario()
+        empty = PriceSnapshot(
+            id="snp-vide", taken_at=NOW, currency="EUR", source="mock", prices={}
+        )
+        resolved = resolve_unit_prices(
+            bom, FakeSourcingRepository().load("bom-test"), empty, scenario
+        )
+        result = run_calculation(
+            bom=bom, scenario=scenario, snapshot=empty, resolved=resolved,
+            now=NOW, calculation_id="calc-2",
+        )
+
+        nodes = with_costs(bom, children_of_path(bom, "V/A").items, result, scenario)
+
+        assert nodes[0].share_of_total_pct is None
 
 
 

@@ -67,6 +67,7 @@ seul un jeu de valeurs de contrôle les révèle.
 | **Quantité cumulée** (`cumulative_quantity`) | Ce qu'il faut de cette pièce pour **un véhicule complet**. Formellement : la somme, sur **tous** les chemins de la racine à la pièce, du **produit** des quantités unitaires du chemin. |
 | **Valeur de contrôle** | La quantité cumulée attendue, stockée dans le jeu de données et vérifiée par les tests du moteur. Quelques-unes sont vérifiables à la main (le pneumatique à 5, roue de secours comprise). |
 | **Unité** (`unit`) | `pce`, `kg`, `m`, `L`… Un nombre sans unité n'est pas une information : l'unité est affichée partout. |
+| **Quantité SAV** (`after_sales_quantity`) | Pièces de rechange livrées **avec** le véhicule, portées par l'arête à côté de la quantité montée. N'entrent dans le calcul que si le scénario **active le SAV** (`include_after_sales`) : chaque arête compte alors montée + SAV, et le SAV se multiplie par les quantités des parents comme toute quantité. Seules les Valhalla en portent. |
 
 ---
 
@@ -92,7 +93,11 @@ seul un jeu de valeurs de contrôle les révèle.
 
 | Terme | Définition |
 |---|---|
-| **Catalogue de prix** | Le prix de référence de chaque pièce achetée, en EUR, USD et RUB, avec ses min/max sur l'année. Alimente la mock API. |
+| **Catalogue de prix** | Le prix de référence de chaque pièce achetée, en EUR, USD et RUB (et GBP pour la Valhalla), avec ses min/max sur l'année simulée et son profil. Alimente la mock API. |
+| **Indice de marché** | Une des neuf séries synthétiques de 365 jours que simule l'API de prix : cuivre, aluminium, acier, lithium, nickel, semi-conducteurs, énergie, transport, cours GBP→EUR. Une année défile en 40 minutes, puis recommence. |
+| **Profil de prix** (`profile`, `drivers`) | À quels indices le prix d'une pièce est exposé, et avec quels poids (somme 1) : câble, acier, aluminium, composite, électronique, batterie, moteur, caoutchouc, défaut. Calculé à la génération du jeu de données, écrit dans le catalogue. |
+| **Prix en direct** (`price_mode: LIVE`) | Prix lus à l'instant sur l'API pour un calcul **jamais enregistré** (ADR-0015). Pour garder un chiffre, on **fige les prix** (snapshot), puis on calcule. |
+| **Figer les prix** | Prendre un snapshot de prix des pièces achetées d'une nomenclature, depuis l'écran ou en ligne de commande. Un snapshot appartient à **une** nomenclature. |
 | **Fournisseur** (`supplier`) | Qui vend la pièce. Porte un **multiplicateur de prix** et un **délai**. |
 | **Site**, **usine** (`plant`) | D'où la pièce sort physiquement. Un fournisseur déclare plusieurs sites. Chaque site porte une **origine**, un **coefficient de prix** et un **CO₂ de transport** (ADR-0010). |
 | **Origine**, **provenance** (`origin`) | Le pays du site retenu. **Levier indépendant du fournisseur** : même fournisseur, usine différente, prix et CO₂ différents. |
@@ -118,6 +123,9 @@ seul un jeu de valeurs de contrôle les révèle.
 | **Calcul** (`calculation`) | L'exécution du moteur sur un scénario et un snapshot. Persisté avec ses versions (BOM, snapshot, règles), son horodatage et sa devise. |
 | **Devise d'achat** | Celle dans laquelle une pièce est payée. |
 | **Devise d'affichage** | Celle dans laquelle le résultat est présenté. |
+| **Snapshot de calcul** (`CalculationSnapshot`) | Un calcul **nommé et figé** avec les hypothèses qui l'ont produit (copie des paramètres, taux horaire, devise, règles actives), et des références vers le calcul, le snapshot de prix et la version de BOM validée. Immuable, sauf son nom (ADR-0014). À ne pas confondre avec le **snapshot de prix** (§5), qui photographie les prix et est partagé par tous les calculs. |
+| **Snapshot ouvert** | Un snapshot de calcul affiché à l'écran : **en lecture seule**. Les réglages montrés pour une ligne et les marques ●/○ sont ceux de la copie, pas du scénario vivant ; la synthèse dit « figé ». |
+| **Repartir d'un snapshot** (`derived_from`) | Créer un **scénario neuf** avec exactement les réglages copiés dans un snapshot de calcul. Le scénario garde `derived_from` = le snapshot d'origine, et le gel de ce scénario le recopie : on refait la configuration d'il y a trois mois et on la recapture avec les prix actuels, sans toucher au snapshot d'origine (ADR-0014, complément du 01/10/2026). |
 | **Reproductibilité** | Mêmes entrées + même snapshot ⇒ même résultat, **au centime**. |
 | **Explicabilité** | Pouvoir descendre du total jusqu'au prix unitaire d'une pièce et à sa source. |
 | **État du calcul** | `à jour` · `paramètres modifiés depuis le dernier calcul` (totaux **obsolètes**) · `calcul en cours` · `échec`. Donnée renvoyée par l'API, pas une décoration du front. |

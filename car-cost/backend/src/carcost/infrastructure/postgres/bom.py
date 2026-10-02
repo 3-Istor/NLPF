@@ -36,7 +36,7 @@ PARTS_QUERY = """
 """
 
 EDGES_QUERY = """
-    SELECT parent_ref, child_ref, quantity
+    SELECT parent_ref, child_ref, quantity, after_sales_quantity
     FROM bom_edge
     WHERE bom_version_id = %s
     ORDER BY parent_ref, child_ref
@@ -45,7 +45,7 @@ EDGES_QUERY = """
 
 VERSIONS_QUERY = """
     SELECT id, label, root_part_ref, part_count, edge_count, validated_at,
-           is_synthetic
+           is_synthetic, reference_labour_rate
     FROM bom_version
     ORDER BY created_at DESC, id
 """
@@ -80,8 +80,13 @@ class PostgresBomRepository(PostgresRepository):
 
             cursor.execute(EDGES_QUERY, (version,))
             edges = tuple(
-                Edge(parent_ref=parent, child_ref=child, quantity=Decimal(quantity))
-                for parent, child, quantity in cursor.fetchall()
+                Edge(
+                    parent_ref=parent,
+                    child_ref=child,
+                    quantity=Decimal(quantity),
+                    after_sales_quantity=Decimal(after_sales),
+                )
+                for parent, child, quantity, after_sales in cursor.fetchall()
             )
 
         return Bom(root_ref=root_ref, parts=parts, edges=edges)

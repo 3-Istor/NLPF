@@ -7,16 +7,35 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Comparison, Scenario, SourcingPreview } from "../api/types";
+import type {
+  CalculationSnapshotSummary,
+  Comparison,
+  Scenario,
+  SourcingPreview,
+} from "../api/types";
+import { ApiFailure } from "../api/client";
 import { DecisionDialog } from "./DecisionDialog";
 
 const compare = vi.fn();
 const previewSourcing = vi.fn();
 const createSourcingVariant = vi.fn();
+const calculationSnapshots = vi.fn();
+const compareCalculationSnapshots = vi.fn();
 
 vi.mock("../api/client", () => ({
-  ApiFailure: class extends Error {},
+  ApiFailure: class extends Error {
+    code: string;
+    status: number;
+    constructor(code: string, message: string, status: number) {
+      super(message);
+      this.code = code;
+      this.status = status;
+    }
+  },
   api: {
+    calculationSnapshots: (...args: unknown[]) => calculationSnapshots(...args),
+    compareCalculationSnapshots: (...args: unknown[]) =>
+      compareCalculationSnapshots(...args),
     compare: (...args: unknown[]) => compare(...args),
     previewSourcing: (...args: unknown[]) => previewSourcing(...args),
     createSourcingVariant: (...args: unknown[]) => createSourcingVariant(...args),
@@ -104,12 +123,40 @@ function mount() {
     onOpenScenario: vi.fn(),
   };
   render(
-    <DecisionDialog scenarios={[base, variant]} current={base} {...callbacks} />,
+    <DecisionDialog
+      scenarios={[base, variant]}
+      current={base}
+      bomVersion="bom-test"
+      {...callbacks}
+    />,
   );
   return callbacks;
 }
 
+function frozen(id: string, name: string): CalculationSnapshotSummary {
+  return {
+    id,
+    name,
+    bom_version: "bom-test",
+    scenario_id: "scn-a",
+    scenario_name: "Base",
+    calculation_id: `calc-${id}`,
+    price_snapshot_id: "snp-jour",
+    created_at: "2026-10-01T10:00:00Z",
+  };
+}
+
+const frozenPair = [frozen("csn-1", "Référence T3"), frozen("csn-2", "Variante Turquie")];
+
 beforeEach(() => {
+  calculationSnapshots
+    .mockReset()
+    .mockResolvedValue({ items: frozenPair, total: 2 });
+  compareCalculationSnapshots.mockReset().mockResolvedValue({
+    ...comparison,
+    snapshot_a: { id: "csn-1", name: "Référence T3" },
+    snapshot_b: { id: "csn-2", name: "Variante Turquie" },
+  });
   compare.mockReset().mockResolvedValue(comparison);
   previewSourcing.mockReset().mockResolvedValue(preview);
   createSourcingVariant.mockReset().mockResolvedValue({
@@ -126,9 +173,17 @@ describe("comparer", () => {
 
     expect(await screen.findByText("Écart B − A")).toBeInTheDocument();
     expect(compare).toHaveBeenCalledWith("scn-a", "scn-b");
-    expect(screen.getByText("non calculé")).toBeInTheDocument();
+    expect(screen.getByText(/^inconnu/)).toBeInTheDocument();
     expect(screen.queryByText(/0,00 kg/)).not.toBeInTheDocument();
     expect(screen.getAllByText("-23,00 €").length).toBeGreaterThan(0);
+  });
+
+  it("un écart CO₂ connu s'affiche arrondi, signe compris", async () => {
+    compare.mockResolvedValue({ ...comparison, co2_delta_kg: "-12.345600" });
+    mount();
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+
+    expect(await screen.findByText("-12,35 kg CO₂e")).toBeInTheDocument();
   });
 
   it("mène à la pièce depuis un écart", async () => {
@@ -180,5 +235,124 @@ describe("recommander", () => {
       price_snapshot_id: "snp-apercu",
     });
     expect(screen.getByText(/Le scénario d'origine n'a pas été modifié/)).toBeInTheDocument();
+  });
+});
+
+describe("comparer deux snapshots de calcul", () => {
+  async function openTab() {
+    const callbacks = mount();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Comparer deux snapshots de calcul" }),
+    );
+    return callbacks;
+  }
+
+  it("compare deux snapshots de calcul par leur nom, sans recalcul", async () => {
+    await openTab();
+    await screen.findAllByRole("option", { name: /Variante Turquie/ });
+    fireEvent.change(screen.getByLabelText("A — référence"), {
+      target: { value: "csn-1" },
+    });
+    fireEvent.change(screen.getByLabelText("B — variante"), {
+      target: { value: "csn-2" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+
+    expect(await screen.findByText("Écart B − A")).toBeInTheDocument();
+    expect(compareCalculationSnapshots).toHaveBeenCalledWith("csn-1", "csn-2");
+    expect(compare).not.toHaveBeenCalled();
+    const terms = screen.getAllByRole("term").map((node) => node.textContent);
+    expect(terms).toContain("Référence T3");
+    expect(terms).toContain("Variante Turquie");
+    expect(screen.getAllByText("-23,00 €").length).toBeGreaterThan(0);
+  });
+
+  it("explique un refus", async () => {
+    compareCalculationSnapshots.mockRejectedValue(
+      new ApiFailure(
+        "INCOMPARABLE_SCENARIOS",
+        "les scénarios doivent être calculés avec le même snapshot de prix",
+        422,
+      ),
+    );
+    await openTab();
+    await screen.findAllByRole("option", { name: /Variante Turquie/ });
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+
+    expect(
+      await screen.findByText(/doivent être calculés avec le même snapshot de prix/),
+    ).toBeInTheDocument();
+  });
+
+  it("demande deux snapshots quand il n'y en a qu'un", async () => {
+    calculationSnapshots.mockResolvedValue({ items: [frozenPair[0]], total: 1 });
+    await openTab();
+
+    expect(
+      await screen.findByText("Il faut au moins deux snapshots de calcul."),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Comparer" })).toBeDisabled();
+  });
+
+  it("dit sur quels prix porte le snapshot", async () => {
+    await openTab();
+
+    const options = await screen.findAllByRole("option", {
+      name: /Référence T3.*prix snp-jour/,
+    });
+    expect(options.length).toBeGreaterThan(0);
+  });
+});
+
+describe("comparer deux snapshots de calcul : les refus", () => {
+  async function openTab() {
+    mount();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Comparer deux snapshots de calcul" }),
+    );
+    await screen.findAllByRole("option", { name: /Variante Turquie/ });
+  }
+
+  it("un refus 422 montre le snapshot de prix de A et celui de B", async () => {
+    calculationSnapshots.mockResolvedValue({
+      items: [
+        { ...frozen("csn-2", "Prix d'octobre"), price_snapshot_id: "snp-oct" },
+        { ...frozen("csn-1", "Prix de septembre"), price_snapshot_id: "snp-sept" },
+      ],
+      total: 2,
+    });
+    compareCalculationSnapshots.mockRejectedValue(
+      new ApiFailure(
+        "INCOMPARABLE_SCENARIOS",
+        "les scénarios doivent être calculés avec le même snapshot de prix",
+        422,
+      ),
+    );
+    mount();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Comparer deux snapshots de calcul" }),
+    );
+    await screen.findAllByRole("option", { name: /Prix d'octobre/ });
+
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+
+    const refusal = (await screen.findByText(/Snapshot de prix de A/)).closest("p")!;
+    expect(refusal.textContent).toMatch(/de A : snp-sept ; de B : snp-oct/);
+  });
+
+  it("le bouton est désactivé quand A et B sont le même snapshot", async () => {
+    await openTab();
+
+    fireEvent.change(screen.getByLabelText("B — variante"), {
+      target: { value: "csn-1" },
+    });
+    fireEvent.change(screen.getByLabelText("A — référence"), {
+      target: { value: "csn-1" },
+    });
+
+    expect(screen.getByRole("button", { name: "Comparer" })).toBeDisabled();
+    expect(screen.getByText("Choisir deux snapshots différents.")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
+    expect(compareCalculationSnapshots).not.toHaveBeenCalled();
   });
 });

@@ -29,6 +29,8 @@ disent en cinq minutes ce que le code dirait en une heure.
 Python et Node sont installés ; le venv est dans `car-cost/backend/.venv`.
 **Il a été créé depuis WSL** : sous Windows, `.venv/Scripts/python.exe` ne
 fonctionne plus. Lancer les commandes Python depuis WSL, ou recréer le venv.
+S'il manque (clone neuf), le créer avant toute commande :
+`cd car-cost/backend && python3 -m venv .venv && .venv/bin/python -m pip install -e ".[dev]"`.
 
 Postgres tourne dans Docker via WSL. Un conteneur démarré par une invocation
 ponctuelle (`wsl -e bash -lc "docker compose up -d"`) s'arrête quelques secondes
@@ -44,8 +46,9 @@ après la fin de la commande. Deux conséquences :
 # tout depuis la racine du dépôt
 cd car-cost && source backend/.venv/bin/activate
 
-python -m pytest backend                 # 390 tests, dont l'intégration Postgres
+python -m pytest backend                 # 606 tests, dont 48 d'intégration Postgres
 python -m tools.bom_generator --check    # déterminisme du jeu de données
+python -m tools.valhalla_import --check  # idem pour les trois Valhalla
 python -m carcost.infrastructure seeds   # émet le SQL de chargement, n'écrit rien
 ```
 

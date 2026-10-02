@@ -267,3 +267,50 @@ class TestIssueCounts:
         counts = run(bom, sourcing, snapshot).issue_counts()
 
         assert counts == {"missing_price": 1, "quarantined": 1, "fallback": 1}
+
+
+class TestAfterSales:
+    """Le SAV est un réglage du scénario : il change le total et l'empreinte."""
+
+    @pytest.fixture
+    def bom_with_spares(self, bom) -> Bom:
+        edges = tuple(
+            Edge(e.parent_ref, e.child_ref, e.quantity, Decimal("1"))
+            if (e.parent_ref, e.child_ref) == ("GMP", "S")
+            else e
+            for e in bom.edges
+        )
+        return Bom(root_ref=bom.root_ref, parts=bom.parts, edges=edges)
+
+    def _run(self, bom, sourcing, snapshot, scenario):
+        return run_calculation(
+            bom=bom, scenario=scenario, snapshot=snapshot,
+            resolved=resolve_unit_prices(bom, sourcing, snapshot, scenario),
+            now=NOW, calculation_id="calc",
+        )
+
+    def test_spares_count_only_when_the_scenario_asks(
+        self, bom_with_spares, sourcing, snapshot
+    ):
+        from dataclasses import replace
+
+        plain = self._run(bom_with_spares, sourcing, snapshot, a_scenario())
+        with_spares = self._run(
+            bom_with_spares, sourcing, snapshot,
+            replace(a_scenario(), include_after_sales=True),
+        )
+        # 2 GMP × 1 vis de rechange × 10 EUR
+        assert with_spares.total_cost - plain.total_cost == Decimal("20")
+        assert next(l for l in with_spares.lines if l.part_ref == "S").cumulative_quantity == Decimal("25")
+
+    def test_switching_spares_makes_previous_totals_stale(
+        self, bom_with_spares, sourcing, snapshot
+    ):
+        from dataclasses import replace
+
+        plain = self._run(bom_with_spares, sourcing, snapshot, a_scenario())
+        with_spares = self._run(
+            bom_with_spares, sourcing, snapshot,
+            replace(a_scenario(), include_after_sales=True),
+        )
+        assert plain.input_digest != with_spares.input_digest

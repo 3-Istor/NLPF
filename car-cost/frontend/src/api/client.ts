@@ -6,14 +6,22 @@
  */
 
 import type {
+  BomVersion,
   Calculation,
+  PriceHistoryResponse,
+  PriceSnapshotSummary,
+  SupplierParts,
+  SupplierSummary,
+  CalculationSnapshot,
+  CalculationSnapshotSummary,
   Comparison,
   Occurrence,
   Page,
   ParameterAck,
   QuarantineJournal,
+  SnapshotComparison,
   Scenario,
-  SearchHit,
+  SearchResponse,
   SourcingConstraints,
   SourcingPreview,
   SourcingVariant,
@@ -55,20 +63,48 @@ const post = (body: unknown): RequestInit => ({
   body: JSON.stringify(body),
 });
 
-const withCalculation = (calculationId: string | null) =>
-  calculationId ? `&calculation_id=${encodeURIComponent(calculationId)}` : "";
+const withCalculation = (calculationId: string | null, snapshotId?: string | null) =>
+  (calculationId ? `&calculation_id=${encodeURIComponent(calculationId)}` : "") +
+  (snapshotId ? `&calculation_snapshot_id=${encodeURIComponent(snapshotId)}` : "");
 
 export const api = {
-  root: (version: string, calculationId: string | null) =>
+  suppliers: (version: string) =>
+    call<{ items: SupplierSummary[] }>(`/bom/${version}/suppliers`),
+
+  supplierParts: (version: string, supplierId: string) =>
+    call<SupplierParts>(
+      `/bom/${version}/suppliers/${encodeURIComponent(supplierId)}/parts`,
+    ),
+
+  /** L'année simulée d'une pièce achetée, et ses prix figés. */
+  priceHistory: (version: string, partRef: string, currency = "EUR") =>
+    call<PriceHistoryResponse>(
+      `/bom/${version}/parts/${encodeURIComponent(partRef)}/price-history` +
+        `?currency=${encodeURIComponent(currency)}`,
+    ),
+
+  /** Les nomenclatures chargées, la plus récente d'abord. */
+  bomVersions: () => call<{ items: BomVersion[] }>("/bom/versions"),
+
+  /**
+   * `snapshotId` : le snapshot de calcul ouvert. Le serveur marque alors les
+   * lignes d'après sa copie des réglages, pas d'après le scénario vivant.
+   */
+  root: (version: string, calculationId: string | null, snapshotId?: string | null) =>
     call<TreeLine>(
-      `/bom/${version}/root?${withCalculation(calculationId).slice(1)}`,
+      `/bom/${version}/root?${withCalculation(calculationId, snapshotId).slice(1)}`,
     ),
 
   /** Les enfants directs d'un nœud. Il n'existe pas de paramètre de profondeur. */
-  children: (version: string, path: string, calculationId: string | null) =>
+  children: (
+    version: string,
+    path: string,
+    calculationId: string | null,
+    snapshotId?: string | null,
+  ) =>
     call<Page<TreeLine> & { path: string }>(
       `/bom/${version}/children?path=${encodeURIComponent(path)}` +
-        withCalculation(calculationId),
+        withCalculation(calculationId, snapshotId),
     ),
 
   whereUsed: (version: string, partRef: string) =>
@@ -76,9 +112,10 @@ export const api = {
       `/bom/${version}/where-used?part_ref=${encodeURIComponent(partRef)}`,
     ),
 
-  search: (version: string, query: string) =>
-    call<{ items: SearchHit[] }>(
-      `/bom/${version}/search?q=${encodeURIComponent(query)}`,
+  /** Au plus `maxPaths` chemins par pièce ; les totaux comptent tout. */
+  search: (version: string, query: string, maxPaths = 50) =>
+    call<SearchResponse>(
+      `/bom/${version}/search?q=${encodeURIComponent(query)}&max_paths=${maxPaths}`,
     ),
 
   part: (version: string, partRef: string) =>
@@ -93,6 +130,13 @@ export const api = {
     call<Scenario>("/scenarios", { method: "POST", body: JSON.stringify(body) }),
 
   scenario: (id: string) => call<Scenario>(`/scenarios/${id}`),
+
+  /** Compter ou non le SAV. Le dernier calcul devient obsolète. */
+  setAfterSales: (id: string, include: boolean) =>
+    call<Scenario>(`/scenarios/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ include_after_sales: include }),
+    }),
 
   /** Du plus récent au plus ancien. */
   scenarios: () =>
@@ -155,6 +199,57 @@ export const api = {
     }),
 
   calculation: (id: string) => call<Calculation>(`/calculations/${id}`),
+
+  /** Aux prix actuels de l'API ; rien n'est enregistré. */
+  calculateLive: (scenarioId: string) =>
+    call<Calculation>("/calculations/live", post({ scenario_id: scenarioId })),
+
+  /** Fige les prix actuels de l'API pour cette nomenclature. */
+  takePriceSnapshot: (version: string, currency = "EUR") =>
+    call<PriceSnapshotSummary>(
+      "/price-snapshots",
+      post({ bom_version: version, currency }),
+    ),
+
+  priceSnapshots: (version: string) =>
+    call<{ items: PriceSnapshotSummary[]; total: number }>(
+      `/price-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
+
+  /** Lance un calcul sur le scénario et le fige sous ce nom. */
+  freezeCalculation: (scenarioId: string, name: string) =>
+    call<CalculationSnapshot>(
+      "/calculation-snapshots",
+      post({ scenario_id: scenarioId, name }),
+    ),
+
+  /** Du plus récent au plus ancien. */
+  calculationSnapshots: (version: string) =>
+    call<{ items: CalculationSnapshotSummary[]; total: number }>(
+      `/calculation-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
+
+  /** Compare deux calculs figés : aucun recalcul, rien d'enregistré. */
+  compareCalculationSnapshots: (snapshotA: string, snapshotB: string) =>
+    call<SnapshotComparison>(
+      "/calculation-snapshots/compare",
+      post({ snapshot_a_id: snapshotA, snapshot_b_id: snapshotB }),
+    ),
+
+  calculationSnapshot: (id: string) =>
+    call<CalculationSnapshot>(
+      `/calculation-snapshots/${encodeURIComponent(id)}`,
+    ),
+
+  /**
+   * « Repartir de ce snapshot » : un scénario neuf avec exactement sa copie.
+   * Refus `SNAPSHOT_SETTINGS_NOT_APPLICABLE` : le message nomme les pièces.
+   */
+  deriveScenario: (snapshotId: string, name: string) =>
+    call<Scenario>(
+      `/calculation-snapshots/${encodeURIComponent(snapshotId)}/derive`,
+      post({ name }),
+    ),
 
   /** Les valeurs refusées à la prise de ce snapshot ; vide s'il est sain. */
   quarantine: (snapshotId: string) =>

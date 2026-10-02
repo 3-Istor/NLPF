@@ -7,7 +7,7 @@ fait que les réunir et traduire les exceptions des cas d'usage en codes nommés
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Callable
 
@@ -20,13 +20,20 @@ from ...application.ports import (
     BomVersionNotValidated,
     CalculationNotFound,
     CalculationRepository,
+    CalculationSnapshotRepository,
+    PriceNotQuoted,
     PriceSnapshotRepository,
+    PriceSource,
+    PriceSourceError,
     ScenarioNotFound,
     ScenarioRepository,
     SourcingRepository,
 )
+from ...application.take_snapshot import NoPriceAvailable
+from ..live_calculations import LiveCalculations, WithLiveCalculations
 from .bom_routes import register_bom_routes
 from .calculation_routes import register_calculation_routes
+from .calculation_snapshot_routes import register_calculation_snapshot_routes
 from .errors import error_response
 from .snapshot_routes import register_snapshot_routes
 
@@ -43,10 +50,24 @@ class Repositories:
     snapshots: PriceSnapshotRepository | None = None
     scenarios: ScenarioRepository | None = None
     calculations: CalculationRepository | None = None
+    calculation_snapshots: CalculationSnapshotRepository | None = None
     clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
+    #: L'API de prix, interrogée en direct : mode direct, figer les prix,
+    #: historique d'une pièce. None : ces routes répondent qu'elle manque.
+    prices: PriceSource | None = None
+    #: Les calculs en direct, jamais enregistrés (ADR-0015), gardés le temps
+    #: que l'arbre lise leurs lignes.
+    live: LiveCalculations = field(default_factory=LiveCalculations)
 
 
 def create_app(repositories: Repositories) -> FastAPI:
+    if repositories.calculations is not None and not isinstance(
+        repositories.calculations, WithLiveCalculations
+    ):
+        repositories.calculations = WithLiveCalculations(
+            repositories.calculations, repositories.live
+        )
+
     app = FastAPI(
         title="3istor",
         description=(
@@ -55,6 +76,18 @@ def create_app(repositories: Repositories) -> FastAPI:
         ),
         version="0.1.0",
     )
+
+    @app.exception_handler(PriceSourceError)
+    async def _price_source(_: Request, error: PriceSourceError):
+        return _error(503, "PRICE_SOURCE_UNAVAILABLE", f"API de prix indisponible : {error}")
+
+    @app.exception_handler(NoPriceAvailable)
+    async def _no_price(_: Request, error: NoPriceAvailable):
+        return _error(503, "PRICE_SOURCE_UNAVAILABLE", str(error))
+
+    @app.exception_handler(PriceNotQuoted)
+    async def _not_quoted(_: Request, error: PriceNotQuoted):
+        return _error(404, "PRICE_NOT_QUOTED", str(error))
 
     @app.get("/health")
     def health():
@@ -88,6 +121,7 @@ def create_app(repositories: Repositories) -> FastAPI:
 
     register_calculation_routes(app, repositories)
     register_snapshot_routes(app, repositories)
+    register_calculation_snapshot_routes(app, repositories)
     register_bom_routes(app, repositories)
 
     return app

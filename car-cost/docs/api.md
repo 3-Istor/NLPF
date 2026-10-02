@@ -81,6 +81,12 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `PRICE_OVERRIDE_JUSTIFICATION_REQUIRED` | 422 | Prix forcé sans justification |
 | `SCOPE_PATH_REQUIRES_PATH` | 422 | `scope = "path"` sans chemin, ou `scope = "part"` avec chemin |
 | `OCCURRENCE_VIEW_TOO_LARGE` | 422 | La vue par occurrence demandée dépasse la borne (voir §4.3) |
+| `INVALID_SNAPSHOT_NAME` | 422 | Nom de snapshot de calcul vide (§3.11) |
+| `SNAPSHOT_NAME_TAKEN` | 409 | Le nom est déjà pris dans cette version, sans casse ni accents ; `details: {name, existing_id}` (§3.11) |
+| `CALCULATION_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot de calcul inconnu (§3.11) |
+| `CALCULATION_SNAPSHOT_MISMATCH` | 422 | Lignes d'arbre demandées avec un `calculation_id` qui n'est pas celui du `calculation_snapshot_id` (§2.3) |
+| `SCENARIO_HAS_SNAPSHOTS` | 409 | Suppression d'un scénario qui porte des snapshots de calcul ; `details.snapshots` les nomme (§3.6) |
+| `SNAPSHOT_SETTINGS_NOT_APPLICABLE` | 422 | Repartir d'un snapshot de calcul dont un réglage copié ne s'applique plus ; `details.parts` nomme chaque pièce, `[{part_ref, path, reason}]`, et aucun scénario n'est créé (§3.11) |
 | `NO_PRICE_SNAPSHOT` | 409 | Aucun snapshot disponible, même périmé |
 | `PRICE_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot inconnu (journal de quarantaine, ou `price_snapshot_id` d'un calcul) |
 | `CALCULATION_FAILED` | 500 | Échec interne ; le calcul est persisté avec `status = "FAILED"` |
@@ -122,6 +128,7 @@ C'est la route centrale de l'écran. Elle renvoie **les enfants directs et rien 
 |---|---|---|
 | `path` | oui | Le nœud à déplier |
 | `calculation_id` | non | Enrichit chaque ligne des chiffres de ce calcul |
+| `calculation_snapshot_id` | non | Snapshot de calcul ouvert : chiffres de son calcul figé, et marques `is_modified` / `has_modified_descendant` d'après **sa copie** des réglages, pas d'après le scénario vivant. Avec `calculation_id`, les deux doivent désigner le même calcul (`422 CALCULATION_SNAPSHOT_MISMATCH` sinon) ; inconnu : `404 CALCULATION_SNAPSHOT_NOT_FOUND`. Aussi accepté par `/root` |
 | `limit`, `offset` | non | Pagination des enfants |
 
 ```json
@@ -180,6 +187,10 @@ Points de contrat :
   deux sont renvoyés parce qu'ils diffèrent dès qu'un sous-ensemble est lui-même monté plusieurs fois.
 - `rolled_up_contribution` est ce que pèse **cette occurrence**, enfants inclus. Sur un nœud acheté,
   elle est égale à `own_contribution` : une feuille n'a rien en dessous d'elle.
+- `share_of_total_pct` est `rolled_up_contribution / total × 100`, en chaîne, à une décimale (même
+  arrondi que `share_pct`). Ces parts **ne se somment pas entre niveaux** : un parent contient ses
+  enfants, et sa main-d'œuvre propre n'est dans aucun d'eux. La clé est absente sans `calculation_id`
+  et quand la ligne n'a pas de prix.
 - `has_modified_descendant` est calculé **côté serveur** : le front ne connaît pas le graphe et ne
   peut pas le déduire (ADR-0009).
 - Sans `calculation_id`, les champs monétaires sont absents — jamais `null` déguisé en zéro.
@@ -215,8 +226,13 @@ Points de contrat :
 ### 2.5 `GET /bom/{bom_version}/search`
 
 ```
-?q=vis m6&limit=20
+?q=vis m6&limit=20&max_paths=50
 ```
+
+La recherche ignore les accents et la casse (`crémaillère`, `cremaillere` et `CREMAILLERE` trouvent la
+même pièce) ; la correspondance reste une sous-chaîne de la référence ou du libellé. `max_paths` vaut
+50 par défaut, 200 au maximum (au-delà : 422) ; `paths_truncated` dit quand la liste des chemins d'une
+pièce est coupée.
 
 Chaque résultat porte **ses chemins**, pour que le front puisse déplier de proche en proche jusqu'à
 la pièce (ADR-0009) :
@@ -224,8 +240,12 @@ la pièce (ADR-0009) :
 ```json
 { "items": [ { "part_ref": "FIX-M6-16", "label": "Vis M6×16", "system": "FIX",
   "occurrence_count": 12, "paths": ["VEH-MULTIPLA-16V/GMP-ASSY/FIX-M6-16", "…"],
-  "paths_truncated": true } ] }
+  "paths_truncated": true } ],
+  "total_parts": 3, "total_occurrences": 27 }
 ```
+
+`total_parts` et `total_occurrences` portent sur **toutes** les pièces trouvées, pas seulement sur les
+`limit` renvoyées : ils permettent de dire « 3 pièces, 27 emplacements » quand la liste est coupée.
 
 ### 2.6 `GET /bom/{bom_version}/parts/{part_ref}`
 
@@ -279,6 +299,17 @@ fournisseur (ADR-0010). La devise d'achat est distincte de la devise d'affichage
 conservée ici. Un snapshot porte aujourd'hui une seule devise : la sélection d'un prix dans une
 autre devise attend le catalogue multi-devise du périmètre prix, sans conversion à taux courant.
 
+### 3.1 bis `PATCH /scenarios/{id}` — compter ou non le SAV
+
+```json
+{ "include_after_sales": true }
+```
+
+Le scénario compte alors, sur chaque arête, les pièces de rechange livrées avec le véhicule en
+plus des pièces montées. Le réglage entre dans l'empreinte des entrées : le dernier calcul devient
+obsolète. Un scénario expose `include_after_sales` et `after_sales_available` (la nomenclature
+porte-t-elle du SAV ?). Une ligne d'arbre porte `after_sales_quantity` à côté d'`edge_quantity`.
+
 ### 3.2 `GET /scenarios` — lister les scénarios
 
 Renvoie tous les scénarios du plus récent au plus ancien. Chaque élément utilise le même format que
@@ -303,7 +334,7 @@ Renvoie le scénario, ses paramètres, et **l'état du calcul**, qui est une don
 { "id": "scn-8f2…", "name": "Sourcing Turquie",
   "bom_version": "bom-multipla-2026-09-22", "display_currency": "EUR",
   "labour_rate": "42.000000",
-  "active_rules": ["labour"], "parameters": [ … ],
+  "active_rules": ["labour"], "derived_from": null, "parameters": [ … ],
   "calculation_state": "PARAMETERS_CHANGED",
   "stale_reason": "parameters",
   "last_calculation_id": "calc-41b…" }
@@ -311,6 +342,9 @@ Renvoie le scénario, ses paramètres, et **l'état du calcul**, qui est une don
 
 `last_calculation_id` désigne le dernier calcul enregistré (`null` s'il n'y en a aucun). L'écran le
 relit avec `GET /calculations/{id}` pour réafficher un scénario rouvert, sans relancer de calcul.
+
+`derived_from` est l'identifiant `csn-…` du snapshot de calcul dont le scénario est reparti (§3.11),
+ou `null`. C'est une trace : le scénario reste librement modifiable, et sa copie (§3.7) la garde.
 
 Chaque paramètre expose `parameter_id`, `part_ref`, `scope`, `path`, `supplier_id`, `plant_id`,
 `purchase_currency`, `price_override`, `price_override_justification` et `labour_minutes`.
@@ -385,6 +419,10 @@ résultats persistés de ce scénario sont supprimés en cascade. La nomenclatur
 de prix sont conservés, car ils peuvent être utilisés par d'autres scénarios. Un identifiant inconnu
 provoque `404 SCENARIO_NOT_FOUND`.
 
+Un scénario qui porte au moins un snapshot de calcul (§3.11) ne se supprime pas :
+`409 SCENARIO_HAS_SNAPSHOTS`. Le message nomme les snapshots et `details.snapshots` en donne la
+liste, du plus récent au plus ancien. Le scénario reste lisible.
+
 ### 3.7 `POST /scenarios/{id}/duplicate` — préparer un autre scénario
 
 ```json
@@ -452,6 +490,41 @@ Même corps que §3.9, sans `name` ni `accepted_part_refs`. Réponse `200` : `ba
 **Aucun scénario n'est créé** ; seul le calcul de base est enregistré. L'écran s'en sert pour faire
 cocher les lignes, puis appelle §3.9 avec les lignes retenues et **le même `price_snapshot_id`**,
 pour que l'économie annoncée porte sur les prix que l'utilisateur a vus.
+
+### 3.11 `/calculation-snapshots` — figer un calcul sous un nom
+
+Un snapshot de calcul est un calcul nommé, figé avec une copie des hypothèses appliquées
+(ADR-0014). À ne pas confondre avec le snapshot de prix (§5). Seul son nom change.
+
+| Route | Rôle |
+|---|---|
+| `POST /calculation-snapshots` `{scenario_id, name}` | `201`. Lance le calcul (réglages et snapshot de prix courants) puis le fige. `404 SCENARIO_NOT_FOUND`, `409 NO_PRICE_SNAPSHOT`, `409 BOM_VERSION_NOT_VALIDATED`, `422 INVALID_SNAPSHOT_NAME`, `409 SNAPSHOT_NAME_TAKEN` |
+| `GET /calculation-snapshots?bom_version=…` | `{items, total}`, du plus récent au plus ancien. `bom_version` est obligatoire (`422` sinon). Un élément porte les neuf premiers champs ci-dessous |
+| `GET /calculation-snapshots/{id}` | Payload complet. `404 CALCULATION_SNAPSHOT_NOT_FOUND` |
+| `PATCH /calculation-snapshots/{id}` `{name}` | `200`, payload complet. Le nom seul : tout autre champ du corps donne `422` |
+| `POST /calculation-snapshots/compare` `{snapshot_a_id, snapshot_b_id}` | `200`. Comparaison des calculs figés, sans recalcul ni enregistrement |
+| `POST /calculation-snapshots/{id}/derive` `{name}` | `201`, le scénario créé (payload de §3.3). « Repartir de ce snapshot ». `404 CALCULATION_SNAPSHOT_NOT_FOUND`, `422 INVALID_SCENARIO` (nom vide), `422 SNAPSHOT_SETTINGS_NOT_APPLICABLE` |
+
+Payload complet : `id`, `name`, `bom_version`, `scenario_id`, `scenario_name`, `calculation_id`,
+`price_snapshot_id`, `created_at` (ISO 8601), `derived_from` (le snapshot d'où repartait le
+scénario figé, ou `null`) ; puis `display_currency`, `labour_rate` (chaîne),
+`active_rules` (liste triée), `parameters` (comme ceux d'un scénario, sans `parameter_id`) et
+`name_history` (`[{name, renamed_at}]`, le nom de création en premier).
+
+La comparaison renvoie le payload de §3.8 (`total_a`, `total_b`, `cost_delta` = B - A,
+`top_differences`) plus `snapshot_a: {id, name}` et `snapshot_b: {id, name}`. Deux gels pris sur des
+snapshots de prix différents, ou un calcul incomplet, donnent `422 INCOMPARABLE_SCENARIOS` (même
+code que §3.8).
+
+**Repartir d'un snapshot** crée un scénario neuf : même version de BOM, devise, taux horaire et
+règles actives, **exactement** les paramètres copiés, et `derived_from` = l'identifiant du
+snapshot. Le snapshot n'est pas modifié ; figer ensuite ce scénario produit un **nouveau** snapshot,
+calculé avec les prix courants, qui recopie `derived_from`. Chaque réglage copié repasse les
+contrôles de la saisie (§3.4) ; si l'un ne s'applique plus (fournisseur ou usine disparus,
+combinaison refusée), la reprise est refusée en bloc et `details.parts` nomme toutes les pièces en
+cause : il n'y a pas de reprise partielle. Au lot 1, la base interdit de supprimer un fournisseur ou
+une usine qu'un snapshot copie : ce refus n'est exercé que sur des doubles de test, il deviendra
+réel avec l'import de snapshots (lot 3).
 
 ---
 
@@ -622,15 +695,34 @@ grave au moins grave (`MISSING_PRICE`, `QUARANTINED`, `FALLBACK`), puis par réf
 
 ## 5. Prix
 
-### 5.1 `POST /price-snapshots` — prendre un snapshot
+### 5.1 `POST /price-snapshots` — figer les prix actuels de l'API
 
 ```json
-{ "id": "snp-20b…", "taken_at": "2026-09-22T09:00:00Z", "status": "FRESH",
-  "counts": { "from_api": 210, "fallback": 3, "quarantined": 2, "missing": 0 } }
+{ "bom_version": "bom-valhalla-hybride-2026-10-02", "currency": "EUR" }
 ```
 
-### 5.2 `GET /price-snapshots` — retrouver les snapshots disponibles
+Interroge l'API pour toutes les pièces achetées de la nomenclature, avec quarantaine et repli
+comme la ligne de commande, et enregistre le snapshot (`201`, même forme qu'un élément de §5.2).
+Si l'API ne répond pas, **rien n'est créé** : `503 PRICE_SOURCE_UNAVAILABLE`, et le dernier
+snapshot reste en vigueur (ADR-0003). Un snapshot **appartient à sa nomenclature** (ADR-0015) :
+un calcul sans `price_snapshot_id` prend le dernier snapshot de la nomenclature de son scénario.
 
+### 5.1 bis `POST /calculations/live` — calculer aux prix actuels, sans rien enregistrer
+
+```json
+{ "scenario_id": "scn-…" }
+```
+
+Même réponse que `POST /calculations` (§4.1), avec `price_mode: "LIVE"` et `prices_taken_at`.
+**Rien n'est enregistré** : ni calcul, ni snapshot de prix. Le calcul reste lisible quelques
+instants par `GET /calculations/{id}` et l'arbre, le temps de l'afficher ; il n'est jamais « le
+dernier calcul » du scénario. API muette : `503 PRICE_SOURCE_UNAVAILABLE`, jamais le prix d'un
+ancien snapshot présenté comme actuel. Les calculs enregistrés portent `price_mode: "SNAPSHOT"`.
+
+### 5.2 `GET /price-snapshots?bom_version=…` — retrouver les snapshots disponibles
+
+`bom_version` (facultatif) limite la liste à cette nomenclature et aux snapshots pris avant la
+migration 0006, qui ne disaient pas pour quelle nomenclature ils l'étaient (`bom_version: null`).
 Les snapshots sont triés du plus récent au plus ancien afin que le premier identifiant puisse être
 repris dans un calcul ou une comparaison :
 
@@ -642,6 +734,7 @@ repris dans un calcul ou une comparaison :
       "taken_at": "2026-09-22T09:00:00+00:00",
       "source": "mock-price-api",
       "currency": "EUR",
+      "bom_version": "bom-multipla-2026-09-22",
       "status": "FRESH",
       "age_seconds": 120,
       "counts": { "prices": 302, "fallback": 0, "quarantined": 0, "missing": 0 }
@@ -684,17 +777,43 @@ Ce n'est pas notre API : c'est le service qu'on interroge, et qu'on a écrit pou
 tomber à la demande.
 
 ```
-GET /prices?refs=FIX-M6-16,ELE-ECU-MAIN&currency=EUR
-X-Mock-Failure: none | timeout | outlier | missing | partial
+GET /prices?refs=FIX-M6-16,VALH-BOM-0006&currency=EUR
+X-Mock-Failure: none | timeout | outlier | missing | garbage
 ```
 
 ```json
-{ "as_of": "2026-09-22T09:00:00Z",
-  "prices": [ { "ref": "FIX-M6-16", "currency": "EUR", "price": 42.0, "per": 1000 } ] }
+{ "as_of": "2026-03-14T07:12:00+00:00",
+  "prices": [ { "ref": "FIX-M6-16", "currency": "EUR", "price": "4.064785", "per": "100" } ] }
 ```
 
 Le déclenchement de panne est un **en-tête**, pas un hasard : la démonstration doit être
 reproductible.
+
+Les prix **varient** : une année de neuf indices synthétiques défile en 40 minutes
+(`--year-minutes`, 0 fige les prix à leur référence). `as_of` est la **date simulée** de la
+cotation ; toutes les pièces d'un appel sont cotées au même instant. Le simulateur sert les
+catalogues des quatre nomenclatures.
+
+```
+GET /history?ref=VALH-BOM-0006&currency=EUR
+```
+
+L'année jour par jour (`points`, 365), l'instant présent (`now`), la référence, le profil
+(`profile`, `drivers`) et la devise du fournisseur (`origin_currency`). Pièce non cotée : `404`.
+
+### 5.5 `GET /bom/{bom_version}/parts/{part_ref}/price-history?currency=EUR`
+
+La courbe de §5.4 ramenée **à l'unité** (`per` divisé une fois, côté serveur), et les prix figés
+de la pièce dans les snapshots de sa nomenclature (`snapshots`, du plus récent au plus ancien).
+Les deux ne partagent pas d'axe : la courbe est datée en temps simulé, les snapshots en temps
+réel. Ensemble fabriqué : `409 PART_HAS_NO_PRICE` ; pièce inconnue : `404 PART_NOT_FOUND`.
+
+### 5.6 `GET /bom/{bom_version}/suppliers` et `…/suppliers/{supplier_id}/parts`
+
+Les fournisseurs qui vendent au moins une pièce de la nomenclature (nombre de pièces, nombre où
+ils sont retenus par défaut, usines), puis les pièces d'un fournisseur : multiplicateur, retenu
+ou non, et prix de référence du dernier snapshot de la nomenclature (`null` s'il n'y figure pas).
+Rien n'est recalculé : multiplicateur et usine s'appliquent au calcul (ADR-0010).
 
 ---
 

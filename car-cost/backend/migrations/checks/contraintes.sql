@@ -6,7 +6,8 @@
 --
 --   docker compose exec -T db psql -U 3istor -d 3istor -q --       < backend/migrations/checks/contraintes.sql
 --
--- Attendu : 21 refus, 0 WARNING, 2 paramètres valides acceptés.
+-- Attendu : 26 refus, 0 WARNING, 2 paramètres valides acceptés, un renommage
+-- de snapshot de calcul accepté.
 \set ON_ERROR_STOP on
 \pset pager off
 
@@ -183,6 +184,55 @@ SELECT doit_refuser(
 SELECT doit_refuser(
     'version validée supprimée (ADR-0013)',
     $q$DELETE FROM bom_version WHERE id = 't'$q$);
+
+-- Un snapshot de calcul est figé, sauf son nom (ADR-0014). On fige un calcul
+-- du scénario sur la version validée, ce qui doit passer, puis on tente de le
+-- retoucher.
+INSERT INTO calculation
+    (id, scenario_id, bom_version_id, price_snapshot_id, rules_version,
+     engine_version, active_rules, status, display_currency, total_cost,
+     input_digest, started_at, finished_at)
+VALUES ('calc1', 'scn', 't', 'snp', 'r1', 'e1', ARRAY['labour'], 'OK', 'EUR', 100,
+        'sha256:x', now(), now()),
+       ('calc2', 'scn', 't', 'snp', 'r1', 'e1', ARRAY['labour'], 'OK', 'EUR', 100,
+        'sha256:x', now(), now());
+INSERT INTO calculation_snapshot
+    (id, name, name_key, bom_version_id, scenario_id, scenario_name,
+     calculation_id, price_snapshot_id, display_currency, labour_rate,
+     active_rules, created_at)
+VALUES ('cs1', 'Gel de référence', 'gel de reference', 't', 'scn', 'test',
+        'calc1', 'snp', 'EUR', 42, ARRAY['labour'], now());
+
+UPDATE calculation_snapshot SET name = 'Gel retenu', name_key = 'gel retenu'
+WHERE id = 'cs1';
+SELECT '  accepté (comme attendu) : renommage du snapshot de calcul en « '
+       || name || ' »' AS resultat
+FROM calculation_snapshot WHERE id = 'cs1';
+
+SELECT doit_refuser(
+    'colonne figée d''un snapshot de calcul modifiée (ADR-0014)',
+    $q$UPDATE calculation_snapshot SET labour_rate = 99 WHERE id = 'cs1'$q$);
+
+SELECT doit_refuser(
+    'snapshot de calcul supprimé (ADR-0014)',
+    $q$DELETE FROM calculation_snapshot WHERE id = 'cs1'$q$);
+
+SELECT doit_refuser(
+    'nom de snapshot de calcul en double dans la version (ADR-0014)',
+    $q$INSERT INTO calculation_snapshot
+        (id, name, name_key, bom_version_id, scenario_id, scenario_name,
+         calculation_id, price_snapshot_id, display_currency, labour_rate,
+         active_rules, created_at)
+       VALUES ('cs2', 'GEL RETENU', 'gel retenu', 't', 'scn', 'test',
+         'calc2', 'snp', 'EUR', 42, ARRAY['labour'], now())$q$);
+
+SELECT doit_refuser(
+    'scénario porteur d''un snapshot de calcul supprimé (ADR-0014)',
+    $q$DELETE FROM scenario WHERE id = 'scn'$q$);
+
+SELECT doit_refuser(
+    'scénario reparti d''un snapshot de calcul inexistant (ADR-0014, 0005)',
+    $q$UPDATE scenario SET derived_from = 'cs-inconnu' WHERE id = 'scn'$q$);
 
 SELECT '  accepté (comme attendu) : ' || count(*)::text ||
        ' paramètres valides' AS resultat

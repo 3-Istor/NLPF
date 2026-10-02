@@ -7,7 +7,10 @@ from dataclasses import replace
 from decimal import Decimal
 
 from .browse_bom import PathNotFound, children_of_path
-from .ports import BomRepository, ScenarioRepository, SourcingRepository
+from .ports import (
+    BomRepository, CalculationSnapshotRepository, ScenarioRepository,
+    SourcingRepository,
+)
 from .price_resolution import (
     NoSupplierForPart, PlantNotAvailableForSupplier, validate_parameters,
 )
@@ -16,6 +19,19 @@ from .scenario import Scenario, ScenarioParameter, Sourcing
 
 class InvalidScenario(Exception):
     """Un scénario dont les réglages ne peuvent pas être conservés tels quels."""
+
+
+class ScenarioHasSnapshots(Exception):
+    """Le scénario porte des snapshots de calcul : le supprimer est refusé.
+
+    Les snapshots sont nommés pour que l'utilisateur sache ce qui le retient.
+    """
+
+    def __init__(self, names: tuple[str, ...]):
+        super().__init__(
+            "le scénario porte des snapshots de calcul : " + ", ".join(names)
+        )
+        self.names = names
 
 
 def create_scenario(
@@ -43,6 +59,19 @@ def duplicate_scenario(
         raise InvalidScenario("une copie doit avoir sa propre identité")
     copied = replace(original, id=scenario_id, name=name)
     return create_scenario(copied, boms, scenarios, sourcing)
+
+
+def delete_scenario(
+    scenario_id: str,
+    *,
+    scenarios: ScenarioRepository,
+    snapshots_repo: CalculationSnapshotRepository,
+) -> None:
+    scenarios.get(scenario_id)
+    carried = snapshots_repo.for_scenario(scenario_id)
+    if carried:
+        raise ScenarioHasSnapshots(tuple(snapshot.name for snapshot in carried))
+    scenarios.delete(scenario_id)
 
 
 def put_parameter(

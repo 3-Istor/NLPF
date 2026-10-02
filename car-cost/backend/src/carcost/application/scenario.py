@@ -110,6 +110,12 @@ class Scenario:
     )
     parameters: Sequence[ScenarioParameter] = ()
     name: str = ""
+    #: Le snapshot de calcul dont le scénario est reparti (ADR-0014). Une
+    #: trace, pas un lien vivant : le scénario reste librement modifiable.
+    derived_from: str | None = None
+    #: Compter les pièces de rechange livrées avec le véhicule (SAV) en plus
+    #: des pièces montées. Sans effet sur une nomenclature sans SAV.
+    include_after_sales: bool = False
 
     def __post_init__(self) -> None:
         # Une copie peut partager des valeurs immuables, jamais les collections

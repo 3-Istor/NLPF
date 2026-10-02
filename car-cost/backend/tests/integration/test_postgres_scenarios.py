@@ -228,3 +228,28 @@ def test_create_rolls_back_header_and_parameters_on_failure(connection, original
     with connection.cursor() as cursor:
         cursor.execute("SELECT count(*) FROM scenario_parameter WHERE scenario_id = %s", (original.id,))
         assert cursor.fetchone()[0] == 0
+
+
+VALHALLA = "bom-valhalla-hybride-2026-10-02"
+
+
+def test_after_sales_switch_survives_the_round_trip(repositories):
+    """Le SAV est relu tel qu'écrit, et seule la Valhalla en porte."""
+    scenarios = repositories.scenarios
+    scenario = Scenario(
+        id=f"scn-{uuid.uuid4().hex[:12]}", bom_version=VALHALLA,
+        display_currency="EUR", labour_rate=Decimal("60.00"), name="SAV",
+    )
+    scenarios.create(scenario)
+    assert scenarios.get(scenario.id).include_after_sales is False
+
+    scenarios.set_after_sales(scenario.id, True)
+
+    assert scenarios.get(scenario.id).include_after_sales is True
+    assert repositories.bom.load(VALHALLA).has_after_sales
+    assert not repositories.bom.load(VERSION).has_after_sales
+
+
+def test_switching_spares_on_an_unknown_scenario_is_refused(repositories):
+    with pytest.raises(ScenarioNotFound):
+        repositories.scenarios.set_after_sales("scn-inconnu", True)

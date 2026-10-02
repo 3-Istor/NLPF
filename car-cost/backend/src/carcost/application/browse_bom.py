@@ -16,6 +16,7 @@ from decimal import Decimal
 from typing import Sequence
 
 from ..domain.bom import Bom
+from ..domain.text_folding import fold
 
 PATH_SEPARATOR = "/"
 
@@ -41,6 +42,9 @@ class TreeNode:
     #: N endroits ». Les deux diffèrent dès qu'un sous-ensemble est lui-même
     #: monté plusieurs fois.
     occurrence_count: int
+    #: Pièces de rechange (SAV) portées par l'arête qui mène à cette ligne.
+    #: Affichées à côté de la quantité montée, jamais additionnées par l'écran.
+    after_sales_quantity: Decimal = Decimal(0)
 
 
 @dataclass(frozen=True)
@@ -59,6 +63,14 @@ class SearchHit:
     occurrence_count: int
     paths: tuple[str, ...]
     paths_truncated: bool
+
+
+@dataclass(frozen=True)
+class SearchSummary:
+    #: Pièces trouvées, au-delà de la limite de la liste renvoyée.
+    total_parts: int
+    #: Somme de leurs emplacements de montage.
+    total_occurrences: int
 
 
 @dataclass(frozen=True)
@@ -109,23 +121,18 @@ def where_used(bom: Bom, part_ref: str, *, limit: int = 50, offset: int = 0) -> 
 
 
 def search_parts(
-    bom: Bom, query: str, *, limit: int = 20, max_paths: int = 10
+    bom: Bom, query: str, *, limit: int = 20, max_paths: int = 50
 ) -> list[SearchHit]:
     """Cherche par référence ou libellé, et renvoie **les chemins**.
 
     Sans les chemins, le front ne saurait pas quoi déplier pour atteindre le
-    résultat : il ne connaît pas le graphe.
+    résultat : il ne connaît pas le graphe. La comparaison ignore accents et
+    casse (`fold`).
     """
-    needle = query.strip().lower()
-    if not needle:
-        return []
-
     hits: list[SearchHit] = []
-    for ref in sorted(bom.parts):
-        part = bom.parts[ref]
-        if needle not in ref.lower() and needle not in part.label.lower():
-            continue
+    for ref in _matching_refs(bom, query):
         paths = [PATH_SEPARATOR.join(chain) for chain, _ in _paths_to(bom, ref)]
+        part = bom.parts[ref]
         hits.append(
             SearchHit(
                 part_ref=ref,
@@ -141,12 +148,41 @@ def search_parts(
     return hits
 
 
+def search_summary(bom: Bom, query: str) -> SearchSummary:
+    """Ce que la recherche a trouvé en tout, pas seulement ce qu'elle renvoie.
+
+    Sans ces totaux, une liste coupée à `limit` se lit comme un résultat complet.
+    """
+    refs = list(_matching_refs(bom, query))
+    occurrences = sum(len(_paths_to(bom, ref)) for ref in refs)
+    return SearchSummary(total_parts=len(refs), total_occurrences=occurrences)
+
+
+def _matching_refs(bom: Bom, query: str):
+    needle = fold(query.strip())
+    if not needle:
+        return
+    for ref in sorted(bom.parts):
+        if needle in fold(ref) or needle in fold(bom.parts[ref].label):
+            yield ref
+
+
 # ------------------------------------------------------------------ internes
 
 
 def _node(bom: Bom, part_ref: str, path: str, edge_quantity: Decimal) -> TreeNode:
     part = bom.parts[part_ref]
     children = bom.children_of(part_ref)
+    chain = path.split(PATH_SEPARATOR)
+    parent_ref = chain[-2] if len(chain) > 1 else None
+    after_sales = next(
+        (
+            edge.after_sales_quantity
+            for edge in bom.edges
+            if edge.parent_ref == parent_ref and edge.child_ref == part_ref
+        ),
+        Decimal(0),
+    )
     return TreeNode(
         path=path,
         part_ref=part_ref,
@@ -159,6 +195,7 @@ def _node(bom: Bom, part_ref: str, path: str, edge_quantity: Decimal) -> TreeNod
         child_count=len(children),
         parent_count=len({edge.parent_ref for edge in bom.edges if edge.child_ref == part_ref}),
         occurrence_count=len(_paths_to(bom, part_ref)),
+        after_sales_quantity=after_sales,
     )
 
 

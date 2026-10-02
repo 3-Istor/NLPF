@@ -10,7 +10,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal
 
-from ...application.ports import PriceSnapshotNotFound, QuarantineRecord
+from ...application.ports import FrozenPrice, PriceSnapshotNotFound, QuarantineRecord
 from ...domain.prices import PriceSnapshot
 from .connection import PostgresRepository
 
@@ -26,12 +26,15 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
     """
 
     HEAD = """
-        SELECT id, taken_at, source, status
+        SELECT id, taken_at, source, status, bom_version_id
         FROM price_snapshot
         {where}
-        ORDER BY taken_at DESC
+        ORDER BY bom_version_id IS NULL, taken_at DESC
         LIMIT 1
     """
+    #: Les snapshots de la nomenclature, puis ceux d'avant la migration 0006
+    #: qui ne disaient pas pour quelle nomenclature ils étaient pris.
+    FOR_BOM = "WHERE bom_version_id = %s OR bom_version_id IS NULL"
     LINES = """
         SELECT part_ref, price, currency, origin
         FROM price_snapshot_line
@@ -42,17 +45,38 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
         SELECT DISTINCT part_ref FROM price_quarantine WHERE snapshot_id = %s
     """
 
-    def latest(self) -> PriceSnapshot | None:
-        return self._read(None)
-
-    def list_all(self) -> tuple[PriceSnapshot, ...]:
+    def history_of(
+        self, part_ref: str, bom_version: str, currency: str, limit: int = 20
+    ) -> list[FrozenPrice]:
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(
                 """
+                SELECT s.id, s.taken_at, l.price, l.origin
+                FROM price_snapshot_line l
+                JOIN price_snapshot s ON s.id = l.snapshot_id
+                WHERE l.part_ref = %s AND l.currency = %s
+                  AND (s.bom_version_id = %s OR s.bom_version_id IS NULL)
+                ORDER BY s.taken_at DESC, s.id DESC
+                LIMIT %s
+                """,
+                (part_ref, currency, bom_version, limit),
+            )
+            return [FrozenPrice(*row) for row in cursor.fetchall()]
+
+    def latest(self, bom_version: str | None = None) -> PriceSnapshot | None:
+        return self._read(None, bom_version)
+
+    def list_all(self, bom_version: str | None = None) -> tuple[PriceSnapshot, ...]:
+        where = self.FOR_BOM if bom_version else ""
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                f"""
                 SELECT id
                 FROM price_snapshot
+                {where}
                 ORDER BY taken_at DESC, id DESC
-                """
+                """,
+                (bom_version,) if bom_version else (),
             )
             identifiers = tuple(row[0] for row in cursor.fetchall())
         return tuple(self.get(identifier) for identifier in identifiers)
@@ -63,16 +87,22 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
             raise PriceSnapshotNotFound(snapshot_id)
         return snapshot
 
-    def _read(self, snapshot_id: str | None) -> PriceSnapshot | None:
-        where = "WHERE id = %s" if snapshot_id else ""
-        parameters = (snapshot_id,) if snapshot_id else ()
+    def _read(
+        self, snapshot_id: str | None, bom_version: str | None = None
+    ) -> PriceSnapshot | None:
+        if snapshot_id:
+            where, parameters = "WHERE id = %s", (snapshot_id,)
+        elif bom_version:
+            where, parameters = self.FOR_BOM, (bom_version,)
+        else:
+            where, parameters = "", ()
 
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(self.HEAD.format(where=where), parameters)
             head = cursor.fetchone()
             if head is None:
                 return None
-            identifier, taken_at, source, _status = head
+            identifier, taken_at, source, _status, head_bom_version = head
 
             cursor.execute(self.LINES, (identifier,))
             rows = cursor.fetchall()
@@ -95,6 +125,7 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
                 part_ref for part_ref, _, _, origin in rows if origin == "FALLBACK"
             ),
             quarantined_refs=quarantined,
+            bom_version=head_bom_version,
         )
 
     def save(self, snapshot: PriceSnapshot, quarantined=(), previous_id=None) -> None:
@@ -116,8 +147,9 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
             cursor.execute(
                 """
                 INSERT INTO price_snapshot
-                    (id, taken_at, source, status, counts, degraded_reason)
-                VALUES (%s, %s, %s, %s, %s::jsonb, %s)
+                    (id, taken_at, source, status, counts, degraded_reason,
+                     bom_version_id)
+                VALUES (%s, %s, %s, %s, %s::jsonb, %s, %s)
                 """,
                 (
                     snapshot.id,
@@ -132,6 +164,7 @@ class PostgresPriceSnapshotRepository(PostgresRepository):
                         if degraded
                         else None
                     ),
+                    snapshot.bom_version,
                 ),
             )
             with cursor.copy(

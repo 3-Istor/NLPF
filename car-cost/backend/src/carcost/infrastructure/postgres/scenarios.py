@@ -15,8 +15,9 @@ class PostgresScenarioRepository(PostgresRepository):
             cursor.execute(
                 """
                 INSERT INTO scenario (id, bom_version_id, name, display_currency,
-                                      labour_rate, labour_rate_currency, active_rules)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                                      labour_rate, labour_rate_currency, active_rules,
+                                      derived_from, include_after_sales)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     scenario.id,
@@ -26,6 +27,8 @@ class PostgresScenarioRepository(PostgresRepository):
                     scenario.labour_rate,
                     scenario.display_currency,
                     sorted(scenario.active_rules),
+                    scenario.derived_from,
+                    scenario.include_after_sales,
                 ),
             )
 
@@ -36,7 +39,8 @@ class PostgresScenarioRepository(PostgresRepository):
         with self._connect() as connection, connection.cursor() as cursor:
             cursor.execute(
                 """
-                SELECT bom_version_id, display_currency, labour_rate, active_rules, name
+                SELECT bom_version_id, display_currency, labour_rate, active_rules, name,
+                       derived_from, include_after_sales
                 FROM scenario WHERE id = %s
                 """,
                 (scenario_id,),
@@ -44,7 +48,10 @@ class PostgresScenarioRepository(PostgresRepository):
             head = cursor.fetchone()
             if head is None:
                 raise ScenarioNotFound(scenario_id)
-            bom_version, currency, labour_rate, active_rules, name = head
+            (
+                bom_version, currency, labour_rate, active_rules, name, derived_from,
+                include_after_sales,
+            ) = head
 
             cursor.execute(
                 """
@@ -82,6 +89,8 @@ class PostgresScenarioRepository(PostgresRepository):
             active_rules=frozenset(active_rules),
             parameters=parameters,
             name=name,
+            derived_from=derived_from,
+            include_after_sales=include_after_sales,
         )
 
     def list_all(self) -> tuple[Scenario, ...]:
@@ -95,6 +104,15 @@ class PostgresScenarioRepository(PostgresRepository):
             )
             identifiers = tuple(row[0] for row in cursor.fetchall())
         return tuple(self.get(identifier) for identifier in identifiers)
+
+    def set_after_sales(self, scenario_id: str, include: bool) -> None:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE scenario SET include_after_sales = %s WHERE id = %s RETURNING id",
+                (include, scenario_id),
+            )
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
 
     def delete(self, scenario_id: str) -> None:
         with self._connect() as connection, connection.cursor() as cursor:

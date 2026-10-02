@@ -14,13 +14,16 @@ from carcost.application.ports import (
     BomVersionNotFound,
     BomVersionNotValidated,
     CalculationNotFound,
+    CalculationSnapshotNotFound,
     PriceSnapshotNotFound,
     QuarantineRecord,
     ScenarioNotFound,
+    SnapshotNameTaken,
 )
 from carcost.application.scenario import (
     Plant, Scenario, ScenarioParameter, Sourcing, SupplierOffer,
 )
+from carcost.domain.calculation_snapshot import name_key
 
 
 class FakeBomRepository:
@@ -76,11 +79,33 @@ class FakeSnapshotRepository:
         self.snapshots = list(snapshots)
         self.journals: dict[str, tuple[QuarantineRecord, ...]] = {}
 
-    def latest(self):
-        return self.snapshots[-1] if self.snapshots else None
+    def latest(self, bom_version=None):
+        candidates = self._for(bom_version)
+        own = [s for s in candidates if s.bom_version is not None]
+        legacy = [s for s in candidates if s.bom_version is None]
+        if own:
+            return own[-1]
+        return legacy[-1] if legacy else None
 
-    def list_all(self):
-        return tuple(reversed(self.snapshots))
+    def list_all(self, bom_version=None):
+        return tuple(reversed(self._for(bom_version)))
+
+    def history_of(self, part_ref, bom_version, currency, limit=20):
+        from carcost.application.ports import FrozenPrice
+
+        return [
+            FrozenPrice(
+                s.id, s.taken_at, s.prices[part_ref],
+                "FALLBACK" if part_ref in s.fallback_refs else "API",
+            )
+            for s in reversed(self._for(bom_version))
+            if part_ref in s.prices and s.currency == currency
+        ][:limit]
+
+    def _for(self, bom_version):
+        if bom_version is None:
+            return list(self.snapshots)
+        return [s for s in self.snapshots if s.bom_version in (None, bom_version)]
 
     def get(self, snapshot_id: str):
         for snapshot in self.snapshots:
@@ -113,6 +138,13 @@ class FakeSnapshotRepository:
 
 
 class FakeScenarioRepository:
+    def set_after_sales(self, scenario_id: str, include: bool) -> None:
+        from dataclasses import replace
+
+        self.scenarios[scenario_id] = replace(
+            self.get(scenario_id), include_after_sales=include
+        )
+
     def __init__(self):
         self.scenarios: dict[str, Scenario] = {}
         self._sequence = 0
@@ -211,3 +243,56 @@ class FakeCalculationRepository:
             if calculation.scenario_id == scenario_id:
                 return calculation
         return None
+
+
+class FakeCalculationSnapshotRepository:
+    """Sans méthode de suppression, comme la base : un snapshot reste."""
+
+    def __init__(self):
+        self.snapshots: dict[str, object] = {}
+        self.order: list[str] = []
+        self.history: dict[str, list[tuple[str, object]]] = {}
+
+    def save(self, snapshot) -> None:
+        if snapshot.id in self.snapshots:
+            raise AssertionError("un snapshot de calcul enregistré ne se réécrit pas")
+        self._ensure_free(snapshot.name, snapshot.bom_version, snapshot.id)
+        self.snapshots[snapshot.id] = snapshot
+        self.order.append(snapshot.id)
+        self.history[snapshot.id] = [(snapshot.name, snapshot.created_at)]
+
+    def get(self, snapshot_id: str):
+        try:
+            return self.snapshots[snapshot_id]
+        except KeyError as missing:
+            raise CalculationSnapshotNotFound(snapshot_id) from missing
+
+    def list_for(self, bom_version: str):
+        return tuple(
+            self.snapshots[identifier]
+            for identifier in reversed(self.order)
+            if self.snapshots[identifier].bom_version == bom_version
+        )
+
+    def for_scenario(self, scenario_id: str):
+        return tuple(
+            self.snapshots[identifier]
+            for identifier in reversed(self.order)
+            if self.snapshots[identifier].scenario_id == scenario_id
+        )
+
+    def rename(self, snapshot_id: str, name: str, renamed_at) -> None:
+        snapshot = self.get(snapshot_id)
+        self._ensure_free(name, snapshot.bom_version, snapshot_id)
+        self.snapshots[snapshot_id] = replace(snapshot, name=name)
+        self.history[snapshot_id].append((name, renamed_at))
+
+    def name_history(self, snapshot_id: str):
+        self.get(snapshot_id)
+        return tuple(self.history[snapshot_id])
+
+    def _ensure_free(self, name: str, bom_version: str, own_id: str) -> None:
+        # L'index unique de la base : la même clé, dans la même version.
+        for existing in self.list_for(bom_version):
+            if existing.id != own_id and existing.name_key == name_key(name):
+                raise SnapshotNameTaken(name, existing.id)

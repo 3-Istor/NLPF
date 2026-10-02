@@ -55,6 +55,22 @@ CONVENTIONS = {
 }
 
 
+#: Ce qui distingue un jeu de données d'un autre dans les fichiers écrits. Le
+#: Multipla est la valeur par défaut : ses fichiers ne changent pas d'un octet
+#: quand un autre véhicule passe par les mêmes writers.
+MULTIPLA = {
+    "slug": "multipla-16v",
+    "vehicle": "Fiat Multipla 1.6 16V",
+    "bom_file": "bom_multipla.json",
+    "dataset_date": DATASET_DATE,
+    "generator_version": GENERATOR_VERSION,
+    "assembly_site": "IT",
+    "transport_co2": CONVENTIONS["transport_co2"],
+    "currencies": ["EUR", "USD", "RUB"],
+    "extra_conventions": {},
+}
+
+
 def _dumps(payload) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 
@@ -101,7 +117,13 @@ def write_all(
     catalog: dict[str, dict],
     suppliers: tuple[dict, ...],
     report: dict,
+    dataset: dict = MULTIPLA,
 ) -> dict[str, str]:
+    conventions = {
+        **CONVENTIONS,
+        "transport_co2": dataset["transport_co2"],
+        **dataset["extra_conventions"],
+    }
     part_rows = [
         _part_row(bom_version, ref, part, cumulative, mass)
         for ref, part in bom.parts.items()
@@ -114,6 +136,7 @@ def write_all(
             "parent_valuation_mode": bom.parts[edge.parent_ref].valuation_mode,
             "quantity": str(edge.quantity),
             "unit": edge.unit,
+            "after_sales_quantity": str(edge.after_sales),
         }
         for edge in bom.edges
     ]
@@ -123,18 +146,18 @@ def write_all(
 
     bom_document = {
         "metadata": {
-            "dataset": "bom-multipla-16v",
+            "dataset": f"bom-{dataset['slug']}",
             "bom_version_id": bom_version,
-            "vehicle": "Fiat Multipla 1.6 16V",
+            "vehicle": dataset["vehicle"],
             "root_part_ref": bom.root_ref,
-            "dataset_date": DATASET_DATE,
-            "generator_version": GENERATOR_VERSION,
+            "dataset_date": dataset["dataset_date"],
+            "generator_version": dataset["generator_version"],
             "is_synthetic": True,
             "disclaimer": DISCLAIMER,
             "reference_currency": "EUR",
-            "assembly_site": "IT",
+            "assembly_site": dataset["assembly_site"],
             "labour_rate_eur_per_hour": report["costing"]["labour_rate_eur_per_hour"],
-            "conventions": CONVENTIONS,
+            "conventions": conventions,
             "seed_checksum": checksum,
             "counts": {
                 "parts": report["parts"],
@@ -151,16 +174,16 @@ def write_all(
 
     supplier_document = {
         "metadata": {
-            "dataset": "suppliers-multipla-16v",
+            "dataset": f"suppliers-{dataset['slug']}",
             "bom_version_id": bom_version,
-            "dataset_date": DATASET_DATE,
+            "dataset_date": dataset["dataset_date"],
             "is_synthetic": True,
             "disclaimer": DISCLAIMER,
-            "assembly_site": "IT",
+            "assembly_site": dataset["assembly_site"],
             "conventions": {
                 "price_multiplier": "Porté par le fournisseur (marge, qualité, service).",
                 "plant_price_coefficient": "Porté par le site : coût local de production.",
-                "transport_co2_kg_per_kg": CONVENTIONS["transport_co2"],
+                "transport_co2_kg_per_kg": conventions["transport_co2"],
                 "independence": (
                     "Fournisseur et site sont deux leviers indépendants : on peut "
                     "changer de site sans changer de fournisseur (ADR-0010)."
@@ -202,19 +225,26 @@ def write_all(
 
     catalog_document = {
         "metadata": {
-            "dataset": "price-catalog-multipla-16v",
+            "dataset": f"price-catalog-{dataset['slug']}",
             "bom_version_id": bom_version,
-            "dataset_date": DATASET_DATE,
+            "dataset_date": dataset["dataset_date"],
             "is_synthetic": True,
             "disclaimer": DISCLAIMER,
-            "currencies": ["EUR", "USD", "RUB"],
+            "currencies": dataset["currencies"],
             "conventions": {
                 "independent_currencies": (
                     "Les trois devises sont des prix indépendants, pas la "
                     "conversion d'un prix pivot : aucun taux de change n'est lu "
                     "à l'exécution (ADR-0003)."
                 ),
-                "year_min_max": "Bornes observées sur l'année, servant au contrôle d'aberration.",
+                "year_min_max": (
+                    "Bornes que le prix parcourt sur l'année simulée par l'API "
+                    "de prix (indices de marché × drivers)."
+                ),
+                "drivers": (
+                    "Exposition du prix aux indices de marché simulés : facteur "
+                    "= 1 + Σ poids × variation de l'indice."
+                ),
                 "price_per": "Le prix s'entend pour price_per unités (la visserie s'achète par 100).",
             },
         },
@@ -222,7 +252,7 @@ def write_all(
     }
 
     files = {
-        "bom_multipla.json": _dumps(bom_document),
+        dataset["bom_file"]: _dumps(bom_document),
         "parts.csv": _csv(part_rows, list(part_rows[0].keys())),
         "edges.csv": _csv(edge_rows, list(edge_rows[0].keys())),
         "price_catalog.json": _dumps(catalog_document),

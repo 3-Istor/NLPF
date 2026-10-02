@@ -16,7 +16,16 @@ from carcost.application.ports import (
 )
 from carcost.domain.bom import Bom, Edge
 from carcost.infrastructure.api.app import Repositories, create_app
+from carcost.application.price_resolution import resolve_unit_prices
+from carcost.application.run_calculation import run_calculation
+from carcost.application.scenario import Scenario
+from carcost.domain.prices import PriceSnapshot
 from factories import manufactured, purchased
+from fakes import (
+    FakeCalculationRepository,
+    FakeScenarioRepository,
+    FakeSourcingRepository,
+)
 
 VERSION = "bom-test"
 
@@ -133,6 +142,58 @@ class TestNumbersOnTheWire:
         assert "own_contribution" not in body["items"][0]
 
 
+class TestShareOnTheWire:
+    @pytest.fixture
+    def costed_client(self, bom):
+        """Total 395 : A pèse 140 enfants compris, soit 35,4 %."""
+        now = datetime(2026, 9, 23, 12, 0, tzinfo=timezone.utc)
+        scenario = Scenario(
+            id="scn", bom_version=VERSION, display_currency="EUR",
+            labour_rate=Decimal("60.00"), parameters=(),
+        )
+        snapshot = PriceSnapshot(
+            id="snp-1", taken_at=now, currency="EUR", source="mock",
+            prices={"S": Decimal("10.000000")},
+        )
+        resolved = resolve_unit_prices(
+            bom, FakeSourcingRepository().load(VERSION), snapshot, scenario
+        )
+        calculation = run_calculation(
+            bom=bom, scenario=scenario, snapshot=snapshot, resolved=resolved,
+            now=now, calculation_id="calc-1",
+        )
+        scenarios = FakeScenarioRepository()
+        scenarios.create(scenario)
+        calculations = FakeCalculationRepository()
+        calculations.save(calculation)
+        return TestClient(
+            create_app(
+                Repositories(
+                    bom=FakeRepository(bom),
+                    scenarios=scenarios,
+                    calculations=calculations,
+                )
+            )
+        )
+
+    def test_the_share_travels_as_a_string_with_a_calculation(self, costed_client):
+        body = costed_client.get(
+            f"/api/v1/bom/{VERSION}/children",
+            params={"path": "V", "calculation_id": "calc-1"},
+        ).json()
+
+        share = body["items"][0]["share_of_total_pct"]
+        assert isinstance(share, str)
+        assert share == "35.4"  # 140 / 395 × 100
+
+    def test_no_share_is_sent_without_a_calculation(self, client):
+        body = client.get(
+            f"/api/v1/bom/{VERSION}/children", params={"path": "V"}
+        ).json()
+
+        assert "share_of_total_pct" not in body["items"][0]
+
+
 class TestWhereUsedAndSearch:
     def test_where_used_lists_the_paths(self, client):
         body = client.get(
@@ -196,6 +257,9 @@ class TestVersions:
                     "edge_count": 4,
                     "validated_at": "2026-09-22T10:04:11+00:00",
                     "is_synthetic": True,
+                    # Une version qui ne dit pas son taux : l'écran propose
+                    # alors le sien, sans que le serveur invente un chiffre.
+                    "reference_labour_rate": None,
                 }
             ]
         }
@@ -210,3 +274,23 @@ class TestVersions:
         item = client.get("/api/v1/bom/versions").json()["items"][0]
 
         assert item["validated_at"] is None
+
+
+class TestSearchTotalsAndBounds:
+    def test_search_reports_its_totals(self, client):
+        body = client.get(f"/api/v1/bom/{VERSION}/search", params={"q": "S"}).json()
+
+        assert isinstance(body["total_parts"], int)
+        assert isinstance(body["total_occurrences"], int)
+        assert body["total_parts"] == 1
+        assert body["total_occurrences"] == 2
+
+    def test_max_paths_is_bounded(self, client):
+        url = f"/api/v1/bom/{VERSION}/search"
+
+        assert client.get(url, params={"q": "S", "max_paths": 201}).status_code == 422
+        assert client.get(url, params={"q": "S", "max_paths": 0}).status_code == 422
+
+        body = client.get(url, params={"q": "S", "max_paths": 1}).json()
+        assert len(body["items"][0]["paths"]) == 1
+        assert body["items"][0]["paths_truncated"] is True

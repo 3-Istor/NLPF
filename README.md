@@ -237,17 +237,19 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 390 tests
+# backend — 554 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 19 tests
+# front — 138 tests
 cd car-cost/frontend && npm test
 ```
 
-Les vingt-deux tests d'intégration se **sautent** si Postgres n'est pas
-joignable : la suite reste verte hors ligne. Vérifié sous NixOS (Python 3.12) :
-`368 passed, 22 skipped` hors ligne, `390 passed` avec la base chargée. Les
-tests d'intégration qui écrivent le font dans une transaction annulée : un
+Les quarante-quatre tests d'intégration se **sautent** si Postgres n'est pas
+joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
+`510 passed, 44 skipped` hors ligne, `554 passed` avec la base chargée et
+migrée jusqu'à 0005 (le démarrage de l'API rattrape les migrations
+manquantes). Les tests d'intégration qui écrivent le font dans une
+transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
 l'écran utilise.
 
@@ -257,7 +259,7 @@ Deux contrôles valent d'être lancés à la main :
 # le schéma refuse-t-il vraiment ce qu'il prétend refuser ?
 docker compose exec -T db psql -U 3istor -d 3istor -q \
   < backend/migrations/checks/contraintes.sql
-# attendu : 21 refus, 0 WARNING
+# attendu : 26 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
 python -m tools.bom_generator --check
@@ -273,7 +275,7 @@ python -m tools.bom_generator --check
 | [docs/cadrage.md](car-cost/docs/cadrage.md) | Le problème, les acteurs, 5 questions métier, 5 invariants, 3 modes de panne, 11 ambiguïtés |
 | [docs/perimetre.md](car-cost/docs/perimetre.md) | Ce qu'on fait, ce qu'on ne fait pas, ce qu'on reporte, la tranche verticale |
 | [docs/domain-glossary.md](car-cost/docs/domain-glossary.md) | Pièce, occurrence, quantité unitaire, quantité cumulée — les quatre mots qu'on confond |
-| [docs/adr/](car-cost/docs/adr) | Onze décisions d'architecture, avec les options écartées et ce qui nous y ferait revenir |
+| [docs/adr/](car-cost/docs/adr) | Quatorze décisions d'architecture, avec les options écartées et ce qui nous y ferait revenir |
 | [docs/api.md](car-cost/docs/api.md) | Les contrats d'API, écrits avant l'implémentation |
 | [backend/migrations/](car-cost/backend/migrations) | Le schéma, et ce qu'il garantit ou non |
 | [seeds/validation_report.json](car-cost/seeds/validation_report.json) | Le rapport du générateur : 474 pièces, 689 arêtes, 65 partagées |
@@ -325,8 +327,89 @@ entièrement distinct.
   Côté API seulement : l'écran ne les appelle pas encore
 - Écran : arbre dépliable, synthèse permanente, panneau de saisie contextuel,
   marquage des modifications, totaux obsolètes signalés
+- Recherche dans l'arbre, sans accents ni casse : le compteur parle en
+  occurrences (« 1 / 3 résultats (2 pièces) »), Entrée et F3 passent au
+  résultat suivant, Maj+Entrée et Maj+F3 reviennent ; aller à un résultat
+  déplie ses ancêtres, le sélectionne et le centre ; les correspondances sont
+  surlignées sans jamais injecter de HTML. Au plus 50 chemins parcourables par
+  pièce, le compteur le dit quand il y en a plus
+- **Lot 1a — l'arbre garde son état.** Dépliage, sélection et défilement
+  survivent à un recalcul et au F5 ; recalculer ne replie plus rien
+- **Lot 1b — un arbre-tableau lisible.** Colonnes alignées, en-tête collant,
+  navigation au clavier (↓ ↑ → ← Entrée), indicateur « mise à jour… » pendant
+  le rafraîchissement
+- **Lot 1c — une recherche sans accents.** Compteur, Suivant et Précédent,
+  surlignage, au plus 50 chemins par pièce (`max_paths`)
+- **Lot 1d — le snapshot de calcul nommé** (ADR-0014). Figer un calcul sous un
+  nom, lister et ouvrir les snapshots, comparer deux snapshots entre eux sans
+  recalcul ; un scénario qui porte un snapshot ne se supprime pas. Un snapshot
+  ouvert est en lecture seule (réglages de sa copie, marques ●/○ de sa copie,
+  synthèse « figé ») ; « Repartir de ce snapshot » crée un scénario éditable
+  avec exactement sa copie (`derived_from`), dont le gel produit un nouveau
+  snapshot aux prix du jour
+- **Empreinte carbone à l'écran.** La synthèse affiche `total_co2` sous le
+  coût ; une somme partielle s'intitule « Empreinte carbone partielle » et dit
+  combien de pièces n'ont pas de CO₂ connu ; un calcul antérieur au CO₂
+  n'affiche ni total ni zéro. « Répartir par Coût / CO₂ » bascule la
+  décomposition par système et les principaux contributeurs. L'écart CO₂ des
+  comparaisons est arrondi à l'affichage et dit « inconnu » quand l'un des
+  deux CO₂ est incomplet. Vérifié à l'écran contre la vraie nomenclature,
+  avec et sans prix forcé
+
+- **Quatre nomenclatures au choix** (ADR-0015) : le Multipla et trois Aston
+  Martin Valhalla (hybride, thermique et électrique hypothétiques), importées
+  des fichiers de la PR #6 par `tools/valhalla_import` au format du Multipla.
+  Masse, carbone, main-d'œuvre, usines, délais et fournisseurs alternatifs y
+  sont **générés** (synthétiques, déterministes, vérifiés en CI). Sélecteur
+  de véhicule dans le bandeau ; un snapshot de prix appartient à sa
+  nomenclature. Migration 0006 vérifiée sur une base existante.
+- **SAV** : un scénario peut compter les pièces de rechange livrées avec le
+  véhicule ; l'arbre affiche « + n SAV » à côté de la quantité montée.
+- **Prix qui varient** : l'API simulée rejoue une année de marché en 40 min.
+  Mode **direct** (calcul aux prix de l'instant, jamais enregistré, rafraîchi
+  toutes les 5 s) ou **snapshot** ; « Figer les prix maintenant » depuis
+  l'écran.
+- **Page Fournisseurs** : par véhicule, chaque fournisseur, ses usines et ses
+  pièces ; un clic sur une pièce affiche la courbe de son prix sur l'année
+  simulée et ses prix figés. Vérifié dans le navigateur sur une pile isolée.
 
 ### Ce qu'il reste à faire
+
+**Suite du lot 1 et lots suivants (vues)**
+
+- [ ] **Lot 1-bis** : panneau de saisie pré-rempli et suppression d'un réglage,
+      types générés depuis l'OpenAPI, `test:e2e`. (Le sélecteur de version
+      de BOM est fait.)
+- [ ] **Valider l'ADR-0015** (plusieurs nomenclatures, prix en direct jamais
+      enregistrés), rédigé au statut « proposé », et fermer la PR #6 qu'il
+      remplace.
+- [ ] **Relire les fourchettes générées pour la Valhalla**
+      (`tools/valhalla_import/enrich.py`, `suppliers.py`) : masse, carbone,
+      heures d'assemblage et usines sont des ordres de grandeur, à discuter.
+      Environ un quart des pièces gardent le profil de prix « défaut ».
+      Les prix de motorisation du thermique (×1,34) et de l'électrique
+      (×2,86) sont recalés pour tenir leur coût à −5 % / +5 % de l'hybride ;
+      l'électrique y gagne des moteurs à ~33 k€ pièce et un pack à ~27 k€,
+      à confronter à un ordre de grandeur réel.
+- [ ] **Placer les snapshots sur la courbe de prix.** Ils sont datés en temps
+      réel, la courbe en temps simulé : ils sont listés à côté. Il faudrait
+      enregistrer la date simulée (`as_of` de l'API) avec chaque snapshot.
+- [ ] **Les Valhalla ne partagent aucune pièce** : le fichier source est un
+      arbre (catégories → lignes). Les fixations du même type, répétées par
+      interface, pourraient devenir une pièce partagée.
+- [ ] **Lot 2.3 — décomposition de l'écart.** Deux snapshots de calcul pris sur
+      des snapshots de prix différents ne se comparent pas aujourd'hui (422) ;
+      les comparer, c'est décomposer l'écart entre prix et hypothèses.
+- [ ] **Lot 3 — export et import de snapshots de calcul.** « Repartir de ce
+      snapshot » et `derived_from` existent depuis le lot 1 ; le refus d'un
+      réglage copié qui ne s'applique plus n'est exercé que sur des doubles
+      de test tant qu'aucun snapshot n'est importé.
+- [ ] **Renommer un snapshot depuis l'écran.** `PATCH /calculation-snapshots/{id}`
+      existe ; aucun contrôle ne l'appelle.
+- [ ] **Route groupée `children:batch`** pour rafraîchir l'arbre en une requête
+      (voir la dette sur la durée du rafraîchissement).
+- [ ] **Décision d'équipe sur l'emplacement des ports** (D8) : les nouveaux
+      ports vivent dans `application/ports.py` en attendant.
 
 **Tranche T2 — « l'outil dit la vérité sur ses prix »**
 
@@ -334,9 +417,6 @@ entièrement distinct.
       (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
 - [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
       existe ; aucun panneau ne l'affiche.
-- [ ] **Empreinte carbone à l'écran.** Le moteur et l'API la calculent
-      (`total_co2`, décomposition par système, quinze principaux contributeurs,
-      `parts_without_co2`) ; aucun panneau ne l'affiche encore.
 - [ ] **CO₂ dans l'arbre.** `rolled_up_co2` est au contrat de dépliage
       (docs/api.md §2) mais n'est pas servi : le CO2 unitaire complet n'est
       pas enregistré par ligne. Demande une colonne, donc une migration.
@@ -349,22 +429,38 @@ entièrement distinct.
       l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
       persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).
 - [ ] **Vue par occurrence** — une ligne par chemin, bornée à un sous-arbre.
-- [ ] **Recherche à l'écran** : l'API renvoie les chemins, le front ne déplie
-      pas encore automatiquement jusqu'au résultat.
 
 **Tranche T3 — « l'outil aide à décider »**
 
-- [ ] **CO₂e aux comparaisons, à l'écran.** `co2_delta_kg` est calculé et
-      renvoyé par l'API (`POST /scenarios/compare`) ; l'écran affiche encore
-      l'écart CO₂ comme « non calculé ».
 - [ ] **Valider l'ADR-0012** (comparaison sur snapshot commun, recommandation
       pièce par pièce), rédigé en revue au statut « proposé ».
 
 **Dette assumée, nommée**
 
-- **Recalculer replie l'arbre.** On remonte le composant pour que les lignes
-  redemandent les nouveaux chiffres, et on perd sa place. Sur 474 pièces c'est
-  pénible ; la correction est de rafraîchir les nœuds ouverts en place.
+- **L'arbre-tableau manque de place à 1 280 px.** Les colonnes fixes et la
+  synthèse (380 px) laissent au libellé une centaine de pixels : les libellés
+  sont tronqués et la colonne « état » rogne ses pastilles (« utilisée à N
+  endroits »). Les références longues sont coupées proprement, avec le texte
+  entier au survol. À trancher : resserrer les colonnes, raccourcir la pastille,
+  ou laisser l'arbre défiler horizontalement.
+- **Un test de la recherche a échoué une fois sur dix lancements** (« F3 passe
+  au suivant et boucle »), sans se reproduire ensuite. Cause non trouvée.
+- **Le rafraîchissement après recalcul est plus lent que le seuil.** Mesuré à
+  395–448 ms pour 12 nœuds dépliés, au-dessus des 300 ms visés par l'ADR-0009 :
+  l'arbre relit chaque nœud ouvert, un par un. Un indicateur « mise à jour… »
+  l'annonce ; la route groupée `children:batch` est différée.
+- **L'URL ne garde pas le snapshot ouvert** : un F5 rouvre le scénario vivant
+  du snapshot, pas le snapshot.
+- **Deux snapshots de calcul sur des snapshots de prix différents ne se
+  comparent pas** (ADR-0012, ADR-0014) : l'API refuse (422), l'écran le dit.
+- **Le pliage des accents diverge entre Python et TS.** `casefold` côté API,
+  `toLowerCase` côté écran : `ß` donne `ss` d'un côté et reste `ß` de l'autre.
+  Sans effet hors surlignage.
+- **Un calcul orphelin peut rester** si deux gels simultanés visent le même
+  nom : le second est refusé (409) mais son calcul a déjà été écrit.
+- **La base doit porter les migrations 0003 à 0005** (snapshots de calcul et
+  scénarios qui en repartent). Le démarrage de l'API les rattrape ; une base qui
+  n'a jamais démarré avec cette version n'a que 0001 et 0002.
 - **Le coefficient d'usine n'est pas versionné.** `supplier_plant` est hors du
   périmètre figé par l'ADR-0013 : le modifier change l'explication d'un calcul
   ancien. `/explain` le détecte (`reproduced: false`) sans pouvoir retrouver
@@ -381,12 +477,9 @@ entièrement distinct.
   qu'une date fausse ; les lignes déjà écrites sont immuables.
 - **Le journal de quarantaine n'est pas protégé en écriture.** Snapshot et
   lignes de prix ont leur déclencheur d'immutabilité ; `price_quarantine` non.
-  L'ajouter fait passer le contrôle du schéma de 21 à 22 refus.
+  L'ajouter fait passer le contrôle du schéma de 26 à 27 refus.
 - **Le motif de quarantaine est une phrase**, pas le code prévu par le contrat
   initial (docs/api.md §5.3). Suffisant pour l'écran ; pas pour trier.
-- **Déplier jusqu'à une pièce ouvre le panneau de chaque ancêtre** (journal,
-  contributeurs, recherche) : l'arbre se remplit de panneaux qu'on n'a pas
-  demandés.
 - **Comparer et recommander enregistrent de nouveaux calculs** à chaque appel,
   même quand un calcul de même empreinte existe déjà sur ce snapshot : la table
   `calculation` grossit plus vite que nécessaire.
