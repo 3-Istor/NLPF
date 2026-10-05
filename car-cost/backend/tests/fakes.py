@@ -145,6 +145,11 @@ class FakeScenarioRepository:
             self.get(scenario_id), include_after_sales=include
         )
 
+    def set_labour_rate(self, scenario_id: str, rate) -> None:
+        from dataclasses import replace
+
+        self.scenarios[scenario_id] = replace(self.get(scenario_id), labour_rate=rate)
+
     def __init__(self):
         self.scenarios: dict[str, Scenario] = {}
         self._sequence = 0

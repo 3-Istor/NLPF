@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import uuid
+from decimal import Decimal
 
 from ...application.ports import ScenarioNotFound
 from ...application.scenario import Scenario, ScenarioParameter
@@ -56,7 +57,8 @@ class PostgresScenarioRepository(PostgresRepository):
             cursor.execute(
                 """
                 SELECT part_ref, scope, path, supplier_id, plant_id, price_override,
-                       price_override_justification, labour_minutes, purchase_currency
+                       price_override_justification, labour_minutes, purchase_currency,
+                       labour_rate
                 FROM scenario_parameter
                 WHERE scenario_id = %s
                 ORDER BY part_ref, coalesce(path, '')
@@ -73,11 +75,12 @@ class PostgresScenarioRepository(PostgresRepository):
                     price_override=override,
                     price_override_justification=justification,
                     labour_minutes=labour_minutes,
+                    labour_rate=labour_rate,
                     purchase_currency=purchase_currency,
                 )
                 for (
                     part_ref, scope, path, supplier_id, plant_id, override,
-                    justification, labour_minutes, purchase_currency,
+                    justification, labour_minutes, purchase_currency, labour_rate,
                 ) in cursor.fetchall()
             )
 
@@ -110,6 +113,15 @@ class PostgresScenarioRepository(PostgresRepository):
             cursor.execute(
                 "UPDATE scenario SET include_after_sales = %s WHERE id = %s RETURNING id",
                 (include, scenario_id),
+            )
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
+
+    def set_labour_rate(self, scenario_id: str, rate: Decimal) -> None:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE scenario SET labour_rate = %s WHERE id = %s RETURNING id",
+                (rate, scenario_id),
             )
             if cursor.fetchone() is None:
                 raise ScenarioNotFound(scenario_id)
@@ -155,8 +167,8 @@ class PostgresScenarioRepository(PostgresRepository):
             INSERT INTO scenario_parameter
                 (id, scenario_id, scope, part_ref, path, supplier_id, plant_id,
                  price_override, price_override_justification, labour_minutes,
-                 purchase_currency)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                 purchase_currency, labour_rate)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT (scenario_id, part_ref, coalesce(path, ''))
             DO UPDATE SET
                 scope = EXCLUDED.scope,
@@ -165,7 +177,8 @@ class PostgresScenarioRepository(PostgresRepository):
                 price_override = EXCLUDED.price_override,
                 price_override_justification = EXCLUDED.price_override_justification,
                 labour_minutes = EXCLUDED.labour_minutes,
-                purchase_currency = EXCLUDED.purchase_currency
+                purchase_currency = EXCLUDED.purchase_currency,
+                labour_rate = EXCLUDED.labour_rate
             RETURNING id
             """,
             (
@@ -180,6 +193,7 @@ class PostgresScenarioRepository(PostgresRepository):
                 parameter.price_override_justification,
                 parameter.labour_minutes,
                 parameter.purchase_currency,
+                parameter.labour_rate,
             ),
         )
         return cursor.fetchone()[0]

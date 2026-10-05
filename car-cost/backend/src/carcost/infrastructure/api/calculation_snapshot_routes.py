@@ -253,6 +253,11 @@ def _full_payload(repositories, snapshot: CalculationSnapshot) -> dict:
                     if parameter.labour_minutes is not None
                     else None
                 ),
+                "labour_rate": (
+                    str(parameter.labour_rate)
+                    if parameter.labour_rate is not None
+                    else None
+                ),
                 "price_override": (
                     str(parameter.price_override)
                     if parameter.price_override is not None

@@ -6,40 +6,72 @@
  * comptabilisation (ADR-0008). Les champs ne sont donc pas grisés — ils ne
  * sont pas là.
  *
+ * Les listes s'ouvrent sur ce qui est réellement retenu : le réglage
+ * enregistré du scénario s'il y en a un, sinon le fournisseur et le site par
+ * défaut du catalogue. Un « — par défaut — » ne disait pas lequel.
+ *
  * La portée du réglage est affichée telle que le serveur la formule : l'écran
  * ne la déduit pas, il ne connaît pas le graphe (ADR-0002).
  */
 
 import { useEffect, useState } from "react";
 import { api, ApiFailure } from "../api/client";
-import type { Supplier, TreeLine } from "../api/types";
+import type { Scenario, ScenarioParameter, Supplier, TreeLine } from "../api/types";
+import { editable, money, quantity } from "../format";
 
 type Props = {
   line: TreeLine;
   version: string;
-  scenarioId: string;
+  scenario: Scenario;
   depth: number;
   onChanged: () => void;
 };
 
 type PartDetail = {
   suppliers?: Supplier[];
+  labour_minutes?: string | null;
 };
 
-export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props) {
+/**
+ * Le paramètre qui s'applique à cette occurrence : celui du chemin gagne en
+ * entier sur celui de la pièce (`Scenario.parameter_for` côté serveur).
+ */
+function savedFor(line: TreeLine, scenario: Scenario): ScenarioParameter | undefined {
+  return (
+    scenario.parameters.find((p) => p.scope === "path" && p.path === line.path) ??
+    scenario.parameters.find((p) => p.scope === "part" && p.part_ref === line.part_ref)
+  );
+}
+
+function defaultPlant(supplier: Supplier | undefined): string {
+  const plants = supplier?.plants ?? [];
+  return (plants.find((plant) => plant.is_default) ?? plants[0])?.plant_id ?? "";
+}
+
+export function NodePanel({ line, version, scenario, depth, onChanged }: Props) {
   const purchased = line.valuation_mode === "purchased";
+  const saved = savedFor(line, scenario);
   const [detail, setDetail] = useState<PartDetail | null>(null);
   const [supplierId, setSupplierId] = useState<string>("");
   const [plantId, setPlantId] = useState<string>("");
-  const [scope, setScope] = useState<"part" | "path">("part");
-  const [override, setOverride] = useState("");
-  const [justification, setJustification] = useState("");
-  const [labourMinutes, setLabourMinutes] = useState("");
+  const [scope, setScope] = useState<"part" | "path">(saved?.scope ?? "part");
+  const [override, setOverride] = useState(
+    saved?.price_override ? editable(saved.price_override) : "",
+  );
+  const [justification, setJustification] = useState(
+    saved?.price_override_justification ?? "",
+  );
+  const [labourMinutes, setLabourMinutes] = useState(
+    saved?.labour_minutes ? editable(saved.labour_minutes) : "",
+  );
+  const scenarioRate = editable(scenario.labour_rate);
+  const [labourRate, setLabourRate] = useState(
+    saved?.labour_rate ? editable(saved.labour_rate) : scenarioRate,
+  );
   const [ack, setAck] = useState<string | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!purchased) return;
     let alive = true;
     api
       .part(version, line.part_ref)
@@ -48,9 +80,30 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
     return () => {
       alive = false;
     };
-  }, [purchased, version, line.part_ref]);
+  }, [version, line.part_ref]);
 
   const suppliers = detail?.suppliers ?? [];
+  const standardMinutes = detail?.labour_minutes ?? null;
+
+  // Une fois le catalogue reçu, les listes se placent sur l'option retenue.
+  useEffect(() => {
+    if (!detail) return;
+    const list = detail.suppliers ?? [];
+    const supplier =
+      list.find((s) => s.supplier_id === saved?.supplier_id) ??
+      list.find((s) => s.is_default) ??
+      list[0];
+    setSupplierId(supplier?.supplier_id ?? "");
+    const plant = supplier?.plants.find((p) => p.plant_id === saved?.plant_id);
+    setPlantId(plant?.plant_id ?? defaultPlant(supplier));
+    if (!saved?.labour_minutes && detail.labour_minutes) {
+      setLabourMinutes(editable(detail.labour_minutes));
+    }
+    // Le réglage enregistré n'est lu qu'à l'ouverture : le relire après un
+    // « Appliquer » écraserait une saisie en cours.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detail]);
+
   const plants =
     suppliers.find((s) => s.supplier_id === supplierId)?.plants ?? [];
 
@@ -58,7 +111,7 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
     setFailure(null);
     try {
       const target = scope === "path" ? line.path : line.part_ref;
-      const response = await api.putParameter(scenarioId, target, {
+      const response = await api.putParameter(scenario.id, target, {
         scope,
         ...body,
       });
@@ -83,17 +136,24 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
             Fournisseur
             <select
               value={supplierId}
+              disabled={suppliers.length === 0}
               onChange={(event) => {
-                setSupplierId(event.target.value);
+                const id = event.target.value;
+                setSupplierId(id);
                 // Changer de fournisseur invalide l'usine : elle appartenait
                 // au précédent, et l'API refuserait la combinaison.
-                setPlantId("");
+                setPlantId(
+                  defaultPlant(suppliers.find((s) => s.supplier_id === id)),
+                );
               }}
             >
-              <option value="">— par défaut —</option>
+              {suppliers.length === 0 && (
+                <option value="">aucun fournisseur référencé</option>
+              )}
               {suppliers.map((supplier) => (
                 <option key={supplier.supplier_id} value={supplier.supplier_id}>
                   {supplier.name} (×{supplier.price_multiplier})
+                  {supplier.is_default ? " — par défaut" : ""}
                 </option>
               ))}
             </select>
@@ -104,14 +164,15 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
             <select
               value={plantId}
               onChange={(event) => setPlantId(event.target.value)}
-              disabled={!supplierId}
+              disabled={plants.length === 0}
             >
-              <option value="">— site par défaut —</option>
+              {plants.length === 0 && <option value="">aucun site</option>}
               {plants.map((plant) => (
                 <option key={plant.plant_id} value={plant.plant_id}>
                   {plant.label} ({plant.origin_country}) ×{plant.price_coefficient}
                   {" — "}
                   {plant.lead_time_days} j
+                  {plant.is_default ? " — par défaut" : ""}
                 </option>
               ))}
             </select>
@@ -151,6 +212,21 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
               onChange={(event) => setLabourMinutes(event.target.value)}
             />
           </label>
+          <label>
+            Taux horaire ({scenario.display_currency}/h)
+            <input
+              type="text"
+              inputMode="decimal"
+              value={labourRate}
+              onChange={(event) => setLabourRate(event.target.value)}
+            />
+          </label>
+          <p className="panel__note">
+            Temps de la nomenclature :{" "}
+            {standardMinutes !== null ? quantity(standardMinutes, "min") : "aucun"}
+            {" · "}taux horaire du scénario :{" "}
+            {money({ amount: scenario.labour_rate, currency: scenario.display_currency })}/h
+          </p>
         </>
       )}
 
@@ -185,7 +261,13 @@ export function NodePanel({ line, version, scenarioId, depth, onChanged }: Props
                     price_override: override || null,
                     price_override_justification: justification || null,
                   }
-                : { labour_minutes: labourMinutes || null },
+                : {
+                    labour_minutes: labourMinutes || null,
+                    // Le taux du scénario laissé tel quel n'est pas un réglage :
+                    // la pièce suivra ses changements futurs.
+                    labour_rate:
+                      labourRate && labourRate !== scenarioRate ? labourRate : null,
+                  },
             )
           }
         >

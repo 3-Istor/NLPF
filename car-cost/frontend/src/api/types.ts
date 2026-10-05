@@ -128,6 +128,8 @@ export type ScenarioParameter = {
   readonly price_override: string | null;
   readonly price_override_justification: string | null;
   readonly labour_minutes?: string | null;
+  /** Taux horaire propre à cette cible ; absent, celui du scénario s'applique. */
+  readonly labour_rate?: string | null;
   readonly purchase_currency?: string | null;
 };
 
@@ -251,6 +253,8 @@ export type Supplier = {
   readonly supplier_id: string;
   readonly name: string;
   readonly price_multiplier: string;
+  /** Le fournisseur retenu par le catalogue quand le scénario n'en choisit pas. */
+  readonly is_default?: boolean;
   readonly plants: readonly {
     readonly plant_id: string;
     readonly label: string;

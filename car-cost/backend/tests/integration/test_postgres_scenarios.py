@@ -90,7 +90,10 @@ def original(repositories):
             ),
             ScenarioParameter(ref, "path", occurrences[0].path, purchase_currency="RUB"),
             ScenarioParameter(ref, "path", occurrences[1].path, purchase_currency="EUR"),
-            ScenarioParameter(manufactured, labour_minutes=Decimal("12.3456")),
+            ScenarioParameter(
+                manufactured, labour_minutes=Decimal("12.3456"),
+                labour_rate=Decimal("77.123456"),
+            ),
         ),
     )
 
@@ -253,3 +256,18 @@ def test_after_sales_switch_survives_the_round_trip(repositories):
 def test_switching_spares_on_an_unknown_scenario_is_refused(repositories):
     with pytest.raises(ScenarioNotFound):
         repositories.scenarios.set_after_sales("scn-inconnu", True)
+
+
+def test_labour_rate_change_survives_the_round_trip(repositories):
+    scenarios = repositories.scenarios
+    scenario = Scenario(
+        id=f"scn-{uuid.uuid4().hex[:12]}", bom_version=VERSION,
+        display_currency="EUR", labour_rate=Decimal("42.00"), name="Taux",
+    )
+    scenarios.create(scenario)
+
+    scenarios.set_labour_rate(scenario.id, Decimal("55.123456"))
+
+    assert scenarios.get(scenario.id).labour_rate == Decimal("55.123456")
+    with pytest.raises(ScenarioNotFound):
+        scenarios.set_labour_rate("scn-inconnu", Decimal("1"))

@@ -9,6 +9,8 @@ chacun terminé par son `INSERT INTO schema_migration`.
 0003_validated_bom_is_frozen.sql    une version validée ne change plus (ADR-0013)
 0004_calculation_snapshot.sql       un snapshot de calcul nommé, figé sauf son nom (ADR-0014)
 0005_derived_from_calculation_snapshot.sql  le snapshot d'où repart un scénario, recopié au gel (ADR-0014)
+0006_multi_bom_sav_prix.sql         plusieurs nomenclatures, SAV, snapshots de prix par BOM (ADR-0015)
+0007_labour_rate_per_target.sql     un taux horaire par pièce ou par chemin (ADR-0016)
 ```
 
 Postgres ne les exécute qu'à la **création** du volume. Le conteneur `backend` rattrape à chaque

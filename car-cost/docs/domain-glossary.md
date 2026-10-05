@@ -83,7 +83,7 @@ seul un jeu de valeurs de contrôle les révèle.
 | **Vue agrégée** | Une ligne par **pièce**, avec sa quantité cumulée et sa contribution totale. Répond à « quelles pièces pèsent le plus ? ». |
 | **Vue par occurrence** | Une ligne par **chemin**. Répond à « combien coûte cette vis *à cet endroit-là* ? ». |
 | **Main-d'œuvre** (`labour`) | Temps d'assemblage d'un ensemble fabriqué, en minutes, converti en coût par le **taux horaire**. |
-| **Taux horaire** (`labour_rate`) | Coût d'une heure de main-d'œuvre. Donnée globale du scénario, pas une règle. |
+| **Taux horaire** (`labour_rate`) | Coût d'une heure de main-d'œuvre. Le scénario porte le taux par défaut ; un paramètre peut le remplacer sur sa cible, pièce ou chemin (ADR-0016). Une donnée, pas une règle. |
 | **Règle de coût** (`cost_rule`) | Un modificateur **activable et nommé**, enregistré dans un registre (ADR-0006). Une seule en v1 : `labour`. La liste des règles actives est enregistrée avec le calcul. |
 | **Double comptabilisation** | L'erreur que la structure interdit : compter le prix d'un ensemble **et** celui de ses composants. |
 

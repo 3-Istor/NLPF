@@ -221,7 +221,11 @@ def _assembly(
         children=tuple(children),
         children_cost=children_cost,
         labour_minutes=labour_minutes,
-        labour_rate=scenario.labour_rate,
+        labour_rate=(
+            parameter.labour_rate
+            if parameter is not None and parameter.labour_rate is not None
+            else scenario.labour_rate
+        ),
         labour_cost=lines[ref].own_unit_cost,
         unit_cost=lines[ref].full_unit_cost,
     )
