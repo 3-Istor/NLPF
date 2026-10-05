@@ -1,0 +1,43 @@
+apiVersion: noodle/v1alpha1
+kind: Layout
+canvas: {width: 1880, height: 1380}
+elements:
+  z-repo: {x: 40, y: 140, w: 1780, h: 800}
+  g-generators: {x: 40, y: 60, w: 340, h: 460}
+  f-bom-generator: {x: 30, y: 70, w: 280, h: 90}
+  f-valhalla-import: {x: 30, y: 200, w: 280, h: 90}
+  f-price-history: {x: 30, y: 330, w: 280, h: 90}
+  g-dataset: {x: 460, y: 60, w: 340, h: 440}
+  f-valhalla-source: {x: 30, y: 70, w: 280, h: 90}
+  f-seeds: {x: 30, y: 200, w: 280, h: 90}
+  f-price-indices: {x: 30, y: 330, w: 280, h: 90}
+  g-price-sim: {x: 460, y: 570, w: 340, h: 170}
+  f-mock-price-api: {x: 30, y: 60, w: 280, h: 90}
+  g-backend-code: {x: 960, y: 60, w: 360, h: 680}
+  f-infrastructure: {x: 30, y: 70, w: 300, h: 90}
+  f-application: {x: 30, y: 230, w: 300, h: 90}
+  f-domain: {x: 30, y: 390, w: 300, h: 90}
+  f-migrations: {x: 30, y: 550, w: 300, h: 90}
+  g-screen: {x: 1400, y: 60, w: 340, h: 300}
+  f-fe-ui: {x: 30, y: 70, w: 280, h: 90}
+  f-fe-api: {x: 30, y: 190, w: 280, h: 90}
+edges:
+  r-bomgen-seeds: {from: f-bom-generator.right, to: f-seeds.left@25px, waypoints: [[430, 315], [430, 425]], label_at: [485, 425]}
+  r-valhalla-source: {from: f-valhalla-import.right@15px, to: f-valhalla-source.left@65px, waypoints: [[450, 415], [450, 335]], label_at: [492, 335]}
+  r-valhalla-seeds: {from: f-valhalla-import.right@45px, to: f-seeds.left@45px}
+  r-valhalla-indices: {from: f-valhalla-import.right@75px, to: f-price-indices.left@30px, waypoints: [[470, 475], [470, 560]]}
+  r-history-indices: {from: f-price-history.right@60px, to: f-price-indices.left@60px}
+  r-mock-seeds: {from: f-mock-price-api.right@15px, to: f-seeds.right@70px, waypoints: [[900, 785], [900, 470]], label_at: [900, 640]}
+  r-mock-indices: {from: f-mock-price-api.top@200px, to: f-price-indices.bottom@200px}
+  r-infra-seeds: {from: f-infrastructure.left@30px, to: f-seeds.right@45px, waypoints: [[870, 300], [870, 445]], label_at: [950, 300]}
+  r-infra-mock: {from: f-infrastructure.left@60px, to: f-mock-price-api.right@45px, waypoints: [[930, 330], [930, 815]], label_at: [870, 815]}
+  r-infra-app: {from: f-infrastructure.bottom, to: f-application.top}
+  r-app-domain: {from: f-application.bottom, to: f-domain.top}
+  r-infra-migrations: {from: f-infrastructure.right@70px, to: f-migrations.right@60px, waypoints: [[1348, 340], [1348, 810]]}
+  r-feapi-infra: {from: f-fe-api.left@45px, to: f-infrastructure.right@20px, waypoints: [[1400, 435], [1400, 290]]}
+  r-feui-feapi: {from: f-fe-ui.bottom, to: f-fe-api.top}
+cards:
+  card-legend: {x: 40, y: 980, w: 470, h: 360}
+  card-commit: {x: 540, y: 980, w: 560, h: 360}
+  card-guards: {x: 1130, y: 980, w: 350, h: 360}
+  card-gaps: {x: 1510, y: 980, w: 310, h: 360}

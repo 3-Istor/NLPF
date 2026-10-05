@@ -1,0 +1,114 @@
+apiVersion: noodle/v1alpha1
+kind: Model
+# Facts from car-cost/docker-compose.yml, the Dockerfiles, frontend/vite.config.ts,
+# backend/src/carcost/{api,infrastructure} and price-api/mock_price_api.py.
+elements:
+  # Zones
+  - {id: z-host, kind: region, color: slate, icon: globe, title: HOST, sub: localhost}
+  - {id: z-compose, kind: region, color: sky, icon: docker, title: DOCKER COMPOSE, sub: "project car-cost"}
+  - {id: g-web, kind: group, parent: z-compose, color: cyan, icon: vite, title: WEB, sub: "service frontend"}
+  - {id: g-api, kind: group, parent: z-compose, color: emerald, icon: fastapi, title: CALCULATION API, sub: "service backend"}
+  - {id: g-data, kind: group, parent: z-compose, color: violet, icon: postgresql, title: DATA, sub: "service db · volume db-data"}
+  - {id: g-price, kind: group, parent: z-compose, color: amber, icon: python, title: PRICE SOURCE, sub: "service mock-api"}
+
+  # Components
+  - {id: user, kind: frontend, parent: z-host, shape: actor, icon: user, title: Analyst, desc: in a browser}
+  - id: frontend
+    kind: frontend
+    parent: g-web
+    icon: react
+    title: frontend
+    tech: "[Vite dev server · React 19 SPA]"
+    desc: Serves the SPA, proxies /api
+    ports: [{name: http, protocol: TCP, port: 5173}]
+  - id: backend
+    kind: backend
+    parent: g-api
+    icon: fastapi
+    title: backend
+    tech: "[FastAPI · Python 3.12]"
+    desc: Computes the cost of a BOM
+    ports: [{name: http, protocol: TCP, port: 8000}]
+  - id: db
+    kind: database
+    parent: g-data
+    shape: cylinder
+    icon: postgresql
+    title: db
+    tech: "[PostgreSQL 16]"
+    desc: BOMs, price snapshots, results
+    ports: [{name: pg, protocol: TCP, port: 5432}]
+  - id: mock-api
+    kind: cloud
+    parent: g-price
+    icon: python
+    title: mock-api
+    tech: "[Python stdlib HTTP server]"
+    desc: Simulated supplier price market
+    ports: [{name: http, protocol: TCP, port: 8099}]
+
+  # Repository map: folders, not running processes (view repo-map)
+  - {id: z-repo, kind: region, color: slate, icon: git, title: REPOSITORY, sub: "car-cost/"}
+  - {id: g-generators, kind: group, parent: z-repo, color: indigo, icon: python, title: DATASET GENERATORS, sub: "tools/ · run by hand"}
+  - {id: g-dataset, kind: group, parent: z-repo, color: violet, icon: postgresql, title: DATASET, sub: "generated, byte-checked in CI"}
+  - {id: g-price-sim, kind: group, parent: z-repo, color: amber, icon: python, title: PRICE SIMULATOR, sub: "price-api/"}
+  - {id: g-backend-code, kind: group, parent: z-repo, color: emerald, icon: fastapi, title: CALCULATION BACKEND, sub: "backend/"}
+  - {id: g-screen, kind: group, parent: z-repo, color: cyan, icon: react, title: SCREEN, sub: "frontend/src/"}
+  - {id: f-bom-generator, kind: tool, parent: g-generators, icon: python, title: bom_generator/, tech: "[tools/ · Python]", desc: Builds the Multipla BOM}
+  - {id: f-valhalla-import, kind: tool, parent: g-generators, icon: python, title: valhalla_import/, tech: "[tools/ · Python]", desc: Enriches the three Valhalla BOMs}
+  - {id: f-price-history, kind: tool, parent: g-generators, icon: python, title: price_history.py, tech: "[tools/ · Python]", desc: Draws the market price indices}
+  - {id: f-valhalla-source, kind: database, parent: g-dataset, title: valhalla/source/, tech: "[seeds/ · JSON · hand-supplied]", desc: Raw Valhalla inputs}
+  - {id: f-seeds, kind: database, parent: g-dataset, title: "seeds/", tech: "[CSV + JSON · 6 files × 4 BOMs]", desc: "Parts, edges, suppliers, catalogs"}
+  - {id: f-price-indices, kind: database, parent: g-dataset, title: price_indices.json, tech: "[price-api/data/ · JSON]", desc: Price index per year}
+  - {id: f-mock-price-api, kind: cloud, parent: g-price-sim, icon: python, title: mock_price_api.py, tech: "[+ simulation.py]", desc: Serves and moves the prices}
+  - {id: f-infrastructure, kind: backend, parent: g-backend-code, icon: fastapi, title: infrastructure/, tech: "[api/ · postgres/ · startup]", desc: "Adapters, routes, wiring"}
+  - {id: f-application, kind: backend, parent: g-backend-code, icon: python, title: application/, tech: "[use cases · ports.py]", desc: One module per use case}
+  - {id: f-domain, kind: backend, parent: g-backend-code, icon: python, title: domain/, tech: "[stdlib only]", desc: "BOM graph, engine, prices"}
+  - {id: f-migrations, kind: database, parent: g-backend-code, icon: postgresql, title: migrations/, tech: "[SQL · 0001…0006 · hand-written]", desc: Schema and constraints}
+  - {id: f-fe-ui, kind: frontend, parent: g-screen, icon: react, title: components/ · tree/, tech: "[React 19 · TS]", desc: Screens and lazy tree}
+  - {id: f-fe-api, kind: frontend, parent: g-screen, icon: react, title: api/, tech: "[client.ts · types.ts]", desc: fetch on /api/v1}
+
+connections:
+  - {id: c-user-frontend, from: user, to: frontend, kind: flow, port: http, protocol: HTTP, verb: "POST /api/v1/calculations"}
+  - {id: c-frontend-backend, from: frontend, to: backend, kind: flow, port: http, protocol: HTTP, verb: proxy}
+  - {id: c-backend-db, from: backend, to: db, kind: flow, port: pg, protocol: SQL, verb: "read · insert"}
+  - {id: c-backend-mock-api, from: backend, to: mock-api, kind: async, port: http, protocol: HTTP, verb: "GET /prices"}
+  - {id: c-backend-db-startup, from: backend, to: db, kind: async, port: pg, protocol: psql, verb: "migrate · seed"}
+
+references:
+  - {id: r-bomgen-seeds, from: f-bom-generator, to: f-seeds, kind: writes}
+  - {id: r-valhalla-source, from: f-valhalla-import, to: f-valhalla-source, kind: reads}
+  - {id: r-valhalla-seeds, from: f-valhalla-import, to: f-seeds, kind: writes}
+  - {id: r-valhalla-indices, from: f-valhalla-import, to: f-price-indices, kind: reads}
+  - {id: r-history-indices, from: f-price-history, to: f-price-indices, kind: writes}
+  - {id: r-mock-seeds, from: f-mock-price-api, to: f-seeds, kind: "reads catalogs"}
+  - {id: r-mock-indices, from: f-mock-price-api, to: f-price-indices, kind: reads}
+  - {id: r-infra-seeds, from: f-infrastructure, to: f-seeds, kind: "loads at start"}
+  - {id: r-infra-mock, from: f-infrastructure, to: f-mock-price-api, kind: "HTTP /prices"}
+  - {id: r-infra-app, from: f-infrastructure, to: f-application, kind: imports}
+  - {id: r-app-domain, from: f-application, to: f-domain, kind: imports}
+  - {id: r-infra-migrations, from: f-infrastructure, to: f-migrations, kind: applies}
+  - {id: r-feapi-infra, from: f-fe-api, to: f-infrastructure, kind: "HTTP /api/v1"}
+  - {id: r-feui-feapi, from: f-fe-ui, to: f-fe-api, kind: imports}
+
+annotations:
+  - id: G1
+    severity: medium
+    title: Seeds are loaded by the backend, not by Postgres init
+    text: "architecture.md §1 draws seeds -> db at first start. In code, initdb only runs backend/migrations; backend startup.py pipes the seed SQL into psql, on every start where a BOM version is missing."
+    targets: [c-backend-db-startup]
+  - id: G2
+    severity: low
+    title: The frontend container runs the Vite dev server
+    text: "frontend/Dockerfile runs npm run dev; the /api proxy exists only in that dev server. There is no production bundle served yet."
+    targets: [frontend]
+  - id: G3
+    severity: low
+    title: The layer test guards application too
+    text: "architecture.md §2 labels the archtest 'garde domain'. backend/tests/test_layer_dependencies.py also forbids application -> infrastructure and a list of I/O libraries in both layers."
+    targets: [f-application]
+  - id: G4
+    severity: low
+    title: price_history.py is undocumented
+    text: "Neither AGENTS.md nor the README mention tools/price_history.py, which writes price-api/data/price_indices.json; only its docstring and simulation.py say so."
+    targets: [f-price-history]
