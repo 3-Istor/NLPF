@@ -366,7 +366,10 @@ entièrement distinct.
   Comme sur le Multipla, une pièce qui ne diffère que par son emplacement
   (gauche/droite, avant/arrière, conducteur/passager) est une pièce et une
   quantité, et les fixations sont regroupées par type et partagées entre
-  ensembles.
+  ensembles. Un détail **synthétique** porte chaque Valhalla à environ mille
+  pièces sur six niveaux : composants des pièces chères, matières et
+  visserie standard partagées, sous-ensembles par zone. Le coût de
+  référence est conservé au centime.
 - **SAV** : un scénario peut compter les pièces de rechange livrées avec le
   véhicule ; l'arbre affiche « + n SAV » à côté de la quantité montée.
 - **Prix qui varient** : l'API simulée rejoue une année de marché en 40 min.
@@ -388,7 +391,8 @@ entièrement distinct.
       enregistrés), rédigé au statut « proposé », et fermer la PR #6 qu'il
       remplace.
 - [ ] **Relire les fourchettes générées pour la Valhalla**
-      (`tools/valhalla_import/enrich.py`, `suppliers.py`) : masse, carbone,
+      (`tools/valhalla_import/enrich.py`, `suppliers.py`, `detail.py`) :
+      décompositions, prix des matières et des standards, zones, masse, carbone,
       heures d'assemblage et usines sont des ordres de grandeur, à discuter.
       Environ un quart des pièces gardent le profil de prix « défaut ».
       Les prix de motorisation du thermique (×1,34) et de l'électrique

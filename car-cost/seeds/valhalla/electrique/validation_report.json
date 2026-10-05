@@ -1,82 +1,154 @@
 {
-  "parts": 324,
-  "edges": 336,
-  "purchased": 304,
-  "manufactured": 20,
-  "max_depth": 3,
-  "deepest_part": "VALE-FIX-VIS-BOULON-STANDARD",
-  "shared_parts": 6,
-  "total_paths": 337,
+  "parts": 969,
+  "edges": 1539,
+  "purchased": 765,
+  "manufactured": 204,
+  "max_depth": 6,
+  "deepest_part": "VALE-STD-THERMISTANCE",
+  "shared_parts": 38,
+  "total_paths": 1540,
   "most_shared": [
     {
-      "part_ref": "VALE-FIX-VIS-BOULON-STANDARD",
-      "label": "Vis boulon standard",
-      "parent_count": 5,
-      "occurrence_count": 5,
-      "cumulative_quantity": "98.0",
+      "part_ref": "VALE-STD-CONNECTEUR-LV",
+      "label": "Connecteur étanche basse tension",
+      "parent_count": 53,
+      "occurrence_count": 53,
+      "cumulative_quantity": "261.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALE-FIX-COLLIER-AGRAFE",
-      "label": "Collier agrafe",
-      "parent_count": 4,
-      "occurrence_count": 4,
-      "cumulative_quantity": "142.0",
+      "part_ref": "VALE-STD-THERMISTANCE",
+      "label": "Thermistance CTN",
+      "parent_count": 46,
+      "occurrence_count": 46,
+      "cumulative_quantity": "222.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALE-FIX-VIS-CLIP-MONTAGE",
-      "label": "Vis clip montage",
-      "parent_count": 4,
-      "occurrence_count": 4,
-      "cumulative_quantity": "87.0",
+      "part_ref": "VALE-STD-JOINT-TORIQUE",
+      "label": "Joint torique FKM",
+      "parent_count": 36,
+      "occurrence_count": 36,
+      "cumulative_quantity": "137.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALE-BOM-0322",
-      "label": "Joints homocinétiques",
-      "parent_count": 2,
-      "occurrence_count": 2,
-      "cumulative_quantity": "8.0",
+      "part_ref": "VALE-STD-VIS-TORX-M5",
+      "label": "Vis Torx M5 inox",
+      "parent_count": 35,
+      "occurrence_count": 35,
+      "cumulative_quantity": "350.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALE-FIX-BOULON-HAUTE-RESISTANCE",
-      "label": "Boulon haute resistance",
-      "parent_count": 2,
-      "occurrence_count": 2,
-      "cumulative_quantity": "48.0",
+      "part_ref": "VALE-STD-CONDENSATEUR",
+      "label": "Condensateur céramique multicouche",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "3660.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALE-FIX-VIS-BOULON-CARROSSERIE",
-      "label": "Vis boulon carrosserie",
-      "parent_count": 2,
-      "occurrence_count": 2,
-      "cumulative_quantity": "102.0",
+      "part_ref": "VALE-STD-INSERT-M6",
+      "label": "Insert fileté M6 à coller",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "642.0",
       "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-MICROCONTROLEUR",
+      "label": "Microcontrôleur automobile 32 bits",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "61.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-RIVET",
+      "label": "Rivet aveugle aluminium",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "856.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-SILENTBLOC",
+      "label": "Silentbloc caoutchouc-métal",
+      "parent_count": 30,
+      "occurrence_count": 30,
+      "cumulative_quantity": "116.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-BAGUE-ETANCHEITE",
+      "label": "Bague d'étanchéité à lèvre",
+      "parent_count": 27,
+      "occurrence_count": 27,
+      "cumulative_quantity": "63.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-MAT-ALU-BILLET",
+      "label": "Billette aluminium 7075",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "14.6300",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALE-MAT-HONEYCOMB",
+      "label": "Âme nid d'abeille aramide",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "13.2380",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALE-MAT-PREPREG",
+      "label": "Préimprégné carbone/époxy",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "31.7720",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALE-STD-CIRCLIP",
+      "label": "Circlip acier",
+      "parent_count": 22,
+      "occurrence_count": 22,
+      "cumulative_quantity": "132.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-MAT-COPPER",
+      "label": "Cuivre électrolytique",
+      "parent_count": 20,
+      "occurrence_count": 20,
+      "cumulative_quantity": "31.7560",
+      "unit": "kg"
     }
   ],
   "systems": {
     "CAR": {
-      "parts": 63,
-      "cost": "312318.77",
-      "co2": "9913.15"
+      "parts": 218,
+      "cost": "306578.01",
+      "co2": "7310.75"
     },
     "CHS": {
-      "parts": 73,
-      "cost": "149447.95",
-      "co2": "1771.81"
+      "parts": 202,
+      "cost": "146611.54",
+      "co2": "2006.35"
     },
     "ELE": {
-      "parts": 45,
-      "cost": "44562.24",
-      "co2": "1478.34"
+      "parts": 138,
+      "cost": "43278.64",
+      "co2": "1435.66"
     },
     "FIX": {
-      "parts": 12,
-      "cost": "1546.76",
-      "co2": "59.12"
+      "parts": 30,
+      "cost": "13969.59",
+      "co2": "746.14"
     },
     "FLU": {
       "parts": 19,
@@ -84,19 +156,24 @@
       "co2": "71.38"
     },
     "GMP": {
-      "parts": 54,
-      "cost": "512480.55",
-      "co2": "14321.77"
+      "parts": 195,
+      "cost": "505854.33",
+      "co2": "13330.45"
     },
     "INT": {
-      "parts": 47,
-      "cost": "63359.36",
-      "co2": "1536.15"
+      "parts": 127,
+      "cost": "62337.16",
+      "co2": "1244.93"
+    },
+    "MAT": {
+      "parts": 14,
+      "cost": "5944.17",
+      "co2": "1974.75"
     },
     "TRN": {
-      "parts": 6,
-      "cost": "51059.30",
-      "co2": "100.77"
+      "parts": 21,
+      "cost": "50201.49",
+      "co2": "124.24"
     },
     "VEH": {
       "parts": 5,
@@ -105,27 +182,6 @@
     }
   },
   "top_contributors": [
-    {
-      "part_ref": "VALE-BOM-0601",
-      "label": "Moteur électrique",
-      "system": "GMP",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "67039.64"
-    },
-    {
-      "part_ref": "VALE-BOM-0006",
-      "label": "Monocoque carbone – cuve inférieure",
-      "system": "CAR",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "58554.00"
-    },
-    {
-      "part_ref": "VALE-BOM-0348",
-      "label": "Moteur électrique",
-      "system": "GMP",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "56983.70"
-    },
     {
       "part_ref": "VALE-BOM-0329",
       "label": "Cellules batterie haute énergie",
@@ -141,86 +197,107 @@
       "own_contribution": "36201.36"
     },
     {
-      "part_ref": "VALE-BOM-0007",
-      "label": "Structure supérieure carbone / cellule sécurité",
+      "part_ref": "VALE-BOM-0601-ROTOR",
+      "label": "Moteur électrique — rotor à aimants permanents",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "18973.50"
+    },
+    {
+      "part_ref": "VALE-BOM-0006-ATTACHE",
+      "label": "Monocoque carbone – cuve inférieure — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "17685.70"
+    },
+    {
+      "part_ref": "VALE-BOM-0006-PEAU-EXT",
+      "label": "Monocoque carbone – cuve inférieure — peau extérieure carbone",
       "system": "CAR",
       "cumulative_quantity": "1.0",
-      "own_contribution": "29277.00"
+      "own_contribution": "17685.70"
     },
     {
-      "part_ref": "VALE-BOM-0327",
-      "label": "Pack batterie HV 800 V 100 kWh",
+      "part_ref": "VALE-BOM-0348-ROTOR",
+      "label": "Moteur électrique — rotor à aimants permanents",
       "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "26815.86"
+      "cumulative_quantity": "2.0",
+      "own_contribution": "16103.74"
     },
     {
-      "part_ref": "VALE-BOM-0630",
-      "label": "Réducteur",
+      "part_ref": "VALE-BOM-0006-PEAU-INT",
+      "label": "Monocoque carbone – cuve inférieure — peau intérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "13264.28"
+    },
+    {
+      "part_ref": "VALE-BOM-0601-STATOR-BOBINAGE",
+      "label": "Moteur électrique — stator bobiné — bobinage en épingles",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "11806.79"
+    },
+    {
+      "part_ref": "VALE-BOM-0322",
+      "label": "Joints homocinétiques",
       "system": "TRN",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "21452.70"
+      "cumulative_quantity": "8.0",
+      "own_contribution": "10726.32"
     },
     {
-      "part_ref": "VALE-BOM-0350",
-      "label": "Réducteur",
+      "part_ref": "VALE-BOM-0348-STATOR-BOBINAGE",
+      "label": "Moteur électrique — stator bobiné — bobinage en épingles",
       "system": "GMP",
       "cumulative_quantity": "2.0",
-      "own_contribution": "20111.90"
+      "own_contribution": "10014.88"
     },
     {
-      "part_ref": "VALE-BOM-0603",
-      "label": "Inverter moteur AR gauche 800 V",
+      "part_ref": "VALE-BOM-0601-CARTER",
+      "label": "Moteur électrique — carter moteur à chemise d'eau",
       "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "20111.89"
+      "cumulative_quantity": "2.0",
+      "own_contribution": "9486.75"
     },
     {
-      "part_ref": "VALE-BOM-0604",
-      "label": "Inverter moteur AR droit 800 V",
+      "part_ref": "VALE-BOM-0601-FLASQUE",
+      "label": "Moteur électrique — flasque palier",
       "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "20111.89"
+      "cumulative_quantity": "4.0",
+      "own_contribution": "9486.75"
     },
     {
-      "part_ref": "VALE-BOM-0355",
-      "label": "Inverter moteur AV gauche 800 V",
+      "part_ref": "VALE-BOM-0601-STATOR-PAQUET",
+      "label": "Moteur électrique — stator bobiné — paquet de tôles empilées",
       "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "18435.90"
+      "cumulative_quantity": "2.0",
+      "own_contribution": "8855.10"
     },
     {
-      "part_ref": "VALE-BOM-0356",
-      "label": "Inverter moteur AV droit 800 V",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "18435.90"
-    },
-    {
-      "part_ref": "VALE-BOM-0043",
-      "label": "Panneaux d'accès sous caisse",
+      "part_ref": "VALE-BOM-0007-ATTACHE",
+      "label": "Structure supérieure carbone / cellule sécurité — attache usinée",
       "system": "CAR",
-      "cumulative_quantity": "6.0",
-      "own_contribution": "17566.20"
+      "cumulative_quantity": "4.0",
+      "own_contribution": "8849.75"
     },
     {
-      "part_ref": "VALE-BOM-0330",
-      "label": "Boîtier batterie HV 800 V",
-      "system": "GMP",
+      "part_ref": "VALE-BOM-0007-PEAU-EXT",
+      "label": "Structure supérieure carbone / cellule sécurité — peau extérieure carbone",
+      "system": "CAR",
       "cumulative_quantity": "1.0",
-      "own_contribution": "16759.91"
+      "own_contribution": "8849.75"
     }
   ],
   "control_values": [],
   "costing": {
     "labour_rate_eur_per_hour": "60.00",
-    "material_cost": "1127615.66",
-    "labour_cost": "19376.00",
+    "material_cost": "1122650.66",
+    "labour_cost": "24341.00",
     "total_cost": "1146991.66",
     "total_cost_exact": "1146991.658000000000000000000",
-    "own_co2": "29459.99",
-    "transport_co2": "12.68",
-    "total_co2": "29472.68"
+    "own_co2": "28446.27",
+    "transport_co2": "18.57",
+    "total_co2": "28464.85"
   },
   "mass": {
     "vehicle_kg": "1960.0",

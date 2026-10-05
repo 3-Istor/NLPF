@@ -2,133 +2,440 @@ bom_version_id,part_ref,label,category,system,unit,valuation_mode,labour_minutes
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0003,Jeu logiciels/calibrations véhicule,vehicle,VEH,jeu,purchased,,5855.400000,1,,0.000000,0.000000,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0004,Plaque VIN / plaque constructeur,vehicle,VEH,pce,purchased,,23.420000,1,,1.315867,6.576966,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0005,Étiquettes réglementaires et sécurité,vehicle,VEH,jeu,purchased,,5.860000,1,,0.029349,0.104799,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0006,Monocoque carbone – cuve inférieure,body,CAR,pce,purchased,,58554.000000,1,,77.152000,2070.466502,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0007,Structure supérieure carbone / cellule sécurité,body,CAR,pce,purchased,,29277.000000,1,,34.344000,602.125877,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0006,Monocoque carbone – cuve inférieure,body,CAR,pce,manufactured,30,,1,,77.152000,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0006-ATTACHE,Monocoque carbone – cuve inférieure — attache usinée,body,CAR,pce,purchased,,4420.938000,1,,4.917846,53.665994,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0006-PEAU-EXT,Monocoque carbone – cuve inférieure — peau extérieure carbone,body,CAR,pce,purchased,,17683.752000,1,,19.671386,516.999433,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0006-PEAU-INT,Monocoque carbone – cuve inférieure — peau intérieure carbone,body,CAR,pce,purchased,,13262.814000,1,,14.753538,383.376586,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0006-RENFORT,Monocoque carbone – cuve inférieure — renfort local,body,CAR,pce,purchased,,4420.938000,1,,4.917846,135.582064,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0007,Structure supérieure carbone / cellule sécurité,body,CAR,pce,manufactured,30,,1,,34.344000,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0007-ATTACHE,Structure supérieure carbone / cellule sécurité — attache usinée,body,CAR,pce,purchased,,2212.660077,1,,2.184769,21.821910,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0007-PEAU-EXT,Structure supérieure carbone / cellule sécurité — peau extérieure carbone,body,CAR,pce,purchased,,8850.640307,1,,8.739078,257.269717,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0007-PEAU-INT,Structure supérieure carbone / cellule sécurité — peau intérieure carbone,body,CAR,pce,purchased,,6637.980231,1,,6.554308,195.807330,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0007-RENFORT,Structure supérieure carbone / cellule sécurité — renfort local,body,CAR,pce,purchased,,2212.660077,1,,2.184769,55.850561,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0008,Inserts métalliques monocoque,body,CAR,pce,purchased,,14.050000,1,,0.028567,0.848560,60.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0009,Cloison avant,body,CAR,pce,purchased,,1171.080000,1,,1.664780,42.096293,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0010,Cloison arrière / pare-feu,body,CAR,pce,purchased,,1171.080000,1,,1.839421,47.156868,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0011,Sous-cadre avant aluminium,body,CAR,pce,purchased,,7026.480000,1,,13.523500,140.860776,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0012,Sous-cadre arrière aluminium,body,CAR,pce,purchased,,7026.480000,1,,14.969500,154.831035,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0013,Crash-box,body,CAR,pce,purchased,,1756.620000,1,,2.821585,79.748150,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0015,Traverse pare-chocs,body,CAR,pce,purchased,,1405.300000,1,,2.288944,64.630623,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0019,Renforts latéraux / anti-intrusion,body,CAR,pce,purchased,,1171.080000,1,,3.473145,93.852019,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0009,Cloison avant,body,CAR,pce,manufactured,30,,1,,1.664780,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0009-ATTACHE,Cloison avant — attache usinée,body,CAR,pce,purchased,,84.096462,1,,0.098291,1.108546,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0009-PEAU-EXT,Cloison avant — peau extérieure carbone,body,CAR,pce,purchased,,336.385843,1,,0.393162,10.376646,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0009-PEAU-INT,Cloison avant — peau intérieure carbone,body,CAR,pce,purchased,,252.289385,1,,0.294872,8.712760,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0009-RENFORT,Cloison avant — renfort local,body,CAR,pce,purchased,,84.096462,1,,0.098291,2.870412,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0010,Cloison arrière / pare-feu,body,CAR,pce,manufactured,30,,1,,1.839421,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0010-ATTACHE,Cloison arrière / pare-feu — attache usinée,body,CAR,pce,purchased,,83.916231,1,,0.109417,1.019679,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0010-PEAU-EXT,Cloison arrière / pare-feu — peau extérieure carbone,body,CAR,pce,purchased,,335.664922,1,,0.437668,13.083560,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0010-PEAU-INT,Cloison arrière / pare-feu — peau intérieure carbone,body,CAR,pce,purchased,,251.748692,1,,0.328251,8.901576,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0010-RENFORT,Cloison arrière / pare-feu — renfort local,body,CAR,pce,purchased,,83.916231,1,,0.109417,2.751203,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0011,Sous-cadre avant aluminium,body,CAR,pce,manufactured,12,,1,,13.523500,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0011-CORPS,Sous-cadre avant aluminium — corps usiné,body,CAR,pce,purchased,,4183.761600,1,,7.083300,81.091743,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0011-DOUILLE,Sous-cadre avant aluminium — douille,body,CAR,pce,purchased,,697.293600,1,,1.180550,2.487797,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0011-ROTULE,Sous-cadre avant aluminium — rotule,body,CAR,pce,purchased,,697.293600,1,,1.180550,2.837641,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0012,Sous-cadre arrière aluminium,body,CAR,pce,manufactured,12,,1,,14.969500,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0012-CORPS,Sous-cadre arrière aluminium — corps usiné,body,CAR,pce,purchased,,4182.935100,1,,7.863900,92.276575,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0012-DOUILLE,Sous-cadre arrière aluminium — douille,body,CAR,pce,purchased,,697.155850,1,,1.310650,3.279168,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0012-ROTULE,Sous-cadre arrière aluminium — rotule,body,CAR,pce,purchased,,697.155850,1,,1.310650,3.168365,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0013,Crash-box,body,CAR,pce,manufactured,12,,1,,2.821585,0.60,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0013-CORPS,Crash-box — corps usiné,body,CAR,pce,purchased,,1027.944600,1,,1.304153,15.558676,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0013-DOUILLE,Crash-box — douille,body,CAR,pce,purchased,,171.324100,1,,0.217358,0.494976,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0013-ROTULE,Crash-box — rotule,body,CAR,pce,purchased,,171.324100,1,,0.217358,0.465972,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0015,Traverse pare-chocs,body,CAR,pce,manufactured,12,,1,,2.288944,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0015-CORPS,Traverse pare-chocs — corps usiné,body,CAR,pce,purchased,,817.454700,1,,1.016368,9.225064,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0015-DOUILLE,Traverse pare-chocs — douille,body,CAR,pce,purchased,,136.242450,1,,0.169394,0.409767,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0015-ROTULE,Traverse pare-chocs — rotule,body,CAR,pce,purchased,,136.242450,1,,0.169394,0.409320,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0019,Renforts latéraux / anti-intrusion,body,CAR,pce,manufactured,30,,1,,3.473145,1.50,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0019-ATTACHE,Renforts latéraux / anti-intrusion — attache usinée,body,CAR,pce,purchased,,82.243615,1,,0.213703,1.955062,16.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0019-PEAU-EXT,Renforts latéraux / anti-intrusion — peau extérieure carbone,body,CAR,pce,purchased,,328.974464,1,,0.854817,23.810415,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0019-PEAU-INT,Renforts latéraux / anti-intrusion — peau intérieure carbone,body,CAR,pce,purchased,,246.730846,1,,0.641110,18.155851,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0019-RENFORT,Renforts latéraux / anti-intrusion — renfort local,body,CAR,pce,purchased,,82.243615,1,,0.213703,5.949363,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0020,Supports groupe motopropulseur,body,CAR,pce,purchased,,585.540000,1,,1.640246,4.007351,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0021,Silentblocs groupe motopropulseur,body,CAR,pce,purchased,,257.640000,1,,0.193286,0.603922,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0024,Panneau avant / capot,body,CAR,pce,purchased,,2927.700000,1,,2.527403,61.411344,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0025,Aile,body,CAR,pce,purchased,,2927.700000,1,,2.704535,68.095864,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0027,Panneau de toit / zone scoop,body,CAR,pce,purchased,,2927.700000,1,,2.542968,63.332109,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0028,Panneau latéral,body,CAR,pce,purchased,,2927.700000,1,,2.618615,66.158784,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0030,Quarter panel,body,CAR,pce,purchased,,2927.700000,1,,1.781519,52.433311,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0032,Panneau arrière,body,CAR,pce,purchased,,2927.700000,1,,1.987913,52.931762,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0033,Cache moteur / deck lid,body,CAR,pce,purchased,,1171.080000,1,,1.867439,48.075723,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0034,Bas de caisse,body,CAR,pce,purchased,,2927.700000,1,,1.377446,33.066969,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0024,Panneau avant / capot,body,CAR,pce,manufactured,30,,1,,2.527403,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0024-ATTACHE,Panneau avant / capot — attache usinée,body,CAR,pce,purchased,,218.342538,1,,0.153416,1.516839,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0024-PEAU-EXT,Panneau avant / capot — peau extérieure carbone,body,CAR,pce,purchased,,873.370157,1,,0.613660,14.794483,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0024-PEAU-INT,Panneau avant / capot — peau intérieure carbone,body,CAR,pce,purchased,,655.027615,1,,0.460247,11.927669,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0024-RENFORT,Panneau avant / capot — renfort local,body,CAR,pce,purchased,,218.342538,1,,0.153416,4.113420,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0025,Aile,body,CAR,pce,manufactured,30,,1,,2.704535,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0025-ATTACHE,Aile — attache usinée,body,CAR,pce,purchased,,218.155769,1,,0.164657,1.830607,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0025-PEAU-EXT,Aile — peau extérieure carbone,body,CAR,pce,purchased,,872.623078,1,,0.658623,18.262562,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0025-PEAU-INT,Aile — peau intérieure carbone,body,CAR,pce,purchased,,654.467308,1,,0.493970,12.889653,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0025-RENFORT,Aile — renfort local,body,CAR,pce,purchased,,218.155769,1,,0.164657,4.394168,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0027,Panneau de toit / zone scoop,body,CAR,pce,manufactured,30,,1,,2.542968,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0027-ATTACHE,Panneau de toit / zone scoop — attache usinée,body,CAR,pce,purchased,,218.324692,1,,0.154382,1.509115,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0027-PEAU-EXT,Panneau de toit / zone scoop — peau extérieure carbone,body,CAR,pce,purchased,,873.298771,1,,0.617530,15.634378,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0027-PEAU-INT,Panneau de toit / zone scoop — peau intérieure carbone,body,CAR,pce,purchased,,654.974077,1,,0.463146,11.282514,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0027-RENFORT,Panneau de toit / zone scoop — renfort local,body,CAR,pce,purchased,,218.324692,1,,0.154382,4.564860,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0028,Panneau latéral,body,CAR,pce,manufactured,30,,1,,2.618615,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0028-ATTACHE,Panneau latéral — attache usinée,body,CAR,pce,purchased,,218.246769,1,,0.159201,1.751752,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0028-PEAU-EXT,Panneau latéral — peau extérieure carbone,body,CAR,pce,purchased,,872.987078,1,,0.636806,15.459485,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0028-PEAU-INT,Panneau latéral — peau intérieure carbone,body,CAR,pce,purchased,,654.740308,1,,0.477603,12.024706,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0028-RENFORT,Panneau latéral — renfort local,body,CAR,pce,purchased,,218.246769,1,,0.159201,4.033357,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0030,Quarter panel,body,CAR,pce,manufactured,30,,1,,1.781519,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0030-ATTACHE,Quarter panel — attache usinée,body,CAR,pce,purchased,,219.100923,1,,0.105732,1.217652,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0030-PEAU-EXT,Quarter panel — peau extérieure carbone,body,CAR,pce,purchased,,876.403693,1,,0.422930,11.976870,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0030-PEAU-INT,Quarter panel — peau intérieure carbone,body,CAR,pce,purchased,,657.302769,1,,0.317197,8.729325,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0030-RENFORT,Quarter panel — renfort local,body,CAR,pce,purchased,,219.100923,1,,0.105732,2.807502,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0032,Panneau arrière,body,CAR,pce,manufactured,30,,1,,1.987913,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0032-ATTACHE,Panneau arrière — attache usinée,body,CAR,pce,purchased,,218.889769,1,,0.118916,1.093290,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0032-PEAU-EXT,Panneau arrière — peau extérieure carbone,body,CAR,pce,purchased,,875.559078,1,,0.475668,12.237130,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0032-PEAU-INT,Panneau arrière — peau intérieure carbone,body,CAR,pce,purchased,,656.669308,1,,0.356749,10.655807,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0032-RENFORT,Panneau arrière — renfort local,body,CAR,pce,purchased,,218.889769,1,,0.118916,2.918627,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0033,Cache moteur / deck lid,body,CAR,pce,manufactured,30,,1,,1.867439,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0033-ATTACHE,Cache moteur / deck lid — attache usinée,body,CAR,pce,purchased,,83.891846,1,,0.111265,1.154564,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0033-PEAU-EXT,Cache moteur / deck lid — peau extérieure carbone,body,CAR,pce,purchased,,335.567386,1,,0.445055,12.959913,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0033-PEAU-INT,Cache moteur / deck lid — peau intérieure carbone,body,CAR,pce,purchased,,251.675538,1,,0.333794,9.567604,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0033-RENFORT,Cache moteur / deck lid — renfort local,body,CAR,pce,purchased,,83.891846,1,,0.111265,2.862426,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0034,Bas de caisse,body,CAR,pce,manufactured,30,,1,,1.377446,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0034-ATTACHE,Bas de caisse — attache usinée,body,CAR,pce,purchased,,219.516692,1,,0.079957,0.832256,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0034-PEAU-EXT,Bas de caisse — peau extérieure carbone,body,CAR,pce,purchased,,878.066771,1,,0.319832,8.893760,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0034-PEAU-INT,Bas de caisse — peau intérieure carbone,body,CAR,pce,purchased,,658.550077,1,,0.239872,5.996704,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0034-RENFORT,Bas de caisse — renfort local,body,CAR,pce,purchased,,219.516692,1,,0.079957,2.203071,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0036,Doublure passage de roue,body,CAR,pce,purchased,,1171.080000,1,,2.894119,75.057240,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0040,Fond plat,body,CAR,pce,purchased,,2927.700000,1,,1.073302,27.742066,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0041,Fond plat central,body,CAR,pce,purchased,,2927.700000,1,,3.489332,98.187709,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0043,Panneaux d'accès sous caisse,body,CAR,pce,purchased,,2927.700000,1,,1.255104,33.804218,6.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0044,Porte dièdre,body,CAR,pce,purchased,,7026.480000,1,,15.004000,364.057056,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0040,Fond plat,body,CAR,pce,manufactured,30,,1,,1.073302,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0040-ATTACHE,Fond plat — attache usinée,body,CAR,pce,purchased,,219.823615,1,,0.060485,0.565795,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0040-PEAU-EXT,Fond plat — peau extérieure carbone,body,CAR,pce,purchased,,879.294464,1,,0.241938,5.828286,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0040-PEAU-INT,Fond plat — peau intérieure carbone,body,CAR,pce,purchased,,659.470846,1,,0.181454,5.050046,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0040-RENFORT,Fond plat — renfort local,body,CAR,pce,purchased,,219.823615,1,,0.060485,1.802102,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0041,Fond plat central,body,CAR,pce,manufactured,30,,1,,3.489332,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0041-ATTACHE,Fond plat central — attache usinée,body,CAR,pce,purchased,,217.355154,1,,0.214795,2.145544,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0041-PEAU-EXT,Fond plat central — peau extérieure carbone,body,CAR,pce,purchased,,869.420614,1,,0.859178,21.135263,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0041-PEAU-INT,Fond plat central — peau intérieure carbone,body,CAR,pce,purchased,,652.065462,1,,0.644384,16.654878,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0041-RENFORT,Fond plat central — renfort local,body,CAR,pce,purchased,,217.355154,1,,0.214795,5.334606,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0043,Panneaux d'accès sous caisse,body,CAR,pce,manufactured,30,,1,,1.255104,1.50,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0043-ATTACHE,Panneaux d'accès sous caisse — attache usinée,body,CAR,pce,purchased,,219.636846,1,,0.072085,0.745928,24.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0043-PEAU-EXT,Panneaux d'accès sous caisse — peau extérieure carbone,body,CAR,pce,purchased,,878.547386,1,,0.288339,7.394165,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0043-PEAU-INT,Panneaux d'accès sous caisse — peau intérieure carbone,body,CAR,pce,purchased,,658.910538,1,,0.216255,5.692005,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0043-RENFORT,Panneaux d'accès sous caisse — renfort local,body,CAR,pce,purchased,,219.636846,1,,0.072085,1.756380,12.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0044,Porte dièdre,body,CAR,pce,manufactured,30,,1,,15.004000,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0044-ATTACHE,Porte dièdre — attache usinée,body,CAR,pce,purchased,,520.869231,1,,0.950000,9.259365,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0044-PEAU-EXT,Porte dièdre — peau extérieure carbone,body,CAR,pce,purchased,,2083.476922,1,,3.800000,107.923800,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0044-PEAU-INT,Porte dièdre — peau intérieure carbone,body,CAR,pce,purchased,,1562.607692,1,,2.850000,77.924700,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0044-RENFORT,Porte dièdre — renfort local,body,CAR,pce,purchased,,520.869231,1,,0.950000,23.583750,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0046,Charnière porte,body,CAR,pce,purchased,,702.650000,1,,3.134446,93.986363,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0048,Assistance ouverture porte,body,CAR,pce,purchased,,1171.080000,1,,2.402259,71.117917,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0050,Serrure porte,body,CAR,pce,purchased,,292.770000,1,,2.862989,77.499967,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0052,Gâche porte,body,CAR,pce,purchased,,93.690000,1,,2.912175,79.820387,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0054,Poignée/commande extérieure,body,CAR,pce,purchased,,1171.080000,1,,0.850449,25.222276,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0056,Joint périphérique porte,body,CAR,pce,purchased,,140.530000,1,,0.571676,2.065122,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0058,Splitter avant carbone,body,CAR,pce,purchased,,2927.700000,1,,3.453221,101.186972,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0059,Aile avant active,body,CAR,pce,purchased,,7026.480000,1,,3.521397,99.884426,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0060,Éléments aile avant active,body,CAR,pce,purchased,,7026.480000,1,,1.744473,44.182617,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0058,Splitter avant carbone,body,CAR,pce,manufactured,30,,1,,3.453221,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0058-ATTACHE,Splitter avant carbone — attache usinée,body,CAR,pce,purchased,,217.392615,1,,0.212479,2.093981,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0058-PEAU-EXT,Splitter avant carbone — peau extérieure carbone,body,CAR,pce,purchased,,869.570464,1,,0.849911,23.599819,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0058-PEAU-INT,Splitter avant carbone — peau intérieure carbone,body,CAR,pce,purchased,,652.177846,1,,0.637436,18.320676,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0058-RENFORT,Splitter avant carbone — renfort local,body,CAR,pce,purchased,,217.392615,1,,0.212479,5.163877,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0059,Aile avant active,body,CAR,pce,manufactured,30,,1,,3.521397,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0059-ATTACHE,Aile avant active — attache usinée,body,CAR,pce,purchased,,532.610231,1,,0.216800,2.320562,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0059-PEAU-EXT,Aile avant active — peau extérieure carbone,body,CAR,pce,purchased,,2130.440922,1,,0.867198,24.006469,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0059-PEAU-INT,Aile avant active — peau intérieure carbone,body,CAR,pce,purchased,,1597.830692,1,,0.650399,16.921951,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0059-RENFORT,Aile avant active — renfort local,body,CAR,pce,purchased,,532.610231,1,,0.216800,6.299514,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0060,Éléments aile avant active,body,CAR,pce,manufactured,30,,1,,1.744473,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0060-ATTACHE,Éléments aile avant active — attache usinée,body,CAR,pce,purchased,,534.433923,1,,0.103421,1.163703,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0060-PEAU-EXT,Éléments aile avant active — peau extérieure carbone,body,CAR,pce,purchased,,2137.735693,1,,0.413684,10.009084,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0060-PEAU-INT,Éléments aile avant active — peau intérieure carbone,body,CAR,pce,purchased,,1603.301769,1,,0.310263,8.891827,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0060-RENFORT,Éléments aile avant active — renfort local,body,CAR,pce,purchased,,534.433923,1,,0.103421,3.023699,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0061,Axe/pivots aile avant,body,CAR,pce,purchased,,936.860000,1,,2.037411,50.452816,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0062,Actionneur aile avant,body,CAR,pce,purchased,,1756.620000,1,,2.871083,84.576937,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0062,Actionneur aile avant,body,CAR,pce,manufactured,20,,1,,2.871083,1.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0062-CORPS,Actionneur aile avant — corps et réservoir,body,CAR,pce,purchased,,679.688000,1,,0.989232,2.327742,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0062-PISTON,Actionneur aile avant — piston et clapets,body,CAR,pce,purchased,,339.844000,1,,0.494617,1.324545,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0062-TIGE,Actionneur aile avant — tige chromée,body,CAR,pce,purchased,,339.844000,1,,0.494617,1.159066,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0062-VALVE,Actionneur aile avant — valve pilotée,body,CAR,pce,purchased,,339.844000,1,,0.494617,16.431474,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0063,Capteur position aile avant,body,CAR,pce,purchased,,210.790000,1,,0.079463,2.334098,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0064,Aileron arrière actif,body,CAR,pce,purchased,,9368.640000,1,,2.102473,51.603518,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0065,Pylônes/bras aileron arrière,body,CAR,pce,purchased,,936.860000,1,,1.359272,3.202472,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0066,Actionneur hydraulique aileron arrière,body,CAR,pce,purchased,,1756.620000,1,,0.982713,24.129338,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0064,Aileron arrière actif,body,CAR,pce,manufactured,30,,1,,2.102473,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0064-ATTACHE,Aileron arrière actif — attache usinée,body,CAR,pce,purchased,,714.233077,1,,0.126267,1.259172,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0064-PEAU-EXT,Aileron arrière actif — peau extérieure carbone,body,CAR,pce,purchased,,2856.932307,1,,0.505070,13.152326,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0064-PEAU-INT,Aileron arrière actif — peau intérieure carbone,body,CAR,pce,purchased,,2142.699231,1,,0.378801,11.106976,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0064-RENFORT,Aileron arrière actif — renfort local,body,CAR,pce,purchased,,714.233077,1,,0.126267,3.297387,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0065,Pylônes/bras aileron arrière,body,CAR,pce,manufactured,12,,1,,1.359272,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0065-CORPS,Pylônes/bras aileron arrière — corps usiné,body,CAR,pce,purchased,,536.920800,1,,0.514364,4.996841,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0065-DOUILLE,Pylônes/bras aileron arrière — douille,body,CAR,pce,purchased,,89.486800,1,,0.085727,0.201080,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0065-ROTULE,Pylônes/bras aileron arrière — rotule,body,CAR,pce,purchased,,89.486800,1,,0.085727,0.199897,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0066,Actionneur hydraulique aileron arrière,body,CAR,pce,manufactured,20,,1,,0.982713,1.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0066-CORPS,Actionneur hydraulique aileron arrière — corps et réservoir,body,CAR,pce,purchased,,679.688000,1,,0.233884,0.549394,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0066-PISTON,Actionneur hydraulique aileron arrière — piston et clapets,body,CAR,pce,purchased,,339.844000,1,,0.116943,0.284270,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0066-TIGE,Actionneur hydraulique aileron arrière — tige chromée,body,CAR,pce,purchased,,339.844000,1,,0.116943,0.281161,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0066-VALVE,Actionneur hydraulique aileron arrière — valve pilotée,body,CAR,pce,purchased,,339.844000,1,,0.116943,3.540286,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0067,Capteur position aileron arrière,body,CAR,pce,purchased,,210.790000,1,,0.043271,1.639157,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0068,Diffuseur arrière carbone,body,CAR,pce,purchased,,4684.320000,1,,3.622571,101.719620,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0069,Tunnels Venturi arrière,body,CAR,pce,purchased,,936.860000,1,,0.376455,1.797271,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0070,Volets/ailettes sous-plancher actifs,body,CAR,pce,purchased,,585.540000,1,,0.315143,1.285027,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0068,Diffuseur arrière carbone,body,CAR,pce,manufactured,30,,1,,3.622571,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0068-ATTACHE,Diffuseur arrière carbone — attache usinée,body,CAR,pce,purchased,,352.341769,1,,0.223275,2.563688,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0068-PEAU-EXT,Diffuseur arrière carbone — peau extérieure carbone,body,CAR,pce,purchased,,1409.367078,1,,0.893097,21.839973,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0068-PEAU-INT,Diffuseur arrière carbone — peau intérieure carbone,body,CAR,pce,purchased,,1057.025308,1,,0.669824,16.680627,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0068-RENFORT,Diffuseur arrière carbone — renfort local,body,CAR,pce,purchased,,352.341769,1,,0.223275,6.314038,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0069,Tunnels Venturi arrière,body,CAR,pce,manufactured,30,,1,,0.376455,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0069-ATTACHE,Tunnels Venturi arrière — attache usinée,body,CAR,pce,purchased,,67.398231,1,,0.016035,0.179759,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0069-PEAU-EXT,Tunnels Venturi arrière — peau extérieure carbone,body,CAR,pce,purchased,,269.592922,1,,0.064140,1.653234,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0069-PEAU-INT,Tunnels Venturi arrière — peau intérieure carbone,body,CAR,pce,purchased,,202.194692,1,,0.048105,1.214324,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0069-RENFORT,Tunnels Venturi arrière — renfort local,body,CAR,pce,purchased,,67.398231,1,,0.016035,0.398502,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0070,Volets/ailettes sous-plancher actifs,body,CAR,pce,manufactured,30,,1,,0.315143,1.50,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0070-ATTACHE,Volets/ailettes sous-plancher actifs — attache usinée,body,CAR,pce,purchased,,40.433692,1,,0.012088,0.142601,16.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0070-PEAU-EXT,Volets/ailettes sous-plancher actifs — peau extérieure carbone,body,CAR,pce,purchased,,161.734771,1,,0.048351,1.259843,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0070-PEAU-INT,Volets/ailettes sous-plancher actifs — peau intérieure carbone,body,CAR,pce,purchased,,121.301077,1,,0.036264,0.914767,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0070-RENFORT,Volets/ailettes sous-plancher actifs — renfort local,body,CAR,pce,purchased,,40.433692,1,,0.012088,0.355358,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0071,By-pass refroidissement actif,body,CAR,pce,purchased,,936.860000,1,,0.782648,3.985087,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0072,Calandre avant,body,CAR,pce,purchased,,936.860000,1,,1.441189,3.889827,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0073,Mesh extraction arrière,body,CAR,pce,purchased,,702.650000,1,,1.679989,7.403376,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0074,Scoop de toit,body,CAR,pce,purchased,,2927.700000,1,,1.358264,7.087965,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0075,Pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,11.759000,67.049818,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0075,Pare-brise,glazing,CAR,pce,manufactured,10,,1,,11.759000,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0075-CAPTEUR,Pare-brise — capteur pluie et lumière,glazing,CAR,pce,purchased,,571.193500,1,,0.705600,25.646302,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0075-ENCADREMENT,Pare-brise — encadrement surmoulé,glazing,CAR,pce,purchased,,1142.387000,1,,1.411200,4.753627,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0075-FILM,Pare-brise — film acoustique et sérigraphie,glazing,CAR,pce,purchased,,1142.387000,1,,1.411200,6.121503,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0076,Joint/adhésif pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,0.828736,3.044942,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0077,Vitre porte,glazing,CAR,pce,purchased,,819.760000,1,,2.689592,64.885869,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0077,Vitre porte,glazing,CAR,pce,manufactured,10,,1,,2.689592,0.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0077-CAPTEUR,Vitre porte — capteur pluie et lumière,glazing,CAR,pce,purchased,,159.127500,1,,0.161318,5.424802,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0077-ENCADREMENT,Vitre porte — encadrement surmoulé,glazing,CAR,pce,purchased,,318.255000,1,,0.322637,1.038407,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0077-FILM,Vitre porte — film acoustique et sérigraphie,glazing,CAR,pce,purchased,,318.255000,1,,0.322637,1.622541,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0079,Lève-vitre,glazing,CAR,pce,purchased,,526.990000,1,,1.432295,7.852128,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0081,Caméra/affichage rétroviseur numérique,glazing,CAR,pce,purchased,,1405.300000,1,,0.675263,19.189084,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0082,Projecteur Matrix LED,glazing,CAR,pce,purchased,,3513.240000,1,,1.650801,9.138174,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0084,Feu arrière LED,glazing,CAR,pce,purchased,,1405.300000,1,,0.294227,11.873531,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0086,Feu stop central,glazing,CAR,pce,purchased,,292.770000,1,,1.048605,5.330479,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0087,Éclairage plaque,glazing,CAR,pce,purchased,,292.770000,1,,1.851859,9.456333,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081,Caméra/affichage rétroviseur numérique,glazing,CAR,pce,manufactured,8,,1,,0.675263,0.40,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081-BOITIER,Caméra/affichage rétroviseur numérique — boîtier,glazing,CAR,pce,purchased,,138.912000,1,,0.063926,0.309811,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081-CARTE,Caméra/affichage rétroviseur numérique — carte de traitement,glazing,CAR,pce,manufactured,4,,1,,0.191779,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081-CARTE-ALIM,Caméra/affichage rétroviseur numérique — carte de traitement — étage d'alimentation,glazing,CAR,pce,purchased,,155.014400,1,,0.062712,2.138818,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081-CARTE-PCB,Caméra/affichage rétroviseur numérique — carte de traitement — circuit imprimé multicouche,glazing,CAR,pce,purchased,,232.521600,1,,0.094067,3.710868,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081-MODULE,Caméra/affichage rétroviseur numérique — module optique ou d'affichage,glazing,CAR,pce,purchased,,694.560000,1,,0.319632,11.461876,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0081-SUPPORT,Caméra/affichage rétroviseur numérique — support de fixation,glazing,CAR,pce,purchased,,138.912000,1,,0.063926,0.701409,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082,Projecteur Matrix LED,glazing,CAR,pce,manufactured,12,,1,,1.650801,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082-BOITIER,Projecteur Matrix LED — boîtier,glazing,CAR,pce,purchased,,863.243400,1,,0.335701,1.666957,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082-DRIVER,Projecteur Matrix LED — driver led,glazing,CAR,pce,manufactured,4,,1,,0.503550,0.20,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082-DRIVER-ALIM,Projecteur Matrix LED — driver led — étage d'alimentation,glazing,CAR,pce,purchased,,506.266040,1,,0.187420,5.634258,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082-DRIVER-PCB,Projecteur Matrix LED — driver led — circuit imprimé multicouche,glazing,CAR,pce,purchased,,759.399060,1,,0.281130,9.012634,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082-GLACE,Projecteur Matrix LED — glace de protection,glazing,CAR,pce,purchased,,431.621700,1,,0.167850,0.749148,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0082-REFLECTEUR,Projecteur Matrix LED — réflecteur,glazing,CAR,pce,purchased,,431.621700,1,,0.167850,1.641019,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084,Feu arrière LED,glazing,CAR,pce,manufactured,12,,1,,0.294227,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084-BOITIER,Feu arrière LED — boîtier,glazing,CAR,pce,purchased,,336.605200,1,,0.047558,0.198212,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084-DRIVER,Feu arrière LED — driver led,glazing,CAR,pce,manufactured,4,,1,,0.071335,0.20,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084-DRIVER-ALIM,Feu arrière LED — driver led — étage d'alimentation,glazing,CAR,pce,purchased,,190.283120,1,,0.014534,0.468056,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084-DRIVER-PCB,Feu arrière LED — driver led — circuit imprimé multicouche,glazing,CAR,pce,purchased,,285.424680,1,,0.021801,0.639362,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084-GLACE,Feu arrière LED — glace de protection,glazing,CAR,pce,purchased,,168.302600,1,,0.023778,0.116222,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0084-REFLECTEUR,Feu arrière LED — réflecteur,glazing,CAR,pce,purchased,,168.302600,1,,0.023778,0.237093,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086,Feu stop central,glazing,CAR,pce,manufactured,12,,1,,1.048605,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086-BOITIER,Feu stop central — boîtier,glazing,CAR,pce,purchased,,58.280600,1,,0.207900,1.065820,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086-DRIVER,Feu stop central — driver led,glazing,CAR,pce,manufactured,4,,1,,0.311852,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086-DRIVER-ALIM,Feu stop central — driver led — étage d'alimentation,glazing,CAR,pce,purchased,,23.288360,1,,0.110741,4.498720,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086-DRIVER-PCB,Feu stop central — driver led — circuit imprimé multicouche,glazing,CAR,pce,purchased,,34.932540,1,,0.166111,5.438773,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086-GLACE,Feu stop central — glace de protection,glazing,CAR,pce,purchased,,29.140300,1,,0.103951,0.563414,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0086-REFLECTEUR,Feu stop central — réflecteur,glazing,CAR,pce,purchased,,29.140300,1,,0.103951,1.194303,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087,Éclairage plaque,glazing,CAR,pce,manufactured,12,,1,,1.851859,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087-BOITIER,Éclairage plaque — boîtier,glazing,CAR,pce,purchased,,58.074900,1,,0.378466,1.860085,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087-DRIVER,Éclairage plaque — driver led,glazing,CAR,pce,manufactured,4,,1,,0.567697,0.20,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087-DRIVER-ALIM,Éclairage plaque — driver led — étage d'alimentation,glazing,CAR,pce,purchased,,23.164940,1,,0.213079,7.294291,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087-DRIVER-PCB,Éclairage plaque — driver led — circuit imprimé multicouche,glazing,CAR,pce,purchased,,34.747410,1,,0.319618,12.488306,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087-GLACE,Éclairage plaque — glace de protection,glazing,CAR,pce,purchased,,29.037450,1,,0.189232,1.132099,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0087-REFLECTEUR,Éclairage plaque — réflecteur,glazing,CAR,pce,purchased,,29.037450,1,,0.189232,1.809077,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0088,Catadioptres/marqueurs,glazing,CAR,pce,purchased,,292.770000,1,,0.004360,0.025656,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0089,Coque siège carbone,interior,INT,pce,purchased,,7026.480000,1,,9.008800,239.453904,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0091,Coussin/foam siège,interior,INT,pce,purchased,,585.540000,1,,0.827327,3.582491,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0093,Garniture siège,interior,INT,pce,purchased,,1171.080000,1,,3.061601,81.283670,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0089,Coque siège carbone,interior,INT,pce,manufactured,25,,1,,9.008800,1.25,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0089-ARMATURE,Coque siège carbone — armature,interior,INT,pce,purchased,,3077.078221,1,,3.099911,87.884337,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0089-RENFORT,Coque siège carbone — renfort local,interior,INT,pce,purchased,,769.269556,1,,0.774978,19.636858,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0089-REVETEMENT,Coque siège carbone — revêtement cousu,interior,INT,pce,purchased,,2307.808667,1,,2.324933,11.692088,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0091,Coussin/foam siège,interior,INT,pce,manufactured,25,,1,,0.827327,1.25,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0091-ARMATURE,Coussin/foam siège — armature,interior,INT,pce,purchased,,240.766221,1,,0.263701,6.520904,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0091-RENFORT,Coussin/foam siège — renfort local,interior,INT,pce,purchased,,60.191556,1,,0.065925,1.697463,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0091-REVETEMENT,Coussin/foam siège — revêtement cousu,interior,INT,pce,purchased,,180.574667,1,,0.197776,0.886551,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0093,Garniture siège,interior,INT,pce,manufactured,25,,1,,3.061601,1.25,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0093-ARMATURE,Garniture siège — armature,interior,INT,pce,purchased,,493.824000,1,,1.038490,28.053561,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0093-RENFORT,Garniture siège — renfort local,interior,INT,pce,purchased,,123.456000,1,,0.259622,7.534750,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0093-REVETEMENT,Garniture siège — revêtement cousu,interior,INT,pce,purchased,,370.368000,1,,0.778867,3.848849,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0095,Rail/fixation siège,interior,INT,pce,purchased,,936.860000,1,,1.449995,3.192280,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0097,Ceinture 3 points,interior,INT,pce,purchased,,468.430000,1,,1.249989,5.063455,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0099,Prétensionneur,interior,INT,pce,purchased,,351.320000,1,,1.502086,6.251682,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0101,Boucle ceinture,interior,INT,pce,purchased,,468.430000,1,,0.421624,1.710360,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0103,Airbag,interior,INT,pce,purchased,,1171.080000,1,,1.715537,7.307158,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0105,ECU airbag/SRS,interior,INT,pce,purchased,,1171.080000,1,,0.779939,30.026560,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0103,Airbag,interior,INT,pce,manufactured,8,,1,,1.715537,0.40,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0103-BOITIER,Airbag — boîtier et couvercle,interior,INT,pce,purchased,,164.985714,1,,0.239934,1.086037,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0103-COUSSIN,Airbag — coussin textile plié,interior,INT,pce,purchased,,494.957143,1,,0.719801,3.765999,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0103-GENERATEUR,Airbag — générateur de gaz,interior,INT,pce,purchased,,494.957143,1,,0.719802,1.609233,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105,ECU airbag/SRS,interior,INT,pce,manufactured,10,,1,,0.779939,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105-BOITIER,ECU airbag/SRS — boîtier,interior,INT,pce,purchased,,254.424444,1,,0.158653,1.781324,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105-CARTE,ECU airbag/SRS — carte électronique,interior,INT,pce,manufactured,4,,1,,0.396632,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105-CARTE-ALIM,ECU airbag/SRS — carte électronique — étage d'alimentation,interior,INT,pce,purchased,,242.744445,1,,0.144653,5.087157,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105-CARTE-PCB,ECU airbag/SRS — carte électronique — circuit imprimé multicouche,interior,INT,pce,purchased,,364.116667,1,,0.216979,8.598227,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105-COUVERCLE,ECU airbag/SRS — couvercle,interior,INT,pce,purchased,,127.212222,1,,0.079327,0.464190,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0105-DISSIPATEUR,ECU airbag/SRS — dissipateur thermique,interior,INT,pce,purchased,,127.212222,1,,0.079327,0.855780,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0106,Capteurs choc avant,interior,INT,pce,purchased,,292.770000,1,,0.032776,1.131329,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0107,Capteurs choc latéraux,interior,INT,pce,purchased,,292.770000,1,,0.105141,4.294631,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0108,Capteur occupation passager,interior,INT,pce,purchased,,292.770000,1,,0.043867,1.587547,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0109,Volant,interior,INT,pce,purchased,,2927.700000,1,,1.047790,5.637739,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0109,Volant,interior,INT,pce,manufactured,25,,1,,1.047790,1.25,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0109-ARMATURE,Volant — armature,interior,INT,pce,purchased,,1281.003555,1,,0.339906,9.432188,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0109-RENFORT,Volant — renfort local,interior,INT,pce,purchased,,320.250889,1,,0.084977,2.543905,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0109-REVETEMENT,Volant — revêtement cousu,interior,INT,pce,purchased,,960.752667,1,,0.254930,1.395742,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0110,Palette DCT,interior,INT,pce,purchased,,409.880000,1,,0.256114,1.052321,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0112,Pédale accélérateur électronique,interior,INT,pce,purchased,,351.320000,1,,0.501789,17.800764,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0113,Pédale frein/capteur,interior,INT,pce,purchased,,351.320000,1,,0.061265,2.402875,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0114,Tableau de bord structure,interior,INT,pce,purchased,,4098.780000,1,,0.898423,4.827946,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0115,Planche de bord / skin,interior,INT,pce,purchased,,292.770000,1,,3.105183,84.210700,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0116,Console centrale,interior,INT,pce,purchased,,2107.940000,1,,1.809462,8.905810,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0117,"Écran conducteur 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.179823,6.868052,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0118,"Écran central tactile 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.500699,15.382975,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0119,Head unit infotainment,interior,INT,pce,purchased,,2927.700000,1,,1.504369,6.346632,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0120,Amplificateur audio,interior,INT,pce,purchased,,1053.970000,1,,0.594013,21.926445,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0114,Tableau de bord structure,interior,INT,pce,manufactured,25,,1,,0.898423,1.25,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0114-ARMATURE,Tableau de bord structure — armature,interior,INT,pce,purchased,,1801.966221,1,,0.288188,8.122406,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0114-RENFORT,Tableau de bord structure — renfort local,interior,INT,pce,purchased,,450.491556,1,,0.072047,1.991350,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0114-REVETEMENT,Tableau de bord structure — revêtement cousu,interior,INT,pce,purchased,,1351.474667,1,,0.216141,0.978903,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0115,Planche de bord / skin,interior,INT,pce,manufactured,25,,1,,3.105183,1.25,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0115-ARMATURE,Planche de bord / skin — armature,interior,INT,pce,purchased,,103.324445,1,,1.053414,29.771376,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0115-RENFORT,Planche de bord / skin — renfort local,interior,INT,pce,purchased,,25.831111,1,,0.263354,6.350834,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0115-REVETEMENT,Planche de bord / skin — revêtement cousu,interior,INT,pce,purchased,,77.493333,1,,0.790061,4.662940,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0116,Console centrale,interior,INT,pce,manufactured,25,,1,,1.809462,1.25,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0116-ARMATURE,Console centrale — armature,interior,INT,pce,purchased,,914.228445,1,,0.604206,17.670125,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0116-RENFORT,Console centrale — renfort local,interior,INT,pce,purchased,,228.557111,1,,0.151051,4.269064,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0116-REVETEMENT,Console centrale — revêtement cousu,interior,INT,pce,purchased,,685.671333,1,,0.453154,2.144143,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0117,"Écran conducteur 10,25 po",interior,INT,pce,manufactured,8,,1,,0.179823,0.40,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0117-BOITIER,"Écran conducteur 10,25 po — boîtier",interior,INT,pce,purchased,,174.044000,1,,0.014382,0.061037,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0117-CARTE,"Écran conducteur 10,25 po — carte de traitement",interior,INT,pce,purchased,,522.132000,1,,0.043147,1.636272,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0117-MODULE,"Écran conducteur 10,25 po — module optique ou d'affichage",interior,INT,pce,purchased,,870.220000,1,,0.071912,2.314761,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0117-SUPPORT,"Écran conducteur 10,25 po — support de fixation",interior,INT,pce,purchased,,174.044000,1,,0.014382,0.155990,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118,"Écran central tactile 10,25 po",interior,INT,pce,manufactured,8,,1,,0.500699,0.40,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118-BOITIER,"Écran central tactile 10,25 po — boîtier",interior,INT,pce,purchased,,174.044000,1,,0.046470,0.224413,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118-CARTE,"Écran central tactile 10,25 po — carte de traitement",interior,INT,pce,manufactured,4,,1,,0.139410,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118-CARTE-ALIM,"Écran central tactile 10,25 po — carte de traitement — étage d'alimentation",interior,INT,pce,purchased,,197.172800,1,,0.041764,1.305509,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118-CARTE-PCB,"Écran central tactile 10,25 po — carte de traitement — circuit imprimé multicouche",interior,INT,pce,purchased,,295.759200,1,,0.062646,2.480544,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118-MODULE,"Écran central tactile 10,25 po — module optique ou d'affichage",interior,INT,pce,purchased,,870.220000,1,,0.232349,7.146591,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0118-SUPPORT,"Écran central tactile 10,25 po — support de fixation",interior,INT,pce,purchased,,174.044000,1,,0.046470,0.497052,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119,Head unit infotainment,interior,INT,pce,manufactured,10,,1,,1.504369,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119-BOITIER,Head unit infotainment — boîtier,interior,INT,pce,purchased,,644.784444,1,,0.319638,3.255705,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119-CARTE,Head unit infotainment — carte électronique,interior,INT,pce,manufactured,4,,1,,0.799093,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119-CARTE-ALIM,Head unit infotainment — carte électronique — étage d'alimentation,interior,INT,pce,purchased,,633.104445,1,,0.305637,10.623698,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119-CARTE-PCB,Head unit infotainment — carte électronique — circuit imprimé multicouche,interior,INT,pce,purchased,,949.656667,1,,0.458456,19.063884,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119-COUVERCLE,Head unit infotainment — couvercle,interior,INT,pce,purchased,,322.392222,1,,0.159819,0.910137,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0119-DISSIPATEUR,Head unit infotainment — dissipateur thermique,interior,INT,pce,purchased,,322.392222,1,,0.159819,1.527790,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120,Amplificateur audio,interior,INT,pce,manufactured,10,,1,,0.594013,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120-BOITIER,Amplificateur audio — boîtier,interior,INT,pce,purchased,,228.400000,1,,0.117336,1.289018,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120-CARTE,Amplificateur audio — carte électronique,interior,INT,pce,manufactured,4,,1,,0.293341,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120-CARTE-ALIM,Amplificateur audio — carte électronique — étage d'alimentation,interior,INT,pce,purchased,,216.720000,1,,0.103336,3.256097,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120-CARTE-PCB,Amplificateur audio — carte électronique — circuit imprimé multicouche,interior,INT,pce,purchased,,325.080000,1,,0.155005,5.738533,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120-COUVERCLE,Amplificateur audio — couvercle,interior,INT,pce,purchased,,114.200000,1,,0.058668,0.301213,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0120-DISSIPATEUR,Amplificateur audio — dissipateur thermique,interior,INT,pce,purchased,,114.200000,1,,0.058668,0.584738,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0121,Haut-parleurs,interior,INT,pce,purchased,,351.320000,1,,0.805151,4.391777,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0122,Microphones habitacle,interior,INT,pce,purchased,,292.770000,1,,0.268833,1.090333,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0123,Ports USB/alimentation,interior,INT,pce,purchased,,292.770000,1,,1.839629,8.321746,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0124,Moquette/revêtement plancher,interior,INT,pce,purchased,,292.770000,1,,0.603441,2.468677,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0125,Garniture pavillon/toit,interior,INT,pce,purchased,,292.770000,1,,1.467102,43.372230,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0126,Garnitures latérales,interior,INT,pce,purchased,,292.770000,1,,3.289164,83.149408,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0127,Porte-moyeu,chassis,CHS,pce,purchased,,2342.160000,1,,0.841381,22.060000,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0129,Bras supérieur,chassis,CHS,pce,purchased,,1405.300000,1,,1.984993,4.499463,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0131,Bras inférieur,chassis,CHS,pce,purchased,,1405.300000,1,,0.544367,1.281756,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0133,Pushrod,chassis,CHS,pce,purchased,,819.760000,1,,1.010448,4.492856,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0135,Rocker/bellcrank,chassis,CHS,pce,purchased,,1171.080000,1,,1.541222,8.356197,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0125,Garniture pavillon/toit,interior,INT,pce,manufactured,25,,1,,1.467102,1.25,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0125-ARMATURE,Garniture pavillon/toit — armature,interior,INT,pce,purchased,,108.578666,1,,0.485378,13.961704,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0125-RENFORT,Garniture pavillon/toit — renfort local,interior,INT,pce,purchased,,27.144667,1,,0.121345,2.979845,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0125-REVETEMENT,Garniture pavillon/toit — revêtement cousu,interior,INT,pce,purchased,,81.434000,1,,0.364034,2.122027,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0126,Garnitures latérales,interior,INT,pce,manufactured,25,,1,,3.289164,1.25,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0126-ARMATURE,Garnitures latérales — armature,interior,INT,pce,purchased,,102.707555,1,,1.116963,27.638132,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0126-RENFORT,Garnitures latérales — renfort local,interior,INT,pce,purchased,,25.676889,1,,0.279240,6.970501,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0126-REVETEMENT,Garnitures latérales — revêtement cousu,interior,INT,pce,purchased,,77.030667,1,,0.837721,4.053062,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0127,Porte-moyeu,chassis,CHS,pce,manufactured,12,,1,,0.841381,0.60,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0127-CORPS,Porte-moyeu — corps usiné,chassis,CHS,pce,purchased,,1380.397200,1,,0.234829,2.641404,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0127-DOUILLE,Porte-moyeu — douille,chassis,CHS,pce,purchased,,230.066200,1,,0.039138,0.090188,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0127-ROTULE,Porte-moyeu — rotule,chassis,CHS,pce,purchased,,230.066200,1,,0.039138,0.085776,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0129,Bras supérieur,chassis,CHS,pce,manufactured,12,,1,,1.984993,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0129-CORPS,Bras supérieur — corps usiné,chassis,CHS,pce,purchased,,817.631400,1,,0.852597,9.191166,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0129-DOUILLE,Bras supérieur — douille,chassis,CHS,pce,purchased,,136.271900,1,,0.142099,0.305527,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0129-ROTULE,Bras supérieur — rotule,chassis,CHS,pce,purchased,,136.271900,1,,0.142099,0.359914,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0131,Bras inférieur,chassis,CHS,pce,manufactured,12,,1,,0.544367,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0131-CORPS,Bras inférieur — corps usiné,chassis,CHS,pce,purchased,,818.452200,1,,0.074619,0.704948,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0131-DOUILLE,Bras inférieur — douille,chassis,CHS,pce,purchased,,136.408700,1,,0.012437,0.033158,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0131-ROTULE,Bras inférieur — rotule,chassis,CHS,pce,purchased,,136.408700,1,,0.012437,0.031193,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0133,Pushrod,chassis,CHS,pce,manufactured,12,,1,,1.010448,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0133-CORPS,Pushrod — corps usiné,chassis,CHS,pce,purchased,,466.860300,1,,0.326068,3.107461,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0133-DOUILLE,Pushrod — douille,chassis,CHS,pce,purchased,,77.810050,1,,0.054345,0.132932,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0133-ROTULE,Pushrod — rotule,chassis,CHS,pce,purchased,,77.810050,1,,0.054345,0.139209,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0135,Rocker/bellcrank,chassis,CHS,pce,manufactured,12,,1,,1.541222,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0135-CORPS,Rocker/bellcrank — corps usiné,chassis,CHS,pce,purchased,,677.350200,1,,0.612734,6.419369,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0135-DOUILLE,Rocker/bellcrank — douille,chassis,CHS,pce,purchased,,112.891700,1,,0.102122,0.224395,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0135-ROTULE,Rocker/bellcrank — rotule,chassis,CHS,pce,purchased,,112.891700,1,,0.102122,0.225908,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0137,Ressort,chassis,CHS,pce,purchased,,468.430000,1,,0.690591,1.522173,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0139,Amortisseur Bilstein DTX,chassis,CHS,pce,purchased,,3500.000000,1,,1.510032,3.572524,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0141,Barre antiroulis,chassis,CHS,pce,purchased,,702.650000,1,,0.932341,2.404377,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0139,Amortisseur Bilstein DTX,chassis,CHS,pce,manufactured,20,,1,,1.510032,1.00,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0139-CORPS,Amortisseur Bilstein DTX — corps et réservoir,chassis,CHS,pce,purchased,,1377.040000,1,,0.444814,1.112231,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0139-PISTON,Amortisseur Bilstein DTX — piston et clapets,chassis,CHS,pce,purchased,,688.520000,1,,0.222406,0.502735,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0139-TIGE,Amortisseur Bilstein DTX — tige chromée,chassis,CHS,pce,purchased,,688.520000,1,,0.222406,0.571139,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0139-VALVE,Amortisseur Bilstein DTX — valve pilotée,chassis,CHS,pce,purchased,,688.520000,1,,0.222406,6.942893,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0141,Barre antiroulis,chassis,CHS,pce,manufactured,12,,1,,0.932341,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0141-CORPS,Barre antiroulis — corps usiné,chassis,CHS,pce,purchased,,396.639900,1,,0.284005,3.356854,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0141-DOUILLE,Barre antiroulis — douille,chassis,CHS,pce,purchased,,66.106650,1,,0.047334,0.126600,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0141-ROTULE,Barre antiroulis — rotule,chassis,CHS,pce,purchased,,66.106650,1,,0.047334,0.107027,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0142,Biellettes barre antiroulis,chassis,CHS,pce,purchased,,702.650000,1,,0.475524,1.143027,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0143,Roulement moyeu,chassis,CHS,pce,purchased,,351.320000,1,,0.684320,3.805093,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0145,Lien 1,chassis,CHS,pce,purchased,,1053.970000,1,,1.558329,3.861726,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0146,Lien 2,chassis,CHS,pce,purchased,,1053.970000,1,,2.018347,5.324682,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0147,Lien 3,chassis,CHS,pce,purchased,,1053.970000,1,,1.286694,3.063901,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0148,Lien 4,chassis,CHS,pce,purchased,,1053.970000,1,,1.206110,2.831126,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0149,Lien 5,chassis,CHS,pce,purchased,,1053.970000,1,,2.593904,6.345364,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0165,Système lift essieu avant,chassis,CHS,pce,purchased,,5269.860000,1,,0.955007,4.250545,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0145,Lien 1,chassis,CHS,pce,manufactured,12,,1,,1.558329,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0145-CORPS,Lien 1 — corps usiné,chassis,CHS,pce,purchased,,607.072800,1,,0.621797,5.703993,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0145-DOUILLE,Lien 1 — douille,chassis,CHS,pce,purchased,,101.178800,1,,0.103633,0.229468,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0145-ROTULE,Lien 1 — rotule,chassis,CHS,pce,purchased,,101.178800,1,,0.103633,0.237017,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0146,Lien 2,chassis,CHS,pce,manufactured,12,,1,,2.018347,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0146-CORPS,Lien 2 — corps usiné,chassis,CHS,pce,purchased,,606.810600,1,,0.870207,8.558138,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0146-DOUILLE,Lien 2 — douille,chassis,CHS,pce,purchased,,101.135100,1,,0.145035,0.388914,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0146-ROTULE,Lien 2 — rotule,chassis,CHS,pce,purchased,,101.135100,1,,0.145035,0.324118,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0147,Lien 3,chassis,CHS,pce,manufactured,12,,1,,1.286694,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0147-CORPS,Lien 3 — corps usiné,chassis,CHS,pce,purchased,,607.226700,1,,0.475018,4.831076,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0147-DOUILLE,Lien 3 — douille,chassis,CHS,pce,purchased,,101.204450,1,,0.079169,0.213528,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0147-ROTULE,Lien 3 — rotule,chassis,CHS,pce,purchased,,101.204450,1,,0.079169,0.177123,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0148,Lien 4,chassis,CHS,pce,manufactured,12,,1,,1.206110,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0148-CORPS,Lien 4 — corps usiné,chassis,CHS,pce,purchased,,607.272300,1,,0.431466,4.944989,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0148-DOUILLE,Lien 4 — douille,chassis,CHS,pce,purchased,,101.212050,1,,0.071911,0.166645,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0148-ROTULE,Lien 4 — rotule,chassis,CHS,pce,purchased,,101.212050,1,,0.071911,0.185414,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0149,Lien 5,chassis,CHS,pce,manufactured,12,,1,,2.593904,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0149-CORPS,Lien 5 — corps usiné,chassis,CHS,pce,purchased,,606.485700,1,,1.181344,13.364190,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0149-DOUILLE,Lien 5 — douille,chassis,CHS,pce,purchased,,101.080950,1,,0.196890,0.441833,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0149-ROTULE,Lien 5 — rotule,chassis,CHS,pce,purchased,,101.080950,1,,0.196890,0.430480,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0165,Système lift essieu avant,chassis,CHS,pce,manufactured,12,,1,,0.955007,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0165-CARTE,Système lift essieu avant — électronique de pilotage,chassis,CHS,pce,purchased,,1034.392000,1,,0.136001,4.718718,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0165-CORPS,Système lift essieu avant — corps de pompe,chassis,CHS,pce,purchased,,1551.588000,1,,0.204003,2.320922,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0165-MOTEUR,Système lift essieu avant — moteur d'entraînement,chassis,CHS,pce,purchased,,1551.588000,1,,0.204002,2.659370,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0165-ROUE,Système lift essieu avant — roue ou rotor,chassis,CHS,pce,purchased,,1034.392000,1,,0.136001,0.684819,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0166,Actionneurs lift avant,chassis,CHS,pce,purchased,,1053.970000,1,,0.271931,1.146352,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0167,Pompe/valves lift,chassis,CHS,pce,purchased,,1639.510000,1,,0.359660,1.623577,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0167,Pompe/valves lift,chassis,CHS,pce,manufactured,12,,1,,0.359660,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0167-CARTE,Pompe/valves lift — électronique de pilotage,chassis,CHS,pce,purchased,,308.322000,1,,0.016932,0.599945,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0167-CORPS,Pompe/valves lift — corps de pompe,chassis,CHS,pce,purchased,,462.483000,1,,0.025398,0.254290,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0167-MOTEUR,Pompe/valves lift — moteur d'entraînement,chassis,CHS,pce,purchased,,462.483000,1,,0.025398,0.336137,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0167-ROUE,Pompe/valves lift — roue ou rotor,chassis,CHS,pce,purchased,,308.322000,1,,0.016932,0.093041,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0168,Capteurs hauteur caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.056640,2.337408,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0169,Capteurs accélération caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.093542,2.940418,3.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0170,Crémaillère EPAS,chassis,CHS,pce,purchased,,4098.780000,1,,0.321029,0.789231,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0171,Moteur EPAS,chassis,CHS,pce,purchased,,1171.080000,1,,0.377108,1.719537,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0172,ECU EPAS,chassis,CHS,pce,purchased,,819.760000,1,,0.150949,5.524764,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172,ECU EPAS,chassis,CHS,pce,manufactured,10,,1,,0.150949,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172-BOITIER,ECU EPAS — boîtier,chassis,CHS,pce,purchased,,176.353333,1,,0.018878,0.188874,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172-CARTE,ECU EPAS — carte électronique,chassis,CHS,pce,manufactured,4,,1,,0.047193,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172-CARTE-ALIM,ECU EPAS — carte électronique — étage d'alimentation,chassis,CHS,pce,purchased,,164.673333,1,,0.004877,0.182002,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172-CARTE-PCB,ECU EPAS — carte électronique — circuit imprimé multicouche,chassis,CHS,pce,purchased,,247.010000,1,,0.007316,0.231028,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172-COUVERCLE,ECU EPAS — couvercle,chassis,CHS,pce,purchased,,88.176667,1,,0.009439,0.053255,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0172-DISSIPATEUR,ECU EPAS — dissipateur thermique,chassis,CHS,pce,purchased,,88.176667,1,,0.009439,0.091710,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0173,Colonne de direction,chassis,CHS,pce,purchased,,1405.300000,1,,0.448307,1.037714,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0174,Arbre intermédiaire,chassis,CHS,pce,purchased,,585.540000,1,,1.785669,3.888009,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0175,Joints cardan colonne,chassis,CHS,pce,purchased,,1405.300000,1,,1.494823,3.215813,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0176,Biellette direction,chassis,CHS,pce,purchased,,257.640000,1,,0.783715,1.661789,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0176,Biellette direction,chassis,CHS,pce,manufactured,12,,1,,0.783715,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0176-CORPS,Biellette direction — corps usiné,chassis,CHS,pce,purchased,,129.719400,1,,0.203827,2.335001,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0176-DOUILLE,Biellette direction — douille,chassis,CHS,pce,purchased,,21.619900,1,,0.033972,0.087929,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0176-ROTULE,Biellette direction — rotule,chassis,CHS,pce,purchased,,21.619900,1,,0.033972,0.074164,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0178,Rotule direction,chassis,CHS,pce,purchased,,210.790000,1,,0.592678,3.024436,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0180,Capteur angle volant,chassis,CHS,pce,purchased,,210.790000,1,,0.023819,0.852539,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0181,Disque CCB avant gauche 410 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.208000,16.236776,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0182,Disque CCB avant droit 410 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.589000,14.470235,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0183,Disque CCB arrière gauche 390 mm,chassis,CHS,pce,purchased,,4500.000000,1,,5.076600,12.095203,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0184,Disque CCB arrière droit 390 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.381000,16.451494,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0185,Étrier avant gauche 6 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.795100,13.943011,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0186,Étrier avant droit 6 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,4.936650,13.304963,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0187,Étrier arrière gauche 4 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.739600,15.372945,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0188,Étrier arrière droit 4 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.970450,14.154982,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0181,Disque CCB avant gauche 410 mm,chassis,CHS,pce,manufactured,15,,1,,6.208000,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0181-CORPS,Disque CCB avant gauche 410 mm — corps,chassis,CHS,pce,purchased,,1142.102636,1,,1.461046,13.982210,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0181-JOINT,Disque CCB avant gauche 410 mm — joint de piston,chassis,CHS,pce,purchased,,228.420526,1,,0.292211,1.056138,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0181-PISTON,Disque CCB avant gauche 410 mm — piston,chassis,CHS,pce,purchased,,228.420526,1,,0.292211,0.709862,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0181-PURGEUR,Disque CCB avant gauche 410 mm — vis de purge,chassis,CHS,pce,purchased,,228.420526,1,,0.292211,0.666013,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0182,Disque CCB avant droit 410 mm,chassis,CHS,pce,manufactured,15,,1,,6.589000,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0182-CORPS,Disque CCB avant droit 410 mm — corps,chassis,CHS,pce,purchased,,1140.002636,1,,1.551318,16.745392,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0182-JOINT,Disque CCB avant droit 410 mm — joint de piston,chassis,CHS,pce,purchased,,228.000526,1,,0.310263,1.191627,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0182-PISTON,Disque CCB avant droit 410 mm — piston,chassis,CHS,pce,purchased,,228.000526,1,,0.310263,0.810848,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0182-PURGEUR,Disque CCB avant droit 410 mm — vis de purge,chassis,CHS,pce,purchased,,228.000526,1,,0.310263,0.799920,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0183,Disque CCB arrière gauche 390 mm,chassis,CHS,pce,manufactured,15,,1,,5.076600,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0183-CORPS,Disque CCB arrière gauche 390 mm — corps,chassis,CHS,pce,purchased,,1148.347364,1,,1.193046,11.347299,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0183-JOINT,Disque CCB arrière gauche 390 mm — joint de piston,chassis,CHS,pce,purchased,,229.669474,1,,0.238611,0.765249,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0183-PISTON,Disque CCB arrière gauche 390 mm — piston,chassis,CHS,pce,purchased,,229.669474,1,,0.238611,0.571392,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0183-PURGEUR,Disque CCB arrière gauche 390 mm — vis de purge,chassis,CHS,pce,purchased,,229.669474,1,,0.238611,0.533410,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0184,Disque CCB arrière droit 390 mm,chassis,CHS,pce,manufactured,15,,1,,6.381000,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0184-CORPS,Disque CCB arrière droit 390 mm — corps,chassis,CHS,pce,purchased,,1141.163152,1,,1.502106,14.539184,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0184-JOINT,Disque CCB arrière droit 390 mm — joint de piston,chassis,CHS,pce,purchased,,228.232632,1,,0.300421,1.200452,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0184-PISTON,Disque CCB arrière droit 390 mm — piston,chassis,CHS,pce,purchased,,228.232632,1,,0.300421,0.781053,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0184-PURGEUR,Disque CCB arrière droit 390 mm — vis de purge,chassis,CHS,pce,purchased,,228.232632,1,,0.300421,0.799781,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0185,Étrier avant gauche 6 pistons,chassis,CHS,pce,manufactured,15,,1,,5.795100,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0185-CORPS,Étrier avant gauche 6 pistons — corps,chassis,CHS,pce,purchased,,749.631576,1,,1.363182,14.416877,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0185-JOINT,Étrier avant gauche 6 pistons — joint de piston,chassis,CHS,pce,purchased,,149.926316,1,,0.272637,1.016173,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0185-PISTON,Étrier avant gauche 6 pistons — piston,chassis,CHS,pce,purchased,,149.926316,1,,0.272637,0.705939,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0185-PURGEUR,Étrier avant gauche 6 pistons — vis de purge,chassis,CHS,pce,purchased,,149.926316,1,,0.272637,0.648620,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0186,Étrier avant droit 6 pistons,chassis,CHS,pce,manufactured,15,,1,,4.936650,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0186-CORPS,Étrier avant droit 6 pistons — corps,chassis,CHS,pce,purchased,,754.384212,1,,1.159902,12.859949,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0186-JOINT,Étrier avant droit 6 pistons — joint de piston,chassis,CHS,pce,purchased,,150.876842,1,,0.231982,0.792033,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0186-PISTON,Étrier avant droit 6 pistons — piston,chassis,CHS,pce,purchased,,150.876842,1,,0.231982,0.493454,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0186-PURGEUR,Étrier avant droit 6 pistons — vis de purge,chassis,CHS,pce,purchased,,150.876842,1,,0.231982,0.489139,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0187,Étrier arrière gauche 4 pistons,chassis,CHS,pce,manufactured,15,,1,,5.739600,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0187-CORPS,Étrier arrière gauche 4 pistons — corps,chassis,CHS,pce,purchased,,749.963152,1,,1.350152,14.513594,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0187-JOINT,Étrier arrière gauche 4 pistons — joint de piston,chassis,CHS,pce,purchased,,149.992632,1,,0.270032,0.877334,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0187-PISTON,Étrier arrière gauche 4 pistons — piston,chassis,CHS,pce,purchased,,149.992632,1,,0.270032,0.629671,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0187-PURGEUR,Étrier arrière gauche 4 pistons — vis de purge,chassis,CHS,pce,purchased,,149.992632,1,,0.270032,0.629461,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0188,Étrier arrière droit 4 pistons,chassis,CHS,pce,manufactured,15,,1,,5.970450,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0188-CORPS,Étrier arrière droit 4 pistons — corps,chassis,CHS,pce,purchased,,748.692106,1,,1.404856,14.571447,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0188-JOINT,Étrier arrière droit 4 pistons — joint de piston,chassis,CHS,pce,purchased,,149.738421,1,,0.280971,1.070780,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0188-PISTON,Étrier arrière droit 4 pistons — piston,chassis,CHS,pce,purchased,,149.738421,1,,0.280971,0.633854,6.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0188-PURGEUR,Étrier arrière droit 4 pistons — vis de purge,chassis,CHS,pce,purchased,,149.738421,1,,0.280971,0.731396,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0189,Jeu plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,0.805314,3.543704,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0193,Integrated Power Braking module,chassis,CHS,pce,purchased,,2927.700000,1,,0.736901,30.200856,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0194,Bloc ABS/ESC hydraulique,chassis,CHS,pce,purchased,,2107.940000,1,,1.761195,8.879241,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0193,Integrated Power Braking module,chassis,CHS,pce,manufactured,12,,1,,0.736901,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0193-CARTE,Integrated Power Braking module — électronique de pilotage,chassis,CHS,pce,purchased,,565.960000,1,,0.092380,2.725672,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0193-CORPS,Integrated Power Braking module — corps de pompe,chassis,CHS,pce,purchased,,848.940000,1,,0.138571,1.656034,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0193-MOTEUR,Integrated Power Braking module — moteur d'entraînement,chassis,CHS,pce,purchased,,848.940000,1,,0.138570,1.587292,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0193-ROUE,Integrated Power Braking module — roue ou rotor,chassis,CHS,pce,purchased,,565.960000,1,,0.092380,0.479988,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0194,Bloc ABS/ESC hydraulique,chassis,CHS,pce,manufactured,12,,1,,1.761195,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0194-CARTE,Bloc ABS/ESC hydraulique — électronique de pilotage,chassis,CHS,pce,purchased,,402.008000,1,,0.297239,8.979352,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0194-CORPS,Bloc ABS/ESC hydraulique — corps de pompe,chassis,CHS,pce,purchased,,603.012000,1,,0.445859,4.600462,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0194-MOTEUR,Bloc ABS/ESC hydraulique — moteur d'entraînement,chassis,CHS,pce,purchased,,603.012000,1,,0.445858,5.610499,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0194-ROUE,Bloc ABS/ESC hydraulique — roue ou rotor,chassis,CHS,pce,purchased,,402.008000,1,,0.297239,1.462119,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0195,Réservoir liquide frein,chassis,CHS,pce,purchased,,234.220000,1,,0.596592,2.530863,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0196,Canalisations rigides frein,chassis,CHS,pce,purchased,,58.550000,1,,0.357214,1.947459,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0197,Flexibles frein,chassis,CHS,pce,purchased,,117.110000,1,,0.906577,4.386926,4.0
@@ -137,10 +444,22 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0199,Capteurs usure plaquettes,chassi
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0200,Conduit refroidissement frein,chassis,CHS,pce,purchased,,585.540000,1,,1.134703,6.071342,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0202,Conduits refroidissement frein AR,chassis,CHS,pce,purchased,,585.540000,1,,1.214278,5.211438,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0203,Frein de stationnement électrique,chassis,CHS,pce,purchased,,1171.080000,1,,1.518067,8.405841,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0204,"Jante avant gauche 20""",chassis,CHS,pce,purchased,,2927.700000,1,,10.388600,119.891716,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0205,"Jante avant droite 20""",chassis,CHS,pce,purchased,,2927.700000,1,,11.422800,117.444660,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0206,"Jante arrière gauche 21""",chassis,CHS,pce,purchased,,2927.700000,1,,10.513000,113.395321,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0207,"Jante arrière droite 21""",chassis,CHS,pce,purchased,,2927.700000,1,,10.588800,117.183073,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0204,"Jante avant gauche 20""",chassis,CHS,pce,manufactured,10,,1,,10.388600,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0204-ECROU,"Jante avant gauche 20"" — écrou central",chassis,CHS,pce,purchased,,364.096188,1,,1.233700,2.966284,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0204-VALVE,"Jante avant gauche 20"" — valve et capteur de pression",chassis,CHS,pce,purchased,,364.096188,1,,1.233700,41.692398,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0204-VOILE,"Jante avant gauche 20"" — voile forgé",chassis,CHS,pce,purchased,,2184.577124,1,,7.402200,71.451956,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0205,"Jante avant droite 20""",chassis,CHS,pce,manufactured,10,,1,,11.422800,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0205-ECROU,"Jante avant droite 20"" — écrou central",chassis,CHS,pce,purchased,,364.034438,1,,1.356475,2.851527,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0205-VALVE,"Jante avant droite 20"" — valve et capteur de pression",chassis,CHS,pce,purchased,,364.034438,1,,1.356475,44.479900,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0205-VOILE,"Jante avant droite 20"" — voile forgé",chassis,CHS,pce,purchased,,2184.206624,1,,8.138850,92.375134,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0206,"Jante arrière gauche 21""",chassis,CHS,pce,manufactured,10,,1,,10.513000,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0206-ECROU,"Jante arrière gauche 21"" — écrou central",chassis,CHS,pce,purchased,,364.087875,1,,1.248375,2.704654,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0206-VALVE,"Jante arrière gauche 21"" — valve et capteur de pression",chassis,CHS,pce,purchased,,364.087875,1,,1.248375,39.002231,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0206-VOILE,"Jante arrière gauche 21"" — voile forgé",chassis,CHS,pce,purchased,,2184.527250,1,,7.490250,85.218072,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0207,"Jante arrière droite 21""",chassis,CHS,pce,manufactured,10,,1,,10.588800,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0207-ECROU,"Jante arrière droite 21"" — écrou central",chassis,CHS,pce,purchased,,364.084312,1,,1.257475,2.986553,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0207-VALVE,"Jante arrière droite 21"" — valve et capteur de pression",chassis,CHS,pce,purchased,,364.084312,1,,1.257475,38.786565,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0207-VOILE,"Jante arrière droite 21"" — voile forgé",chassis,CHS,pce,purchased,,2184.505876,1,,7.544850,69.589924,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0208,Pneu AV gauche 285/30 ZR20,chassis,CHS,pce,purchased,,311.900000,1,,12.466400,45.423822,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0209,Pneu AV droit 285/30 ZR20,chassis,CHS,pce,purchased,,311.900000,1,,11.622400,37.696092,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0210,Pneu AR gauche 335/30 ZR21,chassis,CHS,pce,purchased,,447.500000,1,,12.622000,37.873573,1.0
@@ -148,9 +467,21 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0211,Pneu AR droit 335/30 ZR21,chassi
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0212,Capteur TPMS,chassis,CHS,pce,purchased,,80.000000,1,,0.105941,4.196641,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0213,Valve pneu,chassis,CHS,pce,purchased,,10.000000,1,,0.111725,0.380748,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0214,Fixation roue / centre-lock ou boulons,chassis,CHS,pce,purchased,,175.660000,1,,1.979389,4.715855,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0215,Bloc-cylindres V8,engine,GMP,pce,purchased,,23535.190000,1,,52.870400,619.852570,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0216,Culasse,engine,GMP,pce,purchased,,7845.060000,1,,15.040300,165.990767,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0218,Vilebrequin plat,engine,GMP,pce,purchased,,9414.080000,1,,18.694400,46.436890,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0215,Bloc-cylindres V8,engine,GMP,pce,manufactured,40,,1,,52.870400,2.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0215-BAGUE,Bloc-cylindres V8 — bague de guidage,engine,GMP,pce,purchased,,1563.126480,1,,3.344293,7.862567,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0215-BOUCHON,Bloc-cylindres V8 — bouchon d'expansion,engine,GMP,pce,purchased,,1563.126480,1,,3.344293,8.981835,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0215-BRUT,Bloc-cylindres V8 — brut de fonderie,engine,GMP,pce,purchased,,6252.505920,1,,13.377176,140.167388,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0215-USINAGE,Bloc-cylindres V8 — reprise d'usinage et traitement,engine,GMP,pce,purchased,,4689.379440,1,,10.032880,118.901667,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0216,Culasse,engine,GMP,pce,manufactured,40,,1,,15.040300,2.00,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0216-BAGUE,Culasse — bague de guidage,engine,GMP,pce,purchased,,517.899840,1,,0.948420,2.316326,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0216-BOUCHON,Culasse — bouchon d'expansion,engine,GMP,pce,purchased,,517.899840,1,,0.948420,2.001527,8.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0216-BRUT,Culasse — brut de fonderie,engine,GMP,pce,purchased,,2071.599360,1,,3.793680,38.444015,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0216-USINAGE,Culasse — reprise d'usinage et traitement,engine,GMP,pce,purchased,,1553.699520,1,,2.845260,27.404975,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0218,Vilebrequin plat,engine,GMP,pce,manufactured,40,,1,,18.694400,2.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0218-BAGUE,Vilebrequin plat — bague de guidage,engine,GMP,pce,purchased,,622.425533,1,,1.179827,3.119132,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0218-BOUCHON,Vilebrequin plat — bouchon d'expansion,engine,GMP,pce,purchased,,622.425533,1,,1.179827,3.129751,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0218-BRUT,Vilebrequin plat — brut de fonderie,engine,GMP,pce,purchased,,2489.702136,1,,4.719304,44.236396,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0218-USINAGE,Vilebrequin plat — reprise d'usinage et traitement,engine,GMP,pce,purchased,,1867.276600,1,,3.539480,39.074797,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0219,Piston,engine,GMP,pce,purchased,,784.510000,1,,1.339526,3.301503,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0220,Bielle,engine,GMP,pce,purchased,,706.060000,1,,1.073228,2.770860,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0221,Axe de piston,engine,GMP,pce,purchased,,784.510000,1,,1.031869,2.441753,8.0
@@ -160,13 +491,28 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0224,Paliers principaux vilebrequin,e
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0225,Volant / masse inertie côté DCT,engine,GMP,pce,purchased,,3138.030000,1,,0.796998,4.741022,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0226,Damper/poulie vilebrequin,engine,GMP,pce,purchased,,9414.080000,1,,1.948971,4.999695,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0227,Joint culasse,engine,GMP,pce,purchased,,7845.060000,1,,0.825193,8.673191,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0229,Carter sec / lower crankcase,engine,GMP,pce,purchased,,3922.530000,1,,0.940687,11.233778,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0229,Carter sec / lower crankcase,engine,GMP,pce,manufactured,40,,1,,0.940687,2.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0229-BAGUE,Carter sec / lower crankcase — bague de guidage,engine,GMP,pce,purchased,,256.689240,1,,0.055446,0.133230,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0229-BOUCHON,Carter sec / lower crankcase — bouchon d'expansion,engine,GMP,pce,purchased,,256.689240,1,,0.055446,0.144252,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0229-BRUT,Carter sec / lower crankcase — brut de fonderie,engine,GMP,pce,purchased,,1026.756960,1,,0.221782,2.379677,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0229-USINAGE,Carter sec / lower crankcase — reprise d'usinage et traitement,engine,GMP,pce,purchased,,770.067720,1,,0.166337,1.776030,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0230,Réservoir huile carter sec,engine,GMP,pce,purchased,,3922.530000,1,,1.082330,11.335242,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0231,Pompe(s) huile pression/scavenge,engine,GMP,pce,purchased,,2353.520000,1,,1.578074,7.407479,3.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0232,Refroidisseur huile moteur,engine,GMP,pce,purchased,,1098.310000,1,,2.429031,23.504518,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0231,Pompe(s) huile pression/scavenge,engine,GMP,pce,manufactured,12,,1,,1.578074,0.60,3.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0231-CARTE,Pompe(s) huile pression/scavenge — électronique de pilotage,engine,GMP,pce,purchased,,451.124000,1,,0.260615,9.141957,3.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0231-CORPS,Pompe(s) huile pression/scavenge — corps de pompe,engine,GMP,pce,purchased,,676.686000,1,,0.390922,4.004292,3.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0231-MOTEUR,Pompe(s) huile pression/scavenge — moteur d'entraînement,engine,GMP,pce,purchased,,676.686000,1,,0.390922,5.394411,3.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0231-ROUE,Pompe(s) huile pression/scavenge — roue ou rotor,engine,GMP,pce,purchased,,451.124000,1,,0.260615,1.043346,3.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0232,Refroidisseur huile moteur,engine,GMP,pce,manufactured,12,,1,,2.429031,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0232-BOITE-EAU,Refroidisseur huile moteur — boîte à eau,engine,GMP,pce,purchased,,117.133711,1,,0.202003,0.913821,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0232-FAISCEAU,Refroidisseur huile moteur — faisceau à ailettes brasé,engine,GMP,pce,purchased,,585.668556,1,,1.010019,10.385823,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0232-SUPPORT,Refroidisseur huile moteur — support,engine,GMP,pce,purchased,,117.133711,1,,0.202003,2.289199,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0233,Filtre huile moteur,engine,GMP,pce,purchased,,62.760000,1,,0.425364,14.186230,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0234,Gicleurs refroidissement pistons,engine,GMP,pce,purchased,,784.510000,1,,0.012248,0.030474,8.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0235,Arbres à cames,engine,GMP,pce,purchased,,1882.820000,1,,1.692011,3.835349,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0235,Arbres à cames,engine,GMP,pce,manufactured,40,,1,,1.692011,2.00,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0235-BAGUE,Arbres à cames — bague de guidage,engine,GMP,pce,purchased,,120.692867,1,,0.103001,0.223440,16.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0235-BOUCHON,Arbres à cames — bouchon d'expansion,engine,GMP,pce,purchased,,120.692867,1,,0.103001,0.268079,16.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0235-BRUT,Arbres à cames — brut de fonderie,engine,GMP,pce,purchased,,482.771464,1,,0.412001,4.730307,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0235-USINAGE,Arbres à cames — reprise d'usinage et traitement,engine,GMP,pce,purchased,,362.078600,1,,0.309002,2.916639,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0236,Soupapes admission,engine,GMP,pce,purchased,,156.900000,1,,1.624236,3.590601,16.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0237,Soupapes échappement,engine,GMP,pce,purchased,,156.900000,1,,2.317199,4.888919,16.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0238,Ressorts soupapes,engine,GMP,pce,purchased,,156.900000,1,,0.022877,0.049291,32.0
@@ -180,18 +526,42 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0246,Bougie allumage,engine,GMP,pce,p
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0247,Bobine allumage,engine,GMP,pce,purchased,,156.900000,1,,1.042898,4.776681,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0248,Injecteur essence HP,engine,GMP,pce,purchased,,549.160000,1,,0.819990,3.869041,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0249,Rail carburant HP,engine,GMP,pce,purchased,,784.510000,1,,0.694104,3.584908,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0251,Pompe(s) carburant HP,engine,GMP,pce,purchased,,1569.010000,1,,1.418434,7.271744,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0251,Pompe(s) carburant HP,engine,GMP,pce,manufactured,12,,1,,1.418434,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0251-CARTE,Pompe(s) carburant HP — électronique de pilotage,engine,GMP,pce,purchased,,294.222000,1,,0.228687,8.950443,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0251-CORPS,Pompe(s) carburant HP — corps de pompe,engine,GMP,pce,purchased,,441.333000,1,,0.343030,3.897781,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0251-MOTEUR,Pompe(s) carburant HP — moteur d'entraînement,engine,GMP,pce,purchased,,441.333000,1,,0.343030,4.278407,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0251-ROUE,Pompe(s) carburant HP — roue ou rotor,engine,GMP,pce,purchased,,294.222000,1,,0.228687,1.226951,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0252,Capteur position vilebrequin,engine,GMP,pce,purchased,,9414.080000,1,,0.063124,1.789477,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0253,Capteurs position arbres à cames,engine,GMP,pce,purchased,,1882.820000,1,,0.098790,3.841726,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0254,Capteurs cliquetis,engine,GMP,pce,purchased,,188.280000,1,,0.079151,2.902261,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0255,Capteur pression huile,engine,GMP,pce,purchased,,156.900000,1,,0.056373,1.690040,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0256,Capteur température huile,engine,GMP,pce,purchased,,125.530000,1,,0.097207,4.053299,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0257,Capteur température LDR,engine,GMP,pce,purchased,,125.530000,1,,0.062163,1.851264,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0258,ECU moteur,engine,GMP,pce,purchased,,3922.530000,1,,0.879634,29.725648,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0259,Turbocompresseur,engine,GMP,pce,purchased,,5491.550000,1,,11.911800,30.656685,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0261,Wastegate turbo,engine,GMP,pce,purchased,,784.510000,1,,0.820004,2.118562,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258,ECU moteur,engine,GMP,pce,manufactured,10,,1,,0.879634,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258-BOITIER,ECU moteur — boîtier,engine,GMP,pce,purchased,,865.857778,1,,0.180808,1.839251,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258-CARTE,ECU moteur — carte électronique,engine,GMP,pce,manufactured,4,,1,,0.452018,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258-CARTE-ALIM,ECU moteur — carte électronique — étage d'alimentation,engine,GMP,pce,purchased,,854.177778,1,,0.166807,5.979063,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258-CARTE-PCB,ECU moteur — carte électronique — circuit imprimé multicouche,engine,GMP,pce,purchased,,1281.266666,1,,0.250211,8.563672,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258-COUVERCLE,ECU moteur — couvercle,engine,GMP,pce,purchased,,432.928889,1,,0.090404,0.421156,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0258-DISSIPATEUR,ECU moteur — dissipateur thermique,engine,GMP,pce,purchased,,432.928889,1,,0.090404,0.832784,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0259,Turbocompresseur,engine,GMP,pce,manufactured,20,,1,,11.911800,1.00,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0259-ACTIONNEUR,Turbocompresseur — actionneur de décharge,engine,GMP,pce,purchased,,485.503182,1,,0.973709,37.419637,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0259-CARTER-CENTRAL,Turbocompresseur — carter central,engine,GMP,pce,purchased,,971.006364,1,,1.947418,5.054484,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0259-CARTER-TURBINE,Turbocompresseur — carter de turbine,engine,GMP,pce,purchased,,1456.509545,1,,2.921128,6.981613,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0259-ROUE-COMPRESSEUR,Turbocompresseur — roue de compresseur,engine,GMP,pce,purchased,,971.006364,1,,1.947418,18.428222,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0259-ROUE-TURBINE,Turbocompresseur — roue de turbine,engine,GMP,pce,purchased,,1456.509545,1,,2.921127,7.797131,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0261,Wastegate turbo,engine,GMP,pce,manufactured,20,,1,,0.820004,1.00,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0261-ACTIONNEUR,Wastegate turbo — actionneur de décharge,engine,GMP,pce,purchased,,62.025455,1,,0.046000,1.846541,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0261-CARTER-CENTRAL,Wastegate turbo — carter central,engine,GMP,pce,purchased,,124.050909,1,,0.092001,0.241884,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0261-CARTER-TURBINE,Wastegate turbo — carter de turbine,engine,GMP,pce,purchased,,186.076363,1,,0.138001,0.310444,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0261-ROUE-COMPRESSEUR,Wastegate turbo — roue de compresseur,engine,GMP,pce,purchased,,124.050909,1,,0.092001,0.899825,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0261-ROUE-TURBINE,Wastegate turbo — roue de turbine,engine,GMP,pce,purchased,,186.076364,1,,0.138001,0.370955,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0263,Soupape décharge/bypass,engine,GMP,pce,purchased,,392.250000,1,,1.139669,2.913473,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0264,Collecteur admission monobloc,engine,GMP,pce,purchased,,2353.520000,1,,1.903609,4.902060,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0264,Collecteur admission monobloc,engine,GMP,pce,manufactured,40,,1,,1.903609,2.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0264-BAGUE,Collecteur admission monobloc — bague de guidage,engine,GMP,pce,purchased,,152.068733,1,,0.116441,0.246433,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0264-BOUCHON,Collecteur admission monobloc — bouchon d'expansion,engine,GMP,pce,purchased,,152.068733,1,,0.116441,0.280464,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0264-BRUT,Collecteur admission monobloc — brut de fonderie,engine,GMP,pce,purchased,,608.274936,1,,0.465759,5.180265,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0264-USINAGE,Collecteur admission monobloc — reprise d'usinage et traitement,engine,GMP,pce,purchased,,456.206200,1,,0.349322,3.337772,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0265,Boîtier(s) papillon,engine,GMP,pce,purchased,,941.410000,1,,1.451047,7.530644,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0266,Filtre(s) air,engine,GMP,pce,purchased,,156.900000,1,,0.509516,2.888548,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0267,Boîte(s) à air,engine,GMP,pce,purchased,,941.410000,1,,1.156391,5.888343,2.0
@@ -200,7 +570,11 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0269,Air Charge Air Cooler (ACAC),eng
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0270,Ducts air suralimenté,engine,GMP,pce,purchased,,313.810000,1,,1.516169,3.829934,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0271,Capteurs pression/température admission,engine,GMP,pce,purchased,,235.350000,1,,0.063542,2.210181,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0272,Réservoir essence,engine,GMP,pce,purchased,,3922.530000,1,,8.394200,47.773071,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0273,Module pompe basse pression,engine,GMP,pce,purchased,,784.510000,1,,0.725616,27.167208,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0273,Module pompe basse pression,engine,GMP,pce,manufactured,12,,1,,0.725616,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0273-CARTE,Module pompe basse pression — électronique de pilotage,engine,GMP,pce,purchased,,137.322000,1,,0.090123,2.861712,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0273-CORPS,Module pompe basse pression — corps de pompe,engine,GMP,pce,purchased,,205.983000,1,,0.135185,1.496092,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0273-MOTEUR,Module pompe basse pression — moteur d'entraînement,engine,GMP,pce,purchased,,205.983000,1,,0.135185,1.760758,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0273-ROUE,Module pompe basse pression — roue ou rotor,engine,GMP,pce,purchased,,137.322000,1,,0.090123,0.480572,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0274,Filtre carburant,engine,GMP,pce,purchased,,78.450000,1,,1.664498,8.873106,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0275,Goulotte remplissage,engine,GMP,pce,purchased,,313.810000,1,,1.535025,8.246154,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0276,Bouchon/clapet remplissage,engine,GMP,pce,purchased,,78.450000,1,,0.011866,0.064689,1.0
@@ -211,40 +585,114 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0280,Canister EVAP charbon actif,engi
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0281,Vanne purge EVAP,engine,GMP,pce,purchased,,125.530000,1,,1.035560,5.793544,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0282,Vanne ventilation réservoir,engine,GMP,pce,purchased,,125.530000,1,,0.287586,1.329338,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0283,Capteur pression réservoir,engine,GMP,pce,purchased,,156.900000,1,,0.062741,2.382238,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0284,Collecteur échappement,engine,GMP,pce,purchased,,1882.820000,1,,1.701617,3.973208,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0286,Downpipe,engine,GMP,pce,purchased,,941.410000,1,,2.033289,4.780100,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0288,Catalyseur(s) trois voies,engine,GMP,pce,purchased,,3922.530000,1,,4.853000,12.571114,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0289,Filtre(s) particules essence GPF/OPF,engine,GMP,pce,purchased,,2824.220000,1,,1.492792,6.080142,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0284,Collecteur échappement,engine,GMP,pce,manufactured,15,,1,,1.701617,0.75,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0284-BRIDE,Collecteur échappement — bride usinée,engine,GMP,pce,purchased,,204.110556,1,,0.157402,0.366895,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0284-ECRAN,Collecteur échappement — écran thermique,engine,GMP,pce,purchased,,204.110556,1,,0.157402,0.357620,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0284-SUPPORT,Collecteur échappement — support élastique,engine,GMP,pce,purchased,,204.110556,1,,0.157402,0.565892,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0284-TUBULURE,Collecteur échappement — tubulure formée,engine,GMP,pce,purchased,,816.442220,1,,0.629607,1.654381,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0286,Downpipe,engine,GMP,pce,manufactured,15,,1,,2.033289,0.75,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0286-BRIDE,Downpipe — bride usinée,engine,GMP,pce,purchased,,99.203889,1,,0.188699,0.487274,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0286-ECRAN,Downpipe — écran thermique,engine,GMP,pce,purchased,,99.203889,1,,0.188699,0.434842,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0286-SUPPORT,Downpipe — support élastique,engine,GMP,pce,purchased,,99.203889,1,,0.188699,0.594930,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0286-TUBULURE,Downpipe — tubulure formée,engine,GMP,pce,purchased,,396.815555,1,,0.754794,1.602413,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0288,Catalyseur(s) trois voies,engine,GMP,pce,manufactured,15,,1,,4.853000,0.75,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0288-BRIDE,Catalyseur(s) trois voies — bride usinée,engine,GMP,pce,purchased,,427.854444,1,,0.455000,1.087605,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0288-ECRAN,Catalyseur(s) trois voies — écran thermique,engine,GMP,pce,purchased,,427.854444,1,,0.455000,1.145808,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0288-SUPPORT,Catalyseur(s) trois voies — support élastique,engine,GMP,pce,purchased,,427.854444,1,,0.455000,1.810218,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0288-TUBULURE,Catalyseur(s) trois voies — tubulure formée,engine,GMP,pce,purchased,,1711.417780,1,,1.820000,4.010807,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0289,Filtre(s) particules essence GPF/OPF,engine,GMP,pce,manufactured,15,,1,,1.492792,0.75,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0289-BRIDE,Filtre(s) particules essence GPF/OPF — bride usinée,engine,GMP,pce,purchased,,308.900000,1,,0.137644,0.316083,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0289-ECRAN,Filtre(s) particules essence GPF/OPF — écran thermique,engine,GMP,pce,purchased,,308.900000,1,,0.137644,0.350844,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0289-SUPPORT,Filtre(s) particules essence GPF/OPF — support élastique,engine,GMP,pce,purchased,,308.900000,1,,0.137644,0.444590,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0289-TUBULURE,Filtre(s) particules essence GPF/OPF — tubulure formée,engine,GMP,pce,purchased,,1235.600000,1,,0.550572,1.305483,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0290,Sonde lambda amont,engine,GMP,pce,purchased,,313.810000,1,,1.380277,6.541685,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0291,Sonde lambda aval,engine,GMP,pce,purchased,,313.810000,1,,1.289614,6.803230,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0292,Capteur température échappement,engine,GMP,pce,purchased,,188.280000,1,,0.044445,1.376559,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0293,Silencieux/résonateur,engine,GMP,pce,purchased,,3922.530000,1,,6.031800,13.102155,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0293,Silencieux/résonateur,engine,GMP,pce,manufactured,15,,1,,6.031800,0.75,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0293-BRIDE,Silencieux/résonateur — bride usinée,engine,GMP,pce,purchased,,426.772778,1,,0.566311,1.405323,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0293-ECRAN,Silencieux/résonateur — écran thermique,engine,GMP,pce,purchased,,426.772778,1,,0.566311,1.362850,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0293-SUPPORT,Silencieux/résonateur — support élastique,engine,GMP,pce,purchased,,426.772778,1,,0.566311,2.035039,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0293-TUBULURE,Silencieux/résonateur — tubulure formée,engine,GMP,pce,purchased,,1707.091110,1,,2.265245,5.113927,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0294,Valve(s) échappement active(s),engine,GMP,pce,purchased,,627.600000,1,,0.692963,3.346180,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0295,Actionneur(s) valve échappement,engine,GMP,pce,purchased,,392.250000,1,,1.220149,6.511935,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0296,Sorties/embouts échappement,engine,GMP,pce,purchased,,470.700000,1,,2.310424,55.502854,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0296,Sorties/embouts échappement,engine,GMP,pce,manufactured,15,,1,,2.310424,0.75,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0296-BRIDE,Sorties/embouts échappement — bride usinée,engine,GMP,pce,purchased,,46.646111,1,,0.214825,0.538433,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0296-ECRAN,Sorties/embouts échappement — écran thermique,engine,GMP,pce,purchased,,46.646111,1,,0.214825,0.516727,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0296-SUPPORT,Sorties/embouts échappement — support élastique,engine,GMP,pce,purchased,,46.646111,1,,0.214825,0.710448,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0296-TUBULURE,Sorties/embouts échappement — tubulure formée,engine,GMP,pce,purchased,,186.584445,1,,0.859299,2.048191,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0297,Écrans thermiques,engine,GMP,pce,purchased,,235.350000,1,,0.240297,1.401268,12.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0298,Radiateur moteur,engine,GMP,pce,purchased,,1255.210000,1,,1.895145,17.560035,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0298,Radiateur moteur,engine,GMP,pce,manufactured,12,,1,,1.895145,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0298-BOITE-EAU,Radiateur moteur — boîte à eau,engine,GMP,pce,purchased,,134.603556,1,,0.148572,0.744465,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0298-FAISCEAU,Radiateur moteur — faisceau à ailettes brasé,engine,GMP,pce,purchased,,673.017776,1,,0.742857,7.614136,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0298-SUPPORT,Radiateur moteur — support,engine,GMP,pce,purchased,,134.603556,1,,0.148572,1.776401,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0299,Pompe eau moteur,engine,GMP,pce,purchased,,784.510000,1,,0.275519,1.458818,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0300,Thermostat/vanne régulation,engine,GMP,pce,purchased,,235.350000,1,,0.918480,4.544639,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0301,Vase expansion,engine,GMP,pce,purchased,,235.350000,1,,1.106982,5.543987,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0302,Durites LDR moteur,engine,GMP,pce,purchased,,125.530000,1,,0.264886,0.905619,12.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0303,Ventilateurs radiateur,engine,GMP,pce,purchased,,1255.210000,1,,2.975058,32.437652,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0304,Échangeur huile/eau moteur,engine,GMP,pce,purchased,,941.410000,1,,2.920891,28.790638,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0305,Refroidisseur huile DCT,engine,GMP,pce,purchased,,1569.010000,1,,3.211649,37.115743,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0306,Pompe circuit DCT,engine,GMP,pce,purchased,,784.510000,1,,1.288962,7.260981,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0307,Refroidisseur e-diff,engine,GMP,pce,purchased,,1098.310000,1,,0.754527,7.646150,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0303,Ventilateurs radiateur,engine,GMP,pce,manufactured,12,,1,,2.975058,0.60,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0303-CARTE,Ventilateurs radiateur — électronique de pilotage,engine,GMP,pce,purchased,,231.462000,1,,0.540012,18.404473,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0303-CORPS,Ventilateurs radiateur — corps de pompe,engine,GMP,pce,purchased,,347.193000,1,,0.810017,8.642233,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0303-MOTEUR,Ventilateurs radiateur — moteur d'entraînement,engine,GMP,pce,purchased,,347.193000,1,,0.810017,10.957586,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0303-ROUE,Ventilateurs radiateur — roue ou rotor,engine,GMP,pce,purchased,,231.462000,1,,0.540012,2.940041,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0304,Échangeur huile/eau moteur,engine,GMP,pce,manufactured,12,,1,,2.920891,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0304-BOITE-EAU,Échangeur huile/eau moteur — boîte à eau,engine,GMP,pce,purchased,,99.666622,1,,0.251210,1.503391,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0304-FAISCEAU,Échangeur huile/eau moteur — faisceau à ailettes brasé,engine,GMP,pce,purchased,,498.333112,1,,1.256051,13.847209,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0304-SUPPORT,Échangeur huile/eau moteur — support,engine,GMP,pce,purchased,,99.666622,1,,0.251210,2.666041,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0305,Refroidisseur huile DCT,engine,GMP,pce,manufactured,12,,1,,3.211649,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0305-BOITE-EAU,Refroidisseur huile DCT — boîte à eau,engine,GMP,pce,purchased,,169.379978,1,,0.280294,1.592070,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0305-FAISCEAU,Refroidisseur huile DCT — faisceau à ailettes brasé,engine,GMP,pce,purchased,,846.899888,1,,1.401473,15.300301,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0305-SUPPORT,Refroidisseur huile DCT — support,engine,GMP,pce,purchased,,169.379978,1,,0.280294,2.856308,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0306,Pompe circuit DCT,engine,GMP,pce,manufactured,12,,1,,1.288962,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0306-CARTE,Pompe circuit DCT — électronique de pilotage,engine,GMP,pce,purchased,,137.322000,1,,0.202792,7.589734,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0306-CORPS,Pompe circuit DCT — corps de pompe,engine,GMP,pce,purchased,,205.983000,1,,0.304189,2.824851,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0306-MOTEUR,Pompe circuit DCT — moteur d'entraînement,engine,GMP,pce,purchased,,205.983000,1,,0.304189,4.074186,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0306-ROUE,Pompe circuit DCT — roue ou rotor,engine,GMP,pce,purchased,,137.322000,1,,0.202792,1.058128,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0307,Refroidisseur e-diff,engine,GMP,pce,manufactured,12,,1,,0.754527,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0307-BOITE-EAU,Refroidisseur e-diff — boîte à eau,engine,GMP,pce,purchased,,117.249444,1,,0.034614,0.168141,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0307-FAISCEAU,Refroidisseur e-diff — faisceau à ailettes brasé,engine,GMP,pce,purchased,,586.247224,1,,0.173071,1.795698,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0307-SUPPORT,Refroidisseur e-diff — support,engine,GMP,pce,purchased,,117.249444,1,,0.034614,0.351713,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0308,Conduits refroidissement transmission depuis scoop,engine,GMP,pce,purchased,,392.250000,1,,0.964301,4.908678,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0309,Boîte DCT 8 rapports,transmission,TRN,pce,purchased,,47070.390000,1,,93.446400,514.590636,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0310,Carter DCT,transmission,TRN,pce,purchased,,7845.060000,1,,0.945356,9.433613,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309,Boîte DCT 8 rapports,transmission,TRN,pce,manufactured,45,,1,,93.446400,2.25,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309-ARBRE-PRIMAIRE,Boîte DCT 8 rapports — arbre primaire,transmission,TRN,pce,purchased,,5484.496118,1,,9.763929,23.526577,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309-ARBRE-SECONDAIRE,Boîte DCT 8 rapports — arbre secondaire,transmission,TRN,pce,purchased,,5484.496118,1,,9.763929,22.157479,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309-CARTER,Boîte DCT 8 rapports — carter de boîte,transmission,TRN,pce,purchased,,8226.744175,1,,14.645895,164.652081,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309-EMBRAYAGE,Boîte DCT 8 rapports — embrayage multidisque,transmission,TRN,pce,purchased,,5484.496118,1,,9.763929,24.428179,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309-PIGNONNERIE,Boîte DCT 8 rapports — jeu de pignons,transmission,TRN,pce,purchased,,13711.240294,1,,24.409824,54.869379,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0309-POMPE-HUILE,Boîte DCT 8 rapports — pompe à huile,transmission,TRN,pce,purchased,,2742.248059,1,,4.881965,12.679830,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0310,Carter DCT,transmission,TRN,pce,manufactured,40,,1,,0.945356,2.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0310-BAGUE,Carter DCT — bague de guidage,transmission,TRN,pce,purchased,,518.191240,1,,0.055757,0.128059,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0310-BOUCHON,Carter DCT — bouchon d'expansion,transmission,TRN,pce,purchased,,518.191240,1,,0.055757,0.121753,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0310-BRUT,Carter DCT — brut de fonderie,transmission,TRN,pce,purchased,,2072.764960,1,,0.223029,2.126425,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0310-USINAGE,Carter DCT — reprise d'usinage et traitement,transmission,TRN,pce,purchased,,1554.573720,1,,0.167271,1.860171,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0311,Embrayage DCT A,transmission,TRN,pce,purchased,,6276.050000,1,,2.533866,6.532357,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0312,Embrayage DCT B,transmission,TRN,pce,purchased,,6276.050000,1,,2.319333,5.532722,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0313,Pignons rapports avant,transmission,TRN,pce,purchased,,1569.010000,1,,1.605291,4.262914,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0314,Mécanismes sélection/synchronisation,transmission,TRN,pce,purchased,,1255.210000,1,,1.208897,7.240568,8.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0315,Pompe hydraulique DCT,transmission,TRN,pce,purchased,,1882.820000,1,,0.625291,3.097191,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0316,Mechatronic DCT,transmission,TRN,pce,purchased,,7845.060000,1,,0.813326,29.215646,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0317,TCU,transmission,TRN,pce,purchased,,2353.520000,1,,0.305901,9.871854,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0315,Pompe hydraulique DCT,transmission,TRN,pce,manufactured,12,,1,,0.625291,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0315-CARTE,Pompe hydraulique DCT — électronique de pilotage,transmission,TRN,pce,purchased,,356.984000,1,,0.070058,2.437318,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0315-CORPS,Pompe hydraulique DCT — corps de pompe,transmission,TRN,pce,purchased,,535.476000,1,,0.105088,1.191414,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0315-MOTEUR,Pompe hydraulique DCT — moteur d'entraînement,transmission,TRN,pce,purchased,,535.476000,1,,0.105087,1.364912,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0315-ROUE,Pompe hydraulique DCT — roue ou rotor,transmission,TRN,pce,purchased,,356.984000,1,,0.070058,0.286902,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316,Mechatronic DCT,transmission,TRN,pce,manufactured,10,,1,,0.813326,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316-BOITIER,Mechatronic DCT — boîtier,transmission,TRN,pce,purchased,,1737.531111,1,,0.166072,1.567188,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316-CARTE,Mechatronic DCT — carte électronique,transmission,TRN,pce,manufactured,4,,1,,0.415182,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316-CARTE-ALIM,Mechatronic DCT — carte électronique — étage d'alimentation,transmission,TRN,pce,purchased,,1725.851111,1,,0.152073,4.514165,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316-CARTE-PCB,Mechatronic DCT — carte électronique — circuit imprimé multicouche,transmission,TRN,pce,purchased,,2588.776666,1,,0.228109,9.201826,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316-COUVERCLE,Mechatronic DCT — couvercle,transmission,TRN,pce,purchased,,868.765556,1,,0.083036,0.388077,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0316-DISSIPATEUR,Mechatronic DCT — dissipateur thermique,transmission,TRN,pce,purchased,,868.765556,1,,0.083036,0.944717,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317,TCU,transmission,TRN,pce,manufactured,10,,1,,0.305901,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317-BOITIER,TCU — boîtier,transmission,TRN,pce,purchased,,517.188889,1,,0.053311,0.568834,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317-CARTE,TCU — carte électronique,transmission,TRN,pce,manufactured,4,,1,,0.133278,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317-CARTE-ALIM,TCU — carte électronique — étage d'alimentation,transmission,TRN,pce,purchased,,505.508889,1,,0.039311,1.337085,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317-CARTE-PCB,TCU — carte électronique — circuit imprimé multicouche,transmission,TRN,pce,purchased,,758.263334,1,,0.058967,1.838968,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317-COUVERCLE,TCU — couvercle,transmission,TRN,pce,purchased,,258.594444,1,,0.026656,0.113571,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0317-DISSIPATEUR,TCU — dissipateur thermique,transmission,TRN,pce,purchased,,258.594444,1,,0.026656,0.314570,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0318,E-Diff arrière,transmission,TRN,pce,purchased,,10983.090000,1,,0.613936,20.523389,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0319,Actionneur hydraulique E-Diff,transmission,TRN,pce,purchased,,10983.090000,1,,0.814445,3.680314,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0319,Actionneur hydraulique E-Diff,transmission,TRN,pce,manufactured,20,,1,,0.814445,1.00,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0319-CORPS,Actionneur hydraulique E-Diff — corps et réservoir,transmission,TRN,pce,purchased,,4370.276000,1,,0.166578,0.397289,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0319-PISTON,Actionneur hydraulique E-Diff — piston et clapets,transmission,TRN,pce,purchased,,2185.138000,1,,0.083289,0.182873,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0319-TIGE,Actionneur hydraulique E-Diff — tige chromée,transmission,TRN,pce,purchased,,2185.138000,1,,0.083289,0.218274,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0319-VALVE,Actionneur hydraulique E-Diff — valve pilotée,transmission,TRN,pce,purchased,,2185.138000,1,,0.083289,3.451146,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0320,Demi-arbre,transmission,TRN,pce,purchased,,2353.520000,1,,0.503808,1.257263,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0322,Joints homocinétiques AR,transmission,TRN,pce,purchased,,627.600000,1,,1.615964,3.550111,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0323,Support DCT,transmission,TRN,pce,purchased,,784.510000,1,,1.390491,3.113921,2.0
@@ -252,40 +700,139 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0324,Huile DCT,transmission,TRN,L,pur
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0380,Batterie 12 V démarrage haute puissance,electrical,ELE,pce,purchased,,526.990000,1,,6.585900,30.509840,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0381,Boîte fusibles principale,electrical,ELE,pce,purchased,,702.650000,1,,0.495003,2.694004,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0382,Boîte relais/PDC,electrical,ELE,pce,purchased,,702.650000,1,,0.988435,5.370760,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0383,Faisceau principal habitacle,electrical,ELE,pce,purchased,,4684.320000,1,,16.450400,112.316751,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0384,Faisceau,electrical,ELE,pce,purchased,,2927.700000,1,,1.853400,11.810235,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0383,Faisceau principal habitacle,electrical,ELE,pce,manufactured,30,,1,,16.450400,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0383-BOITIER-DERIVATION,Faisceau principal habitacle — boîtier de dérivation,electrical,ELE,pce,purchased,,898.977400,1,,1.761480,55.434832,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0383-GAINE,Faisceau principal habitacle — gaines et protections,electrical,ELE,pce,purchased,,898.977400,1,,1.761480,5.839482,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0383-TRONCON,Faisceau principal habitacle — tronçon préassemblé,electrical,ELE,pce,purchased,,449.488700,1,,0.880740,5.497579,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0384,Faisceau,electrical,ELE,pce,manufactured,30,,1,,1.853400,1.50,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0384-BOITIER-DERIVATION,Faisceau — boîtier de dérivation,electrical,ELE,pce,purchased,,562.105200,1,,0.155880,5.933292,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0384-GAINE,Faisceau — gaines et protections,electrical,ELE,pce,purchased,,562.105200,1,,0.155880,0.610816,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0384-TRONCON,Faisceau — tronçon préassemblé,electrical,ELE,pce,purchased,,281.052600,1,,0.077940,0.443977,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0386,Faisceau porte,electrical,ELE,pce,purchased,,819.760000,1,,0.457587,2.941461,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0388,Faisceau moteur,electrical,ELE,pce,purchased,,2342.160000,1,,2.174844,14.497945,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0389,Faisceau DCT,electrical,ELE,pce,purchased,,1171.080000,1,,1.593239,11.171155,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0388,Faisceau moteur,electrical,ELE,pce,manufactured,30,,1,,2.174844,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0388-BOITIER-DERIVATION,Faisceau moteur — boîtier de dérivation,electrical,ELE,pce,purchased,,444.678200,1,,0.191169,7.757179,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0388-GAINE,Faisceau moteur — gaines et protections,electrical,ELE,pce,purchased,,444.678200,1,,0.191170,0.748297,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0388-TRONCON,Faisceau moteur — tronçon préassemblé,electrical,ELE,pce,purchased,,222.339100,1,,0.095584,0.660791,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0389,Faisceau DCT,electrical,ELE,pce,manufactured,30,,1,,1.593239,1.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0389-BOITIER-DERIVATION,Faisceau DCT — boîtier de dérivation,electrical,ELE,pce,purchased,,211.038600,1,,0.127248,3.716507,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0389-GAINE,Faisceau DCT — gaines et protections,electrical,ELE,pce,purchased,,211.038600,1,,0.127247,0.403895,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0389-TRONCON,Faisceau DCT — tronçon préassemblé,electrical,ELE,pce,purchased,,105.519300,1,,0.063624,0.370699,4.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0391,Tresses de masse châssis,electrical,ELE,pce,purchased,,35.130000,1,,1.732837,4.572818,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0392,Points de masse/studs,electrical,ELE,pce,purchased,,9.370000,1,,1.595196,7.341411,12.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0393,Connecteurs LV,electrical,ELE,pce,purchased,,7.030000,1,,0.004226,0.031094,250.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0394,Clips/agrafes faisceaux,electrical,ELE,pce,purchased,,0.350000,1,,0.007941,0.017201,400.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0395,Gaines/protections thermiques faisceaux,electrical,ELE,pce,purchased,,23.420000,1,,0.027717,0.192029,60.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0396,VCU / Vehicle Control Unit,electrical,ELE,pce,purchased,,2107.940000,1,,0.649892,25.413897,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0397,BCM / Body Control Module,electrical,ELE,pce,purchased,,1171.080000,1,,0.304188,11.285375,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0398,Gateway réseau véhicule,electrical,ELE,pce,purchased,,936.860000,1,,1.549375,6.851956,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0399,ECU ESC/stabilité,electrical,ELE,pce,purchased,,1405.300000,1,,0.755034,24.798337,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0400,ECU suspension/amortissement,electrical,ELE,pce,purchased,,1171.080000,1,,0.629501,19.767590,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0401,ECU aéro actif,electrical,ELE,pce,purchased,,1053.970000,1,,0.398747,14.661209,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0402,ECU HVAC,electrical,ELE,pce,purchased,,702.650000,1,,0.865080,35.885249,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0403,ECU ADAS/domain controller,electrical,ELE,pce,purchased,,3513.240000,1,,0.325980,11.868867,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0404,Radar avant ACC/AEB,electrical,ELE,pce,purchased,,1171.080000,1,,0.312672,10.831896,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0405,Caméra frontale ADAS,electrical,ELE,pce,purchased,,585.540000,1,,0.612302,17.927958,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0406,Caméras 3D surround view,electrical,ELE,pce,purchased,,526.990000,1,,0.555411,18.098845,4.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0407,Caméra recul,electrical,ELE,pce,purchased,,526.990000,1,,0.802041,24.078554,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396,VCU / Vehicle Control Unit,electrical,ELE,pce,manufactured,10,,1,,0.649892,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396-BOITIER,VCU / Vehicle Control Unit — boîtier,electrical,ELE,pce,purchased,,462.615556,1,,0.129754,1.402745,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396-CARTE,VCU / Vehicle Control Unit — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.324384,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396-CARTE-ALIM,VCU / Vehicle Control Unit — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,450.935555,1,,0.115754,4.761518,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396-CARTE-PCB,VCU / Vehicle Control Unit — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,676.403333,1,,0.173630,6.087016,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396-COUVERCLE,VCU / Vehicle Control Unit — couvercle,electrical,ELE,pce,purchased,,231.307778,1,,0.064877,0.297578,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0396-DISSIPATEUR,VCU / Vehicle Control Unit — dissipateur thermique,electrical,ELE,pce,purchased,,231.307778,1,,0.064877,0.601312,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397,BCM / Body Control Module,electrical,ELE,pce,manufactured,10,,1,,0.304188,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397-BOITIER,BCM / Body Control Module — boîtier,electrical,ELE,pce,purchased,,254.424444,1,,0.052931,0.613306,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397-CARTE,BCM / Body Control Module — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.132327,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397-CARTE-ALIM,BCM / Body Control Module — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,242.744445,1,,0.038931,1.416053,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397-CARTE-PCB,BCM / Body Control Module — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,364.116667,1,,0.058396,2.381669,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397-COUVERCLE,BCM / Body Control Module — couvercle,electrical,ELE,pce,purchased,,127.212222,1,,0.026465,0.106612,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0397-DISSIPATEUR,BCM / Body Control Module — dissipateur thermique,electrical,ELE,pce,purchased,,127.212222,1,,0.026465,0.287926,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398,Gateway réseau véhicule,electrical,ELE,pce,manufactured,10,,1,,1.549375,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398-BOITIER,Gateway réseau véhicule — boîtier,electrical,ELE,pce,purchased,,202.375556,1,,0.329639,3.914430,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398-CARTE,Gateway réseau véhicule — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.824098,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398-CARTE-ALIM,Gateway réseau véhicule — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,190.695555,1,,0.315639,11.464072,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398-CARTE-PCB,Gateway réseau véhicule — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,286.043333,1,,0.473459,14.515590,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398-COUVERCLE,Gateway réseau véhicule — couvercle,electrical,ELE,pce,purchased,,101.187778,1,,0.164819,0.770199,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0398-DISSIPATEUR,Gateway réseau véhicule — dissipateur thermique,electrical,ELE,pce,purchased,,101.187778,1,,0.164819,1.650893,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399,ECU ESC/stabilité,electrical,ELE,pce,manufactured,10,,1,,0.755034,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399-BOITIER,ECU ESC/stabilité — boîtier,electrical,ELE,pce,purchased,,306.473333,1,,0.153119,1.802609,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399-CARTE,ECU ESC/stabilité — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.382797,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399-CARTE-ALIM,ECU ESC/stabilité — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,294.793333,1,,0.139119,5.173196,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399-CARTE-PCB,ECU ESC/stabilité — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,442.190000,1,,0.208678,8.627458,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399-COUVERCLE,ECU ESC/stabilité — couvercle,electrical,ELE,pce,purchased,,153.236667,1,,0.076559,0.332848,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0399-DISSIPATEUR,ECU ESC/stabilité — dissipateur thermique,electrical,ELE,pce,purchased,,153.236667,1,,0.076559,0.865010,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400,ECU suspension/amortissement,electrical,ELE,pce,manufactured,10,,1,,0.629501,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400-BOITIER,ECU suspension/amortissement — boîtier,electrical,ELE,pce,purchased,,254.424444,1,,0.125222,1.390978,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400-CARTE,ECU suspension/amortissement — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.313057,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400-CARTE-ALIM,ECU suspension/amortissement — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,242.744445,1,,0.111223,4.099591,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400-CARTE-PCB,ECU suspension/amortissement — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,364.116667,1,,0.166834,5.369953,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400-COUVERCLE,ECU suspension/amortissement — couvercle,electrical,ELE,pce,purchased,,127.212222,1,,0.062611,0.346827,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0400-DISSIPATEUR,ECU suspension/amortissement — dissipateur thermique,electrical,ELE,pce,purchased,,127.212222,1,,0.062611,0.697123,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401,ECU aéro actif,electrical,ELE,pce,manufactured,10,,1,,0.398747,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401-BOITIER,ECU aéro actif — boîtier,electrical,ELE,pce,purchased,,228.400000,1,,0.073944,0.758421,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401-CARTE,ECU aéro actif — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.184859,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401-CARTE-ALIM,ECU aéro actif — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,216.720000,1,,0.059944,2.096949,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401-CARTE-PCB,ECU aéro actif — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,325.080000,1,,0.089915,2.947755,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401-COUVERCLE,ECU aéro actif — couvercle,electrical,ELE,pce,purchased,,114.200000,1,,0.036972,0.173591,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0401-DISSIPATEUR,ECU aéro actif — dissipateur thermique,electrical,ELE,pce,purchased,,114.200000,1,,0.036972,0.404078,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402,ECU HVAC,electrical,ELE,pce,manufactured,10,,1,,0.865080,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402-BOITIER,ECU HVAC — boîtier,electrical,ELE,pce,purchased,,150.328889,1,,0.177573,2.014956,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402-CARTE,ECU HVAC — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.443933,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402-CARTE-ALIM,ECU HVAC — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,138.648889,1,,0.163573,5.477046,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402-CARTE-PCB,ECU HVAC — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,207.973334,1,,0.245360,9.708110,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402-COUVERCLE,ECU HVAC — couvercle,electrical,ELE,pce,purchased,,75.164444,1,,0.088787,0.476218,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0402-DISSIPATEUR,ECU HVAC — dissipateur thermique,electrical,ELE,pce,purchased,,75.164444,1,,0.088787,0.839916,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403,ECU ADAS/domain controller,electrical,ELE,pce,manufactured,10,,1,,0.325980,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403-BOITIER,ECU ADAS/domain controller — boîtier,electrical,ELE,pce,purchased,,774.904444,1,,0.057773,0.673518,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403-CARTE,ECU ADAS/domain controller — carte électronique,electrical,ELE,pce,manufactured,4,,1,,0.144433,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403-CARTE-ALIM,ECU ADAS/domain controller — carte électronique — étage d'alimentation,electrical,ELE,pce,purchased,,763.224445,1,,0.043773,1.531381,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403-CARTE-PCB,ECU ADAS/domain controller — carte électronique — circuit imprimé multicouche,electrical,ELE,pce,purchased,,1144.836667,1,,0.065660,2.706886,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403-COUVERCLE,ECU ADAS/domain controller — couvercle,electrical,ELE,pce,purchased,,387.452222,1,,0.028887,0.170670,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0403-DISSIPATEUR,ECU ADAS/domain controller — dissipateur thermique,electrical,ELE,pce,purchased,,387.452222,1,,0.028887,0.275998,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404,Radar avant ACC/AEB,electrical,ELE,pce,manufactured,8,,1,,0.312672,0.40,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404-BOITIER,Radar avant ACC/AEB — boîtier,electrical,ELE,pce,purchased,,115.490000,1,,0.027667,0.128889,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404-CARTE,Radar avant ACC/AEB — carte de traitement,electrical,ELE,pce,manufactured,4,,1,,0.083002,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404-CARTE-ALIM,Radar avant ACC/AEB — carte de traitement — étage d'alimentation,electrical,ELE,pce,purchased,,126.908000,1,,0.019201,0.654992,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404-CARTE-PCB,Radar avant ACC/AEB — carte de traitement — circuit imprimé multicouche,electrical,ELE,pce,purchased,,190.362000,1,,0.028801,1.165167,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404-MODULE,Radar avant ACC/AEB — module optique ou d'affichage,electrical,ELE,pce,purchased,,577.450000,1,,0.138336,5.383069,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0404-SUPPORT,Radar avant ACC/AEB — support de fixation,electrical,ELE,pce,purchased,,115.490000,1,,0.027667,0.269463,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405,Caméra frontale ADAS,electrical,ELE,pce,manufactured,8,,1,,0.612302,0.40,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405-BOITIER,Caméra frontale ADAS — boîtier,electrical,ELE,pce,purchased,,56.936000,1,,0.057630,0.246921,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405-CARTE,Caméra frontale ADAS — carte de traitement,electrical,ELE,pce,manufactured,4,,1,,0.172891,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405-CARTE-ALIM,Caméra frontale ADAS — carte de traitement — étage d'alimentation,electrical,ELE,pce,purchased,,56.643200,1,,0.055156,1.887681,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405-CARTE-PCB,Caméra frontale ADAS — carte de traitement — circuit imprimé multicouche,electrical,ELE,pce,purchased,,84.964800,1,,0.082735,3.258386,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405-MODULE,Caméra frontale ADAS — module optique ou d'affichage,electrical,ELE,pce,purchased,,284.680000,1,,0.288151,9.705675,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0405-SUPPORT,Caméra frontale ADAS — support de fixation,electrical,ELE,pce,purchased,,56.936000,1,,0.057630,0.679648,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406,Caméras 3D surround view,electrical,ELE,pce,manufactured,8,,1,,0.555411,0.40,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406-BOITIER,Caméras 3D surround view — boîtier,electrical,ELE,pce,purchased,,51.081000,1,,0.051941,0.301393,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406-CARTE,Caméras 3D surround view — carte de traitement,electrical,ELE,pce,manufactured,4,,1,,0.155823,0.20,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406-CARTE-ALIM,Caméras 3D surround view — carte de traitement — étage d'alimentation,electrical,ELE,pce,purchased,,49.617200,1,,0.048329,1.714114,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406-CARTE-PCB,Caméras 3D surround view — carte de traitement — circuit imprimé multicouche,electrical,ELE,pce,purchased,,74.425800,1,,0.072494,2.416414,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406-MODULE,Caméras 3D surround view — module optique ou d'affichage,electrical,ELE,pce,purchased,,255.405000,1,,0.259706,9.948142,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0406-SUPPORT,Caméras 3D surround view — support de fixation,electrical,ELE,pce,purchased,,51.081000,1,,0.051941,0.546362,4.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407,Caméra recul,electrical,ELE,pce,manufactured,8,,1,,0.802041,0.40,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407-BOITIER,Caméra recul — boîtier,electrical,ELE,pce,purchased,,51.081000,1,,0.076604,0.362245,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407-CARTE,Caméra recul — carte de traitement,electrical,ELE,pce,manufactured,4,,1,,0.229812,0.20,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407-CARTE-ALIM,Caméra recul — carte de traitement — étage d'alimentation,electrical,ELE,pce,purchased,,49.617200,1,,0.077925,2.369871,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407-CARTE-PCB,Caméra recul — carte de traitement — circuit imprimé multicouche,electrical,ELE,pce,purchased,,74.425800,1,,0.116887,3.363330,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407-MODULE,Caméra recul — module optique ou d'affichage,electrical,ELE,pce,purchased,,255.405000,1,,0.383021,13.270069,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0407-SUPPORT,Caméra recul — support de fixation,electrical,ELE,pce,purchased,,51.081000,1,,0.076604,0.811765,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0408,Capteurs ultrasoniques,electrical,ELE,pce,purchased,,70.260000,1,,0.108894,4.005056,12.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0410,Capteur HOD volant,electrical,ELE,pce,purchased,,234.220000,1,,0.051427,1.511162,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0411,Antenne GNSS,electrical,ELE,pce,purchased,,117.110000,1,,0.113515,3.975091,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0412,TCU télématique,electrical,ELE,pce,purchased,,1053.970000,1,,0.116939,3.813240,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0412,TCU télématique,electrical,ELE,pce,manufactured,10,,1,,0.116939,0.50,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0412-BOITIER,TCU télématique — boîtier,electrical,ELE,pce,purchased,,228.400000,1,,0.011320,0.122528,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0412-CARTE,TCU télématique — carte électronique,electrical,ELE,pce,purchased,,571.000000,1,,0.028299,1.162529,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0412-COUVERCLE,TCU télématique — couvercle,electrical,ELE,pce,purchased,,114.200000,1,,0.005660,0.023194,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0412-DISSIPATEUR,TCU télématique — dissipateur thermique,electrical,ELE,pce,purchased,,114.200000,1,,0.005660,0.066825,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0413,Antennes LTE/5G/Wi-Fi/Bluetooth,electrical,ELE,pce,purchased,,93.690000,1,,0.758926,22.758673,5.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0414,Récepteur clé / RF/UWB,electrical,ELE,pce,purchased,,351.320000,1,,0.376619,1.624584,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0415,Sirène alarme,electrical,ELE,pce,purchased,,117.110000,1,,0.941146,4.074033,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0416,Capteurs alarme,electrical,ELE,pce,purchased,,93.690000,1,,0.093035,3.452901,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0417,Compresseur climatisation électrique,interior,INT,pce,purchased,,1756.620000,1,,1.720592,7.508319,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0418,Condenseur A/C,interior,INT,pce,purchased,,585.540000,1,,2.057334,21.713103,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0417,Compresseur climatisation électrique,interior,INT,pce,manufactured,12,,1,,1.720592,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0417-CARTE,Compresseur climatisation électrique — électronique de pilotage,interior,INT,pce,purchased,,331.744000,1,,0.289118,8.678166,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0417-CORPS,Compresseur climatisation électrique — corps de pompe,interior,INT,pce,purchased,,497.616000,1,,0.433678,5.157689,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0417-MOTEUR,Compresseur climatisation électrique — moteur d'entraînement,interior,INT,pce,purchased,,497.616000,1,,0.433678,5.566344,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0417-ROUE,Compresseur climatisation électrique — roue ou rotor,interior,INT,pce,purchased,,331.744000,1,,0.289118,1.660809,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0418,Condenseur A/C,interior,INT,pce,manufactured,12,,1,,2.057334,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0418-BOITE-EAU,Condenseur A/C — boîte à eau,interior,INT,pce,purchased,,60.184756,1,,0.164815,0.711803,2.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0418-FAISCEAU,Condenseur A/C — faisceau à ailettes brasé,interior,INT,pce,purchased,,300.923776,1,,0.824074,9.102227,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0418-SUPPORT,Condenseur A/C — support,interior,INT,pce,purchased,,60.184756,1,,0.164815,1.519331,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0419,Évaporateur HVAC,interior,INT,pce,purchased,,468.430000,1,,0.445268,2.483527,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0420,Bloc HVAC,interior,INT,pce,purchased,,1756.620000,1,,1.487900,7.235955,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0420,Bloc HVAC,interior,INT,pce,manufactured,12,,1,,1.487900,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0420-CARTE,Bloc HVAC — électronique de pilotage,interior,INT,pce,purchased,,331.744000,1,,0.242580,8.450565,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0420-CORPS,Bloc HVAC — corps de pompe,interior,INT,pce,purchased,,497.616000,1,,0.363870,4.004353,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0420-MOTEUR,Bloc HVAC — moteur d'entraînement,interior,INT,pce,purchased,,497.616000,1,,0.363870,4.800173,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0420-ROUE,Bloc HVAC — roue ou rotor,interior,INT,pce,purchased,,331.744000,1,,0.242580,1.198636,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0421,Pulseur habitacle,interior,INT,pce,purchased,,292.770000,1,,0.872333,3.849780,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0422,Filtre habitacle,interior,INT,pce,purchased,,46.840000,1,,0.226437,0.971143,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0423,Détendeur/EXV,interior,INT,pce,purchased,,175.660000,1,,1.228465,5.852653,1.0
@@ -298,9 +845,17 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0429,Volets distribution air,interior
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0430,Actionneurs volets HVAC,interior,INT,pce,purchased,,58.550000,1,,0.278454,1.464557,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0431,Buses/diffuseurs air,interior,INT,pce,purchased,,93.690000,1,,0.017935,0.084373,6.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0432,Réservoir fluide hydraulique actif,chassis,CHS,pce,purchased,,351.320000,1,,0.253831,1.461559,1.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0433,Pompe hydraulique active,chassis,CHS,pce,purchased,,2342.160000,1,,1.714885,7.673424,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0433,Pompe hydraulique active,chassis,CHS,pce,manufactured,12,,1,,1.714885,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0433-CARTE,Pompe hydraulique active — électronique de pilotage,chassis,CHS,pce,purchased,,448.852000,1,,0.287977,10.930685,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0433-CORPS,Pompe hydraulique active — corps de pompe,chassis,CHS,pce,purchased,,673.278000,1,,0.431965,4.047210,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0433-MOTEUR,Pompe hydraulique active — moteur d'entraînement,chassis,CHS,pce,purchased,,673.278000,1,,0.431966,5.013225,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0433-ROUE,Pompe hydraulique active — roue ou rotor,chassis,CHS,pce,purchased,,448.852000,1,,0.287977,1.360403,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0434,Accumulateur hydraulique,chassis,CHS,pce,purchased,,702.650000,1,,0.497612,2.807726,2.0
-bom-valhalla-thermique-2026-10-05,VALT-BOM-0435,Bloc valves hydraulique,chassis,CHS,pce,purchased,,1756.620000,1,,0.572785,2.719125,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0435,Bloc valves hydraulique,chassis,CHS,pce,manufactured,12,,1,,0.572785,0.60,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0435-CARTE,Bloc valves hydraulique — électronique de pilotage,chassis,CHS,pce,purchased,,331.744000,1,,0.059557,2.318876,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0435-CORPS,Bloc valves hydraulique — corps de pompe,chassis,CHS,pce,purchased,,497.616000,1,,0.089335,1.066070,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0435-MOTEUR,Bloc valves hydraulique — moteur d'entraînement,chassis,CHS,pce,purchased,,497.616000,1,,0.089336,1.244844,1.0
+bom-valhalla-thermique-2026-10-05,VALT-BOM-0435-ROUE,Bloc valves hydraulique — roue ou rotor,chassis,CHS,pce,purchased,,331.744000,1,,0.059557,0.299453,1.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0436,Électrovannes hydrauliques,chassis,CHS,pce,purchased,,292.770000,1,,1.141878,5.316584,8.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0437,Capteur pression hydraulique,chassis,CHS,pce,purchased,,175.660000,1,,0.025705,0.890858,2.0
 bom-valhalla-thermique-2026-10-05,VALT-BOM-0438,Conduites rigides/flexibles,chassis,CHS,pce,purchased,,117.110000,1,,0.016723,0.073374,20.0
@@ -347,24 +902,24 @@ bom-valhalla-thermique-2026-10-05,VALT-BOM-0509,Tendeur courroie accessoires,ele
 bom-valhalla-thermique-2026-10-05,VALT-CAT-AERODYNAMIQUE-EXTERIEUR,Aérodynamique et extérieur,body,CAR,pce,manufactured,1004,,1,,39.7592740,50.20,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-AUXILIAIRES,Auxiliaires,electrical,ELE,pce,manufactured,200,,1,,14.7056000,10.00,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-CARBURANT-ESSENCE,Alimentation carburant,engine,GMP,pce,manufactured,276,,1,,24.7647970,13.80,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-CHASSIS-SUSPENSION,Châssis et suspension,chassis,CHS,pce,manufactured,1484,,1,,49.4093010,74.20,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-CHASSIS-SUSPENSION,Châssis et suspension,chassis,CHS,pce,manufactured,1212,,1,,49.4093010,60.60,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-CONFIGURATION-VEHICULE,Configuration véhicule,vehicle,VEH,pce,manufactured,114,,1,,1.3452160,5.70,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-CONSOMMABLES,Consommables et fluides,fluid,FLU,pce,manufactured,250,,1,,95.39368275,12.50,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-DIRECTION,Direction,chassis,CHS,pce,manufactured,336,,1,,8.9295570,16.80,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-ECHAPPEMENT,Échappement,engine,GMP,pce,manufactured,452,,1,,43.2910900,22.60,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-DIRECTION,Direction,chassis,CHS,pce,manufactured,304,,1,,8.9295570,15.20,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-ECHAPPEMENT,Échappement,engine,GMP,pce,manufactured,420,,1,,43.2910900,21.00,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-ELECTRIQUE-BASSE-TENSION,Électricité basse tension,electrical,ELE,pce,manufactured,920,,1,,94.8673160,46.00,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-ELECTRONIQUE-ADAS,Électronique et ADAS,electrical,ELE,pce,manufactured,680,,1,,16.8239490,34.00,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-FREINAGE,Freinage,chassis,CHS,pce,manufactured,588,,1,,67.6815420,29.40,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-FREINAGE,Freinage,chassis,CHS,pce,manufactured,532,,1,,67.6815420,26.60,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-GESTION-THERMIQUE,Gestion thermique,engine,GMP,pce,manufactured,496,,1,,26.0767260,24.80,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-HABITACLE-SECURITE,Habitacle et sécurité,interior,INT,pce,manufactured,1584,,1,,70.0306710,79.20,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-HABITACLE-SECURITE,Habitacle et sécurité,interior,INT,pce,manufactured,1472,,1,,70.0306710,73.60,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-HVAC,Climatisation et chauffage,interior,INT,pce,manufactured,504,,1,,27.7654312,25.20,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-HYDRAULIQUE-ACTIF,Hydraulique active,chassis,CHS,pce,manufactured,532,,1,,18.3820490,26.60,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-MOTORISATION,Motorisation,engine,GMP,pce,manufactured,640,,1,,606.5221200,32.00,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-ROUES-PNEUS,Roues et pneumatiques,chassis,CHS,pce,manufactured,248,,1,,101.2771800,12.40,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-STRUCTURE-CARROSSERIE,Structure et carrosserie,body,CAR,pce,manufactured,3016,,1,,296.8848480,150.80,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-THERMIQUE-ESSENCE,Moteur thermique V8,engine,GMP,pce,manufactured,1936,,1,,366.0469610,96.80,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-STRUCTURE-CARROSSERIE,Structure et carrosserie,body,CAR,pce,manufactured,2904,,1,,296.8848480,145.20,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-THERMIQUE-ESSENCE,Moteur thermique V8,engine,GMP,pce,manufactured,1840,,1,,366.0469610,92.00,1
 bom-valhalla-thermique-2026-10-05,VALT-CAT-TRANSMISSION,Transmission,transmission,TRN,pce,manufactured,772,,1,,146.3425460,38.60,1
-bom-valhalla-thermique-2026-10-05,VALT-CAT-VITRAGE-ECLAIRAGE,Vitrage et éclairage,glazing,CAR,pce,manufactured,488,,1,,30.2308160,24.40,1
+bom-valhalla-thermique-2026-10-05,VALT-CAT-VITRAGE-ECLAIRAGE,Vitrage et éclairage,glazing,CAR,pce,manufactured,456,,1,,30.2308160,22.80,1
 bom-valhalla-thermique-2026-10-05,VALT-FIX-BOULON-FREIN-HAUTE-RESISTANCE,Boulon frein haute resistance,fastener,FIX,pce,purchased,,4.500000,1,,0.003566,0.011181,25.0
 bom-valhalla-thermique-2026-10-05,VALT-FIX-BOULON-HAUTE-RESISTANCE,Boulon haute resistance,fastener,FIX,pce,purchased,,6.000000,1,,0.020061,0.061867,48.0
 bom-valhalla-thermique-2026-10-05,VALT-FIX-CLIP-AGRAFE-FAISCEAU,Clip agrafe faisceau,fastener,FIX,pce,purchased,,0.250000,1,,0.020037,0.057505,400.0
@@ -376,4 +931,45 @@ bom-valhalla-thermique-2026-10-05,VALT-FIX-VIS-BOULON-STANDARD,Vis boulon standa
 bom-valhalla-thermique-2026-10-05,VALT-FIX-VIS-BOULON-STRUCTUREL,Vis boulon structurel,fastener,FIX,pce,purchased,,2.000000,1,,0.007968,0.024120,110.0
 bom-valhalla-thermique-2026-10-05,VALT-FIX-VIS-CLIP-MONTAGE,Vis clip montage,fastener,FIX,pce,purchased,,0.600000,1,,0.005352,0.013723,87.0
 bom-valhalla-thermique-2026-10-05,VALT-FIX-VIS-GOUJON-MASSE,Vis goujon masse,fastener,FIX,pce,purchased,,0.800000,1,,0.008315,0.024972,12.0
+bom-valhalla-thermique-2026-10-05,VALT-MAT-ALCANTARA,Microfibre suédée,material,MAT,kg,purchased,,70.00,1,,1,12.00,1.6270
+bom-valhalla-thermique-2026-10-05,VALT-MAT-ALU-BILLET,Billette aluminium 7075,material,MAT,kg,purchased,,9.50,1,,1,11.20,10.2780
+bom-valhalla-thermique-2026-10-05,VALT-MAT-ALU-CAST,Alliage aluminium de fonderie A357,material,MAT,kg,purchased,,6.20,1,,1,9.40,7.1290
+bom-valhalla-thermique-2026-10-05,VALT-MAT-COPPER,Cuivre électrolytique,material,MAT,kg,purchased,,11.00,1,,1,4.20,10.7670
+bom-valhalla-thermique-2026-10-05,VALT-MAT-CSIC,Carbone-céramique C/SiC,material,MAT,kg,purchased,,210.00,1,,1,38.00,4.6710
+bom-valhalla-thermique-2026-10-05,VALT-MAT-HONEYCOMB,Âme nid d'abeille aramide,material,MAT,kg,purchased,,62.00,1,,1,21.00,10.8100
+bom-valhalla-thermique-2026-10-05,VALT-MAT-INCONEL,Superalliage base nickel 625,material,MAT,kg,purchased,,55.00,1,,1,14.50,6.6610
+bom-valhalla-thermique-2026-10-05,VALT-MAT-LAMINATED-GLASS,Verre feuilleté,material,MAT,kg,purchased,,7.50,1,,1,1.40,11.9970
+bom-valhalla-thermique-2026-10-05,VALT-MAT-LEATHER,Cuir pleine fleur,material,MAT,kg,purchased,,48.00,1,,1,17.00,3.2560
+bom-valhalla-thermique-2026-10-05,VALT-MAT-POLYCARBONATE,Polycarbonate optique,material,MAT,kg,purchased,,6.80,1,,1,5.50,1.2970
+bom-valhalla-thermique-2026-10-05,VALT-MAT-PREPREG,Préimprégné carbone/époxy,material,MAT,kg,purchased,,85.00,1,,1,28.00,25.9420
+bom-valhalla-thermique-2026-10-05,VALT-MAT-PU-FOAM,Mousse polyuréthane,material,MAT,kg,purchased,,6.00,1,,1,4.20,4.0720
+bom-valhalla-thermique-2026-10-05,VALT-MAT-STEEL-FORGED,Acier forgé 42CrMo4,material,MAT,kg,purchased,,3.40,1,,1,2.40,9.3450
+bom-valhalla-thermique-2026-10-05,VALT-STD-BAGUE-ETANCHEITE,Bague d'étanchéité à lèvre,fastener,FIX,pce,purchased,,3.40,1,,0.015,0.050,44.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-CAPTEUR-HALL,Capteur à effet Hall,fastener,FIX,pce,purchased,,4.80,1,,0.004,0.200,3.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-CIRCLIP,Circlip acier,fastener,FIX,pce,purchased,,0.35,1,,0.003,0.008,84.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-CONDENSATEUR,Condensateur céramique multicouche,fastener,FIX,pce,purchased,,0.08,1,,0.0005,0.020,1860.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-CONNECTEUR-LV,Connecteur étanche basse tension,fastener,FIX,pce,purchased,,6.50,1,,0.020,0.600,129.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-INSERT-M6,Insert fileté M6 à coller,fastener,FIX,pce,purchased,,1.90,1,,0.006,0.020,594.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-JOINT-TORIQUE,Joint torique FKM,fastener,FIX,pce,purchased,,0.65,1,,0.002,0.008,154.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-LED,Diode LED haute puissance,fastener,FIX,pce,purchased,,1.60,1,,0.001,0.080,168.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-MICROCONTROLEUR,Microcontrôleur automobile 32 bits,fastener,FIX,pce,purchased,,18.00,1,,0.003,1.900,31.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-RIVET,Rivet aveugle aluminium,fastener,FIX,pce,purchased,,0.18,1,,0.002,0.020,792.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-ROULEMENT-AIGUILLES,Roulement à aiguilles,fastener,FIX,pce,purchased,,12.00,1,,0.040,0.130,4.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-ROULEMENT-BILLES,Roulement à billes hybride céramique,fastener,FIX,pce,purchased,,38.00,1,,0.120,0.400,50.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-SILENTBLOC,Silentbloc caoutchouc-métal,fastener,FIX,pce,purchased,,14.00,1,,0.180,0.600,100.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-THERMISTANCE,Thermistance CTN,fastener,FIX,pce,purchased,,1.20,1,,0.001,0.050,62.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-VIS-TORX-M5,Vis Torx M5 inox,fastener,FIX,pce,purchased,,0.42,1,,0.004,0.012,172.0
+bom-valhalla-thermique-2026-10-05,VALT-STD-VIS-TORX-M6,Vis Torx M6 titane,fastener,FIX,pce,purchased,,2.80,1,,0.005,0.180,232.0
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-BANC-CULASSE,Banc de culasse,engine,GMP,pce,manufactured,32,,1,,18.7290000,1.60,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-BIELLETTE,Biellette de direction complète,chassis,CHS,pce,manufactured,16,,1,,1.3763930,0.80,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-CEINTURE,Ceinture de sécurité complète,interior,INT,pce,manufactured,24,,1,,3.1736990,1.20,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-COIN-FREIN,Coin de frein,chassis,CHS,pce,manufactured,14,,1,,1.8023740,0.70,4
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-COIN-SUSPENSION,Coin de suspension,chassis,CHS,pce,manufactured,32,,1,,3.7263240,1.60,4
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-ESSIEU-MULTIBRAS,Demi-essieu arrière multibras,chassis,CHS,pce,manufactured,40,,1,,8.6633840,2.00,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-LIGNE,Demi-ligne d'échappement,engine,GMP,pce,manufactured,16,,1,,3.7349060,0.80,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-PORTE,Porte dièdre équipée,body,CAR,pce,manufactured,56,,1,,30.8724400,2.80,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-SIEGE,Siège baquet équipé,interior,INT,pce,manufactured,32,,1,,14.3477230,1.60,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-TRAIN-AVANT,Demi-train avant à poussoir,chassis,CHS,pce,manufactured,32,,1,,5.0810300,1.60,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-TURBO,Turbocompresseur équipé,engine,GMP,pce,manufactured,16,,1,,12.7318040,0.80,2
+bom-valhalla-thermique-2026-10-05,VALT-ZONE-VITRAGE-PORTE,Vitrage de porte,glazing,CAR,pce,manufactured,16,,1,,4.1218870,0.80,2
 bom-valhalla-thermique-2026-10-05,VEH-VALHALLA-THE,Aston Martin Valhalla — thermique V8 (hypothétique) — véhicule complet,vehicle,VEH,pce,manufactured,4200,,1,,1540.00855295,210.00,1

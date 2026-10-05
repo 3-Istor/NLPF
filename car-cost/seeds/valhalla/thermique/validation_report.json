@@ -1,82 +1,154 @@
 {
-  "parts": 378,
-  "edges": 391,
-  "purchased": 356,
-  "manufactured": 22,
-  "max_depth": 3,
-  "deepest_part": "VALT-FIX-VIS-BOULON-STANDARD",
-  "shared_parts": 6,
-  "total_paths": 392,
+  "parts": 974,
+  "edges": 1461,
+  "purchased": 779,
+  "manufactured": 195,
+  "max_depth": 5,
+  "deepest_part": "VALT-STD-VIS-TORX-M6",
+  "shared_parts": 32,
+  "total_paths": 1462,
   "most_shared": [
     {
-      "part_ref": "VALT-FIX-VIS-BOULON-STANDARD",
-      "label": "Vis boulon standard",
-      "parent_count": 7,
-      "occurrence_count": 7,
-      "cumulative_quantity": "99.0",
+      "part_ref": "VALT-STD-CONNECTEUR-LV",
+      "label": "Connecteur étanche basse tension",
+      "parent_count": 46,
+      "occurrence_count": 46,
+      "cumulative_quantity": "129.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALT-FIX-VIS-CLIP-MONTAGE",
-      "label": "Vis clip montage",
-      "parent_count": 4,
-      "occurrence_count": 4,
-      "cumulative_quantity": "87.0",
+      "part_ref": "VALT-STD-JOINT-TORIQUE",
+      "label": "Joint torique FKM",
+      "parent_count": 35,
+      "occurrence_count": 35,
+      "cumulative_quantity": "154.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALT-FIX-COLLIER-AGRAFE",
-      "label": "Collier agrafe",
-      "parent_count": 3,
-      "occurrence_count": 3,
-      "cumulative_quantity": "110.0",
+      "part_ref": "VALT-STD-INSERT-M6",
+      "label": "Insert fileté M6 à coller",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "594.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALT-FIX-BOULON-HAUTE-RESISTANCE",
-      "label": "Boulon haute resistance",
-      "parent_count": 2,
-      "occurrence_count": 2,
-      "cumulative_quantity": "48.0",
+      "part_ref": "VALT-STD-RIVET",
+      "label": "Rivet aveugle aluminium",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "792.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALT-FIX-VIS-BOULON-CARROSSERIE",
-      "label": "Vis boulon carrosserie",
-      "parent_count": 2,
-      "occurrence_count": 2,
-      "cumulative_quantity": "102.0",
+      "part_ref": "VALT-STD-VIS-TORX-M5",
+      "label": "Vis Torx M5 inox",
+      "parent_count": 28,
+      "occurrence_count": 28,
+      "cumulative_quantity": "172.0",
       "unit": "pce"
     },
     {
-      "part_ref": "VALT-FIX-VIS-BOULON-HAUTE-TEMPERATURE",
-      "label": "Vis boulon haute temperature",
-      "parent_count": 2,
-      "occurrence_count": 2,
-      "cumulative_quantity": "192.0",
+      "part_ref": "VALT-STD-BAGUE-ETANCHEITE",
+      "label": "Bague d'étanchéité à lèvre",
+      "parent_count": 27,
+      "occurrence_count": 27,
+      "cumulative_quantity": "44.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-STD-SILENTBLOC",
+      "label": "Silentbloc caoutchouc-métal",
+      "parent_count": 27,
+      "occurrence_count": 27,
+      "cumulative_quantity": "100.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-STD-CONDENSATEUR",
+      "label": "Condensateur céramique multicouche",
+      "parent_count": 25,
+      "occurrence_count": 25,
+      "cumulative_quantity": "1860.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-STD-MICROCONTROLEUR",
+      "label": "Microcontrôleur automobile 32 bits",
+      "parent_count": 25,
+      "occurrence_count": 25,
+      "cumulative_quantity": "31.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-STD-THERMISTANCE",
+      "label": "Thermistance CTN",
+      "parent_count": 25,
+      "occurrence_count": 25,
+      "cumulative_quantity": "62.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-MAT-HONEYCOMB",
+      "label": "Âme nid d'abeille aramide",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "10.8100",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALT-MAT-PREPREG",
+      "label": "Préimprégné carbone/époxy",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "25.9420",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALT-STD-VIS-TORX-M6",
+      "label": "Vis Torx M6 titane",
+      "parent_count": 22,
+      "occurrence_count": 22,
+      "cumulative_quantity": "232.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-MAT-ALU-BILLET",
+      "label": "Billette aluminium 7075",
+      "parent_count": 21,
+      "occurrence_count": 21,
+      "cumulative_quantity": "10.2780",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALT-STD-CIRCLIP",
+      "label": "Circlip acier",
+      "parent_count": 18,
+      "occurrence_count": 18,
+      "cumulative_quantity": "84.0",
       "unit": "pce"
     }
   ],
   "systems": {
     "CAR": {
-      "parts": 61,
-      "cost": "294596.06",
-      "co2": "8214.78"
+      "parts": 218,
+      "cost": "289575.38",
+      "co2": "6155.92"
     },
     "CHS": {
-      "parts": 73,
-      "cost": "149447.95",
-      "co2": "1427.51"
+      "parts": 192,
+      "cost": "146844.75",
+      "co2": "1578.90"
     },
     "ELE": {
-      "parts": 51,
-      "cost": "48451.39",
-      "co2": "1150.54"
+      "parts": 139,
+      "cost": "47362.16",
+      "co2": "1136.40"
     },
     "FIX": {
-      "parts": 11,
-      "cost": "1570.40",
-      "co2": "47.25"
+      "parts": 27,
+      "cost": "9093.40",
+      "co2": "394.62"
     },
     "FLU": {
       "parts": 21,
@@ -84,19 +156,24 @@
       "co2": "90.17"
     },
     "GMP": {
-      "parts": 91,
-      "cost": "332147.57",
-      "co2": "2749.10"
+      "parts": 193,
+      "cost": "329922.31",
+      "co2": "2409.17"
     },
     "INT": {
-      "parts": 46,
-      "cost": "61227.42",
-      "co2": "1444.73"
+      "parts": 117,
+      "cost": "60380.18",
+      "co2": "1129.33"
+    },
+    "MAT": {
+      "parts": 13,
+      "cost": "4908.01",
+      "co2": "1597.53"
     },
     "TRN": {
-      "parts": 19,
-      "cost": "137793.90",
-      "co2": "775.55"
+      "parts": 49,
+      "cost": "137148.50",
+      "co2": "574.91"
     },
     "VEH": {
       "parts": 5,
@@ -106,13 +183,6 @@
   },
   "top_contributors": [
     {
-      "part_ref": "VALT-BOM-0006",
-      "label": "Monocoque carbone – cuve inférieure",
-      "system": "CAR",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "58554.00"
-    },
-    {
       "part_ref": "VALT-BOM-0224",
       "label": "Paliers principaux vilebrequin",
       "system": "GMP",
@@ -120,39 +190,18 @@
       "own_contribution": "47070.40"
     },
     {
-      "part_ref": "VALT-BOM-0309",
-      "label": "Boîte DCT 8 rapports",
-      "system": "TRN",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "47070.39"
+      "part_ref": "VALT-BOM-0006-ATTACHE",
+      "label": "Monocoque carbone – cuve inférieure — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "17683.75"
     },
     {
-      "part_ref": "VALT-BOM-0007",
-      "label": "Structure supérieure carbone / cellule sécurité",
+      "part_ref": "VALT-BOM-0006-PEAU-EXT",
+      "label": "Monocoque carbone – cuve inférieure — peau extérieure carbone",
       "system": "CAR",
       "cumulative_quantity": "1.0",
-      "own_contribution": "29277.00"
-    },
-    {
-      "part_ref": "VALT-BOM-0215",
-      "label": "Bloc-cylindres V8",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "23535.19"
-    },
-    {
-      "part_ref": "VALT-BOM-0043",
-      "label": "Panneaux d'accès sous caisse",
-      "system": "CAR",
-      "cumulative_quantity": "6.0",
-      "own_contribution": "17566.20"
-    },
-    {
-      "part_ref": "VALT-BOM-0216",
-      "label": "Culasse",
-      "system": "GMP",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "15690.12"
+      "own_contribution": "17683.75"
     },
     {
       "part_ref": "VALT-BOM-0227",
@@ -169,32 +218,18 @@
       "own_contribution": "15690.12"
     },
     {
-      "part_ref": "VALT-BOM-0044",
-      "label": "Porte dièdre",
+      "part_ref": "VALT-BOM-0309-PIGNONNERIE",
+      "label": "Boîte DCT 8 rapports — jeu de pignons",
+      "system": "TRN",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "13711.24"
+    },
+    {
+      "part_ref": "VALT-BOM-0006-PEAU-INT",
+      "label": "Monocoque carbone – cuve inférieure — peau intérieure carbone",
       "system": "CAR",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "14052.96"
-    },
-    {
-      "part_ref": "VALT-BOM-0060",
-      "label": "Éléments aile avant active",
-      "system": "CAR",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "14052.96"
-    },
-    {
-      "part_ref": "VALT-BOM-0089",
-      "label": "Coque siège carbone",
-      "system": "INT",
-      "cumulative_quantity": "2.0",
-      "own_contribution": "14052.96"
-    },
-    {
-      "part_ref": "VALT-BOM-0139",
-      "label": "Amortisseur Bilstein DTX",
-      "system": "CHS",
-      "cumulative_quantity": "4.0",
-      "own_contribution": "14000.00"
+      "cumulative_quantity": "1.0",
+      "own_contribution": "13262.81"
     },
     {
       "part_ref": "VALT-BOM-0313",
@@ -204,23 +239,65 @@
       "own_contribution": "12552.08"
     },
     {
-      "part_ref": "VALT-BOM-0259",
-      "label": "Turbocompresseur",
-      "system": "GMP",
+      "part_ref": "VALT-BOM-0318",
+      "label": "E-Diff arrière",
+      "system": "TRN",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "10983.09"
+    },
+    {
+      "part_ref": "VALT-BOM-0309-EMBRAYAGE",
+      "label": "Boîte DCT 8 rapports — embrayage multidisque",
+      "system": "TRN",
       "cumulative_quantity": "2.0",
-      "own_contribution": "10983.10"
+      "own_contribution": "10968.99"
+    },
+    {
+      "part_ref": "VALT-BOM-0314",
+      "label": "Mécanismes sélection/synchronisation",
+      "system": "TRN",
+      "cumulative_quantity": "8.0",
+      "own_contribution": "10041.68"
+    },
+    {
+      "part_ref": "VALT-BOM-0226",
+      "label": "Damper/poulie vilebrequin",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "9414.08"
+    },
+    {
+      "part_ref": "VALT-BOM-0252",
+      "label": "Capteur position vilebrequin",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "9414.08"
+    },
+    {
+      "part_ref": "VALT-BOM-0007-ATTACHE",
+      "label": "Structure supérieure carbone / cellule sécurité — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "8850.64"
+    },
+    {
+      "part_ref": "VALT-BOM-0007-PEAU-EXT",
+      "label": "Structure supérieure carbone / cellule sécurité — peau extérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "8850.64"
     }
   ],
   "control_values": [],
   "costing": {
     "labour_rate_eur_per_hour": "60.00",
-    "material_cost": "1017022.42",
-    "labour_cost": "20720.00",
+    "material_cost": "1013001.42",
+    "labour_cost": "24741.00",
     "total_cost": "1037742.42",
     "total_cost_exact": "1037742.418000000000000000000",
-    "own_co2": "16111.04",
-    "transport_co2": "10.98",
-    "total_co2": "16122.02"
+    "own_co2": "15274.22",
+    "transport_co2": "15.12",
+    "total_co2": "15289.34"
   },
   "mass": {
     "vehicle_kg": "1540.0",

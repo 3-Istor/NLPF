@@ -36,13 +36,42 @@ def _source(name: str) -> dict:
     return rows
 
 
-def _prices(variant: str, prefix: str) -> dict[str, Decimal]:
+def _parts(variant: str) -> dict[str, dict]:
     with (SEEDS / variant / "parts.csv").open(encoding="utf-8") as source:
-        return {
-            row["part_ref"].removeprefix(prefix + "-"): Decimal(row["base_price_eur"])
-            for row in csv.DictReader(source)
-            if row["valuation_mode"] == "purchased"
-        }
+        return {row["part_ref"]: row for row in csv.DictReader(source)}
+
+
+#: Le taux de l'atelier Valhalla : 60 EUR/h, une minute coûte un euro.
+LABOUR_EUR_PER_MINUTE = Decimal(1)
+
+
+def _unit_costs(variant: str, prefix: str) -> dict[str, Decimal]:
+    """Coût d'une unité de chaque pièce, enfants et main-d'œuvre compris.
+
+    Une pièce achetée vaut son prix ; une pièce décomposée en ensemble (detail.py)
+    vaut ce que coûtent ses composants plus sa main-d'œuvre. Recalculé ici à la
+    main, sans le moteur : c'est le fichier livré qui est vérifié.
+    """
+    parts = _parts(variant)
+    children: dict[str, list[tuple[str, Decimal]]] = {}
+    for edge in _edges(variant):
+        children.setdefault(edge["parent_ref"], []).append(
+            (edge["child_ref"], Decimal(edge["quantity"]))
+        )
+    costs: dict[str, Decimal] = {}
+
+    def cost(ref: str) -> Decimal:
+        if ref not in costs:
+            row = parts[ref]
+            if row["valuation_mode"] == "purchased":
+                costs[ref] = Decimal(row["base_price_eur"])
+            else:
+                costs[ref] = Decimal(row["labour_minutes"]) * LABOUR_EUR_PER_MINUTE + sum(
+                    (q * cost(child) for child, q in children.get(ref, [])), Decimal(0)
+                )
+        return costs[ref]
+
+    return {ref.removeprefix(prefix + "-"): cost(ref) for ref in parts}
 
 
 @pytest.mark.parametrize(
@@ -64,36 +93,43 @@ def _edges(variant: str) -> list[dict]:
         return list(csv.DictReader(edges))
 
 
-def test_the_hybrid_keeps_every_price_and_quantity_of_the_source_file():
-    """Regrouper « Ressort AV gauche » … « Ressort AR droit » en « Ressort » × 4
-    ne change ni un prix ni une quantité : la valeur achetée, ligne par ligne
-    dans le fichier, arête par arête dans la nomenclature, est la même."""
+def test_the_hybrid_keeps_every_price_of_the_source_file():
+    """Une ligne du fichier garde son prix, qu'elle reste achetée ou qu'elle
+    soit décomposée : ses composants et sa main-d'œuvre le redonnent au
+    millionième. Une ligne regroupée avec ses symétriques porte la référence
+    de la première ; les autres n'existent plus."""
     source = _source("aston_martin_valhalla_hybride_phev.json")
-    prices = _prices("hybride", "VALH")
-    bought = sum(
-        (Decimal(row["quantite"]) * row["prix_unitaire"]["prix_eur"] for row in source.values()),
-        Decimal(0),
-    )
-    mounted = sum(
-        (
-            Decimal(edge["quantity"]) * prices[edge["child_ref"].removeprefix("VALH-")]
-            for edge in _edges("hybride")
-            if edge["child_ref"].removeprefix("VALH-") in prices
-        ),
-        Decimal(0),
-    )
-    assert mounted == bought
+    costs = _unit_costs("hybride", "VALH")
+    kept = [ref for ref in source if ref in costs]
+    assert len(kept) > 300
+    assert all(costs[ref] == source[ref]["prix_unitaire"]["prix_eur"] for ref in kept)
+
+
+def test_the_hybrid_is_detailed_like_the_multipla():
+    """Composants, matières et zones : environ mille pièces sur cinq niveaux
+    et plus, et des matières consommées par des dizaines d'ensembles."""
+    parts = _parts("hybride")
+    edges = _edges("hybride")
+    parents: dict[str, set[str]] = {}
+    for edge in edges:
+        parents.setdefault(edge["child_ref"], set()).add(edge["parent_ref"])
+    assert len(parts) > 900
+    assert len(parents["VALH-MAT-PREPREG"]) > 10
+    assert sum(1 for owners in parents.values() if len(owners) > 1) > 30
+    assert parts["VALH-BOM-0006"]["valuation_mode"] == "manufactured"  # la monocoque
 
 
 def test_parts_that_differ_only_by_position_are_one_part():
     """Les quatre ressorts sont une pièce × 4 ; les joints homocinétiques,
     avant sous la chaîne électrique et arrière sous la transmission, une
     pièce à deux parents. Un bras inférieur reste distinct d'un supérieur."""
-    with (SEEDS / "hybride" / "parts.csv").open(encoding="utf-8") as parts:
-        refs = {row["label"]: row["part_ref"] for row in csv.DictReader(parts)}
+    parts = _parts("hybride")
+    refs = {row["label"]: ref for ref, row in parts.items()}
     edges = _edges("hybride")
     under = lambda ref: {(e["parent_ref"], Decimal(e["quantity"])) for e in edges if e["child_ref"] == ref}
-    assert under(refs["Ressort"]) == {("VALH-CAT-CHASSIS-SUSPENSION", Decimal(4))}
+    # Un ressort par coin de suspension, quatre coins.
+    assert under(refs["Ressort"]) == {("VALH-ZONE-COIN-SUSPENSION", Decimal(1))}
+    assert Decimal(parts[refs["Ressort"]]["expected_cumulative_quantity"]) == 4
     assert len(under(refs["Joints homocinétiques"])) == 2
     assert refs["Bras inférieur"] != refs["Bras supérieur"]
 
@@ -127,7 +163,7 @@ def test_only_the_powertrain_of_a_hypothetical_variant_is_recalibrated():
     """Une pièce commune — la monocoque — coûte le même prix sur les trois
     variantes ; seule la motorisation change d'échelle."""
     source = _source("aston_martin_valhalla_electrique.json")
-    prices = _prices("electrique", "VALE")
+    prices = _unit_costs("electrique", "VALE")
     factor = Decimal(_report("electrique")["calibration"]["price_factor"])
     assert prices["BOM-0006"] == source["BOM-0006"]["prix_unitaire"]["prix_eur"]
     pack = next(ref for ref, row in source.items() if row["nom"].startswith("Pack batterie HV"))

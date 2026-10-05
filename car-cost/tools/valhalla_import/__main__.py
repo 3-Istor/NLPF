@@ -42,13 +42,18 @@ from tools.bom_generator.price_drivers import (
     classify,
     daily_factors,
     fx_ratios,
+    PROFILE_WEIGHTS,
     load_indices,
     weights,
 )
-from tools.bom_generator.pricing import EUR_TO_RUB, EUR_TO_USD, _spread, reference_costing
+from tools.bom_generator.pricing import (
+    EUR_TO_RUB, EUR_TO_USD, _digest, _spread, reference_costing,
+)
 
-from . import enrich
-from .suppliers import ALL_SUPPLIERS, ASSEMBLY_SITE, SOURCE_SUPPLIERS, offers_for
+from . import detail, enrich
+from .suppliers import (
+    ALL_SUPPLIERS, ASSEMBLY_SITE, POOL_BY_PROFILE, SOURCE_SUPPLIERS, offers_for,
+)
 
 DATASET_DATE = "2026-10-05"
 GENERATOR_VERSION = "valhalla-import-1.0.0"
@@ -160,7 +165,11 @@ UNITS = {"piece": "pce", "unit": "pce", "assembly": "pce", "zone": "pce", "set":
 DISCLAIMER_NOTE = (
     "Lignes, prix et fournisseurs principaux viennent des fichiers Valhalla "
     "fournis, eux-mêmes synthétiques. Masses, facteurs carbone, temps "
-    "d'assemblage, usines, délais et fournisseurs alternatifs sont générés ici."
+    "d'assemblage, usines, délais et fournisseurs alternatifs sont générés ici, "
+    "comme le détail sous les lignes du fichier : composants des pièces "
+    "décomposées, matières, visserie standard et sous-ensembles par zone "
+    "(detail.py). Le prix d'une pièce décomposée est réparti entre ses "
+    "composants et sa main-d'œuvre : le coût de référence ne change pas."
 )
 
 
@@ -389,9 +398,30 @@ def build_variant(
 
     masses, factor = enrich.scale_masses(lines, variant.target_mass_kg)
 
+    # -- le détail : composants, matières, standards (detail.py) ---------------
+    detailer = detail.Detailer(variant.prefix, LABOUR_RATE_EUR_PER_HOUR)
+    for line in lines:
+        row = line["row"]
+        price = dec(row["prix_unitaire"]["prix_eur"]).quantize(SCALE6)
+        if (
+            line["group"] in (FASTENERS, "consommables")
+            or line["unit"] not in ("pce", "jeu")
+            or price < detail.MIN_PRICE_EUR
+        ):
+            continue
+        family = detailer.family_of(row["nom"])
+        if family is not None:
+            detailer.decompose(
+                line["ref"], row["nom"], price, masses[line["ref"]], family,
+                row["fournisseur"]["nom"], line["system"], line["category"],
+            )
+
     # -- la nomenclature -------------------------------------------------------
     b = BomBuilder()
+    by_ref = {line["ref"]: line for line in lines}
     for line in lines:
+        if line["ref"] in detailer.assemblies:
+            continue
         row = line["row"]
         b.purchased(
             line["ref"], row["nom"], system=line["system"], category=line["category"],
@@ -399,6 +429,55 @@ def build_variant(
             carbon=str(enrich.carbon_factor(line["ref"], masses[line["ref"]], line["physical"])),
             mass=str(masses[line["ref"]]),
         )
+    # Une pièce décomposée garde sa référence : elle devient un ensemble. Ses
+    # composants de second niveau aussi, sous la référence du composant.
+    for ref, assembly in detailer.assemblies.items():
+        origin = by_ref.get(ref) or next(
+            line for line in lines if ref.startswith(line["ref"] + "-")
+        )
+        b.assembly(
+            ref, assembly.label, system=origin["system"], category=origin["category"],
+            unit=origin["unit"] if ref in by_ref else "pce",
+            labour=assembly.labour_minutes,
+            children={child: str(q) for child, q in assembly.children.items()},
+        )
+    for part in detailer.parts.values():
+        b.purchased(
+            part.ref, part.label, system=part.system, category=part.category, unit=part.unit,
+            price=str(part.price), carbon=str(part.carbon), mass=str(part.mass),
+        )
+
+    # -- les zones : un sous-ensemble par emplacement (detail.ZONES) ------------
+    zones_by_group: dict[str, list[tuple[detail.Zone, list[dict], Decimal]]] = {}
+    present = {sub or category for category, sub, _ in groups}
+    for zone in detail.ZONES:
+        if zone.group not in present:
+            continue
+        members = [
+            line for line in lines
+            if zone.group in line["edges"] and zone.group not in line["after_sales"]
+            and detail.in_zone(zone, line["row"]["nom"])
+            and line["edges"][zone.group] % zone.count == 0
+        ]
+        if len(members) < 2:
+            continue
+        # Le temps de pose de ces lignes passe de la catégorie à la zone.
+        moved = Decimal(
+            enrich.LABOUR_PER_LINE_MINUTES * sum(l["sources"][zone.group] for l in members)
+        )
+        if moved % zone.count:
+            moved = Decimal(0)
+        system, part_category, _ = CATEGORIES[zone.group]
+        b.assembly(
+            f"{variant.prefix}-ZONE-{zone.key}", zone.label, system=system,
+            category=part_category, labour=str(moved / zone.count),
+            children={l["ref"]: str(l["edges"][zone.group] / zone.count) for l in members},
+        )
+        zones_by_group.setdefault(zone.group, []).append(
+            (zone, [dict(l, zoned=l["sources"][zone.group]) for l in members], moved)
+        )
+        for line in members:
+            del line["edges"][zone.group]
 
     root_children: dict[str, int] = {}
     engine_children: dict[str, int] = {}
@@ -406,12 +485,21 @@ def build_variant(
         key = sub or category
         system, part_category, label = CATEGORIES[key]
         members = [line for line in lines if key in line["edges"]]
+        zones = zones_by_group.get(key, [])
+        # Une ligne du fichier source, une opération : regrouper deux
+        # ressorts en une pièce ne divise pas par deux le temps de les poser.
+        source_lines = sum(l["sources"][key] for l in members) + sum(
+            l["zoned"] for _, zoned, _ in zones for l in zoned
+        )
         b.assembly(
             _assembly_ref(variant, key), label, system=system, category=part_category,
-            # Une ligne du fichier source, une opération : regrouper deux
-            # ressorts en une pièce ne divise pas par deux le temps de les poser.
-            labour=enrich.labour_minutes(key, sum(l["sources"][key] for l in members)),
-            children={l["ref"]: str(l["edges"][key]) for l in members},
+            labour=str(
+                enrich.labour_minutes(key, source_lines) - sum(moved for *_, moved in zones)
+            ),
+            children={
+                **{l["ref"]: str(l["edges"][key]) for l in members},
+                **{f"{variant.prefix}-ZONE-{zone.key}": zone.count for zone, _, _ in zones},
+            },
             after_sales={
                 l["ref"]: str(l["after_sales"][key]) for l in members if key in l["after_sales"]
             },
@@ -437,18 +525,59 @@ def build_variant(
     bom = b.build(variant.root)
 
     # -- sourcing et catalogue -------------------------------------------------
+    bought = [line for line in lines if line["ref"] not in detailer.assemblies]
     sourcing = {
         line["ref"]: _with_source_offers(
             offers_for(line["ref"], line["row"]["fournisseur"]["nom"], line["pool"]),
             line["extra_offers"],
         )
-        for line in lines
+        for line in bought
     }
-    catalog = {line["ref"]: _catalog_entry(line, indices) for line in lines}
+    catalog = {line["ref"]: _catalog_entry(line, indices) for line in bought}
+    for part in detailer.parts.values():
+        sourcing[part.ref] = (
+            offers_for(part.ref, part.source_name, _pool(part.profile))
+            if part.source_name is not None
+            else _house_offers(part.ref, part.supplier_id, _pool(part.profile))
+        )
+        catalog[part.ref] = _catalog_entry(_detail_line(part), indices)
 
     return {
         "bom": bom, "sourcing": sourcing, "catalog": catalog, "mass_factor": factor,
         "calibrated_part": _calibrated_part(document),
+    }
+
+
+def _pool(profile: str) -> str:
+    return profile if profile in POOL_BY_PROFILE else "default"
+
+
+def _house_offers(ref: str, supplier_id: str, pool: str) -> list[dict]:
+    """Matière ou standard : son fournisseur, et un alternatif de la même famille."""
+    # Le caoutchouc n'a qu'un alternatif : c'est lui qui fournit déjà.
+    others = [s for s in POOL_BY_PROFILE[pool] if s != supplier_id] or [
+        s for s in POOL_BY_PROFILE["default"] if s != supplier_id
+    ]
+    offers =[{"supplier_id": supplier_id, "price_multiplier": Decimal(1), "is_default": True}]
+    if others:
+        alternative = others[_digest(ref, "house-alt") % len(others)]
+        offers.append({
+            "supplier_id": alternative,
+            "price_multiplier": _spread(ref, "mult-" + alternative, "0.930000", "1.150000"),
+            "is_default": False,
+        })
+    return offers
+
+
+def _detail_line(part: detail.NewPart) -> dict:
+    """Une pièce du détail au format d'une ligne, pour `_catalog_entry`."""
+    return {
+        "ref": part.ref, "unit": part.unit,
+        "price_profile": part.profile if part.profile in PROFILE_WEIGHTS else "default",
+        "row": {
+            "fournisseur": {"devise": "EUR"},
+            "prix_unitaire": {"prix": part.price, "prix_eur": part.price},
+        },
     }
 
 
