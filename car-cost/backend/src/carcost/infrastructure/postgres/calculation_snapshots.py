@@ -139,14 +139,15 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
                 INSERT INTO calculation_snapshot_parameter
                     (snapshot_id, scope, part_ref, path, supplier_id, plant_id,
                      purchase_currency, price_override,
-                     price_override_justification, labour_minutes)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                     price_override_justification, labour_minutes, labour_rate)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     snapshot.id, parameter.scope, parameter.part_ref, parameter.path,
                     parameter.supplier_id, parameter.plant_id,
                     parameter.purchase_currency, parameter.price_override,
                     parameter.price_override_justification, parameter.labour_minutes,
+                    parameter.labour_rate,
                 ),
             )
         connection.execute(
@@ -165,7 +166,8 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
         parameters = connection.execute(
             """
             SELECT part_ref, scope, path, supplier_id, plant_id, price_override,
-                   price_override_justification, labour_minutes, purchase_currency
+                   price_override_justification, labour_minutes, purchase_currency,
+                   labour_rate
             FROM calculation_snapshot_parameter
             WHERE snapshot_id = %s
             ORDER BY part_ref, scope, coalesce(path, '')
@@ -190,10 +192,11 @@ class PostgresCalculationSnapshotRepository(PostgresRepository):
                     price_override=override,
                     price_override_justification=justification,
                     labour_minutes=minutes, purchase_currency=purchase_currency,
+                    labour_rate=rate,
                 )
                 for (
                     part_ref, scope, path, supplier_id, plant_id, override,
-                    justification, minutes, purchase_currency,
+                    justification, minutes, purchase_currency, rate,
                 ) in parameters
             ),
             created_at=created_at,

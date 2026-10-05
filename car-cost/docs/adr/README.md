@@ -33,6 +33,7 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 | [0013](0013-version-de-nomenclature-validee-immuable.md) | Une version de nomenclature validée est immuable, et se garde en mémoire | proposé |
 | [0014](0014-snapshot-de-calcul-nomme.md) | Un snapshot de calcul nommé fige un calcul, autonome et immuable | accepté |
 | [0015](0015-plusieurs-nomenclatures-et-prix-en-direct.md) | Plusieurs nomenclatures ; prix simulés lus en direct (jamais enregistrés) ou figés | proposé |
+| [0016](0016-taux-horaire-par-cible.md) | Un paramètre de scénario peut porter son propre taux horaire | proposé |
 
 ## Ce qui reste à décider
 

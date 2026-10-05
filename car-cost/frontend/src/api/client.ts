@@ -138,6 +138,13 @@ export const api = {
       body: JSON.stringify({ include_after_sales: include }),
     }),
 
+  /** Le coût d'une heure de main-d'œuvre. Le dernier calcul devient obsolète. */
+  setLabourRate: (id: string, rate: string) =>
+    call<Scenario>(`/scenarios/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ labour_rate: rate }),
+    }),
+
   /** Du plus récent au plus ancien. */
   scenarios: () =>
     call<{ items: Scenario[]; total: number }>("/scenarios"),

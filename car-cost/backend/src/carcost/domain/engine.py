@@ -218,9 +218,10 @@ def _own_unit_costs(
         elif labour_is_active and (
             minutes := inputs.labour_minutes_by_part.get(ref, part.labour_minutes)
         ) is not None:
-            costs[ref] = (
-                minutes / MINUTES_PER_HOUR * inputs.labour_rate
-            ).quantize(SCALE, rounding=ROUND_HALF_UP)
+            rate = inputs.labour_rate_by_part.get(ref, inputs.labour_rate)
+            costs[ref] = (minutes / MINUTES_PER_HOUR * rate).quantize(
+                SCALE, rounding=ROUND_HALF_UP
+            )
         else:
             costs[ref] = Decimal(0)
 
@@ -325,10 +326,20 @@ def _path_own_overrides(inputs: CalculationInput) -> dict[str, Decimal]:
     overrides = dict(inputs.unit_prices_by_path)
     if "labour" not in inputs.active_rules:
         return overrides
-    for path, minutes in inputs.labour_minutes_by_path.items():
-        overrides[path] = (
-            minutes / MINUTES_PER_HOUR * inputs.labour_rate
-        ).quantize(SCALE, rounding=ROUND_HALF_UP)
+    # Un réglage de chemin est une cible complète (ADR-0002) : ce qu'il ne
+    # précise pas vient de la nomenclature et du taux du scénario, jamais du
+    # réglage de portée pièce.
+    for path in inputs.labour_minutes_by_path.keys() | inputs.labour_rate_by_path.keys():
+        ref = path.rsplit("/", 1)[-1]
+        minutes = inputs.labour_minutes_by_path.get(
+            path, inputs.bom.parts[ref].labour_minutes
+        )
+        if minutes is None:
+            continue
+        rate = inputs.labour_rate_by_path.get(path, inputs.labour_rate)
+        overrides[path] = (minutes / MINUTES_PER_HOUR * rate).quantize(
+            SCALE, rounding=ROUND_HALF_UP
+        )
     return overrides
 
 

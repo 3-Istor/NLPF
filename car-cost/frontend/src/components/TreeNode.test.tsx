@@ -4,7 +4,7 @@
  * ne doit additionner aucun montant.
  */
 
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   Page,
@@ -21,6 +21,8 @@ const calls: string[] = [];
 // Réponses propres à un test ; vidée avant chaque test, pour que les autres
 // reçoivent exactement les réponses par défaut.
 const served = new Map<string, TreeLine[]>();
+let partDetail: Record<string, unknown> = { suppliers: [] };
+const puts: Record<string, unknown>[] = [];
 
 vi.mock("../api/client", () => ({
   ApiFailure: class extends Error {},
@@ -36,7 +38,11 @@ vi.mock("../api/client", () => ({
         offset: 0,
       };
     },
-    part: async () => ({ suppliers: [] }),
+    part: async () => partDetail,
+    putParameter: async (_scenario: string, _target: string, body: unknown) => {
+      puts.push(body as Record<string, unknown>);
+      return { scope_label: "enregistré" };
+    },
   },
 }));
 
@@ -144,6 +150,8 @@ async function expand(path: string) {
 beforeEach(() => {
   calls.length = 0;
   served.clear();
+  partDetail = { suppliers: [] };
+  puts.length = 0;
   localStorage.clear();
 });
 
@@ -414,5 +422,98 @@ describe("colonne référence", () => {
     mount({ part_ref: "CAR-BUMPER-FRONT-ASSY", label: "Pare-chocs avant" });
 
     expect(row("V")!.querySelector("code.ref")).toHaveAttribute("title", "CAR-BUMPER-FRONT-ASSY");
+  });
+});
+
+describe("valeurs retenues dans le panneau", () => {
+  const catalogue = {
+    suppliers: [
+      {
+        supplier_id: "SUP-A", name: "Alpha", price_multiplier: "1.10", is_default: false,
+        plants: [
+          { plant_id: "A-1", label: "Lyon", origin_country: "FR", price_coefficient: "1", lead_time_days: 3, is_default: true },
+        ],
+      },
+      {
+        supplier_id: "SUP-B", name: "Beta", price_multiplier: "1.00", is_default: true,
+        plants: [
+          { plant_id: "B-1", label: "Turin", origin_country: "IT", price_coefficient: "1", lead_time_days: 5, is_default: false },
+          { plant_id: "B-2", label: "Milan", origin_country: "IT", price_coefficient: "1", lead_time_days: 4, is_default: true },
+        ],
+      },
+    ],
+  };
+  const leaf = { has_children: false, child_count: 0, valuation_mode: "purchased" as const };
+
+  it("une pièce achetée s'ouvre sur le fournisseur et le site par défaut", async () => {
+    partDetail = catalogue;
+    mount(leaf, new Map(), scenarioWith());
+    act(() => screen.getByText("Véhicule complet").click());
+
+    await waitFor(() => expect(screen.getByLabelText("Fournisseur")).toHaveValue("SUP-B"));
+    expect(screen.getByLabelText("Provenance")).toHaveValue("B-2");
+    expect(screen.queryByText(/— par défaut —/)).toBeNull();
+  });
+
+  it("le réglage enregistré gagne sur le catalogue", async () => {
+    partDetail = catalogue;
+    mount(
+      leaf,
+      new Map(),
+      scenarioWith([parameter({ part_ref: "V", supplier_id: "SUP-A", plant_id: "A-1" })]),
+    );
+    act(() => screen.getByText("Véhicule complet").click());
+
+    await waitFor(() => expect(screen.getByLabelText("Fournisseur")).toHaveValue("SUP-A"));
+    expect(screen.getByLabelText("Provenance")).toHaveValue("A-1");
+  });
+
+  it("un ensemble montre son temps et le taux horaire du scénario", async () => {
+    partDetail = { labour_minutes: "12.5000" };
+    mount({}, new Map(), scenarioWith());
+    act(() => screen.getByRole("button", { name: "Régler cette pièce" }).click());
+
+    const minutes = await screen.findByLabelText("Temps de main-d'œuvre (min)");
+    await waitFor(() => expect(minutes).toHaveValue("12.5"));
+    expect(screen.getByText(/Temps de la nomenclature : 12,5 min/)).toBeInTheDocument();
+    expect(screen.getByText(/taux horaire du scénario : 42,00 €\/h/)).toBeInTheDocument();
+  });
+});
+
+describe("taux horaire d'un ensemble", () => {
+  const open = async () => {
+    act(() => screen.getByRole("button", { name: "Régler cette pièce" }).click());
+    return screen.findByLabelText("Taux horaire (EUR/h)");
+  };
+
+  it("s'ouvre sur le taux du scénario, qui n'est pas envoyé s'il reste tel quel", async () => {
+    mount({}, new Map(), scenarioWith());
+    const rate = await open();
+    expect(rate).toHaveValue("42");
+
+    act(() => screen.getByRole("button", { name: "Appliquer" }).click());
+
+    await waitFor(() => expect(puts).toHaveLength(1));
+    expect(puts[0].labour_rate).toBeNull();
+  });
+
+  it("envoie le taux saisi pour cette pièce", async () => {
+    mount({}, new Map(), scenarioWith());
+    const rate = await open();
+    fireEvent.change(rate, { target: { value: "75.5" } });
+
+    act(() => screen.getByRole("button", { name: "Appliquer" }).click());
+
+    await waitFor(() => expect(puts).toHaveLength(1));
+    expect(puts[0].labour_rate).toBe("75.5");
+  });
+
+  it("reprend le taux enregistré sur la pièce", async () => {
+    mount(
+      {},
+      new Map(),
+      scenarioWith([parameter({ part_ref: "V", labour_rate: "80.000000" })]),
+    );
+    expect(await open()).toHaveValue("80");
   });
 });

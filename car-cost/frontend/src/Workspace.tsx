@@ -20,6 +20,7 @@ import type {
   TreeLine,
 } from "./api/types";
 import { AfterSalesToggle } from "./components/AfterSalesToggle";
+import { LabourRateInput } from "./components/LabourRateInput";
 import { DecisionDialog } from "./components/DecisionDialog";
 import { PriceModeBar, type PriceMode } from "./components/PriceModeBar";
 import { ScenarioBar } from "./components/ScenarioBar";
@@ -353,14 +354,15 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
   }
 
   /**
-   * Le SAV change les quantités, donc le total : le calcul affiché devient
-   * obsolète et la synthèse le grise, comme après tout réglage.
+   * Le SAV change les quantités, le taux horaire le coût des ensembles : le
+   * calcul affiché devient obsolète et la synthèse le grise, comme après tout
+   * réglage.
    */
-  async function switchAfterSales(include: boolean) {
+  async function saveSettings(change: (id: string) => Promise<Scenario>) {
     if (!scenario) return;
     setFailure(null);
     try {
-      const fresh = await api.setAfterSales(scenario.id, include);
+      const fresh = await change(scenario.id);
       setScenario(fresh);
       setScenarios((list) =>
         list.map((item) => (item.id === fresh.id ? fresh : item)),
@@ -515,7 +517,18 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
           <AfterSalesToggle
             scenario={scenario}
             frozen={openSnapshot !== null}
-            onChange={switchAfterSales}
+            onChange={(include) =>
+              void saveSettings((id) => api.setAfterSales(id, include))
+            }
+          />
+        )}
+        {scenario && (
+          <LabourRateInput
+            scenario={scenario}
+            frozen={openSnapshot !== null}
+            onChange={(rate) =>
+              void saveSettings((id) => api.setLabourRate(id, rate))
+            }
           />
         )}
         {openSnapshot && (

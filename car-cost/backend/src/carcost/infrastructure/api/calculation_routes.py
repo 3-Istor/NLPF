@@ -87,6 +87,14 @@ class NewParameter(BaseModel):
     labour_minutes: Decimal | None = Field(
         default=None, description="Temps de main-d'œuvre, applicable uniquement à un ensemble fabriqué.",
     )
+    labour_rate: Decimal | None = Field(
+        default=None,
+        description=(
+            "Taux horaire propre à cette cible, à la place de celui du scénario ; "
+            "applicable uniquement à un ensemble fabriqué."
+        ),
+        examples=["75.00"],
+    )
     purchase_currency: str | None = Field(
         default=None, description="Devise d'achat de la pièce, distincte de la devise d'affichage.",
         examples=["EUR"],
@@ -129,11 +137,17 @@ class NewScenario(BaseModel):
 
 
 class ScenarioSettings(BaseModel):
-    include_after_sales: bool = Field(
+    include_after_sales: bool | None = Field(
+        default=None,
         description=(
             "Compter les pièces de rechange livrées avec le véhicule (SAV) en plus "
             "des pièces montées. Basculer rend le dernier calcul obsolète."
         ),
+    )
+    labour_rate: Decimal | None = Field(
+        default=None,
+        description="Coût d'une heure de main-d'œuvre. Le dernier calcul devient obsolète.",
+        examples=["42.000000"],
     )
 
 
@@ -269,17 +283,25 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
 
     @app.patch(
         "/api/v1/scenarios/{scenario_id}", tags=["Scénarios"],
-        summary="Régler le SAV d'un scénario",
+        summary="Régler le SAV ou le taux horaire d'un scénario",
         description=(
-            "Active ou désactive le comptage des pièces de rechange (SAV). Le "
-            "dernier calcul devient obsolète : l'empreinte des entrées change."
+            "Active ou désactive le comptage des pièces de rechange (SAV), ou "
+            "change le taux horaire. Le dernier calcul devient obsolète : "
+            "l'empreinte des entrées change."
         ),
     )
     def update_settings(
         scenario_id: Annotated[str, Path(description="Identifiant `scn-…`.")],
         payload: ScenarioSettings,
     ):
-        repositories.scenarios.set_after_sales(scenario_id, payload.include_after_sales)
+        if payload.labour_rate is not None:
+            manage_scenarios.set_labour_rate(
+                scenario_id, payload.labour_rate, repositories.scenarios,
+            )
+        if payload.include_after_sales is not None:
+            repositories.scenarios.set_after_sales(
+                scenario_id, payload.include_after_sales,
+            )
         return _scenario_payload(repositories, repositories.scenarios.get(scenario_id))
 
     @app.get(
@@ -415,6 +437,7 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
             price_override=payload.price_override,
             price_override_justification=payload.price_override_justification,
             labour_minutes=payload.labour_minutes,
+            labour_rate=payload.labour_rate,
             purchase_currency=payload.purchase_currency,
         )
 
@@ -894,6 +917,11 @@ def _scenario_payload(repositories, scenario: Scenario) -> dict:
                 "labour_minutes": (
                     str(parameter.labour_minutes)
                     if parameter.labour_minutes is not None
+                    else None
+                ),
+                "labour_rate": (
+                    str(parameter.labour_rate)
+                    if parameter.labour_rate is not None
                     else None
                 ),
                 "price_override": (

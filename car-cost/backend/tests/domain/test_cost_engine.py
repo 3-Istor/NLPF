@@ -124,6 +124,54 @@ class TestLabourTimeFromTheScenario:
         assert result.total_cost == Decimal("230")
 
 
+class TestLabourRateFromTheScenario:
+    def test_a_part_rate_replaces_the_scenario_rate_on_that_part_only(self, diamond):
+        """A passe de 60 à 120 €/h : ses deux unités de 30 min coûtent 60 € de
+        plus. V et B restent au taux du scénario. 395 + 60 = 455."""
+        result = compute(
+            CalculationInput(
+                bom=diamond,
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                labour_rate_by_part={"A": Decimal("120")},
+            )
+        )
+
+        assert result.total_cost == Decimal("455")
+        assert result.line("B").own_unit_cost == Decimal("15")
+
+    def test_a_part_rate_applies_to_the_scenario_time(self, diamond):
+        """90 min à 120 €/h sur deux A : 360 € au lieu de 60. 395 + 300."""
+        result = compute(
+            CalculationInput(
+                bom=diamond,
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                labour_minutes_by_part={"A": Decimal("90")},
+                labour_rate_by_part={"A": Decimal("120")},
+            )
+        )
+
+        assert result.total_cost == Decimal("695")
+
+    def test_a_path_rate_is_a_complete_target(self, diamond):
+        """Un réglage de chemin ne reprend rien du réglage de pièce (ADR-0002) :
+        sur V/A, le temps est celui de la nomenclature, 30 min, à 120 €/h — pas
+        les 90 min posées en portée pièce. A coûte 2 × 60 € au lieu de 2 × 30 €
+        sans réglage : 395 - 60 + 120 = 455."""
+        result = compute(
+            CalculationInput(
+                bom=diamond,
+                unit_prices={"S": Decimal("10")},
+                labour_rate=Decimal("60"),
+                labour_minutes_by_part={"A": Decimal("90")},
+                labour_rate_by_path={"V/A": Decimal("120")},
+            )
+        )
+
+        assert result.total_cost == Decimal("455")
+
+
 class TestPrecision:
     def test_amounts_carry_no_more_precision_than_the_data(self, diamond):
         """Une division par soixante produit vingt-huit chiffres ; la donnée

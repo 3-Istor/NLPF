@@ -102,7 +102,10 @@ class World:
                     purchase_currency="USD",
                 ),
                 ScenarioParameter(ref, "path", ref, purchase_currency="RUB"),
-                ScenarioParameter(manufactured, labour_minutes=Decimal("12.3456")),
+                ScenarioParameter(
+                manufactured, labour_minutes=Decimal("12.3456"),
+                labour_rate=Decimal("77.123456"),
+            ),
             ),
         )
         self.scenarios.create(self.scenario)

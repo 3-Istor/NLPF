@@ -193,7 +193,9 @@ def validate_parameters(bom: Bom, scenario: Scenario) -> None:
             raise ParameterNotApplicable(
                 f"{parameter.part_ref} n'existe pas dans cette nomenclature"
             )
-        if part.is_purchased and parameter.labour_minutes is not None:
+        if part.is_purchased and (
+            parameter.labour_minutes is not None or parameter.labour_rate is not None
+        ):
             raise ParameterNotApplicable(
                 f"{part.ref} est une pièce achetée : elle n'a pas de main-d'œuvre"
             )

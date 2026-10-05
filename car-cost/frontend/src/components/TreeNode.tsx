@@ -240,7 +240,7 @@ export function TreeNode({
         <NodePanel
           line={line}
           version={version}
-          scenarioId={scenario.id}
+          scenario={scenario}
           depth={depth}
           onChanged={onParameterChanged}
         />

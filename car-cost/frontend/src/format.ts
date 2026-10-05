@@ -61,3 +61,12 @@ export function age(seconds: number): string {
   if (hours < 48) return `il y a ${hours} h`;
   return `il y a ${Math.floor(hours / 24)} j`;
 }
+
+/**
+ * Une décimale de l'API, débarrassée de ses zéros de stockage, pour pré-remplir
+ * un champ : « 42.000000 » devient « 42 ». Reste une chaîne que l'API relit
+ * exactement — ni arrondi, ni virgule.
+ */
+export function editable(value: string): string {
+  return value.includes(".") ? value.replace(/\.?0+$/, "") : value;
+}

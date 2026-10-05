@@ -86,6 +86,7 @@ class ScenarioParameter:
     price_override: Decimal | None = None
     price_override_justification: str | None = None
     labour_minutes: Decimal | None = None
+    labour_rate: Decimal | None = None
     purchase_currency: str | None = None
 
     @property

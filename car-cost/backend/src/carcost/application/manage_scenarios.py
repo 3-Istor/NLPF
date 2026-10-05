@@ -74,6 +74,13 @@ def delete_scenario(
     scenarios.delete(scenario_id)
 
 
+def set_labour_rate(
+    scenario_id: str, rate: Decimal, scenarios: ScenarioRepository,
+) -> None:
+    _decimal(rate, "taux horaire", scale=6, integer_digits=12)
+    scenarios.set_labour_rate(scenario_id, rate)
+
+
 def put_parameter(
     scenario_id: str,
     parameter: ScenarioParameter,
@@ -125,6 +132,8 @@ def validate_scenario(
                 parameter.labour_minutes, "temps de main-d'œuvre",
                 scale=4, integer_digits=8,
             )
+        if parameter.labour_rate is not None:
+            _decimal(parameter.labour_rate, "taux horaire", scale=6, integer_digits=12)
         if parameter.plant_id is not None and parameter.supplier_id is None:
             raise InvalidScenario("un choix d'usine doit porter son fournisseur")
         if parameter.supplier_id is not None:

@@ -211,6 +211,12 @@ class ScenarioRepository(Protocol):
         """Bascule le SAV. Lève ScenarioNotFound si le scénario n'existe pas."""
         ...
 
+    def set_labour_rate(
+        self, scenario_id: str, rate: Decimal
+    ) -> None:  # pragma: no cover - contrat
+        """Change le taux horaire. Lève ScenarioNotFound si le scénario n'existe pas."""
+        ...
+
     def create(self, scenario) -> None:  # pragma: no cover - contrat
         """Insère le scénario et tous ses paramètres dans une seule transaction."""
         ...

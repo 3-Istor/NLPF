@@ -204,6 +204,16 @@ def run_calculation(
                 and scenario.parameter_for(parameter.part_ref, parameter.path).labour_minutes
                 is not None
             },
+            labour_rate_by_part={
+                parameter.part_ref: parameter.labour_rate
+                for parameter in scenario.parameters
+                if parameter.scope == "part" and parameter.labour_rate is not None
+            },
+            labour_rate_by_path={
+                parameter.path: parameter.labour_rate
+                for parameter in scenario.parameters
+                if parameter.scope == "path" and parameter.labour_rate is not None
+            },
             transport_co2_per_kg=resolved.transport_co2_per_kg,
             transport_co2_per_kg_by_path=resolved.path_transport_co2_per_kg,
         )
@@ -320,6 +330,13 @@ def input_digest(scenario: Scenario, snapshot: PriceSnapshot) -> str:
     # d'achat explicite ; il ne réalise aucune conversion de prix.
     if purchase_currencies:
         payload["purchase_currencies"] = purchase_currencies
+    labour_rates = sorted(
+        (p.part_ref, p.scope, p.path or "", str(p.labour_rate))
+        for p in scenario.parameters if p.labour_rate is not None
+    )
+    # Même précaution pour les taux horaires posés par pièce.
+    if labour_rates:
+        payload["labour_rates"] = labour_rates
     # Même précaution : sans SAV, l'empreinte d'un calcul ancien ne change pas.
     if scenario.include_after_sales:
         payload["include_after_sales"] = True

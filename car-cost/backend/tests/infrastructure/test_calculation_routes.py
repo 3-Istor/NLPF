@@ -355,6 +355,26 @@ class TestStaleness:
 
         assert body["total_cost"]["amount"] == "515.000000"
 
+    def test_a_labour_rate_set_on_an_assembly_changes_the_total(self, client):
+        """A passe de 60 à 120 €/h, deux A de 30 min : 60 € de plus. Le
+        calcul précédent devient obsolète : le taux entre dans l'empreinte."""
+        scenario_id = make_scenario(client)
+        client.post("/api/v1/calculations", json={"scenario_id": scenario_id})
+        client.put(
+            f"/api/v1/scenarios/{scenario_id}/parameters/A",
+            json={"scope": "part", "labour_rate": "120"},
+        )
+        assert (
+            client.get(f"/api/v1/scenarios/{scenario_id}").json()["calculation_state"]
+            != "UP_TO_DATE"
+        )
+
+        body = client.post(
+            "/api/v1/calculations", json={"scenario_id": scenario_id}
+        ).json()
+
+        assert body["total_cost"]["amount"] == "455.000000"
+
 
 class TestErrors:
     def test_an_unknown_scenario_is_a_named_404(self, client):
