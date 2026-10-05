@@ -73,36 +73,38 @@ export function NodePanel({ line, version, scenario, depth, onChanged }: Props) 
 
   useEffect(() => {
     let alive = true;
+    // Le catalogue et l'option retenue arrivent dans le même rendu : posée
+    // dans un effet à part, la sélection laissait un rendu où la liste montrait
+    // le premier fournisseur venu et aucun site.
+    // Le réglage enregistré n'est lu qu'à l'ouverture : le relire après un
+    // « Appliquer » écraserait une saisie en cours.
+    const receive = (body: PartDetail) => {
+      if (!alive) return;
+      const list = body.suppliers ?? [];
+      const supplier =
+        list.find((s) => s.supplier_id === saved?.supplier_id) ??
+        list.find((s) => s.is_default) ??
+        list[0];
+      const plant = supplier?.plants.find((p) => p.plant_id === saved?.plant_id);
+      setDetail(body);
+      setSupplierId(supplier?.supplier_id ?? "");
+      setPlantId(plant?.plant_id ?? defaultPlant(supplier));
+      if (!saved?.labour_minutes && body.labour_minutes) {
+        setLabourMinutes(editable(body.labour_minutes));
+      }
+    };
     api
       .part(version, line.part_ref)
-      .then((body) => alive && setDetail(body as PartDetail))
-      .catch(() => alive && setDetail({ suppliers: [] }));
+      .then((body) => receive(body as PartDetail))
+      .catch(() => receive({ suppliers: [] }));
     return () => {
       alive = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [version, line.part_ref]);
 
   const suppliers = detail?.suppliers ?? [];
   const standardMinutes = detail?.labour_minutes ?? null;
-
-  // Une fois le catalogue reçu, les listes se placent sur l'option retenue.
-  useEffect(() => {
-    if (!detail) return;
-    const list = detail.suppliers ?? [];
-    const supplier =
-      list.find((s) => s.supplier_id === saved?.supplier_id) ??
-      list.find((s) => s.is_default) ??
-      list[0];
-    setSupplierId(supplier?.supplier_id ?? "");
-    const plant = supplier?.plants.find((p) => p.plant_id === saved?.plant_id);
-    setPlantId(plant?.plant_id ?? defaultPlant(supplier));
-    if (!saved?.labour_minutes && detail.labour_minutes) {
-      setLabourMinutes(editable(detail.labour_minutes));
-    }
-    // Le réglage enregistré n'est lu qu'à l'ouverture : le relire après un
-    // « Appliquer » écraserait une saisie en cours.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detail]);
 
   const plants =
     suppliers.find((s) => s.supplier_id === supplierId)?.plants ?? [];
