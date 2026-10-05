@@ -1,182 +1,125 @@
 bom_version_id,part_ref,label,category,system,unit,valuation_mode,labour_minutes,base_price_eur,price_per,material_ref,mass_kg,carbon_factor_kg_co2e_per_unit,expected_cumulative_quantity
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0003,Jeu logiciels/calibrations véhicule,vehicle,VEH,jeu,purchased,,5855.400000,1,,0.000000,0.000000,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0004,Plaque VIN / plaque constructeur,vehicle,VEH,pce,purchased,,23.420000,1,,1.080552,4.953250,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0005,Étiquettes réglementaires et sécurité,vehicle,VEH,jeu,purchased,,5.860000,1,,0.015038,0.053507,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0004,Plaque VIN / plaque constructeur,vehicle,VEH,pce,purchased,,23.420000,1,,1.081746,4.958724,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0005,Étiquettes réglementaires et sécurité,vehicle,VEH,jeu,purchased,,5.860000,1,,0.015055,0.053567,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0006,Monocoque carbone – cuve inférieure,body,CAR,pce,purchased,,58554.000000,1,,74.217000,1816.164207,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0007,Structure supérieure carbone / cellule sécurité,body,CAR,pce,purchased,,29277.000000,1,,38.170400,664.035181,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0008,Inserts métalliques monocoque,body,CAR,pce,purchased,,14.050000,1,,0.016352,0.440386,60.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0009,Cloison avant,body,CAR,pce,purchased,,1171.080000,1,,0.659936,17.275805,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0010,Cloison arrière / pare-feu,body,CAR,pce,purchased,,1171.080000,1,,1.425024,40.270323,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0008,Inserts métalliques monocoque,body,CAR,pce,purchased,,14.050000,1,,0.016370,0.440870,60.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0009,Cloison avant,body,CAR,pce,purchased,,1171.080000,1,,0.660666,17.294915,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0010,Cloison arrière / pare-feu,body,CAR,pce,purchased,,1171.080000,1,,1.426599,40.314832,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0011,Sous-cadre avant aluminium,body,CAR,pce,purchased,,7026.480000,1,,13.050000,151.835445,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0012,Sous-cadre arrière aluminium,body,CAR,pce,purchased,,7026.480000,1,,17.891500,183.352092,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0013,Crash-box avant gauche,body,CAR,pce,purchased,,1756.620000,1,,1.746470,48.993723,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0014,Crash-box avant droit,body,CAR,pce,purchased,,1756.620000,1,,2.021181,57.481175,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0015,Traverse pare-chocs avant,body,CAR,pce,purchased,,1405.300000,1,,2.310938,60.982419,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0016,Crash-box arrière gauche,body,CAR,pce,purchased,,1756.620000,1,,2.549173,64.125976,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0017,Crash-box arrière droit,body,CAR,pce,purchased,,1756.620000,1,,1.881432,53.792399,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0018,Traverse pare-chocs arrière,body,CAR,pce,purchased,,1405.300000,1,,1.293482,34.417228,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0019,Renforts latéraux / anti-intrusion,body,CAR,pce,purchased,,1171.080000,1,,1.664626,48.156964,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0020,Supports groupe motopropulseur,body,CAR,pce,purchased,,585.540000,1,,1.835880,3.922982,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0021,Silentblocs groupe motopropulseur,body,CAR,pce,purchased,,257.640000,1,,0.418426,1.297665,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0022,Supports batterie HV,body,CAR,pce,purchased,,585.540000,1,,1.941921,36.665410,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0023,Protections structurelles batterie HV,body,CAR,pce,purchased,,1171.080000,1,,1.247137,28.682654,3.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0024,Panneau avant / capot,body,CAR,pce,purchased,,2927.700000,1,,0.469348,13.828400,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0025,Aile avant gauche,body,CAR,pce,purchased,,2927.700000,1,,1.715237,48.541550,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0026,Aile avant droite,body,CAR,pce,purchased,,2927.700000,1,,0.837074,20.831089,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0027,Panneau de toit / zone scoop,body,CAR,pce,purchased,,2927.700000,1,,0.482115,14.385058,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0028,Panneau latéral gauche,body,CAR,pce,purchased,,2927.700000,1,,1.262705,35.024911,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0029,Panneau latéral droit,body,CAR,pce,purchased,,2927.700000,1,,0.801509,21.757122,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0030,Quarter panel arrière gauche,body,CAR,pce,purchased,,2927.700000,1,,2.533443,73.736872,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0031,Quarter panel arrière droit,body,CAR,pce,purchased,,2927.700000,1,,2.264203,62.910428,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0032,Panneau arrière,body,CAR,pce,purchased,,2927.700000,1,,2.008642,53.584944,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0033,Cache moteur / deck lid,body,CAR,pce,purchased,,1171.080000,1,,1.850199,54.553488,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0034,Bas de caisse gauche,body,CAR,pce,purchased,,2927.700000,1,,0.550964,15.904788,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0035,Bas de caisse droit,body,CAR,pce,purchased,,2927.700000,1,,1.063454,27.024918,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0036,Doublure passage de roue AV G,body,CAR,pce,purchased,,1171.080000,1,,1.137774,30.127345,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0037,Doublure passage de roue AV D,body,CAR,pce,purchased,,1171.080000,1,,0.503545,12.391135,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0038,Doublure passage de roue AR G,body,CAR,pce,purchased,,1171.080000,1,,1.636129,41.008592,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0039,Doublure passage de roue AR D,body,CAR,pce,purchased,,1171.080000,1,,2.008186,55.935611,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0040,Fond plat avant,body,CAR,pce,purchased,,2927.700000,1,,1.878924,56.178324,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0041,Fond plat central,body,CAR,pce,purchased,,2927.700000,1,,1.939338,47.137549,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0042,Fond plat arrière,body,CAR,pce,purchased,,2927.700000,1,,2.546210,66.046650,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0043,Panneaux d'accès sous caisse,body,CAR,pce,purchased,,2927.700000,1,,2.340575,69.687812,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0044,Porte dièdre gauche,body,CAR,pce,purchased,,7026.480000,1,,13.570600,367.774116,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0045,Porte dièdre droite,body,CAR,pce,purchased,,7026.480000,1,,13.521400,373.571943,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0046,Charnière porte gauche,body,CAR,pce,purchased,,702.650000,1,,1.637725,43.690900,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0047,Charnière porte droite,body,CAR,pce,purchased,,702.650000,1,,1.737351,49.922086,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0048,Assistance ouverture porte gauche,body,CAR,pce,purchased,,1171.080000,1,,0.553015,14.323531,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0049,Assistance ouverture porte droite,body,CAR,pce,purchased,,1171.080000,1,,1.276839,33.699356,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0050,Serrure porte gauche,body,CAR,pce,purchased,,292.770000,1,,0.987766,27.409914,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0051,Serrure porte droite,body,CAR,pce,purchased,,292.770000,1,,0.927124,25.822258,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0052,Gâche porte gauche,body,CAR,pce,purchased,,93.690000,1,,1.658699,43.637385,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0053,Gâche porte droite,body,CAR,pce,purchased,,93.690000,1,,1.175618,34.728931,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0054,Poignée/commande extérieure gauche,body,CAR,pce,purchased,,1171.080000,1,,0.262262,10.543929,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0055,Poignée/commande extérieure droite,body,CAR,pce,purchased,,1171.080000,1,,0.235532,6.979049,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0056,Joint périphérique porte gauche,body,CAR,pce,purchased,,140.530000,1,,0.505341,1.561706,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0057,Joint périphérique porte droite,body,CAR,pce,purchased,,140.530000,1,,0.358924,1.350559,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0058,Splitter avant carbone,body,CAR,pce,purchased,,2927.700000,1,,2.281985,67.353244,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0059,Aile avant active,body,CAR,pce,purchased,,7026.480000,1,,2.631701,76.127741,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0060,Éléments aile avant active,body,CAR,pce,purchased,,7026.480000,1,,1.472899,37.288500,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0061,Axe/pivots aile avant,body,CAR,pce,purchased,,936.860000,1,,1.145753,31.997444,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0062,Actionneur aile avant,body,CAR,pce,purchased,,1756.620000,1,,2.285405,65.954046,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0063,Capteur position aile avant,body,CAR,pce,purchased,,210.790000,1,,0.062368,2.163933,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0064,Aileron arrière actif,body,CAR,pce,purchased,,9368.640000,1,,2.673648,69.985945,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0065,Pylônes/bras aileron arrière,body,CAR,pce,purchased,,936.860000,1,,0.269880,0.670835,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0066,Actionneur hydraulique aileron arrière,body,CAR,pce,purchased,,1756.620000,1,,2.286773,66.306355,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0067,Capteur position aileron arrière,body,CAR,pce,purchased,,210.790000,1,,0.022198,0.745853,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0068,Diffuseur arrière carbone,body,CAR,pce,purchased,,4684.320000,1,,1.596918,47.858674,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0069,Tunnels Venturi arrière,body,CAR,pce,purchased,,936.860000,1,,0.477501,2.334789,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0070,Volets/ailettes sous-plancher actifs,body,CAR,pce,purchased,,585.540000,1,,1.088433,6.430680,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0071,By-pass refroidissement actif,body,CAR,pce,purchased,,936.860000,1,,1.051534,4.293834,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0072,Calandre avant,body,CAR,pce,purchased,,936.860000,1,,0.452196,1.015135,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0073,Mesh extraction arrière,body,CAR,pce,purchased,,702.650000,1,,1.266363,5.454732,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0074,Scoop de toit,body,CAR,pce,purchased,,2927.700000,1,,0.951344,4.246039,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0013,Crash-box,body,CAR,pce,purchased,,1756.620000,1,,1.748400,49.047865,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0015,Traverse pare-chocs,body,CAR,pce,purchased,,1405.300000,1,,2.313493,61.049841,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0019,Renforts latéraux / anti-intrusion,body,CAR,pce,purchased,,1171.080000,1,,1.666467,48.210224,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0020,Supports groupe motopropulseur,body,CAR,pce,purchased,,585.540000,1,,1.837909,3.927317,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0021,Silentblocs groupe motopropulseur,body,CAR,pce,purchased,,257.640000,1,,0.418888,1.299097,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0022,Supports batterie HV,body,CAR,pce,purchased,,585.540000,1,,1.944068,36.705948,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0023,Protections structurelles batterie HV,body,CAR,pce,purchased,,1171.080000,1,,1.248516,28.714370,3.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0024,Panneau avant / capot,body,CAR,pce,purchased,,2927.700000,1,,0.469867,13.843691,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0025,Aile,body,CAR,pce,purchased,,2927.700000,1,,1.717133,48.595207,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0027,Panneau de toit / zone scoop,body,CAR,pce,purchased,,2927.700000,1,,0.482648,14.400961,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0028,Panneau latéral,body,CAR,pce,purchased,,2927.700000,1,,1.264101,35.063634,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0030,Quarter panel,body,CAR,pce,purchased,,2927.700000,1,,2.536243,73.818367,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0032,Panneau arrière,body,CAR,pce,purchased,,2927.700000,1,,2.010863,53.644194,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0033,Cache moteur / deck lid,body,CAR,pce,purchased,,1171.080000,1,,1.852244,54.613785,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0034,Bas de caisse,body,CAR,pce,purchased,,2927.700000,1,,0.551573,15.922368,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0036,Doublure passage de roue,body,CAR,pce,purchased,,1171.080000,1,,1.139032,30.160656,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0040,Fond plat,body,CAR,pce,purchased,,2927.700000,1,,1.881001,56.240425,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0041,Fond plat central,body,CAR,pce,purchased,,2927.700000,1,,1.941481,47.189637,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0043,Panneaux d'accès sous caisse,body,CAR,pce,purchased,,2927.700000,1,,2.343163,69.764867,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0044,Porte dièdre,body,CAR,pce,purchased,,7026.480000,1,,13.570600,367.774116,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0046,Charnière porte,body,CAR,pce,purchased,,702.650000,1,,1.639536,43.739214,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0048,Assistance ouverture porte,body,CAR,pce,purchased,,1171.080000,1,,0.553627,14.339382,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0050,Serrure porte,body,CAR,pce,purchased,,292.770000,1,,0.988858,27.440216,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0052,Gâche porte,body,CAR,pce,purchased,,93.690000,1,,1.660533,43.685634,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0054,Poignée/commande extérieure,body,CAR,pce,purchased,,1171.080000,1,,0.262552,10.555588,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0056,Joint périphérique porte,body,CAR,pce,purchased,,140.530000,1,,0.505900,1.563433,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0058,Splitter avant carbone,body,CAR,pce,purchased,,2927.700000,1,,2.284508,67.427711,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0059,Aile avant active,body,CAR,pce,purchased,,7026.480000,1,,2.634610,76.211890,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0060,Éléments aile avant active,body,CAR,pce,purchased,,7026.480000,1,,1.474527,37.329715,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0061,Axe/pivots aile avant,body,CAR,pce,purchased,,936.860000,1,,1.147020,32.032828,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0062,Actionneur aile avant,body,CAR,pce,purchased,,1756.620000,1,,2.287931,66.026943,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0063,Capteur position aile avant,body,CAR,pce,purchased,,210.790000,1,,0.062437,2.166327,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0064,Aileron arrière actif,body,CAR,pce,purchased,,9368.640000,1,,2.676604,70.063322,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0065,Pylônes/bras aileron arrière,body,CAR,pce,purchased,,936.860000,1,,0.270178,0.671576,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0066,Actionneur hydraulique aileron arrière,body,CAR,pce,purchased,,1756.620000,1,,2.289301,66.379656,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0067,Capteur position aileron arrière,body,CAR,pce,purchased,,210.790000,1,,0.022223,0.746693,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0068,Diffuseur arrière carbone,body,CAR,pce,purchased,,4684.320000,1,,1.598683,47.911570,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0069,Tunnels Venturi arrière,body,CAR,pce,purchased,,936.860000,1,,0.478029,2.337371,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0070,Volets/ailettes sous-plancher actifs,body,CAR,pce,purchased,,585.540000,1,,1.089637,6.437793,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0071,By-pass refroidissement actif,body,CAR,pce,purchased,,936.860000,1,,1.052696,4.298579,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0072,Calandre avant,body,CAR,pce,purchased,,936.860000,1,,0.452696,1.016257,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0073,Mesh extraction arrière,body,CAR,pce,purchased,,702.650000,1,,1.267763,5.460762,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0074,Scoop de toit,body,CAR,pce,purchased,,2927.700000,1,,0.952395,4.250729,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0075,Pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,11.844400,49.305868,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0076,Joint/adhésif pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,0.620925,2.146103,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0077,Vitre porte gauche,glazing,CAR,pce,purchased,,819.760000,1,,1.197276,31.697164,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0078,Vitre porte droite,glazing,CAR,pce,purchased,,819.760000,1,,0.643750,19.171519,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0079,Lève-vitre gauche,glazing,CAR,pce,purchased,,526.990000,1,,0.674299,3.580393,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0080,Lève-vitre droit,glazing,CAR,pce,purchased,,526.990000,1,,1.046160,5.513263,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0081,Caméra/affichage rétroviseur numérique,glazing,CAR,pce,purchased,,1405.300000,1,,0.160414,6.104298,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0082,Projecteur Matrix LED gauche,glazing,CAR,pce,purchased,,3513.240000,1,,0.583662,2.611421,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0083,Projecteur Matrix LED droit,glazing,CAR,pce,purchased,,3513.240000,1,,0.467590,1.878403,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0084,Feu arrière LED gauche,glazing,CAR,pce,purchased,,1405.300000,1,,0.644863,26.687010,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0085,Feu arrière LED droit,glazing,CAR,pce,purchased,,1405.300000,1,,0.371519,12.476277,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0086,Feu stop central,glazing,CAR,pce,purchased,,292.770000,1,,1.312577,6.914918,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0087,Éclairage plaque,glazing,CAR,pce,purchased,,292.770000,1,,1.005200,4.667546,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0088,Catadioptres/marqueurs,glazing,CAR,pce,purchased,,292.770000,1,,0.019810,0.083836,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0089,Coque siège carbone conducteur,interior,INT,pce,purchased,,7026.480000,1,,9.642800,267.200059,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0090,Coque siège carbone passager,interior,INT,pce,purchased,,7026.480000,1,,9.771200,243.625330,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0091,Coussin/foam siège conducteur,interior,INT,pce,purchased,,585.540000,1,,1.176801,6.712473,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0092,Coussin/foam siège passager,interior,INT,pce,purchased,,585.540000,1,,0.862737,4.397025,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0093,Garniture siège conducteur,interior,INT,pce,purchased,,1171.080000,1,,2.190567,59.496238,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0094,Garniture siège passager,interior,INT,pce,purchased,,1171.080000,1,,0.586756,14.870040,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0095,Rail/fixation siège conducteur,interior,INT,pce,purchased,,936.860000,1,,0.562015,1.275156,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0096,Rail/fixation siège passager,interior,INT,pce,purchased,,936.860000,1,,0.891278,2.374365,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0097,Ceinture 3 points conducteur,interior,INT,pce,purchased,,468.430000,1,,0.865125,3.784749,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0098,Ceinture 3 points passager,interior,INT,pce,purchased,,468.430000,1,,0.654476,3.622656,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0099,Prétensionneur conducteur,interior,INT,pce,purchased,,351.320000,1,,0.436900,1.860932,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0100,Prétensionneur passager,interior,INT,pce,purchased,,351.320000,1,,0.542822,3.135123,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0101,Boucle ceinture conducteur,interior,INT,pce,purchased,,468.430000,1,,1.062042,5.143682,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0102,Boucle ceinture passager,interior,INT,pce,purchased,,468.430000,1,,1.324758,7.452294,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0103,Airbag conducteur,interior,INT,pce,purchased,,1171.080000,1,,0.763861,3.538968,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0104,Airbag passager avant,interior,INT,pce,purchased,,1171.080000,1,,1.378061,40.186739,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0105,ECU airbag/SRS,interior,INT,pce,purchased,,1171.080000,1,,0.395514,14.232255,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0106,Capteurs choc avant,interior,INT,pce,purchased,,292.770000,1,,0.044234,1.549181,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0107,Capteurs choc latéraux,interior,INT,pce,purchased,,292.770000,1,,0.029109,1.136305,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0108,Capteur occupation passager,interior,INT,pce,purchased,,292.770000,1,,0.039453,1.358596,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0109,Volant,interior,INT,pce,purchased,,2927.700000,1,,1.163307,6.015926,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0110,Palette DCT gauche,interior,INT,pce,purchased,,409.880000,1,,0.556913,2.922568,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0111,Palette DCT droite,interior,INT,pce,purchased,,409.880000,1,,0.382804,2.212377,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0112,Pédale accélérateur électronique,interior,INT,pce,purchased,,351.320000,1,,0.404063,14.828950,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0113,Pédale frein/capteur,interior,INT,pce,purchased,,351.320000,1,,0.044025,1.474063,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0114,Tableau de bord structure,interior,INT,pce,purchased,,4098.780000,1,,0.577214,2.595962,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0115,Planche de bord / skin,interior,INT,pce,purchased,,292.770000,1,,0.574673,16.569547,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0116,Console centrale,interior,INT,pce,purchased,,2107.940000,1,,1.081268,4.569439,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0117,"Écran conducteur 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.363198,14.244480,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0118,"Écran central tactile 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.300049,9.602768,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0119,Head unit infotainment,interior,INT,pce,purchased,,2927.700000,1,,0.645758,3.037129,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0120,Amplificateur audio,interior,INT,pce,purchased,,1053.970000,1,,0.137160,5.582522,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0121,Haut-parleurs,interior,INT,pce,purchased,,351.320000,1,,0.519655,2.097120,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0122,Microphones habitacle,interior,INT,pce,purchased,,292.770000,1,,1.289291,5.549882,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0123,Ports USB/alimentation,interior,INT,pce,purchased,,292.770000,1,,1.355925,6.936912,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0124,Moquette/revêtement plancher,interior,INT,pce,purchased,,292.770000,1,,0.667611,2.908514,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0125,Garniture pavillon/toit,interior,INT,pce,purchased,,292.770000,1,,2.263291,66.020651,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0126,Garnitures latérales,interior,INT,pce,purchased,,292.770000,1,,2.563536,66.803697,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0127,Porte-moyeu avant gauche,chassis,CHS,pce,purchased,,2342.160000,1,,0.818836,24.335642,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0128,Porte-moyeu avant droit,chassis,CHS,pce,purchased,,2342.160000,1,,2.616882,67.311439,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0129,Bras supérieur AV gauche,chassis,CHS,pce,purchased,,1405.300000,1,,0.634511,1.707469,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0130,Bras supérieur AV droit,chassis,CHS,pce,purchased,,1405.300000,1,,1.735636,4.222490,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0131,Bras inférieur AV gauche,chassis,CHS,pce,purchased,,1405.300000,1,,2.016828,4.541856,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0132,Bras inférieur AV droit,chassis,CHS,pce,purchased,,1405.300000,1,,1.277990,3.238631,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0133,Pushrod AV gauche,chassis,CHS,pce,purchased,,819.760000,1,,0.672269,2.867362,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0134,Pushrod AV droit,chassis,CHS,pce,purchased,,819.760000,1,,0.910504,4.542140,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0135,Rocker/bellcrank AV gauche,chassis,CHS,pce,purchased,,1171.080000,1,,0.172154,0.957589,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0136,Rocker/bellcrank AV droit,chassis,CHS,pce,purchased,,1171.080000,1,,0.602888,3.553904,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0137,Ressort AV gauche,chassis,CHS,pce,purchased,,468.430000,1,,1.475743,3.562857,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0138,Ressort AV droit,chassis,CHS,pce,purchased,,468.430000,1,,1.960355,5.216269,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0139,Amortisseur Bilstein DTX AV gauche,chassis,CHS,pce,purchased,,3500.000000,1,,0.572958,1.259488,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0140,Amortisseur Bilstein DTX AV droit,chassis,CHS,pce,purchased,,3500.000000,1,,0.306421,0.750560,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0141,Barre antiroulis AV,chassis,CHS,pce,purchased,,702.650000,1,,0.708767,1.526514,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0142,Biellettes barre antiroulis AV,chassis,CHS,pce,purchased,,702.650000,1,,1.690301,3.682084,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0143,Roulement moyeu AV gauche,chassis,CHS,pce,purchased,,351.320000,1,,0.378147,2.009398,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0144,Roulement moyeu AV droit,chassis,CHS,pce,purchased,,351.320000,1,,0.412300,1.802576,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0145,Lien 1 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,0.450828,1.151559,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0146,Lien 2 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,1.853076,4.539888,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0147,Lien 3 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,2.087565,5.500776,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0148,Lien 4 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,1.674668,4.110741,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0149,Lien 5 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,1.592792,3.398477,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0150,Lien 1 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,1.906813,4.417666,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0151,Lien 2 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,1.543159,3.494237,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0152,Lien 3 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,1.647311,4.252731,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0153,Lien 4 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,0.339250,0.910581,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0154,Lien 5 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,1.551757,3.293418,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0155,Porte-moyeu arrière gauche,chassis,CHS,pce,purchased,,2342.160000,1,,1.960995,52.511524,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0156,Porte-moyeu arrière droit,chassis,CHS,pce,purchased,,2342.160000,1,,2.021637,55.059688,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0157,Ressort AR gauche,chassis,CHS,pce,purchased,,468.430000,1,,0.599338,1.314672,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0158,Ressort AR droit,chassis,CHS,pce,purchased,,468.430000,1,,1.408913,3.033192,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0159,Amortisseur Bilstein DTX AR gauche,chassis,CHS,pce,purchased,,3500.000000,1,,0.934072,2.013000,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0160,Amortisseur Bilstein DTX AR droit,chassis,CHS,pce,purchased,,3500.000000,1,,1.448386,3.048128,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0161,Roulement moyeu AR gauche,chassis,CHS,pce,purchased,,351.320000,1,,1.102525,5.794651,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0162,Roulement moyeu AR droit,chassis,CHS,pce,purchased,,351.320000,1,,0.285480,1.604740,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0163,Barre antiroulis AR,chassis,CHS,pce,purchased,,702.650000,1,,1.544722,3.751450,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0164,Biellettes barre antiroulis AR,chassis,CHS,pce,purchased,,702.650000,1,,1.034316,2.290410,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0165,Système lift essieu avant,chassis,CHS,pce,purchased,,5269.860000,1,,0.482636,2.642239,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0166,Actionneurs lift avant,chassis,CHS,pce,purchased,,1053.970000,1,,0.980004,4.271641,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0167,Pompe/valves lift,chassis,CHS,pce,purchased,,1639.510000,1,,1.205103,5.588304,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0168,Capteurs hauteur caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.031480,1.055260,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0169,Capteurs accélération caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.024660,1.019701,3.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0170,Crémaillère EPAS,chassis,CHS,pce,purchased,,4098.780000,1,,1.248288,2.972673,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0171,Moteur EPAS,chassis,CHS,pce,purchased,,1171.080000,1,,1.282962,6.259058,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0172,ECU EPAS,chassis,CHS,pce,purchased,,819.760000,1,,0.592998,23.949529,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0173,Colonne de direction,chassis,CHS,pce,purchased,,1405.300000,1,,1.828064,4.732200,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0174,Arbre intermédiaire,chassis,CHS,pce,purchased,,585.540000,1,,0.385953,1.038507,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0175,Joints cardan colonne,chassis,CHS,pce,purchased,,1405.300000,1,,1.416534,3.649048,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0176,Biellette direction gauche,chassis,CHS,pce,purchased,,257.640000,1,,1.874571,4.170995,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0177,Biellette direction droite,chassis,CHS,pce,purchased,,257.640000,1,,2.096554,4.679760,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0178,Rotule direction gauche,chassis,CHS,pce,purchased,,210.790000,1,,1.234479,7.060232,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0179,Rotule direction droite,chassis,CHS,pce,purchased,,210.790000,1,,0.472247,1.905233,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0180,Capteur angle volant,chassis,CHS,pce,purchased,,210.790000,1,,0.028986,0.953558,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0076,Joint/adhésif pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,0.621612,2.148478,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0077,Vitre porte,glazing,CAR,pce,purchased,,819.760000,1,,1.198599,31.732189,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0079,Lève-vitre,glazing,CAR,pce,purchased,,526.990000,1,,0.675044,3.584349,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0081,Caméra/affichage rétroviseur numérique,glazing,CAR,pce,purchased,,1405.300000,1,,0.160591,6.111034,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0082,Projecteur Matrix LED,glazing,CAR,pce,purchased,,3513.240000,1,,0.584307,2.614306,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0084,Feu arrière LED,glazing,CAR,pce,purchased,,1405.300000,1,,0.645576,26.716517,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0086,Feu stop central,glazing,CAR,pce,purchased,,292.770000,1,,1.314028,6.922562,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0087,Éclairage plaque,glazing,CAR,pce,purchased,,292.770000,1,,1.006312,4.672709,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0088,Catadioptres/marqueurs,glazing,CAR,pce,purchased,,292.770000,1,,0.019832,0.083929,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0089,Coque siège carbone,interior,INT,pce,purchased,,7026.480000,1,,9.642800,267.200059,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0091,Coussin/foam siège,interior,INT,pce,purchased,,585.540000,1,,1.178102,6.719894,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0093,Garniture siège,interior,INT,pce,purchased,,1171.080000,1,,2.192989,59.562020,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0095,Rail/fixation siège,interior,INT,pce,purchased,,936.860000,1,,0.562636,1.276565,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0097,Ceinture 3 points,interior,INT,pce,purchased,,468.430000,1,,0.866082,3.788936,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0099,Prétensionneur,interior,INT,pce,purchased,,351.320000,1,,0.437383,1.862989,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0101,Boucle ceinture,interior,INT,pce,purchased,,468.430000,1,,1.063216,5.149368,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0103,Airbag,interior,INT,pce,purchased,,1171.080000,1,,0.764705,3.542878,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0105,ECU airbag/SRS,interior,INT,pce,purchased,,1171.080000,1,,0.395951,14.247980,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0106,Capteurs choc avant,interior,INT,pce,purchased,,292.770000,1,,0.044283,1.550897,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0107,Capteurs choc latéraux,interior,INT,pce,purchased,,292.770000,1,,0.029141,1.137554,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0108,Capteur occupation passager,interior,INT,pce,purchased,,292.770000,1,,0.039496,1.360076,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0109,Volant,interior,INT,pce,purchased,,2927.700000,1,,1.164593,6.022576,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0110,Palette DCT,interior,INT,pce,purchased,,409.880000,1,,0.557528,2.925795,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0112,Pédale accélérateur électronique,interior,INT,pce,purchased,,351.320000,1,,0.404510,14.845355,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0113,Pédale frein/capteur,interior,INT,pce,purchased,,351.320000,1,,0.044074,1.475703,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0114,Tableau de bord structure,interior,INT,pce,purchased,,4098.780000,1,,0.577852,2.598832,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0115,Planche de bord / skin,interior,INT,pce,purchased,,292.770000,1,,0.575308,16.587856,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0116,Console centrale,interior,INT,pce,purchased,,2107.940000,1,,1.082464,4.574493,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0117,"Écran conducteur 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.363600,14.260247,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0118,"Écran central tactile 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.300381,9.613394,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0119,Head unit infotainment,interior,INT,pce,purchased,,2927.700000,1,,0.646472,3.040487,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0120,Amplificateur audio,interior,INT,pce,purchased,,1053.970000,1,,0.137312,5.588708,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0121,Haut-parleurs,interior,INT,pce,purchased,,351.320000,1,,0.520229,2.099436,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0122,Microphones habitacle,interior,INT,pce,purchased,,292.770000,1,,1.290716,5.556016,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0123,Ports USB/alimentation,interior,INT,pce,purchased,,292.770000,1,,1.357424,6.944581,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0124,Moquette/revêtement plancher,interior,INT,pce,purchased,,292.770000,1,,0.668349,2.911729,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0125,Garniture pavillon/toit,interior,INT,pce,purchased,,292.770000,1,,2.265793,66.093635,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0126,Garnitures latérales,interior,INT,pce,purchased,,292.770000,1,,2.566370,66.877549,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0127,Porte-moyeu,chassis,CHS,pce,purchased,,2342.160000,1,,0.819741,24.362539,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0129,Bras supérieur,chassis,CHS,pce,purchased,,1405.300000,1,,0.635213,1.709358,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0131,Bras inférieur,chassis,CHS,pce,purchased,,1405.300000,1,,2.019057,4.546876,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0133,Pushrod,chassis,CHS,pce,purchased,,819.760000,1,,0.673012,2.870531,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0135,Rocker/bellcrank,chassis,CHS,pce,purchased,,1171.080000,1,,0.172345,0.958652,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0137,Ressort,chassis,CHS,pce,purchased,,468.430000,1,,1.477374,3.566795,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0139,Amortisseur Bilstein DTX,chassis,CHS,pce,purchased,,3500.000000,1,,0.573591,1.260879,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0141,Barre antiroulis,chassis,CHS,pce,purchased,,702.650000,1,,0.709550,1.528200,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0142,Biellettes barre antiroulis,chassis,CHS,pce,purchased,,702.650000,1,,1.692169,3.686153,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0143,Roulement moyeu,chassis,CHS,pce,purchased,,351.320000,1,,0.378565,2.011619,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0145,Lien 1,chassis,CHS,pce,purchased,,1053.970000,1,,0.451326,1.152831,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0146,Lien 2,chassis,CHS,pce,purchased,,1053.970000,1,,1.855124,4.544905,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0147,Lien 3,chassis,CHS,pce,purchased,,1053.970000,1,,2.089873,5.506857,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0148,Lien 4,chassis,CHS,pce,purchased,,1053.970000,1,,1.676519,4.115284,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0149,Lien 5,chassis,CHS,pce,purchased,,1053.970000,1,,1.594553,3.402234,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0165,Système lift essieu avant,chassis,CHS,pce,purchased,,5269.860000,1,,0.483170,2.645162,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0166,Actionneurs lift avant,chassis,CHS,pce,purchased,,1053.970000,1,,0.981087,4.276362,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0167,Pompe/valves lift,chassis,CHS,pce,purchased,,1639.510000,1,,1.206435,5.594480,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0168,Capteurs hauteur caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.031515,1.056433,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0169,Capteurs accélération caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.024688,1.020859,3.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0170,Crémaillère EPAS,chassis,CHS,pce,purchased,,4098.780000,1,,1.249668,2.975959,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0171,Moteur EPAS,chassis,CHS,pce,purchased,,1171.080000,1,,1.284380,6.265976,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0172,ECU EPAS,chassis,CHS,pce,purchased,,819.760000,1,,0.593654,23.976023,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0173,Colonne de direction,chassis,CHS,pce,purchased,,1405.300000,1,,1.830084,4.737429,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0174,Arbre intermédiaire,chassis,CHS,pce,purchased,,585.540000,1,,0.386379,1.039653,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0175,Joints cardan colonne,chassis,CHS,pce,purchased,,1405.300000,1,,1.418100,3.653082,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0176,Biellette direction,chassis,CHS,pce,purchased,,257.640000,1,,1.876643,4.175606,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0178,Rotule direction,chassis,CHS,pce,purchased,,210.790000,1,,1.235844,7.068039,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0180,Capteur angle volant,chassis,CHS,pce,purchased,,210.790000,1,,0.029018,0.954611,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0181,Disque CCB avant gauche 410 mm,chassis,CHS,pce,purchased,,4500.000000,1,,5.016600,12.886542,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0182,Disque CCB avant droit 410 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.689600,15.420465,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0183,Disque CCB arrière gauche 390 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.463400,16.609645,1.0
@@ -185,21 +128,17 @@ bom-valhalla-hybride-2026-10-05,VALH-BOM-0185,Étrier avant gauche 6 pistons,cha
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0186,Étrier avant droit 6 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.438700,12.431237,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0187,Étrier arrière gauche 4 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.865600,13.446771,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0188,Étrier arrière droit 4 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,4.920450,10.986282,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0189,Jeu plaquettes AV gauche,chassis,CHS,pce,purchased,,600.000000,1,,0.213234,1.043610,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0190,Jeu plaquettes AV droit,chassis,CHS,pce,purchased,,600.000000,1,,0.579124,3.305524,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0191,Jeu plaquettes AR gauche,chassis,CHS,pce,purchased,,600.000000,1,,0.394985,1.902248,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0192,Jeu plaquettes AR droit,chassis,CHS,pce,purchased,,600.000000,1,,0.700809,3.302212,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0193,Integrated Power Braking module,chassis,CHS,pce,purchased,,2927.700000,1,,0.118922,3.539927,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0194,Bloc ABS/ESC hydraulique,chassis,CHS,pce,purchased,,2107.940000,1,,0.541866,3.208389,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0195,Réservoir liquide frein,chassis,CHS,pce,purchased,,234.220000,1,,0.607306,2.625870,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0196,Canalisations rigides frein,chassis,CHS,pce,purchased,,58.550000,1,,0.571840,2.851537,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0197,Flexibles frein,chassis,CHS,pce,purchased,,117.110000,1,,0.290615,1.233079,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0198,Capteurs vitesse roue,chassis,CHS,pce,purchased,,117.110000,1,,0.018746,0.697996,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0199,Capteurs usure plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,0.026569,0.966405,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0200,Conduit refroidissement frein AV gauche,chassis,CHS,pce,purchased,,585.540000,1,,1.248929,6.327824,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0201,Conduit refroidissement frein AV droit,chassis,CHS,pce,purchased,,585.540000,1,,1.253586,6.114491,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0202,Conduits refroidissement frein AR,chassis,CHS,pce,purchased,,585.540000,1,,0.416241,2.019102,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0203,Frein de stationnement électrique,chassis,CHS,pce,purchased,,1171.080000,1,,0.945731,3.807891,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0189,Jeu plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,0.213469,1.044760,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0193,Integrated Power Braking module,chassis,CHS,pce,purchased,,2927.700000,1,,0.119054,3.543857,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0194,Bloc ABS/ESC hydraulique,chassis,CHS,pce,purchased,,2107.940000,1,,0.542465,3.211935,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0195,Réservoir liquide frein,chassis,CHS,pce,purchased,,234.220000,1,,0.607978,2.628775,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0196,Canalisations rigides frein,chassis,CHS,pce,purchased,,58.550000,1,,0.572472,2.854689,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0197,Flexibles frein,chassis,CHS,pce,purchased,,117.110000,1,,0.290936,1.234441,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0198,Capteurs vitesse roue,chassis,CHS,pce,purchased,,117.110000,1,,0.018767,0.698778,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0199,Capteurs usure plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,0.026598,0.967460,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0200,Conduit refroidissement frein,chassis,CHS,pce,purchased,,585.540000,1,,1.250309,6.334816,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0202,Conduits refroidissement frein AR,chassis,CHS,pce,purchased,,585.540000,1,,0.416701,2.021333,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0203,Frein de stationnement électrique,chassis,CHS,pce,purchased,,1171.080000,1,,0.946777,3.812103,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0204,"Jante avant gauche 20""",chassis,CHS,pce,purchased,,2927.700000,1,,11.694600,133.956965,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0205,"Jante avant droite 20""",chassis,CHS,pce,purchased,,2927.700000,1,,11.393400,108.228185,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0206,"Jante arrière gauche 21""",chassis,CHS,pce,purchased,,2927.700000,1,,11.886800,118.413924,1.0
@@ -208,238 +147,219 @@ bom-valhalla-hybride-2026-10-05,VALH-BOM-0208,Pneu AV gauche 285/30 ZR20,chassis
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0209,Pneu AV droit 285/30 ZR20,chassis,CHS,pce,purchased,,311.900000,1,,11.610200,44.072319,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0210,Pneu AR gauche 335/30 ZR21,chassis,CHS,pce,purchased,,447.500000,1,,12.142400,44.726530,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0211,Pneu AR droit 335/30 ZR21,chassis,CHS,pce,purchased,,447.500000,1,,12.878800,47.978682,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0212,Capteur TPMS,chassis,CHS,pce,purchased,,80.000000,1,,0.032601,1.019583,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0213,Valve pneu,chassis,CHS,pce,purchased,,10.000000,1,,0.367872,1.355020,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0214,Fixation roue / centre-lock ou boulons,chassis,CHS,pce,purchased,,175.660000,1,,1.621908,4.028236,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0212,Capteur TPMS,chassis,CHS,pce,purchased,,80.000000,1,,0.032637,1.020709,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0213,Valve pneu,chassis,CHS,pce,purchased,,10.000000,1,,0.368278,1.356515,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0214,Fixation roue / centre-lock ou boulons,chassis,CHS,pce,purchased,,175.660000,1,,1.623701,4.032689,4.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0215,Bloc-cylindres V8,engine,GMP,pce,purchased,,17566.200000,1,,56.997600,615.061102,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0216,Culasse gauche,engine,GMP,pce,purchased,,5855.400000,1,,14.456800,155.639017,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0217,Culasse droite,engine,GMP,pce,purchased,,5855.400000,1,,14.739100,174.720239,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0216,Culasse,engine,GMP,pce,purchased,,5855.400000,1,,14.456800,155.639017,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0218,Vilebrequin plat,engine,GMP,pce,purchased,,7026.480000,1,,18.202400,43.927124,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0219,Piston,engine,GMP,pce,purchased,,585.540000,1,,0.328503,0.713469,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0220,Bielle,engine,GMP,pce,purchased,,526.990000,1,,2.119221,4.753752,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0221,Axe de piston,engine,GMP,pce,purchased,,585.540000,1,,2.018782,4.552071,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0222,Jeu segments piston,engine,GMP,pce,purchased,,585.540000,1,,0.815068,2.116422,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0223,Coussinets de bielle,engine,GMP,jeu,purchased,,526.990000,1,,1.464018,3.083749,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0224,Paliers principaux vilebrequin,engine,GMP,pce,purchased,,7026.480000,1,,0.317951,0.670349,5.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0225,Volant / masse inertie côté DCT,engine,GMP,pce,purchased,,2342.160000,1,,0.967704,3.888235,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0226,Damper/poulie vilebrequin,engine,GMP,pce,purchased,,7026.480000,1,,0.528991,1.139288,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0227,Joint culasse gauche,engine,GMP,pce,purchased,,5855.400000,1,,2.287685,22.401698,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0228,Joint culasse droit,engine,GMP,pce,purchased,,5855.400000,1,,1.361874,12.932219,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0229,Carter sec / lower crankcase,engine,GMP,pce,purchased,,2927.700000,1,,2.299540,23.636052,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0230,Réservoir huile carter sec,engine,GMP,pce,purchased,,2927.700000,1,,2.387766,23.801490,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0231,Pompe(s) huile pression/scavenge,engine,GMP,pce,purchased,,1756.620000,1,,0.469978,2.460147,3.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0232,Refroidisseur huile moteur,engine,GMP,pce,purchased,,819.760000,1,,1.069153,10.362338,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0233,Filtre huile moteur,engine,GMP,pce,purchased,,46.840000,1,,0.108720,4.226055,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0234,Gicleurs refroidissement pistons,engine,GMP,pce,purchased,,585.540000,1,,0.008429,0.018500,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0235,Arbres à cames,engine,GMP,pce,purchased,,1405.300000,1,,1.532020,4.122758,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0236,Soupapes admission,engine,GMP,pce,purchased,,117.110000,1,,1.435489,3.035026,16.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0237,Soupapes échappement,engine,GMP,pce,purchased,,117.110000,1,,1.500951,3.773301,16.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0238,Ressorts soupapes,engine,GMP,pce,purchased,,117.110000,1,,0.011713,0.024691,32.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0239,Poussoirs/linguets,engine,GMP,pce,purchased,,117.110000,1,,0.008371,0.036585,32.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0240,Chaînes/courroies distribution,engine,GMP,pce,purchased,,351.320000,1,,0.803626,4.332669,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0241,Pignons distribution,engine,GMP,pce,purchased,,292.770000,1,,1.170125,2.727491,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0242,Guides distribution,engine,GMP,pce,purchased,,93.690000,1,,0.435586,2.175491,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0243,Tendeurs distribution,engine,GMP,pce,purchased,,175.660000,1,,0.200695,0.963175,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0244,Couvercle culasse gauche,engine,GMP,pce,purchased,,5855.400000,1,,1.119080,10.759618,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0245,Couvercle culasse droit,engine,GMP,pce,purchased,,5855.400000,1,,0.495566,4.640728,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0246,Bougie allumage,engine,GMP,pce,purchased,,35.130000,1,,0.429854,2.017649,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0247,Bobine allumage,engine,GMP,pce,purchased,,117.110000,1,,1.332997,6.752430,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0248,Injecteur essence HP,engine,GMP,pce,purchased,,409.880000,1,,0.243088,0.994959,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0249,Rail carburant HP gauche,engine,GMP,pce,purchased,,585.540000,1,,1.056191,4.303345,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0250,Rail carburant HP droit,engine,GMP,pce,purchased,,585.540000,1,,1.010097,5.513109,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0251,Pompe(s) carburant HP,engine,GMP,pce,purchased,,1171.080000,1,,1.150291,5.499081,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0252,Capteur position vilebrequin,engine,GMP,pce,purchased,,7026.480000,1,,0.054779,2.262449,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0253,Capteurs position arbres à cames,engine,GMP,pce,purchased,,1405.300000,1,,0.067781,2.351933,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0254,Capteurs cliquetis,engine,GMP,pce,purchased,,140.530000,1,,0.081231,3.187212,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0255,Capteur pression huile,engine,GMP,pce,purchased,,117.110000,1,,0.068074,2.809550,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0256,Capteur température huile,engine,GMP,pce,purchased,,93.690000,1,,0.044950,1.491252,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0257,Capteur température LDR,engine,GMP,pce,purchased,,93.690000,1,,0.029709,1.157148,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0258,ECU moteur,engine,GMP,pce,purchased,,2927.700000,1,,0.327406,12.590463,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0259,Turbocompresseur gauche,engine,GMP,pce,purchased,,4098.780000,1,,9.382500,24.473688,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0260,Turbocompresseur droit,engine,GMP,pce,purchased,,4098.780000,1,,11.579700,29.702625,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0261,Wastegate turbo gauche,engine,GMP,pce,purchased,,585.540000,1,,1.272519,3.374949,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0262,Wastegate turbo droite,engine,GMP,pce,purchased,,585.540000,1,,1.465386,3.468129,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0263,Soupape décharge/bypass,engine,GMP,pce,purchased,,292.770000,1,,1.408718,3.104110,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0264,Collecteur admission monobloc,engine,GMP,pce,purchased,,1756.620000,1,,1.541205,3.366454,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0265,Boîtier(s) papillon,engine,GMP,pce,purchased,,702.650000,1,,0.164512,0.947326,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0266,Filtre(s) air,engine,GMP,pce,purchased,,117.110000,1,,0.165228,0.681400,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0267,Boîte(s) à air,engine,GMP,pce,purchased,,702.650000,1,,0.624861,2.617918,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0268,Conduits air frais,engine,GMP,pce,purchased,,175.660000,1,,1.443501,3.498873,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0269,Air Charge Air Cooler (ACAC),engine,GMP,pce,purchased,,1405.300000,1,,0.228638,1.056673,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0270,Ducts air suralimenté,engine,GMP,pce,purchased,,234.220000,1,,0.636661,1.543954,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0271,Capteurs pression/température admission,engine,GMP,pce,purchased,,175.660000,1,,0.049881,1.795417,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0219,Piston,engine,GMP,pce,purchased,,585.540000,1,,0.328866,0.714257,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0220,Bielle,engine,GMP,pce,purchased,,526.990000,1,,2.121564,4.759008,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0221,Axe de piston,engine,GMP,pce,purchased,,585.540000,1,,2.021013,4.557101,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0222,Jeu segments piston,engine,GMP,pce,purchased,,585.540000,1,,0.815969,2.118761,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0223,Coussinets de bielle,engine,GMP,jeu,purchased,,526.990000,1,,1.465637,3.087159,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0224,Paliers principaux vilebrequin,engine,GMP,pce,purchased,,7026.480000,1,,0.318302,0.671089,5.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0225,Volant / masse inertie côté DCT,engine,GMP,pce,purchased,,2342.160000,1,,0.968774,3.892534,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0226,Damper/poulie vilebrequin,engine,GMP,pce,purchased,,7026.480000,1,,0.529576,1.140548,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0227,Joint culasse,engine,GMP,pce,purchased,,5855.400000,1,,2.290214,22.426463,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0229,Carter sec / lower crankcase,engine,GMP,pce,purchased,,2927.700000,1,,2.302081,23.662170,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0230,Réservoir huile carter sec,engine,GMP,pce,purchased,,2927.700000,1,,2.390406,23.827806,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0231,Pompe(s) huile pression/scavenge,engine,GMP,pce,purchased,,1756.620000,1,,0.470497,2.462864,3.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0232,Refroidisseur huile moteur,engine,GMP,pce,purchased,,819.760000,1,,1.070335,10.373794,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0233,Filtre huile moteur,engine,GMP,pce,purchased,,46.840000,1,,0.108840,4.230720,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0234,Gicleurs refroidissement pistons,engine,GMP,pce,purchased,,585.540000,1,,0.008438,0.018520,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0235,Arbres à cames,engine,GMP,pce,purchased,,1405.300000,1,,1.533714,4.127316,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0236,Soupapes admission,engine,GMP,pce,purchased,,117.110000,1,,1.437076,3.038381,16.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0237,Soupapes échappement,engine,GMP,pce,purchased,,117.110000,1,,1.502610,3.777471,16.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0238,Ressorts soupapes,engine,GMP,pce,purchased,,117.110000,1,,0.011725,0.024717,32.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0239,Poussoirs/linguets,engine,GMP,pce,purchased,,117.110000,1,,0.008380,0.036624,32.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0240,Chaînes/courroies distribution,engine,GMP,pce,purchased,,351.320000,1,,0.804515,4.337462,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0241,Pignons distribution,engine,GMP,pce,purchased,,292.770000,1,,1.171418,2.730505,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0242,Guides distribution,engine,GMP,pce,purchased,,93.690000,1,,0.436068,2.177898,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0243,Tendeurs distribution,engine,GMP,pce,purchased,,175.660000,1,,0.200917,0.964241,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0244,Couvercle culasse,engine,GMP,pce,purchased,,5855.400000,1,,1.120317,10.771512,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0246,Bougie allumage,engine,GMP,pce,purchased,,35.130000,1,,0.430329,2.019878,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0247,Bobine allumage,engine,GMP,pce,purchased,,117.110000,1,,1.334471,6.759896,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0248,Injecteur essence HP,engine,GMP,pce,purchased,,409.880000,1,,0.243356,0.996056,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0249,Rail carburant HP,engine,GMP,pce,purchased,,585.540000,1,,1.057359,4.308104,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0251,Pompe(s) carburant HP,engine,GMP,pce,purchased,,1171.080000,1,,1.151562,5.505157,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0252,Capteur position vilebrequin,engine,GMP,pce,purchased,,7026.480000,1,,0.054840,2.264969,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0253,Capteurs position arbres à cames,engine,GMP,pce,purchased,,1405.300000,1,,0.067855,2.354501,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0254,Capteurs cliquetis,engine,GMP,pce,purchased,,140.530000,1,,0.081321,3.190743,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0255,Capteur pression huile,engine,GMP,pce,purchased,,117.110000,1,,0.068149,2.812646,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0256,Capteur température huile,engine,GMP,pce,purchased,,93.690000,1,,0.045000,1.492911,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0257,Capteur température LDR,engine,GMP,pce,purchased,,93.690000,1,,0.029741,1.158394,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0258,ECU moteur,engine,GMP,pce,purchased,,2927.700000,1,,0.327768,12.604384,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0259,Turbocompresseur,engine,GMP,pce,purchased,,4098.780000,1,,9.382500,24.473688,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0261,Wastegate turbo,engine,GMP,pce,purchased,,585.540000,1,,1.273925,3.378678,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0263,Soupape décharge/bypass,engine,GMP,pce,purchased,,292.770000,1,,1.410275,3.107541,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0264,Collecteur admission monobloc,engine,GMP,pce,purchased,,1756.620000,1,,1.542908,3.370174,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0265,Boîtier(s) papillon,engine,GMP,pce,purchased,,702.650000,1,,0.164694,0.948374,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0266,Filtre(s) air,engine,GMP,pce,purchased,,117.110000,1,,0.165411,0.682155,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0267,Boîte(s) à air,engine,GMP,pce,purchased,,702.650000,1,,0.625551,2.620808,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0268,Conduits air frais,engine,GMP,pce,purchased,,175.660000,1,,1.445096,3.502739,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0269,Air Charge Air Cooler (ACAC),engine,GMP,pce,purchased,,1405.300000,1,,0.228891,1.057843,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0270,Ducts air suralimenté,engine,GMP,pce,purchased,,234.220000,1,,0.637365,1.545661,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0271,Capteurs pression/température admission,engine,GMP,pce,purchased,,175.660000,1,,0.049936,1.797396,4.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0272,Réservoir essence,engine,GMP,pce,purchased,,2927.700000,1,,8.867900,49.954654,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0273,Module pompe basse pression,engine,GMP,pce,purchased,,585.540000,1,,0.388504,12.659947,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0274,Filtre carburant,engine,GMP,pce,purchased,,58.550000,1,,0.780460,3.154463,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0275,Goulotte remplissage,engine,GMP,pce,purchased,,234.220000,1,,0.901667,4.517352,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0276,Bouchon/clapet remplissage,engine,GMP,pce,purchased,,58.550000,1,,0.019893,0.095112,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0277,Trappe carburant,engine,GMP,pce,purchased,,234.220000,1,,1.810987,47.195046,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0278,Canalisations carburant BP,engine,GMP,pce,purchased,,70.260000,1,,0.859394,3.490687,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0279,Canalisations carburant HP,engine,GMP,pce,purchased,,70.260000,1,,1.327265,5.676447,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0280,Canister EVAP charbon actif,engine,GMP,pce,purchased,,175.660000,1,,0.705825,3.144027,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0281,Vanne purge EVAP,engine,GMP,pce,purchased,,93.690000,1,,0.564914,3.209954,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0282,Vanne ventilation réservoir,engine,GMP,pce,purchased,,93.690000,1,,1.055475,4.685254,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0283,Capteur pression réservoir,engine,GMP,pce,purchased,,117.110000,1,,0.034613,1.147829,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0284,Collecteur échappement gauche,engine,GMP,pce,purchased,,1405.300000,1,,1.941400,4.799024,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0285,Collecteur échappement droit,engine,GMP,pce,purchased,,1405.300000,1,,0.342572,0.767128,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0286,Downpipe gauche,engine,GMP,pce,purchased,,702.650000,1,,0.721663,1.599147,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0287,Downpipe droit,engine,GMP,pce,purchased,,702.650000,1,,0.819954,1.790386,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0273,Module pompe basse pression,engine,GMP,pce,purchased,,585.540000,1,,0.388933,12.673926,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0274,Filtre carburant,engine,GMP,pce,purchased,,58.550000,1,,0.781322,3.157947,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0275,Goulotte remplissage,engine,GMP,pce,purchased,,234.220000,1,,0.902663,4.522342,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0276,Bouchon/clapet remplissage,engine,GMP,pce,purchased,,58.550000,1,,0.019915,0.095218,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0277,Trappe carburant,engine,GMP,pce,purchased,,234.220000,1,,1.812989,47.247219,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0278,Canalisations carburant BP,engine,GMP,pce,purchased,,70.260000,1,,0.860343,3.494541,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0279,Canalisations carburant HP,engine,GMP,pce,purchased,,70.260000,1,,1.328733,5.682725,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0280,Canister EVAP charbon actif,engine,GMP,pce,purchased,,175.660000,1,,0.706605,3.147501,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0281,Vanne purge EVAP,engine,GMP,pce,purchased,,93.690000,1,,0.565538,3.213500,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0282,Vanne ventilation réservoir,engine,GMP,pce,purchased,,93.690000,1,,1.056641,4.690429,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0283,Capteur pression réservoir,engine,GMP,pce,purchased,,117.110000,1,,0.034652,1.149123,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0284,Collecteur échappement,engine,GMP,pce,purchased,,1405.300000,1,,1.943546,4.804329,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0286,Downpipe,engine,GMP,pce,purchased,,702.650000,1,,0.722461,1.600916,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0288,Catalyseur(s) trois voies,engine,GMP,pce,purchased,,2927.700000,1,,5.699000,13.676916,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0289,Filtre(s) particules essence GPF/OPF,engine,GMP,pce,purchased,,2107.940000,1,,1.293829,7.240267,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0290,Sonde lambda amont,engine,GMP,pce,purchased,,234.220000,1,,0.962330,5.369224,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0291,Sonde lambda aval,engine,GMP,pce,purchased,,234.220000,1,,0.962450,5.668446,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0292,Capteur température échappement,engine,GMP,pce,purchased,,140.530000,1,,0.042156,1.317114,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0289,Filtre(s) particules essence GPF/OPF,engine,GMP,pce,purchased,,2107.940000,1,,1.295259,7.248269,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0290,Sonde lambda amont,engine,GMP,pce,purchased,,234.220000,1,,0.963394,5.375160,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0291,Sonde lambda aval,engine,GMP,pce,purchased,,234.220000,1,,0.963513,5.674706,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0292,Capteur température échappement,engine,GMP,pce,purchased,,140.530000,1,,0.042203,1.318582,4.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0293,Silencieux/résonateur,engine,GMP,pce,purchased,,2927.700000,1,,6.482400,15.150536,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0294,Valve(s) échappement active(s),engine,GMP,pce,purchased,,468.430000,1,,1.054997,5.850591,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0295,Actionneur(s) valve échappement,engine,GMP,pce,purchased,,292.770000,1,,1.154948,5.338170,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0296,Sorties/embouts échappement,engine,GMP,pce,purchased,,351.320000,1,,1.386724,40.020855,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0297,Écrans thermiques,engine,GMP,pce,purchased,,175.660000,1,,0.190306,0.937485,12.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0298,Radiateur moteur,engine,GMP,pce,purchased,,936.860000,1,,0.442903,4.845270,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0299,Pompe eau moteur,engine,GMP,pce,purchased,,585.540000,1,,0.615546,2.803566,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0300,Thermostat/vanne régulation,engine,GMP,pce,purchased,,175.660000,1,,0.248581,1.380519,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0301,Vase expansion,engine,GMP,pce,purchased,,175.660000,1,,0.995886,4.879642,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0302,Durites LDR moteur,engine,GMP,pce,purchased,,93.690000,1,,0.252003,0.840405,12.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0303,Ventilateurs radiateur,engine,GMP,pce,purchased,,936.860000,1,,1.617663,16.089600,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0304,Échangeur huile/eau moteur,engine,GMP,pce,purchased,,702.650000,1,,2.225903,21.827427,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0305,Refroidisseur huile DCT,engine,GMP,pce,purchased,,1171.080000,1,,1.495468,15.225061,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0306,Pompe circuit DCT,engine,GMP,pce,purchased,,585.540000,1,,0.687315,3.273544,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0307,Refroidisseur e-diff,engine,GMP,pce,purchased,,819.760000,1,,2.217012,22.409336,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0308,Conduits refroidissement transmission depuis scoop,engine,GMP,pce,purchased,,292.770000,1,,1.059057,5.070977,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0294,Valve(s) échappement active(s),engine,GMP,pce,purchased,,468.430000,1,,1.056163,5.857058,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0295,Actionneur(s) valve échappement,engine,GMP,pce,purchased,,292.770000,1,,1.156225,5.344072,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0296,Sorties/embouts échappement,engine,GMP,pce,purchased,,351.320000,1,,1.388257,40.065097,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0297,Écrans thermiques,engine,GMP,pce,purchased,,175.660000,1,,0.190516,0.938520,12.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0298,Radiateur moteur,engine,GMP,pce,purchased,,936.860000,1,,0.443393,4.850631,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0299,Pompe eau moteur,engine,GMP,pce,purchased,,585.540000,1,,0.616226,2.806663,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0300,Thermostat/vanne régulation,engine,GMP,pce,purchased,,175.660000,1,,0.248855,1.382041,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0301,Vase expansion,engine,GMP,pce,purchased,,175.660000,1,,0.996987,4.885037,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0302,Durites LDR moteur,engine,GMP,pce,purchased,,93.690000,1,,0.252282,0.841335,12.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0303,Ventilateurs radiateur,engine,GMP,pce,purchased,,936.860000,1,,1.619452,16.107393,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0304,Échangeur huile/eau moteur,engine,GMP,pce,purchased,,702.650000,1,,2.228364,21.851560,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0305,Refroidisseur huile DCT,engine,GMP,pce,purchased,,1171.080000,1,,1.497121,15.241889,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0306,Pompe circuit DCT,engine,GMP,pce,purchased,,585.540000,1,,0.688075,3.277164,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0307,Refroidisseur e-diff,engine,GMP,pce,purchased,,819.760000,1,,2.219463,22.434110,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0308,Conduits refroidissement transmission depuis scoop,engine,GMP,pce,purchased,,292.770000,1,,1.060228,5.076584,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0309,Boîte DCT 8 rapports,transmission,TRN,pce,purchased,,35132.400000,1,,106.704000,526.136083,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0310,Carter DCT,transmission,TRN,pce,purchased,,5855.400000,1,,0.787831,7.544270,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0311,Embrayage DCT A,transmission,TRN,pce,purchased,,4684.320000,1,,1.610574,3.815514,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0312,Embrayage DCT B,transmission,TRN,pce,purchased,,4684.320000,1,,2.057277,5.497003,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0313,Pignons rapports avant,transmission,TRN,pce,purchased,,1171.080000,1,,1.904077,4.192435,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0314,Mécanismes sélection/synchronisation,transmission,TRN,pce,purchased,,936.860000,1,,1.124736,5.679242,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0315,Pompe hydraulique DCT,transmission,TRN,pce,purchased,,1405.300000,1,,1.029920,5.354142,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0316,Mechatronic DCT,transmission,TRN,pce,purchased,,5855.400000,1,,0.214615,7.939682,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0317,TCU,transmission,TRN,pce,purchased,,1756.620000,1,,0.493715,15.285910,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0318,E-Diff arrière,transmission,TRN,pce,purchased,,8197.560000,1,,0.616537,19.155928,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0319,Actionneur hydraulique E-Diff,transmission,TRN,pce,purchased,,8197.560000,1,,0.319156,1.706144,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0320,Demi-arbre arrière gauche,transmission,TRN,pce,purchased,,1756.620000,1,,1.646530,3.742530,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0321,Demi-arbre arrière droit,transmission,TRN,pce,purchased,,1756.620000,1,,1.542377,3.763061,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0322,Joints homocinétiques AR,transmission,TRN,pce,purchased,,468.430000,1,,1.075352,2.542971,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0323,Support DCT,transmission,TRN,pce,purchased,,585.540000,1,,1.225425,3.173581,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0310,Carter DCT,transmission,TRN,pce,purchased,,5855.400000,1,,0.788702,7.552610,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0311,Embrayage DCT A,transmission,TRN,pce,purchased,,4684.320000,1,,1.612355,3.819733,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0312,Embrayage DCT B,transmission,TRN,pce,purchased,,4684.320000,1,,2.059551,5.503079,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0313,Pignons rapports avant,transmission,TRN,pce,purchased,,1171.080000,1,,1.906182,4.197070,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0314,Mécanismes sélection/synchronisation,transmission,TRN,pce,purchased,,936.860000,1,,1.125979,5.685518,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0315,Pompe hydraulique DCT,transmission,TRN,pce,purchased,,1405.300000,1,,1.031058,5.360058,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0316,Mechatronic DCT,transmission,TRN,pce,purchased,,5855.400000,1,,0.214852,7.948450,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0317,TCU,transmission,TRN,pce,purchased,,1756.620000,1,,0.494260,15.302784,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0318,E-Diff arrière,transmission,TRN,pce,purchased,,8197.560000,1,,0.617218,19.177087,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0319,Actionneur hydraulique E-Diff,transmission,TRN,pce,purchased,,8197.560000,1,,0.319508,1.708026,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0320,Demi-arbre,transmission,TRN,pce,purchased,,1756.620000,1,,1.648350,3.746667,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0322,Joints homocinétiques,transmission,TRN,pce,purchased,,468.430000,1,,1.076541,2.545783,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0323,Support DCT,transmission,TRN,pce,purchased,,585.540000,1,,1.226780,3.177090,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0324,Huile DCT,transmission,TRN,L,purchased,,40.990000,1,,0.870000,0.779450,8.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0327,Pack batterie HV 400 V,engine,GMP,pce,purchased,,17566.200000,1,,17.776800,355.440005,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0328,Modules batterie HV,engine,GMP,pce,purchased,,2342.160000,1,,1.240537,26.393169,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0328,Modules batterie HV,engine,GMP,pce,purchased,,2342.160000,1,,1.241908,26.422338,6.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0329,Cellules batterie,engine,GMP,pce,purchased,,46.840000,1,,0.355368,7.721649,96.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0330,Boîtier batterie HV,engine,GMP,pce,purchased,,4684.320000,1,,18.495000,424.552725,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0331,BMS master,engine,GMP,pce,purchased,,2342.160000,1,,0.359152,13.174198,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0332,BMS cell monitoring units,engine,GMP,pce,purchased,,409.880000,1,,0.361147,14.652456,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0333,Contacteur HV positif,engine,GMP,pce,purchased,,292.770000,1,,0.201677,6.493435,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0334,Contacteur HV négatif,engine,GMP,pce,purchased,,292.770000,1,,0.610951,25.598358,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0335,Circuit précharge HV,engine,GMP,pce,purchased,,234.220000,1,,0.588895,22.064836,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0336,Fusible principal HV,engine,GMP,pce,purchased,,175.660000,1,,0.297302,1.562025,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0337,Service disconnect HV,engine,GMP,pce,purchased,,292.770000,1,,1.029322,6.163168,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0338,HV junction box / PDU,engine,GMP,pce,purchased,,2342.160000,1,,0.393234,12.653877,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0339,Capteur courant HV,engine,GMP,pce,purchased,,234.220000,1,,0.020472,0.718727,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0340,Isolation monitoring device,engine,GMP,pce,purchased,,585.540000,1,,1.295023,7.669385,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0341,Capteurs température cellules,engine,GMP,pce,purchased,,35.130000,1,,0.034327,0.705591,12.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0342,Plaque froide/échangeur batterie,engine,GMP,pce,purchased,,1756.620000,1,,2.039419,22.873104,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0343,Pompe refroidissement batterie,engine,GMP,pce,purchased,,351.320000,1,,0.841362,4.207988,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0344,Vannes circuit batterie,engine,GMP,pce,purchased,,175.660000,1,,0.344352,1.822104,3.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0345,Durites circuit batterie,engine,GMP,pce,purchased,,93.690000,1,,0.363768,1.435429,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0346,Évent/surpression pack,engine,GMP,pce,purchased,,117.110000,1,,1.344461,7.358504,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0331,BMS master,engine,GMP,pce,purchased,,2342.160000,1,,0.359549,13.188761,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0332,BMS cell monitoring units,engine,GMP,pce,purchased,,409.880000,1,,0.361546,14.668644,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0333,Contacteur HV positif,engine,GMP,pce,purchased,,292.770000,1,,0.201900,6.500615,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0334,Contacteur HV négatif,engine,GMP,pce,purchased,,292.770000,1,,0.611627,25.626682,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0335,Circuit précharge HV,engine,GMP,pce,purchased,,234.220000,1,,0.589546,22.089227,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0336,Fusible principal HV,engine,GMP,pce,purchased,,175.660000,1,,0.297631,1.563753,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0337,Service disconnect HV,engine,GMP,pce,purchased,,292.770000,1,,1.030460,6.169982,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0338,HV junction box / PDU,engine,GMP,pce,purchased,,2342.160000,1,,0.393669,12.667875,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0339,Capteur courant HV,engine,GMP,pce,purchased,,234.220000,1,,0.020495,0.719534,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0340,Isolation monitoring device,engine,GMP,pce,purchased,,585.540000,1,,1.296455,7.677866,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0341,Capteurs température cellules,engine,GMP,pce,purchased,,35.130000,1,,0.034365,0.706373,12.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0342,Plaque froide/échangeur batterie,engine,GMP,pce,purchased,,1756.620000,1,,2.041673,22.898384,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0343,Pompe refroidissement batterie,engine,GMP,pce,purchased,,351.320000,1,,0.842292,4.212639,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0344,Vannes circuit batterie,engine,GMP,pce,purchased,,175.660000,1,,0.344733,1.824120,3.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0345,Durites circuit batterie,engine,GMP,pce,purchased,,93.690000,1,,0.364170,1.437015,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0346,Évent/surpression pack,engine,GMP,pce,purchased,,117.110000,1,,1.345947,7.366637,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0347,EDU avant – ensemble,engine,GMP,pce,purchased,,21079.440000,1,,39.257600,546.607119,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0348,Moteur électrique avant gauche,engine,GMP,pce,purchased,,8197.560000,1,,34.447500,376.883208,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0349,Moteur électrique avant droit,engine,GMP,pce,purchased,,8197.560000,1,,31.928400,362.016971,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0350,Réducteur avant gauche,engine,GMP,pce,purchased,,2927.700000,1,,1.137882,2.433452,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0351,Réducteur avant droit,engine,GMP,pce,purchased,,2927.700000,1,,0.287858,0.758149,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0352,Arbre sortie EDU gauche,engine,GMP,pce,purchased,,819.760000,1,,1.805027,22.326018,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0353,Arbre sortie EDU droit,engine,GMP,pce,purchased,,819.760000,1,,1.366662,18.426977,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0354,Joints homocinétiques avant,engine,GMP,pce,purchased,,468.430000,1,,1.419856,3.068422,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0355,Inverter moteur AV gauche,engine,GMP,pce,purchased,,5269.860000,1,,9.929000,125.399298,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0356,Inverter moteur AV droit,engine,GMP,pce,purchased,,5269.860000,1,,8.361200,116.086901,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0357,Capteurs position rotor AV,engine,GMP,pce,purchased,,292.770000,1,,0.070751,2.455880,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0358,Capteurs température moteurs AV,engine,GMP,pce,purchased,,58.550000,1,,0.026595,0.936559,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0359,Refroidissement EDU avant,engine,GMP,pce,purchased,,21079.440000,1,,1.927157,24.752405,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0348,Moteur électrique,engine,GMP,pce,purchased,,8197.560000,1,,34.447500,376.883208,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0350,Réducteur,engine,GMP,pce,purchased,,2927.700000,1,,1.139140,2.436142,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0352,Arbre sortie EDU,engine,GMP,pce,purchased,,819.760000,1,,1.807022,22.350694,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0355,Inverter moteur,engine,GMP,pce,purchased,,5269.860000,1,,9.929000,125.399298,3.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0357,Capteurs position rotor AV,engine,GMP,pce,purchased,,292.770000,1,,0.070829,2.458588,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0358,Capteurs température moteurs AV,engine,GMP,pce,purchased,,58.550000,1,,0.026624,0.937580,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0359,Refroidissement EDU avant,engine,GMP,pce,purchased,,21079.440000,1,,1.929287,24.779762,1.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0360,Moteur électrique arrière intégré DCT,engine,GMP,pce,purchased,,11710.800000,1,,33.093900,420.438143,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0361,Inverter moteur arrière,engine,GMP,pce,purchased,,5269.860000,1,,10.878800,109.632195,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0362,Capteur position rotor AR,engine,GMP,pce,purchased,,292.770000,1,,0.023651,0.723484,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0363,Capteurs température e-motor AR,engine,GMP,pce,purchased,,58.550000,1,,0.078000,2.769421,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0364,Interface mécanique e-motor/DCT,engine,GMP,pce,purchased,,1171.080000,1,,1.400120,3.109779,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0365,Prise de charge PHEV,engine,GMP,pce,purchased,,585.540000,1,,1.456647,10.585454,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0366,Trappe prise de charge,engine,GMP,pce,purchased,,585.540000,1,,1.330186,38.480951,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0367,On-board charger (OBC),engine,GMP,pce,purchased,,2927.700000,1,,0.297712,10.349065,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0368,DC/DC HV -> 12 V,engine,GMP,pce,purchased,,1756.620000,1,,0.519297,2.400087,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0369,Câble HV batterie -> PDU,engine,GMP,pce,purchased,,351.320000,1,,0.360929,2.663584,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0370,Câbles HV PDU -> inverters AV,engine,GMP,pce,purchased,,351.320000,1,,0.570363,3.366625,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0371,Câbles HV PDU -> inverter AR,engine,GMP,pce,purchased,,351.320000,1,,0.425425,2.363661,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0372,Câbles HV OBC -> batterie,engine,GMP,pce,purchased,,351.320000,1,,0.800684,5.651228,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0373,Boucle HVIL,engine,GMP,pce,purchased,,175.660000,1,,0.175020,0.890677,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0374,Connecteurs HV blindés,engine,GMP,pce,purchased,,93.690000,1,,0.008661,0.057416,14.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0362,Capteur position rotor AR,engine,GMP,pce,purchased,,292.770000,1,,0.023677,0.724279,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0363,Capteurs température e-motor AR,engine,GMP,pce,purchased,,58.550000,1,,0.078087,2.772510,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0364,Interface mécanique e-motor/DCT,engine,GMP,pce,purchased,,1171.080000,1,,1.401668,3.113217,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0365,Prise de charge PHEV,engine,GMP,pce,purchased,,585.540000,1,,1.458257,10.597154,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0366,Trappe prise de charge,engine,GMP,pce,purchased,,585.540000,1,,1.331656,38.523476,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0367,On-board charger (OBC),engine,GMP,pce,purchased,,2927.700000,1,,0.298041,10.360501,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0368,DC/DC HV -> 12 V,engine,GMP,pce,purchased,,1756.620000,1,,0.519871,2.402740,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0369,Câble HV batterie -> PDU,engine,GMP,pce,purchased,,351.320000,1,,0.361328,2.666528,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0370,Câbles HV PDU -> inverters AV,engine,GMP,pce,purchased,,351.320000,1,,0.570994,3.370349,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0371,Câbles HV PDU -> inverter AR,engine,GMP,pce,purchased,,351.320000,1,,0.425895,2.366273,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0372,Câbles HV OBC -> batterie,engine,GMP,pce,purchased,,351.320000,1,,0.801569,5.657474,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0373,Boucle HVIL,engine,GMP,pce,purchased,,175.660000,1,,0.175214,0.891664,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0374,Connecteurs HV blindés,engine,GMP,pce,purchased,,93.690000,1,,0.008671,0.057482,14.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0380,Batterie 12 V auxiliaire,electrical,ELE,pce,purchased,,292.770000,1,,6.139800,25.402809,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0381,Boîte fusibles principale,electrical,ELE,pce,purchased,,702.650000,1,,0.554047,3.292036,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0382,Boîte relais/PDC,electrical,ELE,pce,purchased,,702.650000,1,,0.179558,0.752348,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0381,Boîte fusibles principale,electrical,ELE,pce,purchased,,702.650000,1,,0.554659,3.295673,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0382,Boîte relais/PDC,electrical,ELE,pce,purchased,,702.650000,1,,0.179757,0.753182,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0383,Faisceau principal habitacle,electrical,ELE,pce,purchased,,4684.320000,1,,15.639200,110.487820,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0384,Faisceau avant,electrical,ELE,pce,purchased,,2927.700000,1,,0.677762,4.608782,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0385,Faisceau arrière,electrical,ELE,pce,purchased,,2927.700000,1,,1.304793,8.892686,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0386,Faisceau porte gauche,electrical,ELE,pce,purchased,,819.760000,1,,0.814515,6.090292,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0387,Faisceau porte droite,electrical,ELE,pce,purchased,,819.760000,1,,0.458872,2.921363,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0388,Faisceau moteur,electrical,ELE,pce,purchased,,2342.160000,1,,0.984292,5.881735,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0389,Faisceau DCT,electrical,ELE,pce,purchased,,1171.080000,1,,1.194573,7.858857,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0390,Faisceau contrôle HV,electrical,ELE,pce,purchased,,1405.300000,1,,0.645302,4.056497,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0391,Tresses de masse châssis,electrical,ELE,pce,purchased,,35.130000,1,,2.116095,5.650228,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0392,Points de masse/studs,electrical,ELE,pce,purchased,,9.370000,1,,0.221951,1.114860,12.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0393,Connecteurs LV,electrical,ELE,pce,purchased,,7.030000,1,,0.007487,0.048504,250.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0394,Clips/agrafes faisceaux,electrical,ELE,pce,purchased,,0.350000,1,,0.018812,0.039757,400.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0395,Gaines/protections thermiques faisceaux,electrical,ELE,pce,purchased,,23.420000,1,,0.008545,0.047115,60.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0396,VCU / Vehicle Control Unit,electrical,ELE,pce,purchased,,2107.940000,1,,0.470746,18.243008,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0397,BCM / Body Control Module,electrical,ELE,pce,purchased,,1171.080000,1,,0.350033,13.345428,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0398,Gateway réseau véhicule,electrical,ELE,pce,purchased,,936.860000,1,,0.664626,2.677911,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0399,ECU ESC/stabilité,electrical,ELE,pce,purchased,,1405.300000,1,,0.194553,8.170954,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0400,ECU suspension/amortissement,electrical,ELE,pce,purchased,,1171.080000,1,,0.508476,20.494634,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0401,ECU aéro actif,electrical,ELE,pce,purchased,,1053.970000,1,,0.453648,17.045007,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0402,ECU HVAC,electrical,ELE,pce,purchased,,702.650000,1,,0.194382,6.485244,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0403,ECU ADAS/domain controller,electrical,ELE,pce,purchased,,3513.240000,1,,0.502036,19.804216,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0404,Radar avant ACC/AEB,electrical,ELE,pce,purchased,,1171.080000,1,,0.187714,6.491939,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0405,Caméra frontale ADAS,electrical,ELE,pce,purchased,,585.540000,1,,0.260837,8.494626,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0406,Caméras 3D surround view,electrical,ELE,pce,purchased,,526.990000,1,,0.348836,12.288376,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0407,Caméra recul,electrical,ELE,pce,purchased,,526.990000,1,,0.572024,21.128393,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0408,Capteurs ultrasoniques avant,electrical,ELE,pce,purchased,,70.260000,1,,0.042671,1.719479,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0409,Capteurs ultrasoniques arrière,electrical,ELE,pce,purchased,,70.260000,1,,0.055235,1.987665,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0410,Capteur HOD volant,electrical,ELE,pce,purchased,,234.220000,1,,0.046885,1.930443,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0411,Antenne GNSS,electrical,ELE,pce,purchased,,117.110000,1,,0.265226,10.128026,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0412,TCU télématique,electrical,ELE,pce,purchased,,1053.970000,1,,0.550652,15.535435,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0413,Antennes LTE/5G/Wi-Fi/Bluetooth,electrical,ELE,pce,purchased,,93.690000,1,,0.469036,16.979666,5.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0414,Récepteur clé / RF/UWB,electrical,ELE,pce,purchased,,351.320000,1,,0.291929,1.252609,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0415,Sirène alarme,electrical,ELE,pce,purchased,,117.110000,1,,1.210596,6.111573,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0416,Capteurs alarme,electrical,ELE,pce,purchased,,93.690000,1,,0.034281,1.354854,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0417,Compresseur climatisation électrique,interior,INT,pce,purchased,,1756.620000,1,,0.658297,3.838398,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0418,Condenseur A/C,interior,INT,pce,purchased,,585.540000,1,,2.534583,23.614963,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0419,Évaporateur HVAC,interior,INT,pce,purchased,,468.430000,1,,0.407762,1.850913,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0420,Bloc HVAC,interior,INT,pce,purchased,,1756.620000,1,,0.455170,2.719732,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0421,Pulseur habitacle,interior,INT,pce,purchased,,292.770000,1,,0.605754,3.392101,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0422,Filtre habitacle,interior,INT,pce,purchased,,46.840000,1,,0.877903,3.525483,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0423,Détendeur/EXV,interior,INT,pce,purchased,,175.660000,1,,0.950866,3.804795,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0424,Receiver-drier,interior,INT,pce,purchased,,117.110000,1,,1.199013,6.605123,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0425,Conduites réfrigérant,interior,INT,pce,purchased,,117.110000,1,,0.963405,4.890629,0.8
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0426,Capteur pression réfrigérant,interior,INT,pce,purchased,,93.690000,1,,0.028393,0.839683,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0427,Capteurs température habitacle,interior,INT,pce,purchased,,35.130000,1,,0.034450,1.158581,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0428,Sondes température évaporateur,interior,INT,pce,purchased,,468.430000,1,,0.798372,4.195285,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0429,Volets distribution air,interior,INT,pce,purchased,,58.550000,1,,0.590469,2.763395,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0430,Actionneurs volets HVAC,interior,INT,pce,purchased,,58.550000,1,,0.229952,1.177952,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0431,Buses/diffuseurs air,interior,INT,pce,purchased,,93.690000,1,,0.005430,0.026533,6.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0432,Réservoir fluide hydraulique actif,chassis,CHS,pce,purchased,,351.320000,1,,0.934029,4.327543,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0433,Pompe hydraulique active,chassis,CHS,pce,purchased,,2342.160000,1,,0.655431,2.932529,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0434,Accumulateur hydraulique,chassis,CHS,pce,purchased,,702.650000,1,,0.459231,1.934924,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0435,Bloc valves hydraulique,chassis,CHS,pce,purchased,,1756.620000,1,,0.215383,1.217431,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0436,Électrovannes hydrauliques,chassis,CHS,pce,purchased,,292.770000,1,,0.285003,1.156428,8.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0437,Capteur pression hydraulique,chassis,CHS,pce,purchased,,175.660000,1,,0.075128,2.691641,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0438,Conduites rigides/flexibles,chassis,CHS,pce,purchased,,117.110000,1,,0.005569,0.030038,20.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0439,Raccords hydrauliques,chassis,CHS,pce,purchased,,23.420000,1,,0.012357,0.050434,30.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0384,Faisceau,electrical,ELE,pce,purchased,,2927.700000,1,,0.678511,4.613875,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0386,Faisceau porte,electrical,ELE,pce,purchased,,819.760000,1,,0.815415,6.097021,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0388,Faisceau moteur,electrical,ELE,pce,purchased,,2342.160000,1,,0.985380,5.888237,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0389,Faisceau DCT,electrical,ELE,pce,purchased,,1171.080000,1,,1.195893,7.867541,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0390,Faisceau contrôle HV,electrical,ELE,pce,purchased,,1405.300000,1,,0.646016,4.060986,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0391,Tresses de masse châssis,electrical,ELE,pce,purchased,,35.130000,1,,2.118434,5.656473,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0392,Points de masse/studs,electrical,ELE,pce,purchased,,9.370000,1,,0.222196,1.116091,12.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0393,Connecteurs LV,electrical,ELE,pce,purchased,,7.030000,1,,0.007495,0.048556,250.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0394,Clips/agrafes faisceaux,electrical,ELE,pce,purchased,,0.350000,1,,0.018833,0.039801,400.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0395,Gaines/protections thermiques faisceaux,electrical,ELE,pce,purchased,,23.420000,1,,0.008555,0.047171,60.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0396,VCU / Vehicle Control Unit,electrical,ELE,pce,purchased,,2107.940000,1,,0.471266,18.263160,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0397,BCM / Body Control Module,electrical,ELE,pce,purchased,,1171.080000,1,,0.350420,13.360183,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0398,Gateway réseau véhicule,electrical,ELE,pce,purchased,,936.860000,1,,0.665361,2.680873,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0399,ECU ESC/stabilité,electrical,ELE,pce,purchased,,1405.300000,1,,0.194768,8.179983,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0400,ECU suspension/amortissement,electrical,ELE,pce,purchased,,1171.080000,1,,0.509038,20.517286,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0401,ECU aéro actif,electrical,ELE,pce,purchased,,1053.970000,1,,0.454149,17.063831,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0402,ECU HVAC,electrical,ELE,pce,purchased,,702.650000,1,,0.194597,6.492418,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0403,ECU ADAS/domain controller,electrical,ELE,pce,purchased,,3513.240000,1,,0.502591,19.826109,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0404,Radar avant ACC/AEB,electrical,ELE,pce,purchased,,1171.080000,1,,0.187921,6.499097,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0405,Caméra frontale ADAS,electrical,ELE,pce,purchased,,585.540000,1,,0.261125,8.504006,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0406,Caméras 3D surround view,electrical,ELE,pce,purchased,,526.990000,1,,0.349221,12.301938,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0407,Caméra recul,electrical,ELE,pce,purchased,,526.990000,1,,0.572657,21.151773,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0408,Capteurs ultrasoniques,electrical,ELE,pce,purchased,,70.260000,1,,0.042718,1.721373,12.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0410,Capteur HOD volant,electrical,ELE,pce,purchased,,234.220000,1,,0.046937,1.932584,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0411,Antenne GNSS,electrical,ELE,pce,purchased,,117.110000,1,,0.265519,10.139215,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0412,TCU télématique,electrical,ELE,pce,purchased,,1053.970000,1,,0.551260,15.552588,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0413,Antennes LTE/5G/Wi-Fi/Bluetooth,electrical,ELE,pce,purchased,,93.690000,1,,0.469555,16.998454,5.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0414,Récepteur clé / RF/UWB,electrical,ELE,pce,purchased,,351.320000,1,,0.292251,1.253991,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0415,Sirène alarme,electrical,ELE,pce,purchased,,117.110000,1,,1.211934,6.118328,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0416,Capteurs alarme,electrical,ELE,pce,purchased,,93.690000,1,,0.034319,1.356356,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0417,Compresseur climatisation électrique,interior,INT,pce,purchased,,1756.620000,1,,0.659025,3.842643,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0418,Condenseur A/C,interior,INT,pce,purchased,,585.540000,1,,2.537385,23.641070,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0419,Évaporateur HVAC,interior,INT,pce,purchased,,468.430000,1,,0.408213,1.852960,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0420,Bloc HVAC,interior,INT,pce,purchased,,1756.620000,1,,0.455674,2.722743,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0421,Pulseur habitacle,interior,INT,pce,purchased,,292.770000,1,,0.606424,3.395853,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0422,Filtre habitacle,interior,INT,pce,purchased,,46.840000,1,,0.878873,3.529378,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0423,Détendeur/EXV,interior,INT,pce,purchased,,175.660000,1,,0.951917,3.809001,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0424,Receiver-drier,interior,INT,pce,purchased,,117.110000,1,,1.200338,6.612422,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0425,Conduites réfrigérant,interior,INT,pce,purchased,,117.110000,1,,0.964470,4.896036,0.8
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0426,Capteur pression réfrigérant,interior,INT,pce,purchased,,93.690000,1,,0.028424,0.840600,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0427,Capteurs température habitacle,interior,INT,pce,purchased,,35.130000,1,,0.034489,1.159893,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0428,Sondes température évaporateur,interior,INT,pce,purchased,,468.430000,1,,0.799254,4.199920,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0429,Volets distribution air,interior,INT,pce,purchased,,58.550000,1,,0.591121,2.766446,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0430,Actionneurs volets HVAC,interior,INT,pce,purchased,,58.550000,1,,0.230206,1.179253,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0431,Buses/diffuseurs air,interior,INT,pce,purchased,,93.690000,1,,0.005436,0.026562,6.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0432,Réservoir fluide hydraulique actif,chassis,CHS,pce,purchased,,351.320000,1,,0.935061,4.332325,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0433,Pompe hydraulique active,chassis,CHS,pce,purchased,,2342.160000,1,,0.656156,2.935773,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0434,Accumulateur hydraulique,chassis,CHS,pce,purchased,,702.650000,1,,0.459738,1.937060,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0435,Bloc valves hydraulique,chassis,CHS,pce,purchased,,1756.620000,1,,0.215621,1.218776,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0436,Électrovannes hydrauliques,chassis,CHS,pce,purchased,,292.770000,1,,0.285318,1.157706,8.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0437,Capteur pression hydraulique,chassis,CHS,pce,purchased,,175.660000,1,,0.075211,2.694615,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0438,Conduites rigides/flexibles,chassis,CHS,pce,purchased,,117.110000,1,,0.005575,0.030070,20.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0439,Raccords hydrauliques,chassis,CHS,pce,purchased,,23.420000,1,,0.012371,0.050491,30.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0440,Fluide hydraulique,chassis,CHS,L,purchased,,25.760000,1,,1.050000,0.981036,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0441,Moteur essuie-glace,electrical,ELE,pce,purchased,,351.320000,1,,1.679640,19.809674,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0442,Bras essuie-glace,electrical,ELE,pce,purchased,,175.660000,1,,1.328405,3.083441,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0443,Balai essuie-glace,electrical,ELE,pce,purchased,,58.550000,1,,0.570646,3.146200,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0444,Réservoir lave-glace,electrical,ELE,pce,purchased,,175.660000,1,,0.231146,1.103537,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0445,Pompe lave-glace,electrical,ELE,pce,purchased,,70.260000,1,,0.220518,1.249631,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0446,Gicleurs lave-glace,electrical,ELE,pce,purchased,,23.420000,1,,0.014568,0.067482,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0447,Durites lave-glace,electrical,ELE,pce,purchased,,5.860000,1,,0.295034,1.172524,4.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0448,Klaxon(s),electrical,ELE,pce,purchased,,58.550000,1,,1.292396,5.589613,2.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0449,Point remorquage avant,electrical,ELE,pce,purchased,,117.110000,1,,1.105749,4.888516,1.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0450,Point remorquage arrière,electrical,ELE,pce,purchased,,117.110000,1,,0.202844,1.073978,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0441,Moteur essuie-glace,electrical,ELE,pce,purchased,,351.320000,1,,1.681497,19.831576,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0442,Bras essuie-glace,electrical,ELE,pce,purchased,,175.660000,1,,1.329874,3.086850,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0443,Balai essuie-glace,electrical,ELE,pce,purchased,,58.550000,1,,0.571276,3.149673,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0444,Réservoir lave-glace,electrical,ELE,pce,purchased,,175.660000,1,,0.231401,1.104755,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0445,Pompe lave-glace,electrical,ELE,pce,purchased,,70.260000,1,,0.220762,1.251014,1.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0446,Gicleurs lave-glace,electrical,ELE,pce,purchased,,23.420000,1,,0.014584,0.067556,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0447,Durites lave-glace,electrical,ELE,pce,purchased,,5.860000,1,,0.295360,1.173820,4.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0448,Klaxon(s),electrical,ELE,pce,purchased,,58.550000,1,,1.293825,5.595793,2.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0449,Point remorquage,electrical,ELE,pce,purchased,,117.110000,1,,1.106971,4.893919,2.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0451,Essence premier remplissage,fluid,FLU,L,purchased,,2.000000,1,,0.745000,0.884285,40.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0452,Huile moteur,fluid,FLU,L,purchased,,30.000000,1,,0.870000,0.978854,10.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0453,Liquide refroidissement moteur,fluid,FLU,L,purchased,,10.000000,1,,1.050000,1.185660,20.0
@@ -447,7 +367,7 @@ bom-valhalla-hybride-2026-10-05,VALH-BOM-0454,Liquide DCT,fluid,FLU,L,purchased,
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0455,Huile e-diff,fluid,FLU,L,purchased,,40.000000,1,,0.870000,1.065089,1.5
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0456,Liquide de frein,fluid,FLU,L,purchased,,15.000000,1,,1.050000,1.441272,1.5
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0457,Réfrigérant HVAC,fluid,FLU,kg,purchased,,60.000000,1,,1.000000,0.627680,0.8
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0458,Huile compresseur A/C,fluid,FLU,pce,purchased,,35.000000,1,,1.032069,1.422769,0.25
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0458,Huile compresseur A/C,fluid,FLU,pce,purchased,,35.000000,1,,1.033210,1.424342,0.25
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0459,Liquide lave-glace,fluid,FLU,L,purchased,,3.000000,1,,1.050000,1.204140,4.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0460,LDR batterie/EDU/inverters,fluid,FLU,L,purchased,,12.000000,1,,1.050000,1.097208,12.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0461,Fluide hydraulique suspension/aéro,fluid,FLU,L,purchased,,22.000000,1,,1.050000,0.638316,4.0
@@ -458,42 +378,42 @@ bom-valhalla-hybride-2026-10-05,VALH-BOM-0465,Mastic/seam sealer,fluid,FLU,g,pur
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0466,Frein filet,fluid,FLU,g,purchased,,0.220000,1,,0.001000,0.000902,120.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0467,Anti-grippant haute température,fluid,FLU,g,purchased,,0.080000,1,,0.001000,0.001329,80.0
 bom-valhalla-hybride-2026-10-05,VALH-BOM-0468,Pâte thermique power electronics,fluid,FLU,g,purchased,,0.450000,1,,0.001000,0.001104,250.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0469,Joints toriques circuits fluides,fluid,FLU,pce,purchased,,2.500000,1,,0.006979,0.007945,80.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0470,Colliers durites,fluid,FLU,pce,purchased,,1.500000,1,,0.017279,0.013710,70.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0471,Clips tuyauteries,fluid,FLU,pce,purchased,,0.350000,1,,0.014789,0.009634,100.0
-bom-valhalla-hybride-2026-10-05,VALH-BOM-0472,Passe-fils/grommets,fluid,FLU,pce,purchased,,1.200000,1,,0.019954,0.019202,80.0
-bom-valhalla-hybride-2026-10-05,VALH-CAT-AERODYNAMIQUE-EXTERIEUR,Aérodynamique et extérieur,body,CAR,pce,manufactured,1004,,1,,32.6965830,50.20,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-AUXILIAIRES,Auxiliaires,electrical,ELE,pce,manufactured,200,,1,,9.1330120,10.00,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-CARBURANT-ESSENCE,Alimentation carburant,engine,GMP,pce,manufactured,276,,1,,22.1580860,13.80,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-CHASSIS-SUSPENSION,Châssis et suspension,chassis,CHS,pce,manufactured,1484,,1,,52.6194970,74.20,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-CONFIGURATION-VEHICULE,Configuration véhicule,vehicle,VEH,pce,manufactured,114,,1,,1.0955900,5.70,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-CONSOMMABLES,Consommables et fluides,fluid,FLU,pce,manufactured,266,,1,,106.53108725,13.30,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-DIRECTION,Direction,chassis,CHS,pce,manufactured,336,,1,,13.8869100,16.80,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-ECHAPPEMENT,Échappement,engine,GMP,pce,manufactured,452,,1,,37.8647830,22.60,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-ELECTRIQUE-BASSE-TENSION,Électricité basse tension,electrical,ELE,pce,manufactured,880,,1,,61.8799380,44.00,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-ELECTRONIQUE-ADAS,Électronique et ADAS,electrical,ELE,pce,manufactured,680,,1,,11.7856140,34.00,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-FREINAGE,Freinage,chassis,CHS,pce,manufactured,588,,1,,60.0707200,29.40,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-GESTION-THERMIQUE,Gestion thermique,engine,GMP,pce,manufactured,496,,1,,18.3741750,24.80,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-HABITACLE-SECURITE,Habitacle et sécurité,interior,INT,pce,manufactured,1584,,1,,57.7144520,79.20,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-HVAC,Climatisation et chauffage,interior,INT,pce,manufactured,520,,1,,17.0948550,26.00,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-HYBRIDE-ELECTRIQUE-HV,Chaîne électrique haute tension,engine,GMP,pce,manufactured,1480,,1,,293.8695430,74.00,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-HYDRAULIQUE-ACTIF,Hydraulique active,chassis,CHS,pce,manufactured,532,,1,,10.1735800,26.60,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-MOTORISATION,Motorisation,engine,GMP,pce,manufactured,648,,1,,825.2809450,32.40,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-ROUES-PNEUS,Roues et pneumatiques,chassis,CHS,pce,manufactured,248,,1,,102.5226190,12.40,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-STRUCTURE-CARROSSERIE,Structure et carrosserie,body,CAR,pce,manufactured,3048,,1,,270.6940900,152.40,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-THERMIQUE-ESSENCE,Moteur thermique V8,engine,GMP,pce,manufactured,1912,,1,,297.7705200,95.60,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-TRANSMISSION,Transmission,transmission,TRN,pce,manufactured,732,,1,,155.2438380,36.60,1
-bom-valhalla-hybride-2026-10-05,VALH-CAT-VITRAGE-ECLAIRAGE,Vitrage et éclairage,glazing,CAR,pce,manufactured,488,,1,,21.8360190,24.40,1
-bom-valhalla-hybride-2026-10-05,VALH-FIX-BOULON-FREIN-HAUTE-RESISTANCE,Boulon frein haute resistance,fastener,FIX,pce,purchased,,4.500000,1,,0.003505,0.009772,25.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-BOULON-HAUTE-RESISTANCE,Boulon haute resistance,fastener,FIX,pce,purchased,,6.000000,1,,0.002185,0.005296,48.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-CLIP-AGRAFE-FAISCEAU,Clip agrafe faisceau,fastener,FIX,pce,purchased,,0.250000,1,,0.008556,0.021449,400.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-CLIP-GARNITURE,Clip garniture,fastener,FIX,pce,purchased,,0.350000,1,,0.012087,0.029366,12.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-COLLIER-AGRAFE,Collier agrafe,fastener,FIX,pce,purchased,,0.750000,1,,0.009154,0.028137,130.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-CARROSSERIE,Vis boulon carrosserie,fastener,FIX,pce,purchased,,1.200000,1,,0.014694,0.046599,102.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-HAUTE-TEMPERATURE,Vis boulon haute temperature,fastener,FIX,pce,purchased,,2.500000,1,,0.006632,0.017848,176.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-HV-ISOLE,Vis boulon hv isole,fastener,FIX,pce,purchased,,1.500000,1,,0.002548,0.007213,136.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-STANDARD,Vis boulon standard,fastener,FIX,pce,purchased,,1.000000,1,,0.004219,0.012300,108.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-STRUCTUREL,Vis boulon structurel,fastener,FIX,pce,purchased,,2.000000,1,,0.007160,0.018496,130.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-CLIP-MONTAGE,Vis clip montage,fastener,FIX,pce,purchased,,0.600000,1,,0.014912,0.047388,87.0
-bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-GOUJON-MASSE,Vis goujon masse,fastener,FIX,pce,purchased,,0.800000,1,,0.005379,0.013722,12.0
-bom-valhalla-hybride-2026-10-05,VEH-VALHALLA-HYB,Aston Martin Valhalla — hybride rechargeable (PHEV) — véhicule complet,vehicle,VEH,pce,manufactured,4200,,1,,1655.01551125,210.00,1
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0469,Joints toriques circuits fluides,fluid,FLU,pce,purchased,,2.500000,1,,0.006986,0.007953,80.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0470,Colliers durites,fluid,FLU,pce,purchased,,1.500000,1,,0.017299,0.013726,70.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0471,Clips tuyauteries,fluid,FLU,pce,purchased,,0.350000,1,,0.014805,0.009645,100.0
+bom-valhalla-hybride-2026-10-05,VALH-BOM-0472,Passe-fils/grommets,fluid,FLU,pce,purchased,,1.200000,1,,0.019976,0.019223,80.0
+bom-valhalla-hybride-2026-10-05,VALH-CAT-AERODYNAMIQUE-EXTERIEUR,Aérodynamique et extérieur,body,CAR,pce,manufactured,1004,,1,,32.7327190,50.20,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-AUXILIAIRES,Auxiliaires,electrical,ELE,pce,manufactured,200,,1,,10.0470100,10.00,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-CARBURANT-ESSENCE,Alimentation carburant,engine,GMP,pce,manufactured,276,,1,,22.1727760,13.80,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-CHASSIS-SUSPENSION,Châssis et suspension,chassis,CHS,pce,manufactured,1484,,1,,47.4670790,74.20,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-CONFIGURATION-VEHICULE,Configuration véhicule,vehicle,VEH,pce,manufactured,114,,1,,1.0968010,5.70,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-CONSOMMABLES,Consommables et fluides,fluid,FLU,pce,manufactured,266,,1,,106.53669250,13.30,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-DIRECTION,Direction,chassis,CHS,pce,manufactured,336,,1,,14.4431090,16.80,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-ECHAPPEMENT,Échappement,engine,GMP,pce,manufactured,452,,1,,39.3890720,22.60,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-ELECTRIQUE-BASSE-TENSION,Électricité basse tension,electrical,ELE,pce,manufactured,880,,1,,61.6524400,44.00,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-ELECTRONIQUE-ADAS,Électronique et ADAS,electrical,ELE,pce,manufactured,680,,1,,11.7231830,34.00,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-FREINAGE,Freinage,chassis,CHS,pce,manufactured,588,,1,,59.0456020,29.40,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-GESTION-THERMIQUE,Gestion thermique,engine,GMP,pce,manufactured,496,,1,,18.3944930,24.80,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-HABITACLE-SECURITE,Habitacle et sécurité,interior,INT,pce,manufactured,1584,,1,,58.6200370,79.20,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-HVAC,Climatisation et chauffage,interior,INT,pce,manufactured,520,,1,,17.1137530,26.00,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-HYBRIDE-ELECTRIQUE-HV,Chaîne électrique haute tension,engine,GMP,pce,manufactured,1480,,1,,296.9783890,74.00,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-HYDRAULIQUE-ACTIF,Hydraulique active,chassis,CHS,pce,manufactured,532,,1,,10.1801900,26.60,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-MOTORISATION,Motorisation,engine,GMP,pce,manufactured,648,,1,,829.2145770,32.40,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-ROUES-PNEUS,Roues et pneumatiques,chassis,CHS,pce,manufactured,248,,1,,102.5315840,12.40,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-STRUCTURE-CARROSSERIE,Structure et carrosserie,body,CAR,pce,manufactured,3048,,1,,270.1465220,152.40,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-THERMIQUE-ESSENCE,Moteur thermique V8,engine,GMP,pce,manufactured,1912,,1,,296.8857510,95.60,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-TRANSMISSION,Transmission,transmission,TRN,pce,manufactured,732,,1,,155.3940960,36.60,1
+bom-valhalla-hybride-2026-10-05,VALH-CAT-VITRAGE-ECLAIRAGE,Vitrage et éclairage,glazing,CAR,pce,manufactured,488,,1,,22.4187830,24.40,1
+bom-valhalla-hybride-2026-10-05,VALH-FIX-BOULON-FREIN-HAUTE-RESISTANCE,Boulon frein haute resistance,fastener,FIX,pce,purchased,,4.500000,1,,0.003509,0.009783,25.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-BOULON-HAUTE-RESISTANCE,Boulon haute resistance,fastener,FIX,pce,purchased,,6.000000,1,,0.002188,0.005303,48.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-CLIP-AGRAFE-FAISCEAU,Clip agrafe faisceau,fastener,FIX,pce,purchased,,0.250000,1,,0.008565,0.021471,400.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-CLIP-GARNITURE,Clip garniture,fastener,FIX,pce,purchased,,0.350000,1,,0.012100,0.029397,12.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-COLLIER-AGRAFE,Collier agrafe,fastener,FIX,pce,purchased,,0.750000,1,,0.009164,0.028168,130.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-CARROSSERIE,Vis boulon carrosserie,fastener,FIX,pce,purchased,,1.200000,1,,0.014710,0.046650,102.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-HAUTE-TEMPERATURE,Vis boulon haute temperature,fastener,FIX,pce,purchased,,2.500000,1,,0.006640,0.017869,176.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-HV-ISOLE,Vis boulon hv isole,fastener,FIX,pce,purchased,,1.500000,1,,0.002551,0.007222,136.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-STANDARD,Vis boulon standard,fastener,FIX,pce,purchased,,1.000000,1,,0.004224,0.012314,108.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-BOULON-STRUCTUREL,Vis boulon structurel,fastener,FIX,pce,purchased,,2.000000,1,,0.007168,0.018516,130.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-CLIP-MONTAGE,Vis clip montage,fastener,FIX,pce,purchased,,0.600000,1,,0.014929,0.047442,87.0
+bom-valhalla-hybride-2026-10-05,VALH-FIX-VIS-GOUJON-MASSE,Vis goujon masse,fastener,FIX,pce,purchased,,0.800000,1,,0.005385,0.013738,12.0
+bom-valhalla-hybride-2026-10-05,VEH-VALHALLA-HYB,Aston Martin Valhalla — hybride rechargeable (PHEV) — véhicule complet,vehicle,VEH,pce,manufactured,4200,,1,,1654.97008150,210.00,1

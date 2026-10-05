@@ -363,8 +363,10 @@ entièrement distinct.
   sont **générés** (synthétiques, déterministes, vérifiés en CI). Sélecteur
   de véhicule dans le bandeau ; un snapshot de prix appartient à sa
   nomenclature. Migration 0006 vérifiée sur une base existante.
-  Leurs fixations sont regroupées par type et partagées entre ensembles,
-  comme la visserie du Multipla.
+  Comme sur le Multipla, une pièce qui ne diffère que par son emplacement
+  (gauche/droite, avant/arrière, conducteur/passager) est une pièce et une
+  quantité, et les fixations sont regroupées par type et partagées entre
+  ensembles.
 - **SAV** : un scénario peut compter les pièces de rechange livrées avec le
   véhicule ; l'arbre affiche « + n SAV » à côté de la quantité montée.
 - **Prix qui varient** : l'API simulée rejoue une année de marché en 40 min.

@@ -548,18 +548,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0014",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0014",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.058722",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0015",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -569,54 +557,6 @@
       "part_ref": "VALH-BOM-0015",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "1.021014",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0016",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0016",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.069216",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0016",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.124700",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0017",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0017",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.142212",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0017",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.052518",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0018",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0018",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.148680",
       "is_default": false
     },
     {
@@ -722,24 +662,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0026",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0026",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.991028",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0026",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.025546",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0027",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -764,24 +686,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0029",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0029",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.082174",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0029",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.032520",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0030",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -791,18 +695,6 @@
       "part_ref": "VALH-BOM-0030",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "1.024820",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0031",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0031",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.070514",
       "is_default": false
     },
     {
@@ -854,18 +746,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0035",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0035",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.949008",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0036",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -881,54 +761,6 @@
       "part_ref": "VALH-BOM-0036",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "0.989510",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0037",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0037",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.075046",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0037",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.023896",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0038",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0038",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.070492",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0038",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.120938",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0039",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0039",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.111148",
       "is_default": false
     },
     {
@@ -962,18 +794,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0042",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0042",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.990500",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0043",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1004,18 +824,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0045",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0045",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.071922",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0046",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1034,18 +842,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0047",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0047",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.042266",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0048",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1055,24 +851,6 @@
       "part_ref": "VALH-BOM-0048",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "0.948700",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0049",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0049",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.993778",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0049",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.081932",
       "is_default": false
     },
     {
@@ -1094,18 +872,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0051",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0051",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.074826",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0052",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1115,18 +881,6 @@
       "part_ref": "VALH-BOM-0052",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "1.058942",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0053",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0053",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.070580",
       "is_default": false
     },
     {
@@ -1148,24 +902,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0055",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0055",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "0.944146",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0055",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "1.023830",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0056",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1175,18 +911,6 @@
       "part_ref": "VALH-BOM-0056",
       "supplier_id": "SUP-SEVERN-RUBBER",
       "price_multiplier": "0.988102",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0057",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0057",
-      "supplier_id": "SUP-SEVERN-RUBBER",
-      "price_multiplier": "0.999256",
       "is_default": false
     },
     {
@@ -1502,24 +1226,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0078",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0078",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.019892",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0078",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.034060",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0079",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1529,18 +1235,6 @@
       "part_ref": "VALH-BOM-0079",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "0.942628",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0080",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0080",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.930440",
       "is_default": false
     },
     {
@@ -1574,24 +1268,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0083",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0083",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.994966",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0083",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.990588",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0084",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1607,24 +1283,6 @@
       "part_ref": "VALH-BOM-0084",
       "supplier_id": "SUP-OBERLAND-ELEK",
       "price_multiplier": "1.137636",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0085",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0085",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "1.068886",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0085",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "0.935742",
       "is_default": false
     },
     {
@@ -1694,18 +1352,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0090",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0090",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.991446",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0091",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1715,18 +1361,6 @@
       "part_ref": "VALH-BOM-0091",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.051088",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0092",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0092",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.960624",
       "is_default": false
     },
     {
@@ -1748,18 +1382,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0094",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0094",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.009178",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0095",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1778,24 +1400,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0096",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0096",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.978400",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0096",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.980380",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0097",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1805,24 +1409,6 @@
       "part_ref": "VALH-BOM-0097",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.146040",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0098",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0098",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.144302",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0098",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.962780",
       "is_default": false
     },
     {
@@ -1844,24 +1430,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0100",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0100",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.964738",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0100",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.952308",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0101",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1874,24 +1442,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0102",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0102",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.009200",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0102",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.985418",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0103",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1901,24 +1451,6 @@
       "part_ref": "VALH-BOM-0103",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "0.985506",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0104",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0104",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.138670",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0104",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.942958",
       "is_default": false
     },
     {
@@ -2009,18 +1541,6 @@
       "part_ref": "VALH-BOM-0110",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.003018",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0111",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0111",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.137878",
       "is_default": false
     },
     {
@@ -2270,18 +1790,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0128",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0128",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.041320",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0129",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2300,24 +1808,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0130",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0130",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.933740",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0130",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.008848",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0131",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2330,18 +1820,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0132",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0132",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.134908",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0133",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2351,24 +1829,6 @@
       "part_ref": "VALH-BOM-0133",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.005196",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0134",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0134",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.077444",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0134",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.023500",
       "is_default": false
     },
     {
@@ -2390,18 +1850,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0136",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0136",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.051374",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0137",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2420,18 +1868,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0138",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0138",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.942958",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0139",
       "supplier_id": "SUP-BILSTEIN",
       "price_multiplier": "1.000000",
@@ -2447,18 +1883,6 @@
       "part_ref": "VALH-BOM-0139",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.075750",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0140",
-      "supplier_id": "SUP-BILSTEIN",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0140",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.034038",
       "is_default": false
     },
     {
@@ -2501,24 +1925,6 @@
       "part_ref": "VALH-BOM-0143",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.016108",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0144",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0144",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.979764",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0144",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.973956",
       "is_default": false
     },
     {
@@ -2603,222 +2009,6 @@
       "part_ref": "VALH-BOM-0149",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.033862",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0150",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0150",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.104504",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0150",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.123776",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0151",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0151",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.067280",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0152",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0152",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.028120",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0152",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.140122",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0153",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0153",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.131146",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0153",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.008254",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0154",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0154",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.098476",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0155",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0155",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.067874",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0155",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.142036",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0156",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0156",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.064508",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0157",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0157",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.062352",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0157",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.065718",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0158",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0158",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.964386",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0159",
-      "supplier_id": "SUP-BILSTEIN",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0159",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.126878",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0160",
-      "supplier_id": "SUP-BILSTEIN",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0160",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.114844",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0161",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0161",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.998684",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0162",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0162",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.090776",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0163",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0163",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.073726",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0164",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0164",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.134754",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0164",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.061626",
       "is_default": false
     },
     {
@@ -3008,24 +2198,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0177",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0177",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.058964",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0177",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.946874",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0178",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -3035,24 +2207,6 @@
       "part_ref": "VALH-BOM-0178",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "1.111038",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0179",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0179",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.975166",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0179",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.981018",
       "is_default": false
     },
     {
@@ -3194,60 +2348,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0190",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0190",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.081074",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0190",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.966872",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0191",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0191",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.963660",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0191",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.018220",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0192",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0192",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.142542",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0192",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.139110",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0193",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -3371,18 +2471,6 @@
       "part_ref": "VALH-BOM-0200",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.147976",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0201",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0201",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.055906",
       "is_default": false
     },
     {
@@ -3614,18 +2702,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0217",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0217",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.079820",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0218",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -3785,24 +2861,6 @@
       "part_ref": "VALH-BOM-0227",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.065036",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0228",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0228",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.966322",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0228",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.028010",
       "is_default": false
     },
     {
@@ -4040,18 +3098,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0245",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0245",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.009398",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0246",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -4109,18 +3155,6 @@
       "part_ref": "VALH-BOM-0249",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "0.961306",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0250",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0250",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.127340",
       "is_default": false
     },
     {
@@ -4274,18 +3308,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0260",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0260",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.006076",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0261",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -4295,18 +3317,6 @@
       "part_ref": "VALH-BOM-0261",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "1.069986",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0262",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0262",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.968940",
       "is_default": false
     },
     {
@@ -4664,18 +3674,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0285",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0285",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.963990",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0286",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -4685,24 +3683,6 @@
       "part_ref": "VALH-BOM-0286",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.010366",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0287",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0287",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.948172",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0287",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.994702",
       "is_default": false
     },
     {
@@ -5180,18 +4160,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0321",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0321",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.135128",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0322",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -5576,24 +4544,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0349",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0349",
-      "supplier_id": "SUP-VOLTARIS",
-      "price_multiplier": "1.107760",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0349",
-      "supplier_id": "SUP-CELLFORGE",
-      "price_multiplier": "0.984186",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0350",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -5603,24 +4553,6 @@
       "part_ref": "VALH-BOM-0350",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.049548",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0351",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0351",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.128484",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0351",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.118694",
       "is_default": false
     },
     {
@@ -5642,36 +4574,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0353",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0353",
-      "supplier_id": "SUP-VOLTARIS",
-      "price_multiplier": "1.026426",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0354",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0354",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.002270",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0354",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.083978",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0355",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -5681,24 +4583,6 @@
       "part_ref": "VALH-BOM-0355",
       "supplier_id": "SUP-CELLFORGE",
       "price_multiplier": "1.130442",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0356",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0356",
-      "supplier_id": "SUP-VOLTARIS",
-      "price_multiplier": "1.007264",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0356",
-      "supplier_id": "SUP-CELLFORGE",
-      "price_multiplier": "1.017846",
       "is_default": false
     },
     {
@@ -5753,24 +4637,6 @@
       "part_ref": "VALH-BOM-0360",
       "supplier_id": "SUP-VOLTARIS",
       "price_multiplier": "0.962802",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0361",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0361",
-      "supplier_id": "SUP-CELLFORGE",
-      "price_multiplier": "1.091546",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0361",
-      "supplier_id": "SUP-VOLTARIS",
-      "price_multiplier": "1.080216",
       "is_default": false
     },
     {
@@ -6050,24 +4916,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALH-BOM-0385",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0385",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "0.968940",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0385",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "1.030782",
-      "is_default": false
-    },
-    {
       "part_ref": "VALH-BOM-0386",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -6077,18 +4925,6 @@
       "part_ref": "VALH-BOM-0386",
       "supplier_id": "SUP-THAMES-ELEC",
       "price_multiplier": "1.079886",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0387",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0387",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "1.069414",
       "is_default": false
     },
     {
@@ -6413,24 +5249,6 @@
       "part_ref": "VALH-BOM-0408",
       "supplier_id": "SUP-THAMES-ELEC",
       "price_multiplier": "1.016284",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0409",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0409",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "1.079336",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0409",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "1.016240",
       "is_default": false
     },
     {
@@ -7043,24 +5861,6 @@
       "part_ref": "VALH-BOM-0449",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "1.021564",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0450",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALH-BOM-0450",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.983020",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALH-BOM-0450",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.068226",
       "is_default": false
     },
     {

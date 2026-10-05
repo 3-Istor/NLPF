@@ -10,12 +10,17 @@ La nomenclature source est un arbre de catégories. Elle devient un graphe à
 trois ou quatre niveaux : véhicule → catégorie (ensemble fabriqué) → [sous-
 catégorie de la motorisation] → lignes achetées.
 
-Seules les fixations sont regroupées. Le fichier en fait une ligne par
-interface (« vis_boulon_structurel — Monocoque -> sous-cadre »), toutes sous
-une catégorie « fixations ». Comme sur le Multipla, chaque type devient une
-pièce, montée sous chaque ensemble qui l'utilise avec la quantité de ses
-interfaces (`FASTENER_GROUPS`). C'est le seul partage du graphe : on ne
-fabrique pas celui qui n'existe pas dans le fichier.
+Le fichier fait une ligne par emplacement : « Ressort AV gauche », « … AR
+droit », au même prix. Comme sur le Multipla, ce qui ne diffère que par sa
+place devient une pièce et une quantité (« Ressort » × 4).
+
+Les fixations, elles, ont une ligne par interface (« vis_boulon_structurel —
+Monocoque -> sous-cadre »), toutes sous une catégorie « fixations ». Chaque
+type devient une pièce, montée sous chaque ensemble qui l'utilise avec la
+quantité de ses interfaces (`FASTENER_GROUPS`).
+
+Aucun sous-ensemble n'est inventé : une pièce n'a plusieurs parents que si
+le fichier la place dans plusieurs catégories.
 
 `--check` régénère sans écrire et échoue si les fichiers présents diffèrent.
 """
@@ -24,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import tempfile
 from dataclasses import dataclass
@@ -185,26 +191,82 @@ def _pooled_price(rows: list[dict]) -> Decimal:
     return min(set(prices), key=lambda price: (-prices.count(price), price))
 
 
+#: Ce qui ne dit que l'emplacement d'une pièce, en fin de libellé : « Ressort
+#: AV droit », « Coque siège carbone conducteur ». « inférieur » et
+#: « supérieur » n'en sont pas : un bras inférieur n'est pas un bras supérieur.
+_POSITION = re.compile(
+    r"(\s+(gauche|droite|droit|g|d|avant|arrière|arriere|av|ar|conducteur|passager))+$",
+    re.IGNORECASE,
+)
+
+
+def _without_position(name: str) -> str:
+    return _POSITION.sub("", name.strip())
+
+
+def _line(ref: str, row: dict, members: list[tuple[str, dict]], **extra) -> dict:
+    """Une pièce achetée et les arêtes qui la montent, une par ensemble."""
+    edges: dict[str, Decimal] = {}
+    after_sales: dict[str, Decimal] = {}
+    sources: dict[str, int] = {}
+    for group, member in members:
+        edges[group] = edges.get(group, Decimal(0)) + dec(member["quantite"])
+        if member["quantite_sav"]:
+            after_sales[group] = after_sales.get(group, Decimal(0)) + dec(member["quantite_sav"])
+        sources[group] = sources.get(group, 0) + 1
+    return {
+        "ref": ref, "row": row, "group": members[0][0],
+        "quantity": sum(edges.values(), Decimal(0)),
+        "edges": edges, "after_sales": after_sales, "sources": sources,
+        "extra_offers": {}, **extra,
+    }
+
+
+def _positional_lines(variant: Variant, members: list[tuple[str, dict]]) -> list[dict]:
+    """Une pièce pour ce qui ne diffère que par l'emplacement.
+
+    Le fichier source fait une ligne par position : « Ressort AV gauche »,
+    « … AV droit », « … AR gauche », « … AR droit », au même prix. Comme sur
+    le Multipla, c'est une pièce et une quantité : « Ressort » × 4. Une pièce
+    présente dans deux catégories (les joints homocinétiques, avant sous la
+    chaîne électrique, arrière sous la transmission) y gagne deux parents.
+
+    Le regroupement exige le même prix, le même fournisseur et la même unité :
+    deux lignes qui diffèrent autrement que par leur place restent deux
+    pièces. Une ligne seule garde sa référence et son libellé.
+    """
+    by_key: dict[tuple, list[tuple[str, dict]]] = {}
+    for group, row in members:
+        key = (
+            _without_position(row["nom"]).lower(), dec(row["prix_unitaire"]["prix_eur"]),
+            row["fournisseur"]["nom"], row["unite"],
+        )
+        by_key.setdefault(key, []).append((group, row))
+    lines = []
+    for same in by_key.values():
+        same.sort(key=lambda member: member[1]["id"])
+        first = same[0][1]
+        row = first if len(same) == 1 else {**first, "nom": _without_position(first["nom"])}
+        lines.append(_line(_ref(variant, first["id"]), row, same))
+    return lines
+
+
 def _fastener_lines(
     variant: Variant, rows: list[dict], groups: set[str]
-) -> tuple[list[dict], dict[str, dict[str, Decimal]], dict[str, int]]:
+) -> list[dict]:
     """Une pièce par type de fixation, montée sous chaque ensemble qui l'utilise.
 
     Sur le Multipla, une vis M6 est une pièce, portée par neuf ensembles avec
     une quantité par arête. Les fichiers Valhalla en font une ligne par
     interface, toutes sous « fixations » : aucune pièce n'y a deux parents.
-
-    Renvoie les lignes (format de `build_variant`), les arêtes par ensemble
-    et, par ensemble, le nombre d'interfaces qu'il reçoit : le temps de
-    vissage suit la vis.
+    Chaque interface compte dans la main-d'œuvre de l'ensemble qui la
+    reçoit : le temps de vissage suit la vis.
     """
     by_type: dict[str, list[dict]] = {}
     for row in rows:
         by_type.setdefault(_fastener_type(row), []).append(row)
 
     lines: list[dict] = []
-    edges: dict[str, dict[str, Decimal]] = {}
-    interfaces: dict[str, int] = {}
     for kind, members in sorted(by_type.items()):
         ref = f"{variant.prefix}-FIX-{kind.upper().replace('_', '-')}"
         by_supplier: dict[str, list[dict]] = {}
@@ -221,25 +283,23 @@ def _fastener_lines(
             row for row in by_supplier[default]
             if dec(row["prix_unitaire"]["prix_eur"]) == reference
         )
-        row = {**source, "nom": kind.replace("_", " ").capitalize(), "quantite_sav": 0}
+        row = {**source, "nom": kind.replace("_", " ").capitalize()}
+        placed = []
         for member in members:
             key = _fastener_group(member["id"])
             if key not in groups:
                 raise SystemExit(
                     f"{variant.key} : {member['id']} se monte sous {key}, absent de la variante"
                 )
-            target = edges.setdefault(key, {})
-            target[ref] = target.get(ref, Decimal(0)) + dec(member["quantite"])
-            interfaces[key] = interfaces.get(key, 0) + 1
-        lines.append({
-            "ref": ref, "row": row, "category_key": FASTENERS,
-            "quantity": sum((dec(m["quantite"]) for m in members), Decimal(0)),
-            "extra_offers": {
+            placed.append((key, member))
+        lines.append(_line(
+            ref, row, placed, group=FASTENERS,
+            extra_offers={
                 name: (_pooled_price(rows_) / reference).quantize(SCALE6)
                 for name, rows_ in sorted(by_supplier.items()) if name != default
             },
-        })
-    return lines, edges, interfaces
+        ))
+    return lines
 
 
 def _groups(categories: dict) -> list[tuple[str, str | None, list[dict]]]:
@@ -310,28 +370,21 @@ def build_variant(
         row for category, _, rows in _groups(document["categories"])
         if category == FASTENERS for row in rows
     ]
-    fasteners, fastener_edges, fastener_interfaces = _fastener_lines(
-        variant, fastener_rows, {sub or category for category, sub, _ in groups}
-    )
-
-    # -- les lignes achetées, avec leur masse brute ---------------------------
-    # (ligne source, ensemble parent ou None pour une vis partagée, catégorie, réf, quantité)
-    sources = [
-        (row, sub or category, category, _ref(variant, row["id"]), dec(row["quantite"]))
-        for category, sub, rows in groups for row in rows
-    ] + [(f["row"], None, FASTENERS, f["ref"], f["quantity"]) for f in fasteners]
-    extra_offers = {f["ref"]: f["extra_offers"] for f in fasteners}
-    lines: list[dict] = []
-    for row, group, category, ref, quantity in sources:
-        system, part_category, _ = CATEGORIES[group or category]
-        unit = UNITS.get(row["unite"], row["unite"])
-        price_profile, physical, pool = _profiles(row, category)
-        mass, anchored = enrich.unit_mass(ref, row["nom"], row["unite"], physical, quantity)
-        lines.append({
-            "ref": ref, "row": row, "group": group, "system": system,
-            "category": part_category, "unit": unit, "price_profile": price_profile,
+    # -- les pièces achetées, avec leur masse brute -----------------------------
+    lines = _positional_lines(
+        variant, [(sub or category, row) for category, sub, rows in groups for row in rows]
+    ) + _fastener_lines(variant, fastener_rows, {sub or category for category, sub, _ in groups})
+    for line in lines:
+        row = line["row"]
+        system, part_category, _ = CATEGORIES[line["group"]]
+        price_profile, physical, pool = _profiles(row, line["group"])
+        mass, anchored = enrich.unit_mass(
+            line["ref"], row["nom"], row["unite"], physical, line["quantity"]
+        )
+        line.update({
+            "system": system, "category": part_category,
+            "unit": UNITS.get(row["unite"], row["unite"]), "price_profile": price_profile,
             "physical": physical, "pool": pool, "mass": mass, "anchored": anchored,
-            "quantity": quantity,
         })
 
     masses, factor = enrich.scale_masses(lines, variant.target_mass_kg)
@@ -347,30 +400,20 @@ def build_variant(
             mass=str(masses[line["ref"]]),
         )
 
-    by_group: dict[str, list[dict]] = {}
-    for line in lines:
-        if line["group"] is not None:
-            by_group.setdefault(line["group"], []).append(line)
-
     root_children: dict[str, int] = {}
     engine_children: dict[str, int] = {}
     for category, sub, _ in groups:
         key = sub or category
         system, part_category, label = CATEGORIES[key]
-        members = by_group[key]
-        screws = fastener_edges.get(key, {})
+        members = [line for line in lines if key in line["edges"]]
         b.assembly(
             _assembly_ref(variant, key), label, system=system, category=part_category,
-            labour=enrich.labour_minutes(
-                key, len(members) + fastener_interfaces.get(key, 0)
-            ),
-            children={
-                **{l["ref"]: str(l["quantity"]) for l in members},
-                **{ref: str(quantity) for ref, quantity in sorted(screws.items())},
-            },
+            # Une ligne du fichier source, une opération : regrouper deux
+            # ressorts en une pièce ne divise pas par deux le temps de les poser.
+            labour=enrich.labour_minutes(key, sum(l["sources"][key] for l in members)),
+            children={l["ref"]: str(l["edges"][key]) for l in members},
             after_sales={
-                l["ref"]: str(dec(l["row"]["quantite_sav"])) for l in members
-                if l["row"]["quantite_sav"]
+                l["ref"]: str(l["after_sales"][key]) for l in members if key in l["after_sales"]
             },
         )
         if sub:
@@ -397,7 +440,7 @@ def build_variant(
     sourcing = {
         line["ref"]: _with_source_offers(
             offers_for(line["ref"], line["row"]["fournisseur"]["nom"], line["pool"]),
-            extra_offers.get(line["ref"], {}),
+            line["extra_offers"],
         )
         for line in lines
     }

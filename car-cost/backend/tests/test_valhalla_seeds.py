@@ -59,20 +59,43 @@ def _fastener_ref(row: dict) -> str:
     return "FIX-" + row["nom"].split(" — ", 1)[0].upper().replace("_", "-")
 
 
-def test_the_hybrid_keeps_every_price_of_the_source_file():
-    """Chaque ligne garde son prix ; une fixation le porte via son type."""
+def _edges(variant: str) -> list[dict]:
+    with (SEEDS / variant / "edges.csv").open(encoding="utf-8") as edges:
+        return list(csv.DictReader(edges))
+
+
+def test_the_hybrid_keeps_every_price_and_quantity_of_the_source_file():
+    """Regrouper « Ressort AV gauche » … « Ressort AR droit » en « Ressort » × 4
+    ne change ni un prix ni une quantité : la valeur achetée, ligne par ligne
+    dans le fichier, arête par arête dans la nomenclature, est la même."""
     source = _source("aston_martin_valhalla_hybride_phev.json")
     prices = _prices("hybride", "VALH")
-    expected = {
-        _fastener_ref(row) if ref.startswith("FAST-") else ref: row["prix_unitaire"]["prix_eur"]
-        for ref, row in source.items()
-    }
-    assert set(prices) == set(expected)
-    assert all(
-        prices[_fastener_ref(row) if ref.startswith("FAST-") else ref]
-        == row["prix_unitaire"]["prix_eur"]
-        for ref, row in source.items()
+    bought = sum(
+        (Decimal(row["quantite"]) * row["prix_unitaire"]["prix_eur"] for row in source.values()),
+        Decimal(0),
     )
+    mounted = sum(
+        (
+            Decimal(edge["quantity"]) * prices[edge["child_ref"].removeprefix("VALH-")]
+            for edge in _edges("hybride")
+            if edge["child_ref"].removeprefix("VALH-") in prices
+        ),
+        Decimal(0),
+    )
+    assert mounted == bought
+
+
+def test_parts_that_differ_only_by_position_are_one_part():
+    """Les quatre ressorts sont une pièce × 4 ; les joints homocinétiques,
+    avant sous la chaîne électrique et arrière sous la transmission, une
+    pièce à deux parents. Un bras inférieur reste distinct d'un supérieur."""
+    with (SEEDS / "hybride" / "parts.csv").open(encoding="utf-8") as parts:
+        refs = {row["label"]: row["part_ref"] for row in csv.DictReader(parts)}
+    edges = _edges("hybride")
+    under = lambda ref: {(e["parent_ref"], Decimal(e["quantity"])) for e in edges if e["child_ref"] == ref}
+    assert under(refs["Ressort"]) == {("VALH-CAT-CHASSIS-SUSPENSION", Decimal(4))}
+    assert len(under(refs["Joints homocinétiques"])) == 2
+    assert refs["Bras inférieur"] != refs["Bras supérieur"]
 
 
 @pytest.mark.parametrize("variant, prefix, name", [

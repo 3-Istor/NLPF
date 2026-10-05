@@ -387,39 +387,6 @@
         }
       }
     },
-    "VALT-BOM-0014": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1756.620000",
-          "year_min": "1366.570809",
-          "year_max": "2185.838757"
-        },
-        "GBP": {
-          "reference": "1500.000000",
-          "year_min": "1226.919187",
-          "year_max": "1776.059260"
-        },
-        "USD": {
-          "reference": "1944.160967",
-          "year_min": "1590.218928",
-          "year_max": "2301.963392"
-        },
-        "RUB": {
-          "reference": "179908.356574",
-          "year_min": "147155.343007",
-          "year_max": "213018.601751"
-        }
-      }
-    },
     "VALT-BOM-0015": {
       "unit": "pce",
       "price_per": "1",
@@ -450,105 +417,6 @@
           "reference": "140516.375616",
           "year_min": "114934.824850",
           "year_max": "166376.940054"
-        }
-      }
-    },
-    "VALT-BOM-0016": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1756.620000",
-          "year_min": "1366.570809",
-          "year_max": "2185.838757"
-        },
-        "GBP": {
-          "reference": "1500.000000",
-          "year_min": "1226.919187",
-          "year_max": "1776.059260"
-        },
-        "USD": {
-          "reference": "1877.559633",
-          "year_min": "1535.742625",
-          "year_max": "2223.104782"
-        },
-        "RUB": {
-          "reference": "165946.802296",
-          "year_min": "135735.543794",
-          "year_max": "196487.569912"
-        }
-      }
-    },
-    "VALT-BOM-0017": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1756.620000",
-          "year_min": "1366.570809",
-          "year_max": "2185.838757"
-        },
-        "GBP": {
-          "reference": "1500.000000",
-          "year_min": "1226.919187",
-          "year_max": "1776.059260"
-        },
-        "USD": {
-          "reference": "1870.160750",
-          "year_min": "1529.690737",
-          "year_max": "2214.344211"
-        },
-        "RUB": {
-          "reference": "179808.000873",
-          "year_min": "147073.257450",
-          "year_max": "212899.776637"
-        }
-      }
-    },
-    "VALT-BOM-0018": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1405.300000",
-          "year_min": "1093.259759",
-          "year_max": "1748.675983"
-        },
-        "GBP": {
-          "reference": "1200.000000",
-          "year_min": "981.535349",
-          "year_max": "1420.847408"
-        },
-        "USD": {
-          "reference": "1503.463465",
-          "year_min": "1229.752115",
-          "year_max": "1780.160140"
-        },
-        "RUB": {
-          "reference": "134973.956734",
-          "year_min": "110401.424806",
-          "year_max": "159814.497136"
         }
       }
     },
@@ -717,39 +585,6 @@
         }
       }
     },
-    "VALT-BOM-0026": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2927.700000",
-          "year_min": "2277.618015",
-          "year_max": "3643.064594"
-        },
-        "GBP": {
-          "reference": "2500.000000",
-          "year_min": "2044.865311",
-          "year_max": "2960.098766"
-        },
-        "USD": {
-          "reference": "3229.511440",
-          "year_min": "2641.566366",
-          "year_max": "3823.869132"
-        },
-        "RUB": {
-          "reference": "280672.977816",
-          "year_min": "229575.374428",
-          "year_max": "332327.894169"
-        }
-      }
-    },
     "VALT-BOM-0027": {
       "unit": "pce",
       "price_per": "1",
@@ -816,39 +651,6 @@
         }
       }
     },
-    "VALT-BOM-0029": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2927.700000",
-          "year_min": "2277.618015",
-          "year_max": "3643.064594"
-        },
-        "GBP": {
-          "reference": "2500.000000",
-          "year_min": "2044.865311",
-          "year_max": "2960.098766"
-        },
-        "USD": {
-          "reference": "3234.330200",
-          "year_min": "2645.507852",
-          "year_max": "3829.574734"
-        },
-        "RUB": {
-          "reference": "298163.130808",
-          "year_min": "243881.377284",
-          "year_max": "353036.926289"
-        }
-      }
-    },
     "VALT-BOM-0030": {
       "unit": "pce",
       "price_per": "1",
@@ -879,39 +681,6 @@
           "reference": "287112.468604",
           "year_min": "234842.530962",
           "year_max": "339952.505665"
-        }
-      }
-    },
-    "VALT-BOM-0031": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2927.700000",
-          "year_min": "2277.618015",
-          "year_max": "3643.064594"
-        },
-        "GBP": {
-          "reference": "2500.000000",
-          "year_min": "2044.865311",
-          "year_max": "2960.098766"
-        },
-        "USD": {
-          "reference": "3188.172550",
-          "year_min": "2607.753382",
-          "year_max": "3774.922254"
-        },
-        "RUB": {
-          "reference": "276131.017228",
-          "year_min": "225860.295369",
-          "year_max": "326950.033396"
         }
       }
     },
@@ -1014,39 +783,6 @@
         }
       }
     },
-    "VALT-BOM-0035": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2927.700000",
-          "year_min": "2277.618015",
-          "year_max": "3643.064594"
-        },
-        "GBP": {
-          "reference": "2500.000000",
-          "year_min": "2044.865311",
-          "year_max": "2960.098766"
-        },
-        "USD": {
-          "reference": "3149.015383",
-          "year_min": "2575.724928",
-          "year_max": "3728.558620"
-        },
-        "RUB": {
-          "reference": "275467.746794",
-          "year_min": "225317.775887",
-          "year_max": "326164.694998"
-        }
-      }
-    },
     "VALT-BOM-0036": {
       "unit": "pce",
       "price_per": "1",
@@ -1077,105 +813,6 @@
           "reference": "114774.623100",
           "year_min": "93879.458144",
           "year_max": "135897.688106"
-        }
-      }
-    },
-    "VALT-BOM-0037": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "911.047206",
-          "year_max": "1457.225838"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "817.946124",
-          "year_max": "1184.039507"
-        },
-        "USD": {
-          "reference": "1227.574679",
-          "year_min": "1004.089951",
-          "year_max": "1453.496918"
-        },
-        "RUB": {
-          "reference": "119004.558205",
-          "year_min": "97339.317169",
-          "year_max": "140906.098380"
-        }
-      }
-    },
-    "VALT-BOM-0038": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "911.047206",
-          "year_max": "1457.225838"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "817.946124",
-          "year_max": "1184.039507"
-        },
-        "USD": {
-          "reference": "1278.782541",
-          "year_min": "1045.975224",
-          "year_max": "1514.129049"
-        },
-        "RUB": {
-          "reference": "112832.105861",
-          "year_min": "92290.583697",
-          "year_max": "133597.670952"
-        }
-      }
-    },
-    "VALT-BOM-0039": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "911.047206",
-          "year_max": "1457.225838"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "817.946124",
-          "year_max": "1184.039507"
-        },
-        "USD": {
-          "reference": "1264.227610",
-          "year_min": "1034.070074",
-          "year_max": "1496.895435"
-        },
-        "RUB": {
-          "reference": "113519.600086",
-          "year_min": "92852.916933",
-          "year_max": "134411.691275"
         }
       }
     },
@@ -1245,39 +882,6 @@
         }
       }
     },
-    "VALT-BOM-0042": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2927.700000",
-          "year_min": "2277.618015",
-          "year_max": "3643.064594"
-        },
-        "GBP": {
-          "reference": "2500.000000",
-          "year_min": "2044.865311",
-          "year_max": "2960.098766"
-        },
-        "USD": {
-          "reference": "3192.649824",
-          "year_min": "2611.415550",
-          "year_max": "3780.223522"
-        },
-        "RUB": {
-          "reference": "279006.150375",
-          "year_min": "228211.999383",
-          "year_max": "330354.304628"
-        }
-      }
-    },
     "VALT-BOM-0043": {
       "unit": "pce",
       "price_per": "1",
@@ -1344,39 +948,6 @@
         }
       }
     },
-    "VALT-BOM-0045": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "7026.480000",
-          "year_min": "5466.283237",
-          "year_max": "8743.355026"
-        },
-        "GBP": {
-          "reference": "6000.000000",
-          "year_min": "4907.676746",
-          "year_max": "7104.237040"
-        },
-        "USD": {
-          "reference": "7529.771585",
-          "year_min": "6158.947486",
-          "year_max": "8915.547033"
-        },
-        "RUB": {
-          "reference": "667012.433767",
-          "year_min": "545580.235126",
-          "year_max": "789769.072974"
-        }
-      }
-    },
     "VALT-BOM-0046": {
       "unit": "pce",
       "price_per": "1",
@@ -1407,39 +978,6 @@
           "reference": "71340.648239",
           "year_min": "58352.806739",
           "year_max": "84470.145942"
-        }
-      }
-    },
-    "VALT-BOM-0047": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "702.650000",
-          "year_min": "546.629880",
-          "year_max": "874.337991"
-        },
-        "GBP": {
-          "reference": "600.000000",
-          "year_min": "490.767675",
-          "year_max": "710.423704"
-        },
-        "USD": {
-          "reference": "757.486942",
-          "year_min": "619.583509",
-          "year_max": "896.894465"
-        },
-        "RUB": {
-          "reference": "68966.017972",
-          "year_min": "56410.487115",
-          "year_max": "81658.489891"
         }
       }
     },
@@ -1476,39 +1014,6 @@
         }
       }
     },
-    "VALT-BOM-0049": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "911.047206",
-          "year_max": "1457.225838"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "817.946124",
-          "year_max": "1184.039507"
-        },
-        "USD": {
-          "reference": "1264.242787",
-          "year_min": "1034.082488",
-          "year_max": "1496.913405"
-        },
-        "RUB": {
-          "reference": "119420.976686",
-          "year_min": "97679.925053",
-          "year_max": "141399.154313"
-        }
-      }
-    },
     "VALT-BOM-0050": {
       "unit": "pce",
       "price_per": "1",
@@ -1542,39 +1047,6 @@
         }
       }
     },
-    "VALT-BOM-0051": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "292.770000",
-          "year_min": "227.761802",
-          "year_max": "364.306459"
-        },
-        "GBP": {
-          "reference": "250.000000",
-          "year_min": "204.486531",
-          "year_max": "296.009877"
-        },
-        "USD": {
-          "reference": "315.893748",
-          "year_min": "258.384067",
-          "year_max": "374.030677"
-        },
-        "RUB": {
-          "reference": "28853.994193",
-          "year_min": "23601.012724",
-          "year_max": "34164.269048"
-        }
-      }
-    },
     "VALT-BOM-0052": {
       "unit": "pce",
       "price_per": "1",
@@ -1605,39 +1077,6 @@
           "reference": "9274.607325",
           "year_min": "7586.129117",
           "year_max": "10981.501481"
-        }
-      }
-    },
-    "VALT-BOM-0053": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "93.690000",
-          "year_min": "72.886577",
-          "year_max": "116.582547"
-        },
-        "GBP": {
-          "reference": "80.000000",
-          "year_min": "65.435690",
-          "year_max": "94.723161"
-        },
-        "USD": {
-          "reference": "102.424314",
-          "year_min": "83.777571",
-          "year_max": "121.274434"
-        },
-        "RUB": {
-          "reference": "9471.450483",
-          "year_min": "7747.136215",
-          "year_max": "11214.571557"
         }
       }
     },
@@ -1675,40 +1114,6 @@
         }
       }
     },
-    "VALT-BOM-0055": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "electronics",
-      "drivers": {
-        "cuivre": "0.12",
-        "semi_conducteurs": "0.65",
-        "energie": "0.12",
-        "transport": "0.11"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "929.496007",
-          "year_max": "1438.884931"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "833.967529",
-          "year_max": "1168.870095"
-        },
-        "USD": {
-          "reference": "1234.745905",
-          "year_min": "1029.737991",
-          "year_max": "1443.257563"
-        },
-        "RUB": {
-          "reference": "115231.414565",
-          "year_min": "96099.258022",
-          "year_max": "134690.554501"
-        }
-      }
-    },
     "VALT-BOM-0056": {
       "unit": "pce",
       "price_per": "1",
@@ -1739,39 +1144,6 @@
           "reference": "13863.383574",
           "year_min": "11413.096436",
           "year_max": "16352.034905"
-        }
-      }
-    },
-    "VALT-BOM-0057": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "rubber",
-      "drivers": {
-        "acier": "0.12",
-        "energie": "0.63",
-        "transport": "0.25"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "140.530000",
-          "year_min": "110.035523",
-          "year_max": "174.168822"
-        },
-        "GBP": {
-          "reference": "120.000000",
-          "year_min": "98.790571",
-          "year_max": "141.541506"
-        },
-        "USD": {
-          "reference": "151.346223",
-          "year_min": "124.596498",
-          "year_max": "178.514769"
-        },
-        "RUB": {
-          "reference": "14307.718354",
-          "year_min": "11778.897157",
-          "year_max": "16876.133355"
         }
       }
     },
@@ -2437,39 +1809,6 @@
         }
       }
     },
-    "VALT-BOM-0078": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "819.760000",
-          "year_min": "637.736156",
-          "year_max": "1020.063064"
-        },
-        "GBP": {
-          "reference": "700.000000",
-          "year_min": "572.562287",
-          "year_max": "828.827655"
-        },
-        "USD": {
-          "reference": "892.150841",
-          "year_min": "729.731323",
-          "year_max": "1056.341842"
-        },
-        "RUB": {
-          "reference": "82244.204978",
-          "year_min": "67271.328716",
-          "year_max": "97380.387883"
-        }
-      }
-    },
     "VALT-BOM-0079": {
       "unit": "pce",
       "price_per": "1",
@@ -2500,39 +1839,6 @@
           "reference": "51409.155086",
           "year_min": "43376.548576",
           "year_max": "59575.360721"
-        }
-      }
-    },
-    "VALT-BOM-0080": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "526.990000",
-          "year_min": "422.960501",
-          "year_max": "641.526389"
-        },
-        "GBP": {
-          "reference": "450.000000",
-          "year_min": "379.688148",
-          "year_max": "521.481286"
-        },
-        "USD": {
-          "reference": "557.658078",
-          "year_min": "470.524805",
-          "year_max": "646.240559"
-        },
-        "RUB": {
-          "reference": "50538.649289",
-          "year_min": "42642.058058",
-          "year_max": "58566.577426"
         }
       }
     },
@@ -2603,39 +1909,6 @@
         }
       }
     },
-    "VALT-BOM-0083": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "3513.240000",
-          "year_min": "2819.715272",
-          "year_max": "4276.810130"
-        },
-        "GBP": {
-          "reference": "3000.000000",
-          "year_min": "2531.254317",
-          "year_max": "3476.541909"
-        },
-        "USD": {
-          "reference": "3691.192914",
-          "year_min": "3114.449332",
-          "year_max": "4277.528953"
-        },
-        "RUB": {
-          "reference": "345548.900956",
-          "year_min": "291557.382392",
-          "year_max": "400438.411927"
-        }
-      }
-    },
     "VALT-BOM-0084": {
       "unit": "pce",
       "price_per": "1",
@@ -2667,40 +1940,6 @@
           "reference": "145297.473224",
           "year_min": "121173.374656",
           "year_max": "169833.871345"
-        }
-      }
-    },
-    "VALT-BOM-0085": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "electronics",
-      "drivers": {
-        "cuivre": "0.12",
-        "semi_conducteurs": "0.65",
-        "energie": "0.12",
-        "transport": "0.11"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1405.300000",
-          "year_min": "1115.398383",
-          "year_max": "1726.666832"
-        },
-        "GBP": {
-          "reference": "1200.000000",
-          "year_min": "1000.761034",
-          "year_max": "1402.644114"
-        },
-        "USD": {
-          "reference": "1504.319462",
-          "year_min": "1254.553584",
-          "year_max": "1758.354032"
-        },
-        "RUB": {
-          "reference": "134989.183160",
-          "year_min": "112576.595468",
-          "year_max": "157784.819358"
         }
       }
     },
@@ -2836,39 +2075,6 @@
         }
       }
     },
-    "VALT-BOM-0090": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "7026.480000",
-          "year_min": "5466.283237",
-          "year_max": "8743.355026"
-        },
-        "GBP": {
-          "reference": "6000.000000",
-          "year_min": "4907.676746",
-          "year_max": "7104.237040"
-        },
-        "USD": {
-          "reference": "7614.870128",
-          "year_min": "6228.553509",
-          "year_max": "9016.307069"
-        },
-        "RUB": {
-          "reference": "685844.700066",
-          "year_min": "560984.014359",
-          "year_max": "812067.220270"
-        }
-      }
-    },
     "VALT-BOM-0091": {
       "unit": "pce",
       "price_per": "1",
@@ -2899,39 +2105,6 @@
           "reference": "60058.272754",
           "year_min": "50674.254054",
           "year_max": "69598.367404"
-        }
-      }
-    },
-    "VALT-BOM-0092": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "585.540000",
-          "year_min": "469.952545",
-          "year_max": "712.801688"
-        },
-        "GBP": {
-          "reference": "500.000000",
-          "year_min": "421.875719",
-          "year_max": "579.423652"
-        },
-        "USD": {
-          "reference": "615.790730",
-          "year_min": "519.574314",
-          "year_max": "713.607426"
-        },
-        "RUB": {
-          "reference": "57343.478026",
-          "year_min": "48383.642096",
-          "year_max": "66452.334855"
         }
       }
     },
@@ -2968,39 +2141,6 @@
         }
       }
     },
-    "VALT-BOM-0094": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "911.047206",
-          "year_max": "1457.225838"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "817.946124",
-          "year_max": "1184.039507"
-        },
-        "USD": {
-          "reference": "1234.814202",
-          "year_min": "1010.011491",
-          "year_max": "1462.068799"
-        },
-        "RUB": {
-          "reference": "119790.101102",
-          "year_min": "97981.848938",
-          "year_max": "141836.212205"
-        }
-      }
-    },
     "VALT-BOM-0095": {
       "unit": "pce",
       "price_per": "1",
@@ -3031,39 +2171,6 @@
           "reference": "88796.190390",
           "year_min": "77157.947421",
           "year_max": "100490.616805"
-        }
-      }
-    },
-    "VALT-BOM-0096": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "936.860000",
-          "year_min": "775.203175",
-          "year_max": "1113.587377"
-        },
-        "GBP": {
-          "reference": "800.000000",
-          "year_min": "695.146466",
-          "year_max": "905.359713"
-        },
-        "USD": {
-          "reference": "1000.978399",
-          "year_min": "869.783245",
-          "year_max": "1132.806895"
-        },
-        "RUB": {
-          "reference": "88983.520232",
-          "year_min": "77320.724518",
-          "year_max": "100702.617919"
         }
       }
     },
@@ -3100,39 +2207,6 @@
         }
       }
     },
-    "VALT-BOM-0098": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "468.430000",
-          "year_min": "375.960431",
-          "year_max": "570.238916"
-        },
-        "GBP": {
-          "reference": "400.000000",
-          "year_min": "337.500576",
-          "year_max": "463.538921"
-        },
-        "USD": {
-          "reference": "509.641010",
-          "year_min": "430.010335",
-          "year_max": "590.596110"
-        },
-        "RUB": {
-          "reference": "46966.728758",
-          "year_min": "39628.244970",
-          "year_max": "54427.266952"
-        }
-      }
-    },
     "VALT-BOM-0099": {
       "unit": "pce",
       "price_per": "1",
@@ -3163,39 +2237,6 @@
           "reference": "34820.955325",
           "year_min": "29380.231159",
           "year_max": "40352.170166"
-        }
-      }
-    },
-    "VALT-BOM-0100": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "351.320000",
-          "year_min": "281.968317",
-          "year_max": "427.676144"
-        },
-        "GBP": {
-          "reference": "300.000000",
-          "year_min": "253.125432",
-          "year_max": "347.654191"
-        },
-        "USD": {
-          "reference": "384.393040",
-          "year_min": "324.332181",
-          "year_max": "445.452838"
-        },
-        "RUB": {
-          "reference": "34997.440927",
-          "year_min": "29529.141140",
-          "year_max": "40556.690030"
         }
       }
     },
@@ -3232,39 +2273,6 @@
         }
       }
     },
-    "VALT-BOM-0102": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "468.430000",
-          "year_min": "375.960431",
-          "year_max": "570.238916"
-        },
-        "GBP": {
-          "reference": "400.000000",
-          "year_min": "337.500576",
-          "year_max": "463.538921"
-        },
-        "USD": {
-          "reference": "497.238258",
-          "year_min": "419.545495",
-          "year_max": "576.223214"
-        },
-        "RUB": {
-          "reference": "45813.681287",
-          "year_min": "38655.359507",
-          "year_max": "53091.060999"
-        }
-      }
-    },
     "VALT-BOM-0103": {
       "unit": "pce",
       "price_per": "1",
@@ -3295,39 +2303,6 @@
           "reference": "114227.857559",
           "year_min": "96379.919178",
           "year_max": "132372.644659"
-        }
-      }
-    },
-    "VALT-BOM-0104": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "911.047206",
-          "year_max": "1457.225838"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "817.946124",
-          "year_max": "1184.039507"
-        },
-        "USD": {
-          "reference": "1294.999376",
-          "year_min": "1059.239721",
-          "year_max": "1533.330422"
-        },
-        "RUB": {
-          "reference": "118317.063980",
-          "year_min": "96776.983933",
-          "year_max": "140092.078057"
         }
       }
     },
@@ -3530,39 +2505,6 @@
           "reference": "38623.002647",
           "year_min": "32588.214058",
           "year_max": "44758.162451"
-        }
-      }
-    },
-    "VALT-BOM-0111": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "409.880000",
-          "year_min": "328.968387",
-          "year_max": "498.963617"
-        },
-        "GBP": {
-          "reference": "350.000000",
-          "year_min": "295.313004",
-          "year_max": "405.596556"
-        },
-        "USD": {
-          "reference": "429.631986",
-          "year_min": "362.502606",
-          "year_max": "497.877868"
-        },
-        "RUB": {
-          "reference": "39458.323741",
-          "year_min": "33293.017433",
-          "year_max": "45726.172048"
         }
       }
     },
@@ -4099,39 +3041,6 @@
         }
       }
     },
-    "VALT-BOM-0128": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2342.160000",
-          "year_min": "1822.094412",
-          "year_max": "2914.451675"
-        },
-        "GBP": {
-          "reference": "2000.000000",
-          "year_min": "1635.892249",
-          "year_max": "2368.079013"
-        },
-        "USD": {
-          "reference": "2594.081418",
-          "year_min": "2121.818842",
-          "year_max": "3071.494882"
-        },
-        "RUB": {
-          "reference": "230488.206433",
-          "year_min": "188526.935172",
-          "year_max": "272907.142222"
-        }
-      }
-    },
     "VALT-BOM-0129": {
       "unit": "pce",
       "price_per": "1",
@@ -4162,39 +3071,6 @@
           "reference": "141813.390225",
           "year_min": "123226.346294",
           "year_max": "160490.162835"
-        }
-      }
-    },
-    "VALT-BOM-0130": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1405.300000",
-          "year_min": "1162.813036",
-          "year_max": "1670.392951"
-        },
-        "GBP": {
-          "reference": "1200.000000",
-          "year_min": "1042.719699",
-          "year_max": "1358.039569"
-        },
-        "USD": {
-          "reference": "1532.412533",
-          "year_min": "1331.563946",
-          "year_max": "1734.230714"
-        },
-        "RUB": {
-          "reference": "132103.083418",
-          "year_min": "114788.739469",
-          "year_max": "149501.012105"
         }
       }
     },
@@ -4231,39 +3107,6 @@
         }
       }
     },
-    "VALT-BOM-0132": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1405.300000",
-          "year_min": "1162.813036",
-          "year_max": "1670.392951"
-        },
-        "GBP": {
-          "reference": "1200.000000",
-          "year_min": "1042.719699",
-          "year_max": "1358.039569"
-        },
-        "USD": {
-          "reference": "1526.538941",
-          "year_min": "1326.460187",
-          "year_max": "1727.583572"
-        },
-        "RUB": {
-          "reference": "142091.618546",
-          "year_min": "123468.108086",
-          "year_max": "160805.033725"
-        }
-      }
-    },
     "VALT-BOM-0133": {
       "unit": "pce",
       "price_per": "1",
@@ -4294,39 +3137,6 @@
           "reference": "81518.295202",
           "year_min": "68781.178873",
           "year_max": "94467.256540"
-        }
-      }
-    },
-    "VALT-BOM-0134": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "819.760000",
-          "year_min": "657.936774",
-          "year_max": "997.927233"
-        },
-        "GBP": {
-          "reference": "700.000000",
-          "year_min": "590.626007",
-          "year_max": "811.193112"
-        },
-        "USD": {
-          "reference": "860.028907",
-          "year_min": "725.650627",
-          "year_max": "996.642179"
-        },
-        "RUB": {
-          "reference": "79078.947666",
-          "year_min": "66722.975880",
-          "year_max": "91640.425227"
         }
       }
     },
@@ -4363,39 +3173,6 @@
         }
       }
     },
-    "VALT-BOM-0136": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1171.080000",
-          "year_min": "939.905091",
-          "year_max": "1425.603377"
-        },
-        "GBP": {
-          "reference": "1000.000000",
-          "year_min": "843.751439",
-          "year_max": "1158.847303"
-        },
-        "USD": {
-          "reference": "1255.584196",
-          "year_min": "1059.400972",
-          "year_max": "1455.030359"
-        },
-        "RUB": {
-          "reference": "115921.215817",
-          "year_min": "97808.692645",
-          "year_max": "134334.988310"
-        }
-      }
-    },
     "VALT-BOM-0137": {
       "unit": "pce",
       "price_per": "1",
@@ -4429,39 +3206,6 @@
         }
       }
     },
-    "VALT-BOM-0138": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "468.430000",
-          "year_min": "387.601587",
-          "year_max": "556.793688"
-        },
-        "GBP": {
-          "reference": "400.000000",
-          "year_min": "347.573233",
-          "year_max": "452.679856"
-        },
-        "USD": {
-          "reference": "491.382920",
-          "year_min": "426.978875",
-          "year_max": "556.097874"
-        },
-        "RUB": {
-          "reference": "47328.469141",
-          "year_min": "41125.272576",
-          "year_max": "53561.611546"
-        }
-      }
-    },
     "VALT-BOM-0139": {
       "unit": "pce",
       "price_per": "1",
@@ -4492,39 +3236,6 @@
           "reference": "360894.642500",
           "year_min": "313593.294129",
           "year_max": "408424.337428"
-        }
-      }
-    },
-    "VALT-BOM-0140": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "EUR",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "3500.000000",
-          "year_min": "3041.265788",
-          "year_max": "3960.948744"
-        },
-        "GBP": {
-          "reference": "2988.694197",
-          "year_min": "2727.176833",
-          "year_max": "3222.973132"
-        },
-        "USD": {
-          "reference": "3758.952960",
-          "year_min": "3266.278582",
-          "year_max": "4254.005716"
-        },
-        "RUB": {
-          "reference": "360243.065000",
-          "year_min": "313027.116884",
-          "year_max": "407686.947405"
         }
       }
     },
@@ -4624,39 +3335,6 @@
           "reference": "35542.469992",
           "year_min": "29989.010198",
           "year_max": "41188.295492"
-        }
-      }
-    },
-    "VALT-BOM-0144": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "351.320000",
-          "year_min": "281.968317",
-          "year_max": "427.676144"
-        },
-        "GBP": {
-          "reference": "300.000000",
-          "year_min": "253.125432",
-          "year_max": "347.654191"
-        },
-        "USD": {
-          "reference": "384.518250",
-          "year_min": "324.437827",
-          "year_max": "445.597937"
-        },
-        "RUB": {
-          "reference": "34853.137993",
-          "year_min": "29407.385332",
-          "year_max": "40389.464965"
         }
       }
     },
@@ -4822,501 +3500,6 @@
           "reference": "108850.085022",
           "year_min": "94583.439898",
           "year_max": "123185.602164"
-        }
-      }
-    },
-    "VALT-BOM-0150": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1053.970000",
-          "year_min": "872.105640",
-          "year_max": "1252.788770"
-        },
-        "GBP": {
-          "reference": "900.000000",
-          "year_min": "782.039774",
-          "year_max": "1018.529677"
-        },
-        "USD": {
-          "reference": "1113.140550",
-          "year_min": "967.244650",
-          "year_max": "1259.740761"
-        },
-        "RUB": {
-          "reference": "107070.678011",
-          "year_min": "93037.254279",
-          "year_max": "121171.847888"
-        }
-      }
-    },
-    "VALT-BOM-0151": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1053.970000",
-          "year_min": "872.105640",
-          "year_max": "1252.788770"
-        },
-        "GBP": {
-          "reference": "900.000000",
-          "year_min": "782.039774",
-          "year_max": "1018.529677"
-        },
-        "USD": {
-          "reference": "1142.631305",
-          "year_min": "992.870142",
-          "year_max": "1293.115438"
-        },
-        "RUB": {
-          "reference": "99269.940389",
-          "year_min": "86258.935292",
-          "year_max": "112343.755921"
-        }
-      }
-    },
-    "VALT-BOM-0152": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1053.970000",
-          "year_min": "872.105640",
-          "year_max": "1252.788770"
-        },
-        "GBP": {
-          "reference": "900.000000",
-          "year_min": "782.039774",
-          "year_max": "1018.529677"
-        },
-        "USD": {
-          "reference": "1144.570948",
-          "year_min": "994.555561",
-          "year_max": "1295.310531"
-        },
-        "RUB": {
-          "reference": "107845.145706",
-          "year_min": "93710.214881",
-          "year_max": "122048.312701"
-        }
-      }
-    },
-    "VALT-BOM-0153": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1053.970000",
-          "year_min": "872.105640",
-          "year_max": "1252.788770"
-        },
-        "GBP": {
-          "reference": "900.000000",
-          "year_min": "782.039774",
-          "year_max": "1018.529677"
-        },
-        "USD": {
-          "reference": "1104.234588",
-          "year_min": "959.505964",
-          "year_max": "1249.661887"
-        },
-        "RUB": {
-          "reference": "100190.788709",
-          "year_min": "87059.090861",
-          "year_max": "113385.879633"
-        }
-      }
-    },
-    "VALT-BOM-0154": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1053.970000",
-          "year_min": "872.105640",
-          "year_max": "1252.788770"
-        },
-        "GBP": {
-          "reference": "900.000000",
-          "year_min": "782.039774",
-          "year_max": "1018.529677"
-        },
-        "USD": {
-          "reference": "1154.952130",
-          "year_min": "1003.576115",
-          "year_max": "1307.058912"
-        },
-        "RUB": {
-          "reference": "107935.465666",
-          "year_min": "93788.696881",
-          "year_max": "122150.527767"
-        }
-      }
-    },
-    "VALT-BOM-0155": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2342.160000",
-          "year_min": "1822.094412",
-          "year_max": "2914.451675"
-        },
-        "GBP": {
-          "reference": "2000.000000",
-          "year_min": "1635.892249",
-          "year_max": "2368.079013"
-        },
-        "USD": {
-          "reference": "2512.003138",
-          "year_min": "2054.683231",
-          "year_max": "2974.310956"
-        },
-        "RUB": {
-          "reference": "242205.599614",
-          "year_min": "198111.131512",
-          "year_max": "286780.998662"
-        }
-      }
-    },
-    "VALT-BOM-0156": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "composite",
-      "drivers": {
-        "aluminium": "0.14",
-        "energie": "0.65",
-        "transport": "0.21"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2342.160000",
-          "year_min": "1822.094412",
-          "year_max": "2914.451675"
-        },
-        "GBP": {
-          "reference": "2000.000000",
-          "year_min": "1635.892249",
-          "year_max": "2368.079013"
-        },
-        "USD": {
-          "reference": "2592.927951",
-          "year_min": "2120.875368",
-          "year_max": "3070.129132"
-        },
-        "RUB": {
-          "reference": "231148.016327",
-          "year_min": "189066.624117",
-          "year_max": "273688.383203"
-        }
-      }
-    },
-    "VALT-BOM-0157": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "468.430000",
-          "year_min": "387.601587",
-          "year_max": "556.793688"
-        },
-        "GBP": {
-          "reference": "400.000000",
-          "year_min": "347.573233",
-          "year_max": "452.679856"
-        },
-        "USD": {
-          "reference": "498.804538",
-          "year_min": "433.427764",
-          "year_max": "564.496916"
-        },
-        "RUB": {
-          "reference": "48288.649929",
-          "year_min": "41959.605428",
-          "year_max": "54648.247798"
-        }
-      }
-    },
-    "VALT-BOM-0158": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "468.430000",
-          "year_min": "387.601587",
-          "year_max": "556.793688"
-        },
-        "GBP": {
-          "reference": "400.000000",
-          "year_min": "347.573233",
-          "year_max": "452.679856"
-        },
-        "USD": {
-          "reference": "490.939748",
-          "year_min": "426.593788",
-          "year_max": "555.596336"
-        },
-        "RUB": {
-          "reference": "47792.641113",
-          "year_min": "41528.606958",
-          "year_max": "54086.914799"
-        }
-      }
-    },
-    "VALT-BOM-0159": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "EUR",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "3500.000000",
-          "year_min": "3041.265788",
-          "year_max": "3960.948744"
-        },
-        "GBP": {
-          "reference": "2988.694197",
-          "year_min": "2727.176833",
-          "year_max": "3222.973132"
-        },
-        "USD": {
-          "reference": "3704.997240",
-          "year_min": "3219.394672",
-          "year_max": "4192.944047"
-        },
-        "RUB": {
-          "reference": "332966.445000",
-          "year_min": "289325.559390",
-          "year_max": "376818.006338"
-        }
-      }
-    },
-    "VALT-BOM-0160": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "EUR",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "3500.000000",
-          "year_min": "3041.265788",
-          "year_max": "3960.948744"
-        },
-        "GBP": {
-          "reference": "2988.694197",
-          "year_min": "2727.176833",
-          "year_max": "3222.973132"
-        },
-        "USD": {
-          "reference": "3886.142400",
-          "year_min": "3376.797694",
-          "year_max": "4397.945960"
-        },
-        "RUB": {
-          "reference": "348638.780000",
-          "year_min": "302943.769750",
-          "year_max": "394554.382234"
-        }
-      }
-    },
-    "VALT-BOM-0161": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "351.320000",
-          "year_min": "281.968317",
-          "year_max": "427.676144"
-        },
-        "GBP": {
-          "reference": "300.000000",
-          "year_min": "253.125432",
-          "year_max": "347.654191"
-        },
-        "USD": {
-          "reference": "376.090449",
-          "year_min": "317.326857",
-          "year_max": "435.831402"
-        },
-        "RUB": {
-          "reference": "33895.963140",
-          "year_min": "28599.767672",
-          "year_max": "39280.245468"
-        }
-      }
-    },
-    "VALT-BOM-0162": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "351.320000",
-          "year_min": "281.968317",
-          "year_max": "427.676144"
-        },
-        "GBP": {
-          "reference": "300.000000",
-          "year_min": "253.125432",
-          "year_max": "347.654191"
-        },
-        "USD": {
-          "reference": "368.304636",
-          "year_min": "310.757566",
-          "year_max": "426.808834"
-        },
-        "RUB": {
-          "reference": "35088.106079",
-          "year_min": "29605.639993",
-          "year_max": "40661.757097"
-        }
-      }
-    },
-    "VALT-BOM-0163": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "702.650000",
-          "year_min": "581.406518",
-          "year_max": "835.196476"
-        },
-        "GBP": {
-          "reference": "600.000000",
-          "year_min": "521.359849",
-          "year_max": "679.019785"
-        },
-        "USD": {
-          "reference": "757.914940",
-          "year_min": "658.577365",
-          "year_max": "857.732066"
-        },
-        "RUB": {
-          "reference": "68046.895560",
-          "year_min": "59128.198706",
-          "year_max": "77008.647289"
-        }
-      }
-    },
-    "VALT-BOM-0164": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "702.650000",
-          "year_min": "581.406518",
-          "year_max": "835.196476"
-        },
-        "GBP": {
-          "reference": "600.000000",
-          "year_min": "521.359849",
-          "year_max": "679.019785"
-        },
-        "USD": {
-          "reference": "738.550300",
-          "year_min": "641.750788",
-          "year_max": "835.817109"
-        },
-        "RUB": {
-          "reference": "66111.063190",
-          "year_min": "57446.089919",
-          "year_max": "74817.866492"
         }
       }
     },
@@ -5719,39 +3902,6 @@
         }
       }
     },
-    "VALT-BOM-0177": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "257.640000",
-          "year_min": "213.183769",
-          "year_max": "306.240689"
-        },
-        "GBP": {
-          "reference": "220.000000",
-          "year_min": "191.165278",
-          "year_max": "248.973921"
-        },
-        "USD": {
-          "reference": "276.765339",
-          "year_min": "240.490559",
-          "year_max": "313.215234"
-        },
-        "RUB": {
-          "reference": "25805.151549",
-          "year_min": "22422.949877",
-          "year_max": "29203.680749"
-        }
-      }
-    },
     "VALT-BOM-0178": {
       "unit": "pce",
       "price_per": "1",
@@ -5782,39 +3932,6 @@
           "reference": "19800.250897",
           "year_min": "16706.490185",
           "year_max": "22945.467350"
-        }
-      }
-    },
-    "VALT-BOM-0179": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "210.790000",
-          "year_min": "169.179385",
-          "year_max": "256.603252"
-        },
-        "GBP": {
-          "reference": "180.000000",
-          "year_min": "151.875259",
-          "year_max": "208.592515"
-        },
-        "USD": {
-          "reference": "231.682662",
-          "year_min": "195.482579",
-          "year_max": "268.484828"
-        },
-        "RUB": {
-          "reference": "21151.079640",
-          "year_min": "17846.253881",
-          "year_max": "24510.871597"
         }
       }
     },
@@ -6149,105 +4266,6 @@
         }
       }
     },
-    "VALT-BOM-0190": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "EUR",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "600.000000",
-          "year_min": "506.250863",
-          "year_max": "695.308382"
-        },
-        "GBP": {
-          "reference": "512.347577",
-          "year_min": "453.886846",
-          "year_max": "565.329056"
-        },
-        "USD": {
-          "reference": "662.494464",
-          "year_min": "558.980657",
-          "year_max": "767.729923"
-        },
-        "RUB": {
-          "reference": "56567.565000",
-          "year_min": "47728.964364",
-          "year_max": "65553.170138"
-        }
-      }
-    },
-    "VALT-BOM-0191": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "EUR",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "600.000000",
-          "year_min": "506.250863",
-          "year_max": "695.308382"
-        },
-        "GBP": {
-          "reference": "512.347577",
-          "year_min": "453.886846",
-          "year_max": "565.329056"
-        },
-        "USD": {
-          "reference": "642.782304",
-          "year_min": "542.348494",
-          "year_max": "744.886539"
-        },
-        "RUB": {
-          "reference": "56280.339000",
-          "year_min": "47486.617013",
-          "year_max": "65220.319062"
-        }
-      }
-    },
-    "VALT-BOM-0192": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "EUR",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "600.000000",
-          "year_min": "506.250863",
-          "year_max": "695.308382"
-        },
-        "GBP": {
-          "reference": "512.347577",
-          "year_min": "453.886846",
-          "year_max": "565.329056"
-        },
-        "USD": {
-          "reference": "637.125264",
-          "year_min": "537.575358",
-          "year_max": "738.330894"
-        },
-        "RUB": {
-          "reference": "61685.625000",
-          "year_min": "52047.334853",
-          "year_max": "71484.220165"
-        }
-      }
-    },
     "VALT-BOM-0193": {
       "unit": "pce",
       "price_per": "1",
@@ -6512,39 +4530,6 @@
           "reference": "57868.326805",
           "year_min": "48826.484008",
           "year_max": "67060.554447"
-        }
-      }
-    },
-    "VALT-BOM-0201": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "585.540000",
-          "year_min": "469.952545",
-          "year_max": "712.801688"
-        },
-        "GBP": {
-          "reference": "500.000000",
-          "year_min": "421.875719",
-          "year_max": "579.423652"
-        },
-        "USD": {
-          "reference": "644.141733",
-          "year_min": "543.495514",
-          "year_max": "746.461910"
-        },
-        "RUB": {
-          "reference": "58430.088025",
-          "year_min": "49300.470846",
-          "year_max": "67711.549922"
         }
       }
     },
@@ -7044,39 +5029,6 @@
         }
       }
     },
-    "VALT-BOM-0217": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "aluminium",
-      "drivers": {
-        "aluminium": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "7845.060000",
-          "year_min": "6383.983856",
-          "year_max": "9419.467235"
-        },
-        "GBP": {
-          "reference": "6699.000000",
-          "year_min": "5725.190221",
-          "year_max": "7653.616166"
-        },
-        "USD": {
-          "reference": "8527.516832",
-          "year_min": "7287.902071",
-          "year_max": "9742.699012"
-        },
-        "RUB": {
-          "reference": "793069.157567",
-          "year_min": "677783.517775",
-          "year_max": "906082.538435"
-        }
-      }
-    },
     "VALT-BOM-0218": {
       "unit": "pce",
       "price_per": "1",
@@ -7404,39 +5356,6 @@
           "reference": "757013.183356",
           "year_min": "646968.872162",
           "year_max": "864888.541257"
-        }
-      }
-    },
-    "VALT-BOM-0228": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "aluminium",
-      "drivers": {
-        "aluminium": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "7845.060000",
-          "year_min": "6383.983856",
-          "year_max": "9419.467235"
-        },
-        "GBP": {
-          "reference": "6699.000000",
-          "year_min": "5725.190221",
-          "year_max": "7653.616166"
-        },
-        "USD": {
-          "reference": "8602.347407",
-          "year_min": "7351.854793",
-          "year_max": "9828.193041"
-        },
-        "RUB": {
-          "reference": "802960.209215",
-          "year_min": "686236.742461",
-          "year_max": "917383.077738"
         }
       }
     },
@@ -7969,39 +5888,6 @@
         }
       }
     },
-    "VALT-BOM-0245": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "aluminium",
-      "drivers": {
-        "aluminium": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "7845.060000",
-          "year_min": "6383.983856",
-          "year_max": "9419.467235"
-        },
-        "GBP": {
-          "reference": "6699.000000",
-          "year_min": "5725.190221",
-          "year_max": "7653.616166"
-        },
-        "USD": {
-          "reference": "8230.838001",
-          "year_min": "7034.350386",
-          "year_max": "9403.743064"
-        },
-        "RUB": {
-          "reference": "752639.483956",
-          "year_min": "643230.961871",
-          "year_max": "859891.584034"
-        }
-      }
-    },
     "VALT-BOM-0246": {
       "unit": "pce",
       "price_per": "1",
@@ -8131,39 +6017,6 @@
           "reference": "73905.851096",
           "year_min": "62358.168206",
           "year_max": "85645.596219"
-        }
-      }
-    },
-    "VALT-BOM-0250": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "784.510000",
-          "year_min": "629.645236",
-          "year_max": "955.015973"
-        },
-        "GBP": {
-          "reference": "669.900000",
-          "year_min": "565.229089",
-          "year_max": "776.311808"
-        },
-        "USD": {
-          "reference": "865.927703",
-          "year_min": "730.627745",
-          "year_max": "1003.477983"
-        },
-        "RUB": {
-          "reference": "74689.411839",
-          "year_min": "63019.298710",
-          "year_max": "86553.623473"
         }
       }
     },
@@ -8471,39 +6324,6 @@
         }
       }
     },
-    "VALT-BOM-0260": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "5491.550000",
-          "year_min": "4543.973479",
-          "year_max": "6527.464892"
-        },
-        "GBP": {
-          "reference": "4689.300000",
-          "year_min": "4074.687903",
-          "year_max": "5306.879127"
-        },
-        "USD": {
-          "reference": "5803.336486",
-          "year_min": "5042.711061",
-          "year_max": "6567.633818"
-        },
-        "RUB": {
-          "reference": "524392.640029",
-          "year_min": "455662.113088",
-          "year_max": "593454.962568"
-        }
-      }
-    },
     "VALT-BOM-0261": {
       "unit": "pce",
       "price_per": "1",
@@ -8534,39 +6354,6 @@
           "reference": "73794.576198",
           "year_min": "64122.548560",
           "year_max": "83513.295406"
-        }
-      }
-    },
-    "VALT-BOM-0262": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "784.510000",
-          "year_min": "649.141433",
-          "year_max": "932.498381"
-        },
-        "GBP": {
-          "reference": "669.900000",
-          "year_min": "582.098272",
-          "year_max": "758.125590"
-        },
-        "USD": {
-          "reference": "865.317668",
-          "year_min": "751.903149",
-          "year_max": "979.279694"
-        },
-        "RUB": {
-          "reference": "73894.259961",
-          "year_min": "64209.167080",
-          "year_max": "83626.107485"
         }
       }
     },
@@ -9299,39 +7086,6 @@
         }
       }
     },
-    "VALT-BOM-0285": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "1882.820000",
-          "year_min": "1557.936128",
-          "year_max": "2237.991359"
-        },
-        "GBP": {
-          "reference": "1607.760000",
-          "year_min": "1397.035853",
-          "year_max": "1819.501415"
-        },
-        "USD": {
-          "reference": "1976.566060",
-          "year_min": "1717.503639",
-          "year_max": "2236.879101"
-        },
-        "RUB": {
-          "reference": "192314.143757",
-          "year_min": "167108.121724",
-          "year_max": "217641.847487"
-        }
-      }
-    },
     "VALT-BOM-0286": {
       "unit": "pce",
       "price_per": "1",
@@ -9362,39 +7116,6 @@
           "reference": "95176.000275",
           "year_min": "82701.575290",
           "year_max": "107710.645362"
-        }
-      }
-    },
-    "VALT-BOM-0287": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "941.410000",
-          "year_min": "778.968064",
-          "year_max": "1118.995680"
-        },
-        "GBP": {
-          "reference": "803.880000",
-          "year_min": "698.517926",
-          "year_max": "909.750708"
-        },
-        "USD": {
-          "reference": "1018.284486",
-          "year_min": "884.821077",
-          "year_max": "1152.392188"
-        },
-        "RUB": {
-          "reference": "93061.781697",
-          "year_min": "80864.460824",
-          "year_max": "105317.984956"
         }
       }
     },
@@ -10491,39 +8212,6 @@
         }
       }
     },
-    "VALT-BOM-0321": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "steel",
-      "drivers": {
-        "acier": "0.62",
-        "energie": "0.25",
-        "transport": "0.13"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2353.520000",
-          "year_min": "1947.416023",
-          "year_max": "2797.483256"
-        },
-        "GBP": {
-          "reference": "2009.700000",
-          "year_min": "1746.294816",
-          "year_max": "2274.376769"
-        },
-        "USD": {
-          "reference": "2542.564140",
-          "year_min": "2209.318096",
-          "year_max": "2877.418926"
-        },
-        "RUB": {
-          "reference": "226573.276259",
-          "year_min": "196877.015329",
-          "year_max": "256412.895448"
-        }
-      }
-    },
     "VALT-BOM-0322": {
       "unit": "pce",
       "price_per": "1",
@@ -10788,39 +8476,6 @@
         }
       }
     },
-    "VALT-BOM-0385": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "cable",
-      "drivers": {
-        "cuivre": "0.70",
-        "energie": "0.18",
-        "transport": "0.12"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "2927.700000",
-          "year_min": "2358.464111",
-          "year_max": "3561.119783"
-        },
-        "GBP": {
-          "reference": "2500.000000",
-          "year_min": "2114.984272",
-          "year_max": "2895.497115"
-        },
-        "USD": {
-          "reference": "3106.727918",
-          "year_min": "2628.272273",
-          "year_max": "3598.208690"
-        },
-        "RUB": {
-          "reference": "291342.980466",
-          "year_min": "246474.328519",
-          "year_max": "337433.103766"
-        }
-      }
-    },
     "VALT-BOM-0386": {
       "unit": "pce",
       "price_per": "1",
@@ -10851,39 +8506,6 @@
           "reference": "77354.205416",
           "year_min": "65441.171116",
           "year_max": "89591.551447"
-        }
-      }
-    },
-    "VALT-BOM-0387": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "cable",
-      "drivers": {
-        "cuivre": "0.70",
-        "energie": "0.18",
-        "transport": "0.12"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "819.760000",
-          "year_min": "660.373173",
-          "year_max": "997.118405"
-        },
-        "GBP": {
-          "reference": "700.000000",
-          "year_min": "592.195596",
-          "year_max": "810.739192"
-        },
-        "USD": {
-          "reference": "862.865538",
-          "year_min": "729.978817",
-          "year_max": "999.369871"
-        },
-        "RUB": {
-          "reference": "79679.700584",
-          "year_min": "67408.525398",
-          "year_max": "92284.937266"
         }
       }
     },
@@ -11556,40 +9178,6 @@
           "reference": "7225.670489",
           "year_min": "6025.974560",
           "year_max": "8445.870151"
-        }
-      }
-    },
-    "VALT-BOM-0409": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "electronics",
-      "drivers": {
-        "cuivre": "0.12",
-        "semi_conducteurs": "0.65",
-        "energie": "0.12",
-        "transport": "0.11"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "70.260000",
-          "year_min": "55.765951",
-          "year_max": "86.327198"
-        },
-        "GBP": {
-          "reference": "60.000000",
-          "year_min": "50.038052",
-          "year_max": "70.132206"
-        },
-        "USD": {
-          "reference": "76.011011",
-          "year_min": "63.390715",
-          "year_max": "88.846998"
-        },
-        "RUB": {
-          "reference": "6905.246246",
-          "year_min": "5758.751146",
-          "year_max": "8071.335836"
         }
       }
     },
@@ -12921,39 +10509,6 @@
           "reference": "11610.660738",
           "year_min": "9796.511704",
           "year_max": "13454.982882"
-        }
-      }
-    },
-    "VALT-BOM-0450": {
-      "unit": "pce",
-      "price_per": "1",
-      "origin_currency": "GBP",
-      "profile": "default",
-      "drivers": {
-        "acier": "0.27",
-        "energie": "0.46",
-        "transport": "0.27"
-      },
-      "prices": {
-        "EUR": {
-          "reference": "117.110000",
-          "year_min": "93.992114",
-          "year_max": "142.562772"
-        },
-        "GBP": {
-          "reference": "100.000000",
-          "year_min": "84.375144",
-          "year_max": "115.884730"
-        },
-        "USD": {
-          "reference": "125.896745",
-          "year_min": "106.225559",
-          "year_max": "145.895103"
-        },
-        "RUB": {
-          "reference": "12025.932798",
-          "year_min": "10146.898102",
-          "year_max": "13936.219789"
         }
       }
     },

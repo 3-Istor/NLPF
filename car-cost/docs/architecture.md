@@ -51,9 +51,10 @@ Au démarrage, le backend applique les migrations manquantes puis, **pour chaque
 bloque le démarrage avec un diagnostic, sans rien écraser.
 
 Les quatre nomenclatures n'ont pas la même forme : le Multipla (474 pièces, 689 arêtes) est un
-**DAG** à pièces partagées ; les trois Valhalla importées (399 à 498 pièces) le sont aussi, mais
-seulement par leurs fixations : chaque type de vis est une pièce, montée sous chaque ensemble qui
-l'utilise, comme la vis M6 du Multipla. Le reste du fichier source est un arbre.
+**DAG** à pièces partagées ; les trois Valhalla importées (324 à 418 pièces) le sont aussi. Le
+fichier source fait une ligne par emplacement (« Ressort AV gauche », « … AR droit ») et par
+interface de fixation ; l'import en fait une pièce et une quantité (« Ressort » × 4), et chaque
+type de vis est monté sous chaque ensemble qui l'utilise, comme la vis M6 du Multipla.
 
 ---
 

@@ -1,182 +1,125 @@
 bom_version_id,part_ref,label,category,system,unit,valuation_mode,labour_minutes,base_price_eur,price_per,material_ref,mass_kg,carbon_factor_kg_co2e_per_unit,expected_cumulative_quantity
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0003,Jeu logiciels/calibrations véhicule,vehicle,VEH,jeu,purchased,,5855.400000,1,,0.000000,0.000000,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0004,Plaque VIN / plaque constructeur,vehicle,VEH,pce,purchased,,23.420000,1,,0.912353,4.335501,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0005,Étiquettes réglementaires et sécurité,vehicle,VEH,jeu,purchased,,5.860000,1,,0.029449,0.103628,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0004,Plaque VIN / plaque constructeur,vehicle,VEH,pce,purchased,,23.420000,1,,0.921014,4.376659,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0005,Étiquettes réglementaires et sécurité,vehicle,VEH,jeu,purchased,,5.860000,1,,0.029728,0.104610,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0006,Monocoque carbone – cuve inférieure,body,CAR,pce,purchased,,58554.000000,1,,76.676000,2216.503802,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0007,Structure supérieure carbone / cellule sécurité,body,CAR,pce,purchased,,29277.000000,1,,34.554400,667.660117,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0008,Inserts métalliques monocoque,body,CAR,pce,purchased,,14.050000,1,,0.007209,0.197134,60.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0009,Cloison avant,body,CAR,pce,purchased,,1171.080000,1,,1.510936,40.865077,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0010,Cloison arrière / pare-feu,body,CAR,pce,purchased,,1171.080000,1,,2.608875,68.107291,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0008,Inserts métalliques monocoque,body,CAR,pce,purchased,,14.050000,1,,0.007278,0.199021,60.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0009,Cloison avant,body,CAR,pce,purchased,,1171.080000,1,,1.525279,41.253001,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0010,Cloison arrière / pare-feu,body,CAR,pce,purchased,,1171.080000,1,,2.633641,68.753832,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0011,Sous-cadre avant aluminium,body,CAR,pce,purchased,,7026.480000,1,,16.990000,172.706748,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0012,Sous-cadre arrière aluminium,body,CAR,pce,purchased,,7612.020000,1,,14.878000,166.551771,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0013,Crash-box avant gauche,body,CAR,pce,purchased,,1756.620000,1,,3.999597,97.785347,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0014,Crash-box avant droit,body,CAR,pce,purchased,,1756.620000,1,,1.609439,40.696918,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0015,Traverse pare-chocs avant,body,CAR,pce,purchased,,1405.300000,1,,0.892664,22.070403,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0016,Crash-box arrière gauche,body,CAR,pce,purchased,,1756.620000,1,,2.714386,68.609363,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0017,Crash-box arrière droit,body,CAR,pce,purchased,,1756.620000,1,,4.609693,130.485658,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0018,Traverse pare-chocs arrière,body,CAR,pce,purchased,,1405.300000,1,,3.621937,93.241697,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0019,Renforts latéraux / anti-intrusion,body,CAR,pce,purchased,,1171.080000,1,,3.773391,98.148164,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0020,Supports groupes motopropulseurs électriques,body,CAR,pce,purchased,,702.650000,1,,2.839327,6.288144,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0021,Silentblocs groupes électriques,body,CAR,pce,purchased,,292.770000,1,,0.464149,1.547426,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0022,Supports batterie HV 800 V,body,CAR,pce,purchased,,761.200000,1,,2.500675,54.723271,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0023,Protections structurelles batterie HV 800 V,body,CAR,pce,purchased,,1639.510000,1,,1.878918,42.206135,5.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0024,Panneau avant / capot,body,CAR,pce,purchased,,2927.700000,1,,1.113809,27.817380,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0025,Aile avant gauche,body,CAR,pce,purchased,,2927.700000,1,,0.807398,21.926669,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0026,Aile avant droite,body,CAR,pce,purchased,,2927.700000,1,,3.064792,85.013039,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0027,Panneau de toit / canal refroidissement,body,CAR,pce,purchased,,2927.700000,1,,3.613372,104.342621,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0028,Panneau latéral gauche,body,CAR,pce,purchased,,2927.700000,1,,3.498517,87.696626,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0029,Panneau latéral droit,body,CAR,pce,purchased,,2927.700000,1,,1.348581,36.875329,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0030,Quarter panel arrière gauche,body,CAR,pce,purchased,,2927.700000,1,,1.443580,38.794769,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0031,Quarter panel arrière droit,body,CAR,pce,purchased,,2927.700000,1,,1.451367,35.511177,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0032,Panneau arrière,body,CAR,pce,purchased,,2927.700000,1,,1.898718,49.853879,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0033,Cache groupe électrique / deck lid,body,CAR,pce,purchased,,1405.300000,1,,1.012970,24.851598,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0034,Bas de caisse gauche,body,CAR,pce,purchased,,2927.700000,1,,4.534161,115.232074,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0035,Bas de caisse droit,body,CAR,pce,purchased,,2927.700000,1,,1.477842,41.813470,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0036,Doublure passage de roue AV G,body,CAR,pce,purchased,,1171.080000,1,,1.646037,44.830147,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0037,Doublure passage de roue AV D,body,CAR,pce,purchased,,1171.080000,1,,2.107015,57.401410,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0038,Doublure passage de roue AR G,body,CAR,pce,purchased,,1171.080000,1,,2.187219,65.448592,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0039,Doublure passage de roue AR D,body,CAR,pce,purchased,,1171.080000,1,,2.937478,83.464325,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0040,Fond plat avant,body,CAR,pce,purchased,,2927.700000,1,,4.190374,103.927980,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0041,Fond plat central,body,CAR,pce,purchased,,2927.700000,1,,1.983595,51.026791,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0042,Fond plat arrière,body,CAR,pce,purchased,,2927.700000,1,,3.839189,106.005383,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0043,Panneaux d'accès sous caisse,body,CAR,pce,purchased,,2927.700000,1,,4.627603,134.021862,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0044,Porte dièdre gauche,body,CAR,pce,purchased,,7026.480000,1,,15.408100,396.290169,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0045,Porte dièdre droite,body,CAR,pce,purchased,,7026.480000,1,,15.991000,423.054698,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0046,Charnière porte gauche,body,CAR,pce,purchased,,702.650000,1,,2.844036,71.645817,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0047,Charnière porte droite,body,CAR,pce,purchased,,702.650000,1,,2.547748,66.445777,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0048,Assistance ouverture porte gauche,body,CAR,pce,purchased,,1171.080000,1,,1.734417,45.033097,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0049,Assistance ouverture porte droite,body,CAR,pce,purchased,,1171.080000,1,,2.870122,84.726001,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0050,Serrure porte gauche,body,CAR,pce,purchased,,292.770000,1,,1.744150,49.821296,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0051,Serrure porte droite,body,CAR,pce,purchased,,292.770000,1,,4.147157,100.380276,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0052,Gâche porte gauche,body,CAR,pce,purchased,,93.690000,1,,2.552420,61.466357,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0053,Gâche porte droite,body,CAR,pce,purchased,,93.690000,1,,2.140109,55.413842,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0054,Poignée/commande extérieure gauche,body,CAR,pce,purchased,,1171.080000,1,,0.755181,28.091223,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0055,Poignée/commande extérieure droite,body,CAR,pce,purchased,,1171.080000,1,,0.466193,17.999339,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0056,Joint périphérique porte gauche,body,CAR,pce,purchased,,140.530000,1,,0.717025,2.798907,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0057,Joint périphérique porte droite,body,CAR,pce,purchased,,140.530000,1,,0.333525,1.306117,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0058,Splitter avant carbone,body,CAR,pce,purchased,,2927.700000,1,,1.812285,53.815078,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0059,Aile avant active,body,CAR,pce,purchased,,7026.480000,1,,3.356018,92.110612,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0060,Éléments aile avant active,body,CAR,pce,purchased,,7026.480000,1,,2.334779,65.409301,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0061,Axe/pivots aile avant,body,CAR,pce,purchased,,936.860000,1,,2.108962,59.236103,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0062,Actionneur aile avant,body,CAR,pce,purchased,,1756.620000,1,,3.255568,86.343523,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0063,Capteur position aile avant,body,CAR,pce,purchased,,210.790000,1,,0.122642,3.734106,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0064,Aileron arrière actif,body,CAR,pce,purchased,,9368.640000,1,,4.072014,119.018454,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0065,Pylônes/bras aileron arrière,body,CAR,pce,purchased,,936.860000,1,,3.495420,8.104201,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0066,Actionneur hydraulique aileron arrière,body,CAR,pce,purchased,,1756.620000,1,,4.496784,118.000109,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0067,Capteur position aileron arrière,body,CAR,pce,purchased,,210.790000,1,,0.083664,3.039162,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0068,Diffuseur arrière carbone,body,CAR,pce,purchased,,4684.320000,1,,2.786803,77.663183,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0069,Tunnels Venturi arrière,body,CAR,pce,purchased,,936.860000,1,,1.937968,8.366208,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0070,Volets/ailettes sous-plancher actifs,body,CAR,pce,purchased,,585.540000,1,,1.747488,9.636348,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0071,By-pass refroidissement actif,body,CAR,pce,purchased,,936.860000,1,,1.237230,5.830818,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0072,Calandre avant,body,CAR,pce,purchased,,936.860000,1,,3.427008,8.273757,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0073,Mesh extraction arrière,body,CAR,pce,purchased,,702.650000,1,,2.260397,10.514463,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0074,Prise d'air de toit refroidissement e-axles,body,CAR,pce,purchased,,2927.700000,1,,5.928165,65.584475,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0013,Crash-box,body,CAR,pce,purchased,,1756.620000,1,,4.037565,98.713619,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0015,Traverse pare-chocs,body,CAR,pce,purchased,,1405.300000,1,,0.901138,22.279916,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0019,Renforts latéraux / anti-intrusion,body,CAR,pce,purchased,,1171.080000,1,,3.809211,99.079864,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0020,Supports groupes motopropulseurs électriques,body,CAR,pce,purchased,,702.650000,1,,2.866281,6.347838,6.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0021,Silentblocs groupes électriques,body,CAR,pce,purchased,,292.770000,1,,0.468555,1.562116,6.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0022,Supports batterie HV 800 V,body,CAR,pce,purchased,,761.200000,1,,2.524414,55.242761,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0023,Protections structurelles batterie HV 800 V,body,CAR,pce,purchased,,1639.510000,1,,1.896754,42.606785,5.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0024,Panneau avant / capot,body,CAR,pce,purchased,,2927.700000,1,,1.124382,28.081440,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0025,Aile,body,CAR,pce,purchased,,2927.700000,1,,0.815063,22.134829,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0027,Panneau de toit / canal refroidissement,body,CAR,pce,purchased,,2927.700000,1,,3.647674,105.333153,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0028,Panneau latéral,body,CAR,pce,purchased,,2927.700000,1,,3.531728,88.529119,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0030,Quarter panel,body,CAR,pce,purchased,,2927.700000,1,,1.457284,39.163050,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0032,Panneau arrière,body,CAR,pce,purchased,,2927.700000,1,,1.916743,50.327154,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0033,Cache groupe électrique / deck lid,body,CAR,pce,purchased,,1405.300000,1,,1.022586,25.087511,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0034,Bas de caisse,body,CAR,pce,purchased,,2927.700000,1,,4.577204,116.325978,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0036,Doublure passage de roue,body,CAR,pce,purchased,,1171.080000,1,,1.661663,45.255724,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0040,Fond plat,body,CAR,pce,purchased,,2927.700000,1,,4.230153,104.914563,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0041,Fond plat central,body,CAR,pce,purchased,,2927.700000,1,,2.002425,51.511182,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0043,Panneaux d'accès sous caisse,body,CAR,pce,purchased,,2927.700000,1,,4.671532,135.294107,6.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0044,Porte dièdre,body,CAR,pce,purchased,,7026.480000,1,,15.408100,396.290169,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0046,Charnière porte,body,CAR,pce,purchased,,702.650000,1,,2.871034,72.325940,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0048,Assistance ouverture porte,body,CAR,pce,purchased,,1171.080000,1,,1.750882,45.460601,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0050,Serrure porte,body,CAR,pce,purchased,,292.770000,1,,1.760708,50.294272,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0052,Gâche porte,body,CAR,pce,purchased,,93.690000,1,,2.576650,62.049855,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0054,Poignée/commande extérieure,body,CAR,pce,purchased,,1171.080000,1,,0.762349,28.357858,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0056,Joint périphérique porte,body,CAR,pce,purchased,,140.530000,1,,0.723832,2.825478,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0058,Splitter avant carbone,body,CAR,pce,purchased,,2927.700000,1,,1.829489,54.325944,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0059,Aile avant active,body,CAR,pce,purchased,,7026.480000,1,,3.387877,92.985027,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0060,Éléments aile avant active,body,CAR,pce,purchased,,7026.480000,1,,2.356943,66.030230,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0061,Axe/pivots aile avant,body,CAR,pce,purchased,,936.860000,1,,2.128982,59.798421,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0062,Actionneur aile avant,body,CAR,pce,purchased,,1756.620000,1,,3.286473,87.163180,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0063,Capteur position aile avant,body,CAR,pce,purchased,,210.790000,1,,0.123806,3.769546,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0064,Aileron arrière actif,body,CAR,pce,purchased,,9368.640000,1,,4.110670,120.148307,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0065,Pylônes/bras aileron arrière,body,CAR,pce,purchased,,936.860000,1,,3.528602,8.181134,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0066,Actionneur hydraulique aileron arrière,body,CAR,pce,purchased,,1756.620000,1,,4.539472,119.120285,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0067,Capteur position aileron arrière,body,CAR,pce,purchased,,210.790000,1,,0.084458,3.068004,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0068,Diffuseur arrière carbone,body,CAR,pce,purchased,,4684.320000,1,,2.813258,78.400437,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0069,Tunnels Venturi arrière,body,CAR,pce,purchased,,936.860000,1,,1.956365,8.445628,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0070,Volets/ailettes sous-plancher actifs,body,CAR,pce,purchased,,585.540000,1,,1.764077,9.727826,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0071,By-pass refroidissement actif,body,CAR,pce,purchased,,936.860000,1,,1.248975,5.886169,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0072,Calandre avant,body,CAR,pce,purchased,,936.860000,1,,3.459540,8.352298,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0073,Mesh extraction arrière,body,CAR,pce,purchased,,702.650000,1,,2.281855,10.614277,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0074,Prise d'air de toit refroidissement e-axles,body,CAR,pce,purchased,,2927.700000,1,,5.984441,66.207068,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0075,Pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,12.838800,63.652203,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0076,Joint/adhésif pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,0.898166,3.129031,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0077,Vitre porte gauche,glazing,CAR,pce,purchased,,819.760000,1,,0.971311,24.268982,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0078,Vitre porte droite,glazing,CAR,pce,purchased,,819.760000,1,,2.552420,73.410152,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0079,Lève-vitre gauche,glazing,CAR,pce,purchased,,526.990000,1,,1.770941,8.400282,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0080,Lève-vitre droit,glazing,CAR,pce,purchased,,526.990000,1,,2.260601,11.736588,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0081,Caméra/affichage rétroviseur numérique,glazing,CAR,pce,purchased,,1405.300000,1,,0.173312,7.227180,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0082,Projecteur Matrix LED gauche,glazing,CAR,pce,purchased,,3513.240000,1,,1.627979,9.573168,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0083,Projecteur Matrix LED droit,glazing,CAR,pce,purchased,,3513.240000,1,,1.596368,7.138000,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0084,Feu arrière LED gauche,glazing,CAR,pce,purchased,,1405.300000,1,,0.986643,36.040885,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0085,Feu arrière LED droit,glazing,CAR,pce,purchased,,1405.300000,1,,0.648988,25.908250,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0086,Feu stop central,glazing,CAR,pce,purchased,,292.770000,1,,2.126816,11.792344,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0087,Éclairage plaque,glazing,CAR,pce,purchased,,292.770000,1,,0.326638,1.426689,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0088,Catadioptres/marqueurs,glazing,CAR,pce,purchased,,292.770000,1,,0.008059,0.044929,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0089,Coque siège carbone conducteur,interior,INT,pce,purchased,,7026.480000,1,,10.934800,283.810547,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0090,Coque siège carbone passager,interior,INT,pce,purchased,,7026.480000,1,,9.559800,238.429060,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0091,Coussin/foam siège conducteur,interior,INT,pce,purchased,,585.540000,1,,2.268350,12.037680,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0092,Coussin/foam siège passager,interior,INT,pce,purchased,,585.540000,1,,1.768290,8.163841,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0093,Garniture siège conducteur,interior,INT,pce,purchased,,1171.080000,1,,0.944057,25.101532,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0094,Garniture siège passager,interior,INT,pce,purchased,,1171.080000,1,,1.399974,39.753102,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0095,Rail/fixation siège conducteur,interior,INT,pce,purchased,,936.860000,1,,3.284176,8.709241,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0096,Rail/fixation siège passager,interior,INT,pce,purchased,,936.860000,1,,2.085787,4.718050,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0097,Ceinture 3 points conducteur,interior,INT,pce,purchased,,468.430000,1,,0.388635,2.139669,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0098,Ceinture 3 points passager,interior,INT,pce,purchased,,468.430000,1,,2.272837,12.297412,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0099,Prétensionneur conducteur,interior,INT,pce,purchased,,351.320000,1,,0.285850,1.491165,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0100,Prétensionneur passager,interior,INT,pce,purchased,,351.320000,1,,0.550972,2.932493,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0101,Boucle ceinture conducteur,interior,INT,pce,purchased,,468.430000,1,,1.893101,9.663523,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0102,Boucle ceinture passager,interior,INT,pce,purchased,,468.430000,1,,2.087660,10.411995,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0103,Airbag conducteur,interior,INT,pce,purchased,,1171.080000,1,,1.499293,6.795396,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0104,Airbag passager avant,interior,INT,pce,purchased,,1171.080000,1,,1.029322,28.679793,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0105,ECU airbag/SRS,interior,INT,pce,purchased,,1171.080000,1,,0.350170,11.496571,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0106,Capteurs choc avant,interior,INT,pce,purchased,,292.770000,1,,0.127982,4.501767,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0107,Capteurs choc latéraux,interior,INT,pce,purchased,,292.770000,1,,0.066132,2.661813,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0108,Capteur occupation passager,interior,INT,pce,purchased,,292.770000,1,,0.130640,4.646656,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0109,Volant,interior,INT,pce,purchased,,2927.700000,1,,1.943882,10.647419,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0110,Palette réglage régénération gauche,interior,INT,pce,purchased,,409.880000,1,,0.623982,2.524631,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0111,Palette réglage régénération droite,interior,INT,pce,purchased,,409.880000,1,,2.173722,10.886435,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0112,Pédale accélérateur électronique,interior,INT,pce,purchased,,351.320000,1,,0.206308,8.625944,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0113,Pédale frein/capteur,interior,INT,pce,purchased,,351.320000,1,,0.060448,2.099855,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0114,Tableau de bord structure,interior,INT,pce,purchased,,4098.780000,1,,2.210839,11.877954,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0115,Planche de bord / skin,interior,INT,pce,purchased,,292.770000,1,,3.647244,89.593090,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0116,Console centrale,interior,INT,pce,purchased,,2107.940000,1,,1.686918,9.005106,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0117,"Écran conducteur 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.908678,28.606819,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0118,"Écran central tactile 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,1.029373,39.123585,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0119,Head unit infotainment,interior,INT,pce,purchased,,2927.700000,1,,1.689365,7.182166,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0120,Amplificateur audio,interior,INT,pce,purchased,,1053.970000,1,,1.019445,30.112978,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0121,Haut-parleurs,interior,INT,pce,purchased,,351.320000,1,,1.630426,7.120070,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0122,Microphones habitacle,interior,INT,pce,purchased,,292.770000,1,,0.900117,4.955504,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0123,Ports USB/alimentation,interior,INT,pce,purchased,,292.770000,1,,0.532821,2.705452,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0124,Moquette/revêtement plancher,interior,INT,pce,purchased,,292.770000,1,,1.799085,9.501328,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0125,Garniture pavillon/toit,interior,INT,pce,purchased,,292.770000,1,,4.416191,122.024657,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0126,Garnitures latérales,interior,INT,pce,purchased,,292.770000,1,,1.350138,38.653101,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0127,Porte-moyeu avant gauche,chassis,CHS,pce,purchased,,2342.160000,1,,1.507821,38.667466,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0128,Porte-moyeu avant droit,chassis,CHS,pce,purchased,,2342.160000,1,,0.910963,26.073947,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0129,Bras supérieur AV gauche,chassis,CHS,pce,purchased,,1405.300000,1,,0.453229,0.952542,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0130,Bras supérieur AV droit,chassis,CHS,pce,purchased,,1405.300000,1,,3.385626,7.859189,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0131,Bras inférieur AV gauche,chassis,CHS,pce,purchased,,1405.300000,1,,1.008205,2.338027,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0132,Bras inférieur AV droit,chassis,CHS,pce,purchased,,1405.300000,1,,2.048410,4.403549,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0133,Pushrod AV gauche,chassis,CHS,pce,purchased,,819.760000,1,,0.998212,4.145774,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0134,Pushrod AV droit,chassis,CHS,pce,purchased,,819.760000,1,,0.770207,4.206254,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0135,Rocker/bellcrank AV gauche,chassis,CHS,pce,purchased,,1171.080000,1,,0.837303,4.275269,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0136,Rocker/bellcrank AV droit,chassis,CHS,pce,purchased,,1171.080000,1,,2.049727,8.216536,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0137,Ressort AV gauche,chassis,CHS,pce,purchased,,468.430000,1,,3.382289,7.957173,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0138,Ressort AV droit,chassis,CHS,pce,purchased,,468.430000,1,,0.946801,2.509837,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0139,Amortisseur Bilstein DTX AV gauche,chassis,CHS,pce,purchased,,3500.000000,1,,0.746569,1.797410,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0140,Amortisseur Bilstein DTX AV droit,chassis,CHS,pce,purchased,,3500.000000,1,,1.613573,3.955061,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0141,Barre antiroulis AV,chassis,CHS,pce,purchased,,702.650000,1,,3.597872,8.331592,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0142,Biellettes barre antiroulis AV,chassis,CHS,pce,purchased,,702.650000,1,,2.390473,5.573914,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0143,Roulement moyeu AV gauche,chassis,CHS,pce,purchased,,351.320000,1,,0.746142,3.951120,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0144,Roulement moyeu AV droit,chassis,CHS,pce,purchased,,351.320000,1,,0.691078,3.906111,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0145,Lien 1 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,0.641781,1.440927,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0146,Lien 2 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,2.952792,6.771165,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0147,Lien 3 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,3.186729,6.849683,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0148,Lien 4 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,3.615560,8.224821,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0149,Lien 5 AR gauche,chassis,CHS,pce,purchased,,1053.970000,1,,1.633596,3.569048,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0150,Lien 1 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,3.303198,8.069779,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0151,Lien 2 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,3.277835,6.964875,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0152,Lien 3 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,2.047076,4.401172,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0153,Lien 4 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,0.540330,1.170387,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0154,Lien 5 AR droite,chassis,CHS,pce,purchased,,1053.970000,1,,0.391491,0.890744,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0155,Porte-moyeu arrière gauche,chassis,CHS,pce,purchased,,2342.160000,1,,1.691979,43.128206,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0156,Porte-moyeu arrière droit,chassis,CHS,pce,purchased,,2342.160000,1,,2.437176,64.802073,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0157,Ressort AR gauche,chassis,CHS,pce,purchased,,468.430000,1,,3.705664,8.002011,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0158,Ressort AR droit,chassis,CHS,pce,purchased,,468.430000,1,,1.817142,4.196181,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0159,Amortisseur Bilstein DTX AR gauche,chassis,CHS,pce,purchased,,3500.000000,1,,3.568505,7.939210,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0160,Amortisseur Bilstein DTX AR droit,chassis,CHS,pce,purchased,,3500.000000,1,,0.524979,1.159406,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0161,Roulement moyeu AR gauche,chassis,CHS,pce,purchased,,351.320000,1,,1.013100,5.318370,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0162,Roulement moyeu AR droit,chassis,CHS,pce,purchased,,351.320000,1,,1.493378,8.731781,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0163,Barre antiroulis AR,chassis,CHS,pce,purchased,,702.650000,1,,2.112818,5.246972,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0164,Biellettes barre antiroulis AR,chassis,CHS,pce,purchased,,702.650000,1,,3.460380,7.994516,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0165,Système lift essieu avant,chassis,CHS,pce,purchased,,5269.860000,1,,0.308691,1.566792,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0166,Actionneurs lift avant,chassis,CHS,pce,purchased,,1053.970000,1,,1.402625,7.045105,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0167,Pompe/valves lift,chassis,CHS,pce,purchased,,1639.510000,1,,0.993318,5.601320,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0168,Capteurs hauteur caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.083964,3.244839,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0169,Capteurs accélération caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.056054,1.910724,3.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0170,Crémaillère EPAS,chassis,CHS,pce,purchased,,4098.780000,1,,0.852692,1.905664,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0171,Moteur EPAS,chassis,CHS,pce,purchased,,1171.080000,1,,1.291682,7.561506,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0172,ECU EPAS,chassis,CHS,pce,purchased,,819.760000,1,,0.422100,12.127271,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0173,Colonne de direction,chassis,CHS,pce,purchased,,1405.300000,1,,2.867359,7.660838,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0174,Arbre intermédiaire,chassis,CHS,pce,purchased,,585.540000,1,,2.134176,4.653485,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0175,Joints cardan colonne,chassis,CHS,pce,purchased,,1405.300000,1,,2.296031,5.995396,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0176,Biellette direction gauche,chassis,CHS,pce,purchased,,257.640000,1,,1.989342,4.285878,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0177,Biellette direction droite,chassis,CHS,pce,purchased,,257.640000,1,,2.112485,5.056275,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0178,Rotule direction gauche,chassis,CHS,pce,purchased,,210.790000,1,,0.757155,3.411135,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0179,Rotule direction droite,chassis,CHS,pce,purchased,,210.790000,1,,1.837833,9.153511,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0180,Capteur angle volant,chassis,CHS,pce,purchased,,210.790000,1,,0.114933,4.214133,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0076,Joint/adhésif pare-brise,glazing,CAR,pce,purchased,,2927.700000,1,,0.906692,3.158734,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0077,Vitre porte,glazing,CAR,pce,purchased,,819.760000,1,,0.980531,24.499351,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0079,Lève-vitre,glazing,CAR,pce,purchased,,526.990000,1,,1.787752,8.480023,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0081,Caméra/affichage rétroviseur numérique,glazing,CAR,pce,purchased,,1405.300000,1,,0.174957,7.295777,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0082,Projecteur Matrix LED,glazing,CAR,pce,purchased,,3513.240000,1,,1.643433,9.664043,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0084,Feu arrière LED,glazing,CAR,pce,purchased,,1405.300000,1,,0.996009,36.383014,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0086,Feu stop central,glazing,CAR,pce,purchased,,292.770000,1,,2.147006,11.904289,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0087,Éclairage plaque,glazing,CAR,pce,purchased,,292.770000,1,,0.329738,1.440230,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0088,Catadioptres/marqueurs,glazing,CAR,pce,purchased,,292.770000,1,,0.008136,0.045358,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0089,Coque siège carbone,interior,INT,pce,purchased,,7026.480000,1,,10.934800,283.810547,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0091,Coussin/foam siège,interior,INT,pce,purchased,,585.540000,1,,2.289884,12.151956,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0093,Garniture siège,interior,INT,pce,purchased,,1171.080000,1,,0.953019,25.339822,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0095,Rail/fixation siège,interior,INT,pce,purchased,,936.860000,1,,3.315352,8.791916,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0097,Ceinture 3 points,interior,INT,pce,purchased,,468.430000,1,,0.392325,2.159985,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0099,Prétensionneur,interior,INT,pce,purchased,,351.320000,1,,0.288563,1.505318,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0101,Boucle ceinture,interior,INT,pce,purchased,,468.430000,1,,1.911072,9.755258,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0103,Airbag,interior,INT,pce,purchased,,1171.080000,1,,1.513525,6.859901,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0105,ECU airbag/SRS,interior,INT,pce,purchased,,1171.080000,1,,0.353494,11.605703,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0106,Capteurs choc avant,interior,INT,pce,purchased,,292.770000,1,,0.129197,4.544504,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0107,Capteurs choc latéraux,interior,INT,pce,purchased,,292.770000,1,,0.066760,2.687090,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0108,Capteur occupation passager,interior,INT,pce,purchased,,292.770000,1,,0.131880,4.690761,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0109,Volant,interior,INT,pce,purchased,,2927.700000,1,,1.962335,10.748494,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0110,Palette réglage régénération,interior,INT,pce,purchased,,409.880000,1,,0.629906,2.548600,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0112,Pédale accélérateur électronique,interior,INT,pce,purchased,,351.320000,1,,0.208267,8.707852,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0113,Pédale frein/capteur,interior,INT,pce,purchased,,351.320000,1,,0.061022,2.119794,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0114,Tableau de bord structure,interior,INT,pce,purchased,,4098.780000,1,,2.231827,11.990714,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0115,Planche de bord / skin,interior,INT,pce,purchased,,292.770000,1,,3.681868,90.443615,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0116,Console centrale,interior,INT,pce,purchased,,2107.940000,1,,1.702931,9.090586,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0117,"Écran conducteur 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,0.917304,28.878381,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0118,"Écran central tactile 10,25 po",interior,INT,pce,purchased,,1756.620000,1,,1.039145,39.494992,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0119,Head unit infotainment,interior,INT,pce,purchased,,2927.700000,1,,1.705402,7.250346,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0120,Amplificateur audio,interior,INT,pce,purchased,,1053.970000,1,,1.029123,30.398853,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0121,Haut-parleurs,interior,INT,pce,purchased,,351.320000,1,,1.645904,7.187663,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0122,Microphones habitacle,interior,INT,pce,purchased,,292.770000,1,,0.908662,5.002548,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0123,Ports USB/alimentation,interior,INT,pce,purchased,,292.770000,1,,0.537879,2.731134,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0124,Moquette/revêtement plancher,interior,INT,pce,purchased,,292.770000,1,,1.816163,9.591520,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0125,Garniture pavillon/toit,interior,INT,pce,purchased,,292.770000,1,,4.458114,123.183040,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0126,Garnitures latérales,interior,INT,pce,purchased,,292.770000,1,,1.362955,39.020039,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0127,Porte-moyeu,chassis,CHS,pce,purchased,,2342.160000,1,,1.522135,39.034543,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0129,Bras supérieur,chassis,CHS,pce,purchased,,1405.300000,1,,0.457531,0.961584,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0131,Bras inférieur,chassis,CHS,pce,purchased,,1405.300000,1,,1.017776,2.360223,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0133,Pushrod,chassis,CHS,pce,purchased,,819.760000,1,,1.007688,4.185130,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0135,Rocker/bellcrank,chassis,CHS,pce,purchased,,1171.080000,1,,0.845252,4.315857,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0137,Ressort,chassis,CHS,pce,purchased,,468.430000,1,,3.414397,8.032710,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0139,Amortisseur Bilstein DTX,chassis,CHS,pce,purchased,,3500.000000,1,,0.753656,1.814472,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0141,Barre antiroulis,chassis,CHS,pce,purchased,,702.650000,1,,3.632027,8.410685,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0142,Biellettes barre antiroulis,chassis,CHS,pce,purchased,,702.650000,1,,2.413166,5.626827,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0143,Roulement moyeu,chassis,CHS,pce,purchased,,351.320000,1,,0.753225,3.988628,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0145,Lien 1,chassis,CHS,pce,purchased,,1053.970000,1,,0.647873,1.454604,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0146,Lien 2,chassis,CHS,pce,purchased,,1053.970000,1,,2.980822,6.835442,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0147,Lien 3,chassis,CHS,pce,purchased,,1053.970000,1,,3.216981,6.914708,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0148,Lien 4,chassis,CHS,pce,purchased,,1053.970000,1,,3.649882,8.302898,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0149,Lien 5,chassis,CHS,pce,purchased,,1053.970000,1,,1.649104,3.602929,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0165,Système lift essieu avant,chassis,CHS,pce,purchased,,5269.860000,1,,0.311621,1.581664,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0166,Actionneurs lift avant,chassis,CHS,pce,purchased,,1053.970000,1,,1.415940,7.111983,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0167,Pompe/valves lift,chassis,CHS,pce,purchased,,1639.510000,1,,1.002747,5.654490,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0168,Capteurs hauteur caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.084761,3.275640,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0169,Capteurs accélération caisse,chassis,CHS,pce,purchased,,292.770000,1,,0.056586,1.928858,3.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0170,Crémaillère EPAS,chassis,CHS,pce,purchased,,4098.780000,1,,0.860786,1.923753,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0171,Moteur EPAS,chassis,CHS,pce,purchased,,1171.080000,1,,1.303944,7.633288,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0172,ECU EPAS,chassis,CHS,pce,purchased,,819.760000,1,,0.426107,12.242395,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0173,Colonne de direction,chassis,CHS,pce,purchased,,1405.300000,1,,2.894579,7.733562,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0174,Arbre intermédiaire,chassis,CHS,pce,purchased,,585.540000,1,,2.154436,4.697662,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0175,Joints cardan colonne,chassis,CHS,pce,purchased,,1405.300000,1,,2.317827,6.052310,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0176,Biellette direction,chassis,CHS,pce,purchased,,257.640000,1,,2.008227,4.326564,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0178,Rotule direction,chassis,CHS,pce,purchased,,210.790000,1,,0.764343,3.443518,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0180,Capteur angle volant,chassis,CHS,pce,purchased,,210.790000,1,,0.116024,4.254136,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0181,Disque CCB avant gauche 410 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.338400,17.085538,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0182,Disque CCB avant droit 410 mm,chassis,CHS,pce,purchased,,4500.000000,1,,5.337000,12.071333,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0183,Disque CCB arrière gauche 390 mm,chassis,CHS,pce,purchased,,4500.000000,1,,6.131600,13.909044,1.0
@@ -185,21 +128,17 @@ bom-valhalla-electrique-2026-10-05,VALE-BOM-0185,Étrier avant gauche 6 pistons,
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0186,Étrier avant droit 6 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.930100,12.619016,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0187,Étrier arrière gauche 4 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.703750,14.158533,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0188,Étrier arrière droit 4 pistons,chassis,CHS,pce,purchased,,3000.000000,1,,5.848800,12.379687,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0189,Jeu plaquettes AV gauche,chassis,CHS,pce,purchased,,600.000000,1,,1.512957,8.568481,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0190,Jeu plaquettes AV droit,chassis,CHS,pce,purchased,,600.000000,1,,1.530903,6.523178,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0191,Jeu plaquettes AR gauche,chassis,CHS,pce,purchased,,600.000000,1,,1.090597,4.904633,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0192,Jeu plaquettes AR droit,chassis,CHS,pce,purchased,,600.000000,1,,1.767882,7.451269,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0193,Integrated Power Braking module,chassis,CHS,pce,purchased,,2927.700000,1,,0.214485,7.388065,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0194,Bloc ABS/ESC hydraulique,chassis,CHS,pce,purchased,,2107.940000,1,,1.661017,9.591044,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0195,Réservoir liquide frein,chassis,CHS,pce,purchased,,234.220000,1,,2.065634,10.855320,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0196,Canalisations rigides frein,chassis,CHS,pce,purchased,,58.550000,1,,2.137013,11.257357,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0197,Flexibles frein,chassis,CHS,pce,purchased,,117.110000,1,,1.469517,6.143757,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0198,Capteurs vitesse roue,chassis,CHS,pce,purchased,,117.110000,1,,0.133944,4.745984,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0199,Capteurs usure plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,0.065253,2.621866,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0200,Conduit refroidissement frein AV gauche,chassis,CHS,pce,purchased,,585.540000,1,,2.166177,11.912674,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0201,Conduit refroidissement frein AV droit,chassis,CHS,pce,purchased,,585.540000,1,,0.481632,2.094714,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0202,Conduits refroidissement frein AR,chassis,CHS,pce,purchased,,585.540000,1,,1.436479,6.487426,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0203,Frein de stationnement électrique,chassis,CHS,pce,purchased,,1171.080000,1,,1.274551,5.496629,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0189,Jeu plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,1.527319,8.649818,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0193,Integrated Power Braking module,chassis,CHS,pce,purchased,,2927.700000,1,,0.216521,7.458196,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0194,Bloc ABS/ESC hydraulique,chassis,CHS,pce,purchased,,2107.940000,1,,1.676785,9.682092,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0195,Réservoir liquide frein,chassis,CHS,pce,purchased,,234.220000,1,,2.085243,10.958369,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0196,Canalisations rigides frein,chassis,CHS,pce,purchased,,58.550000,1,,2.157300,11.364225,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0197,Flexibles frein,chassis,CHS,pce,purchased,,117.110000,1,,1.483468,6.202083,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0198,Capteurs vitesse roue,chassis,CHS,pce,purchased,,117.110000,1,,0.135216,4.791054,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0199,Capteurs usure plaquettes,chassis,CHS,pce,purchased,,600.000000,1,,0.065873,2.646777,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0200,Conduit refroidissement frein,chassis,CHS,pce,purchased,,585.540000,1,,2.186740,12.025758,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0202,Conduits refroidissement frein AR,chassis,CHS,pce,purchased,,585.540000,1,,1.450116,6.549014,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0203,Frein de stationnement électrique,chassis,CHS,pce,purchased,,1171.080000,1,,1.286650,5.548807,2.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0204,"Jante avant gauche 20""",chassis,CHS,pce,purchased,,2927.700000,1,,10.263800,100.293748,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0205,"Jante avant droite 20""",chassis,CHS,pce,purchased,,2927.700000,1,,11.217400,132.327181,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0206,"Jante arrière gauche 21""",chassis,CHS,pce,purchased,,2927.700000,1,,11.671000,122.801095,1.0
@@ -208,127 +147,117 @@ bom-valhalla-electrique-2026-10-05,VALE-BOM-0208,Pneu AV gauche 285/30 ZR20,chas
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0209,Pneu AV droit 285/30 ZR20,chassis,CHS,pce,purchased,,311.900000,1,,12.672200,47.388959,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0210,Pneu AR gauche 335/30 ZR21,chassis,CHS,pce,purchased,,447.500000,1,,11.242600,38.857798,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0211,Pneu AR droit 335/30 ZR21,chassis,CHS,pce,purchased,,447.500000,1,,11.231200,38.757748,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0212,Capteur TPMS,chassis,CHS,pce,purchased,,80.000000,1,,0.068802,2.154645,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0213,Valve pneu,chassis,CHS,pce,purchased,,10.000000,1,,1.059060,4.234016,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0214,Fixation roue / centre-lock ou boulons,chassis,CHS,pce,purchased,,175.660000,1,,1.845509,4.352264,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0320,Demi-arbre arrière gauche,transmission,TRN,pce,purchased,,5027.970000,1,,3.162034,7.771584,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0321,Demi-arbre arrière droit,transmission,TRN,pce,purchased,,5027.970000,1,,1.259496,2.922736,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0322,Joints homocinétiques AR,transmission,TRN,pce,purchased,,1340.790000,1,,0.900414,2.408589,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0212,Capteur TPMS,chassis,CHS,pce,purchased,,80.000000,1,,0.069455,2.175094,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0213,Valve pneu,chassis,CHS,pce,purchased,,10.000000,1,,1.069114,4.274211,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0214,Fixation roue / centre-lock ou boulons,chassis,CHS,pce,purchased,,175.660000,1,,1.863028,4.393579,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0320,Demi-arbre,transmission,TRN,pce,purchased,,5027.970000,1,,3.192051,7.845359,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0322,Joints homocinétiques,transmission,TRN,pce,purchased,,1340.790000,1,,0.908961,2.431452,8.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0327,Pack batterie HV 800 V 100 kWh,engine,GMP,pce,purchased,,26815.860000,1,,22.872000,508.064885,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0328,Modules batterie HV 800 V,engine,GMP,pce,purchased,,1173.200000,1,,3.502132,74.743202,12.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0328,Modules batterie HV 800 V,engine,GMP,pce,purchased,,1173.200000,1,,3.535378,75.452744,12.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0329,Cellules batterie haute énergie,engine,GMP,pce,purchased,,117.330000,1,,1.069080,19.353983,384.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0330,Boîtier batterie HV 800 V,engine,GMP,pce,purchased,,16759.910000,1,,66.519200,1279.776193,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0331,BMS master 800 V,engine,GMP,pce,purchased,,8379.960000,1,,0.434170,17.385382,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0332,BMS cell monitoring units,engine,GMP,pce,purchased,,1173.200000,1,,0.905076,37.211114,12.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0333,Contacteur HV positif,engine,GMP,pce,purchased,,838.000000,1,,0.390564,14.273396,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0334,Contacteur HV négatif,engine,GMP,pce,purchased,,838.000000,1,,0.934180,27.859863,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0335,Circuit précharge HV,engine,GMP,pce,purchased,,670.410000,1,,0.880840,35.035763,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0336,Fusible principal HV,engine,GMP,pce,purchased,,502.790000,1,,2.207780,11.482222,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0337,Service disconnect HV,engine,GMP,pce,purchased,,838.000000,1,,2.217569,9.759965,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0338,HV junction box / PDU,engine,GMP,pce,purchased,,6703.960000,1,,0.657456,22.536014,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0339,Capteur courant HV,engine,GMP,pce,purchased,,670.410000,1,,0.071494,2.128648,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0340,Isolation monitoring device,engine,GMP,pce,purchased,,1675.990000,1,,1.259255,6.247668,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0341,Capteurs température cellules,engine,GMP,pce,purchased,,100.550000,1,,0.021412,0.376235,24.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0342,Plaques froides batterie,engine,GMP,pce,purchased,,3016.780000,1,,0.904298,25.340600,12.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0343,Pompes refroidissement batterie,engine,GMP,pce,purchased,,1173.200000,1,,0.627653,3.042987,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0344,Vannes circuit batterie,engine,GMP,pce,purchased,,603.340000,1,,1.511325,7.864331,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0345,Durites circuit batterie,engine,GMP,pce,purchased,,301.690000,1,,0.556909,1.732488,16.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0346,Évents/surpression pack,engine,GMP,pce,purchased,,402.240000,1,,2.057680,10.650963,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0347,Carter/structure EDU avant,engine,GMP,pce,purchased,,11731.940000,1,,2.805102,33.185479,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0348,Moteur électrique avant gauche,engine,GMP,pce,purchased,,28491.850000,1,,29.491200,410.600079,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0349,Moteur électrique avant droit,engine,GMP,pce,purchased,,28491.850000,1,,30.603600,396.867485,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0350,Réducteur avant gauche,engine,GMP,pce,purchased,,10055.950000,1,,3.634582,9.212575,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0351,Réducteur avant droit,engine,GMP,pce,purchased,,10055.950000,1,,3.432347,7.593862,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0352,Arbre sortie EDU gauche,engine,GMP,pce,purchased,,2346.400000,1,,2.599308,34.591591,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0353,Arbre sortie EDU droit,engine,GMP,pce,purchased,,2346.400000,1,,4.978175,59.889437,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0354,Joints homocinétiques avant,engine,GMP,pce,purchased,,1340.790000,1,,2.595711,5.669967,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0331,BMS master 800 V,engine,GMP,pce,purchased,,8379.960000,1,,0.438291,17.550399,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0332,BMS cell monitoring units,engine,GMP,pce,purchased,,1173.200000,1,,0.913668,37.564363,12.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0333,Contacteur HV positif,engine,GMP,pce,purchased,,838.000000,1,,0.394271,14.408870,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0334,Contacteur HV négatif,engine,GMP,pce,purchased,,838.000000,1,,0.943048,28.124332,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0335,Circuit précharge HV,engine,GMP,pce,purchased,,670.410000,1,,0.889202,35.368365,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0336,Fusible principal HV,engine,GMP,pce,purchased,,502.790000,1,,2.228739,11.591226,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0337,Service disconnect HV,engine,GMP,pce,purchased,,838.000000,1,,2.238621,9.852619,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0338,HV junction box / PDU,engine,GMP,pce,purchased,,6703.960000,1,,0.663697,22.749940,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0339,Capteur courant HV,engine,GMP,pce,purchased,,670.410000,1,,0.072173,2.148864,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0340,Isolation monitoring device,engine,GMP,pce,purchased,,1675.990000,1,,1.271209,6.306976,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0341,Capteurs température cellules,engine,GMP,pce,purchased,,100.550000,1,,0.021615,0.379801,24.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0342,Plaques froides batterie,engine,GMP,pce,purchased,,3016.780000,1,,0.912882,25.581145,12.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0343,Pompes refroidissement batterie,engine,GMP,pce,purchased,,1173.200000,1,,0.633611,3.071873,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0344,Vannes circuit batterie,engine,GMP,pce,purchased,,603.340000,1,,1.525672,7.938987,6.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0345,Durites circuit batterie,engine,GMP,pce,purchased,,301.690000,1,,0.562196,1.748936,16.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0346,Évents/surpression pack,engine,GMP,pce,purchased,,402.240000,1,,2.077214,10.752075,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0347,Carter/structure EDU avant,engine,GMP,pce,purchased,,11731.940000,1,,2.831731,33.500510,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0348,Moteur électrique,engine,GMP,pce,purchased,,28491.850000,1,,29.491200,410.600079,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0350,Réducteur,engine,GMP,pce,purchased,,10055.950000,1,,3.669085,9.300030,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0352,Arbre sortie EDU,engine,GMP,pce,purchased,,2346.400000,1,,2.623983,34.919966,2.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0355,Inverter moteur AV gauche 800 V,engine,GMP,pce,purchased,,18435.900000,1,,10.120400,111.162474,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0356,Inverter moteur AV droit 800 V,engine,GMP,pce,purchased,,18435.900000,1,,8.091200,108.554776,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0357,Capteurs position rotor AV,engine,GMP,pce,purchased,,838.000000,1,,0.085977,3.216950,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0358,Capteurs température moteurs AV,engine,GMP,pce,purchased,,201.110000,1,,0.036064,1.203622,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0359,Refroidissement EDU avant,engine,GMP,pce,purchased,,5027.970000,1,,3.320143,37.467150,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0365,Prise de charge BEV CCS 800 V,engine,GMP,pce,purchased,,2178.780000,1,,0.445757,2.995665,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0366,Trappe prise de charge,engine,GMP,pce,purchased,,1675.990000,1,,2.822233,80.018772,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0367,On-board charger (OBC) 22 kW,engine,GMP,pce,purchased,,10055.950000,1,,0.529947,16.033758,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0368,DC/DC HV -> 12 V 800 V,engine,GMP,pce,purchased,,6033.560000,1,,2.004860,11.634203,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0369,Câble HV batterie -> PDU 800 V,engine,GMP,pce,purchased,,1340.790000,1,,1.338736,8.005641,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0370,Câbles HV PDU -> inverters AV,engine,GMP,pce,purchased,,1173.200000,1,,2.047094,15.086264,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0371,Câbles HV PDU -> inverters AR,engine,GMP,pce,purchased,,1173.200000,1,,0.638573,4.320202,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0372,Câbles HV OBC/charge -> batterie,engine,GMP,pce,purchased,,1072.650000,1,,2.083488,13.732269,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0373,Boucle HVIL,engine,GMP,pce,purchased,,502.790000,1,,1.149128,6.139791,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0374,Connecteurs HV blindés 800 V,engine,GMP,pce,purchased,,318.430000,1,,0.022043,0.159926,24.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0357,Capteurs position rotor,engine,GMP,pce,purchased,,838.000000,1,,0.086794,3.247519,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0358,Capteurs température moteurs,engine,GMP,pce,purchased,,201.110000,1,,0.036406,1.215036,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0359,Refroidissement EDU avant,engine,GMP,pce,purchased,,5027.970000,1,,3.351661,37.822824,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0365,Prise de charge BEV CCS 800 V,engine,GMP,pce,purchased,,2178.780000,1,,0.449989,3.024106,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0366,Trappe prise de charge,engine,GMP,pce,purchased,,1675.990000,1,,2.849024,80.778377,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0367,On-board charger (OBC) 22 kW,engine,GMP,pce,purchased,,10055.950000,1,,0.534978,16.185973,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0368,DC/DC HV -> 12 V 800 V,engine,GMP,pce,purchased,,6033.560000,1,,2.023892,11.744645,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0369,Câble HV batterie -> PDU 800 V,engine,GMP,pce,purchased,,1340.790000,1,,1.351445,8.081641,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0370,Câbles HV PDU -> inverters,engine,GMP,pce,purchased,,1173.200000,1,,2.066527,15.229477,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0372,Câbles HV OBC/charge -> batterie,engine,GMP,pce,purchased,,1072.650000,1,,2.103267,13.862633,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0373,Boucle HVIL,engine,GMP,pce,purchased,,502.790000,1,,1.160036,6.198072,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0374,Connecteurs HV blindés 800 V,engine,GMP,pce,purchased,,318.430000,1,,0.022252,0.161443,24.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0380,Batterie 12 V auxiliaire,electrical,ELE,pce,purchased,,351.320000,1,,8.191200,261.658055,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0381,Boîte fusibles principale,electrical,ELE,pce,purchased,,702.650000,1,,1.094472,5.104399,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0382,Boîte relais/PDC,electrical,ELE,pce,purchased,,702.650000,1,,2.032392,9.187225,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0381,Boîte fusibles principale,electrical,ELE,pce,purchased,,702.650000,1,,1.104862,5.152855,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0382,Boîte relais/PDC,electrical,ELE,pce,purchased,,702.650000,1,,2.051685,9.274437,2.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0383,Faisceau principal habitacle,electrical,ELE,pce,purchased,,4684.320000,1,,16.802400,124.455377,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0384,Faisceau avant,electrical,ELE,pce,purchased,,2927.700000,1,,1.237508,6.930540,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0385,Faisceau arrière,electrical,ELE,pce,purchased,,2927.700000,1,,2.011664,11.782718,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0386,Faisceau porte gauche,electrical,ELE,pce,purchased,,819.760000,1,,1.941768,11.868086,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0387,Faisceau porte droite,electrical,ELE,pce,purchased,,819.760000,1,,0.741971,4.861691,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0390,Faisceau contrôle HV,electrical,ELE,pce,purchased,,1405.300000,1,,0.864168,5.931822,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0391,Tresses de masse châssis,electrical,ELE,pce,purchased,,35.130000,1,,2.473903,6.080755,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0392,Points de masse/studs,electrical,ELE,pce,purchased,,9.370000,1,,1.740962,8.087465,12.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0393,Connecteurs LV,electrical,ELE,pce,purchased,,7.030000,1,,0.004942,0.034711,250.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0394,Clips/agrafes faisceaux,electrical,ELE,pce,purchased,,0.350000,1,,0.011408,0.024823,400.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0395,Gaines/protections thermiques faisceaux,electrical,ELE,pce,purchased,,23.420000,1,,0.007648,0.043656,60.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0396,VCU / Vehicle Control Unit,electrical,ELE,pce,purchased,,2107.940000,1,,0.785354,32.331768,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0397,BCM / Body Control Module,electrical,ELE,pce,purchased,,1171.080000,1,,0.668552,24.804215,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0398,Gateway réseau véhicule,electrical,ELE,pce,purchased,,936.860000,1,,1.611868,9.537745,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0399,ECU ESC/stabilité,electrical,ELE,pce,purchased,,1405.300000,1,,0.633512,17.888225,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0400,ECU suspension/amortissement,electrical,ELE,pce,purchased,,1171.080000,1,,0.288946,10.016024,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0401,ECU aéro actif,electrical,ELE,pce,purchased,,1053.970000,1,,0.883273,34.545160,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0402,ECU HVAC,electrical,ELE,pce,purchased,,702.650000,1,,0.633998,17.974731,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0403,ECU ADAS/domain controller,electrical,ELE,pce,purchased,,3513.240000,1,,0.745836,30.883428,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0404,Radar avant ACC/AEB,electrical,ELE,pce,purchased,,1171.080000,1,,0.458406,18.408485,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0405,Caméra frontale ADAS,electrical,ELE,pce,purchased,,585.540000,1,,0.582216,18.454733,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0406,Caméras 3D surround view,electrical,ELE,pce,purchased,,526.990000,1,,1.054778,33.687711,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0407,Caméra recul,electrical,ELE,pce,purchased,,526.990000,1,,0.738731,27.730632,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0408,Capteurs ultrasoniques avant,electrical,ELE,pce,purchased,,70.260000,1,,0.121819,4.971945,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0409,Capteurs ultrasoniques arrière,electrical,ELE,pce,purchased,,70.260000,1,,0.060848,2.451262,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0410,Capteur HOD volant,electrical,ELE,pce,purchased,,234.220000,1,,0.133944,4.044653,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0411,Antenne GNSS,electrical,ELE,pce,purchased,,117.110000,1,,0.980122,33.677188,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0412,TCU télématique,electrical,ELE,pce,purchased,,1053.970000,1,,0.757517,25.315764,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0413,Antennes LTE/5G/Wi-Fi/Bluetooth,electrical,ELE,pce,purchased,,93.690000,1,,0.678870,20.409276,5.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0414,Récepteur clé / RF/UWB,electrical,ELE,pce,purchased,,351.320000,1,,1.730153,8.443839,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0415,Sirène alarme,electrical,ELE,pce,purchased,,117.110000,1,,0.956200,4.162912,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0416,Capteurs alarme,electrical,ELE,pce,purchased,,93.690000,1,,0.127781,4.991841,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0417,Compresseur climatisation électrique,interior,INT,pce,purchased,,1756.620000,1,,2.026886,10.363063,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0418,Condenseur A/C,interior,INT,pce,purchased,,585.540000,1,,3.193274,30.690876,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0419,Évaporateur HVAC,interior,INT,pce,purchased,,468.430000,1,,0.853823,4.286362,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0420,Bloc HVAC,interior,INT,pce,purchased,,1756.620000,1,,1.454426,8.274230,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0421,Pulseur habitacle,interior,INT,pce,purchased,,292.770000,1,,0.983121,4.862910,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0422,Filtre habitacle,interior,INT,pce,purchased,,46.840000,1,,1.275163,5.759401,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0423,Détendeur/EXV,interior,INT,pce,purchased,,175.660000,1,,0.709433,2.954788,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0424,Receiver-drier,interior,INT,pce,purchased,,117.110000,1,,1.026968,5.056790,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0425,Conduites réfrigérant,interior,INT,pce,purchased,,117.110000,1,,1.139950,4.629337,0.8
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0426,Capteur pression réfrigérant,interior,INT,pce,purchased,,93.690000,1,,0.122809,4.409040,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0427,Capteurs température habitacle,interior,INT,pce,purchased,,35.130000,1,,0.045408,1.281977,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0428,Sondes température évaporateur,interior,INT,pce,purchased,,468.430000,1,,1.122616,4.553106,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0429,Volets distribution air,interior,INT,pce,purchased,,58.550000,1,,0.454712,1.966175,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0430,Actionneurs volets HVAC,interior,INT,pce,purchased,,58.550000,1,,1.003107,4.555711,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0431,Buses/diffuseurs air,interior,INT,pce,purchased,,93.690000,1,,0.006368,0.032940,6.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0432,Réservoir fluide hydraulique actif,chassis,CHS,pce,purchased,,351.320000,1,,2.252443,13.227246,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0433,Pompe hydraulique active,chassis,CHS,pce,purchased,,2342.160000,1,,0.895630,4.891752,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0434,Accumulateur hydraulique,chassis,CHS,pce,purchased,,702.650000,1,,2.274061,13.262324,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0435,Bloc valves hydraulique,chassis,CHS,pce,purchased,,1756.620000,1,,0.415760,2.405920,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0436,Électrovannes hydrauliques,chassis,CHS,pce,purchased,,292.770000,1,,1.389573,6.639380,8.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0437,Capteur pression hydraulique,chassis,CHS,pce,purchased,,175.660000,1,,0.116702,4.711633,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0438,Conduites rigides/flexibles,chassis,CHS,pce,purchased,,117.110000,1,,0.011489,0.066220,20.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0439,Raccords hydrauliques,chassis,CHS,pce,purchased,,23.420000,1,,0.008245,0.034766,30.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0384,Faisceau,electrical,ELE,pce,purchased,,2927.700000,1,,1.249256,6.996333,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0386,Faisceau porte,electrical,ELE,pce,purchased,,819.760000,1,,1.960202,11.980755,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0390,Faisceau contrôle HV,electrical,ELE,pce,purchased,,1405.300000,1,,0.872371,5.988129,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0391,Tresses de masse châssis,electrical,ELE,pce,purchased,,35.130000,1,,2.497388,6.138480,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0392,Points de masse/studs,electrical,ELE,pce,purchased,,9.370000,1,,1.757489,8.164239,12.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0393,Connecteurs LV,electrical,ELE,pce,purchased,,7.030000,1,,0.004989,0.035041,250.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0394,Clips/agrafes faisceaux,electrical,ELE,pce,purchased,,0.350000,1,,0.011516,0.025058,400.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0395,Gaines/protections thermiques faisceaux,electrical,ELE,pce,purchased,,23.420000,1,,0.007720,0.044067,60.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0396,VCU / Vehicle Control Unit,electrical,ELE,pce,purchased,,2107.940000,1,,0.792810,32.638719,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0397,BCM / Body Control Module,electrical,ELE,pce,purchased,,1171.080000,1,,0.674899,25.039698,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0398,Gateway réseau véhicule,electrical,ELE,pce,purchased,,936.860000,1,,1.627169,9.628284,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0399,ECU ESC/stabilité,electrical,ELE,pce,purchased,,1405.300000,1,,0.639526,18.058040,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0400,ECU suspension/amortissement,electrical,ELE,pce,purchased,,1171.080000,1,,0.291689,10.111107,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0401,ECU aéro actif,electrical,ELE,pce,purchased,,1053.970000,1,,0.891658,34.873101,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0402,ECU HVAC,electrical,ELE,pce,purchased,,702.650000,1,,0.640017,18.145378,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0403,ECU ADAS/domain controller,electrical,ELE,pce,purchased,,3513.240000,1,,0.752917,31.176637,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0404,Radar avant ACC/AEB,electrical,ELE,pce,purchased,,1171.080000,1,,0.462758,18.583251,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0405,Caméra frontale ADAS,electrical,ELE,pce,purchased,,585.540000,1,,0.587743,18.629925,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0406,Caméras 3D surround view,electrical,ELE,pce,purchased,,526.990000,1,,1.064791,34.007508,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0407,Caméra recul,electrical,ELE,pce,purchased,,526.990000,1,,0.745744,27.993887,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0408,Capteurs ultrasoniques,electrical,ELE,pce,purchased,,70.260000,1,,0.122975,5.019126,12.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0410,Capteur HOD volant,electrical,ELE,pce,purchased,,234.220000,1,,0.135216,4.083063,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0411,Antenne GNSS,electrical,ELE,pce,purchased,,117.110000,1,,0.989426,33.996875,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0412,TCU télématique,electrical,ELE,pce,purchased,,1053.970000,1,,0.764708,25.556083,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0413,Antennes LTE/5G/Wi-Fi/Bluetooth,electrical,ELE,pce,purchased,,93.690000,1,,0.685314,20.603006,5.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0414,Récepteur clé / RF/UWB,electrical,ELE,pce,purchased,,351.320000,1,,1.746577,8.523994,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0415,Sirène alarme,electrical,ELE,pce,purchased,,117.110000,1,,0.965278,4.202434,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0416,Capteurs alarme,electrical,ELE,pce,purchased,,93.690000,1,,0.128994,5.039228,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0417,Compresseur climatisation électrique,interior,INT,pce,purchased,,1756.620000,1,,2.046127,10.461438,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0418,Condenseur A/C,interior,INT,pce,purchased,,585.540000,1,,3.223588,30.982227,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0419,Évaporateur HVAC,interior,INT,pce,purchased,,468.430000,1,,0.861928,4.327051,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0420,Bloc HVAC,interior,INT,pce,purchased,,1756.620000,1,,1.468233,8.352778,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0421,Pulseur habitacle,interior,INT,pce,purchased,,292.770000,1,,0.992453,4.909070,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0422,Filtre habitacle,interior,INT,pce,purchased,,46.840000,1,,1.287268,5.814075,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0423,Détendeur/EXV,interior,INT,pce,purchased,,175.660000,1,,0.716168,2.982840,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0424,Receiver-drier,interior,INT,pce,purchased,,117.110000,1,,1.036717,5.104795,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0425,Conduites réfrigérant,interior,INT,pce,purchased,,117.110000,1,,1.150772,4.673285,0.8
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0426,Capteur pression réfrigérant,interior,INT,pce,purchased,,93.690000,1,,0.123975,4.450901,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0427,Capteurs température habitacle,interior,INT,pce,purchased,,35.130000,1,,0.045839,1.294145,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0428,Sondes température évaporateur,interior,INT,pce,purchased,,468.430000,1,,1.133273,4.596329,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0429,Volets distribution air,interior,INT,pce,purchased,,58.550000,1,,0.459029,1.984841,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0430,Actionneurs volets HVAC,interior,INT,pce,purchased,,58.550000,1,,1.012629,4.598956,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0431,Buses/diffuseurs air,interior,INT,pce,purchased,,93.690000,1,,0.006429,0.033256,6.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0432,Réservoir fluide hydraulique actif,chassis,CHS,pce,purchased,,351.320000,1,,2.273826,13.352816,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0433,Pompe hydraulique active,chassis,CHS,pce,purchased,,2342.160000,1,,0.904133,4.938194,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0434,Accumulateur hydraulique,chassis,CHS,pce,purchased,,702.650000,1,,2.295648,13.388219,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0435,Bloc valves hydraulique,chassis,CHS,pce,purchased,,1756.620000,1,,0.419706,2.428755,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0436,Électrovannes hydrauliques,chassis,CHS,pce,purchased,,292.770000,1,,1.402764,6.702406,8.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0437,Capteur pression hydraulique,chassis,CHS,pce,purchased,,175.660000,1,,0.117810,4.756367,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0438,Conduites rigides/flexibles,chassis,CHS,pce,purchased,,117.110000,1,,0.011598,0.066849,20.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0439,Raccords hydrauliques,chassis,CHS,pce,purchased,,23.420000,1,,0.008323,0.035095,30.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0440,Fluide hydraulique,chassis,CHS,L,purchased,,25.760000,1,,1.050000,1.206996,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0441,Moteur essuie-glace,electrical,ELE,pce,purchased,,351.320000,1,,4.799635,54.303070,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0442,Bras essuie-glace,electrical,ELE,pce,purchased,,175.660000,1,,1.515460,3.409967,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0443,Balai essuie-glace,electrical,ELE,pce,purchased,,58.550000,1,,1.548034,7.184116,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0444,Réservoir lave-glace,electrical,ELE,pce,purchased,,175.660000,1,,1.730153,7.429969,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0445,Pompe lave-glace,electrical,ELE,pce,purchased,,70.260000,1,,1.585355,8.841842,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0446,Gicleurs lave-glace,electrical,ELE,pce,purchased,,23.420000,1,,0.004335,0.019874,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0447,Durites lave-glace,electrical,ELE,pce,purchased,,5.860000,1,,0.852224,2.806033,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0448,Klaxon(s),electrical,ELE,pce,purchased,,58.550000,1,,0.947227,5.247827,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0449,Point remorquage avant,electrical,ELE,pce,purchased,,117.110000,1,,1.029415,5.483076,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0450,Point remorquage arrière,electrical,ELE,pce,purchased,,117.110000,1,,0.462666,1.965498,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0441,Moteur essuie-glace,electrical,ELE,pce,purchased,,351.320000,1,,4.845198,54.818570,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0442,Bras essuie-glace,electrical,ELE,pce,purchased,,175.660000,1,,1.529846,3.442337,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0443,Balai essuie-glace,electrical,ELE,pce,purchased,,58.550000,1,,1.562730,7.252317,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0444,Réservoir lave-glace,electrical,ELE,pce,purchased,,175.660000,1,,1.746577,7.500500,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0445,Pompe lave-glace,electrical,ELE,pce,purchased,,70.260000,1,,1.600405,8.925779,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0446,Gicleurs lave-glace,electrical,ELE,pce,purchased,,23.420000,1,,0.004376,0.020062,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0447,Durites lave-glace,electrical,ELE,pce,purchased,,5.860000,1,,0.860314,2.832670,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0448,Klaxon(s),electrical,ELE,pce,purchased,,58.550000,1,,0.956219,5.297645,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0449,Point remorquage,electrical,ELE,pce,purchased,,117.110000,1,,1.039187,5.535126,2.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0456,Liquide de frein,fluid,FLU,L,purchased,,15.000000,1,,1.050000,1.159284,1.5
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0457,Réfrigérant HVAC,fluid,FLU,kg,purchased,,60.000000,1,,1.000000,1.069360,0.8
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0458,Huile compresseur A/C,fluid,FLU,pce,purchased,,35.000000,1,,1.095084,1.505872,0.25
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0458,Huile compresseur A/C,fluid,FLU,pce,purchased,,35.000000,1,,1.105479,1.520166,0.25
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0459,Liquide lave-glace,fluid,FLU,L,purchased,,3.000000,1,,1.050000,0.893844,4.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0460,LDR batterie/e-motors/inverters,fluid,FLU,L,purchased,,12.000000,1,,1.050000,1.400196,25.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0461,Fluide hydraulique suspension/aéro,fluid,FLU,L,purchased,,22.000000,1,,1.050000,0.937272,4.0
@@ -339,62 +268,58 @@ bom-valhalla-electrique-2026-10-05,VALE-BOM-0465,Mastic/seam sealer,fluid,FLU,g,
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0466,Frein filet,fluid,FLU,g,purchased,,0.220000,1,,0.001000,0.001030,120.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0467,Anti-grippant haute température,fluid,FLU,g,purchased,,0.080000,1,,0.001000,0.000790,80.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0468,Pâte thermique power electronics,fluid,FLU,g,purchased,,0.450000,1,,0.001000,0.001128,500.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0469,Joints toriques circuits fluides,fluid,FLU,pce,purchased,,2.500000,1,,0.021858,0.019043,80.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0470,Colliers durites,fluid,FLU,pce,purchased,,1.500000,1,,0.028251,0.018232,70.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0471,Clips tuyauteries,fluid,FLU,pce,purchased,,0.350000,1,,0.004046,0.004487,100.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0472,Passe-fils/grommets,fluid,FLU,pce,purchased,,1.200000,1,,0.013160,0.009909,80.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0601,Moteur électrique arrière gauche,engine,GMP,pce,purchased,,33519.820000,1,,31.059900,432.515319,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0602,Moteur électrique arrière droit,engine,GMP,pce,purchased,,33519.820000,1,,28.549800,345.943637,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0469,Joints toriques circuits fluides,fluid,FLU,pce,purchased,,2.500000,1,,0.022065,0.019223,80.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0470,Colliers durites,fluid,FLU,pce,purchased,,1.500000,1,,0.028519,0.018405,70.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0471,Clips tuyauteries,fluid,FLU,pce,purchased,,0.350000,1,,0.004085,0.004530,100.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0472,Passe-fils/grommets,fluid,FLU,pce,purchased,,1.200000,1,,0.013285,0.010003,80.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0601,Moteur électrique,engine,GMP,pce,purchased,,33519.820000,1,,31.059900,432.515319,2.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0603,Inverter moteur AR gauche 800 V,engine,GMP,pce,purchased,,20111.890000,1,,10.465700,110.304292,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0604,Inverter moteur AR droit 800 V,engine,GMP,pce,purchased,,20111.890000,1,,8.265200,113.279525,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0605,Capteurs position rotor AR,engine,GMP,pce,purchased,,838.000000,1,,0.091473,3.773481,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0606,Capteurs température moteurs AR,engine,GMP,pce,purchased,,201.110000,1,,0.052160,1.982163,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0607,Module contacteurs charge rapide DC,engine,GMP,pce,purchased,,3016.780000,1,,0.982652,27.964114,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0608,Filtre EMI haute tension,engine,GMP,pce,purchased,,1675.990000,1,,0.817378,32.825083,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0620,Radiateur basse température batterie,engine,GMP,pce,purchased,,3016.780000,1,,2.230436,20.733018,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0621,Radiateur e-motors/inverters,engine,GMP,pce,purchased,,3016.780000,1,,3.934744,39.973851,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0622,Chiller batterie-HVAC,engine,GMP,pce,purchased,,4692.770000,1,,3.391059,39.609265,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0623,Vase expansion circuit HV,engine,GMP,pce,purchased,,603.340000,1,,0.586661,2.748741,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0624,Pompe circuit e-motors/inverters,engine,GMP,pce,purchased,,1173.200000,1,,5.188975,62.261473,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0625,Vannes thermiques multi-voies,engine,GMP,pce,purchased,,603.340000,1,,1.778691,9.655090,4.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0626,Durites refroidissement traction,engine,GMP,pce,purchased,,301.690000,1,,0.033091,0.125567,20.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0627,Ventilateurs radiateurs BEV,engine,GMP,pce,purchased,,1508.400000,1,,4.490166,45.066898,2.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0630,Réducteur arrière gauche,transmission,TRN,pce,purchased,,10726.350000,1,,3.183392,7.389544,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0631,Réducteur arrière droit,transmission,TRN,pce,purchased,,10726.350000,1,,2.435859,5.997036,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0632,Verrouillage parking électrique,transmission,TRN,pce,purchased,,2178.780000,1,,0.854230,4.974523,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0633,ECU e-axle arrière,transmission,TRN,pce,purchased,,6033.560000,1,,0.525957,14.856392,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0634,Faisceau e-axle arrière,electrical,ELE,pce,purchased,,1639.510000,1,,2.472494,13.729759,1.0
-bom-valhalla-electrique-2026-10-05,VALE-BOM-0635,Module pompe à chaleur réversible,interior,INT,pce,purchased,,2107.940000,1,,0.448186,16.692329,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0607,Module contacteurs charge rapide DC,engine,GMP,pce,purchased,,3016.780000,1,,0.991981,28.229597,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0608,Filtre EMI haute tension,engine,GMP,pce,purchased,,1675.990000,1,,0.825137,33.136677,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0620,Radiateur basse température batterie,engine,GMP,pce,purchased,,3016.780000,1,,2.251610,20.929841,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0621,Radiateur e-motors/inverters,engine,GMP,pce,purchased,,3016.780000,1,,3.972097,40.353328,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0622,Chiller batterie-HVAC,engine,GMP,pce,purchased,,4692.770000,1,,3.423250,39.985272,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0623,Vase expansion circuit HV,engine,GMP,pce,purchased,,603.340000,1,,0.592230,2.774834,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0624,Pompe circuit e-motors/inverters,engine,GMP,pce,purchased,,1173.200000,1,,5.238234,62.852522,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0625,Vannes thermiques multi-voies,engine,GMP,pce,purchased,,603.340000,1,,1.795576,9.746746,4.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0626,Durites refroidissement traction,engine,GMP,pce,purchased,,301.690000,1,,0.033405,0.126759,20.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0627,Ventilateurs radiateurs BEV,engine,GMP,pce,purchased,,1508.400000,1,,4.532791,45.494717,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0630,Réducteur,transmission,TRN,pce,purchased,,10726.350000,1,,3.213612,7.459693,2.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0632,Verrouillage parking électrique,transmission,TRN,pce,purchased,,2178.780000,1,,0.862340,5.021751,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0633,ECU e-axle arrière,transmission,TRN,pce,purchased,,6033.560000,1,,0.530950,14.997426,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0634,Faisceau e-axle arrière,electrical,ELE,pce,purchased,,1639.510000,1,,2.495966,13.860099,1.0
+bom-valhalla-electrique-2026-10-05,VALE-BOM-0635,Module pompe à chaleur réversible,interior,INT,pce,purchased,,2107.940000,1,,0.452441,16.850803,1.0
 bom-valhalla-electrique-2026-10-05,VALE-BOM-0636,Huile réducteurs électriques,fluid,FLU,L,purchased,,30.000000,1,,0.870000,0.725858,4.0
-bom-valhalla-electrique-2026-10-05,VALE-CAT-AERODYNAMIQUE-EXTERIEUR,Aérodynamique et extérieur,body,CAR,pce,manufactured,1004,,1,,66.0838140,50.20,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-AUXILIAIRES,Auxiliaires,electrical,ELE,pce,manufactured,200,,1,,17.9827380,10.00,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-CHASSIS-SUSPENSION,Châssis et suspension,chassis,CHS,pce,manufactured,1484,,1,,82.5410030,74.20,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-CONFIGURATION-VEHICULE,Configuration véhicule,vehicle,VEH,pce,manufactured,114,,1,,0.9418020,5.70,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-CONSOMMABLES,Consommables et fluides,fluid,FLU,pce,manufactured,234,,1,,55.06238100,11.70,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-DIRECTION,Direction,chassis,CHS,pce,manufactured,336,,1,,19.0244430,16.80,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-ELECTRIQUE-BASSE-TENSION,Électricité basse tension,electrical,ELE,pce,manufactured,872,,1,,90.9178650,43.60,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-ELECTRONIQUE-ADAS,Électronique et ADAS,electrical,ELE,pce,manufactured,680,,1,,23.9773570,34.00,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-FREINAGE,Freinage,chassis,CHS,pce,manufactured,588,,1,,89.7436040,29.40,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-GESTION-THERMIQUE,Gestion thermique,engine,GMP,pce,manufactured,488,,1,,45.6637030,24.40,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-HABITACLE-SECURITE,Habitacle et sécurité,interior,INT,pce,manufactured,1584,,1,,86.4444100,79.20,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-HVAC,Climatisation et chauffage,interior,INT,pce,manufactured,528,,1,,27.7857850,26.40,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-HYBRIDE-ELECTRIQUE-HV,Chaîne électrique haute tension,engine,GMP,pce,manufactured,1528,,1,,815.1456380,76.40,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-HYDRAULIQUE-ACTIF,Hydraulique active,chassis,CHS,pce,manufactured,532,,1,,24.9722330,26.60,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-MOTORISATION,Motorisation,engine,GMP,pce,manufactured,624,,1,,876.0474250,31.20,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-ROUES-PNEUS,Roues et pneumatiques,chassis,CHS,pce,manufactured,248,,1,,104.4205640,12.40,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-STRUCTURE-CARROSSERIE,Structure et carrosserie,body,CAR,pce,manufactured,3032,,1,,364.5616500,151.60,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-TRANSMISSION,Transmission,transmission,TRN,pce,manufactured,612,,1,,15.2380840,30.60,1
-bom-valhalla-electrique-2026-10-05,VALE-CAT-VITRAGE-ECLAIRAGE,Vitrage et éclairage,glazing,CAR,pce,manufactured,488,,1,,29.4707610,24.40,1
-bom-valhalla-electrique-2026-10-05,VALE-FIX-BOULON-FREIN-HAUTE-RESISTANCE,Boulon frein haute resistance,fastener,FIX,pce,purchased,,4.500000,1,,0.021956,0.067170,25.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-BOULON-HAUTE-RESISTANCE,Boulon haute resistance,fastener,FIX,pce,purchased,,6.000000,1,,0.013156,0.033127,48.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-CLIP-AGRAFE-FAISCEAU,Clip agrafe faisceau,fastener,FIX,pce,purchased,,0.250000,1,,0.010086,0.031072,400.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-CLIP-GARNITURE,Clip garniture,fastener,FIX,pce,purchased,,0.350000,1,,0.020090,0.061718,12.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-COLLIER-AGRAFE,Collier agrafe,fastener,FIX,pce,purchased,,0.750000,1,,0.023744,0.065364,142.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-CARROSSERIE,Vis boulon carrosserie,fastener,FIX,pce,purchased,,1.200000,1,,0.021789,0.069244,102.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-HAUTE-RESISTANCE,Vis boulon haute resistance,fastener,FIX,pce,purchased,,7.030000,1,,0.017955,0.046100,12.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-HV-ISOLE,Vis boulon hv isole,fastener,FIX,pce,purchased,,1.500000,1,,0.019548,0.052296,198.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-STANDARD,Vis boulon standard,fastener,FIX,pce,purchased,,1.000000,1,,0.008056,0.021248,98.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-STRUCTUREL,Vis boulon structurel,fastener,FIX,pce,purchased,,2.000000,1,,0.014153,0.035831,136.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-CLIP-MONTAGE,Vis clip montage,fastener,FIX,pce,purchased,,0.600000,1,,0.027742,0.070782,87.0
-bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-GOUJON-MASSE,Vis goujon masse,fastener,FIX,pce,purchased,,0.800000,1,,0.024896,0.066980,12.0
-bom-valhalla-electrique-2026-10-05,VEH-VALHALLA-ELE,Aston Martin Valhalla — électrique 800 V (hypothétique) — véhicule complet,vehicle,VEH,pce,manufactured,4200,,1,,1959.97783500,210.00,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-AERODYNAMIQUE-EXTERIEUR,Aérodynamique et extérieur,body,CAR,pce,manufactured,1004,,1,,66.7111530,50.20,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-AUXILIAIRES,Auxiliaires,electrical,ELE,pce,manufactured,200,,1,,18.7255760,10.00,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-CHASSIS-SUSPENSION,Châssis et suspension,chassis,CHS,pce,manufactured,1484,,1,,78.8756020,74.20,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-CONFIGURATION-VEHICULE,Configuration véhicule,vehicle,VEH,pce,manufactured,114,,1,,0.9507420,5.70,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-CONSOMMABLES,Consommables et fluides,fluid,FLU,pce,manufactured,234,,1,,55.11419975,11.70,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-DIRECTION,Direction,chassis,CHS,pce,manufactured,336,,1,,17.9897940,16.80,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-ELECTRIQUE-BASSE-TENSION,Électricité basse tension,electrical,ELE,pce,manufactured,872,,1,,91.9733510,43.60,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-ELECTRONIQUE-ADAS,Électronique et ADAS,electrical,ELE,pce,manufactured,680,,1,,24.5742840,34.00,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-FREINAGE,Freinage,chassis,CHS,pce,manufactured,588,,1,,91.9959650,29.40,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-GESTION-THERMIQUE,Gestion thermique,engine,GMP,pce,manufactured,488,,1,,46.0972100,24.40,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-HABITACLE-SECURITE,Habitacle et sécurité,interior,INT,pce,manufactured,1584,,1,,86.2436770,79.20,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-HVAC,Climatisation et chauffage,interior,INT,pce,manufactured,528,,1,,28.0495596,26.40,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-HYBRIDE-ELECTRIQUE-HV,Chaîne électrique haute tension,engine,GMP,pce,manufactured,1528,,1,,811.8059760,76.40,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-HYDRAULIQUE-ACTIF,Hydraulique active,chassis,CHS,pce,manufactured,532,,1,,25.1694230,26.60,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-MOTORISATION,Motorisation,engine,GMP,pce,manufactured,624,,1,,875.9611580,31.20,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-ROUES-PNEUS,Roues et pneumatiques,chassis,CHS,pce,manufactured,248,,1,,104.5338480,12.40,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-STRUCTURE-CARROSSERIE,Structure et carrosserie,body,CAR,pce,manufactured,3032,,1,,365.2514580,151.60,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-TRANSMISSION,Transmission,transmission,TRN,pce,manufactured,612,,1,,18.0579720,30.60,1
+bom-valhalla-electrique-2026-10-05,VALE-CAT-VITRAGE-ECLAIRAGE,Vitrage et éclairage,glazing,CAR,pce,manufactured,488,,1,,27.9109970,24.40,1
+bom-valhalla-electrique-2026-10-05,VALE-FIX-BOULON-FREIN-HAUTE-RESISTANCE,Boulon frein haute resistance,fastener,FIX,pce,purchased,,4.500000,1,,0.022164,0.067806,25.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-BOULON-HAUTE-RESISTANCE,Boulon haute resistance,fastener,FIX,pce,purchased,,6.000000,1,,0.013281,0.033442,48.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-CLIP-AGRAFE-FAISCEAU,Clip agrafe faisceau,fastener,FIX,pce,purchased,,0.250000,1,,0.010182,0.031368,400.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-CLIP-GARNITURE,Clip garniture,fastener,FIX,pce,purchased,,0.350000,1,,0.020281,0.062305,12.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-COLLIER-AGRAFE,Collier agrafe,fastener,FIX,pce,purchased,,0.750000,1,,0.023970,0.065987,142.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-CARROSSERIE,Vis boulon carrosserie,fastener,FIX,pce,purchased,,1.200000,1,,0.021996,0.069902,102.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-HAUTE-RESISTANCE,Vis boulon haute resistance,fastener,FIX,pce,purchased,,7.030000,1,,0.018126,0.046539,12.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-HV-ISOLE,Vis boulon hv isole,fastener,FIX,pce,purchased,,1.500000,1,,0.019733,0.052791,198.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-STANDARD,Vis boulon standard,fastener,FIX,pce,purchased,,1.000000,1,,0.008132,0.021448,98.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-BOULON-STRUCTUREL,Vis boulon structurel,fastener,FIX,pce,purchased,,2.000000,1,,0.014288,0.036173,136.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-CLIP-MONTAGE,Vis clip montage,fastener,FIX,pce,purchased,,0.600000,1,,0.028006,0.071456,87.0
+bom-valhalla-electrique-2026-10-05,VALE-FIX-VIS-GOUJON-MASSE,Vis goujon masse,fastener,FIX,pce,purchased,,0.800000,1,,0.025133,0.067618,12.0
+bom-valhalla-electrique-2026-10-05,VEH-VALHALLA-ELE,Aston Martin Valhalla — électrique 800 V (hypothétique) — véhicule complet,vehicle,VEH,pce,manufactured,4200,,1,,1960.03078735,210.00,1

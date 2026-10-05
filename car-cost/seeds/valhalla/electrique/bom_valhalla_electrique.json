@@ -23,13 +23,13 @@
       "calibration": "Thermique et électrique sont hypothétiques : les prix de leur motorisation sont mis à l'échelle pour que leur coût de référence se tienne à ±5 % de celui de l'hybride (thermique 0,95, électrique 1,05). Le facteur appliqué est dans validation_report.json (calibration). Les autres pièces gardent le prix du fichier source.",
       "drivers": "Exposition du prix aux indices de marché simulés : facteur = 1 + Σ poids × variation. Le change GBP/EUR s'applique en plus selon origin_currency."
     },
-    "seed_checksum": "sha256:282560271ee876a5bcf58aad9dc184aa5d35003e7a2dee9c6c83389f0dec4e2c",
+    "seed_checksum": "sha256:6f433c4f3ecbaca7c253a1e6291c7417aeb8b975cd8caf17f5e4cb23da6d47f0",
     "counts": {
-      "parts": 399,
-      "edges": 410,
-      "purchased": 379,
+      "parts": 324,
+      "edges": 336,
+      "purchased": 304,
       "manufactured": 20,
-      "shared_parts": 5,
+      "shared_parts": 6,
       "max_depth": 3
     }
   },
@@ -62,8 +62,8 @@
       "base_price_eur": "23.420000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.912353",
-      "carbon_factor_kg_co2e_per_unit": "4.335501",
+      "mass_kg": "0.921014",
+      "carbon_factor_kg_co2e_per_unit": "4.376659",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -78,8 +78,8 @@
       "base_price_eur": "5.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.029449",
-      "carbon_factor_kg_co2e_per_unit": "0.103628",
+      "mass_kg": "0.029728",
+      "carbon_factor_kg_co2e_per_unit": "0.104610",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -126,8 +126,8 @@
       "base_price_eur": "14.050000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.007209",
-      "carbon_factor_kg_co2e_per_unit": "0.197134",
+      "mass_kg": "0.007278",
+      "carbon_factor_kg_co2e_per_unit": "0.199021",
       "expected_cumulative_quantity": "60.0"
     },
     {
@@ -142,8 +142,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.510936",
-      "carbon_factor_kg_co2e_per_unit": "40.865077",
+      "mass_kg": "1.525279",
+      "carbon_factor_kg_co2e_per_unit": "41.253001",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -158,8 +158,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.608875",
-      "carbon_factor_kg_co2e_per_unit": "68.107291",
+      "mass_kg": "2.633641",
+      "carbon_factor_kg_co2e_per_unit": "68.753832",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -197,7 +197,7 @@
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0013",
-      "label": "Crash-box avant gauche",
+      "label": "Crash-box",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -206,30 +206,14 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.999597",
-      "carbon_factor_kg_co2e_per_unit": "97.785347",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0014",
-      "label": "Crash-box avant droit",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1756.620000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.609439",
-      "carbon_factor_kg_co2e_per_unit": "40.696918",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "4.037565",
+      "carbon_factor_kg_co2e_per_unit": "98.713619",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0015",
-      "label": "Traverse pare-chocs avant",
+      "label": "Traverse pare-chocs",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -238,57 +222,9 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.892664",
-      "carbon_factor_kg_co2e_per_unit": "22.070403",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0016",
-      "label": "Crash-box arrière gauche",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1756.620000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.714386",
-      "carbon_factor_kg_co2e_per_unit": "68.609363",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0017",
-      "label": "Crash-box arrière droit",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1756.620000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "4.609693",
-      "carbon_factor_kg_co2e_per_unit": "130.485658",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0018",
-      "label": "Traverse pare-chocs arrière",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1405.300000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.621937",
-      "carbon_factor_kg_co2e_per_unit": "93.241697",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.901138",
+      "carbon_factor_kg_co2e_per_unit": "22.279916",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -302,8 +238,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.773391",
-      "carbon_factor_kg_co2e_per_unit": "98.148164",
+      "mass_kg": "3.809211",
+      "carbon_factor_kg_co2e_per_unit": "99.079864",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -318,8 +254,8 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.839327",
-      "carbon_factor_kg_co2e_per_unit": "6.288144",
+      "mass_kg": "2.866281",
+      "carbon_factor_kg_co2e_per_unit": "6.347838",
       "expected_cumulative_quantity": "6.0"
     },
     {
@@ -334,8 +270,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.464149",
-      "carbon_factor_kg_co2e_per_unit": "1.547426",
+      "mass_kg": "0.468555",
+      "carbon_factor_kg_co2e_per_unit": "1.562116",
       "expected_cumulative_quantity": "6.0"
     },
     {
@@ -350,8 +286,8 @@
       "base_price_eur": "761.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.500675",
-      "carbon_factor_kg_co2e_per_unit": "54.723271",
+      "mass_kg": "2.524414",
+      "carbon_factor_kg_co2e_per_unit": "55.242761",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -366,8 +302,8 @@
       "base_price_eur": "1639.510000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.878918",
-      "carbon_factor_kg_co2e_per_unit": "42.206135",
+      "mass_kg": "1.896754",
+      "carbon_factor_kg_co2e_per_unit": "42.606785",
       "expected_cumulative_quantity": "5.0"
     },
     {
@@ -382,14 +318,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.113809",
-      "carbon_factor_kg_co2e_per_unit": "27.817380",
+      "mass_kg": "1.124382",
+      "carbon_factor_kg_co2e_per_unit": "28.081440",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0025",
-      "label": "Aile avant gauche",
+      "label": "Aile",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -398,25 +334,9 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.807398",
-      "carbon_factor_kg_co2e_per_unit": "21.926669",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0026",
-      "label": "Aile avant droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2927.700000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.064792",
-      "carbon_factor_kg_co2e_per_unit": "85.013039",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.815063",
+      "carbon_factor_kg_co2e_per_unit": "22.134829",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -430,14 +350,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.613372",
-      "carbon_factor_kg_co2e_per_unit": "104.342621",
+      "mass_kg": "3.647674",
+      "carbon_factor_kg_co2e_per_unit": "105.333153",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0028",
-      "label": "Panneau latéral gauche",
+      "label": "Panneau latéral",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -446,30 +366,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.498517",
-      "carbon_factor_kg_co2e_per_unit": "87.696626",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0029",
-      "label": "Panneau latéral droit",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2927.700000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.348581",
-      "carbon_factor_kg_co2e_per_unit": "36.875329",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.531728",
+      "carbon_factor_kg_co2e_per_unit": "88.529119",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0030",
-      "label": "Quarter panel arrière gauche",
+      "label": "Quarter panel",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -478,25 +382,9 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.443580",
-      "carbon_factor_kg_co2e_per_unit": "38.794769",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0031",
-      "label": "Quarter panel arrière droit",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2927.700000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.451367",
-      "carbon_factor_kg_co2e_per_unit": "35.511177",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.457284",
+      "carbon_factor_kg_co2e_per_unit": "39.163050",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -510,8 +398,8 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.898718",
-      "carbon_factor_kg_co2e_per_unit": "49.853879",
+      "mass_kg": "1.916743",
+      "carbon_factor_kg_co2e_per_unit": "50.327154",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -526,14 +414,14 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.012970",
-      "carbon_factor_kg_co2e_per_unit": "24.851598",
+      "mass_kg": "1.022586",
+      "carbon_factor_kg_co2e_per_unit": "25.087511",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0034",
-      "label": "Bas de caisse gauche",
+      "label": "Bas de caisse",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -542,30 +430,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.534161",
-      "carbon_factor_kg_co2e_per_unit": "115.232074",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0035",
-      "label": "Bas de caisse droit",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2927.700000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.477842",
-      "carbon_factor_kg_co2e_per_unit": "41.813470",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "4.577204",
+      "carbon_factor_kg_co2e_per_unit": "116.325978",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0036",
-      "label": "Doublure passage de roue AV G",
+      "label": "Doublure passage de roue",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -574,62 +446,14 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.646037",
-      "carbon_factor_kg_co2e_per_unit": "44.830147",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0037",
-      "label": "Doublure passage de roue AV D",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.107015",
-      "carbon_factor_kg_co2e_per_unit": "57.401410",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0038",
-      "label": "Doublure passage de roue AR G",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.187219",
-      "carbon_factor_kg_co2e_per_unit": "65.448592",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0039",
-      "label": "Doublure passage de roue AR D",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.937478",
-      "carbon_factor_kg_co2e_per_unit": "83.464325",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.661663",
+      "carbon_factor_kg_co2e_per_unit": "45.255724",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0040",
-      "label": "Fond plat avant",
+      "label": "Fond plat",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -638,9 +462,9 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.190374",
-      "carbon_factor_kg_co2e_per_unit": "103.927980",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "4.230153",
+      "carbon_factor_kg_co2e_per_unit": "104.914563",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -654,24 +478,8 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.983595",
-      "carbon_factor_kg_co2e_per_unit": "51.026791",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0042",
-      "label": "Fond plat arrière",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2927.700000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.839189",
-      "carbon_factor_kg_co2e_per_unit": "106.005383",
+      "mass_kg": "2.002425",
+      "carbon_factor_kg_co2e_per_unit": "51.511182",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -686,14 +494,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.627603",
-      "carbon_factor_kg_co2e_per_unit": "134.021862",
+      "mass_kg": "4.671532",
+      "carbon_factor_kg_co2e_per_unit": "135.294107",
       "expected_cumulative_quantity": "6.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0044",
-      "label": "Porte dièdre gauche",
+      "label": "Porte dièdre",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -704,28 +512,12 @@
       "material_ref": "",
       "mass_kg": "15.408100",
       "carbon_factor_kg_co2e_per_unit": "396.290169",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0045",
-      "label": "Porte dièdre droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "7026.480000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "15.991000",
-      "carbon_factor_kg_co2e_per_unit": "423.054698",
-      "expected_cumulative_quantity": "1.0"
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0046",
-      "label": "Charnière porte gauche",
+      "label": "Charnière porte",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -734,30 +526,14 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.844036",
-      "carbon_factor_kg_co2e_per_unit": "71.645817",
-      "expected_cumulative_quantity": "2.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0047",
-      "label": "Charnière porte droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "702.650000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.547748",
-      "carbon_factor_kg_co2e_per_unit": "66.445777",
-      "expected_cumulative_quantity": "2.0"
+      "mass_kg": "2.871034",
+      "carbon_factor_kg_co2e_per_unit": "72.325940",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0048",
-      "label": "Assistance ouverture porte gauche",
+      "label": "Assistance ouverture porte",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -766,30 +542,14 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.734417",
-      "carbon_factor_kg_co2e_per_unit": "45.033097",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0049",
-      "label": "Assistance ouverture porte droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.870122",
-      "carbon_factor_kg_co2e_per_unit": "84.726001",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.750882",
+      "carbon_factor_kg_co2e_per_unit": "45.460601",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0050",
-      "label": "Serrure porte gauche",
+      "label": "Serrure porte",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -798,30 +558,14 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.744150",
-      "carbon_factor_kg_co2e_per_unit": "49.821296",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0051",
-      "label": "Serrure porte droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "292.770000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "4.147157",
-      "carbon_factor_kg_co2e_per_unit": "100.380276",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.760708",
+      "carbon_factor_kg_co2e_per_unit": "50.294272",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0052",
-      "label": "Gâche porte gauche",
+      "label": "Gâche porte",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -830,30 +574,14 @@
       "base_price_eur": "93.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.552420",
-      "carbon_factor_kg_co2e_per_unit": "61.466357",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0053",
-      "label": "Gâche porte droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "93.690000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.140109",
-      "carbon_factor_kg_co2e_per_unit": "55.413842",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "2.576650",
+      "carbon_factor_kg_co2e_per_unit": "62.049855",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0054",
-      "label": "Poignée/commande extérieure gauche",
+      "label": "Poignée/commande extérieure",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -862,30 +590,14 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.755181",
-      "carbon_factor_kg_co2e_per_unit": "28.091223",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0055",
-      "label": "Poignée/commande extérieure droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.466193",
-      "carbon_factor_kg_co2e_per_unit": "17.999339",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.762349",
+      "carbon_factor_kg_co2e_per_unit": "28.357858",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0056",
-      "label": "Joint périphérique porte gauche",
+      "label": "Joint périphérique porte",
       "category": "body",
       "system": "CAR",
       "unit": "pce",
@@ -894,25 +606,9 @@
       "base_price_eur": "140.530000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.717025",
-      "carbon_factor_kg_co2e_per_unit": "2.798907",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0057",
-      "label": "Joint périphérique porte droite",
-      "category": "body",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "140.530000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.333525",
-      "carbon_factor_kg_co2e_per_unit": "1.306117",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.723832",
+      "carbon_factor_kg_co2e_per_unit": "2.825478",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -926,8 +622,8 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.812285",
-      "carbon_factor_kg_co2e_per_unit": "53.815078",
+      "mass_kg": "1.829489",
+      "carbon_factor_kg_co2e_per_unit": "54.325944",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -942,8 +638,8 @@
       "base_price_eur": "7026.480000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.356018",
-      "carbon_factor_kg_co2e_per_unit": "92.110612",
+      "mass_kg": "3.387877",
+      "carbon_factor_kg_co2e_per_unit": "92.985027",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -958,8 +654,8 @@
       "base_price_eur": "7026.480000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.334779",
-      "carbon_factor_kg_co2e_per_unit": "65.409301",
+      "mass_kg": "2.356943",
+      "carbon_factor_kg_co2e_per_unit": "66.030230",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -974,8 +670,8 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.108962",
-      "carbon_factor_kg_co2e_per_unit": "59.236103",
+      "mass_kg": "2.128982",
+      "carbon_factor_kg_co2e_per_unit": "59.798421",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -990,8 +686,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.255568",
-      "carbon_factor_kg_co2e_per_unit": "86.343523",
+      "mass_kg": "3.286473",
+      "carbon_factor_kg_co2e_per_unit": "87.163180",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1006,8 +702,8 @@
       "base_price_eur": "210.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.122642",
-      "carbon_factor_kg_co2e_per_unit": "3.734106",
+      "mass_kg": "0.123806",
+      "carbon_factor_kg_co2e_per_unit": "3.769546",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1022,8 +718,8 @@
       "base_price_eur": "9368.640000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.072014",
-      "carbon_factor_kg_co2e_per_unit": "119.018454",
+      "mass_kg": "4.110670",
+      "carbon_factor_kg_co2e_per_unit": "120.148307",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1038,8 +734,8 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.495420",
-      "carbon_factor_kg_co2e_per_unit": "8.104201",
+      "mass_kg": "3.528602",
+      "carbon_factor_kg_co2e_per_unit": "8.181134",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1054,8 +750,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.496784",
-      "carbon_factor_kg_co2e_per_unit": "118.000109",
+      "mass_kg": "4.539472",
+      "carbon_factor_kg_co2e_per_unit": "119.120285",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1070,8 +766,8 @@
       "base_price_eur": "210.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.083664",
-      "carbon_factor_kg_co2e_per_unit": "3.039162",
+      "mass_kg": "0.084458",
+      "carbon_factor_kg_co2e_per_unit": "3.068004",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1086,8 +782,8 @@
       "base_price_eur": "4684.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.786803",
-      "carbon_factor_kg_co2e_per_unit": "77.663183",
+      "mass_kg": "2.813258",
+      "carbon_factor_kg_co2e_per_unit": "78.400437",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1102,8 +798,8 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.937968",
-      "carbon_factor_kg_co2e_per_unit": "8.366208",
+      "mass_kg": "1.956365",
+      "carbon_factor_kg_co2e_per_unit": "8.445628",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1118,8 +814,8 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.747488",
-      "carbon_factor_kg_co2e_per_unit": "9.636348",
+      "mass_kg": "1.764077",
+      "carbon_factor_kg_co2e_per_unit": "9.727826",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -1134,8 +830,8 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.237230",
-      "carbon_factor_kg_co2e_per_unit": "5.830818",
+      "mass_kg": "1.248975",
+      "carbon_factor_kg_co2e_per_unit": "5.886169",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1150,8 +846,8 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.427008",
-      "carbon_factor_kg_co2e_per_unit": "8.273757",
+      "mass_kg": "3.459540",
+      "carbon_factor_kg_co2e_per_unit": "8.352298",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1166,8 +862,8 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.260397",
-      "carbon_factor_kg_co2e_per_unit": "10.514463",
+      "mass_kg": "2.281855",
+      "carbon_factor_kg_co2e_per_unit": "10.614277",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1182,8 +878,8 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "5.928165",
-      "carbon_factor_kg_co2e_per_unit": "65.584475",
+      "mass_kg": "5.984441",
+      "carbon_factor_kg_co2e_per_unit": "66.207068",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1214,14 +910,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.898166",
-      "carbon_factor_kg_co2e_per_unit": "3.129031",
+      "mass_kg": "0.906692",
+      "carbon_factor_kg_co2e_per_unit": "3.158734",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0077",
-      "label": "Vitre porte gauche",
+      "label": "Vitre porte",
       "category": "glazing",
       "system": "CAR",
       "unit": "pce",
@@ -1230,30 +926,14 @@
       "base_price_eur": "819.760000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.971311",
-      "carbon_factor_kg_co2e_per_unit": "24.268982",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0078",
-      "label": "Vitre porte droite",
-      "category": "glazing",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "819.760000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.552420",
-      "carbon_factor_kg_co2e_per_unit": "73.410152",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.980531",
+      "carbon_factor_kg_co2e_per_unit": "24.499351",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0079",
-      "label": "Lève-vitre gauche",
+      "label": "Lève-vitre",
       "category": "glazing",
       "system": "CAR",
       "unit": "pce",
@@ -1262,25 +942,9 @@
       "base_price_eur": "526.990000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.770941",
-      "carbon_factor_kg_co2e_per_unit": "8.400282",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0080",
-      "label": "Lève-vitre droit",
-      "category": "glazing",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "526.990000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.260601",
-      "carbon_factor_kg_co2e_per_unit": "11.736588",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.787752",
+      "carbon_factor_kg_co2e_per_unit": "8.480023",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -1294,14 +958,14 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.173312",
-      "carbon_factor_kg_co2e_per_unit": "7.227180",
+      "mass_kg": "0.174957",
+      "carbon_factor_kg_co2e_per_unit": "7.295777",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0082",
-      "label": "Projecteur Matrix LED gauche",
+      "label": "Projecteur Matrix LED",
       "category": "glazing",
       "system": "CAR",
       "unit": "pce",
@@ -1310,30 +974,14 @@
       "base_price_eur": "3513.240000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.627979",
-      "carbon_factor_kg_co2e_per_unit": "9.573168",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0083",
-      "label": "Projecteur Matrix LED droit",
-      "category": "glazing",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "3513.240000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.596368",
-      "carbon_factor_kg_co2e_per_unit": "7.138000",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.643433",
+      "carbon_factor_kg_co2e_per_unit": "9.664043",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0084",
-      "label": "Feu arrière LED gauche",
+      "label": "Feu arrière LED",
       "category": "glazing",
       "system": "CAR",
       "unit": "pce",
@@ -1342,25 +990,9 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.986643",
-      "carbon_factor_kg_co2e_per_unit": "36.040885",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0085",
-      "label": "Feu arrière LED droit",
-      "category": "glazing",
-      "system": "CAR",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1405.300000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.648988",
-      "carbon_factor_kg_co2e_per_unit": "25.908250",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.996009",
+      "carbon_factor_kg_co2e_per_unit": "36.383014",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -1374,8 +1006,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.126816",
-      "carbon_factor_kg_co2e_per_unit": "11.792344",
+      "mass_kg": "2.147006",
+      "carbon_factor_kg_co2e_per_unit": "11.904289",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1390,8 +1022,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.326638",
-      "carbon_factor_kg_co2e_per_unit": "1.426689",
+      "mass_kg": "0.329738",
+      "carbon_factor_kg_co2e_per_unit": "1.440230",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1406,14 +1038,14 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.008059",
-      "carbon_factor_kg_co2e_per_unit": "0.044929",
+      "mass_kg": "0.008136",
+      "carbon_factor_kg_co2e_per_unit": "0.045358",
       "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0089",
-      "label": "Coque siège carbone conducteur",
+      "label": "Coque siège carbone",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1424,28 +1056,12 @@
       "material_ref": "",
       "mass_kg": "10.934800",
       "carbon_factor_kg_co2e_per_unit": "283.810547",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0090",
-      "label": "Coque siège carbone passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "7026.480000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "9.559800",
-      "carbon_factor_kg_co2e_per_unit": "238.429060",
-      "expected_cumulative_quantity": "1.0"
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0091",
-      "label": "Coussin/foam siège conducteur",
+      "label": "Coussin/foam siège",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1454,30 +1070,14 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.268350",
-      "carbon_factor_kg_co2e_per_unit": "12.037680",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0092",
-      "label": "Coussin/foam siège passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "585.540000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.768290",
-      "carbon_factor_kg_co2e_per_unit": "8.163841",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "2.289884",
+      "carbon_factor_kg_co2e_per_unit": "12.151956",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0093",
-      "label": "Garniture siège conducteur",
+      "label": "Garniture siège",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1486,30 +1086,14 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.944057",
-      "carbon_factor_kg_co2e_per_unit": "25.101532",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0094",
-      "label": "Garniture siège passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.399974",
-      "carbon_factor_kg_co2e_per_unit": "39.753102",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.953019",
+      "carbon_factor_kg_co2e_per_unit": "25.339822",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0095",
-      "label": "Rail/fixation siège conducteur",
+      "label": "Rail/fixation siège",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1518,30 +1102,14 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.284176",
-      "carbon_factor_kg_co2e_per_unit": "8.709241",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0096",
-      "label": "Rail/fixation siège passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "936.860000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.085787",
-      "carbon_factor_kg_co2e_per_unit": "4.718050",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.315352",
+      "carbon_factor_kg_co2e_per_unit": "8.791916",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0097",
-      "label": "Ceinture 3 points conducteur",
+      "label": "Ceinture 3 points",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1550,30 +1118,14 @@
       "base_price_eur": "468.430000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.388635",
-      "carbon_factor_kg_co2e_per_unit": "2.139669",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0098",
-      "label": "Ceinture 3 points passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "468.430000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.272837",
-      "carbon_factor_kg_co2e_per_unit": "12.297412",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.392325",
+      "carbon_factor_kg_co2e_per_unit": "2.159985",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0099",
-      "label": "Prétensionneur conducteur",
+      "label": "Prétensionneur",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1582,30 +1134,14 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.285850",
-      "carbon_factor_kg_co2e_per_unit": "1.491165",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0100",
-      "label": "Prétensionneur passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "351.320000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.550972",
-      "carbon_factor_kg_co2e_per_unit": "2.932493",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.288563",
+      "carbon_factor_kg_co2e_per_unit": "1.505318",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0101",
-      "label": "Boucle ceinture conducteur",
+      "label": "Boucle ceinture",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1614,30 +1150,14 @@
       "base_price_eur": "468.430000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.893101",
-      "carbon_factor_kg_co2e_per_unit": "9.663523",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0102",
-      "label": "Boucle ceinture passager",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "468.430000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.087660",
-      "carbon_factor_kg_co2e_per_unit": "10.411995",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.911072",
+      "carbon_factor_kg_co2e_per_unit": "9.755258",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0103",
-      "label": "Airbag conducteur",
+      "label": "Airbag",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1646,25 +1166,9 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.499293",
-      "carbon_factor_kg_co2e_per_unit": "6.795396",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0104",
-      "label": "Airbag passager avant",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.029322",
-      "carbon_factor_kg_co2e_per_unit": "28.679793",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.513525",
+      "carbon_factor_kg_co2e_per_unit": "6.859901",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -1678,8 +1182,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.350170",
-      "carbon_factor_kg_co2e_per_unit": "11.496571",
+      "mass_kg": "0.353494",
+      "carbon_factor_kg_co2e_per_unit": "11.605703",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1694,8 +1198,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.127982",
-      "carbon_factor_kg_co2e_per_unit": "4.501767",
+      "mass_kg": "0.129197",
+      "carbon_factor_kg_co2e_per_unit": "4.544504",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1710,8 +1214,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.066132",
-      "carbon_factor_kg_co2e_per_unit": "2.661813",
+      "mass_kg": "0.066760",
+      "carbon_factor_kg_co2e_per_unit": "2.687090",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -1726,8 +1230,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.130640",
-      "carbon_factor_kg_co2e_per_unit": "4.646656",
+      "mass_kg": "0.131880",
+      "carbon_factor_kg_co2e_per_unit": "4.690761",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1742,14 +1246,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.943882",
-      "carbon_factor_kg_co2e_per_unit": "10.647419",
+      "mass_kg": "1.962335",
+      "carbon_factor_kg_co2e_per_unit": "10.748494",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0110",
-      "label": "Palette réglage régénération gauche",
+      "label": "Palette réglage régénération",
       "category": "interior",
       "system": "INT",
       "unit": "pce",
@@ -1758,25 +1262,9 @@
       "base_price_eur": "409.880000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.623982",
-      "carbon_factor_kg_co2e_per_unit": "2.524631",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0111",
-      "label": "Palette réglage régénération droite",
-      "category": "interior",
-      "system": "INT",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "409.880000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.173722",
-      "carbon_factor_kg_co2e_per_unit": "10.886435",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.629906",
+      "carbon_factor_kg_co2e_per_unit": "2.548600",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -1790,8 +1278,8 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.206308",
-      "carbon_factor_kg_co2e_per_unit": "8.625944",
+      "mass_kg": "0.208267",
+      "carbon_factor_kg_co2e_per_unit": "8.707852",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1806,8 +1294,8 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.060448",
-      "carbon_factor_kg_co2e_per_unit": "2.099855",
+      "mass_kg": "0.061022",
+      "carbon_factor_kg_co2e_per_unit": "2.119794",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1822,8 +1310,8 @@
       "base_price_eur": "4098.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.210839",
-      "carbon_factor_kg_co2e_per_unit": "11.877954",
+      "mass_kg": "2.231827",
+      "carbon_factor_kg_co2e_per_unit": "11.990714",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1838,8 +1326,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.647244",
-      "carbon_factor_kg_co2e_per_unit": "89.593090",
+      "mass_kg": "3.681868",
+      "carbon_factor_kg_co2e_per_unit": "90.443615",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1854,8 +1342,8 @@
       "base_price_eur": "2107.940000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.686918",
-      "carbon_factor_kg_co2e_per_unit": "9.005106",
+      "mass_kg": "1.702931",
+      "carbon_factor_kg_co2e_per_unit": "9.090586",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1870,8 +1358,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.908678",
-      "carbon_factor_kg_co2e_per_unit": "28.606819",
+      "mass_kg": "0.917304",
+      "carbon_factor_kg_co2e_per_unit": "28.878381",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1886,8 +1374,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.029373",
-      "carbon_factor_kg_co2e_per_unit": "39.123585",
+      "mass_kg": "1.039145",
+      "carbon_factor_kg_co2e_per_unit": "39.494992",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1902,8 +1390,8 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.689365",
-      "carbon_factor_kg_co2e_per_unit": "7.182166",
+      "mass_kg": "1.705402",
+      "carbon_factor_kg_co2e_per_unit": "7.250346",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1918,8 +1406,8 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.019445",
-      "carbon_factor_kg_co2e_per_unit": "30.112978",
+      "mass_kg": "1.029123",
+      "carbon_factor_kg_co2e_per_unit": "30.398853",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1934,8 +1422,8 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.630426",
-      "carbon_factor_kg_co2e_per_unit": "7.120070",
+      "mass_kg": "1.645904",
+      "carbon_factor_kg_co2e_per_unit": "7.187663",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -1950,8 +1438,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.900117",
-      "carbon_factor_kg_co2e_per_unit": "4.955504",
+      "mass_kg": "0.908662",
+      "carbon_factor_kg_co2e_per_unit": "5.002548",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1966,8 +1454,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.532821",
-      "carbon_factor_kg_co2e_per_unit": "2.705452",
+      "mass_kg": "0.537879",
+      "carbon_factor_kg_co2e_per_unit": "2.731134",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -1982,8 +1470,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.799085",
-      "carbon_factor_kg_co2e_per_unit": "9.501328",
+      "mass_kg": "1.816163",
+      "carbon_factor_kg_co2e_per_unit": "9.591520",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -1998,8 +1486,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.416191",
-      "carbon_factor_kg_co2e_per_unit": "122.024657",
+      "mass_kg": "4.458114",
+      "carbon_factor_kg_co2e_per_unit": "123.183040",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2014,14 +1502,14 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.350138",
-      "carbon_factor_kg_co2e_per_unit": "38.653101",
+      "mass_kg": "1.362955",
+      "carbon_factor_kg_co2e_per_unit": "39.020039",
       "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0127",
-      "label": "Porte-moyeu avant gauche",
+      "label": "Porte-moyeu",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2030,30 +1518,14 @@
       "base_price_eur": "2342.160000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.507821",
-      "carbon_factor_kg_co2e_per_unit": "38.667466",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0128",
-      "label": "Porte-moyeu avant droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2342.160000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.910963",
-      "carbon_factor_kg_co2e_per_unit": "26.073947",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.522135",
+      "carbon_factor_kg_co2e_per_unit": "39.034543",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0129",
-      "label": "Bras supérieur AV gauche",
+      "label": "Bras supérieur",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2062,238 +1534,126 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.453229",
-      "carbon_factor_kg_co2e_per_unit": "0.952542",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0130",
-      "label": "Bras supérieur AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1405.300000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.385626",
-      "carbon_factor_kg_co2e_per_unit": "7.859189",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0131",
-      "label": "Bras inférieur AV gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1405.300000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.008205",
-      "carbon_factor_kg_co2e_per_unit": "2.338027",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0132",
-      "label": "Bras inférieur AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1405.300000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.048410",
-      "carbon_factor_kg_co2e_per_unit": "4.403549",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0133",
-      "label": "Pushrod AV gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "819.760000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.998212",
-      "carbon_factor_kg_co2e_per_unit": "4.145774",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0134",
-      "label": "Pushrod AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "819.760000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.770207",
-      "carbon_factor_kg_co2e_per_unit": "4.206254",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0135",
-      "label": "Rocker/bellcrank AV gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.837303",
-      "carbon_factor_kg_co2e_per_unit": "4.275269",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0136",
-      "label": "Rocker/bellcrank AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1171.080000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.049727",
-      "carbon_factor_kg_co2e_per_unit": "8.216536",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0137",
-      "label": "Ressort AV gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "468.430000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.382289",
-      "carbon_factor_kg_co2e_per_unit": "7.957173",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0138",
-      "label": "Ressort AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "468.430000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.946801",
-      "carbon_factor_kg_co2e_per_unit": "2.509837",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0139",
-      "label": "Amortisseur Bilstein DTX AV gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "3500.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.746569",
-      "carbon_factor_kg_co2e_per_unit": "1.797410",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0140",
-      "label": "Amortisseur Bilstein DTX AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "3500.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.613573",
-      "carbon_factor_kg_co2e_per_unit": "3.955061",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0141",
-      "label": "Barre antiroulis AV",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "702.650000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.597872",
-      "carbon_factor_kg_co2e_per_unit": "8.331592",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0142",
-      "label": "Biellettes barre antiroulis AV",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "702.650000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.390473",
-      "carbon_factor_kg_co2e_per_unit": "5.573914",
+      "mass_kg": "0.457531",
+      "carbon_factor_kg_co2e_per_unit": "0.961584",
       "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0143",
-      "label": "Roulement moyeu AV gauche",
+      "part_ref": "VALE-BOM-0131",
+      "label": "Bras inférieur",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
       "valuation_mode": "purchased",
       "labour_minutes": "",
-      "base_price_eur": "351.320000",
+      "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.746142",
-      "carbon_factor_kg_co2e_per_unit": "3.951120",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.017776",
+      "carbon_factor_kg_co2e_per_unit": "2.360223",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0144",
-      "label": "Roulement moyeu AV droit",
+      "part_ref": "VALE-BOM-0133",
+      "label": "Pushrod",
+      "category": "chassis",
+      "system": "CHS",
+      "unit": "pce",
+      "valuation_mode": "purchased",
+      "labour_minutes": "",
+      "base_price_eur": "819.760000",
+      "price_per": "1",
+      "material_ref": "",
+      "mass_kg": "1.007688",
+      "carbon_factor_kg_co2e_per_unit": "4.185130",
+      "expected_cumulative_quantity": "2.0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "part_ref": "VALE-BOM-0135",
+      "label": "Rocker/bellcrank",
+      "category": "chassis",
+      "system": "CHS",
+      "unit": "pce",
+      "valuation_mode": "purchased",
+      "labour_minutes": "",
+      "base_price_eur": "1171.080000",
+      "price_per": "1",
+      "material_ref": "",
+      "mass_kg": "0.845252",
+      "carbon_factor_kg_co2e_per_unit": "4.315857",
+      "expected_cumulative_quantity": "2.0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "part_ref": "VALE-BOM-0137",
+      "label": "Ressort",
+      "category": "chassis",
+      "system": "CHS",
+      "unit": "pce",
+      "valuation_mode": "purchased",
+      "labour_minutes": "",
+      "base_price_eur": "468.430000",
+      "price_per": "1",
+      "material_ref": "",
+      "mass_kg": "3.414397",
+      "carbon_factor_kg_co2e_per_unit": "8.032710",
+      "expected_cumulative_quantity": "4.0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "part_ref": "VALE-BOM-0139",
+      "label": "Amortisseur Bilstein DTX",
+      "category": "chassis",
+      "system": "CHS",
+      "unit": "pce",
+      "valuation_mode": "purchased",
+      "labour_minutes": "",
+      "base_price_eur": "3500.000000",
+      "price_per": "1",
+      "material_ref": "",
+      "mass_kg": "0.753656",
+      "carbon_factor_kg_co2e_per_unit": "1.814472",
+      "expected_cumulative_quantity": "4.0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "part_ref": "VALE-BOM-0141",
+      "label": "Barre antiroulis",
+      "category": "chassis",
+      "system": "CHS",
+      "unit": "pce",
+      "valuation_mode": "purchased",
+      "labour_minutes": "",
+      "base_price_eur": "702.650000",
+      "price_per": "1",
+      "material_ref": "",
+      "mass_kg": "3.632027",
+      "carbon_factor_kg_co2e_per_unit": "8.410685",
+      "expected_cumulative_quantity": "2.0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "part_ref": "VALE-BOM-0142",
+      "label": "Biellettes barre antiroulis",
+      "category": "chassis",
+      "system": "CHS",
+      "unit": "pce",
+      "valuation_mode": "purchased",
+      "labour_minutes": "",
+      "base_price_eur": "702.650000",
+      "price_per": "1",
+      "material_ref": "",
+      "mass_kg": "2.413166",
+      "carbon_factor_kg_co2e_per_unit": "5.626827",
+      "expected_cumulative_quantity": "4.0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "part_ref": "VALE-BOM-0143",
+      "label": "Roulement moyeu",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2302,14 +1662,14 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.691078",
-      "carbon_factor_kg_co2e_per_unit": "3.906111",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.753225",
+      "carbon_factor_kg_co2e_per_unit": "3.988628",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0145",
-      "label": "Lien 1 AR gauche",
+      "label": "Lien 1",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2318,14 +1678,14 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.641781",
-      "carbon_factor_kg_co2e_per_unit": "1.440927",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.647873",
+      "carbon_factor_kg_co2e_per_unit": "1.454604",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0146",
-      "label": "Lien 2 AR gauche",
+      "label": "Lien 2",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2334,14 +1694,14 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.952792",
-      "carbon_factor_kg_co2e_per_unit": "6.771165",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "2.980822",
+      "carbon_factor_kg_co2e_per_unit": "6.835442",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0147",
-      "label": "Lien 3 AR gauche",
+      "label": "Lien 3",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2350,14 +1710,14 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.186729",
-      "carbon_factor_kg_co2e_per_unit": "6.849683",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.216981",
+      "carbon_factor_kg_co2e_per_unit": "6.914708",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0148",
-      "label": "Lien 4 AR gauche",
+      "label": "Lien 4",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2366,14 +1726,14 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.615560",
-      "carbon_factor_kg_co2e_per_unit": "8.224821",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.649882",
+      "carbon_factor_kg_co2e_per_unit": "8.302898",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0149",
-      "label": "Lien 5 AR gauche",
+      "label": "Lien 5",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2382,248 +1742,8 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.633596",
-      "carbon_factor_kg_co2e_per_unit": "3.569048",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0150",
-      "label": "Lien 1 AR droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1053.970000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.303198",
-      "carbon_factor_kg_co2e_per_unit": "8.069779",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0151",
-      "label": "Lien 2 AR droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1053.970000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.277835",
-      "carbon_factor_kg_co2e_per_unit": "6.964875",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0152",
-      "label": "Lien 3 AR droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1053.970000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.047076",
-      "carbon_factor_kg_co2e_per_unit": "4.401172",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0153",
-      "label": "Lien 4 AR droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1053.970000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.540330",
-      "carbon_factor_kg_co2e_per_unit": "1.170387",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0154",
-      "label": "Lien 5 AR droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1053.970000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.391491",
-      "carbon_factor_kg_co2e_per_unit": "0.890744",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0155",
-      "label": "Porte-moyeu arrière gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2342.160000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.691979",
-      "carbon_factor_kg_co2e_per_unit": "43.128206",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0156",
-      "label": "Porte-moyeu arrière droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2342.160000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.437176",
-      "carbon_factor_kg_co2e_per_unit": "64.802073",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0157",
-      "label": "Ressort AR gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "468.430000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.705664",
-      "carbon_factor_kg_co2e_per_unit": "8.002011",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0158",
-      "label": "Ressort AR droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "468.430000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.817142",
-      "carbon_factor_kg_co2e_per_unit": "4.196181",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0159",
-      "label": "Amortisseur Bilstein DTX AR gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "3500.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.568505",
-      "carbon_factor_kg_co2e_per_unit": "7.939210",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0160",
-      "label": "Amortisseur Bilstein DTX AR droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "3500.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.524979",
-      "carbon_factor_kg_co2e_per_unit": "1.159406",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0161",
-      "label": "Roulement moyeu AR gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "351.320000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.013100",
-      "carbon_factor_kg_co2e_per_unit": "5.318370",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0162",
-      "label": "Roulement moyeu AR droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "351.320000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.493378",
-      "carbon_factor_kg_co2e_per_unit": "8.731781",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0163",
-      "label": "Barre antiroulis AR",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "702.650000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.112818",
-      "carbon_factor_kg_co2e_per_unit": "5.246972",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0164",
-      "label": "Biellettes barre antiroulis AR",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "702.650000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.460380",
-      "carbon_factor_kg_co2e_per_unit": "7.994516",
+      "mass_kg": "1.649104",
+      "carbon_factor_kg_co2e_per_unit": "3.602929",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -2638,8 +1758,8 @@
       "base_price_eur": "5269.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.308691",
-      "carbon_factor_kg_co2e_per_unit": "1.566792",
+      "mass_kg": "0.311621",
+      "carbon_factor_kg_co2e_per_unit": "1.581664",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2654,8 +1774,8 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.402625",
-      "carbon_factor_kg_co2e_per_unit": "7.045105",
+      "mass_kg": "1.415940",
+      "carbon_factor_kg_co2e_per_unit": "7.111983",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -2670,8 +1790,8 @@
       "base_price_eur": "1639.510000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.993318",
-      "carbon_factor_kg_co2e_per_unit": "5.601320",
+      "mass_kg": "1.002747",
+      "carbon_factor_kg_co2e_per_unit": "5.654490",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2686,8 +1806,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.083964",
-      "carbon_factor_kg_co2e_per_unit": "3.244839",
+      "mass_kg": "0.084761",
+      "carbon_factor_kg_co2e_per_unit": "3.275640",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -2702,8 +1822,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.056054",
-      "carbon_factor_kg_co2e_per_unit": "1.910724",
+      "mass_kg": "0.056586",
+      "carbon_factor_kg_co2e_per_unit": "1.928858",
       "expected_cumulative_quantity": "3.0"
     },
     {
@@ -2718,8 +1838,8 @@
       "base_price_eur": "4098.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.852692",
-      "carbon_factor_kg_co2e_per_unit": "1.905664",
+      "mass_kg": "0.860786",
+      "carbon_factor_kg_co2e_per_unit": "1.923753",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2734,8 +1854,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.291682",
-      "carbon_factor_kg_co2e_per_unit": "7.561506",
+      "mass_kg": "1.303944",
+      "carbon_factor_kg_co2e_per_unit": "7.633288",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2750,8 +1870,8 @@
       "base_price_eur": "819.760000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.422100",
-      "carbon_factor_kg_co2e_per_unit": "12.127271",
+      "mass_kg": "0.426107",
+      "carbon_factor_kg_co2e_per_unit": "12.242395",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2766,8 +1886,8 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.867359",
-      "carbon_factor_kg_co2e_per_unit": "7.660838",
+      "mass_kg": "2.894579",
+      "carbon_factor_kg_co2e_per_unit": "7.733562",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2782,8 +1902,8 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.134176",
-      "carbon_factor_kg_co2e_per_unit": "4.653485",
+      "mass_kg": "2.154436",
+      "carbon_factor_kg_co2e_per_unit": "4.697662",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -2798,14 +1918,14 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.296031",
-      "carbon_factor_kg_co2e_per_unit": "5.995396",
+      "mass_kg": "2.317827",
+      "carbon_factor_kg_co2e_per_unit": "6.052310",
       "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0176",
-      "label": "Biellette direction gauche",
+      "label": "Biellette direction",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2814,30 +1934,14 @@
       "base_price_eur": "257.640000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.989342",
-      "carbon_factor_kg_co2e_per_unit": "4.285878",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0177",
-      "label": "Biellette direction droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "257.640000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.112485",
-      "carbon_factor_kg_co2e_per_unit": "5.056275",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "2.008227",
+      "carbon_factor_kg_co2e_per_unit": "4.326564",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0178",
-      "label": "Rotule direction gauche",
+      "label": "Rotule direction",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -2846,25 +1950,9 @@
       "base_price_eur": "210.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.757155",
-      "carbon_factor_kg_co2e_per_unit": "3.411135",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0179",
-      "label": "Rotule direction droite",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "210.790000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.837833",
-      "carbon_factor_kg_co2e_per_unit": "9.153511",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "0.764343",
+      "carbon_factor_kg_co2e_per_unit": "3.443518",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -2878,8 +1966,8 @@
       "base_price_eur": "210.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.114933",
-      "carbon_factor_kg_co2e_per_unit": "4.214133",
+      "mass_kg": "0.116024",
+      "carbon_factor_kg_co2e_per_unit": "4.254136",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3013,7 +2101,7 @@
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0189",
-      "label": "Jeu plaquettes AV gauche",
+      "label": "Jeu plaquettes",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -3022,57 +2110,9 @@
       "base_price_eur": "600.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.512957",
-      "carbon_factor_kg_co2e_per_unit": "8.568481",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0190",
-      "label": "Jeu plaquettes AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "600.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.530903",
-      "carbon_factor_kg_co2e_per_unit": "6.523178",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0191",
-      "label": "Jeu plaquettes AR gauche",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "600.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.090597",
-      "carbon_factor_kg_co2e_per_unit": "4.904633",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0192",
-      "label": "Jeu plaquettes AR droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "600.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.767882",
-      "carbon_factor_kg_co2e_per_unit": "7.451269",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.527319",
+      "carbon_factor_kg_co2e_per_unit": "8.649818",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -3086,8 +2126,8 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.214485",
-      "carbon_factor_kg_co2e_per_unit": "7.388065",
+      "mass_kg": "0.216521",
+      "carbon_factor_kg_co2e_per_unit": "7.458196",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3102,8 +2142,8 @@
       "base_price_eur": "2107.940000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.661017",
-      "carbon_factor_kg_co2e_per_unit": "9.591044",
+      "mass_kg": "1.676785",
+      "carbon_factor_kg_co2e_per_unit": "9.682092",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3118,8 +2158,8 @@
       "base_price_eur": "234.220000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.065634",
-      "carbon_factor_kg_co2e_per_unit": "10.855320",
+      "mass_kg": "2.085243",
+      "carbon_factor_kg_co2e_per_unit": "10.958369",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3134,8 +2174,8 @@
       "base_price_eur": "58.550000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.137013",
-      "carbon_factor_kg_co2e_per_unit": "11.257357",
+      "mass_kg": "2.157300",
+      "carbon_factor_kg_co2e_per_unit": "11.364225",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -3150,8 +2190,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.469517",
-      "carbon_factor_kg_co2e_per_unit": "6.143757",
+      "mass_kg": "1.483468",
+      "carbon_factor_kg_co2e_per_unit": "6.202083",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -3166,8 +2206,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.133944",
-      "carbon_factor_kg_co2e_per_unit": "4.745984",
+      "mass_kg": "0.135216",
+      "carbon_factor_kg_co2e_per_unit": "4.791054",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -3182,14 +2222,14 @@
       "base_price_eur": "600.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.065253",
-      "carbon_factor_kg_co2e_per_unit": "2.621866",
+      "mass_kg": "0.065873",
+      "carbon_factor_kg_co2e_per_unit": "2.646777",
       "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0200",
-      "label": "Conduit refroidissement frein AV gauche",
+      "label": "Conduit refroidissement frein",
       "category": "chassis",
       "system": "CHS",
       "unit": "pce",
@@ -3198,25 +2238,9 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.166177",
-      "carbon_factor_kg_co2e_per_unit": "11.912674",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0201",
-      "label": "Conduit refroidissement frein AV droit",
-      "category": "chassis",
-      "system": "CHS",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "585.540000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.481632",
-      "carbon_factor_kg_co2e_per_unit": "2.094714",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "2.186740",
+      "carbon_factor_kg_co2e_per_unit": "12.025758",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -3230,8 +2254,8 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.436479",
-      "carbon_factor_kg_co2e_per_unit": "6.487426",
+      "mass_kg": "1.450116",
+      "carbon_factor_kg_co2e_per_unit": "6.549014",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -3246,8 +2270,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.274551",
-      "carbon_factor_kg_co2e_per_unit": "5.496629",
+      "mass_kg": "1.286650",
+      "carbon_factor_kg_co2e_per_unit": "5.548807",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -3390,8 +2414,8 @@
       "base_price_eur": "80.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.068802",
-      "carbon_factor_kg_co2e_per_unit": "2.154645",
+      "mass_kg": "0.069455",
+      "carbon_factor_kg_co2e_per_unit": "2.175094",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -3406,8 +2430,8 @@
       "base_price_eur": "10.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.059060",
-      "carbon_factor_kg_co2e_per_unit": "4.234016",
+      "mass_kg": "1.069114",
+      "carbon_factor_kg_co2e_per_unit": "4.274211",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -3422,14 +2446,14 @@
       "base_price_eur": "175.660000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.845509",
-      "carbon_factor_kg_co2e_per_unit": "4.352264",
+      "mass_kg": "1.863028",
+      "carbon_factor_kg_co2e_per_unit": "4.393579",
       "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0320",
-      "label": "Demi-arbre arrière gauche",
+      "label": "Demi-arbre",
       "category": "transmission",
       "system": "TRN",
       "unit": "pce",
@@ -3438,30 +2462,14 @@
       "base_price_eur": "5027.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.162034",
-      "carbon_factor_kg_co2e_per_unit": "7.771584",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0321",
-      "label": "Demi-arbre arrière droit",
-      "category": "transmission",
-      "system": "TRN",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "5027.970000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "1.259496",
-      "carbon_factor_kg_co2e_per_unit": "2.922736",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.192051",
+      "carbon_factor_kg_co2e_per_unit": "7.845359",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0322",
-      "label": "Joints homocinétiques AR",
+      "label": "Joints homocinétiques",
       "category": "transmission",
       "system": "TRN",
       "unit": "pce",
@@ -3470,9 +2478,9 @@
       "base_price_eur": "1340.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.900414",
-      "carbon_factor_kg_co2e_per_unit": "2.408589",
-      "expected_cumulative_quantity": "4.0"
+      "mass_kg": "0.908961",
+      "carbon_factor_kg_co2e_per_unit": "2.431452",
+      "expected_cumulative_quantity": "8.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -3502,8 +2510,8 @@
       "base_price_eur": "1173.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.502132",
-      "carbon_factor_kg_co2e_per_unit": "74.743202",
+      "mass_kg": "3.535378",
+      "carbon_factor_kg_co2e_per_unit": "75.452744",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -3550,8 +2558,8 @@
       "base_price_eur": "8379.960000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.434170",
-      "carbon_factor_kg_co2e_per_unit": "17.385382",
+      "mass_kg": "0.438291",
+      "carbon_factor_kg_co2e_per_unit": "17.550399",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3566,8 +2574,8 @@
       "base_price_eur": "1173.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.905076",
-      "carbon_factor_kg_co2e_per_unit": "37.211114",
+      "mass_kg": "0.913668",
+      "carbon_factor_kg_co2e_per_unit": "37.564363",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -3582,8 +2590,8 @@
       "base_price_eur": "838.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.390564",
-      "carbon_factor_kg_co2e_per_unit": "14.273396",
+      "mass_kg": "0.394271",
+      "carbon_factor_kg_co2e_per_unit": "14.408870",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3598,8 +2606,8 @@
       "base_price_eur": "838.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.934180",
-      "carbon_factor_kg_co2e_per_unit": "27.859863",
+      "mass_kg": "0.943048",
+      "carbon_factor_kg_co2e_per_unit": "28.124332",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3614,8 +2622,8 @@
       "base_price_eur": "670.410000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.880840",
-      "carbon_factor_kg_co2e_per_unit": "35.035763",
+      "mass_kg": "0.889202",
+      "carbon_factor_kg_co2e_per_unit": "35.368365",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3630,8 +2638,8 @@
       "base_price_eur": "502.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.207780",
-      "carbon_factor_kg_co2e_per_unit": "11.482222",
+      "mass_kg": "2.228739",
+      "carbon_factor_kg_co2e_per_unit": "11.591226",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3646,8 +2654,8 @@
       "base_price_eur": "838.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.217569",
-      "carbon_factor_kg_co2e_per_unit": "9.759965",
+      "mass_kg": "2.238621",
+      "carbon_factor_kg_co2e_per_unit": "9.852619",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3662,8 +2670,8 @@
       "base_price_eur": "6703.960000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.657456",
-      "carbon_factor_kg_co2e_per_unit": "22.536014",
+      "mass_kg": "0.663697",
+      "carbon_factor_kg_co2e_per_unit": "22.749940",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3678,8 +2686,8 @@
       "base_price_eur": "670.410000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.071494",
-      "carbon_factor_kg_co2e_per_unit": "2.128648",
+      "mass_kg": "0.072173",
+      "carbon_factor_kg_co2e_per_unit": "2.148864",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3694,8 +2702,8 @@
       "base_price_eur": "1675.990000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.259255",
-      "carbon_factor_kg_co2e_per_unit": "6.247668",
+      "mass_kg": "1.271209",
+      "carbon_factor_kg_co2e_per_unit": "6.306976",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -3710,8 +2718,8 @@
       "base_price_eur": "100.550000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.021412",
-      "carbon_factor_kg_co2e_per_unit": "0.376235",
+      "mass_kg": "0.021615",
+      "carbon_factor_kg_co2e_per_unit": "0.379801",
       "expected_cumulative_quantity": "24.0"
     },
     {
@@ -3726,8 +2734,8 @@
       "base_price_eur": "3016.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.904298",
-      "carbon_factor_kg_co2e_per_unit": "25.340600",
+      "mass_kg": "0.912882",
+      "carbon_factor_kg_co2e_per_unit": "25.581145",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -3742,8 +2750,8 @@
       "base_price_eur": "1173.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.627653",
-      "carbon_factor_kg_co2e_per_unit": "3.042987",
+      "mass_kg": "0.633611",
+      "carbon_factor_kg_co2e_per_unit": "3.071873",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -3758,8 +2766,8 @@
       "base_price_eur": "603.340000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.511325",
-      "carbon_factor_kg_co2e_per_unit": "7.864331",
+      "mass_kg": "1.525672",
+      "carbon_factor_kg_co2e_per_unit": "7.938987",
       "expected_cumulative_quantity": "6.0"
     },
     {
@@ -3774,8 +2782,8 @@
       "base_price_eur": "301.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.556909",
-      "carbon_factor_kg_co2e_per_unit": "1.732488",
+      "mass_kg": "0.562196",
+      "carbon_factor_kg_co2e_per_unit": "1.748936",
       "expected_cumulative_quantity": "16.0"
     },
     {
@@ -3790,8 +2798,8 @@
       "base_price_eur": "402.240000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.057680",
-      "carbon_factor_kg_co2e_per_unit": "10.650963",
+      "mass_kg": "2.077214",
+      "carbon_factor_kg_co2e_per_unit": "10.752075",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -3806,14 +2814,14 @@
       "base_price_eur": "11731.940000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.805102",
-      "carbon_factor_kg_co2e_per_unit": "33.185479",
+      "mass_kg": "2.831731",
+      "carbon_factor_kg_co2e_per_unit": "33.500510",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0348",
-      "label": "Moteur électrique avant gauche",
+      "label": "Moteur électrique",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -3824,28 +2832,12 @@
       "material_ref": "",
       "mass_kg": "29.491200",
       "carbon_factor_kg_co2e_per_unit": "410.600079",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0349",
-      "label": "Moteur électrique avant droit",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "28491.850000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "30.603600",
-      "carbon_factor_kg_co2e_per_unit": "396.867485",
-      "expected_cumulative_quantity": "1.0"
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0350",
-      "label": "Réducteur avant gauche",
+      "label": "Réducteur",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -3854,30 +2846,14 @@
       "base_price_eur": "10055.950000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.634582",
-      "carbon_factor_kg_co2e_per_unit": "9.212575",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0351",
-      "label": "Réducteur avant droit",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "10055.950000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "3.432347",
-      "carbon_factor_kg_co2e_per_unit": "7.593862",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.669085",
+      "carbon_factor_kg_co2e_per_unit": "9.300030",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0352",
-      "label": "Arbre sortie EDU gauche",
+      "label": "Arbre sortie EDU",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -3886,41 +2862,9 @@
       "base_price_eur": "2346.400000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.599308",
-      "carbon_factor_kg_co2e_per_unit": "34.591591",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0353",
-      "label": "Arbre sortie EDU droit",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2346.400000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "4.978175",
-      "carbon_factor_kg_co2e_per_unit": "59.889437",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0354",
-      "label": "Joints homocinétiques avant",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1340.790000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.595711",
-      "carbon_factor_kg_co2e_per_unit": "5.669967",
-      "expected_cumulative_quantity": "4.0"
+      "mass_kg": "2.623983",
+      "carbon_factor_kg_co2e_per_unit": "34.919966",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -3957,7 +2901,7 @@
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0357",
-      "label": "Capteurs position rotor AV",
+      "label": "Capteurs position rotor",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -3966,14 +2910,14 @@
       "base_price_eur": "838.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.085977",
-      "carbon_factor_kg_co2e_per_unit": "3.216950",
-      "expected_cumulative_quantity": "2.0"
+      "mass_kg": "0.086794",
+      "carbon_factor_kg_co2e_per_unit": "3.247519",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0358",
-      "label": "Capteurs température moteurs AV",
+      "label": "Capteurs température moteurs",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -3982,9 +2926,9 @@
       "base_price_eur": "201.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.036064",
-      "carbon_factor_kg_co2e_per_unit": "1.203622",
-      "expected_cumulative_quantity": "2.0"
+      "mass_kg": "0.036406",
+      "carbon_factor_kg_co2e_per_unit": "1.215036",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -3998,8 +2942,8 @@
       "base_price_eur": "5027.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.320143",
-      "carbon_factor_kg_co2e_per_unit": "37.467150",
+      "mass_kg": "3.351661",
+      "carbon_factor_kg_co2e_per_unit": "37.822824",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4014,8 +2958,8 @@
       "base_price_eur": "2178.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.445757",
-      "carbon_factor_kg_co2e_per_unit": "2.995665",
+      "mass_kg": "0.449989",
+      "carbon_factor_kg_co2e_per_unit": "3.024106",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4030,8 +2974,8 @@
       "base_price_eur": "1675.990000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.822233",
-      "carbon_factor_kg_co2e_per_unit": "80.018772",
+      "mass_kg": "2.849024",
+      "carbon_factor_kg_co2e_per_unit": "80.778377",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4046,8 +2990,8 @@
       "base_price_eur": "10055.950000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.529947",
-      "carbon_factor_kg_co2e_per_unit": "16.033758",
+      "mass_kg": "0.534978",
+      "carbon_factor_kg_co2e_per_unit": "16.185973",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4062,8 +3006,8 @@
       "base_price_eur": "6033.560000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.004860",
-      "carbon_factor_kg_co2e_per_unit": "11.634203",
+      "mass_kg": "2.023892",
+      "carbon_factor_kg_co2e_per_unit": "11.744645",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4078,14 +3022,14 @@
       "base_price_eur": "1340.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.338736",
-      "carbon_factor_kg_co2e_per_unit": "8.005641",
+      "mass_kg": "1.351445",
+      "carbon_factor_kg_co2e_per_unit": "8.081641",
       "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0370",
-      "label": "Câbles HV PDU -> inverters AV",
+      "label": "Câbles HV PDU -> inverters",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -4094,25 +3038,9 @@
       "base_price_eur": "1173.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.047094",
-      "carbon_factor_kg_co2e_per_unit": "15.086264",
-      "expected_cumulative_quantity": "2.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0371",
-      "label": "Câbles HV PDU -> inverters AR",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "1173.200000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.638573",
-      "carbon_factor_kg_co2e_per_unit": "4.320202",
-      "expected_cumulative_quantity": "2.0"
+      "mass_kg": "2.066527",
+      "carbon_factor_kg_co2e_per_unit": "15.229477",
+      "expected_cumulative_quantity": "4.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -4126,8 +3054,8 @@
       "base_price_eur": "1072.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.083488",
-      "carbon_factor_kg_co2e_per_unit": "13.732269",
+      "mass_kg": "2.103267",
+      "carbon_factor_kg_co2e_per_unit": "13.862633",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -4142,8 +3070,8 @@
       "base_price_eur": "502.790000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.149128",
-      "carbon_factor_kg_co2e_per_unit": "6.139791",
+      "mass_kg": "1.160036",
+      "carbon_factor_kg_co2e_per_unit": "6.198072",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4158,8 +3086,8 @@
       "base_price_eur": "318.430000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.022043",
-      "carbon_factor_kg_co2e_per_unit": "0.159926",
+      "mass_kg": "0.022252",
+      "carbon_factor_kg_co2e_per_unit": "0.161443",
       "expected_cumulative_quantity": "24.0"
     },
     {
@@ -4190,8 +3118,8 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.094472",
-      "carbon_factor_kg_co2e_per_unit": "5.104399",
+      "mass_kg": "1.104862",
+      "carbon_factor_kg_co2e_per_unit": "5.152855",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4206,8 +3134,8 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.032392",
-      "carbon_factor_kg_co2e_per_unit": "9.187225",
+      "mass_kg": "2.051685",
+      "carbon_factor_kg_co2e_per_unit": "9.274437",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -4229,7 +3157,7 @@
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0384",
-      "label": "Faisceau avant",
+      "label": "Faisceau",
       "category": "electrical",
       "system": "ELE",
       "unit": "pce",
@@ -4238,30 +3166,14 @@
       "base_price_eur": "2927.700000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.237508",
-      "carbon_factor_kg_co2e_per_unit": "6.930540",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0385",
-      "label": "Faisceau arrière",
-      "category": "electrical",
-      "system": "ELE",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "2927.700000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.011664",
-      "carbon_factor_kg_co2e_per_unit": "11.782718",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.249256",
+      "carbon_factor_kg_co2e_per_unit": "6.996333",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0386",
-      "label": "Faisceau porte gauche",
+      "label": "Faisceau porte",
       "category": "electrical",
       "system": "ELE",
       "unit": "pce",
@@ -4270,25 +3182,9 @@
       "base_price_eur": "819.760000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.941768",
-      "carbon_factor_kg_co2e_per_unit": "11.868086",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0387",
-      "label": "Faisceau porte droite",
-      "category": "electrical",
-      "system": "ELE",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "819.760000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.741971",
-      "carbon_factor_kg_co2e_per_unit": "4.861691",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.960202",
+      "carbon_factor_kg_co2e_per_unit": "11.980755",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -4302,8 +3198,8 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.864168",
-      "carbon_factor_kg_co2e_per_unit": "5.931822",
+      "mass_kg": "0.872371",
+      "carbon_factor_kg_co2e_per_unit": "5.988129",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4318,8 +3214,8 @@
       "base_price_eur": "35.130000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.473903",
-      "carbon_factor_kg_co2e_per_unit": "6.080755",
+      "mass_kg": "2.497388",
+      "carbon_factor_kg_co2e_per_unit": "6.138480",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -4334,8 +3230,8 @@
       "base_price_eur": "9.370000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.740962",
-      "carbon_factor_kg_co2e_per_unit": "8.087465",
+      "mass_kg": "1.757489",
+      "carbon_factor_kg_co2e_per_unit": "8.164239",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -4350,8 +3246,8 @@
       "base_price_eur": "7.030000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.004942",
-      "carbon_factor_kg_co2e_per_unit": "0.034711",
+      "mass_kg": "0.004989",
+      "carbon_factor_kg_co2e_per_unit": "0.035041",
       "expected_cumulative_quantity": "250.0"
     },
     {
@@ -4366,8 +3262,8 @@
       "base_price_eur": "0.350000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.011408",
-      "carbon_factor_kg_co2e_per_unit": "0.024823",
+      "mass_kg": "0.011516",
+      "carbon_factor_kg_co2e_per_unit": "0.025058",
       "expected_cumulative_quantity": "400.0"
     },
     {
@@ -4382,8 +3278,8 @@
       "base_price_eur": "23.420000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.007648",
-      "carbon_factor_kg_co2e_per_unit": "0.043656",
+      "mass_kg": "0.007720",
+      "carbon_factor_kg_co2e_per_unit": "0.044067",
       "expected_cumulative_quantity": "60.0"
     },
     {
@@ -4398,8 +3294,8 @@
       "base_price_eur": "2107.940000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.785354",
-      "carbon_factor_kg_co2e_per_unit": "32.331768",
+      "mass_kg": "0.792810",
+      "carbon_factor_kg_co2e_per_unit": "32.638719",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4414,8 +3310,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.668552",
-      "carbon_factor_kg_co2e_per_unit": "24.804215",
+      "mass_kg": "0.674899",
+      "carbon_factor_kg_co2e_per_unit": "25.039698",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4430,8 +3326,8 @@
       "base_price_eur": "936.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.611868",
-      "carbon_factor_kg_co2e_per_unit": "9.537745",
+      "mass_kg": "1.627169",
+      "carbon_factor_kg_co2e_per_unit": "9.628284",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4446,8 +3342,8 @@
       "base_price_eur": "1405.300000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.633512",
-      "carbon_factor_kg_co2e_per_unit": "17.888225",
+      "mass_kg": "0.639526",
+      "carbon_factor_kg_co2e_per_unit": "18.058040",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4462,8 +3358,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.288946",
-      "carbon_factor_kg_co2e_per_unit": "10.016024",
+      "mass_kg": "0.291689",
+      "carbon_factor_kg_co2e_per_unit": "10.111107",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4478,8 +3374,8 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.883273",
-      "carbon_factor_kg_co2e_per_unit": "34.545160",
+      "mass_kg": "0.891658",
+      "carbon_factor_kg_co2e_per_unit": "34.873101",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4494,8 +3390,8 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.633998",
-      "carbon_factor_kg_co2e_per_unit": "17.974731",
+      "mass_kg": "0.640017",
+      "carbon_factor_kg_co2e_per_unit": "18.145378",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4510,8 +3406,8 @@
       "base_price_eur": "3513.240000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.745836",
-      "carbon_factor_kg_co2e_per_unit": "30.883428",
+      "mass_kg": "0.752917",
+      "carbon_factor_kg_co2e_per_unit": "31.176637",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4526,8 +3422,8 @@
       "base_price_eur": "1171.080000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.458406",
-      "carbon_factor_kg_co2e_per_unit": "18.408485",
+      "mass_kg": "0.462758",
+      "carbon_factor_kg_co2e_per_unit": "18.583251",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4542,8 +3438,8 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.582216",
-      "carbon_factor_kg_co2e_per_unit": "18.454733",
+      "mass_kg": "0.587743",
+      "carbon_factor_kg_co2e_per_unit": "18.629925",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4558,8 +3454,8 @@
       "base_price_eur": "526.990000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.054778",
-      "carbon_factor_kg_co2e_per_unit": "33.687711",
+      "mass_kg": "1.064791",
+      "carbon_factor_kg_co2e_per_unit": "34.007508",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -4574,14 +3470,14 @@
       "base_price_eur": "526.990000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.738731",
-      "carbon_factor_kg_co2e_per_unit": "27.730632",
+      "mass_kg": "0.745744",
+      "carbon_factor_kg_co2e_per_unit": "27.993887",
       "expected_cumulative_quantity": "1.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0408",
-      "label": "Capteurs ultrasoniques avant",
+      "label": "Capteurs ultrasoniques",
       "category": "electrical",
       "system": "ELE",
       "unit": "pce",
@@ -4590,25 +3486,9 @@
       "base_price_eur": "70.260000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.121819",
-      "carbon_factor_kg_co2e_per_unit": "4.971945",
-      "expected_cumulative_quantity": "6.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0409",
-      "label": "Capteurs ultrasoniques arrière",
-      "category": "electrical",
-      "system": "ELE",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "70.260000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.060848",
-      "carbon_factor_kg_co2e_per_unit": "2.451262",
-      "expected_cumulative_quantity": "6.0"
+      "mass_kg": "0.122975",
+      "carbon_factor_kg_co2e_per_unit": "5.019126",
+      "expected_cumulative_quantity": "12.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -4622,8 +3502,8 @@
       "base_price_eur": "234.220000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.133944",
-      "carbon_factor_kg_co2e_per_unit": "4.044653",
+      "mass_kg": "0.135216",
+      "carbon_factor_kg_co2e_per_unit": "4.083063",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4638,8 +3518,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.980122",
-      "carbon_factor_kg_co2e_per_unit": "33.677188",
+      "mass_kg": "0.989426",
+      "carbon_factor_kg_co2e_per_unit": "33.996875",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4654,8 +3534,8 @@
       "base_price_eur": "1053.970000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.757517",
-      "carbon_factor_kg_co2e_per_unit": "25.315764",
+      "mass_kg": "0.764708",
+      "carbon_factor_kg_co2e_per_unit": "25.556083",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4670,8 +3550,8 @@
       "base_price_eur": "93.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.678870",
-      "carbon_factor_kg_co2e_per_unit": "20.409276",
+      "mass_kg": "0.685314",
+      "carbon_factor_kg_co2e_per_unit": "20.603006",
       "expected_cumulative_quantity": "5.0"
     },
     {
@@ -4686,8 +3566,8 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.730153",
-      "carbon_factor_kg_co2e_per_unit": "8.443839",
+      "mass_kg": "1.746577",
+      "carbon_factor_kg_co2e_per_unit": "8.523994",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -4702,8 +3582,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.956200",
-      "carbon_factor_kg_co2e_per_unit": "4.162912",
+      "mass_kg": "0.965278",
+      "carbon_factor_kg_co2e_per_unit": "4.202434",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4718,8 +3598,8 @@
       "base_price_eur": "93.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.127781",
-      "carbon_factor_kg_co2e_per_unit": "4.991841",
+      "mass_kg": "0.128994",
+      "carbon_factor_kg_co2e_per_unit": "5.039228",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -4734,8 +3614,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.026886",
-      "carbon_factor_kg_co2e_per_unit": "10.363063",
+      "mass_kg": "2.046127",
+      "carbon_factor_kg_co2e_per_unit": "10.461438",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4750,8 +3630,8 @@
       "base_price_eur": "585.540000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.193274",
-      "carbon_factor_kg_co2e_per_unit": "30.690876",
+      "mass_kg": "3.223588",
+      "carbon_factor_kg_co2e_per_unit": "30.982227",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4766,8 +3646,8 @@
       "base_price_eur": "468.430000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.853823",
-      "carbon_factor_kg_co2e_per_unit": "4.286362",
+      "mass_kg": "0.861928",
+      "carbon_factor_kg_co2e_per_unit": "4.327051",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4782,8 +3662,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.454426",
-      "carbon_factor_kg_co2e_per_unit": "8.274230",
+      "mass_kg": "1.468233",
+      "carbon_factor_kg_co2e_per_unit": "8.352778",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4798,8 +3678,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.983121",
-      "carbon_factor_kg_co2e_per_unit": "4.862910",
+      "mass_kg": "0.992453",
+      "carbon_factor_kg_co2e_per_unit": "4.909070",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4814,8 +3694,8 @@
       "base_price_eur": "46.840000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.275163",
-      "carbon_factor_kg_co2e_per_unit": "5.759401",
+      "mass_kg": "1.287268",
+      "carbon_factor_kg_co2e_per_unit": "5.814075",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4830,8 +3710,8 @@
       "base_price_eur": "175.660000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.709433",
-      "carbon_factor_kg_co2e_per_unit": "2.954788",
+      "mass_kg": "0.716168",
+      "carbon_factor_kg_co2e_per_unit": "2.982840",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4846,8 +3726,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.026968",
-      "carbon_factor_kg_co2e_per_unit": "5.056790",
+      "mass_kg": "1.036717",
+      "carbon_factor_kg_co2e_per_unit": "5.104795",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4862,8 +3742,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.139950",
-      "carbon_factor_kg_co2e_per_unit": "4.629337",
+      "mass_kg": "1.150772",
+      "carbon_factor_kg_co2e_per_unit": "4.673285",
       "expected_cumulative_quantity": "0.8"
     },
     {
@@ -4878,8 +3758,8 @@
       "base_price_eur": "93.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.122809",
-      "carbon_factor_kg_co2e_per_unit": "4.409040",
+      "mass_kg": "0.123975",
+      "carbon_factor_kg_co2e_per_unit": "4.450901",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4894,8 +3774,8 @@
       "base_price_eur": "35.130000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.045408",
-      "carbon_factor_kg_co2e_per_unit": "1.281977",
+      "mass_kg": "0.045839",
+      "carbon_factor_kg_co2e_per_unit": "1.294145",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -4910,8 +3790,8 @@
       "base_price_eur": "468.430000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.122616",
-      "carbon_factor_kg_co2e_per_unit": "4.553106",
+      "mass_kg": "1.133273",
+      "carbon_factor_kg_co2e_per_unit": "4.596329",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -4926,8 +3806,8 @@
       "base_price_eur": "58.550000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.454712",
-      "carbon_factor_kg_co2e_per_unit": "1.966175",
+      "mass_kg": "0.459029",
+      "carbon_factor_kg_co2e_per_unit": "1.984841",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -4942,8 +3822,8 @@
       "base_price_eur": "58.550000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.003107",
-      "carbon_factor_kg_co2e_per_unit": "4.555711",
+      "mass_kg": "1.012629",
+      "carbon_factor_kg_co2e_per_unit": "4.598956",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -4958,8 +3838,8 @@
       "base_price_eur": "93.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.006368",
-      "carbon_factor_kg_co2e_per_unit": "0.032940",
+      "mass_kg": "0.006429",
+      "carbon_factor_kg_co2e_per_unit": "0.033256",
       "expected_cumulative_quantity": "6.0"
     },
     {
@@ -4974,8 +3854,8 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.252443",
-      "carbon_factor_kg_co2e_per_unit": "13.227246",
+      "mass_kg": "2.273826",
+      "carbon_factor_kg_co2e_per_unit": "13.352816",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -4990,8 +3870,8 @@
       "base_price_eur": "2342.160000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.895630",
-      "carbon_factor_kg_co2e_per_unit": "4.891752",
+      "mass_kg": "0.904133",
+      "carbon_factor_kg_co2e_per_unit": "4.938194",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5006,8 +3886,8 @@
       "base_price_eur": "702.650000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.274061",
-      "carbon_factor_kg_co2e_per_unit": "13.262324",
+      "mass_kg": "2.295648",
+      "carbon_factor_kg_co2e_per_unit": "13.388219",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5022,8 +3902,8 @@
       "base_price_eur": "1756.620000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.415760",
-      "carbon_factor_kg_co2e_per_unit": "2.405920",
+      "mass_kg": "0.419706",
+      "carbon_factor_kg_co2e_per_unit": "2.428755",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5038,8 +3918,8 @@
       "base_price_eur": "292.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.389573",
-      "carbon_factor_kg_co2e_per_unit": "6.639380",
+      "mass_kg": "1.402764",
+      "carbon_factor_kg_co2e_per_unit": "6.702406",
       "expected_cumulative_quantity": "8.0"
     },
     {
@@ -5054,8 +3934,8 @@
       "base_price_eur": "175.660000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.116702",
-      "carbon_factor_kg_co2e_per_unit": "4.711633",
+      "mass_kg": "0.117810",
+      "carbon_factor_kg_co2e_per_unit": "4.756367",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5070,8 +3950,8 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.011489",
-      "carbon_factor_kg_co2e_per_unit": "0.066220",
+      "mass_kg": "0.011598",
+      "carbon_factor_kg_co2e_per_unit": "0.066849",
       "expected_cumulative_quantity": "20.0"
     },
     {
@@ -5086,8 +3966,8 @@
       "base_price_eur": "23.420000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.008245",
-      "carbon_factor_kg_co2e_per_unit": "0.034766",
+      "mass_kg": "0.008323",
+      "carbon_factor_kg_co2e_per_unit": "0.035095",
       "expected_cumulative_quantity": "30.0"
     },
     {
@@ -5118,8 +3998,8 @@
       "base_price_eur": "351.320000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.799635",
-      "carbon_factor_kg_co2e_per_unit": "54.303070",
+      "mass_kg": "4.845198",
+      "carbon_factor_kg_co2e_per_unit": "54.818570",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5134,8 +4014,8 @@
       "base_price_eur": "175.660000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.515460",
-      "carbon_factor_kg_co2e_per_unit": "3.409967",
+      "mass_kg": "1.529846",
+      "carbon_factor_kg_co2e_per_unit": "3.442337",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5150,8 +4030,8 @@
       "base_price_eur": "58.550000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.548034",
-      "carbon_factor_kg_co2e_per_unit": "7.184116",
+      "mass_kg": "1.562730",
+      "carbon_factor_kg_co2e_per_unit": "7.252317",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5166,8 +4046,8 @@
       "base_price_eur": "175.660000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.730153",
-      "carbon_factor_kg_co2e_per_unit": "7.429969",
+      "mass_kg": "1.746577",
+      "carbon_factor_kg_co2e_per_unit": "7.500500",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5182,8 +4062,8 @@
       "base_price_eur": "70.260000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.585355",
-      "carbon_factor_kg_co2e_per_unit": "8.841842",
+      "mass_kg": "1.600405",
+      "carbon_factor_kg_co2e_per_unit": "8.925779",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5198,8 +4078,8 @@
       "base_price_eur": "23.420000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.004335",
-      "carbon_factor_kg_co2e_per_unit": "0.019874",
+      "mass_kg": "0.004376",
+      "carbon_factor_kg_co2e_per_unit": "0.020062",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5214,8 +4094,8 @@
       "base_price_eur": "5.860000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.852224",
-      "carbon_factor_kg_co2e_per_unit": "2.806033",
+      "mass_kg": "0.860314",
+      "carbon_factor_kg_co2e_per_unit": "2.832670",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -5230,14 +4110,14 @@
       "base_price_eur": "58.550000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.947227",
-      "carbon_factor_kg_co2e_per_unit": "5.247827",
+      "mass_kg": "0.956219",
+      "carbon_factor_kg_co2e_per_unit": "5.297645",
       "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0449",
-      "label": "Point remorquage avant",
+      "label": "Point remorquage",
       "category": "electrical",
       "system": "ELE",
       "unit": "pce",
@@ -5246,25 +4126,9 @@
       "base_price_eur": "117.110000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.029415",
-      "carbon_factor_kg_co2e_per_unit": "5.483076",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0450",
-      "label": "Point remorquage arrière",
-      "category": "electrical",
-      "system": "ELE",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "117.110000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.462666",
-      "carbon_factor_kg_co2e_per_unit": "1.965498",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "1.039187",
+      "carbon_factor_kg_co2e_per_unit": "5.535126",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -5310,8 +4174,8 @@
       "base_price_eur": "35.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.095084",
-      "carbon_factor_kg_co2e_per_unit": "1.505872",
+      "mass_kg": "1.105479",
+      "carbon_factor_kg_co2e_per_unit": "1.520166",
       "expected_cumulative_quantity": "0.25"
     },
     {
@@ -5486,8 +4350,8 @@
       "base_price_eur": "2.500000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.021858",
-      "carbon_factor_kg_co2e_per_unit": "0.019043",
+      "mass_kg": "0.022065",
+      "carbon_factor_kg_co2e_per_unit": "0.019223",
       "expected_cumulative_quantity": "80.0"
     },
     {
@@ -5502,8 +4366,8 @@
       "base_price_eur": "1.500000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.028251",
-      "carbon_factor_kg_co2e_per_unit": "0.018232",
+      "mass_kg": "0.028519",
+      "carbon_factor_kg_co2e_per_unit": "0.018405",
       "expected_cumulative_quantity": "70.0"
     },
     {
@@ -5518,8 +4382,8 @@
       "base_price_eur": "0.350000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.004046",
-      "carbon_factor_kg_co2e_per_unit": "0.004487",
+      "mass_kg": "0.004085",
+      "carbon_factor_kg_co2e_per_unit": "0.004530",
       "expected_cumulative_quantity": "100.0"
     },
     {
@@ -5534,14 +4398,14 @@
       "base_price_eur": "1.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.013160",
-      "carbon_factor_kg_co2e_per_unit": "0.009909",
+      "mass_kg": "0.013285",
+      "carbon_factor_kg_co2e_per_unit": "0.010003",
       "expected_cumulative_quantity": "80.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0601",
-      "label": "Moteur électrique arrière gauche",
+      "label": "Moteur électrique",
       "category": "engine",
       "system": "GMP",
       "unit": "pce",
@@ -5552,23 +4416,7 @@
       "material_ref": "",
       "mass_kg": "31.059900",
       "carbon_factor_kg_co2e_per_unit": "432.515319",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0602",
-      "label": "Moteur électrique arrière droit",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "33519.820000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "28.549800",
-      "carbon_factor_kg_co2e_per_unit": "345.943637",
-      "expected_cumulative_quantity": "1.0"
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -5604,38 +4452,6 @@
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0605",
-      "label": "Capteurs position rotor AR",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "838.000000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.091473",
-      "carbon_factor_kg_co2e_per_unit": "3.773481",
-      "expected_cumulative_quantity": "2.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0606",
-      "label": "Capteurs température moteurs AR",
-      "category": "engine",
-      "system": "GMP",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "201.110000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "0.052160",
-      "carbon_factor_kg_co2e_per_unit": "1.982163",
-      "expected_cumulative_quantity": "2.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0607",
       "label": "Module contacteurs charge rapide DC",
       "category": "engine",
@@ -5646,8 +4462,8 @@
       "base_price_eur": "3016.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.982652",
-      "carbon_factor_kg_co2e_per_unit": "27.964114",
+      "mass_kg": "0.991981",
+      "carbon_factor_kg_co2e_per_unit": "28.229597",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5662,8 +4478,8 @@
       "base_price_eur": "1675.990000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.817378",
-      "carbon_factor_kg_co2e_per_unit": "32.825083",
+      "mass_kg": "0.825137",
+      "carbon_factor_kg_co2e_per_unit": "33.136677",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5678,8 +4494,8 @@
       "base_price_eur": "3016.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.230436",
-      "carbon_factor_kg_co2e_per_unit": "20.733018",
+      "mass_kg": "2.251610",
+      "carbon_factor_kg_co2e_per_unit": "20.929841",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5694,8 +4510,8 @@
       "base_price_eur": "3016.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.934744",
-      "carbon_factor_kg_co2e_per_unit": "39.973851",
+      "mass_kg": "3.972097",
+      "carbon_factor_kg_co2e_per_unit": "40.353328",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5710,8 +4526,8 @@
       "base_price_eur": "4692.770000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.391059",
-      "carbon_factor_kg_co2e_per_unit": "39.609265",
+      "mass_kg": "3.423250",
+      "carbon_factor_kg_co2e_per_unit": "39.985272",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5726,8 +4542,8 @@
       "base_price_eur": "603.340000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.586661",
-      "carbon_factor_kg_co2e_per_unit": "2.748741",
+      "mass_kg": "0.592230",
+      "carbon_factor_kg_co2e_per_unit": "2.774834",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5742,8 +4558,8 @@
       "base_price_eur": "1173.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "5.188975",
-      "carbon_factor_kg_co2e_per_unit": "62.261473",
+      "mass_kg": "5.238234",
+      "carbon_factor_kg_co2e_per_unit": "62.852522",
       "expected_cumulative_quantity": "2.0"
     },
     {
@@ -5758,8 +4574,8 @@
       "base_price_eur": "603.340000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1.778691",
-      "carbon_factor_kg_co2e_per_unit": "9.655090",
+      "mass_kg": "1.795576",
+      "carbon_factor_kg_co2e_per_unit": "9.746746",
       "expected_cumulative_quantity": "4.0"
     },
     {
@@ -5774,8 +4590,8 @@
       "base_price_eur": "301.690000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.033091",
-      "carbon_factor_kg_co2e_per_unit": "0.125567",
+      "mass_kg": "0.033405",
+      "carbon_factor_kg_co2e_per_unit": "0.126759",
       "expected_cumulative_quantity": "20.0"
     },
     {
@@ -5790,14 +4606,14 @@
       "base_price_eur": "1508.400000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "4.490166",
-      "carbon_factor_kg_co2e_per_unit": "45.066898",
+      "mass_kg": "4.532791",
+      "carbon_factor_kg_co2e_per_unit": "45.494717",
       "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "part_ref": "VALE-BOM-0630",
-      "label": "Réducteur arrière gauche",
+      "label": "Réducteur",
       "category": "transmission",
       "system": "TRN",
       "unit": "pce",
@@ -5806,25 +4622,9 @@
       "base_price_eur": "10726.350000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "3.183392",
-      "carbon_factor_kg_co2e_per_unit": "7.389544",
-      "expected_cumulative_quantity": "1.0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "part_ref": "VALE-BOM-0631",
-      "label": "Réducteur arrière droit",
-      "category": "transmission",
-      "system": "TRN",
-      "unit": "pce",
-      "valuation_mode": "purchased",
-      "labour_minutes": "",
-      "base_price_eur": "10726.350000",
-      "price_per": "1",
-      "material_ref": "",
-      "mass_kg": "2.435859",
-      "carbon_factor_kg_co2e_per_unit": "5.997036",
-      "expected_cumulative_quantity": "1.0"
+      "mass_kg": "3.213612",
+      "carbon_factor_kg_co2e_per_unit": "7.459693",
+      "expected_cumulative_quantity": "2.0"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -5838,8 +4638,8 @@
       "base_price_eur": "2178.780000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.854230",
-      "carbon_factor_kg_co2e_per_unit": "4.974523",
+      "mass_kg": "0.862340",
+      "carbon_factor_kg_co2e_per_unit": "5.021751",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5854,8 +4654,8 @@
       "base_price_eur": "6033.560000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.525957",
-      "carbon_factor_kg_co2e_per_unit": "14.856392",
+      "mass_kg": "0.530950",
+      "carbon_factor_kg_co2e_per_unit": "14.997426",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5870,8 +4670,8 @@
       "base_price_eur": "1639.510000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "2.472494",
-      "carbon_factor_kg_co2e_per_unit": "13.729759",
+      "mass_kg": "2.495966",
+      "carbon_factor_kg_co2e_per_unit": "13.860099",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5886,8 +4686,8 @@
       "base_price_eur": "2107.940000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.448186",
-      "carbon_factor_kg_co2e_per_unit": "16.692329",
+      "mass_kg": "0.452441",
+      "carbon_factor_kg_co2e_per_unit": "16.850803",
       "expected_cumulative_quantity": "1.0"
     },
     {
@@ -5918,7 +4718,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "66.0838140",
+      "mass_kg": "66.7111530",
       "carbon_factor_kg_co2e_per_unit": "50.20",
       "expected_cumulative_quantity": "1"
     },
@@ -5934,7 +4734,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "17.9827380",
+      "mass_kg": "18.7255760",
       "carbon_factor_kg_co2e_per_unit": "10.00",
       "expected_cumulative_quantity": "1"
     },
@@ -5950,7 +4750,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "82.5410030",
+      "mass_kg": "78.8756020",
       "carbon_factor_kg_co2e_per_unit": "74.20",
       "expected_cumulative_quantity": "1"
     },
@@ -5966,7 +4766,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.9418020",
+      "mass_kg": "0.9507420",
       "carbon_factor_kg_co2e_per_unit": "5.70",
       "expected_cumulative_quantity": "1"
     },
@@ -5982,7 +4782,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "55.06238100",
+      "mass_kg": "55.11419975",
       "carbon_factor_kg_co2e_per_unit": "11.70",
       "expected_cumulative_quantity": "1"
     },
@@ -5998,7 +4798,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "19.0244430",
+      "mass_kg": "17.9897940",
       "carbon_factor_kg_co2e_per_unit": "16.80",
       "expected_cumulative_quantity": "1"
     },
@@ -6014,7 +4814,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "90.9178650",
+      "mass_kg": "91.9733510",
       "carbon_factor_kg_co2e_per_unit": "43.60",
       "expected_cumulative_quantity": "1"
     },
@@ -6030,7 +4830,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "23.9773570",
+      "mass_kg": "24.5742840",
       "carbon_factor_kg_co2e_per_unit": "34.00",
       "expected_cumulative_quantity": "1"
     },
@@ -6046,7 +4846,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "89.7436040",
+      "mass_kg": "91.9959650",
       "carbon_factor_kg_co2e_per_unit": "29.40",
       "expected_cumulative_quantity": "1"
     },
@@ -6062,7 +4862,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "45.6637030",
+      "mass_kg": "46.0972100",
       "carbon_factor_kg_co2e_per_unit": "24.40",
       "expected_cumulative_quantity": "1"
     },
@@ -6078,7 +4878,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "86.4444100",
+      "mass_kg": "86.2436770",
       "carbon_factor_kg_co2e_per_unit": "79.20",
       "expected_cumulative_quantity": "1"
     },
@@ -6094,7 +4894,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "27.7857850",
+      "mass_kg": "28.0495596",
       "carbon_factor_kg_co2e_per_unit": "26.40",
       "expected_cumulative_quantity": "1"
     },
@@ -6110,7 +4910,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "815.1456380",
+      "mass_kg": "811.8059760",
       "carbon_factor_kg_co2e_per_unit": "76.40",
       "expected_cumulative_quantity": "1"
     },
@@ -6126,7 +4926,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "24.9722330",
+      "mass_kg": "25.1694230",
       "carbon_factor_kg_co2e_per_unit": "26.60",
       "expected_cumulative_quantity": "1"
     },
@@ -6142,7 +4942,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "876.0474250",
+      "mass_kg": "875.9611580",
       "carbon_factor_kg_co2e_per_unit": "31.20",
       "expected_cumulative_quantity": "1"
     },
@@ -6158,7 +4958,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "104.4205640",
+      "mass_kg": "104.5338480",
       "carbon_factor_kg_co2e_per_unit": "12.40",
       "expected_cumulative_quantity": "1"
     },
@@ -6174,7 +4974,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "364.5616500",
+      "mass_kg": "365.2514580",
       "carbon_factor_kg_co2e_per_unit": "151.60",
       "expected_cumulative_quantity": "1"
     },
@@ -6190,7 +4990,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "15.2380840",
+      "mass_kg": "18.0579720",
       "carbon_factor_kg_co2e_per_unit": "30.60",
       "expected_cumulative_quantity": "1"
     },
@@ -6206,7 +5006,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "29.4707610",
+      "mass_kg": "27.9109970",
       "carbon_factor_kg_co2e_per_unit": "24.40",
       "expected_cumulative_quantity": "1"
     },
@@ -6222,8 +5022,8 @@
       "base_price_eur": "4.500000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.021956",
-      "carbon_factor_kg_co2e_per_unit": "0.067170",
+      "mass_kg": "0.022164",
+      "carbon_factor_kg_co2e_per_unit": "0.067806",
       "expected_cumulative_quantity": "25.0"
     },
     {
@@ -6238,8 +5038,8 @@
       "base_price_eur": "6.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.013156",
-      "carbon_factor_kg_co2e_per_unit": "0.033127",
+      "mass_kg": "0.013281",
+      "carbon_factor_kg_co2e_per_unit": "0.033442",
       "expected_cumulative_quantity": "48.0"
     },
     {
@@ -6254,8 +5054,8 @@
       "base_price_eur": "0.250000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.010086",
-      "carbon_factor_kg_co2e_per_unit": "0.031072",
+      "mass_kg": "0.010182",
+      "carbon_factor_kg_co2e_per_unit": "0.031368",
       "expected_cumulative_quantity": "400.0"
     },
     {
@@ -6270,8 +5070,8 @@
       "base_price_eur": "0.350000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.020090",
-      "carbon_factor_kg_co2e_per_unit": "0.061718",
+      "mass_kg": "0.020281",
+      "carbon_factor_kg_co2e_per_unit": "0.062305",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -6286,8 +5086,8 @@
       "base_price_eur": "0.750000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.023744",
-      "carbon_factor_kg_co2e_per_unit": "0.065364",
+      "mass_kg": "0.023970",
+      "carbon_factor_kg_co2e_per_unit": "0.065987",
       "expected_cumulative_quantity": "142.0"
     },
     {
@@ -6302,8 +5102,8 @@
       "base_price_eur": "1.200000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.021789",
-      "carbon_factor_kg_co2e_per_unit": "0.069244",
+      "mass_kg": "0.021996",
+      "carbon_factor_kg_co2e_per_unit": "0.069902",
       "expected_cumulative_quantity": "102.0"
     },
     {
@@ -6318,8 +5118,8 @@
       "base_price_eur": "7.030000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.017955",
-      "carbon_factor_kg_co2e_per_unit": "0.046100",
+      "mass_kg": "0.018126",
+      "carbon_factor_kg_co2e_per_unit": "0.046539",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -6334,8 +5134,8 @@
       "base_price_eur": "1.500000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.019548",
-      "carbon_factor_kg_co2e_per_unit": "0.052296",
+      "mass_kg": "0.019733",
+      "carbon_factor_kg_co2e_per_unit": "0.052791",
       "expected_cumulative_quantity": "198.0"
     },
     {
@@ -6350,8 +5150,8 @@
       "base_price_eur": "1.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.008056",
-      "carbon_factor_kg_co2e_per_unit": "0.021248",
+      "mass_kg": "0.008132",
+      "carbon_factor_kg_co2e_per_unit": "0.021448",
       "expected_cumulative_quantity": "98.0"
     },
     {
@@ -6366,8 +5166,8 @@
       "base_price_eur": "2.000000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.014153",
-      "carbon_factor_kg_co2e_per_unit": "0.035831",
+      "mass_kg": "0.014288",
+      "carbon_factor_kg_co2e_per_unit": "0.036173",
       "expected_cumulative_quantity": "136.0"
     },
     {
@@ -6382,8 +5182,8 @@
       "base_price_eur": "0.600000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.027742",
-      "carbon_factor_kg_co2e_per_unit": "0.070782",
+      "mass_kg": "0.028006",
+      "carbon_factor_kg_co2e_per_unit": "0.071456",
       "expected_cumulative_quantity": "87.0"
     },
     {
@@ -6398,8 +5198,8 @@
       "base_price_eur": "0.800000",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "0.024896",
-      "carbon_factor_kg_co2e_per_unit": "0.066980",
+      "mass_kg": "0.025133",
+      "carbon_factor_kg_co2e_per_unit": "0.067618",
       "expected_cumulative_quantity": "12.0"
     },
     {
@@ -6414,7 +5214,7 @@
       "base_price_eur": "",
       "price_per": "1",
       "material_ref": "",
-      "mass_kg": "1959.97783500",
+      "mass_kg": "1960.03078735",
       "carbon_factor_kg_co2e_per_unit": "210.00",
       "expected_cumulative_quantity": "1"
     }
@@ -6659,16 +5459,7 @@
       "parent_ref": "VALE-CAT-AUXILIAIRES",
       "child_ref": "VALE-BOM-0449",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-AUXILIAIRES",
-      "child_ref": "VALE-BOM-0450",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6677,16 +5468,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0127",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0128",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6695,16 +5477,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0129",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0130",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6713,16 +5486,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0131",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0132",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6731,16 +5495,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0133",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0134",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6749,16 +5504,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0135",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0136",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6767,16 +5513,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0137",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0138",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6785,16 +5522,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0139",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0140",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6803,7 +5531,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0141",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6812,7 +5540,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0142",
       "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6821,16 +5549,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0143",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0144",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6839,7 +5558,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0145",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6848,7 +5567,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0146",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6857,7 +5576,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0147",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6866,7 +5585,7 @@
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0148",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -6874,141 +5593,6 @@
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
       "child_ref": "VALE-BOM-0149",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0150",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0151",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0152",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0153",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0154",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0155",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0156",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0157",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0158",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0159",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0160",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0161",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0162",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0163",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-CHASSIS-SUSPENSION",
-      "child_ref": "VALE-BOM-0164",
       "parent_valuation_mode": "manufactured",
       "quantity": "2.0",
       "unit": "pce",
@@ -7316,16 +5900,7 @@
       "parent_ref": "VALE-CAT-DIRECTION",
       "child_ref": "VALE-BOM-0176",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-DIRECTION",
-      "child_ref": "VALE-BOM-0177",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -7334,16 +5909,7 @@
       "parent_ref": "VALE-CAT-DIRECTION",
       "child_ref": "VALE-BOM-0178",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-DIRECTION",
-      "child_ref": "VALE-BOM-0179",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -7406,16 +5972,7 @@
       "parent_ref": "VALE-CAT-ELECTRIQUE-BASSE-TENSION",
       "child_ref": "VALE-BOM-0384",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-ELECTRIQUE-BASSE-TENSION",
-      "child_ref": "VALE-BOM-0385",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -7424,16 +5981,7 @@
       "parent_ref": "VALE-CAT-ELECTRIQUE-BASSE-TENSION",
       "child_ref": "VALE-BOM-0386",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-ELECTRIQUE-BASSE-TENSION",
-      "child_ref": "VALE-BOM-0387",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -7640,16 +6188,7 @@
       "parent_ref": "VALE-CAT-ELECTRONIQUE-ADAS",
       "child_ref": "VALE-BOM-0408",
       "parent_valuation_mode": "manufactured",
-      "quantity": "6.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-ELECTRONIQUE-ADAS",
-      "child_ref": "VALE-BOM-0409",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "6.0",
+      "quantity": "12.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -7802,34 +6341,7 @@
       "parent_ref": "VALE-CAT-FREINAGE",
       "child_ref": "VALE-BOM-0189",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-FREINAGE",
-      "child_ref": "VALE-BOM-0190",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-FREINAGE",
-      "child_ref": "VALE-BOM-0191",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-FREINAGE",
-      "child_ref": "VALE-BOM-0192",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -7901,16 +6413,7 @@
       "parent_ref": "VALE-CAT-FREINAGE",
       "child_ref": "VALE-BOM-0200",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-FREINAGE",
-      "child_ref": "VALE-BOM-0201",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8036,16 +6539,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0089",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0090",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8054,16 +6548,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0091",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0092",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8072,16 +6557,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0093",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0094",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8090,16 +6566,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0095",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0096",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8108,16 +6575,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0097",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0098",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8126,16 +6584,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0099",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0100",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8144,16 +6593,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0101",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0102",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8162,16 +6602,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0103",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0104",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8225,16 +6656,7 @@
       "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
       "child_ref": "VALE-BOM-0110",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HABITACLE-SECURITE",
-      "child_ref": "VALE-BOM-0111",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8547,6 +6969,15 @@
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
+      "child_ref": "VALE-BOM-0322",
+      "parent_valuation_mode": "manufactured",
+      "quantity": "4.0",
+      "unit": "pce",
+      "after_sales_quantity": "0"
+    },
+    {
+      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
+      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0327",
       "parent_valuation_mode": "manufactured",
       "quantity": "1.0",
@@ -8738,16 +7169,7 @@
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0348",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0349",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8756,16 +7178,7 @@
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0350",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0351",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8774,25 +7187,7 @@
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0352",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0353",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0354",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "4.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8819,18 +7214,18 @@
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0357",
       "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
+      "quantity": "4.0",
       "unit": "pce",
-      "after_sales_quantity": "0"
+      "after_sales_quantity": "1"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0358",
       "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
+      "quantity": "4.0",
       "unit": "pce",
-      "after_sales_quantity": "0"
+      "after_sales_quantity": "1"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -8891,16 +7286,7 @@
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0370",
       "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0371",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -8936,18 +7322,9 @@
       "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
       "child_ref": "VALE-BOM-0601",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
-      "after_sales_quantity": "1"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0602",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "1"
+      "after_sales_quantity": "2"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -8964,24 +7341,6 @@
       "child_ref": "VALE-BOM-0604",
       "parent_valuation_mode": "manufactured",
       "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "1"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0605",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
-      "unit": "pce",
-      "after_sales_quantity": "1"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-HYBRIDE-ELECTRIQUE-HV",
-      "child_ref": "VALE-BOM-0606",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "1"
     },
@@ -9323,16 +7682,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0013",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0014",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9341,34 +7691,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0015",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0016",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0017",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0018",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9431,16 +7754,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0025",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0026",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9458,16 +7772,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0028",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0029",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9476,16 +7781,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0030",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0031",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9512,16 +7808,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0034",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0035",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9530,34 +7817,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0036",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0037",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0038",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0039",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9566,7 +7826,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0040",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9574,15 +7834,6 @@
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0041",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0042",
       "parent_valuation_mode": "manufactured",
       "quantity": "1.0",
       "unit": "pce",
@@ -9602,16 +7853,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0044",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0045",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9620,16 +7862,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0046",
       "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0047",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "2.0",
+      "quantity": "4.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9638,16 +7871,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0048",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0049",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9656,16 +7880,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0050",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0051",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9674,16 +7889,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0052",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0053",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9692,16 +7898,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0054",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0055",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9710,16 +7907,7 @@
       "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
       "child_ref": "VALE-BOM-0056",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-STRUCTURE-CARROSSERIE",
-      "child_ref": "VALE-BOM-0057",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9764,18 +7952,9 @@
       "parent_ref": "VALE-CAT-TRANSMISSION",
       "child_ref": "VALE-BOM-0320",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
-      "after_sales_quantity": "1"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-TRANSMISSION",
-      "child_ref": "VALE-BOM-0321",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "1"
+      "after_sales_quantity": "2"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -9791,18 +7970,9 @@
       "parent_ref": "VALE-CAT-TRANSMISSION",
       "child_ref": "VALE-BOM-0630",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
-      "after_sales_quantity": "1"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-TRANSMISSION",
-      "child_ref": "VALE-BOM-0631",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "1"
+      "after_sales_quantity": "2"
     },
     {
       "bom_version_id": "bom-valhalla-electrique-2026-10-05",
@@ -9854,16 +8024,7 @@
       "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
       "child_ref": "VALE-BOM-0077",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
-      "child_ref": "VALE-BOM-0078",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9872,16 +8033,7 @@
       "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
       "child_ref": "VALE-BOM-0079",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
-      "child_ref": "VALE-BOM-0080",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9899,16 +8051,7 @@
       "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
       "child_ref": "VALE-BOM-0082",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
-      "child_ref": "VALE-BOM-0083",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },
@@ -9917,16 +8060,7 @@
       "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
       "child_ref": "VALE-BOM-0084",
       "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
-      "unit": "pce",
-      "after_sales_quantity": "0"
-    },
-    {
-      "bom_version_id": "bom-valhalla-electrique-2026-10-05",
-      "parent_ref": "VALE-CAT-VITRAGE-ECLAIRAGE",
-      "child_ref": "VALE-BOM-0085",
-      "parent_valuation_mode": "manufactured",
-      "quantity": "1.0",
+      "quantity": "2.0",
       "unit": "pce",
       "after_sales_quantity": "0"
     },

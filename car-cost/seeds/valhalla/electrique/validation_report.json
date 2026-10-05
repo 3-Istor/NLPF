@@ -1,12 +1,12 @@
 {
-  "parts": 399,
-  "edges": 410,
-  "purchased": 379,
+  "parts": 324,
+  "edges": 336,
+  "purchased": 304,
   "manufactured": 20,
   "max_depth": 3,
   "deepest_part": "VALE-FIX-VIS-BOULON-STANDARD",
-  "shared_parts": 5,
-  "total_paths": 411,
+  "shared_parts": 6,
+  "total_paths": 337,
   "most_shared": [
     {
       "part_ref": "VALE-FIX-VIS-BOULON-STANDARD",
@@ -33,6 +33,14 @@
       "unit": "pce"
     },
     {
+      "part_ref": "VALE-BOM-0322",
+      "label": "Joints homocinétiques",
+      "parent_count": 2,
+      "occurrence_count": 2,
+      "cumulative_quantity": "8.0",
+      "unit": "pce"
+    },
+    {
       "part_ref": "VALE-FIX-BOULON-HAUTE-RESISTANCE",
       "label": "Boulon haute resistance",
       "parent_count": 2,
@@ -51,58 +59,72 @@
   ],
   "systems": {
     "CAR": {
-      "parts": 86,
+      "parts": 63,
       "cost": "312318.77",
-      "co2": "10016.40"
+      "co2": "9913.15"
     },
     "CHS": {
-      "parts": 102,
+      "parts": 73,
       "cost": "149447.95",
-      "co2": "1785.83"
+      "co2": "1771.81"
     },
     "ELE": {
-      "parts": 49,
+      "parts": 45,
       "cost": "44562.24",
-      "co2": "1448.09"
+      "co2": "1478.34"
     },
     "FIX": {
       "parts": 12,
       "cost": "1546.76",
-      "co2": "58.57"
+      "co2": "59.12"
     },
     "FLU": {
       "parts": 19,
       "cost": "2018.05",
-      "co2": "71.34"
+      "co2": "71.38"
     },
     "GMP": {
-      "parts": 62,
-      "cost": "517843.71",
-      "co2": "14222.31"
+      "parts": 54,
+      "cost": "512480.55",
+      "co2": "14321.77"
     },
     "INT": {
-      "parts": 56,
+      "parts": 47,
       "cost": "63359.36",
-      "co2": "1532.04"
+      "co2": "1536.15"
     },
     "TRN": {
-      "parts": 8,
-      "cost": "45696.14",
-      "co2": "84.21"
+      "parts": 6,
+      "cost": "51059.30",
+      "co2": "100.77"
     },
     "VEH": {
       "parts": 5,
       "cost": "10198.68",
-      "co2": "220.14"
+      "co2": "220.19"
     }
   },
   "top_contributors": [
+    {
+      "part_ref": "VALE-BOM-0601",
+      "label": "Moteur électrique",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "67039.64"
+    },
     {
       "part_ref": "VALE-BOM-0006",
       "label": "Monocoque carbone – cuve inférieure",
       "system": "CAR",
       "cumulative_quantity": "1.0",
       "own_contribution": "58554.00"
+    },
+    {
+      "part_ref": "VALE-BOM-0348",
+      "label": "Moteur électrique",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "56983.70"
     },
     {
       "part_ref": "VALE-BOM-0329",
@@ -119,20 +141,6 @@
       "own_contribution": "36201.36"
     },
     {
-      "part_ref": "VALE-BOM-0601",
-      "label": "Moteur électrique arrière gauche",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "33519.82"
-    },
-    {
-      "part_ref": "VALE-BOM-0602",
-      "label": "Moteur électrique arrière droit",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "33519.82"
-    },
-    {
       "part_ref": "VALE-BOM-0007",
       "label": "Structure supérieure carbone / cellule sécurité",
       "system": "CAR",
@@ -140,25 +148,25 @@
       "own_contribution": "29277.00"
     },
     {
-      "part_ref": "VALE-BOM-0348",
-      "label": "Moteur électrique avant gauche",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "28491.85"
-    },
-    {
-      "part_ref": "VALE-BOM-0349",
-      "label": "Moteur électrique avant droit",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "28491.85"
-    },
-    {
       "part_ref": "VALE-BOM-0327",
       "label": "Pack batterie HV 800 V 100 kWh",
       "system": "GMP",
       "cumulative_quantity": "1.0",
       "own_contribution": "26815.86"
+    },
+    {
+      "part_ref": "VALE-BOM-0630",
+      "label": "Réducteur",
+      "system": "TRN",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "21452.70"
+    },
+    {
+      "part_ref": "VALE-BOM-0350",
+      "label": "Réducteur",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "20111.90"
     },
     {
       "part_ref": "VALE-BOM-0603",
@@ -210,14 +218,14 @@
     "labour_cost": "19376.00",
     "total_cost": "1146991.66",
     "total_cost_exact": "1146991.658000000000000000000",
-    "own_co2": "29426.11",
-    "transport_co2": "12.82",
-    "total_co2": "29438.93"
+    "own_co2": "29459.99",
+    "transport_co2": "12.68",
+    "total_co2": "29472.68"
   },
   "mass": {
     "vehicle_kg": "1960.0",
     "target_kg": "1960",
-    "free_mass_scale": "0.9270"
+    "free_mass_scale": "0.9358"
   },
   "calibration": {
     "category": "motorisation",

@@ -572,24 +572,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0014",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0014",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.142410",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0014",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.062506",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0015",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -599,54 +581,6 @@
       "part_ref": "VALE-BOM-0015",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "0.989510",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0016",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0016",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.137482",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0016",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.076322",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0017",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0017",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.019430",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0017",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.972218",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0018",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0018",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.969116",
       "is_default": false
     },
     {
@@ -746,18 +680,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0026",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0026",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.065828",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0027",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -788,18 +710,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0029",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0029",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.991622",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0030",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -809,24 +719,6 @@
       "part_ref": "VALE-BOM-0030",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "1.058876",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0031",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0031",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.096386",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0031",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.930176",
       "is_default": false
     },
     {
@@ -866,18 +758,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0035",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0035",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.141684",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0036",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -887,54 +767,6 @@
       "part_ref": "VALE-BOM-0036",
       "supplier_id": "SUP-CARBONIA",
       "price_multiplier": "1.125492",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0037",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0037",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.955652",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0037",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.945840",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0038",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0038",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.988916",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0038",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.149164",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0039",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0039",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.133082",
       "is_default": false
     },
     {
@@ -965,24 +797,6 @@
       "part_ref": "VALE-BOM-0041",
       "supplier_id": "SUP-MIDLANDS-COMP",
       "price_multiplier": "0.970084",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0042",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0042",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.993426",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0042",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.116978",
       "is_default": false
     },
     {
@@ -1022,24 +836,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0045",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0045",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.006780",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0045",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.135260",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0046",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1049,24 +845,6 @@
       "part_ref": "VALE-BOM-0046",
       "supplier_id": "SUP-CARBONIA",
       "price_multiplier": "0.943134",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0047",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0047",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.017186",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0047",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.025370",
       "is_default": false
     },
     {
@@ -1082,24 +860,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0049",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0049",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.012126",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0049",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.027614",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0050",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1109,24 +869,6 @@
       "part_ref": "VALE-BOM-0050",
       "supplier_id": "SUP-CARBONIA",
       "price_multiplier": "1.141486",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0051",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0051",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.148680",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0051",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.149648",
       "is_default": false
     },
     {
@@ -1142,18 +884,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0053",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0053",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.029682",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0054",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1166,18 +896,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0055",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0055",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "0.953034",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0056",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1187,18 +905,6 @@
       "part_ref": "VALE-BOM-0056",
       "supplier_id": "SUP-SEVERN-RUBBER",
       "price_multiplier": "1.040814",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0057",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0057",
-      "supplier_id": "SUP-SEVERN-RUBBER",
-      "price_multiplier": "1.013732",
       "is_default": false
     },
     {
@@ -1466,18 +1172,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0078",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0078",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.077312",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0079",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1493,18 +1187,6 @@
       "part_ref": "VALE-BOM-0079",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.089258",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0080",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0080",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.111566",
       "is_default": false
     },
     {
@@ -1538,18 +1220,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0083",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0083",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.101116",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0084",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1559,18 +1229,6 @@
       "part_ref": "VALE-BOM-0084",
       "supplier_id": "SUP-OBERLAND-ELEK",
       "price_multiplier": "1.081426",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0085",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0085",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "0.953694",
       "is_default": false
     },
     {
@@ -1628,24 +1286,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0090",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0090",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.023830",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0090",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "0.983042",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0091",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1655,18 +1295,6 @@
       "part_ref": "VALE-BOM-0091",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.109894",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0092",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0092",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.004074",
       "is_default": false
     },
     {
@@ -1688,24 +1316,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0094",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0094",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.012764",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0094",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.091392",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0095",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1724,18 +1334,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0096",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0096",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.043036",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0097",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1745,18 +1343,6 @@
       "part_ref": "VALE-BOM-0097",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.096870",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0098",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0098",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.087344",
       "is_default": false
     },
     {
@@ -1778,24 +1364,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0100",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0100",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.963110",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0100",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.038878",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0101",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1808,18 +1376,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0102",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0102",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.120454",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0103",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -1829,24 +1385,6 @@
       "part_ref": "VALE-BOM-0103",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.141750",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0104",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0104",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.017868",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0104",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "0.967202",
       "is_default": false
     },
     {
@@ -1937,24 +1475,6 @@
       "part_ref": "VALE-BOM-0110",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "0.949536",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0111",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0111",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.010080",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0111",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.939086",
       "is_default": false
     },
     {
@@ -2198,18 +1718,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0128",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0128",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.127120",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0129",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2225,24 +1733,6 @@
       "part_ref": "VALE-BOM-0129",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.088378",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0130",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0130",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.989466",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0130",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.119420",
       "is_default": false
     },
     {
@@ -2264,24 +1754,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0132",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0132",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.951362",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0132",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.149230",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0133",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2291,24 +1763,6 @@
       "part_ref": "VALE-BOM-0133",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "0.967004",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0134",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0134",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.078060",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0134",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.101446",
       "is_default": false
     },
     {
@@ -2330,18 +1784,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0136",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0136",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.990104",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0137",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2354,18 +1796,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0138",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0138",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.095022",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0139",
       "supplier_id": "SUP-BILSTEIN",
       "price_multiplier": "1.000000",
@@ -2375,24 +1805,6 @@
       "part_ref": "VALE-BOM-0139",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "1.138340",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0140",
-      "supplier_id": "SUP-BILSTEIN",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0140",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.076212",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0140",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.988542",
       "is_default": false
     },
     {
@@ -2435,24 +1847,6 @@
       "part_ref": "VALE-BOM-0143",
       "supplier_id": "SUP-SAXONIA",
       "price_multiplier": "1.073484",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0144",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0144",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.946368",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0144",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.053486",
       "is_default": false
     },
     {
@@ -2519,234 +1913,6 @@
       "part_ref": "VALE-BOM-0149",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "0.987376",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0150",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0150",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.990082",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0151",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0151",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.985792",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0151",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.995362",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0152",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0152",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.070008",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0152",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.000664",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0153",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0153",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.009024",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0154",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0154",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.099774",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0155",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0155",
-      "supplier_id": "SUP-MIDLANDS-COMP",
-      "price_multiplier": "1.006340",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0156",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0156",
-      "supplier_id": "SUP-CARBONIA",
-      "price_multiplier": "1.046380",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0157",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0157",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.946390",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0157",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.945224",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0158",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0158",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.958644",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0158",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.130244",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0159",
-      "supplier_id": "SUP-BILSTEIN",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0159",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.090402",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0160",
-      "supplier_id": "SUP-BILSTEIN",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0160",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.014986",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0160",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.111258",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0161",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0161",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.947534",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0161",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.055466",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0162",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0162",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "1.027900",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0162",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.935522",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0163",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0163",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.149362",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0163",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.975430",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0164",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0164",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.006802",
       "is_default": false
     },
     {
@@ -2936,24 +2102,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0177",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0177",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.060284",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0177",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.988234",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0178",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -2963,18 +2111,6 @@
       "part_ref": "VALE-BOM-0178",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "0.943244",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0179",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0179",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.127824",
       "is_default": false
     },
     {
@@ -3140,54 +2276,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0190",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0190",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.022796",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0190",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.086640",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0191",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0191",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.947534",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0191",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.991930",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0192",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0192",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.034214",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0193",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -3311,18 +2399,6 @@
       "part_ref": "VALE-BOM-0200",
       "supplier_id": "SUP-CASTELLO",
       "price_multiplier": "1.087916",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0201",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0201",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.980974",
       "is_default": false
     },
     {
@@ -3521,18 +2597,6 @@
       "part_ref": "VALE-BOM-0320",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "1.042860",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0321",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0321",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.935104",
       "is_default": false
     },
     {
@@ -3896,18 +2960,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0349",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0349",
-      "supplier_id": "SUP-VOLTARIS",
-      "price_multiplier": "1.080700",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0350",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -3920,24 +2972,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0351",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0351",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "0.977740",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0351",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.990192",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0352",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -3947,36 +2981,6 @@
       "part_ref": "VALE-BOM-0352",
       "supplier_id": "SUP-VOLTARIS",
       "price_multiplier": "1.129078",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0353",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0353",
-      "supplier_id": "SUP-CELLFORGE",
-      "price_multiplier": "0.965750",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0354",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0354",
-      "supplier_id": "SUP-SAXONIA",
-      "price_multiplier": "1.103536",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0354",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.935412",
       "is_default": false
     },
     {
@@ -4142,24 +3146,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0371",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0371",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "1.007264",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0371",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "1.082658",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0372",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -4268,24 +3254,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0385",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0385",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "0.936974",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0385",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "0.989840",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0386",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -4301,18 +3269,6 @@
       "part_ref": "VALE-BOM-0386",
       "supplier_id": "SUP-THAMES-ELEC",
       "price_multiplier": "1.014766",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0387",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0387",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "1.069832",
       "is_default": false
     },
     {
@@ -4595,18 +3551,6 @@
       "part_ref": "VALE-BOM-0408",
       "supplier_id": "SUP-THAMES-ELEC",
       "price_multiplier": "1.122346",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0409",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0409",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "1.049086",
       "is_default": false
     },
     {
@@ -5174,24 +4118,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0450",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0450",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "1.004404",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0450",
-      "supplier_id": "SUP-BLACKCOUNTRY",
-      "price_multiplier": "0.973472",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0456",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -5414,24 +4340,6 @@
       "is_default": false
     },
     {
-      "part_ref": "VALE-BOM-0602",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0602",
-      "supplier_id": "SUP-VOLTARIS",
-      "price_multiplier": "1.126438",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0602",
-      "supplier_id": "SUP-CELLFORGE",
-      "price_multiplier": "0.958908",
-      "is_default": false
-    },
-    {
       "part_ref": "VALE-BOM-0603",
       "supplier_id": "SUP-AML-TIER1",
       "price_multiplier": "1.000000",
@@ -5459,30 +4367,6 @@
       "part_ref": "VALE-BOM-0604",
       "supplier_id": "SUP-CELLFORGE",
       "price_multiplier": "1.045786",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0605",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0605",
-      "supplier_id": "SUP-OBERLAND-ELEK",
-      "price_multiplier": "0.988256",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0606",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0606",
-      "supplier_id": "SUP-THAMES-ELEC",
-      "price_multiplier": "0.932266",
       "is_default": false
     },
     {
@@ -5645,18 +4529,6 @@
       "part_ref": "VALE-BOM-0630",
       "supplier_id": "SUP-BLACKCOUNTRY",
       "price_multiplier": "0.952022",
-      "is_default": false
-    },
-    {
-      "part_ref": "VALE-BOM-0631",
-      "supplier_id": "SUP-AML-TIER1",
-      "price_multiplier": "1.000000",
-      "is_default": true
-    },
-    {
-      "part_ref": "VALE-BOM-0631",
-      "supplier_id": "SUP-CASTELLO",
-      "price_multiplier": "0.955762",
       "is_default": false
     },
     {

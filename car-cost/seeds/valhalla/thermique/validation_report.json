@@ -1,12 +1,12 @@
 {
-  "parts": 452,
-  "edges": 465,
-  "purchased": 430,
+  "parts": 378,
+  "edges": 391,
+  "purchased": 356,
   "manufactured": 22,
   "max_depth": 3,
   "deepest_part": "VALT-FIX-VIS-BOULON-STANDARD",
   "shared_parts": 6,
-  "total_paths": 466,
+  "total_paths": 392,
   "most_shared": [
     {
       "part_ref": "VALT-FIX-VIS-BOULON-STANDARD",
@@ -59,49 +59,49 @@
   ],
   "systems": {
     "CAR": {
-      "parts": 84,
+      "parts": 61,
       "cost": "294596.06",
-      "co2": "7908.24"
+      "co2": "8214.78"
     },
     "CHS": {
-      "parts": 102,
+      "parts": 73,
       "cost": "149447.95",
-      "co2": "1591.53"
+      "co2": "1427.51"
     },
     "ELE": {
-      "parts": 55,
+      "parts": 51,
       "cost": "48451.39",
-      "co2": "1126.15"
+      "co2": "1150.54"
     },
     "FIX": {
       "parts": 11,
       "cost": "1570.40",
-      "co2": "47.14"
+      "co2": "47.25"
     },
     "FLU": {
       "parts": 21,
       "cost": "2309.05",
-      "co2": "90.15"
+      "co2": "90.17"
     },
     "GMP": {
-      "parts": 99,
+      "parts": 91,
       "cost": "332147.57",
-      "co2": "2727.77"
+      "co2": "2749.10"
     },
     "INT": {
-      "parts": 55,
+      "parts": 46,
       "cost": "61227.42",
-      "co2": "1459.57"
+      "co2": "1444.73"
     },
     "TRN": {
-      "parts": 20,
+      "parts": 19,
       "cost": "137793.90",
-      "co2": "775.67"
+      "co2": "775.55"
     },
     "VEH": {
       "parts": 5,
       "cost": "10198.68",
-      "co2": "222.37"
+      "co2": "222.39"
     }
   },
   "top_contributors": [
@@ -148,11 +148,53 @@
       "own_contribution": "17566.20"
     },
     {
+      "part_ref": "VALT-BOM-0216",
+      "label": "Culasse",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "15690.12"
+    },
+    {
+      "part_ref": "VALT-BOM-0227",
+      "label": "Joint culasse",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "15690.12"
+    },
+    {
+      "part_ref": "VALT-BOM-0244",
+      "label": "Couvercle culasse",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "15690.12"
+    },
+    {
+      "part_ref": "VALT-BOM-0044",
+      "label": "Porte dièdre",
+      "system": "CAR",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "14052.96"
+    },
+    {
       "part_ref": "VALT-BOM-0060",
       "label": "Éléments aile avant active",
       "system": "CAR",
       "cumulative_quantity": "2.0",
       "own_contribution": "14052.96"
+    },
+    {
+      "part_ref": "VALT-BOM-0089",
+      "label": "Coque siège carbone",
+      "system": "INT",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "14052.96"
+    },
+    {
+      "part_ref": "VALT-BOM-0139",
+      "label": "Amortisseur Bilstein DTX",
+      "system": "CHS",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "14000.00"
     },
     {
       "part_ref": "VALT-BOM-0313",
@@ -162,53 +204,11 @@
       "own_contribution": "12552.08"
     },
     {
-      "part_ref": "VALT-BOM-0318",
-      "label": "E-Diff arrière",
-      "system": "TRN",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "10983.09"
-    },
-    {
-      "part_ref": "VALT-BOM-0319",
-      "label": "Actionneur hydraulique E-Diff",
-      "system": "TRN",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "10983.09"
-    },
-    {
-      "part_ref": "VALT-BOM-0314",
-      "label": "Mécanismes sélection/synchronisation",
-      "system": "TRN",
-      "cumulative_quantity": "8.0",
-      "own_contribution": "10041.68"
-    },
-    {
-      "part_ref": "VALT-BOM-0218",
-      "label": "Vilebrequin plat",
+      "part_ref": "VALT-BOM-0259",
+      "label": "Turbocompresseur",
       "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9414.08"
-    },
-    {
-      "part_ref": "VALT-BOM-0226",
-      "label": "Damper/poulie vilebrequin",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9414.08"
-    },
-    {
-      "part_ref": "VALT-BOM-0252",
-      "label": "Capteur position vilebrequin",
-      "system": "GMP",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9414.08"
-    },
-    {
-      "part_ref": "VALT-BOM-0064",
-      "label": "Aileron arrière actif",
-      "system": "CAR",
-      "cumulative_quantity": "1.0",
-      "own_contribution": "9368.64"
+      "cumulative_quantity": "2.0",
+      "own_contribution": "10983.10"
     }
   ],
   "control_values": [],
@@ -218,14 +218,14 @@
     "labour_cost": "20720.00",
     "total_cost": "1037742.42",
     "total_cost_exact": "1037742.418000000000000000000",
-    "own_co2": "15937.61",
-    "transport_co2": "10.99",
-    "total_co2": "15948.60"
+    "own_co2": "16111.04",
+    "transport_co2": "10.98",
+    "total_co2": "16122.02"
   },
   "mass": {
     "vehicle_kg": "1540.0",
     "target_kg": "1540",
-    "free_mass_scale": "0.7394"
+    "free_mass_scale": "0.7412"
   },
   "calibration": {
     "category": "motorisation",
