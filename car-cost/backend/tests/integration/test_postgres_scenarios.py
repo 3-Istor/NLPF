@@ -233,7 +233,7 @@ def test_create_rolls_back_header_and_parameters_on_failure(connection, original
         assert cursor.fetchone()[0] == 0
 
 
-VALHALLA = "bom-valhalla-hybride-2026-10-02"
+VALHALLA = "bom-valhalla-hybride-2026-10-05"
 
 
 def test_after_sales_switch_survives_the_round_trip(repositories):

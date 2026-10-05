@@ -329,7 +329,7 @@ class TestCalculationLines:
         assert read.part_full_unit_costs[shared] == Decimal("1")
 
 
-VALHALLA = "bom-valhalla-hybride-2026-10-02"
+VALHALLA = "bom-valhalla-hybride-2026-10-05"
 
 
 def test_a_snapshot_belongs_to_its_bom(snapshots):

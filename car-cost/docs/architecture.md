@@ -51,9 +51,9 @@ Au démarrage, le backend applique les migrations manquantes puis, **pour chaque
 bloque le démarrage avec un diagnostic, sans rien écraser.
 
 Les quatre nomenclatures n'ont pas la même forme : le Multipla (474 pièces, 689 arêtes) est un
-**DAG** à pièces partagées ; les trois Valhalla importées (535 à 659 pièces) sont des **arbres**
-(une arête de moins que de pièces). Le moteur ne fait aucune différence : un arbre est un DAG
-particulier.
+**DAG** à pièces partagées ; les trois Valhalla importées (399 à 498 pièces) le sont aussi, mais
+seulement par leurs fixations : chaque type de vis est une pièce, montée sous chaque ensemble qui
+l'utilise, comme la vis M6 du Multipla. Le reste du fichier source est un arbre.
 
 ---
 

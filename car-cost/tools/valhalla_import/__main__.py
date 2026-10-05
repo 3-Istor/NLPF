@@ -8,8 +8,14 @@ et écrit, par variante, **les mêmes fichiers que le Multipla** dans
 
 La nomenclature source est un arbre de catégories. Elle devient un graphe à
 trois ou quatre niveaux : véhicule → catégorie (ensemble fabriqué) → [sous-
-catégorie de la motorisation] → lignes achetées. Le fichier ne partage aucune
-pièce entre deux parents : on ne fabrique pas de partage qui n'existe pas.
+catégorie de la motorisation] → lignes achetées.
+
+Seules les fixations sont regroupées. Le fichier en fait une ligne par
+interface (« vis_boulon_structurel — Monocoque -> sous-cadre »), toutes sous
+une catégorie « fixations ». Comme sur le Multipla, chaque type devient une
+pièce, montée sous chaque ensemble qui l'utilise avec la quantité de ses
+interfaces (`FASTENER_GROUPS`). C'est le seul partage du graphe : on ne
+fabrique pas celui qui n'existe pas dans le fichier.
 
 `--check` régénère sans écrire et échoue si les fichiers présents diffèrent.
 """
@@ -38,7 +44,7 @@ from tools.bom_generator.pricing import EUR_TO_RUB, EUR_TO_USD, _spread, referen
 from . import enrich
 from .suppliers import ALL_SUPPLIERS, ASSEMBLY_SITE, SOURCE_SUPPLIERS, offers_for
 
-DATASET_DATE = "2026-10-02"
+DATASET_DATE = "2026-10-05"
 GENERATOR_VERSION = "valhalla-import-1.0.0"
 # Atelier britannique, synthétique. Un taux de 60 garde le coût de la minute
 # exact (1 EUR) : un taux qui ne divise pas 60 produit des décimales infinies
@@ -106,6 +112,43 @@ CATEGORIES: dict[str, tuple[str, str, str]] = {
     "transmission": ("TRN", "transmission", "Transmission"),
 }
 
+#: L'ensemble où se monte chaque interface de fixation, par plage d'identifiants
+#: `FAST-`. Les fichiers source rangent toutes les vis sous « fixations », une
+#: ligne par interface ; les identifiants sont communs aux trois variantes, qui
+#: n'ajoutent que leurs propres plages (201+ thermique, 301+ électrique).
+FASTENER_GROUPS: tuple[tuple[int, int, str], ...] = (
+    (1, 28, "structure_carrosserie"),
+    (29, 39, "aerodynamique_exterieur"),
+    (40, 59, "chassis_suspension"),
+    (60, 60, "direction"),
+    (61, 70, "chassis_suspension"),
+    (71, 83, "freinage"),
+    (84, 88, "roues_pneus"),
+    (89, 105, "thermique_essence"),
+    (106, 113, "transmission"),
+    (114, 130, "hybride_electrique_hv"),
+    (131, 136, "gestion_thermique"),
+    (137, 140, "echappement"),
+    # Écrans thermiques -> structure : l'électrique en porte aussi, sans
+    # échappement. Ils se vissent sur la structure.
+    (141, 141, "structure_carrosserie"),
+    (142, 142, "echappement"),
+    (143, 152, "habitacle_securite"),
+    (153, 154, "electrique_basse_tension"),
+    (155, 158, "electronique_adas"),
+    (159, 160, "vitrage_eclairage"),
+    (161, 162, "electrique_basse_tension"),
+    (163, 167, "hvac"),
+    (168, 172, "hydraulique_actif"),
+    (201, 203, "thermique_essence"),
+    (204, 205, "transmission"),
+    (301, 304, "hybride_electrique_hv"),
+    (305, 306, "transmission"),
+    (307, 307, "hybride_electrique_hv"),
+    (308, 309, "gestion_thermique"),
+)
+FASTENERS = "fixations"
+
 UNITS = {"piece": "pce", "unit": "pce", "assembly": "pce", "zone": "pce", "set": "jeu"}
 
 DISCLAIMER_NOTE = (
@@ -121,6 +164,82 @@ def _ref(variant: Variant, source_id: str) -> str:
 
 def _assembly_ref(variant: Variant, key: str) -> str:
     return f"{variant.prefix}-CAT-{key.upper().replace('_', '-')}"
+
+
+def _fastener_group(source_id: str) -> str:
+    number = int(source_id.removeprefix("FAST-"))
+    for low, high, key in FASTENER_GROUPS:
+        if low <= number <= high:
+            return key
+    raise SystemExit(f"{source_id} : aucun ensemble connu pour cette fixation")
+
+
+def _fastener_type(row: dict) -> str:
+    """`vis_boulon_structurel — Monocoque -> sous-cadre` → `vis_boulon_structurel`."""
+    return row["nom"].split(" — ", 1)[0]
+
+
+def _pooled_price(rows: list[dict]) -> Decimal:
+    """Le prix le plus fréquent d'un fournisseur pour un type ; à égalité, le plus bas."""
+    prices = [dec(row["prix_unitaire"]["prix_eur"]) for row in rows]
+    return min(set(prices), key=lambda price: (-prices.count(price), price))
+
+
+def _fastener_lines(
+    variant: Variant, rows: list[dict], groups: set[str]
+) -> tuple[list[dict], dict[str, dict[str, Decimal]], dict[str, int]]:
+    """Une pièce par type de fixation, montée sous chaque ensemble qui l'utilise.
+
+    Sur le Multipla, une vis M6 est une pièce, portée par neuf ensembles avec
+    une quantité par arête. Les fichiers Valhalla en font une ligne par
+    interface, toutes sous « fixations » : aucune pièce n'y a deux parents.
+
+    Renvoie les lignes (format de `build_variant`), les arêtes par ensemble
+    et, par ensemble, le nombre d'interfaces qu'il reçoit : le temps de
+    vissage suit la vis.
+    """
+    by_type: dict[str, list[dict]] = {}
+    for row in rows:
+        by_type.setdefault(_fastener_type(row), []).append(row)
+
+    lines: list[dict] = []
+    edges: dict[str, dict[str, Decimal]] = {}
+    interfaces: dict[str, int] = {}
+    for kind, members in sorted(by_type.items()):
+        ref = f"{variant.prefix}-FIX-{kind.upper().replace('_', '-')}"
+        by_supplier: dict[str, list[dict]] = {}
+        for row in members:
+            by_supplier.setdefault(row["fournisseur"]["nom"], []).append(row)
+        # Le fournisseur retenu est celui de la majorité des interfaces ; les
+        # autres deviennent des offres, au rapport de leur prix (ADR-0010).
+        default = min(
+            by_supplier, key=lambda name: (-len(by_supplier[name]), _pooled_price(by_supplier[name]))
+        )
+        reference = _pooled_price(by_supplier[default])
+        # Une ligne réelle à ce prix : sa devise d'origine reste cohérente.
+        source = next(
+            row for row in by_supplier[default]
+            if dec(row["prix_unitaire"]["prix_eur"]) == reference
+        )
+        row = {**source, "nom": kind.replace("_", " ").capitalize(), "quantite_sav": 0}
+        for member in members:
+            key = _fastener_group(member["id"])
+            if key not in groups:
+                raise SystemExit(
+                    f"{variant.key} : {member['id']} se monte sous {key}, absent de la variante"
+                )
+            target = edges.setdefault(key, {})
+            target[ref] = target.get(ref, Decimal(0)) + dec(member["quantite"])
+            interfaces[key] = interfaces.get(key, 0) + 1
+        lines.append({
+            "ref": ref, "row": row, "category_key": FASTENERS,
+            "quantity": sum((dec(m["quantite"]) for m in members), Decimal(0)),
+            "extra_offers": {
+                name: (_pooled_price(rows_) / reference).quantize(SCALE6)
+                for name, rows_ in sorted(by_supplier.items()) if name != default
+            },
+        })
+    return lines, edges, interfaces
 
 
 def _groups(categories: dict) -> list[tuple[str, str | None, list[dict]]]:
@@ -186,25 +305,34 @@ def build_variant(
     )
     if motor_factor != 1:
         _calibrate(document, motor_factor)
-    groups = _groups(document["categories"])
+    groups = [g for g in _groups(document["categories"]) if g[0] != FASTENERS]
+    fastener_rows = [
+        row for category, _, rows in _groups(document["categories"])
+        if category == FASTENERS for row in rows
+    ]
+    fasteners, fastener_edges, fastener_interfaces = _fastener_lines(
+        variant, fastener_rows, {sub or category for category, sub, _ in groups}
+    )
 
     # -- les lignes achetées, avec leur masse brute ---------------------------
+    # (ligne source, ensemble parent ou None pour une vis partagée, catégorie, réf, quantité)
+    sources = [
+        (row, sub or category, category, _ref(variant, row["id"]), dec(row["quantite"]))
+        for category, sub, rows in groups for row in rows
+    ] + [(f["row"], None, FASTENERS, f["ref"], f["quantity"]) for f in fasteners]
+    extra_offers = {f["ref"]: f["extra_offers"] for f in fasteners}
     lines: list[dict] = []
-    for category, sub, rows in groups:
-        system, part_category, _ = CATEGORIES[sub or category]
-        for row in rows:
-            ref = _ref(variant, row["id"])
-            unit = UNITS.get(row["unite"], row["unite"])
-            price_profile, physical, pool = _profiles(row, category)
-            mass, anchored = enrich.unit_mass(
-                ref, row["nom"], row["unite"], physical, dec(row["quantite"])
-            )
-            lines.append({
-                "ref": ref, "row": row, "group": sub or category, "system": system,
-                "category": part_category, "unit": unit, "price_profile": price_profile,
-                "physical": physical, "pool": pool, "mass": mass, "anchored": anchored,
-                "quantity": dec(row["quantite"]),
-            })
+    for row, group, category, ref, quantity in sources:
+        system, part_category, _ = CATEGORIES[group or category]
+        unit = UNITS.get(row["unite"], row["unite"])
+        price_profile, physical, pool = _profiles(row, category)
+        mass, anchored = enrich.unit_mass(ref, row["nom"], row["unite"], physical, quantity)
+        lines.append({
+            "ref": ref, "row": row, "group": group, "system": system,
+            "category": part_category, "unit": unit, "price_profile": price_profile,
+            "physical": physical, "pool": pool, "mass": mass, "anchored": anchored,
+            "quantity": quantity,
+        })
 
     masses, factor = enrich.scale_masses(lines, variant.target_mass_kg)
 
@@ -221,7 +349,8 @@ def build_variant(
 
     by_group: dict[str, list[dict]] = {}
     for line in lines:
-        by_group.setdefault(line["group"], []).append(line)
+        if line["group"] is not None:
+            by_group.setdefault(line["group"], []).append(line)
 
     root_children: dict[str, int] = {}
     engine_children: dict[str, int] = {}
@@ -229,10 +358,16 @@ def build_variant(
         key = sub or category
         system, part_category, label = CATEGORIES[key]
         members = by_group[key]
+        screws = fastener_edges.get(key, {})
         b.assembly(
             _assembly_ref(variant, key), label, system=system, category=part_category,
-            labour=enrich.labour_minutes(key, len(members)),
-            children={l["ref"]: str(l["quantity"]) for l in members},
+            labour=enrich.labour_minutes(
+                key, len(members) + fastener_interfaces.get(key, 0)
+            ),
+            children={
+                **{l["ref"]: str(l["quantity"]) for l in members},
+                **{ref: str(quantity) for ref, quantity in sorted(screws.items())},
+            },
             after_sales={
                 l["ref"]: str(dec(l["row"]["quantite_sav"])) for l in members
                 if l["row"]["quantite_sav"]
@@ -260,7 +395,10 @@ def build_variant(
 
     # -- sourcing et catalogue -------------------------------------------------
     sourcing = {
-        line["ref"]: offers_for(line["ref"], line["row"]["fournisseur"]["nom"], line["pool"])
+        line["ref"]: _with_source_offers(
+            offers_for(line["ref"], line["row"]["fournisseur"]["nom"], line["pool"]),
+            extra_offers.get(line["ref"], {}),
+        )
         for line in lines
     }
     catalog = {line["ref"]: _catalog_entry(line, indices) for line in lines}
@@ -269,6 +407,18 @@ def build_variant(
         "bom": bom, "sourcing": sourcing, "catalog": catalog, "mass_factor": factor,
         "calibrated_part": _calibrated_part(document),
     }
+
+
+def _with_source_offers(offers: list[dict], extra: dict[str, Decimal]) -> list[dict]:
+    """Ajoute les autres fournisseurs du fichier source d'une vis partagée, à
+    leur multiplicateur réel ; il remplace un alternatif tiré au hasard."""
+    for name, multiplier in extra.items():
+        supplier_id = SOURCE_SUPPLIERS[name]["id"]
+        offers = [o for o in offers if o["supplier_id"] != supplier_id]
+        offers.append(
+            {"supplier_id": supplier_id, "price_multiplier": multiplier, "is_default": False}
+        )
+    return offers
 
 
 def _bounds(reference: Decimal, factors: list[Decimal]) -> dict[str, str]:

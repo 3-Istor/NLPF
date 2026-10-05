@@ -1,58 +1,107 @@
 {
-  "parts": 598,
-  "edges": 597,
-  "purchased": 575,
-  "manufactured": 23,
+  "parts": 452,
+  "edges": 465,
+  "purchased": 430,
+  "manufactured": 22,
   "max_depth": 3,
-  "deepest_part": "VALT-BOM-0503",
-  "shared_parts": 0,
-  "total_paths": 598,
-  "most_shared": [],
+  "deepest_part": "VALT-FIX-VIS-BOULON-STANDARD",
+  "shared_parts": 6,
+  "total_paths": 466,
+  "most_shared": [
+    {
+      "part_ref": "VALT-FIX-VIS-BOULON-STANDARD",
+      "label": "Vis boulon standard",
+      "parent_count": 7,
+      "occurrence_count": 7,
+      "cumulative_quantity": "99.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-FIX-VIS-CLIP-MONTAGE",
+      "label": "Vis clip montage",
+      "parent_count": 4,
+      "occurrence_count": 4,
+      "cumulative_quantity": "87.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-FIX-COLLIER-AGRAFE",
+      "label": "Collier agrafe",
+      "parent_count": 3,
+      "occurrence_count": 3,
+      "cumulative_quantity": "110.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-FIX-BOULON-HAUTE-RESISTANCE",
+      "label": "Boulon haute resistance",
+      "parent_count": 2,
+      "occurrence_count": 2,
+      "cumulative_quantity": "48.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-FIX-VIS-BOULON-CARROSSERIE",
+      "label": "Vis boulon carrosserie",
+      "parent_count": 2,
+      "occurrence_count": 2,
+      "cumulative_quantity": "102.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALT-FIX-VIS-BOULON-HAUTE-TEMPERATURE",
+      "label": "Vis boulon haute temperature",
+      "parent_count": 2,
+      "occurrence_count": 2,
+      "cumulative_quantity": "192.0",
+      "unit": "pce"
+    }
+  ],
   "systems": {
     "CAR": {
       "parts": 84,
-      "cost": "294276.06",
-      "co2": "7878.43"
+      "cost": "294596.06",
+      "co2": "7908.24"
     },
     "CHS": {
       "parts": 102,
-      "cost": "149015.95",
-      "co2": "1567.55"
+      "cost": "149447.95",
+      "co2": "1591.53"
     },
     "ELE": {
       "parts": 55,
-      "cost": "48387.39",
-      "co2": "1119.81"
+      "cost": "48451.39",
+      "co2": "1126.15"
     },
     "FIX": {
-      "parts": 157,
-      "cost": "3305.79",
-      "co2": "140.73"
+      "parts": 11,
+      "cost": "1570.40",
+      "co2": "47.14"
     },
     "FLU": {
       "parts": 21,
       "cost": "2309.05",
-      "co2": "90.13"
+      "co2": "90.15"
     },
     "GMP": {
       "parts": 99,
-      "cost": "331875.16",
-      "co2": "2710.42"
+      "cost": "332147.57",
+      "co2": "2727.77"
     },
     "INT": {
       "parts": 55,
-      "cost": "61123.42",
-      "co2": "1451.30"
+      "cost": "61227.42",
+      "co2": "1459.57"
     },
     "TRN": {
       "parts": 20,
-      "cost": "137703.65",
-      "co2": "770.92"
+      "cost": "137793.90",
+      "co2": "775.67"
     },
     "VEH": {
       "parts": 5,
       "cost": "10198.68",
-      "co2": "222.35"
+      "co2": "222.37"
     }
   },
   "top_contributors": [
@@ -68,14 +117,14 @@
       "label": "Paliers principaux vilebrequin",
       "system": "GMP",
       "cumulative_quantity": "5.0",
-      "own_contribution": "47066.90"
+      "own_contribution": "47070.40"
     },
     {
       "part_ref": "VALT-BOM-0309",
       "label": "Boîte DCT 8 rapports",
       "system": "TRN",
       "cumulative_quantity": "1.0",
-      "own_contribution": "47066.88"
+      "own_contribution": "47070.39"
     },
     {
       "part_ref": "VALT-BOM-0007",
@@ -89,7 +138,7 @@
       "label": "Bloc-cylindres V8",
       "system": "GMP",
       "cumulative_quantity": "1.0",
-      "own_contribution": "23533.44"
+      "own_contribution": "23535.19"
     },
     {
       "part_ref": "VALT-BOM-0043",
@@ -110,49 +159,49 @@
       "label": "Pignons rapports avant",
       "system": "TRN",
       "cumulative_quantity": "8.0",
-      "own_contribution": "12551.20"
+      "own_contribution": "12552.08"
     },
     {
       "part_ref": "VALT-BOM-0318",
       "label": "E-Diff arrière",
       "system": "TRN",
       "cumulative_quantity": "1.0",
-      "own_contribution": "10982.27"
+      "own_contribution": "10983.09"
     },
     {
       "part_ref": "VALT-BOM-0319",
       "label": "Actionneur hydraulique E-Diff",
       "system": "TRN",
       "cumulative_quantity": "1.0",
-      "own_contribution": "10982.27"
+      "own_contribution": "10983.09"
     },
     {
       "part_ref": "VALT-BOM-0314",
       "label": "Mécanismes sélection/synchronisation",
       "system": "TRN",
       "cumulative_quantity": "8.0",
-      "own_contribution": "10040.88"
+      "own_contribution": "10041.68"
     },
     {
       "part_ref": "VALT-BOM-0218",
       "label": "Vilebrequin plat",
       "system": "GMP",
       "cumulative_quantity": "1.0",
-      "own_contribution": "9413.38"
+      "own_contribution": "9414.08"
     },
     {
       "part_ref": "VALT-BOM-0226",
       "label": "Damper/poulie vilebrequin",
       "system": "GMP",
       "cumulative_quantity": "1.0",
-      "own_contribution": "9413.38"
+      "own_contribution": "9414.08"
     },
     {
       "part_ref": "VALT-BOM-0252",
       "label": "Capteur position vilebrequin",
       "system": "GMP",
       "cumulative_quantity": "1.0",
-      "own_contribution": "9413.38"
+      "own_contribution": "9414.08"
     },
     {
       "part_ref": "VALT-BOM-0064",
@@ -165,22 +214,22 @@
   "control_values": [],
   "costing": {
     "labour_rate_eur_per_hour": "60.00",
-    "material_cost": "1016995.15",
-    "labour_cost": "21200.00",
-    "total_cost": "1038195.15",
-    "total_cost_exact": "1038195.148000000000000000000",
-    "own_co2": "15940.54",
-    "transport_co2": "11.10",
-    "total_co2": "15951.64"
+    "material_cost": "1017022.42",
+    "labour_cost": "20720.00",
+    "total_cost": "1037742.42",
+    "total_cost_exact": "1037742.418000000000000000000",
+    "own_co2": "15937.61",
+    "transport_co2": "10.99",
+    "total_co2": "15948.60"
   },
   "mass": {
     "vehicle_kg": "1540.0",
     "target_kg": "1540",
-    "free_mass_scale": "0.7368"
+    "free_mass_scale": "0.7394"
   },
   "calibration": {
     "category": "motorisation",
-    "price_factor": "1.3397",
+    "price_factor": "1.3398",
     "target_cost_ratio_to_hybrid": "0.95"
   }
 }

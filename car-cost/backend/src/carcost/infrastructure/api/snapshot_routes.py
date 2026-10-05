@@ -22,7 +22,7 @@ from .price_source import previous_for, price_source
 class NewPriceSnapshot(BaseModel):
     bom_version: str = Field(
         description="Nomenclature dont on fige les prix.",
-        examples=["bom-valhalla-hybride-2026-10-02"],
+        examples=["bom-valhalla-hybride-2026-10-05"],
     )
     currency: str = Field(default="EUR", description="Devise des prix demandés.")
 

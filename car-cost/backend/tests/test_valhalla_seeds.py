@@ -53,11 +53,51 @@ def test_hypothetical_variants_stay_within_five_percent_of_the_hybrid(variant, r
     assert abs(observed - ratio) < Decimal("0.001")
 
 
+def _fastener_ref(row: dict) -> str:
+    """Une ligne `vis_boulon_standard — Radiateur -> structure` est montée
+    comme la pièce partagée `FIX-VIS-BOULON-STANDARD`."""
+    return "FIX-" + row["nom"].split(" — ", 1)[0].upper().replace("_", "-")
+
+
 def test_the_hybrid_keeps_every_price_of_the_source_file():
+    """Chaque ligne garde son prix ; une fixation le porte via son type."""
     source = _source("aston_martin_valhalla_hybride_phev.json")
     prices = _prices("hybride", "VALH")
-    assert set(prices) == set(source)
-    assert all(prices[ref] == source[ref]["prix_unitaire"]["prix_eur"] for ref in source)
+    expected = {
+        _fastener_ref(row) if ref.startswith("FAST-") else ref: row["prix_unitaire"]["prix_eur"]
+        for ref, row in source.items()
+    }
+    assert set(prices) == set(expected)
+    assert all(
+        prices[_fastener_ref(row) if ref.startswith("FAST-") else ref]
+        == row["prix_unitaire"]["prix_eur"]
+        for ref, row in source.items()
+    )
+
+
+@pytest.mark.parametrize("variant, prefix, name", [
+    ("hybride", "VALH", "aston_martin_valhalla_hybride_phev.json"),
+    ("thermique", "VALT", "aston_martin_valhalla_thermique.json"),
+    ("electrique", "VALE", "aston_martin_valhalla_electrique.json"),
+])
+def test_fasteners_are_shared_and_keep_their_quantities(variant, prefix, name):
+    """Comme la vis M6 du Multipla : une pièce par type, sous plusieurs
+    ensembles, et autant de vis au total que d'interfaces dans le fichier."""
+    expected: dict[str, Decimal] = {}
+    for ref, row in _source(name).items():
+        if ref.startswith("FAST-"):
+            key = f"{prefix}-{_fastener_ref(row)}"
+            expected[key] = expected.get(key, Decimal(0)) + Decimal(row["quantite"])
+    totals: dict[str, Decimal] = {}
+    parents: dict[str, set[str]] = {}
+    with (SEEDS / variant / "edges.csv").open(encoding="utf-8") as edges:
+        for edge in csv.DictReader(edges):
+            if "-FIX-" in edge["child_ref"]:
+                child = edge["child_ref"]
+                totals[child] = totals.get(child, Decimal(0)) + Decimal(edge["quantity"])
+                parents.setdefault(child, set()).add(edge["parent_ref"])
+    assert totals == expected
+    assert any(len(owners) > 1 for owners in parents.values())
 
 
 def test_only_the_powertrain_of_a_hypothetical_variant_is_recalibrated():

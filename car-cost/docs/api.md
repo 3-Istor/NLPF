@@ -698,7 +698,7 @@ grave au moins grave (`MISSING_PRICE`, `QUARANTINED`, `FALLBACK`), puis par réf
 ### 5.1 `POST /price-snapshots` — figer les prix actuels de l'API
 
 ```json
-{ "bom_version": "bom-valhalla-hybride-2026-10-02", "currency": "EUR" }
+{ "bom_version": "bom-valhalla-hybride-2026-10-05", "currency": "EUR" }
 ```
 
 Interroge l'API pour toutes les pièces achetées de la nomenclature, avec quarantaine et repli
