@@ -200,7 +200,7 @@ class TestValuationMode:
     def test_missing_price_on_a_purchased_part_is_reported_not_zeroed(self, diamond):
         result = compute(inputs(diamond, prices={}))
 
-        assert result.is_incomplete
+        assert result.parts_without_price
         assert "S" in result.parts_without_price
         assert result.line("S").own_contribution is None
 

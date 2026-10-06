@@ -67,11 +67,6 @@ class CalculationResult:
                 return line
         raise KeyError(part_ref)
 
-    @property
-    def is_incomplete(self) -> bool:
-        """Il manque au moins un prix. Le total n'est pas un total fiable."""
-        return bool(self.parts_without_price)
-
 
 def compute(inputs: CalculationInput) -> CalculationResult:
     bom = inputs.bom
