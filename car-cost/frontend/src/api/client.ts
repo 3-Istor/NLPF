@@ -155,12 +155,6 @@ export const api = {
   deleteScenario: (id: string) =>
     call<void>(`/scenarios/${id}`, { method: "DELETE" }),
 
-  deleteParameter: (scenarioId: string, parameterId: string) =>
-    call<{ calculation_state: string; stale_reason: string | null }>(
-      `/scenarios/${scenarioId}/parameters/${parameterId}`,
-      { method: "DELETE" },
-    ),
-
   /** Recalcule A et B sur un même snapshot ; le delta vaut B − A. */
   compare: (scenarioA: string, scenarioB: string) =>
     call<Comparison>(
@@ -216,11 +210,6 @@ export const api = {
     call<PriceSnapshotSummary>(
       "/price-snapshots",
       post({ bom_version: version, currency }),
-    ),
-
-  priceSnapshots: (version: string) =>
-    call<{ items: PriceSnapshotSummary[]; total: number }>(
-      `/price-snapshots?bom_version=${encodeURIComponent(version)}`,
     ),
 
   /** Lance un calcul sur le scénario et le fige sous ce nom. */

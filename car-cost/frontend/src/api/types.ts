@@ -332,14 +332,6 @@ export type SourcingVariant = Omit<SourcingPreview, "price_snapshot_id"> & {
   readonly savings: Money;
 };
 
-export type ApiError = {
-  readonly error: {
-    readonly code: string;
-    readonly message: string;
-    readonly details: Record<string, unknown>;
-  };
-};
-
 /** Une nomenclature au choix : le Multipla ou l'une des trois Valhalla. */
 export interface BomVersion {
   id: string;
