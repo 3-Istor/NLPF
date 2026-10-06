@@ -19,7 +19,8 @@ Sans `--catalog`, il sert `seeds/price_catalog.json` (Multipla) et
 régénéré par `python -m tools.price_history`), interpolés entre deux jours et bouclés.
 `prix = référence × (1 + Σ poids × variation de l'indice + part propre)` ; la part propre,
 tirée d'une graine dérivée de la référence, fait varier chaque pièce à sa façon (nulle au
-jour 0, non comptée dans `year_min`/`year_max` du catalogue). Les poids (`drivers`) sont écrits
+jour 0). La courbe est ensuite étirée pour aller de `year_min` à `year_max` du catalogue,
+en partant de la référence au jour 0. Les poids (`drivers`) sont écrits
 dans le catalogue à la génération du jeu de données. Le cours GBP→EUR ne s'applique qu'à la
 devise que le fournisseur ne facture pas : un fournisseur britannique garde son prix en livres.
 
