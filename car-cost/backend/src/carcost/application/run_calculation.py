@@ -26,7 +26,9 @@ from ..domain.scenario import CalculationInput
 from .price_resolution import PriceExplanation, ResolvedPrices
 from .scenario import Scenario
 
-ENGINE_VERSION = "engine-0.1.0"
+#: Entre dans l'empreinte des entrées : la changer rend obsolètes les calculs
+#: produits par une version précédente. 0.2.0 ajoute le CO2.
+ENGINE_VERSION = "engine-0.2.0"
 RULES_VERSION = "rules-1"
 PERCENT = Decimal("0.1")
 
@@ -72,6 +74,8 @@ class SystemTotal:
     system: str
     cost: Decimal
     share_pct: Decimal
+    co2: Decimal = Decimal(0)
+    co2_share_pct: Decimal = Decimal("0.0")
 
 
 @dataclass(frozen=True)
@@ -83,6 +87,17 @@ class Contributor:
     own_contribution: Decimal
     share_pct: Decimal
     #: Un chemin où la trouver, pour que l'écran puisse déplier jusqu'à elle.
+    first_path: str
+
+
+@dataclass(frozen=True)
+class Co2Contributor:
+    part_ref: str
+    label: str
+    system: str
+    cumulative_quantity: Decimal
+    own_co2_contribution: Decimal
+    share_pct: Decimal
     first_path: str
 
 
@@ -114,10 +129,34 @@ class Calculation:
     total_co2: Decimal | None = None
     part_own_unit_costs: Mapping[str, Decimal | None] = field(default_factory=dict)
     part_full_unit_costs: Mapping[str, Decimal | None] = field(default_factory=dict)
+    top_co2_contributors: tuple[Co2Contributor, ...] = ()
 
     @property
     def lines_by_ref(self) -> dict[str, PartLine]:
         return {line.part_ref: line for line in self.lines}
+
+    @property
+    def parts_without_co2(self) -> tuple[str, ...]:
+        """Les pièces dont le CO2 propre est inconnu.
+
+        Relu des lignes plutôt que stocké : la contribution NULL en base dit
+        déjà la même chose. Vide pour un calcul enregistré avant que le moteur
+        ne porte le CO2 — il n'a pas de CO2 du tout, pas un CO2 partiel.
+        """
+        if self.total_co2 is None:
+            return ()
+        return tuple(
+            sorted(
+                line.part_ref
+                for line in self.lines
+                if line.own_co2_contribution is None
+            )
+        )
+
+    @property
+    def co2_is_complete(self) -> bool:
+        """Le total CO2 est celui du véhicule, pas une somme partielle."""
+        return self.total_co2 is not None and not self.parts_without_co2
 
     def price_status_of(self, part_ref: str) -> PriceStatus:
         return self.price_statuses.get(part_ref, PriceStatus.OK)
@@ -140,6 +179,10 @@ def run_calculation(
     snapshot_is_fallback: bool = False,
     top: int = 15,
 ) -> Calculation:
+    # Le SAV s'ajoute sur les arêtes, avant le moteur : il n'existe qu'une
+    # façon de cumuler les quantités, et elle ne sait rien du SAV.
+    if scenario.include_after_sales:
+        bom = bom.with_after_sales()
     result = compute(
         CalculationInput(
             bom=bom,
@@ -161,6 +204,18 @@ def run_calculation(
                 and scenario.parameter_for(parameter.part_ref, parameter.path).labour_minutes
                 is not None
             },
+            labour_rate_by_part={
+                parameter.part_ref: parameter.labour_rate
+                for parameter in scenario.parameters
+                if parameter.scope == "part" and parameter.labour_rate is not None
+            },
+            labour_rate_by_path={
+                parameter.path: parameter.labour_rate
+                for parameter in scenario.parameters
+                if parameter.scope == "path" and parameter.labour_rate is not None
+            },
+            transport_co2_per_kg=resolved.transport_co2_per_kg,
+            transport_co2_per_kg_by_path=resolved.path_transport_co2_per_kg,
         )
     )
 
@@ -180,11 +235,15 @@ def run_calculation(
         display_currency=scenario.display_currency,
         status=_status(result.parts_without_price, snapshot, now, snapshot_is_fallback),
         total_cost=total,
+        total_co2=result.total_co2,
         computed_at=now,
         input_digest=input_digest(scenario, snapshot),
         lines=result.lines,
-        systems=_systems(bom, result.lines, total),
+        systems=_systems(bom, result.lines, total, result.total_co2),
         top_contributors=_contributors(bom, result.lines, total, first_paths, top),
+        top_co2_contributors=_co2_contributors(
+            bom, result.lines, result.total_co2, first_paths, top
+        ),
         parts_without_price=result.parts_without_price,
         explanations=resolved.explanations,
         price_statuses=_price_statuses(
@@ -222,14 +281,14 @@ def with_contributors(calculation: Calculation, bom: Bom, top: int = 15) -> Calc
     """
     from dataclasses import replace
 
+    first_paths = first_path_of_each_part(bom)
     return replace(
         calculation,
         top_contributors=_contributors(
-            bom,
-            calculation.lines,
-            calculation.total_cost,
-            first_path_of_each_part(bom),
-            top,
+            bom, calculation.lines, calculation.total_cost, first_paths, top
+        ),
+        top_co2_contributors=_co2_contributors(
+            bom, calculation.lines, calculation.total_co2, first_paths, top
         ),
     )
 
@@ -271,6 +330,16 @@ def input_digest(scenario: Scenario, snapshot: PriceSnapshot) -> str:
     # d'achat explicite ; il ne réalise aucune conversion de prix.
     if purchase_currencies:
         payload["purchase_currencies"] = purchase_currencies
+    labour_rates = sorted(
+        (p.part_ref, p.scope, p.path or "", str(p.labour_rate))
+        for p in scenario.parameters if p.labour_rate is not None
+    )
+    # Même précaution pour les taux horaires posés par pièce.
+    if labour_rates:
+        payload["labour_rates"] = labour_rates
+    # Même précaution : sans SAV, l'empreinte d'un calcul ancien ne change pas.
+    if scenario.include_after_sales:
+        payload["include_after_sales"] = True
     canonical = json.dumps(payload, sort_keys=True, ensure_ascii=False)
     return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
@@ -300,17 +369,32 @@ def _share(part: Decimal, total: Decimal) -> Decimal:
     return (part / total * 100).quantize(PERCENT, rounding=ROUND_HALF_UP)
 
 
-def _systems(bom: Bom, lines, total: Decimal) -> tuple[SystemTotal, ...]:
-    totals: dict[str, Decimal] = {}
+def _systems(
+    bom: Bom, lines, total: Decimal, total_co2: Decimal | None
+) -> tuple[SystemTotal, ...]:
+    costs: dict[str, Decimal] = {}
+    co2s: dict[str, Decimal] = {}
     for line in lines:
-        if line.own_contribution is None:
-            continue
         system = bom.parts[line.part_ref].system
-        totals[system] = totals.get(system, Decimal(0)) + line.own_contribution
+        if line.own_contribution is not None:
+            costs[system] = costs.get(system, Decimal(0)) + line.own_contribution
+        if line.own_co2_contribution is not None:
+            co2s[system] = co2s.get(system, Decimal(0)) + line.own_co2_contribution
 
+    systems = sorted(set(costs) | set(co2s))
     return tuple(
-        SystemTotal(system=system, cost=cost, share_pct=_share(cost, total))
-        for system, cost in sorted(totals.items())
+        SystemTotal(
+            system=system,
+            cost=costs.get(system, Decimal(0)),
+            share_pct=_share(costs.get(system, Decimal(0)), total),
+            co2=co2s.get(system, Decimal(0)),
+            co2_share_pct=(
+                _share(co2s.get(system, Decimal(0)), total_co2)
+                if total_co2 is not None
+                else Decimal("0.0")
+            ),
+        )
+        for system in systems
     )
 
 
@@ -329,6 +413,33 @@ def _contributors(
             cumulative_quantity=line.cumulative_quantity,
             own_contribution=line.own_contribution,
             share_pct=_share(line.own_contribution, total),
+            first_path=first_paths.get(line.part_ref, line.part_ref),
+        )
+        for line in ranked[:top]
+    )
+
+
+def _co2_contributors(
+    bom: Bom,
+    lines,
+    total_co2: Decimal | None,
+    first_paths: dict[str, str],
+    top: int,
+) -> tuple[Co2Contributor, ...]:
+    if total_co2 is None:
+        return ()
+    ranked = sorted(
+        (line for line in lines if line.own_co2_contribution is not None),
+        key=lambda line: (-line.own_co2_contribution, line.part_ref),
+    )
+    return tuple(
+        Co2Contributor(
+            part_ref=line.part_ref,
+            label=bom.parts[line.part_ref].label,
+            system=bom.parts[line.part_ref].system,
+            cumulative_quantity=line.cumulative_quantity,
+            own_co2_contribution=line.own_co2_contribution,
+            share_pct=_share(line.own_co2_contribution, total_co2),
             first_path=first_paths.get(line.part_ref, line.part_ref),
         )
         for line in ranked[:top]

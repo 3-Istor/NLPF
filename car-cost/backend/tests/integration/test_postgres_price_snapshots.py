@@ -226,6 +226,26 @@ class TestCalculationLines:
         assert read.issue_counts() == saved["written"].issue_counts()
         assert read.issue_counts()["missing_price"] > 0
 
+    def test_co2_survives_the_round_trip_to_postgres(self, saved):
+        """`own_co2_contribution` par ligne et `co2`/`co2_share_pct` par système
+        sont des colonnes à part : rien ne garantit qu'elles soient écrites et
+        relues, sinon qu'un test contre une vraie base."""
+        written, read = saved["written"], saved["read"]
+        fresh_ref = saved["fresh_ref"]
+
+        # Sur la vraie Multipla, chaque pièce porte un facteur carbone réel :
+        # un total à zéro trahirait une colonne jamais écrite ou jamais relue.
+        assert written.total_co2 is not None and written.total_co2 > 0
+        assert read.total_co2 == written.total_co2
+
+        written_line = written.lines_by_ref[fresh_ref]
+        read_line = read.lines_by_ref[fresh_ref]
+        assert written_line.own_co2_contribution is not None
+        assert read_line.own_co2_contribution == written_line.own_co2_contribution
+
+        assert read.systems == written.systems
+        assert any(system.co2 > 0 for system in read.systems)
+
     def test_a_price_read_back_is_explained_by_factors_that_reproduce_it(
         self, saved
     ):
@@ -307,3 +327,38 @@ class TestCalculationLines:
         assert read.path_full_unit_costs == calculation.path_full_unit_costs
         assert read.part_own_unit_costs[shared] == Decimal("1")
         assert read.part_full_unit_costs[shared] == Decimal("1")
+
+
+VALHALLA = "bom-valhalla-hybride-2026-10-05"
+
+
+def test_a_snapshot_belongs_to_its_bom(snapshots):
+    """Le dernier snapshot d'une Valhalla n'est pas servi au Multipla, et
+    inversement : ses prix n'y couvriraient aucune pièce (ADR-0015)."""
+    later = datetime(2099, 1, 1, tzinfo=timezone.utc)
+    snapshots.save(PriceSnapshot(
+        id="snp-test-valhalla", taken_at=later, currency="EUR", source="test",
+        prices={"VALH-BOM-0004": Decimal("58554.000000")}, bom_version=VALHALLA,
+    ))
+
+    assert snapshots.latest(VALHALLA).id == "snp-test-valhalla"
+    assert snapshots.latest(VALHALLA).bom_version == VALHALLA
+    multipla = snapshots.latest(VERSION)
+    assert multipla is None or multipla.id != "snp-test-valhalla"
+    assert "snp-test-valhalla" in {s.id for s in snapshots.list_all(VALHALLA)}
+    assert "snp-test-valhalla" not in {s.id for s in snapshots.list_all(VERSION)}
+
+
+def test_the_frozen_prices_of_a_part_newest_first(snapshots):
+    for day, price in ((1, "100"), (2, "110")):
+        snapshots.save(PriceSnapshot(
+            id=f"snp-test-h{day}", taken_at=datetime(2099, 1, day, tzinfo=timezone.utc),
+            currency="EUR", source="test",
+            prices={"VALH-BOM-0004": Decimal(price)}, bom_version=VALHALLA,
+        ))
+
+    frozen = snapshots.history_of("VALH-BOM-0004", VALHALLA, "EUR")
+
+    assert [item.snapshot_id for item in frozen[:2]] == ["snp-test-h2", "snp-test-h1"]
+    assert frozen[0].price == Decimal("110")
+    assert frozen[0].origin == "API"

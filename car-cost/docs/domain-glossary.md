@@ -67,6 +67,7 @@ seul un jeu de valeurs de contrôle les révèle.
 | **Quantité cumulée** (`cumulative_quantity`) | Ce qu'il faut de cette pièce pour **un véhicule complet**. Formellement : la somme, sur **tous** les chemins de la racine à la pièce, du **produit** des quantités unitaires du chemin. |
 | **Valeur de contrôle** | La quantité cumulée attendue, stockée dans le jeu de données et vérifiée par les tests du moteur. Quelques-unes sont vérifiables à la main (le pneumatique à 5, roue de secours comprise). |
 | **Unité** (`unit`) | `pce`, `kg`, `m`, `L`… Un nombre sans unité n'est pas une information : l'unité est affichée partout. |
+| **Quantité SAV** (`after_sales_quantity`) | Pièces de rechange livrées **avec** le véhicule, portées par l'arête à côté de la quantité montée. N'entrent dans le calcul que si le scénario **active le SAV** (`include_after_sales`) : chaque arête compte alors montée + SAV, et le SAV se multiplie par les quantités des parents comme toute quantité. Seules les Valhalla en portent. |
 
 ---
 
@@ -82,7 +83,7 @@ seul un jeu de valeurs de contrôle les révèle.
 | **Vue agrégée** | Une ligne par **pièce**, avec sa quantité cumulée et sa contribution totale. Répond à « quelles pièces pèsent le plus ? ». |
 | **Vue par occurrence** | Une ligne par **chemin**. Répond à « combien coûte cette vis *à cet endroit-là* ? ». |
 | **Main-d'œuvre** (`labour`) | Temps d'assemblage d'un ensemble fabriqué, en minutes, converti en coût par le **taux horaire**. |
-| **Taux horaire** (`labour_rate`) | Coût d'une heure de main-d'œuvre. Donnée globale du scénario, pas une règle. |
+| **Taux horaire** (`labour_rate`) | Coût d'une heure de main-d'œuvre. Le scénario porte le taux par défaut ; un paramètre peut le remplacer sur sa cible, pièce ou chemin (ADR-0016). Une donnée, pas une règle. |
 | **Règle de coût** (`cost_rule`) | Un modificateur **activable et nommé**, enregistré dans un registre (ADR-0006). Une seule en v1 : `labour`. La liste des règles actives est enregistrée avec le calcul. |
 | **Double comptabilisation** | L'erreur que la structure interdit : compter le prix d'un ensemble **et** celui de ses composants. |
 
@@ -92,7 +93,11 @@ seul un jeu de valeurs de contrôle les révèle.
 
 | Terme | Définition |
 |---|---|
-| **Catalogue de prix** | Le prix de référence de chaque pièce achetée, en EUR, USD et RUB, avec ses min/max sur l'année. Alimente la mock API. |
+| **Catalogue de prix** | Le prix de référence de chaque pièce achetée, en EUR, USD et RUB (et GBP pour la Valhalla), avec ses min/max sur l'année simulée et son profil. Alimente la mock API. |
+| **Indice de marché** | Une des neuf séries synthétiques de 365 jours que simule l'API de prix : cuivre, aluminium, acier, lithium, nickel, semi-conducteurs, énergie, transport, cours GBP→EUR. Une année défile en 40 minutes, puis recommence. |
+| **Profil de prix** (`profile`, `drivers`) | À quels indices le prix d'une pièce est exposé, et avec quels poids (somme 1) : câble, acier, aluminium, composite, électronique, batterie, moteur, caoutchouc, défaut. Calculé à la génération du jeu de données, écrit dans le catalogue. |
+| **Prix en direct** (`price_mode: LIVE`) | Prix lus à l'instant sur l'API pour un calcul **jamais enregistré** (ADR-0015). Pour garder un chiffre, on **fige les prix** (snapshot), puis on calcule. |
+| **Figer les prix** | Prendre un snapshot de prix des pièces achetées d'une nomenclature, depuis l'écran ou en ligne de commande. Un snapshot appartient à **une** nomenclature. |
 | **Fournisseur** (`supplier`) | Qui vend la pièce. Porte un **multiplicateur de prix** et un **délai**. |
 | **Site**, **usine** (`plant`) | D'où la pièce sort physiquement. Un fournisseur déclare plusieurs sites. Chaque site porte une **origine**, un **coefficient de prix** et un **CO₂ de transport** (ADR-0010). |
 | **Origine**, **provenance** (`origin`) | Le pays du site retenu. **Levier indépendant du fournisseur** : même fournisseur, usine différente, prix et CO₂ différents. |

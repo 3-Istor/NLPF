@@ -7,7 +7,7 @@ from decimal import Decimal
 from carcost.domain.bom import Part, ValuationMode
 
 
-def purchased(ref: str, *, carbon: str = "0") -> Part:
+def purchased(ref: str, *, carbon: str = "0", mass: str = "1") -> Part:
     return Part(
         ref=ref,
         label=ref,
@@ -15,7 +15,7 @@ def purchased(ref: str, *, carbon: str = "0") -> Part:
         unit="pce",
         valuation_mode=ValuationMode.PURCHASED,
         carbon_factor=Decimal(carbon),
-        mass_kg=Decimal("1"),
+        mass_kg=Decimal(mass),
     )
 
 

@@ -54,8 +54,8 @@ class PostgresCalculationRepository(PostgresRepository):
             with cursor.copy(
                 "COPY calculation_line (calculation_id, part_ref, "
                 "cumulative_quantity, unit, unit_cost, own_unit_cost, "
-                "own_contribution, occurrence_count, price_status, supplier_id, "
-                "plant_id) FROM STDIN"
+                "own_contribution, own_co2_contribution, occurrence_count, "
+                "price_status, supplier_id, plant_id) FROM STDIN"
             ) as copy:
                 for line in calculation.lines:
                     explanation = calculation.explanations.get(line.part_ref)
@@ -68,6 +68,7 @@ class PostgresCalculationRepository(PostgresRepository):
                             line.full_unit_cost,
                             line.own_unit_cost,
                             line.own_contribution,
+                            line.own_co2_contribution,
                             line.occurrence_count,
                             calculation.price_status_of(line.part_ref).value,
                             explanation.supplier_id if explanation else None,
@@ -85,9 +86,9 @@ class PostgresCalculationRepository(PostgresRepository):
                             calculation.id,
                             system.system,
                             system.cost,
-                            Decimal(0),
+                            system.co2,
                             system.share_pct,
-                            Decimal(0),
+                            system.co2_share_pct,
                         )
                     )
 
@@ -156,8 +157,8 @@ class PostgresCalculationRepository(PostgresRepository):
             cursor.execute(
                 """
                 SELECT part_ref, cumulative_quantity, occurrence_count, unit_cost,
-                       own_unit_cost, own_contribution, supplier_id, plant_id,
-                       price_status
+                       own_unit_cost, own_contribution, own_co2_contribution,
+                       supplier_id, plant_id, price_status
                 FROM calculation_line
                 WHERE calculation_id = %s
                 ORDER BY part_ref
@@ -173,17 +174,20 @@ class PostgresCalculationRepository(PostgresRepository):
                     own_unit_cost=own_unit,
                     own_contribution=own,
                     full_unit_cost=full,
+                    own_co2_contribution=own_co2,
                 )
-                for part_ref, quantity, occurrences, full, own_unit, own, _, _, _
-                in rows
+                for (
+                    part_ref, quantity, occurrences, full, own_unit, own, own_co2,
+                    _, _, _,
+                ) in rows
             )
             # Relu tel qu'il a été écrit, pas recalculé depuis le snapshot : le
             # calcul dit ce qu'il a vu, et un snapshot n'est de toute façon
             # jamais modifié.
             price_statuses = {
-                row[0]: PriceStatus(row[8])
+                row[0]: PriceStatus(row[9])
                 for row in rows
-                if row[8] != PriceStatus.OK.value
+                if row[9] != PriceStatus.OK.value
             }
             # Le fournisseur et l'usine retenus sont relus ; les trois facteurs
             # du prix ne sont pas stockés. La décomposition complète se
@@ -196,13 +200,15 @@ class PostgresCalculationRepository(PostgresRepository):
                     supplier_id=supplier_id,
                     plant_id=plant_id,
                 )
-                for part_ref, _, _, _, own_unit, _, supplier_id, plant_id, _ in rows
+                for (
+                    part_ref, _, _, _, own_unit, _, _, supplier_id, plant_id, _,
+                ) in rows
                 if supplier_id is not None
             }
 
             cursor.execute(
                 """
-                SELECT system, cost, cost_share_pct
+                SELECT system, cost, cost_share_pct, co2, co2_share_pct
                 FROM calculation_system_total
                 WHERE calculation_id = %s
                 ORDER BY system
@@ -210,8 +216,11 @@ class PostgresCalculationRepository(PostgresRepository):
                 (calculation_id,),
             )
             systems = tuple(
-                SystemTotal(system=system, cost=cost, share_pct=share)
-                for system, cost, share in cursor.fetchall()
+                SystemTotal(
+                    system=system, cost=cost, share_pct=share,
+                    co2=co2, co2_share_pct=co2_share,
+                )
+                for system, cost, share, co2, co2_share in cursor.fetchall()
             )
 
             cursor.execute(

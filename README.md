@@ -237,16 +237,16 @@ Vite ; il n'y a pas de CORS à configurer.
 ## Les tests
 
 ```bash
-# backend — 471 tests
+# backend — 554 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 117 tests
+# front — 138 tests
 cd car-cost/frontend && npm test
 ```
 
-Les quarante-trois tests d'intégration se **sautent** si Postgres n'est pas
+Les quarante-quatre tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
-`428 passed, 43 skipped` hors ligne, `471 passed` avec la base chargée et
+`510 passed, 44 skipped` hors ligne, `554 passed` avec la base chargée et
 migrée jusqu'à 0005 (le démarrage de l'API rattrape les migrations
 manquantes). Les tests d'intégration qui écrivent le font dans une
 transaction annulée : un
@@ -298,6 +298,12 @@ entièrement distinct.
   parents multiples**, générateur déterministe, rapport de validation à zéro erreur
 - Moteur de coût par programmation dynamique sur le DAG : une évaluation par pièce dans le cas
   courant, et seulement les préfixes concernés réévalués lorsqu'une surcharge de chemin existe
+- Empreinte carbone calculée par le même moteur, sur le même parcours que le coût : facteur matière
+  ou procédé par pièce, transport ajouté pour une pièce achetée depuis l'usine retenue pour son
+  prix, surcharges de chemin comprises. Sans prix, sans masse ou à prix forcé (aucune usine retenue),
+  le CO2 d'une pièce est inconnu, jamais zéro, et la pièce est nommée (`parts_without_co2`).
+  Décomposée par système et par quinze principaux contributeurs, comme le coût ; alimente
+  `co2_delta_kg` de la comparaison, qui reste `null` tant qu'un des deux CO2 est incomplet
 - Schéma Postgres dont les contraintes rendent la double comptabilisation
   impossible, vérifié sur une vraie base
 - Snapshot de prix immuable, repli sur timeout, quarantaine des valeurs
@@ -341,13 +347,66 @@ entièrement distinct.
   synthèse « figé ») ; « Repartir de ce snapshot » crée un scénario éditable
   avec exactement sa copie (`derived_from`), dont le gel produit un nouveau
   snapshot aux prix du jour
+- **Empreinte carbone à l'écran.** La synthèse affiche `total_co2` sous le
+  coût ; une somme partielle s'intitule « Empreinte carbone partielle » et dit
+  combien de pièces n'ont pas de CO₂ connu ; un calcul antérieur au CO₂
+  n'affiche ni total ni zéro. « Répartir par Coût / CO₂ » bascule la
+  décomposition par système et les principaux contributeurs. L'écart CO₂ des
+  comparaisons est arrondi à l'affichage et dit « inconnu » quand l'un des
+  deux CO₂ est incomplet. Vérifié à l'écran contre la vraie nomenclature,
+  avec et sans prix forcé
+
+- **Quatre nomenclatures au choix** (ADR-0015) : le Multipla et trois Aston
+  Martin Valhalla (hybride, thermique et électrique hypothétiques), importées
+  des fichiers de la PR #6 par `tools/valhalla_import` au format du Multipla.
+  Masse, carbone, main-d'œuvre, usines, délais et fournisseurs alternatifs y
+  sont **générés** (synthétiques, déterministes, vérifiés en CI). Sélecteur
+  de véhicule dans le bandeau ; un snapshot de prix appartient à sa
+  nomenclature. Migration 0006 vérifiée sur une base existante.
+  Comme sur le Multipla, une pièce qui ne diffère que par son emplacement
+  (gauche/droite, avant/arrière, conducteur/passager) est une pièce et une
+  quantité, et les fixations sont regroupées par type et partagées entre
+  ensembles. Un détail **synthétique** porte chaque Valhalla à environ mille
+  pièces sur six niveaux : composants des pièces chères, matières et
+  visserie standard partagées, sous-ensembles par zone. Le coût de
+  référence est conservé au centime.
+- **SAV** : un scénario peut compter les pièces de rechange livrées avec le
+  véhicule ; l'arbre affiche « + n SAV » à côté de la quantité montée.
+- **Prix qui varient** : l'API simulée rejoue une année de marché en 40 min.
+  Mode **direct** (calcul aux prix de l'instant, jamais enregistré, rafraîchi
+  toutes les 5 s) ou **snapshot** ; « Figer les prix maintenant » depuis
+  l'écran.
+- **Page Fournisseurs** : par véhicule, chaque fournisseur, ses usines et ses
+  pièces ; un clic sur une pièce affiche la courbe de son prix sur l'année
+  simulée et ses prix figés. Vérifié dans le navigateur sur une pile isolée.
 
 ### Ce qu'il reste à faire
 
 **Suite du lot 1 et lots suivants (vues)**
 
 - [ ] **Lot 1-bis** : panneau de saisie pré-rempli et suppression d'un réglage,
-      sélecteur de version de BOM, types générés depuis l'OpenAPI, `test:e2e`.
+      types générés depuis l'OpenAPI, `test:e2e`. (Le sélecteur de version
+      de BOM est fait.)
+- [ ] **Valider l'ADR-0015** (plusieurs nomenclatures, prix en direct jamais
+      enregistrés), rédigé au statut « proposé », et fermer la PR #6 qu'il
+      remplace.
+- [ ] **Relire les fourchettes générées pour la Valhalla**
+      (`tools/valhalla_import/enrich.py`, `suppliers.py`, `detail.py`) :
+      décompositions, prix des matières et des standards, zones, masse, carbone,
+      heures d'assemblage et usines sont des ordres de grandeur, à discuter.
+      Environ un quart des pièces gardent le profil de prix « défaut ».
+      Les prix de motorisation du thermique (×1,34) et de l'électrique
+      (×2,86) sont recalés pour tenir leur coût à −5 % / +5 % de l'hybride ;
+      l'électrique y gagne des moteurs à ~33 k€ pièce et un pack à ~27 k€,
+      à confronter à un ordre de grandeur réel.
+      Fixations : une pièce par type, au prix du fournisseur majoritaire
+      (Würth). Les interfaces que le fichier achetait chez Tier-1 sont
+      valorisées au prix Würth par défaut ; Tier-1 reste une offre, à son
+      prix le plus fréquent (sur l'électrique, les vis HV à 2,34 € y sont
+      comptées à 1,76 €).
+- [ ] **Placer les snapshots sur la courbe de prix.** Ils sont datés en temps
+      réel, la courbe en temps simulé : ils sont listés à côté. Il faudrait
+      enregistrer la date simulée (`as_of` de l'API) avec chaque snapshot.
 - [ ] **Lot 2.3 — décomposition de l'écart.** Deux snapshots de calcul pris sur
       des snapshots de prix différents ne se comparent pas aujourd'hui (422) ;
       les comparer, c'est décomposer l'écart entre prix et hypothèses.
@@ -368,8 +427,14 @@ entièrement distinct.
       (`GET /calculations/{id}/issues`) ; la synthèse ne l'appelle pas encore.
 - [ ] **Expliquer un montant à l'écran.** `GET /calculations/{id}/explain`
       existe ; aucun panneau ne l'affiche.
-- [ ] **Empreinte carbone.** Le moteur a tout ce qu'il faut — facteurs par
-      pièce, CO₂ de transport par usine — mais ne calcule que le coût.
+- [ ] **CO₂ dans l'arbre.** `rolled_up_co2` est au contrat de dépliage
+      (docs/api.md §2) mais n'est pas servi : le CO2 unitaire complet n'est
+      pas enregistré par ligne. Demande une colonne, donc une migration.
+- [ ] **Statut carbone distinct.** Le statut du calcul ne parle que des prix :
+      un prix forcé donne `OK` avec un CO2 incomplet. `parts_without_co2` le
+      dit ; un `co2_status` le rendrait lisible d'un coup d'œil.
+- [ ] **CO₂ dans `/explain` et dans la recommandation de sourcing**, qui ne
+      raisonnent encore qu'en euros.
 - [ ] **Devises USD et RUB.** Le catalogue les porte, l'application ne sert que
       l'euro. Le réglage `purchase_currency` d'un paramètre est accepté et
       persisté mais **n'a aucun effet** sur le prix (docs/api.md §3.3).
@@ -377,10 +442,6 @@ entièrement distinct.
 
 **Tranche T3 — « l'outil aide à décider »**
 
-- [ ] **Ajouter le CO₂e aux calculs et aux comparaisons.** Le delta de coût, les
-      dix principaux écarts et la recommandation de sourcing sont disponibles,
-      à l'écran comme dans l'API ; la projection carbone dépend encore de
-      NLPF-46 à NLPF-48. L'écran affiche l'écart CO₂ « non calculé ».
 - [ ] **Valider l'ADR-0012** (comparaison sur snapshot commun, recommandation
       pièce par pièce), rédigé en revue au statut « proposé ».
 

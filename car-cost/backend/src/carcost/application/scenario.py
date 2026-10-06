@@ -86,6 +86,7 @@ class ScenarioParameter:
     price_override: Decimal | None = None
     price_override_justification: str | None = None
     labour_minutes: Decimal | None = None
+    labour_rate: Decimal | None = None
     purchase_currency: str | None = None
 
     @property
@@ -113,6 +114,9 @@ class Scenario:
     #: Le snapshot de calcul dont le scénario est reparti (ADR-0014). Une
     #: trace, pas un lien vivant : le scénario reste librement modifiable.
     derived_from: str | None = None
+    #: Compter les pièces de rechange livrées avec le véhicule (SAV) en plus
+    #: des pièces montées. Sans effet sur une nomenclature sans SAV.
+    include_after_sales: bool = False
 
     def __post_init__(self) -> None:
         # Une copie peut partager des valeurs immuables, jamais les collections

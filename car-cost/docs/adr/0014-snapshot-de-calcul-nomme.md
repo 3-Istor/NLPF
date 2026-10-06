@@ -1,8 +1,8 @@
 # ADR-0014 — Un snapshot de calcul nommé fige un calcul, autonome et immuable
 
 - **Date** : 2026-10-01
-- **Statut** : proposé
-- **Décideurs** : équipe 3istor — à valider en revue de la PR qui l'introduit
+- **Statut** : accepté
+- **Décideurs** : équipe 3istor — accepté en revue de la PR #5 (`deliver/lot1-vues`), le 2026-10-02
 
 ## Contexte et problème
 

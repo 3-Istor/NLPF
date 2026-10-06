@@ -1,0 +1,36 @@
+apiVersion: noodle/v1alpha1
+kind: View
+type: topology
+title: 3istor · car-cost · Repository map
+subtitle: Where does each part of car-cost live, and which folder produces or reads which?
+meta:
+  - "Scope: the folders under car-cost/ that hold code or data, and who writes, reads or imports them"
+  - "Out of scope: tests (backend/tests mirrors the layers), docs/, CI wiring, running containers (see the containers view)"
+  - "v0.1 · source: car-cost/docs/architecture/car-cost · facts read from the code"
+include: [z-repo/**]
+labels: {r-mock-seeds: reads}
+cards:
+  - {id: card-legend, title: Legend, color: slate, legend: true}
+  - id: card-commit
+    title: I want to change… → commit in
+    color: emerald
+    lines:
+      - "A calculation rule → backend/src/carcost/domain/ (no I/O allowed)."
+      - "A use case or a port → backend/src/carcost/application/."
+      - "A route, SQL or the price adapter → backend/src/carcost/infrastructure/."
+      - "The schema → a new backend/migrations/000N_*.sql, never edit an old one."
+      - "A BOM or a price → tools/, then regenerate seeds/: never edit seeds/ by hand."
+      - "The screen → frontend/src/; the API contract → frontend/src/api/types.ts."
+  - id: card-guards
+    title: What CI refuses
+    color: amber
+    lines:
+      - "domain/ or application/ importing infrastructure/ or an I/O library (test_layer_dependencies.py)."
+      - "seeds/ differing from what tools/ regenerate (bom_generator --check, valhalla_import --check)."
+      - "A migration that lets one of the 26 forbidden writes through (migrations/checks/contraintes.sql)."
+  - id: card-gaps
+    title: Gaps between docs and code
+    color: rose
+    lines:
+      - "[G3] architecture.md §2 says the archtest guards domain; it also guards application."
+      - "[G4] tools/price_history.py and price-api/data/ are absent from AGENTS.md and the README."

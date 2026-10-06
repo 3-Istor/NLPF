@@ -16,7 +16,7 @@ import type {
   SourcingPreview,
   SourcingVariant,
 } from "../api/types";
-import { money, quantity } from "../format";
+import { co2, money, quantity } from "../format";
 
 type Tab = "compare" | "recommend" | "snapshots";
 
@@ -149,8 +149,8 @@ function ComparePane({
               <dt>Écart CO₂</dt>
               <dd className="decision__muted">
                 {result.co2_delta_kg === null
-                  ? "non calculé"
-                  : `${result.co2_delta_kg} kg CO₂e`}
+                  ? "inconnu : CO₂ incomplet pour A ou B"
+                  : co2(result.co2_delta_kg)}
               </dd>
             </div>
           </dl>
@@ -308,8 +308,8 @@ function SnapshotComparePane({ bomVersion, onGoToPart }: Props) {
               <dt>Écart CO₂</dt>
               <dd className="decision__muted">
                 {result.co2_delta_kg === null
-                  ? "non calculé"
-                  : `${result.co2_delta_kg} kg CO₂e`}
+                  ? "inconnu : CO₂ incomplet pour A ou B"
+                  : co2(result.co2_delta_kg)}
               </dd>
             </div>
           </dl>

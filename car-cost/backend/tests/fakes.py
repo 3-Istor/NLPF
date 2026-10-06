@@ -79,11 +79,33 @@ class FakeSnapshotRepository:
         self.snapshots = list(snapshots)
         self.journals: dict[str, tuple[QuarantineRecord, ...]] = {}
 
-    def latest(self):
-        return self.snapshots[-1] if self.snapshots else None
+    def latest(self, bom_version=None):
+        candidates = self._for(bom_version)
+        own = [s for s in candidates if s.bom_version is not None]
+        legacy = [s for s in candidates if s.bom_version is None]
+        if own:
+            return own[-1]
+        return legacy[-1] if legacy else None
 
-    def list_all(self):
-        return tuple(reversed(self.snapshots))
+    def list_all(self, bom_version=None):
+        return tuple(reversed(self._for(bom_version)))
+
+    def history_of(self, part_ref, bom_version, currency, limit=20):
+        from carcost.application.ports import FrozenPrice
+
+        return [
+            FrozenPrice(
+                s.id, s.taken_at, s.prices[part_ref],
+                "FALLBACK" if part_ref in s.fallback_refs else "API",
+            )
+            for s in reversed(self._for(bom_version))
+            if part_ref in s.prices and s.currency == currency
+        ][:limit]
+
+    def _for(self, bom_version):
+        if bom_version is None:
+            return list(self.snapshots)
+        return [s for s in self.snapshots if s.bom_version in (None, bom_version)]
 
     def get(self, snapshot_id: str):
         for snapshot in self.snapshots:
@@ -116,6 +138,18 @@ class FakeSnapshotRepository:
 
 
 class FakeScenarioRepository:
+    def set_after_sales(self, scenario_id: str, include: bool) -> None:
+        from dataclasses import replace
+
+        self.scenarios[scenario_id] = replace(
+            self.get(scenario_id), include_after_sales=include
+        )
+
+    def set_labour_rate(self, scenario_id: str, rate) -> None:
+        from dataclasses import replace
+
+        self.scenarios[scenario_id] = replace(self.get(scenario_id), labour_rate=rate)
+
     def __init__(self):
         self.scenarios: dict[str, Scenario] = {}
         self._sequence = 0

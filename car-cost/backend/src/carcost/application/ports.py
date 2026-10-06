@@ -36,10 +36,44 @@ class Quote:
     reason: str | None = None
 
 
+class PriceNotQuoted(Exception):
+    """La source ne cote pas cette pièce dans cette devise."""
+
+
+@dataclass(frozen=True)
+class PricePoint:
+    day: str
+    #: Prix ramené à l'unité, comme une cotation (`per` déjà divisé).
+    price: Decimal
+
+
+@dataclass(frozen=True)
+class PriceHistory:
+    """L'année de marché d'une pièce, telle que la source la simule."""
+
+    part_ref: str
+    currency: str
+    unit: str
+    reference: Decimal
+    points: tuple[PricePoint, ...]
+    now_at: str
+    now_price: Decimal
+    profile: str | None = None
+    drivers: Mapping[str, Decimal] = None  # type: ignore[assignment]
+    origin_currency: str | None = None
+
+
 class PriceSource(Protocol):
     def fetch(
         self, refs: Sequence[str], currency: str
     ) -> Sequence[Quote]:  # pragma: no cover - contrat
+        ...
+
+    def history(
+        self, ref: str, currency: str
+    ) -> PriceHistory:  # pragma: no cover - contrat
+        """Lève PriceNotQuoted si la pièce n'est pas cotée, PriceSourceError
+        si la source ne répond pas."""
         ...
 
 
@@ -68,6 +102,8 @@ class BomVersionSummary:
     #: mais ni lue ni calculée.
     validated_at: datetime | None
     is_synthetic: bool
+    #: Taux horaire proposé à la création d'un scénario sur cette version.
+    reference_labour_rate: Decimal | None = None
 
 
 class BomRepository(Protocol):
@@ -108,13 +144,35 @@ class QuarantineRecord:
     detected_at: datetime
 
 
+@dataclass(frozen=True)
+class FrozenPrice:
+    """Le prix d'une pièce dans un snapshot enregistré."""
+
+    snapshot_id: str
+    taken_at: datetime
+    price: Decimal
+    #: API, ou FALLBACK quand le prix venait du snapshot précédent.
+    origin: str
+
+
 class PriceSnapshotRepository(Protocol):
-    def latest(self):  # pragma: no cover - contrat
-        """Le dernier snapshot pris, même périmé — ou None s'il n'y en a aucun."""
+    def history_of(
+        self, part_ref: str, bom_version: str, currency: str, limit: int = 20
+    ) -> Sequence[FrozenPrice]:  # pragma: no cover - contrat
+        """Les prix figés d'une pièce, du plus récent au plus ancien."""
         ...
 
-    def list_all(self):  # pragma: no cover - contrat
-        """Liste les snapshots du plus récent au plus ancien."""
+    def latest(self, bom_version: str | None = None):  # pragma: no cover - contrat
+        """Le dernier snapshot pris pour cette nomenclature, même périmé — ou None.
+
+        À défaut, le dernier snapshot pris avant que les snapshots ne portent
+        leur nomenclature (ADR-0015). `None` : le dernier, toutes confondues.
+        """
+        ...
+
+    def list_all(self, bom_version: str | None = None):  # pragma: no cover - contrat
+        """Liste les snapshots du plus récent au plus ancien, de cette
+        nomenclature (et les anciens, sans nomenclature) si elle est donnée."""
         ...
 
     def get(self, snapshot_id: str):  # pragma: no cover - contrat
@@ -147,6 +205,18 @@ class ScenarioNotFound(Exception):
 
 
 class ScenarioRepository(Protocol):
+    def set_after_sales(
+        self, scenario_id: str, include: bool
+    ) -> None:  # pragma: no cover - contrat
+        """Bascule le SAV. Lève ScenarioNotFound si le scénario n'existe pas."""
+        ...
+
+    def set_labour_rate(
+        self, scenario_id: str, rate: Decimal
+    ) -> None:  # pragma: no cover - contrat
+        """Change le taux horaire. Lève ScenarioNotFound si le scénario n'existe pas."""
+        ...
+
     def create(self, scenario) -> None:  # pragma: no cover - contrat
         """Insère le scénario et tous ses paramètres dans une seule transaction."""
         ...

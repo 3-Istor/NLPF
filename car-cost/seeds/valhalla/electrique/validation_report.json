@@ -1,0 +1,312 @@
+{
+  "parts": 969,
+  "edges": 1539,
+  "purchased": 765,
+  "manufactured": 204,
+  "max_depth": 6,
+  "deepest_part": "VALE-STD-THERMISTANCE",
+  "shared_parts": 38,
+  "total_paths": 1540,
+  "most_shared": [
+    {
+      "part_ref": "VALE-STD-CONNECTEUR-LV",
+      "label": "Connecteur étanche basse tension",
+      "parent_count": 53,
+      "occurrence_count": 53,
+      "cumulative_quantity": "261.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-THERMISTANCE",
+      "label": "Thermistance CTN",
+      "parent_count": 46,
+      "occurrence_count": 46,
+      "cumulative_quantity": "222.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-JOINT-TORIQUE",
+      "label": "Joint torique FKM",
+      "parent_count": 36,
+      "occurrence_count": 36,
+      "cumulative_quantity": "137.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-VIS-TORX-M5",
+      "label": "Vis Torx M5 inox",
+      "parent_count": 35,
+      "occurrence_count": 35,
+      "cumulative_quantity": "350.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-CONDENSATEUR",
+      "label": "Condensateur céramique multicouche",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "3660.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-INSERT-M6",
+      "label": "Insert fileté M6 à coller",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "642.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-MICROCONTROLEUR",
+      "label": "Microcontrôleur automobile 32 bits",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "61.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-RIVET",
+      "label": "Rivet aveugle aluminium",
+      "parent_count": 33,
+      "occurrence_count": 33,
+      "cumulative_quantity": "856.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-SILENTBLOC",
+      "label": "Silentbloc caoutchouc-métal",
+      "parent_count": 30,
+      "occurrence_count": 30,
+      "cumulative_quantity": "116.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-STD-BAGUE-ETANCHEITE",
+      "label": "Bague d'étanchéité à lèvre",
+      "parent_count": 27,
+      "occurrence_count": 27,
+      "cumulative_quantity": "63.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-MAT-ALU-BILLET",
+      "label": "Billette aluminium 7075",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "14.6300",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALE-MAT-HONEYCOMB",
+      "label": "Âme nid d'abeille aramide",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "13.2380",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALE-MAT-PREPREG",
+      "label": "Préimprégné carbone/époxy",
+      "parent_count": 24,
+      "occurrence_count": 24,
+      "cumulative_quantity": "31.7720",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALE-STD-CIRCLIP",
+      "label": "Circlip acier",
+      "parent_count": 22,
+      "occurrence_count": 22,
+      "cumulative_quantity": "132.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALE-MAT-COPPER",
+      "label": "Cuivre électrolytique",
+      "parent_count": 20,
+      "occurrence_count": 20,
+      "cumulative_quantity": "31.7560",
+      "unit": "kg"
+    }
+  ],
+  "systems": {
+    "CAR": {
+      "parts": 218,
+      "cost": "306578.01",
+      "co2": "7310.75"
+    },
+    "CHS": {
+      "parts": 202,
+      "cost": "146611.54",
+      "co2": "2006.35"
+    },
+    "ELE": {
+      "parts": 138,
+      "cost": "43278.64",
+      "co2": "1435.66"
+    },
+    "FIX": {
+      "parts": 30,
+      "cost": "13969.59",
+      "co2": "746.14"
+    },
+    "FLU": {
+      "parts": 19,
+      "cost": "2018.05",
+      "co2": "71.38"
+    },
+    "GMP": {
+      "parts": 195,
+      "cost": "505854.33",
+      "co2": "13330.45"
+    },
+    "INT": {
+      "parts": 127,
+      "cost": "62337.16",
+      "co2": "1244.93"
+    },
+    "MAT": {
+      "parts": 14,
+      "cost": "5944.17",
+      "co2": "1974.75"
+    },
+    "TRN": {
+      "parts": 21,
+      "cost": "50201.49",
+      "co2": "124.24"
+    },
+    "VEH": {
+      "parts": 5,
+      "cost": "10198.68",
+      "co2": "220.19"
+    }
+  },
+  "top_contributors": [
+    {
+      "part_ref": "VALE-BOM-0329",
+      "label": "Cellules batterie haute énergie",
+      "system": "GMP",
+      "cumulative_quantity": "384.0",
+      "own_contribution": "45054.72"
+    },
+    {
+      "part_ref": "VALE-BOM-0342",
+      "label": "Plaques froides batterie",
+      "system": "GMP",
+      "cumulative_quantity": "12.0",
+      "own_contribution": "36201.36"
+    },
+    {
+      "part_ref": "VALE-BOM-0601-ROTOR",
+      "label": "Moteur électrique — rotor à aimants permanents",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "18973.50"
+    },
+    {
+      "part_ref": "VALE-BOM-0006-ATTACHE",
+      "label": "Monocoque carbone – cuve inférieure — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "17685.70"
+    },
+    {
+      "part_ref": "VALE-BOM-0006-PEAU-EXT",
+      "label": "Monocoque carbone – cuve inférieure — peau extérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "17685.70"
+    },
+    {
+      "part_ref": "VALE-BOM-0348-ROTOR",
+      "label": "Moteur électrique — rotor à aimants permanents",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "16103.74"
+    },
+    {
+      "part_ref": "VALE-BOM-0006-PEAU-INT",
+      "label": "Monocoque carbone – cuve inférieure — peau intérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "13264.28"
+    },
+    {
+      "part_ref": "VALE-BOM-0601-STATOR-BOBINAGE",
+      "label": "Moteur électrique — stator bobiné — bobinage en épingles",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "11806.79"
+    },
+    {
+      "part_ref": "VALE-BOM-0322",
+      "label": "Joints homocinétiques",
+      "system": "TRN",
+      "cumulative_quantity": "8.0",
+      "own_contribution": "10726.32"
+    },
+    {
+      "part_ref": "VALE-BOM-0348-STATOR-BOBINAGE",
+      "label": "Moteur électrique — stator bobiné — bobinage en épingles",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "10014.88"
+    },
+    {
+      "part_ref": "VALE-BOM-0601-CARTER",
+      "label": "Moteur électrique — carter moteur à chemise d'eau",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "9486.75"
+    },
+    {
+      "part_ref": "VALE-BOM-0601-FLASQUE",
+      "label": "Moteur électrique — flasque palier",
+      "system": "GMP",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "9486.75"
+    },
+    {
+      "part_ref": "VALE-BOM-0601-STATOR-PAQUET",
+      "label": "Moteur électrique — stator bobiné — paquet de tôles empilées",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "8855.10"
+    },
+    {
+      "part_ref": "VALE-BOM-0007-ATTACHE",
+      "label": "Structure supérieure carbone / cellule sécurité — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "8849.75"
+    },
+    {
+      "part_ref": "VALE-BOM-0007-PEAU-EXT",
+      "label": "Structure supérieure carbone / cellule sécurité — peau extérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "8849.75"
+    }
+  ],
+  "control_values": [],
+  "costing": {
+    "labour_rate_eur_per_hour": "60.00",
+    "material_cost": "1122650.66",
+    "labour_cost": "24341.00",
+    "total_cost": "1146991.66",
+    "total_cost_exact": "1146991.658000000000000000000",
+    "own_co2": "28446.27",
+    "transport_co2": "18.57",
+    "total_co2": "28464.85"
+  },
+  "mass": {
+    "vehicle_kg": "1960.0",
+    "target_kg": "1960",
+    "free_mass_scale": "0.9358"
+  },
+  "calibration": {
+    "category": "motorisation",
+    "price_factor": "2.8623",
+    "target_cost_ratio_to_hybrid": "1.05"
+  }
+}

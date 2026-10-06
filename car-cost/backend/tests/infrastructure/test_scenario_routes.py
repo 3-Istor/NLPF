@@ -1,5 +1,7 @@
 """Les réglages sauvegardés restent accessibles sans calcul ni prix."""
 
+from decimal import Decimal
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -32,7 +34,7 @@ def payload(**changes):
             {"part_ref": "S", "supplier_id": "SUP-IT", "plant_id": "PLT-TR",
              "purchase_currency": "USD", "price_override": "9.123456",
              "price_override_justification": "Offre négociée synthétique"},
-            {"part_ref": "A", "labour_minutes": "21.2345"},
+            {"part_ref": "A", "labour_minutes": "21.2345", "labour_rate": "75.5"},
             {"part_ref": "S", "scope": "path", "path": "V/B/S",
              "supplier_id": "SUP-DE", "plant_id": "PLT-DE", "purchase_currency": "RUB"},
         ],
@@ -62,6 +64,7 @@ def test_full_scenario_round_trip(client):
     assert parameters["S"]["price_override"] == "9.123456"
     assert parameters["S"]["price_override_justification"] == "Offre négociée synthétique"
     assert parameters["A"]["labour_minutes"] == "21.2345"
+    assert Decimal(parameters["A"]["labour_rate"]) == Decimal("75.5")
     assert parameters["V/B/S"]["purchase_currency"] == "RUB"
 
 
@@ -203,6 +206,7 @@ def test_invalid_scope_or_path_is_rejected_before_writing(client, target, parame
     ({"supplier_id": "SUP-IT", "plant_id": "PLT-DE"}, "PLANT_NOT_AVAILABLE_FOR_SUPPLIER"),
     ({"price_override": "9"}, "PRICE_OVERRIDE_JUSTIFICATION_REQUIRED"),
     ({"labour_minutes": "5"}, "PARAMETER_NOT_APPLICABLE"),
+    ({"labour_rate": "80"}, "PARAMETER_NOT_APPLICABLE"),
 ])
 def test_validation_does_not_depend_on_prices(client, parameter, code):
     original = create(client)
@@ -255,3 +259,49 @@ def test_parameter_identity_is_stable_and_cannot_delete_another_scenario_setting
     )
     assert response.status_code == 200
     assert client.get(f"/api/v1/scenarios/{copied['id']}").json() == copied
+
+
+class TestAfterSales:
+    def test_a_new_scenario_does_not_count_spares(self, client):
+        saved = create(client)
+        assert saved["include_after_sales"] is False
+        # Le losange de test n'a aucune pièce de rechange.
+        assert saved["after_sales_available"] is False
+
+    def test_switching_spares_is_saved(self, client):
+        saved = create(client)
+        response = client.patch(
+            f"/api/v1/scenarios/{saved['id']}", json={"include_after_sales": True}
+        )
+        assert response.status_code == 200, response.text
+        assert response.json()["include_after_sales"] is True
+        reloaded = client.get(f"/api/v1/scenarios/{saved['id']}").json()
+        assert reloaded["include_after_sales"] is True
+
+    def test_an_unknown_scenario_is_named(self, client):
+        response = client.patch(
+            "/api/v1/scenarios/scn-inconnu", json={"include_after_sales": True}
+        )
+        assert response.status_code == 404
+
+
+class TestLabourRate:
+    def test_changing_the_rate_is_saved(self, client):
+        saved = create(client)
+        response = client.patch(
+            f"/api/v1/scenarios/{saved['id']}", json={"labour_rate": "55.5"}
+        )
+        assert response.status_code == 200, response.text
+        reloaded = client.get(f"/api/v1/scenarios/{saved['id']}").json()
+        assert Decimal(reloaded["labour_rate"]) == Decimal("55.5")
+        # Changer le taux ne touche pas au SAV.
+        assert reloaded["include_after_sales"] == saved["include_after_sales"]
+
+    def test_a_negative_rate_is_refused(self, client):
+        saved = create(client)
+        response = client.patch(
+            f"/api/v1/scenarios/{saved['id']}", json={"labour_rate": "-1"}
+        )
+        assert response.status_code == 422
+        reloaded = client.get(f"/api/v1/scenarios/{saved['id']}").json()
+        assert reloaded["labour_rate"] == saved["labour_rate"]

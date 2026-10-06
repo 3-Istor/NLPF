@@ -1,0 +1,312 @@
+{
+  "parts": 1108,
+  "edges": 1685,
+  "purchased": 888,
+  "manufactured": 220,
+  "max_depth": 6,
+  "deepest_part": "VALH-STD-THERMISTANCE",
+  "shared_parts": 38,
+  "total_paths": 1686,
+  "most_shared": [
+    {
+      "part_ref": "VALH-STD-CONNECTEUR-LV",
+      "label": "Connecteur étanche basse tension",
+      "parent_count": 52,
+      "occurrence_count": 52,
+      "cumulative_quantity": "165.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-JOINT-TORIQUE",
+      "label": "Joint torique FKM",
+      "parent_count": 42,
+      "occurrence_count": 42,
+      "cumulative_quantity": "213.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-THERMISTANCE",
+      "label": "Thermistance CTN",
+      "parent_count": 38,
+      "occurrence_count": 38,
+      "cumulative_quantity": "161.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-INSERT-M6",
+      "label": "Insert fileté M6 à coller",
+      "parent_count": 34,
+      "occurrence_count": 34,
+      "cumulative_quantity": "630.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-RIVET",
+      "label": "Rivet aveugle aluminium",
+      "parent_count": 34,
+      "occurrence_count": 34,
+      "cumulative_quantity": "840.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-VIS-TORX-M5",
+      "label": "Vis Torx M5 inox",
+      "parent_count": 32,
+      "occurrence_count": 32,
+      "cumulative_quantity": "278.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-BAGUE-ETANCHEITE",
+      "label": "Bague d'étanchéité à lèvre",
+      "parent_count": 31,
+      "occurrence_count": 31,
+      "cumulative_quantity": "56.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-CONDENSATEUR",
+      "label": "Condensateur céramique multicouche",
+      "parent_count": 29,
+      "occurrence_count": 29,
+      "cumulative_quantity": "2820.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-MICROCONTROLEUR",
+      "label": "Microcontrôleur automobile 32 bits",
+      "parent_count": 29,
+      "occurrence_count": 29,
+      "cumulative_quantity": "47.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-SILENTBLOC",
+      "label": "Silentbloc caoutchouc-métal",
+      "parent_count": 29,
+      "occurrence_count": 29,
+      "cumulative_quantity": "116.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-STD-VIS-TORX-M6",
+      "label": "Vis Torx M6 titane",
+      "parent_count": 28,
+      "occurrence_count": 28,
+      "cumulative_quantity": "372.0",
+      "unit": "pce"
+    },
+    {
+      "part_ref": "VALH-MAT-HONEYCOMB",
+      "label": "Âme nid d'abeille aramide",
+      "parent_count": 25,
+      "occurrence_count": 25,
+      "cumulative_quantity": "10.3080",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALH-MAT-PREPREG",
+      "label": "Préimprégné carbone/époxy",
+      "parent_count": 25,
+      "occurrence_count": 25,
+      "cumulative_quantity": "24.7410",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALH-MAT-ALU-BILLET",
+      "label": "Billette aluminium 7075",
+      "parent_count": 22,
+      "occurrence_count": 22,
+      "cumulative_quantity": "10.7900",
+      "unit": "kg"
+    },
+    {
+      "part_ref": "VALH-STD-ROULEMENT-BILLES",
+      "label": "Roulement à billes hybride céramique",
+      "parent_count": 21,
+      "occurrence_count": 21,
+      "cumulative_quantity": "60.0",
+      "unit": "pce"
+    }
+  ],
+  "systems": {
+    "CAR": {
+      "parts": 219,
+      "cost": "295623.95",
+      "co2": "5206.39"
+    },
+    "CHS": {
+      "parts": 199,
+      "cost": "146727.22",
+      "co2": "1522.42"
+    },
+    "ELE": {
+      "parts": 136,
+      "cost": "45293.15",
+      "co2": "716.80"
+    },
+    "FIX": {
+      "parts": 30,
+      "cost": "12551.11",
+      "co2": "581.65"
+    },
+    "FLU": {
+      "parts": 23,
+      "cost": "2581.55",
+      "co2": "129.67"
+    },
+    "GMP": {
+      "parts": 319,
+      "cost": "412122.80",
+      "co2": "5945.83"
+    },
+    "INT": {
+      "parts": 117,
+      "cost": "60423.88",
+      "co2": "926.18"
+    },
+    "MAT": {
+      "parts": 15,
+      "cost": "5394.43",
+      "co2": "1794.03"
+    },
+    "TRN": {
+      "parts": 45,
+      "cost": "101451.09",
+      "co2": "587.66"
+    },
+    "VEH": {
+      "parts": 5,
+      "cost": "10198.68",
+      "co2": "220.72"
+    }
+  },
+  "top_contributors": [
+    {
+      "part_ref": "VALH-BOM-0224",
+      "label": "Paliers principaux vilebrequin",
+      "system": "GMP",
+      "cumulative_quantity": "5.0",
+      "own_contribution": "35132.40"
+    },
+    {
+      "part_ref": "VALH-BOM-0006-ATTACHE",
+      "label": "Monocoque carbone – cuve inférieure — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "17695.76"
+    },
+    {
+      "part_ref": "VALH-BOM-0006-PEAU-EXT",
+      "label": "Monocoque carbone – cuve inférieure — peau extérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "17695.76"
+    },
+    {
+      "part_ref": "VALH-BOM-0006-PEAU-INT",
+      "label": "Monocoque carbone – cuve inférieure — peau intérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "13271.82"
+    },
+    {
+      "part_ref": "VALH-BOM-0227",
+      "label": "Joint culasse",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "11710.80"
+    },
+    {
+      "part_ref": "VALH-BOM-0244",
+      "label": "Couvercle culasse",
+      "system": "GMP",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "11710.80"
+    },
+    {
+      "part_ref": "VALH-BOM-0359-FAISCEAU",
+      "label": "Refroidissement EDU avant — faisceau à ailettes brasé",
+      "system": "GMP",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "11686.47"
+    },
+    {
+      "part_ref": "VALH-BOM-0309-PIGNONNERIE",
+      "label": "Boîte DCT 8 rapports — jeu de pignons",
+      "system": "TRN",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "10198.74"
+    },
+    {
+      "part_ref": "VALH-BOM-0313",
+      "label": "Pignons rapports avant",
+      "system": "TRN",
+      "cumulative_quantity": "8.0",
+      "own_contribution": "9368.64"
+    },
+    {
+      "part_ref": "VALH-BOM-0006-RENFORT",
+      "label": "Monocoque carbone – cuve inférieure — renfort local",
+      "system": "CAR",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "8847.88"
+    },
+    {
+      "part_ref": "VALH-BOM-0007-ATTACHE",
+      "label": "Structure supérieure carbone / cellule sécurité — attache usinée",
+      "system": "CAR",
+      "cumulative_quantity": "4.0",
+      "own_contribution": "8834.97"
+    },
+    {
+      "part_ref": "VALH-BOM-0007-PEAU-EXT",
+      "label": "Structure supérieure carbone / cellule sécurité — peau extérieure carbone",
+      "system": "CAR",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "8834.97"
+    },
+    {
+      "part_ref": "VALH-BOM-0318",
+      "label": "E-Diff arrière",
+      "system": "TRN",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "8197.56"
+    },
+    {
+      "part_ref": "VALH-BOM-0319",
+      "label": "Actionneur hydraulique E-Diff",
+      "system": "TRN",
+      "cumulative_quantity": "1.0",
+      "own_contribution": "8197.56"
+    },
+    {
+      "part_ref": "VALH-BOM-0309-EMBRAYAGE",
+      "label": "Boîte DCT 8 rapports — embrayage multidisque",
+      "system": "TRN",
+      "cumulative_quantity": "2.0",
+      "own_contribution": "8158.99"
+    }
+  ],
+  "control_values": [],
+  "costing": {
+    "labour_rate_eur_per_hour": "60.00",
+    "material_cost": "1065210.86",
+    "labour_cost": "27157.00",
+    "total_cost": "1092367.86",
+    "total_cost_exact": "1092367.858000000000000000000",
+    "own_co2": "17614.78",
+    "transport_co2": "16.55",
+    "total_co2": "17631.33"
+  },
+  "mass": {
+    "vehicle_kg": "1655.0",
+    "target_kg": "1655",
+    "free_mass_scale": "0.5434"
+  },
+  "calibration": {
+    "category": "motorisation",
+    "price_factor": "1",
+    "target_cost_ratio_to_hybrid": null
+  }
+}

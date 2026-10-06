@@ -23,8 +23,10 @@ from ...application.browse_bom import (
     where_used,
 )
 from ...application.freeze_calculation import frozen_scenario
+from ...application.supplier_catalog import suppliers_of
 from ...application.tree_view import with_costs
 from .errors import error_response
+from .price_source import price_source
 
 SCALE = Decimal("0.000001")
 
@@ -61,9 +63,139 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                         else None
                     ),
                     "is_synthetic": summary.is_synthetic,
+                    "reference_labour_rate": (
+                        str(summary.reference_labour_rate)
+                        if summary.reference_labour_rate is not None
+                        else None
+                    ),
                 }
                 for summary in repository.versions()
             ]
+        }
+
+    def _catalog(version: str):
+        if repositories.sourcing is None:
+            return ()
+        return suppliers_of(repository.load(version), repositories.sourcing.load(version))
+
+    @app.get("/api/v1/bom/{version}/suppliers")
+    def read_suppliers(version: str):
+        """Les fournisseurs qui vendent au moins une pièce de cette nomenclature."""
+        return {
+            "items": [
+                {
+                    "supplier_id": entry.supplier_id,
+                    "name": entry.name,
+                    "part_count": len(entry.parts),
+                    "default_count": entry.default_count,
+                    "plants": [_plant_payload(plant) for plant in entry.plants],
+                }
+                for entry in _catalog(version)
+            ]
+        }
+
+    @app.get("/api/v1/bom/{version}/suppliers/{supplier_id}/parts")
+    def read_supplier_parts(version: str, supplier_id: str):
+        """Les pièces que ce fournisseur vend pour cette nomenclature.
+
+        Le prix de référence est celui du dernier snapshot de la nomenclature,
+        tel quel : le multiplicateur et l'usine s'y appliquent au calcul
+        (ADR-0010), pas ici.
+        """
+        entry = next(
+            (e for e in _catalog(version) if e.supplier_id == supplier_id), None
+        )
+        if entry is None:
+            return error_response(
+                404, "SUPPLIER_NOT_FOUND",
+                f"{supplier_id} ne vend aucune pièce de {version}",
+            )
+        snapshot = (
+            repositories.snapshots.latest(version)
+            if repositories.snapshots is not None
+            else None
+        )
+        return {
+            "supplier_id": entry.supplier_id,
+            "name": entry.name,
+            "plants": [_plant_payload(plant) for plant in entry.plants],
+            "price_snapshot": (
+                {
+                    "id": snapshot.id,
+                    "taken_at": snapshot.taken_at.isoformat(),
+                    "currency": snapshot.currency,
+                }
+                if snapshot
+                else None
+            ),
+            "items": [
+                {
+                    "part_ref": part.part_ref,
+                    "label": part.label,
+                    "unit": part.unit,
+                    "system": part.system,
+                    "price_multiplier": str(part.price_multiplier),
+                    "is_default": part.is_default,
+                    "reference_price": (
+                        {
+                            "amount": str(snapshot.prices[part.part_ref]),
+                            "currency": snapshot.currency,
+                        }
+                        if snapshot and part.part_ref in snapshot.prices
+                        else None
+                    ),
+                }
+                for part in entry.parts
+            ],
+        }
+
+    @app.get("/api/v1/bom/{version}/parts/{part_ref}/price-history")
+    def read_price_history(
+        version: str,
+        part_ref: str,
+        currency: str = Query("EUR", description="Devise de la courbe."),
+    ):
+        """L'année de marché simulée d'une pièce achetée, et les prix figés.
+
+        Les snapshots sont datés en temps réel, la courbe en temps simulé :
+        on ne les place pas sur le même axe, on les donne à côté.
+        """
+        bom = repository.load(version)
+        part = bom.parts.get(part_ref)
+        if part is None:
+            return error_response(404, "PART_NOT_FOUND", f"{part_ref} n'est pas dans {version}")
+        if not part.is_purchased:
+            return error_response(
+                409, "PART_HAS_NO_PRICE",
+                f"{part_ref} est fabriquée : son coût est celui de ses enfants (ADR-0008)",
+            )
+        history = price_source(repositories).history(part_ref, currency)
+        frozen = (
+            repositories.snapshots.history_of(part_ref, version, currency)
+            if repositories.snapshots is not None
+            else ()
+        )
+        return {
+            "part_ref": part_ref,
+            "label": part.label,
+            "unit": part.unit,
+            "currency": history.currency,
+            "profile": history.profile,
+            "drivers": {name: str(weight) for name, weight in (history.drivers or {}).items()},
+            "origin_currency": history.origin_currency,
+            "reference": str(history.reference),
+            "points": [{"date": p.day, "price": str(p.price)} for p in history.points],
+            "now": {"at": history.now_at, "price": str(history.now_price)},
+            "snapshots": [
+                {
+                    "id": item.snapshot_id,
+                    "taken_at": item.taken_at.isoformat(),
+                    "price": str(item.price),
+                    "origin": item.origin,
+                }
+                for item in frozen
+            ],
+            "is_synthetic": True,
         }
 
     @app.get("/api/v1/bom/{version}/root")
@@ -273,6 +405,18 @@ def _decimal(value: Decimal) -> str:
     return str(value.quantize(SCALE))
 
 
+def _plant_payload(plant) -> dict:
+    return {
+        "plant_id": plant.plant_id,
+        "label": plant.label,
+        "origin_country": plant.origin_country,
+        "price_coefficient": str(plant.price_coefficient),
+        "lead_time_days": plant.lead_time_days,
+        "transport_co2_kg_per_kg": str(plant.transport_co2_kg_per_kg),
+        "is_default": plant.is_default,
+    }
+
+
 def _node_payload(node) -> dict:
     """Ce qu'une ligne d'arbre porte, sans les chiffres d'un calcul.
 
@@ -287,6 +431,7 @@ def _node_payload(node) -> dict:
         "valuation_mode": node.valuation_mode,
         "unit": node.unit,
         "edge_quantity": _decimal(node.edge_quantity),
+        "after_sales_quantity": _decimal(node.after_sales_quantity),
         "has_children": node.has_children,
         "child_count": node.child_count,
         "parent_count": node.parent_count,

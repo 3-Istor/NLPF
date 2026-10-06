@@ -96,8 +96,10 @@ def compare_calculations(
         )
 
     differences.sort(key=lambda item: (-abs(item.delta), item.part_ref))
+    # Un écart entre deux sommes partielles mesurerait surtout les pièces
+    # manquantes : sans CO2 complet des deux côtés, pas d'écart annoncé.
     co2_delta = None
-    if calculation_a.total_co2 is not None and calculation_b.total_co2 is not None:
+    if calculation_a.co2_is_complete and calculation_b.co2_is_complete:
         co2_delta = calculation_b.total_co2 - calculation_a.total_co2
     return ScenarioComparison(
         calculation_a_id=calculation_a.id,

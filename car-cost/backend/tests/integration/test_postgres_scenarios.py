@@ -90,7 +90,10 @@ def original(repositories):
             ),
             ScenarioParameter(ref, "path", occurrences[0].path, purchase_currency="RUB"),
             ScenarioParameter(ref, "path", occurrences[1].path, purchase_currency="EUR"),
-            ScenarioParameter(manufactured, labour_minutes=Decimal("12.3456")),
+            ScenarioParameter(
+                manufactured, labour_minutes=Decimal("12.3456"),
+                labour_rate=Decimal("77.123456"),
+            ),
         ),
     )
 
@@ -228,3 +231,43 @@ def test_create_rolls_back_header_and_parameters_on_failure(connection, original
     with connection.cursor() as cursor:
         cursor.execute("SELECT count(*) FROM scenario_parameter WHERE scenario_id = %s", (original.id,))
         assert cursor.fetchone()[0] == 0
+
+
+VALHALLA = "bom-valhalla-hybride-2026-10-05"
+
+
+def test_after_sales_switch_survives_the_round_trip(repositories):
+    """Le SAV est relu tel qu'écrit, et seule la Valhalla en porte."""
+    scenarios = repositories.scenarios
+    scenario = Scenario(
+        id=f"scn-{uuid.uuid4().hex[:12]}", bom_version=VALHALLA,
+        display_currency="EUR", labour_rate=Decimal("60.00"), name="SAV",
+    )
+    scenarios.create(scenario)
+    assert scenarios.get(scenario.id).include_after_sales is False
+
+    scenarios.set_after_sales(scenario.id, True)
+
+    assert scenarios.get(scenario.id).include_after_sales is True
+    assert repositories.bom.load(VALHALLA).has_after_sales
+    assert not repositories.bom.load(VERSION).has_after_sales
+
+
+def test_switching_spares_on_an_unknown_scenario_is_refused(repositories):
+    with pytest.raises(ScenarioNotFound):
+        repositories.scenarios.set_after_sales("scn-inconnu", True)
+
+
+def test_labour_rate_change_survives_the_round_trip(repositories):
+    scenarios = repositories.scenarios
+    scenario = Scenario(
+        id=f"scn-{uuid.uuid4().hex[:12]}", bom_version=VERSION,
+        display_currency="EUR", labour_rate=Decimal("42.00"), name="Taux",
+    )
+    scenarios.create(scenario)
+
+    scenarios.set_labour_rate(scenario.id, Decimal("55.123456"))
+
+    assert scenarios.get(scenario.id).labour_rate == Decimal("55.123456")
+    with pytest.raises(ScenarioNotFound):
+        scenarios.set_labour_rate("scn-inconnu", Decimal("1"))

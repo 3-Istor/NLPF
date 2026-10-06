@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import uuid
+from decimal import Decimal
 
 from ...application.ports import ScenarioNotFound
 from ...application.scenario import Scenario, ScenarioParameter
@@ -16,8 +17,8 @@ class PostgresScenarioRepository(PostgresRepository):
                 """
                 INSERT INTO scenario (id, bom_version_id, name, display_currency,
                                       labour_rate, labour_rate_currency, active_rules,
-                                      derived_from)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                      derived_from, include_after_sales)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     scenario.id,
@@ -28,6 +29,7 @@ class PostgresScenarioRepository(PostgresRepository):
                     scenario.display_currency,
                     sorted(scenario.active_rules),
                     scenario.derived_from,
+                    scenario.include_after_sales,
                 ),
             )
 
@@ -39,7 +41,7 @@ class PostgresScenarioRepository(PostgresRepository):
             cursor.execute(
                 """
                 SELECT bom_version_id, display_currency, labour_rate, active_rules, name,
-                       derived_from
+                       derived_from, include_after_sales
                 FROM scenario WHERE id = %s
                 """,
                 (scenario_id,),
@@ -49,12 +51,14 @@ class PostgresScenarioRepository(PostgresRepository):
                 raise ScenarioNotFound(scenario_id)
             (
                 bom_version, currency, labour_rate, active_rules, name, derived_from,
+                include_after_sales,
             ) = head
 
             cursor.execute(
                 """
                 SELECT part_ref, scope, path, supplier_id, plant_id, price_override,
-                       price_override_justification, labour_minutes, purchase_currency
+                       price_override_justification, labour_minutes, purchase_currency,
+                       labour_rate
                 FROM scenario_parameter
                 WHERE scenario_id = %s
                 ORDER BY part_ref, coalesce(path, '')
@@ -71,11 +75,12 @@ class PostgresScenarioRepository(PostgresRepository):
                     price_override=override,
                     price_override_justification=justification,
                     labour_minutes=labour_minutes,
+                    labour_rate=labour_rate,
                     purchase_currency=purchase_currency,
                 )
                 for (
                     part_ref, scope, path, supplier_id, plant_id, override,
-                    justification, labour_minutes, purchase_currency,
+                    justification, labour_minutes, purchase_currency, labour_rate,
                 ) in cursor.fetchall()
             )
 
@@ -88,6 +93,7 @@ class PostgresScenarioRepository(PostgresRepository):
             parameters=parameters,
             name=name,
             derived_from=derived_from,
+            include_after_sales=include_after_sales,
         )
 
     def list_all(self) -> tuple[Scenario, ...]:
@@ -101,6 +107,24 @@ class PostgresScenarioRepository(PostgresRepository):
             )
             identifiers = tuple(row[0] for row in cursor.fetchall())
         return tuple(self.get(identifier) for identifier in identifiers)
+
+    def set_after_sales(self, scenario_id: str, include: bool) -> None:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE scenario SET include_after_sales = %s WHERE id = %s RETURNING id",
+                (include, scenario_id),
+            )
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
+
+    def set_labour_rate(self, scenario_id: str, rate: Decimal) -> None:
+        with self._connect() as connection, connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE scenario SET labour_rate = %s WHERE id = %s RETURNING id",
+                (rate, scenario_id),
+            )
+            if cursor.fetchone() is None:
+                raise ScenarioNotFound(scenario_id)
 
     def delete(self, scenario_id: str) -> None:
         with self._connect() as connection, connection.cursor() as cursor:
@@ -143,8 +167,8 @@ class PostgresScenarioRepository(PostgresRepository):
             INSERT INTO scenario_parameter
                 (id, scenario_id, scope, part_ref, path, supplier_id, plant_id,
                  price_override, price_override_justification, labour_minutes,
-                 purchase_currency)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                 purchase_currency, labour_rate)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT (scenario_id, part_ref, coalesce(path, ''))
             DO UPDATE SET
                 scope = EXCLUDED.scope,
@@ -153,7 +177,8 @@ class PostgresScenarioRepository(PostgresRepository):
                 price_override = EXCLUDED.price_override,
                 price_override_justification = EXCLUDED.price_override_justification,
                 labour_minutes = EXCLUDED.labour_minutes,
-                purchase_currency = EXCLUDED.purchase_currency
+                purchase_currency = EXCLUDED.purchase_currency,
+                labour_rate = EXCLUDED.labour_rate
             RETURNING id
             """,
             (
@@ -168,6 +193,7 @@ class PostgresScenarioRepository(PostgresRepository):
                 parameter.price_override_justification,
                 parameter.labour_minutes,
                 parameter.purchase_currency,
+                parameter.labour_rate,
             ),
         )
         return cursor.fetchone()[0]

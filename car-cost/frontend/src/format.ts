@@ -6,7 +6,7 @@
  * l'API, et deux vérités qui coexistent finissent par diverger.
  */
 
-import type { Money } from "./api/types";
+import type { Co2, Money } from "./api/types";
 
 const CURRENCIES: Record<string, string> = {
   EUR: "€",
@@ -22,6 +22,20 @@ export function money(value: Money | null | undefined): string {
     maximumFractionDigits: 2,
   });
   return `${rounded} ${CURRENCIES[value.currency] ?? value.currency}`;
+}
+
+/**
+ * Formate une masse de CO₂e. Accepte la chaîne nue de `co2_delta_kg` comme
+ * l'objet `{ kg_co2e }` des calculs. `null` : inconnu, jamais zéro.
+ */
+export function co2(value: Co2 | string | null | undefined): string {
+  if (value === null || value === undefined) return "—";
+  const kg = typeof value === "string" ? value : value.kg_co2e;
+  const rounded = Number.parseFloat(kg).toLocaleString("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${rounded} kg CO₂e`;
 }
 
 /** Une quantité garde ses décimales utiles, et rien de plus. */
@@ -46,4 +60,13 @@ export function age(seconds: number): string {
   const hours = Math.floor(minutes / 60);
   if (hours < 48) return `il y a ${hours} h`;
   return `il y a ${Math.floor(hours / 24)} j`;
+}
+
+/**
+ * Une décimale de l'API, débarrassée de ses zéros de stockage, pour pré-remplir
+ * un champ : « 42.000000 » devient « 42 ». Reste une chaîne que l'API relit
+ * exactement — ni arrondi, ni virgule.
+ */
+export function editable(value: string): string {
+  return value.includes(".") ? value.replace(/\.?0+$/, "") : value;
 }

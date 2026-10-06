@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import type { CalculationSnapshot, Supplier, TreeLine } from "../api/types";
+import { money } from "../format";
 
 type Props = {
   line: TreeLine;
@@ -97,6 +98,14 @@ export function FrozenSettings({ line, snapshot, version, depth }: Props) {
               <>
                 <dt>Main-d'œuvre</dt>
                 <dd>{parameter.labour_minutes} min</dd>
+              </>
+            )}
+            {parameter.labour_rate && (
+              <>
+                <dt>Taux horaire</dt>
+                <dd>
+                  {money({ amount: parameter.labour_rate, currency: snapshot.display_currency })}/h
+                </dd>
               </>
             )}
             {parameter.purchase_currency && (

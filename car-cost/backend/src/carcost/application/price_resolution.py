@@ -61,6 +61,9 @@ class PriceExplanation:
     plant_coefficient: Decimal | None = None
     origin_country: str | None = None
     override_justification: str | None = None
+    #: kg CO2e/kg transporté par l'usine retenue. `None` sur un prix forcé :
+    #: aucune usine n'est retenue, donc aucun transport à annoncer.
+    transport_co2_per_kg: Decimal | None = None
 
     @property
     def is_overridden(self) -> bool:
@@ -75,6 +78,8 @@ class ResolvedPrices:
     missing: tuple[str, ...]
     path_prices: dict[str, Decimal] = field(default_factory=dict)
     path_explanations: dict[str, PriceExplanation] = field(default_factory=dict)
+    transport_co2_per_kg: dict[str, Decimal] = field(default_factory=dict)
+    path_transport_co2_per_kg: dict[str, Decimal | None] = field(default_factory=dict)
 
 
 def resolve_unit_prices(
@@ -117,12 +122,28 @@ def resolve_unit_prices(
             path_prices[parameter.path] = resolved.unit_price
             path_explanations[parameter.path] = resolved
 
+    # Un prix forcé n'a pas d'usine : la pièce reste hors du dictionnaire et le
+    # moteur la lit comme « transport inconnu ». Sur un chemin, l'absence ne
+    # suffirait pas — elle voudrait dire « même usine que la pièce » — d'où le
+    # `None` explicite.
+    transport_co2_per_kg = {
+        ref: explanation.transport_co2_per_kg
+        for ref, explanation in explanations.items()
+        if explanation.transport_co2_per_kg is not None
+    }
+    path_transport_co2_per_kg = {
+        path: explanation.transport_co2_per_kg
+        for path, explanation in path_explanations.items()
+    }
+
     return ResolvedPrices(
         prices=prices,
         explanations=explanations,
         missing=tuple(sorted(missing)),
         path_prices=path_prices,
         path_explanations=path_explanations,
+        transport_co2_per_kg=transport_co2_per_kg,
+        path_transport_co2_per_kg=path_transport_co2_per_kg,
     )
 
 
@@ -155,6 +176,7 @@ def resolve_purchase_price(
         plant_id=plant.plant_id,
         plant_coefficient=plant.price_coefficient,
         origin_country=plant.origin_country,
+        transport_co2_per_kg=plant.transport_co2_kg_per_kg,
     )
 
 
@@ -171,7 +193,9 @@ def validate_parameters(bom: Bom, scenario: Scenario) -> None:
             raise ParameterNotApplicable(
                 f"{parameter.part_ref} n'existe pas dans cette nomenclature"
             )
-        if part.is_purchased and parameter.labour_minutes is not None:
+        if part.is_purchased and (
+            parameter.labour_minutes is not None or parameter.labour_rate is not None
+        ):
             raise ParameterNotApplicable(
                 f"{part.ref} est une pièce achetée : elle n'a pas de main-d'œuvre"
             )

@@ -7,12 +7,42 @@ l'on regarde le total, sinon le repli est silencieux (ADR-0003, mode de panne P2
 
 from __future__ import annotations
 
+import uuid
 from typing import Annotated
 
-from fastapi import FastAPI, Path, Request
+from fastapi import FastAPI, Path, Query, Request
+from pydantic import BaseModel, Field
 
-from ...application.ports import PriceSnapshotNotFound
+from ...application.ports import PriceSnapshotNotFound, PriceSourceError
+from ...application.take_snapshot import TookFallback, snapshot_for_bom
 from .errors import error_response
+from .price_source import previous_for, price_source
+
+
+class NewPriceSnapshot(BaseModel):
+    bom_version: str = Field(
+        description="Nomenclature dont on fige les prix.",
+        examples=["bom-valhalla-hybride-2026-10-05"],
+    )
+    currency: str = Field(default="EUR", description="Devise des prix demandés.")
+
+
+def _summary(snapshot, now) -> dict:
+    return {
+        "id": snapshot.id,
+        "taken_at": snapshot.taken_at.isoformat(),
+        "source": snapshot.source,
+        "currency": snapshot.currency,
+        "bom_version": snapshot.bom_version,
+        "status": snapshot.status(now).value,
+        "age_seconds": int(snapshot.age(now).total_seconds()),
+        "counts": {
+            "prices": len(snapshot.prices),
+            "fallback": len(snapshot.fallback_refs),
+            "quarantined": len(snapshot.quarantined_refs),
+            "missing": len(snapshot.missing_refs),
+        },
+    }
 
 
 def register_snapshot_routes(app: FastAPI, repositories) -> None:
@@ -31,29 +61,50 @@ def register_snapshot_routes(app: FastAPI, repositories) -> None:
             "pour sélectionner automatiquement le plus récent."
         ),
     )
-    def list_snapshots():
-        snapshots = repositories.snapshots.list_all()
+    def list_snapshots(
+        bom_version: Annotated[
+            str | None,
+            Query(description="Seulement les snapshots de cette nomenclature (et les anciens, sans nomenclature)."),
+        ] = None,
+    ):
+        snapshots = repositories.snapshots.list_all(bom_version)
         now = repositories.clock()
         return {
-            "items": [
-                {
-                    "id": snapshot.id,
-                    "taken_at": snapshot.taken_at.isoformat(),
-                    "source": snapshot.source,
-                    "currency": snapshot.currency,
-                    "status": snapshot.status(now).value,
-                    "age_seconds": int(snapshot.age(now).total_seconds()),
-                    "counts": {
-                        "prices": len(snapshot.prices),
-                        "fallback": len(snapshot.fallback_refs),
-                        "quarantined": len(snapshot.quarantined_refs),
-                        "missing": len(snapshot.missing_refs),
-                    },
-                }
-                for snapshot in snapshots
-            ],
+            "items": [_summary(snapshot, now) for snapshot in snapshots],
             "total": len(snapshots),
         }
+
+    @app.post(
+        "/api/v1/price-snapshots", status_code=201, tags=["Prix"],
+        summary="Figer les prix actuels de l'API",
+        description=(
+            "Interroge l'API de prix pour toutes les pièces achetées de la nomenclature et "
+            "enregistre un snapshot immuable, avec quarantaine et repli comme en ligne de "
+            "commande. Si l'API ne répond pas, rien n'est créé : le dernier snapshot reste "
+            "en vigueur (503 PRICE_SOURCE_UNAVAILABLE)."
+        ),
+    )
+    def take_price_snapshot(payload: NewPriceSnapshot):
+        source = price_source(repositories)
+        bom = repositories.bom.load(payload.bom_version)
+        previous = previous_for(repositories, payload.bom_version, payload.currency)
+        now = repositories.clock()
+        outcome = snapshot_for_bom(
+            source, bom, bom_version=payload.bom_version, currency=payload.currency,
+            previous=previous, now=now, snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
+        )
+        if isinstance(outcome, TookFallback):
+            # Un snapshot daté d'aujourd'hui avec les prix d'hier ferait passer
+            # des prix anciens pour frais (ADR-0003) : on n'en crée pas.
+            raise PriceSourceError(
+                f"{outcome.reason} ; le snapshot {outcome.snapshot.id} reste en vigueur"
+            )
+        repositories.snapshots.save(
+            outcome.snapshot,
+            quarantined=outcome.quarantined,
+            previous_id=previous.id if previous else None,
+        )
+        return _summary(outcome.snapshot, now)
 
     @app.get(
         "/api/v1/price-snapshots/{snapshot_id}/quarantine", tags=["Prix"],

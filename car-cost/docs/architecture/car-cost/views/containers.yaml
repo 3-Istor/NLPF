@@ -1,0 +1,37 @@
+apiVersion: noodle/v1alpha1
+kind: View
+type: topology
+title: 3istor · car-cost · Containers
+subtitle: Which containers run car-cost, and which connections serve one cost calculation?
+meta:
+  - "Scope: the four services of car-cost/docker-compose.yml, one frozen calculation (POST /api/v1/calculations)"
+  - "Out of scope: the hexagonal layers inside the backend, offline tools/ generators, CI, healthchecks"
+  - "v0.1 · source: car-cost/docs/architecture/car-cost · facts read from the code, not run live"
+include: [z-host/**, z-compose/**]
+steps: [c-user-frontend, c-frontend-backend, c-backend-db]
+background: [c-backend-mock-api, c-backend-db-startup]
+notes:
+  - id: n-503
+    text: "If GET /prices fails or exceeds 5 s, the backend answers **503** PRICE_SOURCE_UNAVAILABLE to live and snapshot calls. A frozen calculation never calls the price API."
+cards:
+  - {id: card-legend, title: Legend, color: slate, legend: true}
+  - id: card-steps
+    title: Request path · data plane
+    color: emerald
+    lines:
+      - "[1] The SPA posts the scenario to its own origin, port 5173."
+      - "[2] Vite proxies /api/* to backend:8000, path unchanged."
+      - "[3] The backend reads the scenario, the BOM (cached in memory) and the latest price snapshot, then inserts the calculation and COPYs its lines. No pool: one connection per operation."
+  - id: card-background
+    title: Background · control plane
+    color: amber
+    lines:
+      - "[A] Prices: first snapshot at startup, POST /price-snapshots, and live mode (POST /calculations/live, nothing written)."
+      - "[B] At each start, the backend runs psql: pending migrations, then missing seed BOMs, then execs uvicorn."
+      - "Postgres initdb also runs backend/migrations, once, on an empty volume."
+  - id: card-gaps
+    title: Gaps between docs and code
+    color: rose
+    lines:
+      - "[G1] architecture.md §1 says the seeds load at db init. In code, backend startup.py pipes them into psql."
+      - "[G2] The frontend container runs the Vite dev server (npm run dev); the /api proxy exists only there."

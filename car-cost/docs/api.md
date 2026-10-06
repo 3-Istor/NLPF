@@ -299,6 +299,17 @@ fournisseur (ADR-0010). La devise d'achat est distincte de la devise d'affichage
 conservée ici. Un snapshot porte aujourd'hui une seule devise : la sélection d'un prix dans une
 autre devise attend le catalogue multi-devise du périmètre prix, sans conversion à taux courant.
 
+### 3.1 bis `PATCH /scenarios/{id}` — compter ou non le SAV
+
+```json
+{ "include_after_sales": true }
+```
+
+Le scénario compte alors, sur chaque arête, les pièces de rechange livrées avec le véhicule en
+plus des pièces montées. Le réglage entre dans l'empreinte des entrées : le dernier calcul devient
+obsolète. Un scénario expose `include_after_sales` et `after_sales_available` (la nomenclature
+porte-t-elle du SAV ?). Une ligne d'arbre porte `after_sales_quantity` à côté d'`edge_quantity`.
+
 ### 3.2 `GET /scenarios` — lister les scénarios
 
 Renvoie tous les scénarios du plus récent au plus ancien. Chaque élément utilise le même format que
@@ -439,8 +450,10 @@ pièce partagée est donc pondérée par sa quantité totale, jamais par une seu
 Une comparaison est refusée avec `422 INCOMPARABLE_SCENARIOS` si l'un des calculs est incomplet :
 une contribution sans prix ne doit jamais être assimilée à zéro.
 
-`co2_delta_kg` vaut `null` tant que le calcul ne porte pas les projections carbone de NLPF-47/48.
-Le champ est déjà stable et devient numérique dès que les deux calculs portent `total_co2`.
+`co2_delta_kg` est `B - A` en kg CO2e, sur la même portée que `cost_delta`, surcharges de chemin
+comprises. Il vaut `null` si l'un des deux calculs n'a pas de CO2 complet : enregistré avant que le
+moteur ne porte le CO2 (`total_co2` alors `NULL`), ou `parts_without_co2` non vide (§4.1). Un écart
+entre deux sommes partielles mesurerait la pièce manquante, pas le choix de sourcing.
 
 ### 3.9 `POST /scenarios/{id}/recommend-sourcing` — recommandation contrainte
 
@@ -532,7 +545,7 @@ réel avec l'import de snapshots (lot 3).
   "bom_version": "bom-multipla-2026-09-22",
   "price_snapshot": { "id": "snp-19a…", "taken_at": "2026-09-21T06:00:00Z",
     "age_seconds": 97200, "status": "STALE", "is_fallback": true },
-  "rules_version": "rules-1", "engine_version": "engine-0.1.0",
+  "rules_version": "rules-1", "engine_version": "engine-0.2.0",
   "computed_at": "2026-09-22T09:03:44Z",
   "input_digest": "sha256:7c1e…",
   "display_currency": "EUR",
@@ -549,6 +562,8 @@ réel avec l'import de snapshots (lot 3).
       "first_path": "VEH-MULTIPLA-16V/GMP-ASSY/ENG-BLOCK-ASSY/ENG-BLOCK-RAW" }
   ],
   "top_co2_contributors": [ … ],
+  "parts_without_price": [],
+  "parts_without_co2": [],
   "issue_counts": { "missing_price": 0, "quarantined": 2, "fallback": 37 }
 }
 ```
@@ -556,6 +571,12 @@ réel avec l'import de snapshots (lot 3).
 - La somme des `systems[].cost` est **exactement** `total_cost` (ADR-0011). Les pourcentages, eux,
   sont arrondis à une décimale et peuvent ne pas totaliser 100.
 - `first_path` permet au front de déplier jusqu'au contributeur en un clic.
+- `parts_without_co2` nomme les pièces dont le CO2 propre est **inconnu**, jamais compté zéro : sans
+  prix, sans masse, ou à **prix forcé** — un prix forcé ne retient aucune usine, donc aucun
+  transport. Le coût peut alors être complet et le CO2 non : `total_co2` est une somme partielle tant
+  que la liste n'est pas vide, et le statut du calcul, qui ne parle que des prix, ne le dit pas.
+- `engine_version` entre dans `input_digest` : un calcul produit par une version antérieure du
+  moteur apparaît obsolète.
 - `issue_counts` compte les **pièces** selon leur `price_status` (§2.3) : les trois catégories sont
   disjointes. Ce n'est pas le `counts` d'un snapshot (§5.1), où `fallback` inclut les valeurs mises
   en quarantaine puis remplacées.
@@ -674,15 +695,34 @@ grave au moins grave (`MISSING_PRICE`, `QUARANTINED`, `FALLBACK`), puis par réf
 
 ## 5. Prix
 
-### 5.1 `POST /price-snapshots` — prendre un snapshot
+### 5.1 `POST /price-snapshots` — figer les prix actuels de l'API
 
 ```json
-{ "id": "snp-20b…", "taken_at": "2026-09-22T09:00:00Z", "status": "FRESH",
-  "counts": { "from_api": 210, "fallback": 3, "quarantined": 2, "missing": 0 } }
+{ "bom_version": "bom-valhalla-hybride-2026-10-05", "currency": "EUR" }
 ```
 
-### 5.2 `GET /price-snapshots` — retrouver les snapshots disponibles
+Interroge l'API pour toutes les pièces achetées de la nomenclature, avec quarantaine et repli
+comme la ligne de commande, et enregistre le snapshot (`201`, même forme qu'un élément de §5.2).
+Si l'API ne répond pas, **rien n'est créé** : `503 PRICE_SOURCE_UNAVAILABLE`, et le dernier
+snapshot reste en vigueur (ADR-0003). Un snapshot **appartient à sa nomenclature** (ADR-0015) :
+un calcul sans `price_snapshot_id` prend le dernier snapshot de la nomenclature de son scénario.
 
+### 5.1 bis `POST /calculations/live` — calculer aux prix actuels, sans rien enregistrer
+
+```json
+{ "scenario_id": "scn-…" }
+```
+
+Même réponse que `POST /calculations` (§4.1), avec `price_mode: "LIVE"` et `prices_taken_at`.
+**Rien n'est enregistré** : ni calcul, ni snapshot de prix. Le calcul reste lisible quelques
+instants par `GET /calculations/{id}` et l'arbre, le temps de l'afficher ; il n'est jamais « le
+dernier calcul » du scénario. API muette : `503 PRICE_SOURCE_UNAVAILABLE`, jamais le prix d'un
+ancien snapshot présenté comme actuel. Les calculs enregistrés portent `price_mode: "SNAPSHOT"`.
+
+### 5.2 `GET /price-snapshots?bom_version=…` — retrouver les snapshots disponibles
+
+`bom_version` (facultatif) limite la liste à cette nomenclature et aux snapshots pris avant la
+migration 0006, qui ne disaient pas pour quelle nomenclature ils l'étaient (`bom_version: null`).
 Les snapshots sont triés du plus récent au plus ancien afin que le premier identifiant puisse être
 repris dans un calcul ou une comparaison :
 
@@ -694,6 +734,7 @@ repris dans un calcul ou une comparaison :
       "taken_at": "2026-09-22T09:00:00+00:00",
       "source": "mock-price-api",
       "currency": "EUR",
+      "bom_version": "bom-multipla-2026-09-22",
       "status": "FRESH",
       "age_seconds": 120,
       "counts": { "prices": 302, "fallback": 0, "quarantined": 0, "missing": 0 }
@@ -736,17 +777,43 @@ Ce n'est pas notre API : c'est le service qu'on interroge, et qu'on a écrit pou
 tomber à la demande.
 
 ```
-GET /prices?refs=FIX-M6-16,ELE-ECU-MAIN&currency=EUR
-X-Mock-Failure: none | timeout | outlier | missing | partial
+GET /prices?refs=FIX-M6-16,VALH-BOM-0006-PEAU-EXT&currency=EUR
+X-Mock-Failure: none | timeout | outlier | missing | garbage
 ```
 
 ```json
-{ "as_of": "2026-09-22T09:00:00Z",
-  "prices": [ { "ref": "FIX-M6-16", "currency": "EUR", "price": 42.0, "per": 1000 } ] }
+{ "as_of": "2026-03-14T07:12:00+00:00",
+  "prices": [ { "ref": "FIX-M6-16", "currency": "EUR", "price": "4.064785", "per": "100" } ] }
 ```
 
 Le déclenchement de panne est un **en-tête**, pas un hasard : la démonstration doit être
 reproductible.
+
+Les prix **varient** : une année de neuf indices synthétiques défile en 40 minutes
+(`--year-minutes`, 0 fige les prix à leur référence). `as_of` est la **date simulée** de la
+cotation ; toutes les pièces d'un appel sont cotées au même instant. Le simulateur sert les
+catalogues des quatre nomenclatures.
+
+```
+GET /history?ref=VALH-BOM-0006-PEAU-EXT&currency=EUR
+```
+
+L'année jour par jour (`points`, 365), l'instant présent (`now`), la référence, le profil
+(`profile`, `drivers`) et la devise du fournisseur (`origin_currency`). Pièce non cotée : `404`.
+
+### 5.5 `GET /bom/{bom_version}/parts/{part_ref}/price-history?currency=EUR`
+
+La courbe de §5.4 ramenée **à l'unité** (`per` divisé une fois, côté serveur), et les prix figés
+de la pièce dans les snapshots de sa nomenclature (`snapshots`, du plus récent au plus ancien).
+Les deux ne partagent pas d'axe : la courbe est datée en temps simulé, les snapshots en temps
+réel. Ensemble fabriqué : `409 PART_HAS_NO_PRICE` ; pièce inconnue : `404 PART_NOT_FOUND`.
+
+### 5.6 `GET /bom/{bom_version}/suppliers` et `…/suppliers/{supplier_id}/parts`
+
+Les fournisseurs qui vendent au moins une pièce de la nomenclature (nombre de pièces, nombre où
+ils sont retenus par défaut, usines), puis les pièces d'un fournisseur : multiplicateur, retenu
+ou non, et prix de référence du dernier snapshot de la nomenclature (`null` s'il n'y figure pas).
+Rien n'est recalculé : multiplicateur et usine s'appliquent au calcul (ADR-0010).
 
 ---
 
@@ -809,6 +876,5 @@ asynchrone le rendrait observable, et que l'écran doit déjà savoir l'afficher
 - Elle n'expose aucune écriture sur la nomenclature : la BOM vient du seed (périmètre §2.4).
 - Elle ne renvoie jamais le graphe entier en une réponse.
 - Elle ne renvoie aucun montant en nombre flottant.
-- Elle ne calcule pas encore la projection carbone : ce moteur appartient à NLPF-47/48.
 - Elle ne convertit pas une devise à l'exécution ; les taux courants rendraient le calcul
   irreproductible.

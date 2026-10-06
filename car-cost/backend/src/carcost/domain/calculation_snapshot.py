@@ -44,6 +44,7 @@ class FrozenParameter:
     price_override: Decimal | None = None
     price_override_justification: str | None = None
     labour_minutes: Decimal | None = None
+    labour_rate: Decimal | None = None
     purchase_currency: str | None = None
 
 
@@ -63,6 +64,9 @@ class CalculationSnapshot:
     created_at: datetime
     #: Le snapshot dont le scénario figé était reparti, recopié au gel.
     derived_from: str | None = None
+    #: Le SAV était-il compté ? Sans cette copie, le total figé ne
+    #: s'expliquerait plus dès que le scénario vivant bascule le réglage.
+    include_after_sales: bool = False
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "name", snapshot_name(self.name))

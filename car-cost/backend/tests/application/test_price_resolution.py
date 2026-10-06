@@ -216,3 +216,79 @@ class TestMissingPrice:
 
         assert resolved.missing == ("S",)
         assert "S" not in resolved.prices
+
+
+class TestCarbon:
+    """L'intensité de transport (ADR-0010, cadrage.md A10) se résout par la
+    même offre et la même usine que le prix : jamais une seconde résolution de
+    sourcing, qui pourrait diverger de celle qui a servi au prix."""
+
+    def test_the_default_plant_s_intensity_is_resolved_alongside_the_price(
+        self, bom, sourcing, snapshot
+    ):
+        resolved = resolve_unit_prices(bom, sourcing, snapshot, scenario())
+
+        assert resolved.transport_co2_per_kg["S"] == Decimal("0.021000")
+
+    def test_changing_the_plant_changes_the_intensity_too(
+        self, bom, sourcing, snapshot
+    ):
+        """Même levier que pour le prix : changer d'usine change le transport."""
+        resolved = resolve_unit_prices(
+            bom, sourcing, snapshot,
+            scenario(parameter(supplier_id="SUP-IT", plant_id="PLT-TR")),
+        )
+
+        assert resolved.transport_co2_per_kg["S"] == Decimal("0.142000")
+
+    def test_a_forced_price_has_no_known_transport(self, bom, sourcing, snapshot):
+        """Un prix forcé ne retient aucune usine : rien à annoncer, pas zéro."""
+        resolved = resolve_unit_prices(
+            bom, sourcing, snapshot,
+            scenario(parameter(
+                price_override=Decimal("29.990000"),
+                price_override_justification="devis du 2026-09-20",
+            )),
+        )
+
+        assert "S" not in resolved.transport_co2_per_kg
+
+    def test_a_missing_price_has_no_transport_either(self, bom, sourcing):
+        empty = PriceSnapshot(
+            id="snp-vide", taken_at=NOW, currency="EUR", source="mock", prices={}
+        )
+
+        resolved = resolve_unit_prices(bom, sourcing, empty, scenario())
+
+        assert "S" not in resolved.transport_co2_per_kg
+
+    def test_a_path_plant_change_carries_its_own_intensity(
+        self, bom, sourcing, snapshot
+    ):
+        """Une seule occurrence change d'usine : son transport doit suivre,
+        sinon le coût bouge et le CO2 non."""
+        resolved = resolve_unit_prices(
+            bom, sourcing, snapshot,
+            scenario(parameter(
+                scope="path", path="V/S", supplier_id="SUP-IT", plant_id="PLT-TR"
+            )),
+        )
+
+        assert resolved.path_transport_co2_per_kg["V/S"] == Decimal("0.142000")
+        assert resolved.transport_co2_per_kg["S"] == Decimal("0.021000")
+
+    def test_a_forced_price_on_a_path_has_an_explicitly_unknown_transport(
+        self, bom, sourcing, snapshot
+    ):
+        """Absent voudrait dire « même usine que la pièce » : il faut `None`."""
+        resolved = resolve_unit_prices(
+            bom, sourcing, snapshot,
+            scenario(parameter(
+                scope="path", path="V/S",
+                price_override=Decimal("29.990000"),
+                price_override_justification="devis du 2026-09-20",
+            )),
+        )
+
+        assert "V/S" in resolved.path_transport_co2_per_kg
+        assert resolved.path_transport_co2_per_kg["V/S"] is None

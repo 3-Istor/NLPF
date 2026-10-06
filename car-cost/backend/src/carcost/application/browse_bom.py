@@ -42,6 +42,9 @@ class TreeNode:
     #: N endroits ». Les deux diffèrent dès qu'un sous-ensemble est lui-même
     #: monté plusieurs fois.
     occurrence_count: int
+    #: Pièces de rechange (SAV) portées par l'arête qui mène à cette ligne.
+    #: Affichées à côté de la quantité montée, jamais additionnées par l'écran.
+    after_sales_quantity: Decimal = Decimal(0)
 
 
 @dataclass(frozen=True)
@@ -170,6 +173,16 @@ def _matching_refs(bom: Bom, query: str):
 def _node(bom: Bom, part_ref: str, path: str, edge_quantity: Decimal) -> TreeNode:
     part = bom.parts[part_ref]
     children = bom.children_of(part_ref)
+    chain = path.split(PATH_SEPARATOR)
+    parent_ref = chain[-2] if len(chain) > 1 else None
+    after_sales = next(
+        (
+            edge.after_sales_quantity
+            for edge in bom.edges
+            if edge.parent_ref == parent_ref and edge.child_ref == part_ref
+        ),
+        Decimal(0),
+    )
     return TreeNode(
         path=path,
         part_ref=part_ref,
@@ -182,6 +195,7 @@ def _node(bom: Bom, part_ref: str, path: str, edge_quantity: Decimal) -> TreeNod
         child_count=len(children),
         parent_count=len({edge.parent_ref for edge in bom.edges if edge.child_ref == part_ref}),
         occurrence_count=len(_paths_to(bom, part_ref)),
+        after_sales_quantity=after_sales,
     )
 
 

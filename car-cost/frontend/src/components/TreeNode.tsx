@@ -157,6 +157,14 @@ export function TreeNode({
 
         <span className="cell num qty">
           × {quantity(line.edge_quantity)} {line.unit}
+          {hasAfterSales(line.after_sales_quantity) && (
+            <span
+              className="qty__sav"
+              title="Pièces de rechange livrées avec le véhicule, comptées si le SAV est activé"
+            >
+              {" "}+ {quantity(line.after_sales_quantity)} SAV
+            </span>
+          )}
         </span>
         <span className="cell num cell--path-qty">{quantity(line.quantity_on_path)}</span>
 
@@ -232,7 +240,7 @@ export function TreeNode({
         <NodePanel
           line={line}
           version={version}
-          scenarioId={scenario.id}
+          scenario={scenario}
           depth={depth}
           onChanged={onParameterChanged}
         />
@@ -286,4 +294,9 @@ export function TreeNode({
       )}
     </li>
   );
+}
+
+/** Une quantité SAV nulle ou absente ne s'affiche pas : « + 0 SAV » serait du bruit. */
+function hasAfterSales(value: string | undefined): boolean {
+  return value !== undefined && Number.parseFloat(value) !== 0;
 }

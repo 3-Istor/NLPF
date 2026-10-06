@@ -111,7 +111,7 @@ def register_calculation_snapshot_routes(app: FastAPI, repositories) -> None:
     )
     def freeze(payload: NewCalculationSnapshot):
         def calculate(scenario):
-            price_snapshot = _snapshot(repositories, None)
+            price_snapshot = _snapshot(repositories, None, scenario.bom_version)
             return _execute_calculation(
                 repositories, scenario.id, price_snapshot, scenario
             )
@@ -238,6 +238,7 @@ def _full_payload(repositories, snapshot: CalculationSnapshot) -> dict:
         **_summary_payload(snapshot),
         "display_currency": snapshot.display_currency,
         "labour_rate": str(snapshot.labour_rate),
+        "include_after_sales": snapshot.include_after_sales,
         "active_rules": sorted(snapshot.active_rules),
         "parameters": [
             {
@@ -250,6 +251,11 @@ def _full_payload(repositories, snapshot: CalculationSnapshot) -> dict:
                 "labour_minutes": (
                     str(parameter.labour_minutes)
                     if parameter.labour_minutes is not None
+                    else None
+                ),
+                "labour_rate": (
+                    str(parameter.labour_rate)
+                    if parameter.labour_rate is not None
                     else None
                 ),
                 "price_override": (
