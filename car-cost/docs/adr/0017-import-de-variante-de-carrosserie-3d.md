@@ -1,14 +1,15 @@
 # ADR-0017 — Importer une variante de carrosserie depuis un modèle 3D (glTF binaire)
 
 - **Date** : 2026-10-06
-- **Statut** : proposé
+- **Statut** : accepté
 - **Décideurs** : équipe 3istor — cadrage de [recentrage-import-3d.md](../recentrage-import-3d.md)
   §0 et §4, et réponses de l'utilisateur du 2026-10-06 (R1 à R5, reprises ci-dessous)
 - **Écarte** : [ADR-0012](0012-comparaison-et-recommandation-par-piece.md) (comparaison entre deux
-  versions de nomenclature) et [ADR-0015](0015-plusieurs-nomenclatures-et-prix-en-direct.md)
-  (snapshot de prix d'une version). Les deux ADR restent tels quels ; l'écart est dit ici.
-- **S'appuie sur** : ADR-0004 (couches), ADR-0011 (décimal exact), ADR-0013 (version validée
-  immuable)
+  versions de nomenclature), [ADR-0015](0015-plusieurs-nomenclatures-et-prix-en-direct.md)
+  (snapshot de prix d'une version) et [ADR-0013](0013-version-de-nomenclature-validee-immuable.md)
+  (l'import crée une variante validée et gelée, dans sa transaction, alors que jusqu'ici seul le
+  chargeur de données validait une version). Les trois ADR restent tels quels ; l'écart est dit ici.
+- **S'appuie sur** : ADR-0004 (couches), ADR-0011 (décimal exact)
 
 ## Contexte et problème
 
@@ -93,7 +94,7 @@ et autres), que l'import ne touche pas.
 ### 4. Densités (R5)
 
 Colonne `part.density_kg_m3` (migration 0008), `Part.density_kg_m3: Decimal | None` et
-`Part.material_ref` au domaine. Données **synthétiques**, à valider. Aluminium : **2 700**, valeur
+`Part.material_ref` au domaine. Données **synthétiques** (validé par l'utilisateur le 07/10/2026). Aluminium : **2 700**, valeur
 ronde facile à recalculer à la main (les nuances réelles vont d'environ 2 660 à 2 800).
 
 Les **26 matières au kg** du Multipla :
@@ -206,10 +207,12 @@ n'entre en base si une seule faute existe.
 | `ref` d'une pièce achetée (`CAR-DOOR-HINGE`) | `REF_IS_PURCHASED` |
 | `ref` d'un ensemble sans matière (`CAR-BIW-ASSY`) | `NOT_A_MATERIAL_PIECE` |
 | Nœuds de même `ref` à maillages différents | `OCCURRENCES_DIFFER` |
-| **À valider** : `ref` hors `^[A-Z0-9-]+$`, quantité de fixation non décimale ou ≤ 0, maillage à plusieurs matériaux | `INVALID_SPEC` |
+| (**validé par l'utilisateur le 07/10/2026**) `ref` hors `^[A-Z0-9-]+$`, quantité de fixation non décimale ou ≤ 0, maillage à plusieurs matériaux | `INVALID_SPEC` |
 
-Import sur une version **sans modèle** (les Valhalla) : **404 `MODEL_NOT_FOUND`**. L'import part du
-modèle de la version ouverte ; sans lui, rien n'est mesurable contre rien.
+Import sur une version **sans modèle** (les Valhalla) : **404 `MODEL_NOT_FOUND`**. Les Valhalla sont
+hors périmètre (décision D6) et leurs pièces de carrosserie n'ont pas de matière déclarée
+(`material_ref` vide) : aucune pièce ne serait modifiable. Le refus explicite évite une variante
+vide ou trompeuse (validé par l'utilisateur le 07/10/2026).
 
 ### 12. Réponses de l'import
 
@@ -237,8 +240,8 @@ lance cette commande.
 ### 15. Vue 3D
 
 **three.js**, lié à l'arbre ; `<model-viewer>` est écarté. `three` est la seule dépendance
-d'exécution ajoutée, chargée **à la demande** (`import()`). **À valider** : `@types/three` en
-devDependency. Il ne fournit que des types et n'est pas livré au navigateur. Aucune arithmétique
+d'exécution ajoutée, chargée **à la demande** (`import()`). `@types/three` en
+devDependency (validé par l'utilisateur le 07/10/2026). Il ne fournit que des types et n'est pas livré au navigateur. Aucune arithmétique
 métier dans le navigateur : montants et masses voyagent en chaînes, et seul `src/format.ts`
 arrondit.
 
@@ -257,5 +260,5 @@ arrondit.
 - Le chiffre d'une variante change si un nouveau snapshot de l'origine apparaît : c'est voulu, une
   seule source de prix. L'écart est toujours recalculé, jamais lu dans le navigateur.
 - Hors périmètre : les Valhalla, les commentaires par pièce, les procédés et l'outillage.
-- Ce qui reste à valider par l'utilisateur : la table des densités, `INVALID_SPEC`, le format
+- Validés par l'utilisateur le 07/10/2026 : la table des densités, `INVALID_SPEC`, le format
   `extras.carcost`, `@types/three`, le refus d'import sans modèle.
