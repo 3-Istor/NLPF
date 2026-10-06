@@ -329,7 +329,7 @@ class TestCalculationLines:
         assert read.part_full_unit_costs[shared] == Decimal("1")
 
 
-VALHALLA = "bom-valhalla-hybride-2026-10-02"
+VALHALLA = "bom-valhalla-hybride-2026-10-05"
 
 
 def test_a_snapshot_belongs_to_its_bom(snapshots):
@@ -338,7 +338,7 @@ def test_a_snapshot_belongs_to_its_bom(snapshots):
     later = datetime(2099, 1, 1, tzinfo=timezone.utc)
     snapshots.save(PriceSnapshot(
         id="snp-test-valhalla", taken_at=later, currency="EUR", source="test",
-        prices={"VALH-BOM-0006": Decimal("58554.000000")}, bom_version=VALHALLA,
+        prices={"VALH-BOM-0004": Decimal("58554.000000")}, bom_version=VALHALLA,
     ))
 
     assert snapshots.latest(VALHALLA).id == "snp-test-valhalla"
@@ -354,10 +354,10 @@ def test_the_frozen_prices_of_a_part_newest_first(snapshots):
         snapshots.save(PriceSnapshot(
             id=f"snp-test-h{day}", taken_at=datetime(2099, 1, day, tzinfo=timezone.utc),
             currency="EUR", source="test",
-            prices={"VALH-BOM-0006": Decimal(price)}, bom_version=VALHALLA,
+            prices={"VALH-BOM-0004": Decimal(price)}, bom_version=VALHALLA,
         ))
 
-    frozen = snapshots.history_of("VALH-BOM-0006", VALHALLA, "EUR")
+    frozen = snapshots.history_of("VALH-BOM-0004", VALHALLA, "EUR")
 
     assert [item.snapshot_id for item in frozen[:2]] == ["snp-test-h2", "snp-test-h1"]
     assert frozen[0].price == Decimal("110")

@@ -363,6 +363,13 @@ entièrement distinct.
   sont **générés** (synthétiques, déterministes, vérifiés en CI). Sélecteur
   de véhicule dans le bandeau ; un snapshot de prix appartient à sa
   nomenclature. Migration 0006 vérifiée sur une base existante.
+  Comme sur le Multipla, une pièce qui ne diffère que par son emplacement
+  (gauche/droite, avant/arrière, conducteur/passager) est une pièce et une
+  quantité, et les fixations sont regroupées par type et partagées entre
+  ensembles. Un détail **synthétique** porte chaque Valhalla à environ mille
+  pièces sur six niveaux : composants des pièces chères, matières et
+  visserie standard partagées, sous-ensembles par zone. Le coût de
+  référence est conservé au centime.
 - **SAV** : un scénario peut compter les pièces de rechange livrées avec le
   véhicule ; l'arbre affiche « + n SAV » à côté de la quantité montée.
 - **Prix qui varient** : l'API simulée rejoue une année de marché en 40 min.
@@ -384,19 +391,22 @@ entièrement distinct.
       enregistrés), rédigé au statut « proposé », et fermer la PR #6 qu'il
       remplace.
 - [ ] **Relire les fourchettes générées pour la Valhalla**
-      (`tools/valhalla_import/enrich.py`, `suppliers.py`) : masse, carbone,
+      (`tools/valhalla_import/enrich.py`, `suppliers.py`, `detail.py`) :
+      décompositions, prix des matières et des standards, zones, masse, carbone,
       heures d'assemblage et usines sont des ordres de grandeur, à discuter.
       Environ un quart des pièces gardent le profil de prix « défaut ».
       Les prix de motorisation du thermique (×1,34) et de l'électrique
       (×2,86) sont recalés pour tenir leur coût à −5 % / +5 % de l'hybride ;
       l'électrique y gagne des moteurs à ~33 k€ pièce et un pack à ~27 k€,
       à confronter à un ordre de grandeur réel.
+      Fixations : une pièce par type, au prix du fournisseur majoritaire
+      (Würth). Les interfaces que le fichier achetait chez Tier-1 sont
+      valorisées au prix Würth par défaut ; Tier-1 reste une offre, à son
+      prix le plus fréquent (sur l'électrique, les vis HV à 2,34 € y sont
+      comptées à 1,76 €).
 - [ ] **Placer les snapshots sur la courbe de prix.** Ils sont datés en temps
       réel, la courbe en temps simulé : ils sont listés à côté. Il faudrait
       enregistrer la date simulée (`as_of` de l'API) avec chaque snapshot.
-- [ ] **Les Valhalla ne partagent aucune pièce** : le fichier source est un
-      arbre (catégories → lignes). Les fixations du même type, répétées par
-      interface, pourraient devenir une pièce partagée.
 - [ ] **Lot 2.3 — décomposition de l'écart.** Deux snapshots de calcul pris sur
       des snapshots de prix différents ne se comparent pas aujourd'hui (422) ;
       les comparer, c'est décomposer l'écart entre prix et hypothèses.

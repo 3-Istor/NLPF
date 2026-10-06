@@ -51,9 +51,13 @@ Au démarrage, le backend applique les migrations manquantes puis, **pour chaque
 bloque le démarrage avec un diagnostic, sans rien écraser.
 
 Les quatre nomenclatures n'ont pas la même forme : le Multipla (474 pièces, 689 arêtes) est un
-**DAG** à pièces partagées ; les trois Valhalla importées (535 à 659 pièces) sont des **arbres**
-(une arête de moins que de pièces). Le moteur ne fait aucune différence : un arbre est un DAG
-particulier.
+**DAG** à pièces partagées ; les trois Valhalla importées (≈ 970 à 1 110 pièces, 6 niveaux) le
+sont aussi. Le fichier source fait une ligne par emplacement et par interface de fixation ; l'import
+en fait une pièce et une quantité (« Ressort » × 4) et partage chaque type de vis entre ensembles.
+Il ajoute ensuite un détail **synthétique** (`tools/valhalla_import/detail.py`) : les pièces chères
+deviennent des ensembles (composants, matières en kg, visserie standard partagées), et les pièces
+d'un même emplacement un sous-ensemble (coin de suspension × 4, siège × 2…). Le prix d'une pièce
+décomposée est réparti entre ses composants et sa main-d'œuvre : le coût de référence est inchangé.
 
 ---
 

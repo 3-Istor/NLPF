@@ -120,8 +120,8 @@ class TestCatalogs:
     def test_the_four_boms_are_served_together(self):
         catalog = mock.PriceCatalog(mock.default_catalogs(ROOT / "seeds"))
         assert "FIX-M6-16" in catalog.prices
-        assert "VALH-BOM-0006" in catalog.prices
-        assert "VALE-BOM-0006" in catalog.prices
+        assert "VALH-BOM-0004" in catalog.prices
+        assert "VALE-BOM-0006-PEAU-EXT" in catalog.prices
 
     def test_two_catalogs_quoting_the_same_part_are_refused(self, tmp_path):
         catalog = ROOT / "seeds" / "price_catalog.json"
@@ -152,7 +152,7 @@ def _get(url: str) -> tuple[int, dict]:
 class TestHistoryRoute:
     def test_serves_the_year_of_a_part(self, served, clock):
         clock.now += 12 * DAY
-        status, body = _get(f"{served}/history?ref=VALH-BOM-0006&currency=EUR")
+        status, body = _get(f"{served}/history?ref=VALH-BOM-0006-PEAU-EXT&currency=EUR")
         assert status == 200
         assert body["is_synthetic"] is True
         assert len(body["points"]) == 365
@@ -166,7 +166,7 @@ class TestHistoryRoute:
 
     def test_prices_carry_the_simulated_date(self, served, clock):
         clock.now += 31 * DAY
-        status, body = _get(f"{served}/prices?refs=VALH-BOM-0006&currency=EUR")
+        status, body = _get(f"{served}/prices?refs=VALH-BOM-0006-PEAU-EXT&currency=EUR")
         assert status == 200
         assert body["as_of"].startswith("2026-02-01")
 
