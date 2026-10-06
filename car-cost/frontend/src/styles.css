@@ -317,7 +317,7 @@ button { font: inherit; }
 /* Arbre-tableau : une grille de colonnes fixes, partagée par l'en-tête et les lignes. */
 .row-grid {
   display: grid;
-  grid-template-columns: minmax(220px, 250px) minmax(84px, 1fr) 84px 84px 104px 112px 112px minmax(120px, 1fr);
+  grid-template-columns: minmax(220px, 300px) minmax(84px, 1fr) 84px 84px 104px 112px 112px minmax(120px, 1fr);
   column-gap: 8px;
   align-items: center;
 }
