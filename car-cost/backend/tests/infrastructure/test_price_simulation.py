@@ -115,6 +115,15 @@ class TestMarket:
         assert history["now"]["day"] == "42.000"
         assert history["now"]["price"] == history["points"][42]["price"]
 
+    def test_two_parts_with_the_same_drivers_move_differently(self, market):
+        """La part propre : même profil, courbes distinctes, départ et bouclage intacts."""
+        one = [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]]
+        other = [p["price"] for p in market.history(ENTRY, "EUR", "REF-B")["points"]]
+        assert one[0] == other[0] == "100.000000"
+        assert one != other
+        assert one == [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]]
+        assert abs(simulation.wobble("REF-A", Decimal(365))) < Decimal("1e-9")
+
 
 class TestCatalogs:
     def test_the_four_boms_are_served_together(self):

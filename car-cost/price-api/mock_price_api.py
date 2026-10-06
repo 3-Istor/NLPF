@@ -70,7 +70,7 @@ class PriceCatalog:
         return {
             "ref": ref,
             "currency": currency,
-            "price": str(self.market.price(entry, currency, position)),
+            "price": str(self.market.price(entry, currency, position, ref)),
             "per": entry["price_per"],
             "unit": entry["unit"],
         }
@@ -88,7 +88,7 @@ class PriceCatalog:
             "drivers": entry.get("drivers") or {},
             "origin_currency": entry.get("origin_currency"),
             "reference": entry["prices"][currency]["reference"],
-            **self.market.history(entry, currency),
+            **self.market.history(entry, currency, ref),
         }
 
 
