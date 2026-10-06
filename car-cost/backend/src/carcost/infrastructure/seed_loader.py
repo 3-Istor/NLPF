@@ -14,6 +14,7 @@ module existe (ADR-0004).
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from decimal import Decimal
 from pathlib import Path
@@ -62,6 +63,7 @@ def build_load_script(
     parts: Sequence[Mapping],
     edges: Sequence[Mapping],
     suppliers: Mapping,
+    model: bytes | None = None,
 ) -> str:
     """Valide d'abord, émet ensuite. Un fichier refusé ne produit aucun SQL."""
     # Un fichier antérieur au SAV n'a pas la colonne : aucune pièce de rechange.
@@ -86,6 +88,9 @@ def build_load_script(
     supplier_sql = _supplier_blocks(version, suppliers)
     if supplier_sql:
         blocks += ["", supplier_sql]
+
+    if model is not None:
+        blocks += ["", _insert_model(version, model)]
 
     blocks += [
         "",
@@ -273,6 +278,15 @@ def _insert_bom_version(
     )
 
 
+def _insert_model(version: str, model: bytes) -> str:
+    """La maquette générée de la version (ADR-0017 §5), à l'octet près."""
+    return (
+        "INSERT INTO bom_model (bom_version_id, glb, sha256, source) VALUES ("
+        f"{_quote(version)}, decode('{model.hex()}', 'hex'), "
+        f"'{hashlib.sha256(model).hexdigest()}', 'generated');"
+    )
+
+
 def _labour_rate(metadata: Mapping) -> str:
     rate = metadata.get("labour_rate_eur_per_hour")
     if rate is None:
@@ -380,11 +394,17 @@ def read_seeds(seeds_dir: Path) -> dict:
         )
     bom = json.loads(candidates[0].read_text(encoding="utf-8"))
     suppliers = json.loads((seeds_dir / "suppliers.json").read_text(encoding="utf-8"))
+    models = sorted(seeds_dir.glob("body_*.glb"))
+    if len(models) > 1:
+        raise SeedRejected(
+            f"{seeds_dir} : au plus un fichier body_*.glb attendu, {len(models)} trouvés"
+        )
     return {
         "metadata": bom["metadata"],
         "parts": list(csv.DictReader(_lines(seeds_dir / "parts.csv"))),
         "edges": list(csv.DictReader(_lines(seeds_dir / "edges.csv"))),
         "suppliers": suppliers,
+        "model": models[0].read_bytes() if models else None,
     }
 
 

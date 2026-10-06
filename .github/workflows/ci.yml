@@ -105,6 +105,11 @@ jobs:
       - name: Vérifier le déterminisme de l'import Valhalla
         run: python -m tools.valhalla_import --check
 
+      # La maquette 3D du Multipla est générée elle aussi : chaque pavé y pèse
+      # exactement la quantité de matière de la nomenclature (ADR-0017).
+      - name: Vérifier le déterminisme de la maquette 3D
+        run: python -m tools.body_model --check
+
       - name: Charger la nomenclature
         run: |
           python -m carcost.infrastructure seeds \
