@@ -698,7 +698,7 @@ grave au moins grave (`MISSING_PRICE`, `QUARANTINED`, `FALLBACK`), puis par réf
 ### 5.1 `POST /price-snapshots` — figer les prix actuels de l'API
 
 ```json
-{ "bom_version": "bom-valhalla-hybride-2026-10-02", "currency": "EUR" }
+{ "bom_version": "bom-valhalla-hybride-2026-10-05", "currency": "EUR" }
 ```
 
 Interroge l'API pour toutes les pièces achetées de la nomenclature, avec quarantaine et repli
@@ -777,7 +777,7 @@ Ce n'est pas notre API : c'est le service qu'on interroge, et qu'on a écrit pou
 tomber à la demande.
 
 ```
-GET /prices?refs=FIX-M6-16,VALH-BOM-0006&currency=EUR
+GET /prices?refs=FIX-M6-16,VALH-BOM-0006-PEAU-EXT&currency=EUR
 X-Mock-Failure: none | timeout | outlier | missing | garbage
 ```
 
@@ -795,7 +795,7 @@ cotation ; toutes les pièces d'un appel sont cotées au même instant. Le simul
 catalogues des quatre nomenclatures.
 
 ```
-GET /history?ref=VALH-BOM-0006&currency=EUR
+GET /history?ref=VALH-BOM-0006-PEAU-EXT&currency=EUR
 ```
 
 L'année jour par jour (`points`, 365), l'instant présent (`now`), la référence, le profil
