@@ -13,10 +13,11 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-import uuid
 from datetime import datetime, timezone
 
-from ..application.take_snapshot import NoPriceAvailable, TookFallback, snapshot_for_bom
+from ..application.take_snapshot import (
+    NoPriceAvailable, TookFallback, new_snapshot_id, snapshot_for_bom,
+)
 from .http_price_source import HttpPriceSource
 from .postgres.bom import PostgresBomRepository
 from .postgres.snapshots import PostgresPriceSnapshotRepository
@@ -49,6 +50,7 @@ def main(argv: list[str] | None = None) -> int:
         failure_mode=arguments.fail,
     )
 
+    now = datetime.now(timezone.utc)
     try:
         outcome = snapshot_for_bom(
             source,
@@ -56,8 +58,8 @@ def main(argv: list[str] | None = None) -> int:
             bom_version=arguments.bom_version,
             currency=arguments.currency,
             previous=previous,
-            now=datetime.now(timezone.utc),
-            snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
+            now=now,
+            snapshot_id=new_snapshot_id(now),
         )
     except NoPriceAvailable as refusal:
         print(f"refus : {refusal}", file=sys.stderr)

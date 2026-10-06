@@ -172,7 +172,7 @@ class NewCalculation(BaseModel):
     price_snapshot_id: str | None = Field(
         default=None,
         description="Identifiant `snp-…` retourné par la liste des snapshots. `null` utilise le plus récent.",
-        examples=["snp-7a9947ddac59"],
+        examples=["snp-2026-10-06-1923-7a9947"],
     )
 
 
@@ -188,7 +188,7 @@ class CompareScenarios(BaseModel):
     price_snapshot_id: str | None = Field(
         default=None,
         description="Snapshot commun aux deux calculs. `null` sélectionne automatiquement le plus récent.",
-        examples=["snp-7a9947ddac59"],
+        examples=["snp-2026-10-06-1923-7a9947"],
     )
 
 
@@ -204,7 +204,7 @@ class SourcingQuery(BaseModel):
     price_snapshot_id: str | None = Field(
         default=None,
         description="Snapshot utilisé pour évaluer les options. `null` utilise le plus récent.",
-        examples=["snp-7a9947ddac59"],
+        examples=["snp-2026-10-06-1923-7a9947"],
     )
 
 
