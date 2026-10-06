@@ -37,7 +37,7 @@ def read_glb(data: bytes) -> BodyModel:
     except _Invalid as error:
         raise ModelFileRejected("INVALID_MODEL_FILE", str(error)) from None
     except (KeyError, IndexError, TypeError, ValueError, AttributeError,
-            ArithmeticError, struct.error, RecursionError) as error:
+            ArithmeticError, struct.error) as error:
         raise ModelFileRejected(
             "INVALID_MODEL_FILE", f"glTF illisible : {type(error).__name__} {error}"
         ) from None
@@ -150,9 +150,12 @@ def _read_accessor(document, binary, accessor, fmt, size):
 
 
 def _world(nodes, parents, index):
-    matrix = _local(nodes[index])
+    matrix, seen = _local(nodes[index]), {index}
     while index in parents:
         index = parents[index]
+        if index in seen:
+            raise _Invalid("graphe de nœuds cyclique")
+        seen.add(index)
         matrix = _multiply(_local(nodes[index]), matrix)
     return matrix
 

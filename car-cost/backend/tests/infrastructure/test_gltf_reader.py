@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import struct
+import threading
 from decimal import Decimal
 from fractions import Fraction
 
@@ -141,3 +142,26 @@ def test_garbage_is_refused(data):
         read_glb(data)
 
     assert refused.value.code == "INVALID_MODEL_FILE"
+
+
+@pytest.mark.parametrize(
+    "nodes",
+    [[{"mesh": 0, "children": [0]}], [{"mesh": 0, "children": [1]}, {"children": [0]}]],
+    ids=["self-child", "two-node-cycle"],
+)
+def test_a_node_cycle_is_refused(nodes):
+    # Borné : un lecteur qui boucle sur le cycle fait échouer le test au lieu de le bloquer.
+    outcome = []
+
+    def read():
+        try:
+            read_glb(model(*BOX, nodes=nodes))
+        except ModelFileRejected as refused:
+            outcome.append(refused.code)
+
+    worker = threading.Thread(target=read, daemon=True)
+    worker.start()
+    worker.join(timeout=5)
+
+    assert not worker.is_alive(), "le lecteur ne termine pas sur un graphe cyclique"
+    assert outcome == ["INVALID_MODEL_FILE"]
