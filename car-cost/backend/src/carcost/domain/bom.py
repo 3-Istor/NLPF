@@ -29,6 +29,10 @@ class Part:
     carbon_factor: Decimal
     labour_minutes: Decimal | None = None
     mass_kg: Decimal | None = None
+    #: Matière de la pièce (arête pièce → matière), si elle en a une.
+    material_ref: str | None = None
+    #: Densité en kg/m³, pour une matière achetée au kilogramme seulement.
+    density_kg_m3: Decimal | None = None
 
     @property
     def is_purchased(self) -> bool:

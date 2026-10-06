@@ -40,6 +40,7 @@ PART_COLUMNS = (
     "price_per",
     "material_ref",
     "mass_kg",
+    "density_kg_m3",
     "carbon_factor_kg_co2e_per_unit",
     "expected_cumulative_quantity",
 )
@@ -117,6 +118,10 @@ def _to_domain(
                 Decimal(row["labour_minutes"]) if row["labour_minutes"] else None
             ),
             mass_kg=Decimal(row["mass_kg"]) if row["mass_kg"] else None,
+            material_ref=row.get("material_ref") or None,
+            density_kg_m3=(
+                Decimal(row["density_kg_m3"]) if row.get("density_kg_m3") else None
+            ),
         )
         for row in parts
     }
@@ -236,7 +241,16 @@ def _copy_field(value) -> str:
 
 def _copy_block(table: str, columns: Sequence[str], rows: Sequence[Mapping]) -> str:
     lines = [f"COPY {table} ({', '.join(columns)}) FROM STDIN;"]
-    lines += ["\t".join(_copy_field(row[column]) for column in columns) for row in rows]
+    # `get` : un jeu qui ne déclare pas de densités (les Valhalla) n'a pas la
+    # colonne ; elle se charge alors à NULL. Les autres colonnes restent exigées.
+    optional = {"density_kg_m3"}
+    lines += [
+        "\t".join(
+            _copy_field(row.get(column) if column in optional else row[column])
+            for column in columns
+        )
+        for row in rows
+    ]
     lines.append("\\.")
     return "\n".join(lines)
 
@@ -372,6 +386,20 @@ def read_seeds(seeds_dir: Path) -> dict:
         "edges": list(csv.DictReader(_lines(seeds_dir / "edges.csv"))),
         "suppliers": suppliers,
     }
+
+
+def seed_bom(seeds_dir: Path) -> Bom:
+    """Le graphe d'un jeu de données, tel que le domaine le lit.
+
+    Même construction que le chargement en base : les tests et les cas d'usage
+    qui veulent la vraie nomenclature n'ont pas besoin de Postgres.
+    """
+    seeds = read_seeds(seeds_dir)
+    edges = [
+        {**row, "after_sales_quantity": row.get("after_sales_quantity") or "0"}
+        for row in seeds["edges"]
+    ]
+    return _to_domain(seeds["metadata"], seeds["parts"], edges)
 
 
 def _lines(path: Path) -> list[str]:

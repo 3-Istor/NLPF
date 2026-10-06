@@ -104,6 +104,8 @@ class BomVersionSummary:
     is_synthetic: bool
     #: Taux horaire proposé à la création d'un scénario sur cette version.
     reference_labour_rate: Decimal | None = None
+    #: Version dont celle-ci est la variante (import d'un modèle 3D, ADR-0017).
+    parent_version_id: str | None = None
 
 
 class BomRepository(Protocol):

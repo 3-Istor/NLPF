@@ -29,7 +29,7 @@ VERSION_QUERY = """
 
 PARTS_QUERY = """
     SELECT part_ref, label, system, unit, valuation_mode, labour_minutes,
-           mass_kg, carbon_factor_kg_co2e_per_unit
+           mass_kg, carbon_factor_kg_co2e_per_unit, material_ref, density_kg_m3
     FROM part
     WHERE bom_version_id = %s
     ORDER BY part_ref
@@ -45,7 +45,7 @@ EDGES_QUERY = """
 
 VERSIONS_QUERY = """
     SELECT id, label, root_part_ref, part_count, edge_count, validated_at,
-           is_synthetic, reference_labour_rate
+           is_synthetic, reference_labour_rate, parent_version_id
     FROM bom_version
     ORDER BY created_at DESC, id
 """
@@ -73,8 +73,13 @@ class PostgresBomRepository(PostgresRepository):
                     carbon_factor=carbon,
                     labour_minutes=labour,
                     mass_kg=mass,
+                    material_ref=material,
+                    density_kg_m3=density,
                 )
-                for ref, label, system, unit, mode, labour, mass, carbon
+                for (
+                    ref, label, system, unit, mode, labour, mass, carbon,
+                    material, density,
+                )
                 in cursor.fetchall()
             }
 
