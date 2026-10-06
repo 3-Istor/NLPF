@@ -71,9 +71,6 @@ class Bom:
     def children_of(self, ref: str) -> tuple[Edge, ...]:
         return tuple(e for e in self.edges if e.parent_ref == ref)
 
-    def parents_of(self, ref: str) -> tuple[str, ...]:
-        return tuple(e.parent_ref for e in self.edges if e.child_ref == ref)
-
 
 class BomError(Exception):
     """Le graphe décrit viole une règle de structure : il ne doit pas exister."""

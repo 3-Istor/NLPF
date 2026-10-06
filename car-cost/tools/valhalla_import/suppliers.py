@@ -136,13 +136,6 @@ POOL_BY_PROFILE = {
 }
 
 
-def supplier_by_id(supplier_id: str) -> dict:
-    for supplier in ALL_SUPPLIERS:
-        if supplier["id"] == supplier_id:
-            return supplier
-    raise KeyError(supplier_id)
-
-
 def offers_for(ref: str, source_name: str, pool_key: str) -> list[dict]:
     """Le fournisseur du fichier source, retenu par défaut, et 1 ou 2 alternatifs.
 
