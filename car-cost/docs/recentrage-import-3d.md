@@ -55,12 +55,12 @@ y changer.
 |---|---|---|
 | D1 | Vue 3D | **three.js, liée à l'arbre** : un clic sur une pièce sélectionne sa ligne, et inversement ; sur une variante, les pièces modifiées sont colorées. `<model-viewer>` est écarté, car il ne permet pas de lien avec le métier |
 | D2 | Masse | **Calculée** : volume du **solide fermé** × densité de la matière |
-| D3 | Densités | **Valeurs physiques usuelles**, ajoutées au jeu de données, marquées synthétiques, à relire |
+| D3 | Densités | **Valeurs physiques usuelles**, ajoutées au jeu de données, marquées synthétiques. Aluminium : **2 700 kg/m³**, une valeur ronde (§4.5) |
 | D4 | Modèles de départ | **Maquettes générées par script**, déterministes, à masse exacte |
 | D5 | Ce que fait un import | Crée une **variante** du véhicule ouvert. Les pièces existantes du modèle sont remises à jour, les nouvelles ajoutées sous `CAR-ASSY`, les absentes restent inchangées |
 | D6 | Périmètre | **Multipla seul** pour la réactivité au prix ; les Valhalla plus tard (§5) |
 | D7 | Main-d'œuvre et CO₂ | **0 min** sur une pièce nouvelle ; **CO₂ masqué** sur une variante importée |
-| D8 | Arrondi de la masse | **Pas de nouvelle règle** : l'échelle 10⁻⁶ de l'ADR-0011 s'applique. Le générateur garantit que sa maquette retombe exactement sur la masse de la nomenclature (§4.4) |
+| D8 | Arrondi de la masse | **Validé : pas de nouvelle règle.** L'échelle 10⁻⁶ de l'ADR-0011 s'applique à la masse mesurée. Le générateur garantit que sa maquette retombe exactement sur la masse de la nomenclature (§4.4) |
 | D9 | Discussion | Devant l'écran, rien n'est enregistré. Commentaires par pièce : plus tard |
 | D10 | Nettoyage | Code mort au sens strict seulement |
 | D11 | Personas | **Ingénieur carrosserie** (importe), **ingénieur coût**, achats et projet (lisent). On ne parle plus de « designer » |
@@ -361,13 +361,19 @@ que `Part.material_ref`, déjà présent en base mais non lu.
 |---|---|
 | `MAT-STEEL-SHEET` | 7 850 |
 | `MAT-STAINLESS-SHEET` | 7 700 |
-| `MAT-ALU-SHEET` | 2 700 (5754 : 2 670, à trancher) |
+| `MAT-ALU-SHEET` | 2 700 |
 | `MAT-ABS-GRANULE` | 1 050 |
 | `MAT-PP-GRANULE` | 900 |
 | `MAT-PC-GRANULE` | 1 200 |
 | `MAT-GLASS-FLOAT` | 2 500 |
 | `MAT-EPDM-RUBBER` | 1 200 |
 | autres matières au kg | à compléter, même règle |
+
+**Aluminium : 2 700 kg/m³ (décision du 06/10).** C'est la valeur usuelle des tables. La densité
+réelle varie d'une nuance à l'autre, d'environ 2 660 à 2 800 kg/m³ ; la tôle 5754 est autour de
+2 670. On retient 2 700, une valeur ronde, facile à recalculer à la main en soutenance.
+**Comme toutes les densités de cette table, c'est une donnée synthétique** : elle n'est pas
+mesurée et ne vient d'aucun constructeur.
 
 ### 4.6 Ce que fait un import
 
@@ -579,7 +585,8 @@ fonctionne comme aujourd'hui.
 
 ### Pour la suite
 
-1. Relire ce document, en particulier §0 (décisions), §4.5 (densités) et §4.8 (démonstration).
+1. Relire ce document, en particulier §0 (décisions) et §4.8 (démonstration). Densité de
+   l'aluminium et arrondi : tranchés le 06/10 (D3, D8).
 2. Lancer `/deliver` **A** : le code mort, sur une branche.
 3. Lancer `/deliver` **B** en commençant par **B.0** (ADR-0017). Ordre : B.1 → B.2 → B.3, puis
    B.4 → B.5 → B.6 → B.7 → B.8. B.2 et B.3 peuvent avancer en parallèle de B.1.
