@@ -1,7 +1,7 @@
 # ADR-0017 — Importer une variante de carrosserie depuis un modèle 3D (glTF binaire)
 
 - **Date** : 2026-10-06
-- **Statut** : accepté
+- **Statut** : accepté, amendé le 2026-10-07
 - **Décideurs** : équipe 3istor — cadrage de [recentrage-import-3d.md](../recentrage-import-3d.md)
   §0 et §4, et réponses de l'utilisateur du 2026-10-06 (R1 à R5, reprises ci-dessous)
 - **Écarte** : [ADR-0012](0012-comparaison-et-recommandation-par-piece.md) (comparaison entre deux
@@ -65,7 +65,7 @@ pour le web, faute de lecteur JT libre. Le `.glb` se lit en bibliothèque standa
 - Un nœud sans `extras.carcost` est du **décor** : ignoré.
 - Plusieurs nœuds de même `ref` sont les **emplacements de montage** d'une même pièce. Ils
   partagent le **même maillage** (sinon `OCCURRENCES_DIFFER`). La masse est celle d'**une** pièce ;
-  le nombre de nœuds est la quantité.
+  le nombre de nœuds est la quantité. (amendé le 2026-10-07, voir « Amendement du 2026-10-07 »)
 
 ### 3. Masse mesurée
 
@@ -138,7 +138,7 @@ maquette compte **26 pièces, 51 objets** (une pièce montée deux fois donne de
 maillage) et du **décor** (pare-brise, rétroviseurs, optiques : sans `extras.carcost`). Chaque
 pièce y est un **pavé** dont la masse mesurée vaut **exactement** la quantité de matière de la
 nomenclature (R1). Le fichier `seeds/body_multipla.glb` est chargé dans `bom_model` avec le jeu de
-données. Les Valhalla n'en ont pas.
+données. Les Valhalla n'en ont pas. (amendé le 2026-10-07, voir « Amendement du 2026-10-07 »)
 
 ### 6. Variante gelée et `parent_version_id`
 
@@ -206,7 +206,7 @@ n'entre en base si une seule faute existe.
 | Fixation fabriquée | `NOT_PURCHASED` |
 | `ref` d'une pièce achetée (`CAR-DOOR-HINGE`) | `REF_IS_PURCHASED` |
 | `ref` d'un ensemble sans matière (`CAR-BIW-ASSY`) | `NOT_A_MATERIAL_PIECE` |
-| Nœuds de même `ref` à maillages différents | `OCCURRENCES_DIFFER` |
+| Nœuds de même `ref` à matière, masse mesurée ou fixations différentes (amendé le 2026-10-07, voir « Amendement du 2026-10-07 ») | `OCCURRENCES_DIFFER` |
 | (**validé par l'utilisateur le 07/10/2026**) `ref` hors `^[A-Z0-9-]+$`, quantité de fixation non décimale ou ≤ 0, maillage à plusieurs matériaux | `INVALID_SPEC` |
 
 Import sur une version **sans modèle** (les Valhalla) : **404 `MODEL_NOT_FOUND`**. Les Valhalla sont
@@ -262,3 +262,73 @@ arrondit.
 - Hors périmètre : les Valhalla, les commentaires par pièce, les procédés et l'outillage.
 - Validés par l'utilisateur le 07/10/2026 : la table des densités, `INVALID_SPEC`, le format
   `extras.carcost`, `@types/three`, le refus d'import sans modèle.
+
+## Amendement du 2026-10-07 : emplacements d'une même pièce
+
+Cette section amende les §2, §5 et §11. Le raisonnement d'origine y reste, avec sa date ; seul le
+texte normatif ci-dessous le remplace pour la suite.
+
+### Contexte
+
+Le 07/10/2026, l'utilisateur a demandé « la carrosserie la plus fidèle possible ». Les flancs et
+les portes galbés en sont la première conséquence. Or la règle du §2, « même maillage » pour les
+emplacements d'une même `ref`, l'empêche : une paire gauche-droite galbée a deux maillages, car un
+galbe vers l'extérieur à gauche, posé tel quel à droite, irait vers l'intérieur. La seule
+transformation exacte de gauche à droite est une **réflexion** (déterminant -1, échelle négative),
+que l'ADR refuse puisque le volume devient négatif (`NON_POSITIVE_VOLUME`).
+
+La règle actuelle a aussi un **trou** : `body_import.py` ne compare que `mesh_index`. Deux nœuds
+sur le même maillage mais d'**échelles** différentes ont des volumes différents, et la masse d'**un**
+seul est retenue en silence.
+
+### Options
+
+- **A (recommandée) : même matière et même masse mesurée.** Les emplacements d'une même `ref`
+  peuvent avoir des maillages différents s'ils portent **la même matière** et **la même masse
+  mesurée**, `arrondi₁₀⁻⁶(volume × densité)` (R1, §3, pas de nouvelle règle d'arrondi). Pour une
+  pièce nouvelle, ils portent aussi **les mêmes fixations** (`parts`). Sinon `OCCURRENCES_DIFFER`, et
+  le message nomme les masses ou matières qui divergent.
+  - Apporte : la règle la plus simple, qui porte exactement sur ce que le métier chiffre (matière
+    × masse × quantité). Elle ferme le trou de l'échelle. Elle tolère le bruit d'arrondi d'un
+    export de CAO, puisqu'elle compare à 10⁻⁶ kg comme « aucun changement ». Ni le lecteur ni le
+    moteur ne changent.
+  - Risques :
+    1. deux formes réellement différentes de même masse sont acceptées, par exemple une retouche
+       faite d'un seul côté qui garde la masse. Le chiffre reste juste, mais la vue 3D montre deux
+       pièces différentes sous une même référence ;
+    2. un écart de masse inférieur à 5·10⁻⁷ kg passe inaperçu. Son effet sur le coût est inférieur
+       à 10⁻⁶ × prix au kg ;
+    3. l'interdit du miroir par échelle négative reste en place.
+- **B : volumes exacts égaux** (égalité en `Fraction`). Plus stricte, mais un miroir obtenu par
+  rotation dans un outil de CAO diffère au dernier bit et serait refusé à tort.
+- **C : maillages égaux à une symétrie près.** La plus sûre géométriquement, mais le lecteur
+  devrait exposer les sommets, il faudrait trouver le plan de symétrie, et un maillage re-triangulé
+  serait refusé à tort. C'est coûteux.
+- **D : miroir par échelle négative, conforme à la spécification glTF.** La spécification inverse
+  l'ordre des sommets quand le déterminant est négatif ; le volume serait alors pris × signe(det).
+  Cela garde « même maillage », mais change le lecteur (T4) et le sens de `NON_POSITIVE_VOLUME`, et
+  laisse le trou de l'échelle ouvert. On peut la proposer **en complément** de A plus tard, parce
+  qu'un export Blender à instances miroir est aujourd'hui refusé.
+
+### Décision
+
+**A**, retenue par l'utilisateur le 07/10/2026.
+
+- Texte normatif qui **remplace**, pour la suite, la phrase du §2 (« Ils partagent le même
+  maillage… ») : « Plusieurs nœuds de même `ref` sont les emplacements de montage d'une même pièce.
+  Ils peuvent avoir des maillages distincts (pièces gauche et droite), mais portent la même
+  matière, la même masse mesurée à 10⁻⁶ kg et, pour une pièce nouvelle, les mêmes fixations ;
+  sinon `OCCURRENCES_DIFFER`. La masse de la pièce est cette masse commune ; le nombre de nœuds est
+  la quantité. »
+- §11 : la ligne `OCCURRENCES_DIFFER` devient « Nœuds de même `ref` à matière, masse mesurée ou
+  fixations différentes ». Aucun autre code ne change.
+- §5 (maquette) : un maillage **par emplacement** est permis ; les paires gauche-droite sont des
+  maillages distincts, de même masse exacte.
+
+### Conséquences
+
+- T6c adapte `plan_variant` et ses tests ; les valeurs de contrôle ne bougent pas.
+- T5-quater galbe les flancs. T7 à T13 sont inchangés.
+- La **fidélité** demandée reste bornée par les règles métier inchangées : R1, maillages fermés, un
+  matériau par maillage, génération déterministe en bibliothèque standard. T5-quater signalera
+  toute autre règle qui la bloquerait.

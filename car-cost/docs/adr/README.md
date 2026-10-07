@@ -34,7 +34,7 @@ Pas d'ADR pour un nom de variable ou le choix d'un linter.
 | [0014](0014-snapshot-de-calcul-nomme.md) | Un snapshot de calcul nommé fige un calcul, autonome et immuable | accepté |
 | [0015](0015-plusieurs-nomenclatures-et-prix-en-direct.md) | Plusieurs nomenclatures ; prix simulés lus en direct (jamais enregistrés) ou figés | proposé |
 | [0016](0016-taux-horaire-par-cible.md) | Un paramètre de scénario peut porter son propre taux horaire | proposé |
-| [0017](0017-import-de-variante-de-carrosserie-3d.md) | Importer une variante de carrosserie depuis un modèle 3D glTF ; chiffrée sur le snapshot de l'origine | accepté |
+| [0017](0017-import-de-variante-de-carrosserie-3d.md) | Importer une variante de carrosserie depuis un modèle 3D glTF ; chiffrée sur le snapshot de l'origine | accepté, amendé le 2026-10-07 |
 
 ## Ce qui reste à décider
 
