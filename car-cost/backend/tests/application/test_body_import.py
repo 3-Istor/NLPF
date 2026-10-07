@@ -318,6 +318,14 @@ def test_occurrences_equal_at_a_millionth_of_a_kilogram_are_accepted(parent, moc
     assert plan_variant(parent, model) is None
 
 
+def test_occurrences_without_ref_and_with_an_unknown_material_are_not_compared(parent, mockup):
+    """Sans ref, leur masse est incalculable : seule la faute de spécification est rendue."""
+    unnamed = spoiler(name="Sans ref", spec={"ref": ""}, materials=("MAT-UNOBTAINIUM",))
+    model = plus(mockup, unnamed, replace(unnamed, node_index=1001))
+
+    assert rejected(parent, model) == [("MISSING_SPEC", "Sans ref", None)] * 2
+
+
 def test_occurrences_of_a_new_part_with_different_fixations_are_refused(parent, mockup):
     other = spoiler(1001, name="Aileron 2", spec={"ref": "BODY-SPOILER", "parts": {"FIX-M8-20": "2"}})
     model = plus(mockup, spoiler(), other)
