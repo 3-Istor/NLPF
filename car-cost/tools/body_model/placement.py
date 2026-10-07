@@ -210,6 +210,7 @@ COLOURS = {
     "MAT-STEEL-SHEET": [0.10, 0.36, 0.55, 1.0],
     "MAT-PP-GRANULE": [0.06, 0.06, 0.07, 1.0],
     "MAT-ABS-GRANULE": [0.10, 0.10, 0.11, 1.0],
+    "MAT-ALU-SHEET": [0.72, 0.74, 0.77, 1.0],
     "MAT-EPDM-RUBBER": [0.02, 0.02, 0.02, 1.0],
     "MAT-GLASS-FLOAT": [0.04, 0.05, 0.06, 0.85],
     "MAT-COPPER-WIRE": [0.72, 0.45, 0.20, 1.0],

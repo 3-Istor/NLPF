@@ -1,4 +1,6 @@
-"""Génère la maquette 3D du Multipla : `seeds/body_multipla.glb`.
+"""Génère la maquette 3D du Multipla : `seeds/body_multipla.glb`, et ses quatre
+dérivés de démonstration dans `seeds/demo/` (aileron, capot en aluminium,
+capot en surface ouverte, carrosserie en aluminium).
 
     python -m tools.body_model [--seeds-dir seeds] [--check]
 
@@ -9,7 +11,9 @@ chaque maillage, arrondi₁₀⁻⁶(volume × densité), vaut exactement la qua
 de l'arête pièce → matière (ADR-0017 §3, R1). Plus du décor sans
 `extras.carcost`. Maquette synthétique : aucune cote constructeur.
 
-`--check` régénère en mémoire et échoue si le fichier présent diffère.
+Les dérivés sont la même maquette, octet pour octet sauf ce qui change : même
+géométrie, autre matière, un pavé en plus, ou une face en moins. Données
+synthétiques. `--check` régénère en mémoire et échoue si un fichier présent diffère.
 """
 
 from __future__ import annotations
@@ -26,10 +30,21 @@ from pathlib import Path
 
 from carcost.infrastructure.seed_loader import seed_bom
 
-from .placement import COLOURS, DECOR, MIRRORED, PIECES, flank
+from .placement import COLOURS, DECOR, MIRRORED, PIECES, flank, rectangle
 
 FILE_NAME = "body_multipla.glb"
 ROOT = "CAR-ASSY"
+ALU = "MAT-ALU-SHEET"
+HOOD = "CAR-HOOD-SHELL"
+SHELLS = (HOOD, "CAR-PANEL-ROOF", "CAR-DOOR-SHELL-FRONT", "CAR-DOOR-SHELL-REAR", "CAR-TAILGATE-SHELL")
+SPOILER = {"ref": "BODY-SPOILER", "parts": {"FIX-M8-20": "4"}}
+# Dérivés : nom du fichier -> options de `build`.
+DEMOS = {
+    "aileron.glb": {"spoiler": True},
+    "capot-alu.glb": {"alu": (HOOD,)},
+    "capot-surface.glb": {"open_hood": True},
+    "carrosserie-alu.glb": {"alu": SHELLS},
+}
 
 
 def f32(x: float) -> float:
@@ -235,7 +250,9 @@ def fit(ref: str, shape, quantity: Decimal, density: Decimal):
     sys.exit(f"{ref} : aucun maillage float32 ne pèse exactement {quantity} kg")
 
 
-def build(seeds_dir: Path) -> bytes:
+def build(seeds_dir: Path, alu=(), spoiler=False, open_hood=False) -> bytes:
+    """La maquette ; `alu` : pièces passées en aluminium, `spoiler` : un aileron
+    sur le pavillon, `open_hood` : le capot privé d'une face (surface ouverte)."""
     bom = seed_bom(seeds_dir)
     pieces = body_pieces(bom)
     if set(pieces) != set(PIECES):
@@ -250,7 +267,8 @@ def build(seeds_dir: Path) -> bytes:
         "asset": {
             "version": "2.0",
             "generator": "tools.body_model",
-            "copyright": "Maquette synthétique : aucune cote ni masse constructeur",
+            "copyright": "Données synthétiques : aucune cote ni masse constructeur"
+            if (alu or spoiler or open_hood) else "Maquette synthétique : aucune cote ni masse constructeur",
         },
         "scene": 0,
         "scenes": [{"nodes": []}],
@@ -316,14 +334,22 @@ def build(seeds_dir: Path) -> bytes:
         shape, centers = PIECES[ref]
         if len(centers) != count:
             sys.exit(f"{ref} : {len(centers)} emplacements, la nomenclature en monte {count}")
-        fitted = fit(ref, shape, quantity, density)
-        left = add_mesh(*fitted, bom.parts[ref].material_ref)
+        points, triangles = fit(ref, shape, quantity, density)
+        if open_hood and ref == HOOD:
+            triangles = triangles[1:]
+        material = ALU if ref in alu else bom.parts[ref].material_ref
+        left = add_mesh(points, triangles, material)
         # Flancs et portes : l'emplacement de droite reçoit le miroir, de même masse.
-        right = add_mesh(*mirror(*fitted), bom.parts[ref].material_ref) if ref in MIRRORED else left
+        right = add_mesh(*mirror(points, triangles), material) if ref in MIRRORED else left
         add_nodes(ref, centers, lambda c: right if c[0] < 0 else left, {"carcost": {"ref": ref}})
     for name, (shape, material, centers) in DECOR.items():
         index = add_mesh(*prism(*shape), material)
         add_nodes(name, centers, lambda c: index)
+    if spoiler:  # 1,20 × 0,25 × 0,010 m, posé en haut à l'arrière du pavillon
+        index = add_mesh(*prism(rectangle(1.2, 0.25), 0.01, "y"), "MAT-ABS-GRANULE")
+        document["scenes"][0]["nodes"].append(len(document["nodes"]))
+        document["nodes"].append({"name": "Aileron", "mesh": index, "translation": [0, 1.72, -1.78],
+                                  "extras": {"carcost": SPOILER}})
 
     document["buffers"].append({"byteLength": len(binary)})
     text = json.dumps(document, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
@@ -349,22 +375,26 @@ def main(argv: list[str] | None = None) -> int:
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
 
-    data = build(args.seeds_dir)
-    path = args.seeds_dir / FILE_NAME
+    files = {args.seeds_dir / FILE_NAME: build(args.seeds_dir)}
+    for name, options in DEMOS.items():
+        files[args.seeds_dir / "demo" / name] = build(args.seeds_dir, **options)
     if args.check:
-        if not path.exists():
-            difference = f"{FILE_NAME} : absent du dépôt"
-        elif path.read_bytes() != data:
-            difference = f"{FILE_NAME} : diffère de la régénération"
-        else:
-            print("Déterminisme vérifié : la maquette régénérée est identique.")
+        differences = [
+            f"{path.name} : {'absent du dépôt' if not path.exists() else 'diffère de la régénération'}"
+            for path, data in files.items() if not path.exists() or path.read_bytes() != data
+        ]
+        if not differences:
+            print("Déterminisme vérifié : la maquette et ses dérivés régénérés sont identiques.")
             return 0
         print("DÉTERMINISME — ÉCHEC", file=sys.stderr)
-        print(f"  - {difference}", file=sys.stderr)
+        for difference in differences:
+            print(f"  - {difference}", file=sys.stderr)
         return 1
 
-    path.write_bytes(data)
-    print(f"{path} écrit : {len(data)} octets (maquette synthétique)")
+    (args.seeds_dir / "demo").mkdir(exist_ok=True)
+    for path, data in files.items():
+        path.write_bytes(data)
+        print(f"{path} écrit : {len(data)} octets (données synthétiques)")
     return 0
 
 
