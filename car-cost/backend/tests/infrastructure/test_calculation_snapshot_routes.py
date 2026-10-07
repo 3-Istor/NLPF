@@ -392,3 +392,39 @@ def test_an_unknown_open_snapshot_is_a_named_404(client):
 
     assert response.status_code == 404
     assert response.json()["error"]["code"] == "CALCULATION_SNAPSHOT_NOT_FOUND"
+
+
+def test_freezing_on_a_chosen_price_snapshot_keeps_it(client, repositories):
+    scenario = make_scenario(client)
+    repositories.snapshots.snapshots.append(
+        PriceSnapshot(
+            id="snp-2", taken_at=NOW, currency="EUR", source="mock",
+            prices={"S": Decimal("12.000000")},
+        )
+    )
+
+    response = client.post(
+        BASE,
+        json={"scenario_id": scenario["id"], "name": "Hier", "price_snapshot_id": "snp-1"},
+    )
+
+    assert response.status_code == 201, response.text
+    assert response.json()["price_snapshot_id"] == "snp-1"
+
+
+def test_a_price_snapshot_of_another_bom_is_refused(client, repositories):
+    scenario = make_scenario(client)
+    repositories.snapshots.snapshots.append(
+        PriceSnapshot(
+            id="snp-autre", taken_at=NOW, currency="EUR", source="mock",
+            prices={"S": Decimal("12.000000")}, bom_version="bom-autre",
+        )
+    )
+
+    response = client.post(
+        "/api/v1/calculations",
+        json={"scenario_id": scenario["id"], "price_snapshot_id": "snp-autre"},
+    )
+
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "PRICE_SNAPSHOT_OTHER_BOM"

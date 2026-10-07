@@ -422,3 +422,12 @@ def test_freezing_prices_on_a_variant_targets_the_origin(client, repositories):
     assert response.status_code == 201, response.text
     assert response.json()["bom_version"] == MULTIPLA
     assert repositories.snapshots.latest(MULTIPLA).bom_version == MULTIPLA
+
+
+def test_a_variant_lists_the_origin_price_snapshots(client):
+    variant = import_file(client, "aileron.glb").json()["variant"]["id"]
+
+    response = client.get("/api/v1/price-snapshots", params={"bom_version": variant})
+
+    assert response.status_code == 200, response.text
+    assert [item["id"] for item in response.json()["items"]] == [reference_snapshot().id]

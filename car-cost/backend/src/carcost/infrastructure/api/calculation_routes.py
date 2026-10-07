@@ -57,6 +57,11 @@ from .price_source import previous_for, price_source
 SCALE = Decimal("0.000001")
 
 
+class PriceSnapshotOfOtherBom(Exception):
+    """Un snapshot imposé qui cote une autre nomenclature : toutes les pièces
+    resteraient sans prix, et le calcul le cacherait derrière des manques."""
+
+
 class NoPriceSnapshot(Exception):
     """Aucun snapshot, même périmé : rien ne peut être calculé."""
 
@@ -243,6 +248,10 @@ def register_calculation_routes(app: FastAPI, repositories) -> None:
         return error_response(
             422, "PRICE_OVERRIDE_JUSTIFICATION_REQUIRED", str(error)
         )
+
+    @app.exception_handler(PriceSnapshotOfOtherBom)
+    async def _other_bom(_: Request, error: PriceSnapshotOfOtherBom):
+        return error_response(422, "PRICE_SNAPSHOT_OTHER_BOM", str(error))
 
     @app.exception_handler(NoPriceSnapshot)
     async def _no_snapshot(_: Request, error: NoPriceSnapshot):
@@ -839,7 +848,13 @@ def _snapshot_or_none(repositories, bom_version: str):
 
 def _snapshot(repositories, snapshot_id: str | None, bom_version: str):
     if snapshot_id is not None:
-        return repositories.snapshots.get(snapshot_id)
+        snapshot = repositories.snapshots.get(snapshot_id)
+        origin = price_origin(bom_version, repositories.bom)
+        if snapshot.bom_version not in (None, origin):
+            raise PriceSnapshotOfOtherBom(
+                f"le snapshot {snapshot_id} cote {snapshot.bom_version}, pas {origin}"
+            )
+        return snapshot
     snapshot = _snapshot_or_none(repositories, bom_version)
     if snapshot is None:
         raise NoPriceSnapshot(

@@ -494,6 +494,10 @@ entièrement distinct.
 - [ ] **Lot 1-bis** : panneau de saisie pré-rempli et suppression d'un réglage,
       types générés depuis l'OpenAPI, `test:e2e`. (Le sélecteur de version
       de BOM est fait.)
+- [ ] **État d'un calcul sur un snapshot de prix choisi** : le sélecteur
+      « Snapshot de prix » permet de calculer sur un snapshot ancien, mais
+      l'état du scénario compare toujours au plus récent et affiche « les prix
+      ont changé ». Règle à trancher (et ADR à toucher) avant de le changer.
 - [ ] **Valider l'ADR-0015** (plusieurs nomenclatures, prix en direct jamais
       enregistrés), rédigé au statut « proposé », et fermer la PR #6 qu'il
       remplace.

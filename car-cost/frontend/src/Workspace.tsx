@@ -19,6 +19,7 @@ import type {
   CalculationSnapshot,
   CalculationSnapshotSummary,
   PartCardData,
+  PriceSnapshotSummary,
   QuarantineJournal,
   Scenario,
   TreeLine,
@@ -110,6 +111,9 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
   // D'où viennent les prix : le snapshot (rejouable) ou l'API en direct.
   const [priceMode, setPriceMode] = useState<PriceMode>("SNAPSHOT");
   const [liveAt, setLiveAt] = useState<string | null>(null);
+  // Les snapshots de prix proposés, et celui choisi (`null` : le plus récent).
+  const [priceSnapshots, setPriceSnapshots] = useState<PriceSnapshotSummary[]>([]);
+  const [priceSnapshotId, setPriceSnapshotId] = useState<string | null>(null);
   // La recherche en cours, surlignée dans l'arbre.
   const [query, setQuery] = useState("");
   // Variante de carrosserie : l'écart servi par l'API et le dernier import tenté.
@@ -219,6 +223,10 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
             setSnapshotsError(null);
           })
           .catch((error) => alive && setSnapshotsError(describe(error)));
+        api
+          .priceSnapshots(version)
+          .then((page) => alive && setPriceSnapshots(page.items))
+          .catch((error) => alive && setFailure(describe(error)));
         await open(known.find((item) => item.id === initial.scenario) ?? known[0]);
       } catch (error) {
         if (alive) setFailure(describe(error));
@@ -359,7 +367,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
     setFailure(null);
     let frozen: CalculationSnapshot;
     try {
-      frozen = await api.freezeCalculation(scenario.id, name);
+      frozen = await api.freezeCalculation(scenario.id, name, priceSnapshotId);
     } catch (error) {
       setFailure(describe(error));
       setBusy(false);
@@ -493,8 +501,19 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
     }
     setPriceMode("SNAPSHOT");
     setLiveAt(null);
+    // On vient de figer : ce sont ces prix-là qu'on veut voir.
+    setPriceSnapshotId(null);
     setBusy(false);
-    await recalculate();
+    api
+      .priceSnapshots(version)
+      .then((page) => setPriceSnapshots(page.items))
+      .catch((error) => setFailure(describe(error)));
+    await recalculate(null);
+  }
+
+  async function choosePriceSnapshot(id: string | null) {
+    setPriceSnapshotId(id);
+    await recalculate(id);
   }
 
   async function duplicate(name: string) {
@@ -521,7 +540,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
     }
   }
 
-  async function recalculate() {
+  async function recalculate(snapshotId: string | null = priceSnapshotId) {
     if (!scenario) return;
     // « Recalculer » calcule sur le dernier snapshot : en direct, on en sort,
     // sinon le prochain rafraîchissement écraserait ce total.
@@ -530,7 +549,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
     setBusy(true);
     setFailure(null);
     try {
-      const result = await api.calculate(scenario.id);
+      const result = await api.calculate(scenario.id, snapshotId);
       setCalculation(result);
       setOpenSnapshot(null);
       // Le journal éclaire le calcul sans le conditionner : s'il ne se lit
@@ -602,6 +621,9 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
             liveAt={liveAt}
             onModeChange={(mode) => void changePriceMode(mode)}
             onFreezePrices={() => void freezePrices()}
+            snapshots={priceSnapshots}
+            selectedSnapshotId={priceSnapshotId}
+            onSelectSnapshot={(id) => void choosePriceSnapshot(id)}
           />
         )}
         {scenario && (
@@ -738,7 +760,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
               busy={busy}
               failure={failure}
               hideCo2={isVariant}
-              onRecalculate={recalculate}
+              onRecalculate={() => recalculate()}
               onGoToPath={goToPath}
               onGoToPart={goToPart}
             />

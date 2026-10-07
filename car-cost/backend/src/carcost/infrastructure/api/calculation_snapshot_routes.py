@@ -38,6 +38,11 @@ class NewCalculationSnapshot(BaseModel):
         description="Nom du gel, unique dans la version de nomenclature (sans casse ni accents).",
         examples=["Référence T3"],
     )
+    price_snapshot_id: str | None = Field(
+        default=None,
+        description="Snapshot de prix du calcul figé. `null` utilise le plus récent.",
+        examples=["snp-2026-10-06-1923-7a9947"],
+    )
 
 
 class RenameCalculationSnapshot(BaseModel):
@@ -106,12 +111,14 @@ def register_calculation_snapshot_routes(app: FastAPI, repositories) -> None:
         summary="Figer un calcul sous un nom",
         description=(
             "Lance le calcul du scénario avec ses réglages courants et le snapshot "
-            "de prix le plus récent, puis le fige avec une copie des hypothèses."
+            "de prix demandé (le plus récent par défaut), puis le fige avec une copie des hypothèses."
         ),
     )
     def freeze(payload: NewCalculationSnapshot):
         def calculate(scenario):
-            price_snapshot = _snapshot(repositories, None, scenario.bom_version)
+            price_snapshot = _snapshot(
+                repositories, payload.price_snapshot_id, scenario.bom_version
+            )
             return _execute_calculation(
                 repositories, scenario.id, price_snapshot, scenario
             )

@@ -67,6 +67,9 @@ def register_snapshot_routes(app: FastAPI, repositories) -> None:
             Query(description="Seulement les snapshots de cette nomenclature (et les anciens, sans nomenclature)."),
         ] = None,
     ):
+        # Une variante n'a pas de prix à elle : ce sont ceux de son origine (ADR-0017).
+        if bom_version:
+            bom_version = price_origin(bom_version, repositories.bom)
         snapshots = repositories.snapshots.list_all(bom_version)
         now = repositories.clock()
         return {

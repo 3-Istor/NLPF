@@ -224,10 +224,11 @@ export const api = {
       { method: "PUT", body: JSON.stringify(body) },
     ),
 
-  calculate: (scenarioId: string) =>
+  /** `null` : le snapshot de prix le plus récent de la nomenclature. */
+  calculate: (scenarioId: string, priceSnapshotId: string | null = null) =>
     call<Calculation>("/calculations", {
       method: "POST",
-      body: JSON.stringify({ scenario_id: scenarioId }),
+      body: JSON.stringify({ scenario_id: scenarioId, price_snapshot_id: priceSnapshotId }),
     }),
 
   calculation: (id: string) => call<Calculation>(`/calculations/${id}`),
@@ -235,6 +236,12 @@ export const api = {
   /** Aux prix actuels de l'API ; rien n'est enregistré. */
   calculateLive: (scenarioId: string) =>
     call<Calculation>("/calculations/live", post({ scenario_id: scenarioId })),
+
+  /** Les snapshots de prix de la nomenclature, du plus récent au plus ancien. */
+  priceSnapshots: (version: string) =>
+    call<{ items: PriceSnapshotSummary[]; total: number }>(
+      `/price-snapshots?bom_version=${encodeURIComponent(version)}`,
+    ),
 
   /** Fige les prix actuels de l'API pour cette nomenclature. */
   takePriceSnapshot: (version: string, currency = "EUR") =>
@@ -244,10 +251,14 @@ export const api = {
     ),
 
   /** Lance un calcul sur le scénario et le fige sous ce nom. */
-  freezeCalculation: (scenarioId: string, name: string) =>
+  freezeCalculation: (
+    scenarioId: string,
+    name: string,
+    priceSnapshotId: string | null = null,
+  ) =>
     call<CalculationSnapshot>(
       "/calculation-snapshots",
-      post({ scenario_id: scenarioId, name }),
+      post({ scenario_id: scenarioId, name, price_snapshot_id: priceSnapshotId }),
     ),
 
   /** Du plus récent au plus ancien. */

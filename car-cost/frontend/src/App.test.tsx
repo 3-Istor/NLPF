@@ -195,6 +195,13 @@ vi.mock("./api/client", () => ({
       prices_taken_at: "2026-10-02T09:00:00+00:00",
     })),
     takePriceSnapshot: vi.fn(async () => ({ id: "snp-figé" })),
+    priceSnapshots: vi.fn(async () => ({
+      items: [
+        { id: "snp-2026-10-07-0930-bbbbbb", currency: "EUR", status: "FRESH" },
+        { id: "snp-2026-10-06-1923-aaaaaa", currency: "EUR", status: "STALE" },
+      ],
+      total: 2,
+    })),
     quarantine: vi.fn(async (snapshotId: string) => ({ snapshot_id: snapshotId, items: [] })),
     root: vi.fn(async () => line({})),
     children: vi.fn(
@@ -505,7 +512,7 @@ describe("les snapshots de calcul", () => {
     await freezeAs("Référence T3");
 
     await screen.findByText("Snapshot de calcul :", { exact: false });
-    expect(api.freezeCalculation).toHaveBeenCalledWith("scn-1", "Référence T3");
+    expect(api.freezeCalculation).toHaveBeenCalledWith("scn-1", "Référence T3", null);
     expect(document.querySelector(".snapshot-title")).toHaveTextContent(
       "Snapshot de calcul : Référence T3",
     );
@@ -881,8 +888,22 @@ describe("prix en direct ou figés", () => {
     fireEvent.click(screen.getByRole("button", { name: "Figer les prix maintenant" }));
 
     await waitFor(() => expect(api.takePriceSnapshot).toHaveBeenCalledWith(VERSION, "EUR"));
-    await waitFor(() => expect(api.calculate).toHaveBeenCalledWith("scn-1"));
+    await waitFor(() => expect(api.calculate).toHaveBeenCalledWith("scn-1", null));
     expect((screen.getByLabelText("Snapshot") as HTMLInputElement).checked).toBe(true);
+  });
+
+  it("choisir un snapshot de prix calcule dessus, et le gel le garde", async () => {
+    render(<App />);
+    const choice = await screen.findByLabelText("Snapshot de prix");
+    await screen.findByRole("option", { name: /snp-2026-10-06-1923-aaaaaa/ });
+
+    fireEvent.change(choice, { target: { value: "snp-2026-10-06-1923-aaaaaa" } });
+
+    await waitFor(() =>
+      expect(api.calculate).toHaveBeenCalledWith("scn-1", "snp-2026-10-06-1923-aaaaaa"),
+    );
+    fireEvent.change(choice, { target: { value: "" } });
+    await waitFor(() => expect(api.calculate).toHaveBeenLastCalledWith("scn-1", null));
   });
 });
 
