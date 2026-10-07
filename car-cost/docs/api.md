@@ -291,6 +291,9 @@ quantité, et `price_status`. Sans `calculation_id`, ces clés sont **absentes**
 
 `POST /bom/{bom_version}/body-imports` — corps **brut** (un `.glb`, `application/octet-stream`), pas
 de formulaire. Une variante est calculée sur le snapshot de prix de l'**origine** de sa filiation.
+Un import se fait **toujours sur l'origine** : envoyé sur une variante, il est comparé à l'origine
+et `parent_version` la nomme (sur `NO_CHANGE`, c'est le modèle à rouvrir). `?name=` (facultatif,
+le nom du fichier) libelle la variante : « Fiat Multipla 1.6 16V — aileron » ; sans lui, le hash.
 `201` si la variante est créée, `200` si le fichier était déjà importé (`ALREADY_IMPORTED`, « déjà
 importé ») ou ne change rien (`NO_CHANGE`, « aucun changement »).
 

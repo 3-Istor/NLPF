@@ -60,20 +60,20 @@ def register_body_routes(app: FastAPI, repositories) -> None:
         fault = {"code": error.code, "message": error.message, "object": None, "part_ref": None}
         return error_response(422, "BODY_IMPORT_REJECTED", error.message, {"faults": [fault]})
 
-    def _import(version: str, data: bytes):
+    def _import(version: str, data: bytes, name: str | None):
         with _IMPORT:
             return import_body(
                 version, data, read_model=read_glb, boms=repositories.bom, models=repositories.models,
                 variants=repositories.variants, sourcing=repositories.sourcing,
                 snapshots=repositories.snapshots, scenarios=repositories.scenarios,
                 calculations=repositories.calculations, clock=repositories.clock,
-                new_id=lambda: uuid.uuid4().hex[:12],
+                new_id=lambda: uuid.uuid4().hex[:12], name=name,
             )
 
     @app.post("/api/v1/bom/{version}/body-imports")
-    async def create_body_import(version: str, request: Request, response: Response):
+    async def create_body_import(version: str, request: Request, response: Response, name: str | None = None):
         """Importe un `.glb` (corps brut) : une variante chiffrée, ou rien."""
-        outcome = await run_in_threadpool(_import, version, await request.body())
+        outcome = await run_in_threadpool(_import, version, await request.body(), name)
         response.status_code = 201 if outcome.status == "CREATED" else 200
         return {
             "status": outcome.status,

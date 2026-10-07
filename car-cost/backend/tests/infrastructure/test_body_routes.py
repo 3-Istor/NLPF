@@ -166,6 +166,20 @@ def test_same_file_twice_returns_200_already_imported(client):
     assert second.json()["cost"]["delta"]["amount"] == first.json()["cost"]["delta"]["amount"]
 
 
+def test_import_from_a_variant_is_named_after_the_file_and_hangs_off_the_origin(client):
+    hood = import_file(client, "capot-alu.glb").json()["variant"]["id"]
+
+    response = client.post(
+        f"/api/v1/bom/{hood}/body-imports?name=aileron.glb", content=demo("aileron.glb"), headers=RAW,
+    )
+
+    assert response.status_code == 201, response.text
+    body = response.json()
+    assert body["parent_version"] == MULTIPLA
+    assert body["variant"]["label"].endswith(" — aileron")
+    assert [c["part_ref"] for c in body["changes"]] == ["BODY-SPOILER"]
+
+
 def test_reimported_mockup_returns_200_no_change(client):
     response = client.post(IMPORTS, content=mockup_bytes(), headers=RAW)
 

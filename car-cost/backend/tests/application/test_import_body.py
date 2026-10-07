@@ -107,9 +107,9 @@ class World:
         self.read.append(data)
         return self.derived[data] if data in self.derived else read_glb(data)
 
-    def run(self, data, version=MULTIPLA):
+    def run(self, data, version=MULTIPLA, name=None):
         return import_body(
-            version, data, read_model=self.read_model, boms=self.boms, models=self.models,
+            version, data, name=name, read_model=self.read_model, boms=self.boms, models=self.models,
             variants=self.variants, sourcing=self.sourcing, snapshots=self.snapshots,
             scenarios=self.scenarios, calculations=self.calculations,
             clock=lambda: NOW, new_id=lambda: f"{next(self._ids):04d}",
@@ -247,18 +247,42 @@ def test_unknown_version_is_refused(world):
     assert world.read == []
 
 
-def test_a_variant_of_a_variant_is_priced_on_the_origin_snapshot(world):
+def test_an_import_on_a_variant_is_a_variant_of_the_origin(world):
+    """La 3D montre le fichier ; la nomenclature doit dire la même chose : pas d'empilement."""
     hood = world.run(b"capot-alu")
 
-    outcome = world.run(b"capot-alu+aileron", version=hood.variant_id)
+    outcome = world.run(b"aileron", version=hood.variant_id)
 
     assert outcome.status == "CREATED"
-    assert outcome.parent_version == hood.variant_id
-    assert price_origin(outcome.variant_id, world.boms) == MULTIPLA
+    assert outcome.parent_version == MULTIPLA
+    assert outcome.variant_id == variant_id(b"aileron")
     assert outcome.cost.snapshot_id == reference_snapshot().id
     assert outcome.cost.delta == Decimal("6.5233862")
-    assert outcome.cost.total_before == Decimal("13284.327853662617")
     assert [c.part_ref for c in outcome.changes] == ["BODY-SPOILER"]
+
+
+def test_reimporting_the_mockup_on_a_variant_points_back_to_the_origin(world):
+    hood = world.run(b"capot-alu")
+
+    outcome = world.run(mockup_bytes(), version=hood.variant_id)
+
+    assert (outcome.status, outcome.parent_version) == ("NO_CHANGE", MULTIPLA)
+
+
+def test_a_file_already_imported_from_a_variant_reopens_the_same_variant(world):
+    first = world.run(b"aileron")
+    hood = world.run(b"capot-alu")
+
+    again = world.run(b"aileron", version=hood.variant_id)
+
+    assert (again.status, again.variant_id) == ("ALREADY_IMPORTED", first.variant_id)
+
+
+def test_the_file_name_labels_the_variant(world):
+    outcome = world.run(b"capot-alu", name="demo/capot-alu.glb")
+
+    assert outcome.variant_label == "Fiat Multipla 1.6 16V — capot-alu"
+    assert {v.id: v.label for v in world.boms.versions()}[outcome.variant_id] == outcome.variant_label
 
 
 def test_body_changes_of_a_variant(world):

@@ -119,6 +119,7 @@ export function App() {
   }
 
   const current = versions?.find((item) => item.id === version) ?? null;
+  const models = family(versions ?? [], version);
 
   return (
     <div className="app">
@@ -175,10 +176,24 @@ export function App() {
           labourRate={current?.reference_labour_rate ?? FALLBACK_LABOUR_RATE}
           isVariant={current?.parent_version_id !== undefined}
           onOpenVersion={openCreated}
+          models={models}
         />
       )}
     </div>
   );
+}
+
+/** L'origine de la version ouverte, puis les variantes qui en descendent. De la navigation, pas un calcul. */
+function family(versions: BomVersion[], version: string): BomVersion[] {
+  const parentOf = new Map(versions.map((item) => [item.id, item.parent_version_id]));
+  const originOf = (id: string): string => {
+    const parent = parentOf.get(id);
+    return parent ? originOf(parent) : id;
+  };
+  const origin = originOf(version);
+  return versions
+    .filter((item) => originOf(item.id) === origin)
+    .sort((a, b) => (a.id === origin ? -1 : b.id === origin ? 1 : a.label.localeCompare(b.label)));
 }
 
 function describe(error: unknown): string {

@@ -932,7 +932,75 @@ describe("le modèle de carrosserie", () => {
     fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
 
     await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(variant));
-    expect(api.bodyImport).toHaveBeenCalledWith(VERSION, file);
+    expect(api.bodyImport).toHaveBeenCalledWith(VERSION, file, "capot-alu.glb");
     expect(await screen.findByRole("tab", { name: "Variante" })).toBeInTheDocument();
+  });
+
+  const VARIANT = `${VERSION}+1a2b3c4d`;
+
+  async function startWithVariant() {
+    const listed = (await api.bomVersions()).items;
+    vi.mocked(api.bomVersions).mockResolvedValue({
+      items: [
+        ...listed,
+        {
+          id: VARIANT,
+          label: "Multipla — aileron",
+          root_part_ref: "VEH",
+          part_count: 476,
+          edge_count: 692,
+          validated_at: "2026-10-07T08:00:00+00:00",
+          is_synthetic: true,
+          reference_labour_rate: "42.00",
+          parent_version_id: VERSION,
+        },
+      ],
+    });
+    await start();
+  }
+
+  function outcome(status: "ALREADY_IMPORTED" | "NO_CHANGE") {
+    return {
+      status,
+      message: "",
+      parent_version: VERSION,
+      variant: status === "NO_CHANGE" ? null : { id: VARIANT, label: "Multipla — aileron" },
+      scenario_id: null,
+      changes: [],
+      cost: null,
+      cost_status: "NO_PRICES" as const,
+      material_mass_delta_kg: "0",
+    };
+  }
+
+  it("the model selector opens an imported model", async () => {
+    await startWithVariant();
+
+    fireEvent.change(await screen.findByLabelText("Modèle"), { target: { value: VARIANT } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VARIANT));
+    expect(screen.getByLabelText("Modèle")).toHaveValue(VARIANT);
+  });
+
+  it("a file already imported reopens its variant", async () => {
+    vi.mocked(api.bodyImport).mockResolvedValue(outcome("ALREADY_IMPORTED"));
+    await startWithVariant();
+
+    const file = new File([new Uint8Array([1])], "aileron.glb");
+    fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VARIANT));
+  });
+
+  it("reimporting the mockup from a variant goes back to the origin", async () => {
+    vi.mocked(api.bodyImport).mockResolvedValue(outcome("NO_CHANGE"));
+    await startWithVariant();
+    fireEvent.change(await screen.findByLabelText("Modèle"), { target: { value: VARIANT } });
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VARIANT));
+
+    const file = new File([new Uint8Array([1])], "body_multipla.glb");
+    fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VERSION));
   });
 });

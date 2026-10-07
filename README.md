@@ -266,12 +266,17 @@ Déroulé en trois minutes, sur la nomenclature Multipla :
 1. ouvrir le Multipla, puis l'onglet 3D ; cliquer sur le capot : l'arbre suit ;
 2. importer `capot-alu.glb` : le capot est coloré, −1,33 €, −7,35 kg ;
 3. importer `aileron.glb` : l'aileron apparaît, +6,52 €, la vis M8 passe à 208 ;
-4. réimporter la maquette : « aucun changement », aucune variante créée ;
+4. réimporter la maquette : « aucun changement », l'écran revient à l'origine ;
 5. importer `capot-surface.glb` : refus `MESH_NOT_CLOSED`, qui nomme l'objet ;
 6. importer `carrosserie-alu.glb` : cinq pièces colorées, −8,33 € et −45,92 kg.
 
-Importer deux fois le même fichier sur la même version redonne la même
-variante (« déjà importé ») et ne crée rien.
+Chaque fichier est un véhicule complet : il est **toujours comparé à
+l'origine**, même importé depuis une variante. Importer `carrosserie-alu.glb`
+depuis la variante « aileron » donne une variante sans aileron, comme la 3D.
+Importer deux fois le même fichier redonne la même variante (« déjà importé »),
+que l'écran rouvre. Le sélecteur **Modèle**, au-dessus des onglets, passe de
+l'origine à une variante importée (libellée du nom de son fichier) : arbre,
+synthèse, écart et 3D suivent.
 
 **Fiche pièce.** Un clic sur une pièce, dans la 3D ou dans l'arbre, ouvre sa
 fiche : référence, libellé, matière, masse, quantité cumulée, coût unitaire et
@@ -307,16 +312,16 @@ snapshots de calcul sont perdus.** Prendre un nouveau snapshot de prix ensuite
 ## Les tests
 
 ```bash
-# backend — 768 tests
+# backend — 772 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 183 tests
+# front — 187 tests
 cd car-cost/frontend && npm test
 ```
 
 Les soixante-six tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
-`702 passed, 66 skipped` hors ligne, `768 passed` avec la base chargée et
+`706 passed, 66 skipped` hors ligne, `772 passed` avec la base chargée et
 migrée jusqu'à 0008 (le démarrage de l'API rattrape les migrations
 manquantes). Les tests d'intégration qui écrivent le font dans une
 transaction annulée : un

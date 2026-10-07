@@ -453,6 +453,8 @@ button { font: inherit; }
 .side { width: 380px; flex: none; overflow: auto; background: var(--panel); border-left: 1px solid var(--line); }
 .side .summary { width: auto; border-left: none; overflow: visible; }
 .side__import, .variant, .part-card { padding: 8px 16px; }
+.side__import { display: flex; gap: 8px; }
+.side__import select { flex: 1; min-width: 0; }
 .part-card { border-top: 1px solid var(--line); }
 .model3d__canvas { height: 360px; }
 .model3d__canvas canvas { display: block; cursor: pointer; }

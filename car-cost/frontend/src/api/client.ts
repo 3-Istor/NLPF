@@ -134,13 +134,12 @@ export const api = {
         (calculationId ? `?calculation_id=${encodeURIComponent(calculationId)}` : ""),
     ),
 
-  /** Le `.glb` part tel quel, en corps brut : ni formulaire ni JSON. */
-  bodyImport: (version: string, file: Blob) =>
-    call<BodyImportResult>(`/bom/${encodeURIComponent(version)}/body-imports`, {
-      method: "POST",
-      body: file,
-      headers: { "Content-Type": "application/octet-stream" },
-    }),
+  /** Le `.glb` part tel quel, en corps brut : ni formulaire ni JSON. Son nom libelle la variante. */
+  bodyImport: (version: string, file: Blob, name?: string) =>
+    call<BodyImportResult>(
+      `/bom/${encodeURIComponent(version)}/body-imports` + (name ? `?name=${encodeURIComponent(name)}` : ""),
+      { method: "POST", body: file, headers: { "Content-Type": "application/octet-stream" } },
+    ),
 
   bodyChanges: (version: string) =>
     call<BodyChanges>(`/bom/${encodeURIComponent(version)}/body-changes`),

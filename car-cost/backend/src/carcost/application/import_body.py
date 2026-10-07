@@ -88,8 +88,12 @@ def price_origin(version: str, boms) -> str:
 
 def import_body(
     version: str, data: bytes, *, read_model, boms, models, variants, sourcing,
-    snapshots, scenarios, calculations, clock, new_id,
+    snapshots, scenarios, calculations, clock, new_id, name: str | None = None,
 ) -> ImportOutcome:
+    # Un fichier est un véhicule complet : on le compare toujours à l'origine,
+    # jamais à la variante ouverte, sinon la nomenclature empilerait des pièces
+    # que la 3D ne montre pas (ADR-0017, amendement bis).
+    version = price_origin(version, boms)
     parent = boms.load(version)
     if models.get(version) is None:
         raise ModelNotFound(version)
@@ -105,7 +109,7 @@ def import_body(
 
     digest = sha256(data).hexdigest()
     variant_id = f"{version}+{digest[:8]}"
-    label = f"{summary.label} — variante {digest[:8]}"
+    label = f"{summary.label} — {_display_name(name) or f'variante {digest[:8]}'}"
     if any(known.id == variant_id for known in boms.versions()):
         if models.get(variant_id).sha256 != digest:
             raise VariantIdCollision(variant_id)
@@ -149,6 +153,13 @@ def body_changes(version: str, *, boms, sourcing, snapshots, clock) -> BodyChang
     cost = _delta(before, after)
     changes = _costed(diff_versions(parent, variant), variant, before, after)
     return BodyChanges(version, parent_id, changes, cost, _status(cost), _mass_delta(changes))
+
+
+def _display_name(name: str | None) -> str:
+    """Le nom du fichier, sans dossier ni extension : un libellé, pas un identifiant."""
+    if not name:
+        return ""
+    return name.replace("\\", "/").rsplit("/", 1)[-1].removesuffix(".glb").strip()[:60]
 
 
 def _summary(version: str, boms):

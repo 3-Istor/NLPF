@@ -14,6 +14,7 @@ import { api, ApiFailure } from "./api/client";
 import type {
   BodyChanges,
   BodyImportResult,
+  BomVersion,
   Calculation,
   CalculationSnapshot,
   CalculationSnapshotSummary,
@@ -71,6 +72,8 @@ interface WorkspaceProps {
   isVariant: boolean;
   /** Ouvre une autre nomenclature, par exemple la variante qu'un import vient de créer. */
   onOpenVersion: (id: string) => void;
+  /** L'origine et ses variantes importées, pour passer de l'une à l'autre. */
+  models?: BomVersion[];
 }
 
 /** La ligne d'arbre d'un chemin, si sa page est chargée. De la navigation, pas un calcul. */
@@ -81,7 +84,7 @@ function lineAt(root: TreeLine, state: TreeState, path: string | null): TreeLine
   return entry?.status === "ready" ? (entry.page.items.find((l) => l.path === path) ?? null) : null;
 }
 
-export function Workspace({ version, labourRate, isVariant, onOpenVersion }: WorkspaceProps) {
+export function Workspace({ version, labourRate, isVariant, onOpenVersion, models = [] }: WorkspaceProps) {
   const SCENARIO_DEFAULTS = {
     bom_version: version,
     display_currency: "EUR",
@@ -170,9 +173,11 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
     setProblem(null);
     setTab("variant");
     try {
-      const result = await api.bodyImport(version, file);
+      const result = await api.bodyImport(version, file, file.name);
       setOutcome(result);
-      if (result.status === "CREATED" && result.variant) onOpenVersion(result.variant.id);
+      // Le fichier désigne un modèle : on l'ouvre, qu'il soit neuf, déjà importé ou l'origine.
+      const target = result.variant?.id ?? result.parent_version;
+      if (target && target !== version) onOpenVersion(target);
     } catch (error) {
       setProblem(error);
     } finally {
@@ -660,6 +665,15 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
 
         <div className="side">
           <div className="side__import">
+            {models.length > 1 && (
+              <select aria-label="Modèle" value={version} onChange={(event) => onOpenVersion(event.target.value)}>
+                {models.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.parent_version_id === undefined ? "Origine" : item.label}
+                  </option>
+                ))}
+              </select>
+            )}
             <button type="button" disabled={importing} onClick={() => importInput.current?.click()}>
               Importer une variante (.glb)
             </button>
@@ -676,7 +690,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
               }}
             />
           </div>
-          <div className="shell__tabs" role="tablist" aria-label="Panneau de droite">
+          <div className="tabs side__tabs" role="tablist" aria-label="Panneau de droite">
             {(["summary", "3d", "variant"] as const)
               .filter((choice) => choice !== "variant" || isVariant || outcome || problem !== null)
               .map((choice) => (
@@ -685,6 +699,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
                   type="button"
                   role="tab"
                   aria-selected={tab === choice}
+                  className={tab === choice ? "tabs__on" : undefined}
                   onClick={() => setTab(choice)}
                 >
                   {choice === "summary" ? "Synthèse" : choice === "3d" ? "3D" : "Variante"}

@@ -1,7 +1,7 @@
 # ADR-0017 — Importer une variante de carrosserie depuis un modèle 3D (glTF binaire)
 
 - **Date** : 2026-10-06
-- **Statut** : accepté, amendé le 2026-10-07
+- **Statut** : accepté, amendé deux fois le 2026-10-07
 - **Décideurs** : équipe 3istor — cadrage de [recentrage-import-3d.md](../recentrage-import-3d.md)
   §0 et §4, et réponses de l'utilisateur du 2026-10-06 (R1 à R5, reprises ci-dessous)
 - **Écarte** : [ADR-0012](0012-comparaison-et-recommandation-par-piece.md) (comparaison entre deux
@@ -346,3 +346,42 @@ snapshot : la variante est alors créée, sans chiffre.
 **versions différentes**. L'utilisateur l'a **gardé**, avec les mêmes garde-fous : même snapshot de prix,
 calculs complets. La zone des snapshots de calcul relève d'ADR-0014 : c'est pourquoi ce
 changement est écrit ici, pour qu'il ne passe pas inaperçu.
+
+## Amendement bis du 2026-10-07 : un import se fait toujours sur l'origine
+
+Cette section amende le §6 et le §12. Le texte d'origine reste, avec sa date.
+
+### Contexte
+
+En démonstration, l'utilisateur a importé `carrosserie-alu.glb` en étant sur la variante « aileron ».
+Le §6 prenait pour parente la version **ouverte** : la nouvelle variante empilait les deux, et
+l'aileron restait dans la nomenclature alors que la 3D (le fichier importé, stocké tel quel) ne le
+montrait pas. Réimporter la maquette depuis une variante ne ramenait pas à l'origine, et les
+variantes, libellées par un hash, ne se distinguaient pas.
+
+### Options
+
+- **A (retenue) : la parente est toujours l'origine de la filiation.** Chaque fichier est un
+  véhicule complet, comparé à l'origine. La nomenclature dit ce que la 3D montre. On perd
+  l'empilement de variantes, qui n'a pas de cas d'usage aujourd'hui : l'ingénieur part de la
+  maquette du véhicule.
+- **B : garder la version ouverte, et retirer les pièces absentes du fichier.** Garde l'empilement,
+  mais invente une règle de suppression (fixations, quantités, parents) : écartée.
+
+### Décision
+
+**A**, retenue par l'utilisateur le 07/10/2026.
+
+- §6 : la parente d'une variante est l'**origine** (`price_origin`) de la version sur laquelle on
+  importe ; son id est `<origine>+<8 hex>`. « Déjà importé » et « aucun changement » se jugent
+  contre l'origine, et `parent_version` de la réponse la nomme.
+- Libellé : `<libellé de l'origine> — <nom du fichier sans .glb>` quand la route reçoit `?name=`,
+  sinon `— variante <8 hex>` comme avant.
+- L'écran ouvre le modèle désigné par le fichier : la variante (créée ou déjà importée) ou
+  l'origine (aucun changement). Un sélecteur « Modèle » passe de l'origine à ses variantes.
+
+### Conséquences
+
+- Les variantes déjà écrites sur une variante restent telles quelles (immuables) ; le sélecteur
+  les liste sous la même origine.
+- Le moteur, le lecteur et les règles de masse ne changent pas.

@@ -18,6 +18,17 @@ describe("le client de variante", () => {
     expect(init.headers).toEqual({ "Content-Type": "application/octet-stream" });
   });
 
+  it("names the variant after the file", async () => {
+    const fetchMock = vi.fn(async () => new Response("{}", { status: 201 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await api.bodyImport("bom-a+1b", new Blob([]), "capot alu.glb");
+
+    expect((fetchMock.mock.calls[0] as unknown[])[0]).toBe(
+      "/api/v1/bom/bom-a%2B1b/body-imports?name=capot%20alu.glb",
+    );
+  });
+
   it("encodes the + of a variant identifier", async () => {
     const fetchMock = vi.fn(async () => new Response("{}"));
     vi.stubGlobal("fetch", fetchMock);
