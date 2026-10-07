@@ -177,7 +177,7 @@ ADR-0012 refuse de comparer deux versions de nomenclature différentes. Comparer
 parente est le but de la feature : `compare_calculations` **ne refuse plus** deux versions
 différentes. Il garde le refus de **snapshots différents** et celui des **calculs incomplets**. La
 route `POST /scenarios/compare` garde son propre refus (même version). L'écart est calculé **côté
-serveur**, jamais dans le navigateur.
+serveur**, jamais dans le navigateur. (complété le 2026-10-07, voir « Complément du 2026-10-07 »).
 
 ### 10. Main-d'œuvre, CO₂ et limite
 
@@ -332,3 +332,17 @@ seul est retenue en silence.
 - La **fidélité** demandée reste bornée par les règles métier inchangées : R1, maillages fermés, un
   matériau par maillage, génération déterministe en bibliothèque standard. T5-quater signalera
   toute autre règle qui la bloquerait.
+
+### Complément du 2026-10-07 : prix incomplets à l'import, comparaison de calculs figés entre versions
+
+**Prix incomplets.** Un import, ou une relecture `body-changes`, dont le calcul A ou B est
+`INCOMPLETE` est **refusé** et n'écrit rien. L'erreur (`IncompletePrices`) nomme les pièces sans prix
+et le snapshot utilisé ; cela vaut aussi pour une maquette réimportée ou un fichier déjà importé. Un
+prix manquant n'est jamais un zéro. C'est distinct de `NO_PRICES`, qui veut dire qu'il n'y a **aucun**
+snapshot : la variante est alors créée, sans chiffre.
+
+**Calculs figés.** Depuis le retrait du refus « même version » dans `compare_calculations` (§9),
+`compare_snapshots` (`POST /calculation-snapshots/compare`) compare aussi deux calculs figés de
+**versions différentes**. L'utilisateur l'a **gardé**, avec les mêmes garde-fous : même snapshot de prix,
+calculs complets. La zone des snapshots de calcul relève d'ADR-0014 : c'est pourquoi ce
+changement est écrit ici, pour qu'il ne passe pas inaperçu.

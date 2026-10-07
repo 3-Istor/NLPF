@@ -2,7 +2,7 @@
 
 Les règles sont dans `body_import` ; ici, l'ordre des lectures et des
 écritures. Tout est calculé avant la première écriture : un refus, un prix
-introuvable ou un calcul incomparable ne laissent rien derrière eux.
+introuvable ou des prix incomplets ne laissent rien derrière eux.
 
 L'écart est toujours `compare_calculations(A, B).cost_delta`, A et B sur le
 même snapshot, celui de l'origine de la filiation. Sans snapshot, pas
@@ -20,8 +20,20 @@ from .body_import import PartChange, diff_versions, plan_variant
 from .compare_scenarios import compare_calculations
 from .ports import ModelNotFound, NewVariant, VariantIdCollision
 from .price_resolution import resolve_unit_prices
-from .run_calculation import Calculation, run_calculation
+from .run_calculation import Calculation, CalculationStatus, run_calculation
 from .scenario import Scenario
+
+
+class IncompletePrices(Exception):
+    """Un prix manque dans le snapshot : on ne chiffre pas d'écart (ADR-0017)."""
+
+    def __init__(self, parts_without_price: tuple[str, ...], snapshot_id: str):
+        self.parts_without_price = parts_without_price
+        self.snapshot_id = snapshot_id
+        super().__init__(
+            f"calcul incomplet sur le snapshot {snapshot_id}, pièces sans prix : "
+            + ", ".join(parts_without_price)
+        )
 
 
 @dataclass(frozen=True)
@@ -144,6 +156,8 @@ def _priced(bom: Bom, scenario: Scenario, sourcing, snapshot, now, calculation_i
 def _delta(a: Calculation | None, b: Calculation | None) -> CostDelta | None:
     if a is None:
         return None
+    if CalculationStatus.INCOMPLETE in (a.status, b.status):
+        raise IncompletePrices(tuple(sorted(set(a.parts_without_price) | set(b.parts_without_price))), a.snapshot_id)
     comparison = compare_calculations(a, b)
     return CostDelta(comparison.snapshot_id, comparison.total_a, comparison.total_b, comparison.cost_delta)
 

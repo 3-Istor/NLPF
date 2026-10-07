@@ -18,6 +18,8 @@ from carcost.application.body_model import BodyModel, ModelObject
 from carcost.application.compare_scenarios import IncomparableCalculations, compare_calculations
 from carcost.application.import_body import body_changes, import_body, price_origin
 from carcost.application.ports import BomVersionNotFound, ModelNotFound, StoredModel, VariantIdCollision
+from carcost.application.import_body import IncompletePrices
+from carcost.application.run_calculation import CalculationStatus
 from carcost.application.price_resolution import resolve_unit_prices
 from carcost.application.run_calculation import run_calculation
 from carcost.application.scenario import Scenario
@@ -305,3 +307,57 @@ def test_compare_calculations_accepts_two_versions_on_one_snapshot(world, static
     assert compare_calculations(a, b).cost_delta == b.total_cost - a.total_cost == Decimal("-1.333147507383")
     with pytest.raises(IncomparableCalculations, match="même snapshot"):
         compare_calculations(a, replace(b, snapshot_id="autre"))
+
+
+NO_PRICE = ("FIX-M8-20", "MAT-ALU-SHEET")
+
+
+def without_prices(world, static):
+    """Le snapshot de référence privé de deux prix, que le Multipla utilise."""
+    snapshot = reference_snapshot()
+    snapshot = replace(snapshot, prices={r: p for r, p in snapshot.prices.items() if r not in NO_PRICE})
+    world.snapshots.snapshots[:] = [snapshot]
+    scenario = Scenario("scn-pre", MULTIPLA, "EUR", Decimal("42.00"))
+    calculation = run_calculation(
+        bom=static["bom"], scenario=scenario, snapshot=snapshot, now=NOW, calculation_id="calc-pre",
+        resolved=resolve_unit_prices(static["bom"], static["sourcing"], snapshot, scenario),
+    )
+    assert calculation.status is CalculationStatus.INCOMPLETE
+    return snapshot
+
+
+def test_import_on_incomplete_prices_is_refused_and_names_the_parts(world, static):
+    snapshot = without_prices(world, static)
+
+    with pytest.raises(IncompletePrices) as caught:
+        world.run(b"capot-alu")
+
+    assert caught.value.parts_without_price == NO_PRICE
+    assert all(ref in str(caught.value) for ref in NO_PRICE)
+    assert caught.value.snapshot_id == snapshot.id
+    assert world.writes() == (0, 0, 0)
+
+
+def test_reimport_on_incomplete_prices_is_refused_too(world, static):
+    world.run(b"aileron")
+    before = world.writes()
+    snapshot = without_prices(world, static)
+
+    for data in (mockup_bytes(), b"aileron"):
+        with pytest.raises(IncompletePrices) as caught:
+            world.run(data)
+        assert caught.value.parts_without_price == NO_PRICE
+        assert caught.value.snapshot_id == snapshot.id
+    assert world.writes() == before == (1, 1, 1)
+
+
+def test_body_changes_on_incomplete_prices_names_the_parts(world, static):
+    hood = world.run(b"capot-alu")
+    before = world.writes()
+    without_prices(world, static)
+
+    with pytest.raises(IncompletePrices) as caught:
+        world.changes_of(hood.variant_id)
+
+    assert caught.value.parts_without_price == NO_PRICE
+    assert world.writes() == before

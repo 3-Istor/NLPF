@@ -311,6 +311,25 @@ def test_snapshots_on_different_price_snapshots_are_refused(world):
         )
 
 
+def test_compare_snapshots_accepts_two_versions_on_one_price_snapshot(world):
+    calculate = world.calculator(prices(S="10.000000"))
+    first = world.freeze("Version d'origine", calculate, snapshot_id="csn-1")
+    world.boms.version = "bom-autre"
+    world.scenarios.create(study(id="scn-autre", bom_version="bom-autre", parameters=()))
+    second = world.freeze(
+        "Autre version", calculate, snapshot_id="csn-2", scenario_id="scn-autre",
+    )
+
+    comparison, a, b = compare_snapshots(
+        first.id, second.id,
+        snapshots_repo=world.snapshots_repo, calculations=world.calculations,
+    )
+
+    assert (a.bom_version, b.bom_version) == ("bom-test", "bom-autre")
+    assert comparison.total_a != comparison.total_b
+    assert comparison.cost_delta == comparison.total_b - comparison.total_a
+
+
 def test_an_unknown_snapshot_is_reported(world):
     known = world.freeze("Référence T3", world.calculator(prices(S="10.000000")))
 
