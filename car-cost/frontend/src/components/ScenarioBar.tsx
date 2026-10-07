@@ -67,7 +67,7 @@ export function ScenarioBar({
               : onSelect(event.target.value)
           }
         >
-          <option value={BLANK_CHOICE}>Catalogue — sans réglage</option>
+          <option value={BLANK_CHOICE}>Catalogue sans réglage</option>
           {scenarios.map((scenario) => (
             <option key={scenario.id} value={scenario.id}>
               {scenario.name} ({scenario.parameters.length} réglage

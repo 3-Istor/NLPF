@@ -184,7 +184,7 @@ export function TreeNode({
               </span>
             </>
           ) : (
-            "—"
+            "-"
           )}
         </span>
 

@@ -436,7 +436,7 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
       }
       const created = await api.createScenario({
         ...SCENARIO_DEFAULTS,
-        name: "Catalogue — sans réglage",
+        name: "Catalogue sans réglage",
       });
       await reloadScenarios(created.id);
     } catch (error) {
@@ -779,6 +779,6 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion, model
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

@@ -16,7 +16,7 @@ const CURRENCIES: Record<string, string> = {
 
 /** Formate un montant pour l'œil. Ne le transforme pas. */
 export function money(value: Money | null | undefined): string {
-  if (!value) return "—";
+  if (!value) return "-";
   const rounded = Number.parseFloat(value.amount).toLocaleString("fr-FR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -29,7 +29,7 @@ export function money(value: Money | null | undefined): string {
  * l'objet `{ kg_co2e }` des calculs. `null` : inconnu, jamais zéro.
  */
 export function co2(value: Co2 | string | null | undefined): string {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "-";
   const kg = typeof value === "string" ? value : value.kg_co2e;
   const rounded = Number.parseFloat(kg).toLocaleString("fr-FR", {
     minimumFractionDigits: 2,
@@ -40,7 +40,7 @@ export function co2(value: Co2 | string | null | undefined): string {
 
 /** Une masse en kg, deux décimales. `null` : inconnue, jamais zéro. */
 export function mass(value: string | null | undefined): string {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "-";
   const rounded = Number.parseFloat(value).toLocaleString("fr-FR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -50,7 +50,7 @@ export function mass(value: string | null | undefined): string {
 
 /** Une quantité garde ses décimales utiles, et rien de plus. */
 export function quantity(value: string | undefined, unit?: string): string {
-  if (value === undefined) return "—";
+  if (value === undefined) return "-";
   const asNumber = Number.parseFloat(value);
   const text = Number.isInteger(asNumber)
     ? String(asNumber)

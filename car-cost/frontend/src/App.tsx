@@ -135,7 +135,7 @@ export function App() {
             >
               {versions.map((item) => (
                 <option key={item.id} value={item.id}>
-                  {item.label} — {item.part_count} pièces
+                  {item.label} ({item.part_count} pièces)
                 </option>
               ))}
             </select>
@@ -197,6 +197,6 @@ function family(versions: BomVersion[], version: string): BomVersion[] {
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

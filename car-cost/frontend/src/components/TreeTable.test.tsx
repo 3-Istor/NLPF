@@ -122,7 +122,7 @@ describe("colonnes", () => {
     mount(line());
 
     const cell = row("V").querySelector(".cell--share") as HTMLElement;
-    expect(cell.textContent).toBe("—");
+    expect(cell.textContent).toBe("-");
     expect(cell.querySelector("i")).toBeNull();
   });
 

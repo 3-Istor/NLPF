@@ -18,7 +18,7 @@ type Props = {
 export function PartCard({ card, line, change }: Props) {
   // Les écarts servis sont des montants nus : la devise est celle de la fiche.
   const served = (amount: string | null): string =>
-    amount !== null && card.unit_cost ? money({ amount, currency: card.unit_cost.currency }) : "—";
+    amount !== null && card.unit_cost ? money({ amount, currency: card.unit_cost.currency }) : "-";
 
   return (
     <section className="part-card" aria-label="Fiche pièce">
@@ -27,7 +27,7 @@ export function PartCard({ card, line, change }: Props) {
       </h3>
       <dl>
         <dt>Matière</dt>
-        <dd>{card.material_ref ?? "—"}</dd>
+        <dd>{card.material_ref ?? "-"}</dd>
         <dt>Masse</dt>
         <dd>
           {mass(card.material_quantity_kg)}

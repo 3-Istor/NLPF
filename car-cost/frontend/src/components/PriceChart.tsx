@@ -89,7 +89,7 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
           maintenant : {amount(history.now.price)} / {history.unit}
         </span>
         <span className="price-chart__meta">
-          profil {history.profile ?? "—"}
+          profil {history.profile ?? "-"}
           {history.origin_currency && ` · fournisseur facturant en ${history.origin_currency}`}
           {" · données synthétiques"}
         </span>
@@ -147,7 +147,7 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
           <ul>
             {history.snapshots.map((snapshot) => (
               <li key={snapshot.id}>
-                {amount(snapshot.price)} — <code>{snapshot.id}</code>,{" "}
+                {amount(snapshot.price)}, <code>{snapshot.id}</code>,{" "}
                 {new Date(snapshot.taken_at).toLocaleString("fr-FR")}
                 {snapshot.origin === "FALLBACK" && " (repli sur le prix précédent)"}
               </li>
@@ -172,6 +172,6 @@ function compact(value: number): string {
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

@@ -185,10 +185,10 @@ describe("clavier de l'arbre", () => {
     focus("V");
     press("ArrowDown");
     // Parcourir sélectionne sans ouvrir : le panneau attend Entrée.
-    expect(screen.queryByText("Ensemble fabriqué — A")).toBeNull();
+    expect(screen.queryByText("Ensemble fabriqué : A")).toBeNull();
 
     press("Enter");
-    expect(await screen.findByText("Ensemble fabriqué — A")).toBeInTheDocument();
+    expect(await screen.findByText("Ensemble fabriqué : A")).toBeInTheDocument();
   });
 
   it("étoile déplie les frères", async () => {

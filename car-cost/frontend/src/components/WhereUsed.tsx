@@ -48,7 +48,7 @@ export function WhereUsed({ version, partRef, onClose }: Props) {
       <div className="dialog" onClick={(event) => event.stopPropagation()}>
         <header>
           <h3>
-            <code>{partRef}</code> — {total} emplacement(s)
+            <code>{partRef}</code> : {total} emplacement(s)
           </h3>
           <button onClick={onClose}>Fermer</button>
         </header>
@@ -80,7 +80,7 @@ export function WhereUsed({ version, partRef, onClose }: Props) {
           </>
         )}
         <p className="hint">
-          Ces lignes sont la même pièce, montée à plusieurs endroits — pas un
+          Ces lignes sont la même pièce, montée à plusieurs endroits, pas un
           doublon.
         </p>
       </div>

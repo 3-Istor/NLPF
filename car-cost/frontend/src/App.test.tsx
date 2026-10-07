@@ -606,7 +606,7 @@ describe("un snapshot ouvert est en lecture seule", () => {
 
     openSettings("V/A");
 
-    const copied = await screen.findByRole("region", { name: "Réglages figés — GMP" });
+    const copied = await screen.findByRole("region", { name: "Réglages figés : GMP" });
     expect(within(copied).getByText("toutes les occurrences")).toBeInTheDocument();
     expect(within(copied).getByText("12.5 min")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Appliquer" })).toBeNull();
@@ -622,7 +622,7 @@ describe("un snapshot ouvert est en lecture seule", () => {
 
     fireEvent.click(screen.getByText("Châssis"));
 
-    const copied = await screen.findByRole("region", { name: "Réglages figés — CHS" });
+    const copied = await screen.findByRole("region", { name: "Réglages figés : CHS" });
     expect(within(copied).getByText(/Aucun réglage/)).toBeInTheDocument();
   });
 

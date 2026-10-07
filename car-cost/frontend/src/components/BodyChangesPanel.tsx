@@ -28,12 +28,12 @@ export function BodyChangesPanel({ changes, outcome, failure, onOpen }: Props) {
     <section className="variant" aria-label="Variante de carrosserie">
       {failure !== null && (
         <div className="banner banner--danger" role="alert">
-          {failure instanceof ApiFailure ? `${failure.code} — ${failure.message}` : String(failure)}
+          {failure instanceof ApiFailure ? `${failure.code} : ${failure.message}` : String(failure)}
           {faults && (
             <ul>
               {faults.map((fault, index) => (
                 <li key={index}>
-                  <code>{fault.code}</code> — {fault.object} : {fault.message}
+                  <code>{fault.code}</code>, {fault.object} : {fault.message}
                 </li>
               ))}
             </ul>
