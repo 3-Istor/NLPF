@@ -2,10 +2,11 @@
 
     python -m tools.body_model [--seeds-dir seeds] [--check]
 
-Un pavé par pièce de carrosserie à matière déclarée sous CAR-ASSY, autant de
-nœuds que d'emplacements de montage, un seul maillage par pièce. La masse
-mesurée de chaque pavé, arrondi₁₀⁻⁶(volume × densité), vaut exactement la
-quantité de l'arête pièce → matière (ADR-0017 §3, R1). Plus du décor sans
+Une voiture-jouet : chaque pièce de carrosserie à matière déclarée sous
+CAR-ASSY est un polygone extrudé (placement.py), avec autant de nœuds que
+d'emplacements de montage et un seul maillage par pièce. La masse mesurée de
+chaque maillage, arrondi₁₀⁻⁶(volume × densité), vaut exactement la quantité
+de l'arête pièce → matière (ADR-0017 §3, R1). Plus du décor sans
 `extras.carcost`. Maquette synthétique : aucune cote constructeur.
 
 `--check` régénère en mémoire et échoue si le fichier présent diffère.
@@ -25,14 +26,10 @@ from pathlib import Path
 
 from carcost.infrastructure.seed_loader import seed_bom
 
-from .placement import DECOR, PIECES
+from .placement import COLOURS, DECOR, PIECES
 
 FILE_NAME = "body_multipla.glb"
 ROOT = "CAR-ASSY"
-# Sommets d'un pavé : bit 0 → +X, bit 1 → +Y, bit 2 → +Z. Faces vues de
-# l'extérieur dans le sens trigonométrique : le volume signé est positif.
-TRIANGLES = (0, 4, 6, 0, 6, 2, 1, 3, 7, 1, 7, 5, 0, 1, 5, 0, 5, 4,
-             2, 6, 7, 2, 7, 3, 0, 2, 3, 0, 3, 1, 4, 5, 7, 4, 7, 6)
 
 
 def f32(x: float) -> float:
@@ -69,28 +66,96 @@ def body_pieces(bom) -> dict[str, tuple[Decimal, Decimal, Decimal]]:
     return pieces
 
 
-def solve(ref: str, sides, quantity: Decimal, density: Decimal) -> list[float]:
-    """Côtés float32 dont le volume × densité s'arrondit à `quantity`.
+def triangulate(polygon) -> list[tuple[int, int, int]]:
+    """Découpe en oreilles d'un polygone simple parcouru dans le sens trigonométrique."""
 
-    L'épaisseur (côté `None`) est calculée, puis on essaie les float32 voisins
-    du premier côté donné jusqu'à tomber juste.
+    def cross(o, p, q):
+        return (p[0] - o[0]) * (q[1] - o[1]) - (p[1] - o[1]) * (q[0] - o[0])
+
+    left, triangles = list(range(len(polygon))), []
+    while len(left) > 3:
+        for m in range(len(left)):
+            i, j, k = left[m - 1], left[m], left[(m + 1) % len(left)]
+            a, b, c = polygon[i], polygon[j], polygon[k]
+            if cross(a, b, c) > 0 and not any(
+                cross(a, b, p) > 0 and cross(b, c, p) > 0 and cross(c, a, p) > 0
+                for p in (polygon[n] for n in left if n not in (i, j, k))
+            ):
+                triangles.append((i, j, k))
+                left.pop(m)
+                break
+        else:
+            sys.exit("polygone non simple : aucune oreille")
+    return triangles + [tuple(left)]
+
+
+def volume(points, triangles) -> Fraction:
+    """Volume signé exact (produit mixte) des sommets float32."""
+    total = Fraction(0)
+    for a, b, c in triangles:
+        (ax, ay, az), (bx, by, bz), (cx, cy, cz) = (map(Fraction, points[i]) for i in (a, b, c))
+        total += ax * (by * cz - bz * cy) + ay * (bz * cx - bx * cz) + az * (bx * cy - by * cx)
+    return total / 6
+
+
+def prism(polygon, width: float, axis: str):
+    """Polygone extrudé sur `width`, centré : sommets float32, faces vers l'extérieur.
+
+    Les faces planes partagent exactement les arêtes du contour avec les
+    parois : le maillage est fermé.
+    """
+    if sum(a0 * b1 - a1 * b0 for (a0, b0), (a1, b1) in zip(polygon, polygon[1:] + polygon[:1])) < 0:
+        polygon = polygon[::-1]
+    place = {"x": lambda a, b, e: (e, b, a), "y": lambda a, b, e: (a, e, b),
+             "z": lambda a, b, e: (a, b, e)}[axis]
+    n = len(polygon)
+    points = [[f32(c) for c in place(a, b, e)] for e in (-width / 2, width / 2) for a, b in polygon]
+    caps = triangulate(polygon)
+    triangles = [(i, k, j) for i, j, k in caps] + [(n + i, n + j, n + k) for i, j, k in caps]
+    for i in range(n):
+        j = (i + 1) % n
+        triangles += [(i, j, n + j), (i, n + j, n + i)]
+    if volume(points, triangles) < 0:
+        triangles = [(i, k, j) for i, j, k in triangles]
+    return points, triangles
+
+
+def fit(ref: str, shape, quantity: Decimal, density: Decimal):
+    """Maillage float32 de `shape(t)` dont le volume × densité s'arrondit à `quantity`.
+
+    t approché par point fixe, puis on retouche une coordonnée à la fois :
+    le volume est linéaire en chaque coordonnée, de pente le gradient exact.
+    On prend la plus forte pente dont un pas float32 ne dépasse pas l'écart
+    restant, qui diminue au moins de moitié à chaque tour.
     """
     if density is None:
         sys.exit(f"{ref} : la matière n'a pas de densité, la pièce n'est pas mesurable")
-    free = sides.index(None)
-    a, b = (f32(s) for s in sides if s is not None)
-    target = micro(Fraction(quantity))
-    for k in range(4000):
-        candidate = f32_step(a, k // 2 if k % 2 else -(k // 2))
-        base = Fraction(candidate) * Fraction(b)
-        start = f32(float(Fraction(quantity) / Fraction(density) / base))
-        for j in (-1, 0, 1):
-            thickness = f32_step(start, j)
-            if micro(base * Fraction(thickness) * Fraction(density)) == target:
-                found = [candidate, b]
-                found.insert(free, thickness)
-                return found
-    sys.exit(f"{ref} : aucun pavé float32 ne pèse exactement {quantity} kg")
+    target = Fraction(quantity) / Fraction(density)
+    t = 0.001
+    for _ in range(6):
+        points, triangles = prism(*shape(t))
+        t *= float(target / volume(points, triangles))
+    points, triangles = prism(*shape(t))
+    for _ in range(60):
+        measured = volume(points, triangles)
+        if micro(measured * Fraction(density)) == micro(Fraction(quantity)):
+            return points, triangles
+        error = target - measured
+        gradient = [[Fraction(0)] * 3 for _ in points]
+        for a, b, c in triangles:
+            for i, p, q in ((a, points[b], points[c]), (b, points[c], points[a]),
+                            (c, points[a], points[b])):
+                p, q = list(map(Fraction, p)), list(map(Fraction, q))
+                gradient[i][0] += p[1] * q[2] - p[2] * q[1]
+                gradient[i][1] += p[2] * q[0] - p[0] * q[2]
+                gradient[i][2] += p[0] * q[1] - p[1] * q[0]
+        slope, i, k = max(
+            (abs(g) / 6, i, k) for i, row in enumerate(gradient) for k, g in enumerate(row)
+            if 0 < abs(g) / 6 * (Fraction(f32_step(abs(points[i][k]), 1)) - Fraction(abs(points[i][k])))
+            <= abs(error)
+        )
+        points[i][k] = f32(float(Fraction(points[i][k]) + error / (gradient[i][k] / 6)))
+    sys.exit(f"{ref} : aucun maillage float32 ne pèse exactement {quantity} kg")
 
 
 def build(seeds_dir: Path) -> bytes:
@@ -121,29 +186,32 @@ def build(seeds_dir: Path) -> bytes:
     }
 
     def add_view(data: bytes) -> int:
+        binary.extend(b"\0" * (-len(binary) % 4))
         document["bufferViews"].append(
             {"buffer": 0, "byteOffset": len(binary), "byteLength": len(data)}
         )
         binary.extend(data)
         return len(document["bufferViews"]) - 1
 
-    def add_box(sides, material: str) -> int:
-        half = [s / 2 for s in sides]
-        corners = [[half[axis] if i >> axis & 1 else -half[axis] for axis in range(3)]
-                   for i in range(8)]
+    def add_mesh(points, triangles, material: str) -> int:
         names = [m["name"] for m in document["materials"]]
         if material not in names:
-            document["materials"].append({"name": material})
+            colour = COLOURS[material]
+            entry = {"name": material, "pbrMetallicRoughness": {
+                "baseColorFactor": colour, "metallicFactor": 0.0, "roughnessFactor": 0.6}}
+            if colour[3] < 1:
+                entry["alphaMode"] = "BLEND"
+            document["materials"].append(entry)
             names.append(material)
         accessors = document["accessors"]
         accessors.append({
-            "bufferView": add_view(struct.pack("<24f", *sum(corners, []))),
-            "componentType": 5126, "count": 8, "type": "VEC3",
-            "min": [-h for h in half], "max": half,
+            "bufferView": add_view(struct.pack(f"<{3 * len(points)}f", *sum(points, []))),
+            "componentType": 5126, "count": len(points), "type": "VEC3",
+            "min": [min(c) for c in zip(*points)], "max": [max(c) for c in zip(*points)],
         })
         accessors.append({
-            "bufferView": add_view(struct.pack("<36H", *TRIANGLES)),
-            "componentType": 5123, "count": 36, "type": "SCALAR",
+            "bufferView": add_view(struct.pack(f"<{3 * len(triangles)}H", *sum(triangles, ()))),
+            "componentType": 5123, "count": 3 * len(triangles), "type": "SCALAR",
         })
         document["meshes"].append({"primitives": [{
             "attributes": {"POSITION": len(accessors) - 2},
@@ -161,13 +229,13 @@ def build(seeds_dir: Path) -> bytes:
             document["nodes"].append(node)
 
     for ref, (count, quantity, density) in pieces.items():
-        sides, centers = PIECES[ref]
+        shape, centers = PIECES[ref]
         if len(centers) != count:
             sys.exit(f"{ref} : {len(centers)} emplacements, la nomenclature en monte {count}")
-        mesh = add_box(solve(ref, sides, quantity, density), bom.parts[ref].material_ref)
+        mesh = add_mesh(*fit(ref, shape, quantity, density), bom.parts[ref].material_ref)
         add_nodes(ref, mesh, centers, {"carcost": {"ref": ref}})
-    for name, (sides, centers) in DECOR.items():
-        add_nodes(name, add_box([f32(s) for s in sides], "DECOR"), centers)
+    for name, (shape, material, centers) in DECOR.items():
+        add_nodes(name, add_mesh(*prism(*shape), material), centers)
 
     document["buffers"].append({"byteLength": len(binary)})
     text = json.dumps(document, ensure_ascii=False, separators=(",", ":")).encode("utf-8")

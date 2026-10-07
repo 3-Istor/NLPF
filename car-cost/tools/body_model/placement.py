@@ -1,75 +1,165 @@
-"""Où poser chaque pavé de la maquette du Multipla. Table relue à la main.
+"""Formes de la maquette du Multipla, en voiture-jouet. Table relue à la main.
 
-Repère glTF, en mètres : X vers la gauche, Y vers le haut, Z vers l'avant. La
-caisse va de Z = -2,0 (hayon) à Z = +2,0 (pare-chocs avant), X de ±0,94, et
-le sol est à Y = 0.
+Repère glTF, en mètres : X vers la gauche, Y vers le haut, Z vers l'avant. Le
+sol est à Y = 0, la caisse va de Z = -1,99 (hayon) à Z = +1,99 (pare-chocs).
 
-Chaque pièce donne ses côtés (X, Y, Z) et le centre de chaque emplacement de
-montage. Le côté `None` est l'épaisseur : le générateur la calcule pour que la
-masse mesurée vaille la quantité de matière de la nomenclature (R1). Les
-autres côtés sont des ordres de grandeur plausibles, pas des cotes réelles :
-la maquette est synthétique.
+Une forme est un polygone 2D extrudé, centré : `(polygone, largeur, axe)`.
+L'axe d'extrusion fixe le plan du polygone : « x » → (z, y), vue de profil ;
+« y » → (x, z), vue de dessus ; « z » → (x, y), vue de face. Chaque pièce
+donne sa forme en fonction d'une épaisseur t, et la translation de chaque
+emplacement de montage : le générateur cherche t pour que la masse mesurée
+vaille la quantité de matière de la nomenclature (R1). Les paires gauche et
+droite partagent une forme symétrique, posée par translation (pas de miroir).
+Cotes plausibles, pas constructeur : la maquette est synthétique.
 """
 
-FRONT_WHEELS, REAR_WHEELS = 1.33, -1.33
-FRONT_DOOR, REAR_DOOR = 0.55, -0.45
+import math
+
+
+def strip(points, t):
+    """Bande d'épaisseur t le long d'une polyligne, à gauche du sens de parcours."""
+    normals = []
+    for (a0, b0), (a1, b1) in zip(points, points[1:]):
+        length = math.hypot(a1 - a0, b1 - b0)
+        normals.append(((b0 - b1) / length, (a1 - a0) / length))
+    offset = []
+    for i, (a, b) in enumerate(points):
+        (u0, v0), (u1, v1) = normals[max(i - 1, 0)], normals[min(i, len(normals) - 1)]
+        scale = t / (1 + u0 * u1 + v0 * v1)  # onglet : épaisseur constante aux coudes
+        offset.append((a + (u0 + u1) * scale, b + (v0 + v1) * scale))
+    return list(points) + offset[::-1]
+
+
+def arc(r, n=10):
+    """Demi-cercle supérieur, de θ = 0 (avant) à θ = π (arrière)."""
+    return [(r * math.cos(math.pi * k / n), r * math.sin(math.pi * k / n)) for k in range(n + 1)]
+
+
+def ellipse(ra, rb, n=20):
+    """Sommets décalés d'un demi-pas : aucun ne tombe sur un axe (roue posée au-dessus du sol)."""
+    return [(ra * math.cos(2 * math.pi * (k + 0.5) / n), rb * math.sin(2 * math.pi * (k + 0.5) / n))
+            for k in range(n)]
+
+
+def rectangle(a, b):
+    return [(-a / 2, -b / 2), (a / 2, -b / 2), (a / 2, b / 2), (-a / 2, b / 2)]
+
+
+WHEEL_Z, WHEEL_Y, CUTOUT = 1.33, 0.31, 0.38
+WHEELS = [(z, WHEEL_Y) for z in (WHEEL_Z, -WHEEL_Z)]
+
+
+def cutout(zc):
+    """Passage de roue découpé dans le bas de caisse, parcouru d'arrière en avant."""
+    return ([(zc - CUTOUT, 0.22)] + [(zc + z, WHEEL_Y + y) for z, y in reversed(arc(CUTOUT))]
+            + [(zc + CUTOUT, 0.22)])
+
+
+# Profil latéral (z, y) sous la ceinture : aile avant qui suit le capot,
+# marche au pied du pare-brise, ceinture basse, chute du hayon.
+SIDE = ([(1.96, 0.79), (1.60, 0.87), (1.30, 0.895), (1.23, 1.06), (-1.94, 1.02),
+         (-1.97, 0.62), (-1.95, 0.30), (-1.80, 0.22)]
+        + cutout(-WHEEL_Z) + cutout(WHEEL_Z) + [(1.80, 0.22), (1.96, 0.32)])
+HOOD = [(1.99, 0.78), (1.88, 0.83), (1.70, 0.865), (1.50, 0.89), (1.30, 0.90)]
+COWL = [(1.30, 0.90), (1.27, 0.98), (1.24, 1.06), (1.14, 1.07)]  # la marche
+WINDSCREEN = [(1.15, 1.07), (0.38, 1.62)]
+ROOF = [(0.40, 1.625), (0.10, 1.66), (-0.60, 1.67), (-1.50, 1.665), (-1.90, 1.645), (-1.96, 1.60)]
+FRONT_BUMPER = [(0.93, 1.72), (0.925, 1.88), (0.85, 1.975), (0.70, 1.99),
+                (-0.70, 1.99), (-0.85, 1.975), (-0.925, 1.88), (-0.93, 1.72)]  # (x, z)
+FRONT_DOOR = [(0.94, 1.02), (0.03, 1.02), (0.03, 0.30), (0.08, 0.24), (0.89, 0.24), (0.94, 0.30)]
+
+
+def sides(x, y=0, z=0):
+    return [(x, y, z), (-x, y, z)]
+
+
+def at_wheels(x):
+    return [(s, WHEEL_Y, z) for z in (WHEEL_Z, -WHEEL_Z) for s in (x, -x)]
+
 
 PIECES = {
     # Structure
-    "CAR-PANEL-FLOOR": ((1.60, None, 3.20), [(0, 0.30, 0)]),
-    "CAR-PANEL-ROOF": ((1.60, None, 2.30), [(0, 1.66, -0.35)]),
-    "CAR-PANEL-SIDE": ((None, 1.20, 1.90), [(x, 0.95, -0.85) for x in (0.90, -0.90)]),
-    "CAR-BULKHEAD": ((1.60, 0.50, None), [(0, 0.75, 1.10)]),
-    "CAR-COWL": ((1.60, None, 0.20), [(0, 1.00, 1.05)]),
-    "CAR-PILLAR-A": ((None, 0.55, 0.10), [(x, 1.33, 0.95) for x in (0.89, -0.89)]),
-    "CAR-PILLAR-B": ((None, 0.55, 0.10), [(x, 1.33, 0.00) for x in (0.89, -0.89)]),
-    "CAR-PILLAR-C": ((None, 0.55, 0.10), [(x, 1.33, -1.40) for x in (0.89, -0.89)]),
-    "CAR-RAIL-FRONT": ((None, 0.12, 1.00), [(x, 0.42, 1.40) for x in (0.45, -0.45)]),
-    "CAR-RAIL-REAR": ((None, 0.12, 0.90), [(x, 0.42, -1.45) for x in (0.50, -0.50)]),
-    "CAR-WHEEL-ARCH": (
-        (None, 0.45, 0.75),
-        [(x, 0.55, z) for z in (FRONT_WHEELS, REAR_WHEELS) for x in (0.75, -0.75)],
-    ),
+    "CAR-PANEL-FLOOR": (lambda t: (rectangle(1.60, 2.90), t, "y"), [(0, 0.26, -0.30)]),
+    "CAR-PANEL-ROOF": (lambda t: (strip(ROOF, t), 1.84, "x"), [(0, 0, 0)]),
+    "CAR-PANEL-SIDE": (lambda t: (SIDE, t, "x"), sides(0.92)),
+    "CAR-BULKHEAD": (lambda t: (rectangle(1.60, 0.53), t, "z"), [(0, 0.60, 1.20)]),
+    "CAR-COWL": (lambda t: (strip(COWL, t), 1.84, "x"), [(0, 0, 0)]),
+    "CAR-PILLAR-A": (lambda t: (strip([(1.14, 1.06), (0.38, 1.62)], 0.07), t, "x"), sides(0.916)),
+    "CAR-PILLAR-B": (lambda t: (strip([(0.03, 1.02), (0.0, 1.64)], 0.08), t, "x"), sides(0.916)),
+    "CAR-PILLAR-C": (lambda t: (strip([(-1.36, 1.02), (-1.40, 1.64)], 0.08), t, "x"), sides(0.916)),
+    "CAR-RAIL-FRONT": (lambda t: (rectangle(1.00, 0.12), t, "x"), sides(0.45, 0.42, 1.40)),
+    "CAR-RAIL-REAR": (lambda t: (rectangle(0.90, 0.12), t, "x"), sides(0.50, 0.42, -1.45)),
+    "CAR-WHEEL-ARCH": (lambda t: (strip(arc(0.40), t), 0.26, "x"), at_wheels(0.79)),
     # Ouvrants
-    "CAR-HOOD-SHELL": ((1.60, None, 0.80), [(0, 0.95, 1.55)]),
-    "CAR-DOOR-SHELL-FRONT": ((None, 0.75, 1.00), [(x, 0.80, FRONT_DOOR) for x in (0.935, -0.935)]),
-    "CAR-DOOR-SHELL-REAR": ((None, 0.75, 0.95), [(x, 0.80, REAR_DOOR) for x in (0.935, -0.935)]),
-    "CAR-TAILGATE-SHELL": ((1.40, 0.60, None), [(0, 0.80, -2.00)]),
+    "CAR-HOOD-SHELL": (lambda t: (strip(HOOD, t), 1.84, "x"), [(0, 0, 0)]),
+    "CAR-DOOR-SHELL-FRONT": (lambda t: (FRONT_DOOR, t, "x"), sides(0.930)),
+    "CAR-DOOR-SHELL-REAR": (lambda t: ([(-z, y) for z, y in FRONT_DOOR], t, "x"), sides(0.930)),
+    "CAR-TAILGATE-SHELL": (
+        lambda t: (strip([(-1.965, 1.02), (-1.975, 0.80), (-1.985, 0.60)], t), 1.80, "x"),
+        [(0, 0, 0)],
+    ),
     "CAR-DOOR-SEAL": (
-        (None, 1.00, 0.03),
-        [(x, 0.95, z) for z in (0.03, -0.95) for x in (0.94, -0.94)] + [(0.70, 1.00, -2.00)],
+        lambda t: (rectangle(0.03, 0.72), t, "x"),
+        sides(0.895, 0.64, 0.91) + sides(0.895, 0.64, -0.91) + [(0.70, 0.62, -1.94)],
     ),
     # Vitrage
-    "CAR-GLASS-QUARTER": ((None, 0.45, 0.50), [(x, 1.35, -1.65) for x in (0.91, -0.91)]),
-    "CAR-GLASS-TAILGATE": ((1.30, 0.60, None), [(0, 1.35, -1.98)]),
-    # Pare-chocs et garnitures extérieures
-    "CAR-BUMPER-BEAM": ((1.50, 0.12, None), [(0, 0.45, z) for z in (1.90, -1.90)]),
-    "CAR-BUMPER-SKIN-FRONT": ((1.80, 0.35, None), [(0, 0.45, 1.98)]),
-    "CAR-BUMPER-SKIN-REAR": ((1.80, 0.35, None), [(0, 0.45, -1.98)]),
-    "CAR-GRILLE": ((1.00, 0.15, None), [(0, 0.78, 1.97)]),
-    "CAR-ARCH-TRIM": (
-        (None, 0.08, 0.80),
-        [(x, 0.80, z) for z in (FRONT_WHEELS, REAR_WHEELS) for x in (0.945, -0.945)],
+    "CAR-GLASS-QUARTER": (
+        lambda t: ([(-1.44, 1.03), (-1.93, 1.03), (-1.94, 1.60), (-1.44, 1.62)], t, "x"),
+        sides(0.910),
     ),
+    "CAR-GLASS-TAILGATE": (lambda t: (strip([(-1.955, 1.60), (-1.965, 1.03)], t), 1.80, "x"),
+                           [(0, 0, 0)]),
+    # Pare-chocs et garnitures extérieures
+    "CAR-BUMPER-BEAM": (lambda t: (rectangle(1.50, 0.12), t, "z"), [(0, 0.42, 1.90), (0, 0.42, -1.90)]),
+    "CAR-BUMPER-SKIN-FRONT": (lambda t: (strip(FRONT_BUMPER, t), 0.40, "y"), [(0, 0.42, 0)]),
+    "CAR-BUMPER-SKIN-REAR": (  # le même tracé tourné d'un demi-tour autour de Y
+        lambda t: (strip([(-x, -z) for x, z in FRONT_BUMPER], t), 0.40, "y"),
+        [(0, 0.42, 0)],
+    ),
+    "CAR-GRILLE": (
+        lambda t: ([(-0.48, -0.07), (0.48, -0.07), (0.50, 0), (0.48, 0.07), (-0.48, 0.07), (-0.50, 0)],
+                   t, "z"),
+        [(0, 0.70, 1.975)],
+    ),
+    "CAR-ARCH-TRIM": (lambda t: (strip(arc(0.44), 0.06), t, "x"), at_wheels(0.935)),
     # Habillage et faisceaux de porte
-    "INT-DOOR-PANEL-FRONT": ((None, 0.60, 0.90), [(x, 0.80, FRONT_DOOR) for x in (0.89, -0.89)]),
-    "INT-DOOR-PANEL-REAR": ((None, 0.60, 0.85), [(x, 0.80, REAR_DOOR) for x in (0.89, -0.89)]),
+    "INT-DOOR-PANEL-FRONT": (lambda t: (rectangle(0.80, 0.62), t, "x"), sides(0.89, 0.64, 0.485)),
+    "INT-DOOR-PANEL-REAR": (lambda t: (rectangle(0.78, 0.62), t, "x"), sides(0.89, 0.64, -0.485)),
     "ELE-HARNESS-DOOR": (
-        (None, 0.015, 0.60),
-        [(x, 0.95, z) for z in (FRONT_DOOR, REAR_DOOR) for x in (0.91, -0.91)],
+        lambda t: (rectangle(0.60, 0.015), t, "x"),
+        sides(0.905, 0.95, 0.485) + sides(0.905, 0.95, -0.485),
     ),
 }
 
-# Décor : sans `extras.carcost`, ignoré à l'import. Le Multipla se reconnaît à
-# ses deux étages d'optiques avant, l'un au pied du pare-brise.
+# Décor : sans `extras.carcost`, ignoré à l'import. Nom → (forme, matériau,
+# translations). Le Multipla se reconnaît à ses deux étages d'optiques avant,
+# le haut sur la marche au pied du pare-brise.
 DECOR = {
-    "Pare-brise": ((1.50, 0.70, 0.006), [(0, 1.35, 1.00)]),
-    "Rétroviseur": ((0.06, 0.12, 0.18), [(x, 1.15, 0.95) for x in (1.00, -1.00)]),
-    "Optique basse": ((0.30, 0.12, 0.05), [(x, 0.75, 1.97) for x in (0.65, -0.65)]),
-    "Optique haute": ((0.25, 0.08, 0.05), [(x, 1.08, 1.12) for x in (0.55, -0.55)]),
-    "Feu arrière": ((0.12, 0.40, 0.05), [(x, 1.05, -2.02) for x in (0.80, -0.80)]),
-    "Roue": (
-        (0.20, 0.60, 0.60),
-        [(x, 0.30, z) for z in (FRONT_WHEELS, REAR_WHEELS) for x in (0.80, -0.80)],
-    ),
+    "Pare-brise": ((strip(WINDSCREEN, 0.006), 1.80, "x"), "DECOR-GLASS", [(0, 0, 0)]),
+    "Vitre avant": (([(1.11, 1.05), (0.38, 1.61), (0.03, 1.62), (0.03, 1.03)], 0.005, "x"),
+                    "DECOR-GLASS", sides(0.910)),
+    "Vitre arrière": (([(-0.03, 1.03), (-0.03, 1.62), (-1.37, 1.63), (-1.37, 1.03)], 0.005, "x"),
+                      "DECOR-GLASS", sides(0.910)),
+    "Optique basse": ((ellipse(0.17, 0.065), 0.04, "z"), "DECOR-LIGHT", sides(0.69, 0.70, 1.975)),
+    "Optique haute": ((ellipse(0.11, 0.04), 0.03, "z"), "DECOR-LIGHT", sides(0.60, 0.98, 1.275)),
+    "Feu arrière": ((ellipse(0.07, 0.17), 0.02, "z"), "DECOR-TAIL-LIGHT", sides(0.81, 0.81, -1.99)),
+    "Rétroviseur": ((ellipse(0.06, 0.05), 0.10, "z"), "DECOR-TRIM", sides(0.90, 1.12, 1.02)),
+    "Pneu": ((ellipse(0.31, 0.31), 0.20, "x"), "DECOR-TYRE", at_wheels(0.78)),
+    "Jante": ((ellipse(0.19, 0.19), 0.21, "x"), "DECOR-RIM", at_wheels(0.78)),
+}
+
+# Couleur de base (RVBA linéaire) par matériau ; alpha < 1 → verre translucide.
+COLOURS = {
+    "MAT-STEEL-SHEET": [0.10, 0.36, 0.55, 1.0],
+    "MAT-PP-GRANULE": [0.06, 0.06, 0.07, 1.0],
+    "MAT-ABS-GRANULE": [0.10, 0.10, 0.11, 1.0],
+    "MAT-EPDM-RUBBER": [0.02, 0.02, 0.02, 1.0],
+    "MAT-GLASS-FLOAT": [0.45, 0.60, 0.70, 0.35],
+    "MAT-COPPER-WIRE": [0.72, 0.45, 0.20, 1.0],
+    "DECOR-GLASS": [0.45, 0.60, 0.70, 0.35],
+    "DECOR-LIGHT": [0.95, 0.95, 0.85, 1.0],
+    "DECOR-TAIL-LIGHT": [0.75, 0.05, 0.05, 1.0],
+    "DECOR-TRIM": [0.06, 0.06, 0.07, 1.0],
+    "DECOR-TYRE": [0.03, 0.03, 0.03, 1.0],
+    "DECOR-RIM": [0.75, 0.75, 0.78, 1.0],
 }
