@@ -16,7 +16,11 @@ La part propre à la pièce (`wobble`) évite que toutes les pièces d'un même
 profil dessinent la même courbe : quelques sinusoïdes de période 1 an, 1/2, 1/3,
 1/4, dont amplitudes et phases sont tirées d'une graine dérivée de la référence.
 Nulle au jour 0 (le prix part de sa référence) et sans saut au bouclage.
-Les bornes `year_min`/`year_max` du catalogue ne la comptent pas.
+
+Les bornes du catalogue (`year_min`, `year_max`) tiennent la courbe : la partie
+au-dessus de la référence est étirée pour que son sommet atteigne `year_max`,
+celle en dessous pour que son creux atteigne `year_min`. Le jour 0 reste à la
+référence, la forme propre à la pièce est gardée. Sans bornes, prix brut.
 
 Les poids viennent du catalogue (`drivers`), calculés à la génération du jeu de
 données : rien n'est deviné ici. Le change ne s'applique qu'entre GBP et EUR,
@@ -59,15 +63,19 @@ def _wobble_terms(ref: str) -> tuple[tuple[int, float, float], ...]:
     )
 
 
+def _wobble(ref: str, position: float) -> float:
+    angle = 2 * math.pi * position / DAYS
+    return sum(
+        amplitude * (math.sin(k * angle + phase) - math.sin(phase))
+        for k, amplitude, phase in _wobble_terms(ref)
+    )
+
+
 def wobble(ref: str, position: Decimal) -> Decimal:
     """La part du facteur propre à la pièce ; nulle sans référence."""
     if not ref:
         return Decimal(0)
-    angle = 2 * math.pi * float(position) / DAYS
-    return Decimal(repr(sum(
-        amplitude * (math.sin(k * angle + phase) - math.sin(phase))
-        for k, amplitude, phase in _wobble_terms(ref)
-    )))
+    return Decimal(repr(_wobble(ref, float(position))))
 
 
 class Market:
@@ -94,6 +102,11 @@ class Market:
         self.year_minutes = year_minutes
         self.clock = clock
         self.started = clock()
+        self._ratios = {
+            name: tuple(float(value / values[0]) for value in values)
+            for name, values in self.indices.items()
+        }
+        self._raw_ranges: dict[tuple[str, str], tuple[Decimal, Decimal]] = {}
 
     # ----------------------------------------------------------------- temps
 
@@ -133,7 +146,52 @@ class Market:
     # ------------------------------------------------------------------ prix
 
     def price(self, entry: dict, currency: str, position: Decimal, ref: str = "") -> Decimal:
-        """Le prix catalogue (pour `price_per` unités) à cette position."""
+        """Le prix catalogue (pour `price_per` unités) à cette position, ramené
+        dans les bornes annuelles du catalogue quand il en a."""
+        raw = self.raw_price(entry, currency, position, ref)
+        quote = entry["prices"][currency]
+        if not ref or "year_min" not in quote or "year_max" not in quote:
+            return raw
+        reference = Decimal(quote["reference"])
+        low, high = Decimal(quote["year_min"]), Decimal(quote["year_max"])
+        raw_low, raw_high = self._raw_range(entry, currency, ref)
+        if raw >= reference:
+            span = raw_high - reference
+            price = reference + (raw - reference) * (high - reference) / span if span else reference
+        else:
+            span = reference - raw_low
+            price = reference - (reference - raw) * (reference - low) / span if span else reference
+        # Entre deux jours, la courbe brute peut dépasser d'un cheveu ses valeurs journalières.
+        return min(max(price, low), high).quantize(SCALE)
+
+    def _raw_range(self, entry: dict, currency: str, ref: str) -> tuple[Decimal, Decimal]:
+        """Creux et sommet de l'année brute, jour par jour. En flottants, la même
+        formule que `raw_price` : dix fois plus rapide (un premier appel sur
+        2 000 pièces tient sous le timeout du client), écart effacé à l'arrondi."""
+        key = (ref, currency)
+        if key not in self._raw_ranges:
+            reference = float(entry["prices"][currency]["reference"])
+            drivers = [
+                (float(weight), self._ratios[name])
+                for name, weight in (entry.get("drivers") or {}).items()
+            ]
+            origin = entry.get("origin_currency")
+            fx = self._ratios[FX]
+            series = []
+            for day in range(DAYS):
+                factor = 1 + sum(w * (r[day] - 1) for w, r in drivers) + _wobble(ref, day)
+                if origin == "GBP" and currency == "EUR":
+                    factor *= fx[day]
+                elif origin == "EUR" and currency == "GBP":
+                    factor /= fx[day]
+                series.append(reference * factor)
+            self._raw_ranges[key] = tuple(
+                Decimal(repr(value)).quantize(SCALE) for value in (min(series), max(series))
+            )
+        return self._raw_ranges[key]
+
+    def raw_price(self, entry: dict, currency: str, position: Decimal, ref: str = "") -> Decimal:
+        """Le prix tiré des indices et de la part propre, avant les bornes."""
         reference = Decimal(entry["prices"][currency]["reference"])
         factor = self.factor(entry.get("drivers") or {}, position) + wobble(ref, position)
         origin = entry.get("origin_currency")

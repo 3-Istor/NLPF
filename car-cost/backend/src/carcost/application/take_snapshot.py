@@ -18,10 +18,12 @@ prix d'une pièce voisine. Le calcul qui la rencontrera sera incomplet.
 
 from __future__ import annotations
 
+import uuid
 from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 from typing import Sequence
+from zoneinfo import ZoneInfo
 
 from ..domain.prices import PriceSnapshot
 from .ports import PriceSource, PriceSourceError, Quote
@@ -31,6 +33,16 @@ from .ports import PriceSource, PriceSourceError, Quote
 #: (ambiguïté A5 du cadrage) : un seuil trop serré met tout en quarantaine et
 #: l'outil paraît cassé ; trop lâche, il avale n'importe quoi.
 DEVIATION_LIMIT = Decimal("0.5")
+
+
+#: L'heure lue dans l'identifiant est celle des utilisateurs, pas celle du serveur.
+SNAPSHOT_ID_ZONE = ZoneInfo("Europe/Paris")
+
+
+def new_snapshot_id(now: datetime) -> str:
+    """`snp-2026-10-06-1923-a1b2c3` : la minute de la prise se lit dans la liste ;
+    le suffixe aléatoire départage deux prises dans la même minute."""
+    return f"snp-{now.astimezone(SNAPSHOT_ID_ZONE):%Y-%m-%d-%H%M}-{uuid.uuid4().hex[:6]}"
 
 
 class NoPriceAvailable(Exception):

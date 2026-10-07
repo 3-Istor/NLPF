@@ -13,6 +13,7 @@ import pytest
 
 from carcost.application.ports import PriceSourceTimeout, Quote
 from carcost.application.take_snapshot import (
+    new_snapshot_id,
     NoPriceAvailable,
     SnapshotTaken,
     TookFallback,
@@ -149,3 +150,10 @@ class TestAgeAndStaleness:
 
         assert snapshot.status(NOW) is SnapshotStatus.STALE
         assert snapshot.prices["SCREW"] == Decimal("0.480000")
+
+
+def test_the_snapshot_id_carries_the_paris_minute_and_stays_unique():
+    now = datetime(2026, 10, 6, 17, 23, 59, tzinfo=timezone.utc)  # 19 h 23 à Paris, heure d'été
+    first, second = new_snapshot_id(now), new_snapshot_id(now)
+    assert first.startswith("snp-2026-10-06-1923-")
+    assert first != second

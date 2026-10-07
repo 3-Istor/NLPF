@@ -312,7 +312,7 @@ snapshots de calcul sont perdus.** Prendre un nouveau snapshot de prix ensuite
 ## Les tests
 
 ```bash
-# backend — 772 tests
+# backend — 774 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
 # front — 187 tests
@@ -321,7 +321,7 @@ cd car-cost/frontend && npm test
 
 Les soixante-six tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
-`706 passed, 66 skipped` hors ligne, `772 passed` avec la base chargée et
+`708 passed, 66 skipped` hors ligne, `774 passed` avec la base chargée et
 migrée jusqu'à 0008 (le démarrage de l'API rattrape les migrations
 manquantes). Les tests d'intégration qui écrivent le font dans une
 transaction annulée : un

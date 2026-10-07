@@ -7,7 +7,6 @@ l'on regarde le total, sinon le repli est silencieux (ADR-0003, mode de panne P2
 
 from __future__ import annotations
 
-import uuid
 from typing import Annotated
 
 from fastapi import FastAPI, Path, Query, Request
@@ -15,7 +14,7 @@ from pydantic import BaseModel, Field
 
 from ...application.import_body import price_origin
 from ...application.ports import PriceSnapshotNotFound, PriceSourceError
-from ...application.take_snapshot import TookFallback, snapshot_for_bom
+from ...application.take_snapshot import TookFallback, new_snapshot_id, snapshot_for_bom
 from .errors import error_response
 from .price_source import previous_for, price_source
 
@@ -93,7 +92,7 @@ def register_snapshot_routes(app: FastAPI, repositories) -> None:
         now = repositories.clock()
         outcome = snapshot_for_bom(
             source, bom, bom_version=origin, currency=payload.currency,
-            previous=previous, now=now, snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
+            previous=previous, now=now, snapshot_id=new_snapshot_id(now),
         )
         if isinstance(outcome, TookFallback):
             # Un snapshot daté d'aujourd'hui avec les prix d'hier ferait passer
@@ -118,7 +117,7 @@ def register_snapshot_routes(app: FastAPI, repositories) -> None:
             str,
             Path(
                 description="Identifiant `snp-…` obtenu avec `GET /api/v1/price-snapshots`.",
-                examples=["snp-7a9947ddac59"],
+                examples=["snp-2026-10-06-1923-7a9947"],
             ),
         ],
     ):

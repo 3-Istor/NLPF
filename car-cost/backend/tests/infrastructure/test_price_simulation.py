@@ -128,6 +128,19 @@ class TestMarket:
         assert one == [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]][::-1]
         assert abs(simulation.wobble("REF-A", Decimal(365))) < Decimal("1e-9")
 
+    def test_the_catalog_bounds_hold_the_curve(self, market):
+        """Le creux des douze mois touche `year_min`, le sommet `year_max`, le jour 0 la référence."""
+        bounded = {
+            **ENTRY,
+            "prices": {"EUR": {"reference": "100.000000", "year_min": "80.000000",
+                               "year_max": "130.000000"}},
+        }
+        prices = [Decimal(p["price"]) for p in market.history(bounded, "EUR", "REF-A")["points"]]
+        assert prices[-1] == Decimal("100.000000")  # aujourd'hui : le jour 0, au bout de la fenêtre glissante
+        assert min(prices) == Decimal("80.000000")
+        assert max(prices) == Decimal("130.000000")
+        assert Decimal(80) <= market.price(bounded, "EUR", Decimal("364.5"), "REF-A") <= 130
+
 
 class TestCatalogs:
     def test_the_four_boms_are_served_together(self):
