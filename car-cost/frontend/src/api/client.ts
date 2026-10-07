@@ -6,6 +6,8 @@
  */
 
 import type {
+  BodyChanges,
+  BodyImportResult,
   BomVersion,
   Calculation,
   PriceHistoryResponse,
@@ -17,6 +19,7 @@ import type {
   Comparison,
   Occurrence,
   Page,
+  PartCardData,
   ParameterAck,
   QuarantineJournal,
   SnapshotComparison,
@@ -33,6 +36,8 @@ export class ApiFailure extends Error {
     readonly code: string,
     message: string,
     readonly status: number,
+    /** Le détail de l'erreur, tel que l'API le sert (`faults`, `parts_without_price`…). */
+    readonly details?: Record<string, unknown>,
   ) {
     super(message);
   }
@@ -51,6 +56,7 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
       error?.code ?? "UNKNOWN",
       error?.message ?? response.statusText,
       response.status,
+      error?.details,
     );
   }
   // Une suppression répond 204, sans corps à lire.
@@ -120,6 +126,24 @@ export const api = {
 
   part: (version: string, partRef: string) =>
     call<Record<string, unknown>>(`/bom/${version}/parts/${partRef}`),
+
+  /** La fiche d'une pièce ; avec un calcul, ses coûts et quantités cumulées. */
+  partCard: (version: string, partRef: string, calculationId?: string | null) =>
+    call<PartCardData>(
+      `/bom/${encodeURIComponent(version)}/parts/${encodeURIComponent(partRef)}` +
+        (calculationId ? `?calculation_id=${encodeURIComponent(calculationId)}` : ""),
+    ),
+
+  /** Le `.glb` part tel quel, en corps brut : ni formulaire ni JSON. */
+  bodyImport: (version: string, file: Blob) =>
+    call<BodyImportResult>(`/bom/${encodeURIComponent(version)}/body-imports`, {
+      method: "POST",
+      body: file,
+      headers: { "Content-Type": "application/octet-stream" },
+    }),
+
+  bodyChanges: (version: string) =>
+    call<BodyChanges>(`/bom/${encodeURIComponent(version)}/body-changes`),
 
   createScenario: (body: {
     bom_version: string;

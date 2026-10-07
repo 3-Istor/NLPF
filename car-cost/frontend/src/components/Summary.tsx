@@ -28,6 +28,8 @@ type Props = {
   staleReason: string | null;
   busy: boolean;
   failure: string | null;
+  /** Une variante de carrosserie n'a pas de CO₂ propre (ADR-0017). */
+  hideCo2?: boolean;
   onRecalculate: () => void;
   onGoToPath: (path: string) => void;
   onGoToPart: (partRef: string) => void;
@@ -49,6 +51,7 @@ export function Summary({
   staleReason,
   busy,
   failure,
+  hideCo2 = false,
   onRecalculate,
   onGoToPath,
   onGoToPart,
@@ -58,7 +61,7 @@ export function Summary({
   const [chosenMetric, setMetric] = useState<"cost" | "co2">("cost");
   // Sans `total_co2`, les CO₂ par système sont des zéros de remplissage : on
   // ne propose pas de les regarder.
-  const hasCo2 = calculation?.total_co2 != null;
+  const hasCo2 = !hideCo2 && calculation?.total_co2 != null;
   const metric = hasCo2 ? chosenMetric : "cost";
 
   return (
@@ -124,7 +127,7 @@ export function Summary({
 
           {/* Le CO₂ peut être incomplet quand le coût ne l'est pas (prix forcé) :
               il porte son propre avertissement, sous son propre total. */}
-          {calculation.total_co2 === null ? (
+          {hideCo2 ? null : calculation.total_co2 === null ? (
             <p className="total total--co2">
               <span className="total__label">Empreinte carbone</span>
               <span className="hint hint--flush">

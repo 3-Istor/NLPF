@@ -241,6 +241,23 @@ vi.mock("./api/client", () => ({
       return found;
     }),
     part: vi.fn(async () => ({ suppliers: [] })),
+    partCard: vi.fn(async (_version: string, partRef: string) => ({
+      part_ref: partRef,
+      label: "Fiche servie",
+      composition: [],
+      material_ref: null,
+      material_quantity_kg: null,
+      mass_kg: null,
+    })),
+    bodyChanges: vi.fn(async (version: string) => ({
+      version,
+      parent_version: VERSION,
+      changes: [],
+      cost: null,
+      cost_status: "NO_PRICES",
+      material_mass_delta_kg: "0",
+    })),
+    bodyImport: vi.fn(),
     search: vi.fn(),
     deriveScenario: vi.fn(async (snapshotId: string, name: string) => {
       const created = {
@@ -866,5 +883,56 @@ describe("prix en direct ou figés", () => {
     await waitFor(() => expect(api.takePriceSnapshot).toHaveBeenCalledWith(VERSION, "EUR"));
     await waitFor(() => expect(api.calculate).toHaveBeenCalledWith("scn-1"));
     expect((screen.getByLabelText("Snapshot") as HTMLInputElement).checked).toBe(true);
+  });
+});
+
+describe("le modèle de carrosserie", () => {
+  it("selecting a row opens its part card", async () => {
+    await start();
+    fireEvent.click(chevron("V"));
+    fireEvent.click(await screen.findByText("Châssis"));
+
+    expect(await screen.findByText("Fiche servie")).toBeInTheDocument();
+    expect(api.partCard).toHaveBeenCalledWith(VERSION, "CHS", "calc-1");
+  });
+
+  it("opens the created variant", async () => {
+    const variant = `${VERSION}+1a2b3c4d`;
+    vi.mocked(api.bodyImport).mockResolvedValue({
+      status: "CREATED",
+      message: "variante créée",
+      parent_version: VERSION,
+      variant: { id: variant, label: "Multipla — capot alu" },
+      scenario_id: "scn-v",
+      changes: [],
+      cost: null,
+      cost_status: "NO_PRICES",
+      material_mass_delta_kg: "0",
+    });
+    await start();
+    const listed = (await api.bomVersions()).items;
+    vi.mocked(api.bomVersions).mockResolvedValueOnce({
+      items: [
+        ...listed,
+        {
+          id: variant,
+          label: "Multipla — capot alu",
+          root_part_ref: "VEH",
+          part_count: 475,
+          edge_count: 690,
+          validated_at: "2026-10-07T08:00:00+00:00",
+          is_synthetic: true,
+          reference_labour_rate: "42.00",
+          parent_version_id: VERSION,
+        },
+      ],
+    });
+
+    const file = new File([new Uint8Array([1, 2, 3])], "capot-alu.glb");
+    fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(variant));
+    expect(api.bodyImport).toHaveBeenCalledWith(VERSION, file);
+    expect(await screen.findByRole("tab", { name: "Variante" })).toBeInTheDocument();
   });
 });

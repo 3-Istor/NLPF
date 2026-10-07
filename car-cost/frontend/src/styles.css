@@ -448,3 +448,17 @@ button { font: inherit; }
 .node-status { margin: 4px 0 4px 34px; color: var(--muted); font-size: 12px; list-style: none; }
 .node-status--danger { color: var(--danger); }
 .scenario-bar__error { color: var(--danger); font-size: 12px; }
+
+/* Colonne de droite : import, onglets, synthèse ou variante, fiche pièce. */
+.side { width: 380px; flex: none; overflow: auto; background: var(--panel); border-left: 1px solid var(--line); }
+.side .summary { width: auto; border-left: none; overflow: visible; }
+.side__import, .variant, .part-card { padding: 8px 16px; }
+.part-card { border-top: 1px solid var(--line); }
+.part-card dl, .variant__totals { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 4px 0; }
+.part-card dt, .variant__totals dt { color: var(--muted); }
+.part-card dd, .variant__totals dd { margin: 0; }
+.variant__changes { width: 100%; font-size: 12px; border-collapse: collapse; }
+.variant__changes th, .variant__changes td { text-align: left; padding: 2px 4px; vertical-align: top; }
+@media (max-width: 900px) {
+  .side { width: auto; border-left: none; border-bottom: 1px solid var(--line); order: -1; }
+}

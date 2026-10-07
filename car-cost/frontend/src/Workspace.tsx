@@ -12,16 +12,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiFailure } from "./api/client";
 import type {
+  BodyChanges,
+  BodyImportResult,
   Calculation,
   CalculationSnapshot,
   CalculationSnapshotSummary,
+  PartCardData,
   QuarantineJournal,
   Scenario,
   TreeLine,
 } from "./api/types";
 import { AfterSalesToggle } from "./components/AfterSalesToggle";
+import { BodyChangesPanel } from "./components/BodyChangesPanel";
 import { LabourRateInput } from "./components/LabourRateInput";
 import { DecisionDialog } from "./components/DecisionDialog";
+import { PartCard } from "./components/PartCard";
 import { PriceModeBar, type PriceMode } from "./components/PriceModeBar";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { SearchBar } from "./components/SearchBar";
@@ -32,7 +37,7 @@ import { TreeToolbar } from "./components/TreeToolbar";
 import { rowId, Tree } from "./components/Tree";
 import { WhereUsed } from "./components/WhereUsed";
 import { byPart, Refusals } from "./quarantine";
-import { useTreeState } from "./tree/useTreeState";
+import { useTreeState, type TreeState } from "./tree/useTreeState";
 
 /**
  * Le scénario et la ligne sélectionnée vivent dans l'URL : un F5 ou un lien
@@ -58,9 +63,21 @@ interface WorkspaceProps {
   version: string;
   /** Taux horaire proposé à la création d'un scénario sur cette nomenclature. */
   labourRate: string;
+  /** Une variante de carrosserie : son CO₂ est masqué, son écart est lu à l'API. */
+  isVariant: boolean;
+  /** Ouvre une autre nomenclature, par exemple la variante qu'un import vient de créer. */
+  onOpenVersion: (id: string) => void;
 }
 
-export function Workspace({ version, labourRate }: WorkspaceProps) {
+/** La ligne d'arbre d'un chemin, si sa page est chargée. De la navigation, pas un calcul. */
+function lineAt(root: TreeLine, state: TreeState, path: string | null): TreeLine | null {
+  if (path === null) return null;
+  if (path === root.path) return root;
+  const entry = state.childrenOf(path.slice(0, path.lastIndexOf("/")));
+  return entry?.status === "ready" ? (entry.page.items.find((l) => l.path === path) ?? null) : null;
+}
+
+export function Workspace({ version, labourRate, isVariant, onOpenVersion }: WorkspaceProps) {
   const SCENARIO_DEFAULTS = {
     bom_version: version,
     display_currency: "EUR",
@@ -88,6 +105,13 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
   const [liveAt, setLiveAt] = useState<string | null>(null);
   // La recherche en cours, surlignée dans l'arbre.
   const [query, setQuery] = useState("");
+  // Variante de carrosserie : l'écart servi par l'API et le dernier import tenté.
+  const [changes, setChanges] = useState<BodyChanges | null>(null);
+  const [outcome, setOutcome] = useState<BodyImportResult | null>(null);
+  const [problem, setProblem] = useState<unknown>(null);
+  const [importing, setImporting] = useState(false);
+  const [tab, setTab] = useState<"summary" | "variant">("summary");
+  const [card, setCard] = useState<{ path: string; data: PartCardData } | null>(null);
   const [initial] = useState(readLocation);
   const tree = useTreeState({
     version,
@@ -95,9 +119,56 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
     snapshotId: openSnapshot?.id ?? null,
     initialSelected: initial.node,
   });
+  const selectedLine = root ? lineAt(root, tree, tree.selected) : null;
+  const selectedPath = selectedLine?.path ?? null;
+  const selectedRef = selectedLine?.part_ref ?? null;
+  const calculationId = calculation?.id ?? null;
+  const change = changes?.changes.find((item) => item.part_ref === selectedRef);
+
+  useEffect(() => {
+    if (!isVariant) return;
+    let alive = true;
+    api
+      .bodyChanges(version)
+      .then((served) => alive && setChanges(served))
+      .catch((error) => alive && setProblem(error));
+    return () => {
+      alive = false;
+    };
+  }, [isVariant, version]);
+
+  // La fiche suit la ligne sélectionnée et le calcul affiché.
+  useEffect(() => {
+    if (selectedPath === null || selectedRef === null) return;
+    let alive = true;
+    api
+      .partCard(version, selectedRef, calculationId)
+      .then((data) => alive && setCard({ path: selectedPath, data }))
+      .catch(() => alive && setCard(null));
+    return () => {
+      alive = false;
+    };
+  }, [version, selectedPath, selectedRef, calculationId]);
+
+  async function importBody(file: File) {
+    setImporting(true);
+    setProblem(null);
+    setTab("variant");
+    try {
+      const result = await api.bodyImport(version, file);
+      setOutcome(result);
+      if (result.status === "CREATED" && result.variant) onOpenVersion(result.variant.id);
+    } catch (error) {
+      setProblem(error);
+    } finally {
+      setImporting(false);
+    }
+  }
+
   // La ligne de l'URL, à rouvrir puis à amener à l'écran une fois l'arbre là.
   const [pendingReveal, setPendingReveal] = useState(initial.node);
   const pendingScroll = useRef(initial.node);
+  const importInput = useRef<HTMLInputElement>(null);
 
   // Démarrage : on reprend le scénario de l'URL s'il appartient à cette
   // nomenclature, sinon le plus récent, sans rien signaler (un lien vers un
@@ -572,23 +643,65 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
           )}
         </section>
 
-        <Summary
-          calculation={calculation}
-          journal={journal}
-          state={
-            openSnapshot
-              ? "FROZEN"
-              : priceMode === "LIVE"
-                ? "LIVE"
-                : (scenario?.calculation_state ?? "NEVER_RUN")
-          }
-          staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
-          busy={busy}
-          failure={failure}
-          onRecalculate={recalculate}
-          onGoToPath={goToPath}
-          onGoToPart={goToPart}
-        />
+        <div className="side">
+          <div className="side__import">
+            <button type="button" disabled={importing} onClick={() => importInput.current?.click()}>
+              Importer une variante (.glb)
+            </button>
+            <input
+              ref={importInput}
+              type="file"
+              accept=".glb"
+              hidden
+              aria-label="Fichier .glb"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.target.value = "";
+                if (file) void importBody(file);
+              }}
+            />
+          </div>
+          {(isVariant || outcome || problem !== null) && (
+            <div className="shell__tabs" role="tablist" aria-label="Panneau de droite">
+              {(["summary", "variant"] as const).map((choice) => (
+                <button
+                  key={choice}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === choice}
+                  onClick={() => setTab(choice)}
+                >
+                  {choice === "summary" ? "Synthèse" : "Variante"}
+                </button>
+              ))}
+            </div>
+          )}
+          {tab === "variant" ? (
+            <BodyChangesPanel changes={changes} outcome={outcome} failure={problem} onOpen={onOpenVersion} />
+          ) : (
+            <Summary
+              calculation={calculation}
+              journal={journal}
+              state={
+                openSnapshot
+                  ? "FROZEN"
+                  : priceMode === "LIVE"
+                    ? "LIVE"
+                    : (scenario?.calculation_state ?? "NEVER_RUN")
+              }
+              staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
+              busy={busy}
+              failure={failure}
+              hideCo2={isVariant}
+              onRecalculate={recalculate}
+              onGoToPath={goToPath}
+              onGoToPart={goToPart}
+            />
+          )}
+          {selectedLine && card?.path === selectedLine.path && (
+            <PartCard card={card.data} line={selectedLine} change={change} />
+          )}
+        </div>
       </main>
 
       {deciding && scenario && (

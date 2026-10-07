@@ -344,6 +344,8 @@ export interface BomVersion {
   is_synthetic: boolean;
   /** Taux horaire proposé à la création d'un scénario, ou null s'il est inconnu. */
   reference_labour_rate: string | null;
+  /** Absent (et non null) quand la version n'est pas une variante de carrosserie. */
+  parent_version_id?: string;
 }
 
 /** Un snapshot de prix enregistré, tel que la liste le résume. */
@@ -411,4 +413,65 @@ export interface PriceHistoryResponse {
   now: { at: string; price: string };
   snapshots: { id: string; taken_at: string; price: string; origin: string }[];
   is_synthetic: boolean;
+}
+
+/** Une pièce de carrosserie modifiée ou nouvelle, avec ses écarts déjà calculés par l'API. */
+export interface PartChange {
+  part_ref: string;
+  label: string;
+  kind: "MODIFIED" | "NEW";
+  material_before: string | null;
+  material_after: string;
+  mass_before_kg: string | null;
+  mass_after_kg: string;
+  mass_delta_kg: string;
+  cumulative_quantity: string;
+  /** Montants nus : la devise est celle de `cost`. `null` sans prix, ou pour une pièce nouvelle (avant). */
+  unit_cost_before: string | null;
+  unit_cost_after: string | null;
+}
+
+/** `null` sans snapshot de prix : `cost_status` vaut alors `NO_PRICES`. */
+export interface BodyCost {
+  snapshot_id: string;
+  total_before: Money;
+  total_after: Money;
+  delta: Money;
+}
+
+export interface BodyChanges {
+  version: string;
+  parent_version: string | null;
+  changes: PartChange[];
+  cost: BodyCost | null;
+  cost_status: "OK" | "NO_PRICES";
+  material_mass_delta_kg: string;
+}
+
+export interface BodyImportResult extends Omit<BodyChanges, "version"> {
+  status: "CREATED" | "ALREADY_IMPORTED" | "NO_CHANGE";
+  message: string;
+  variant: { id: string; label: string } | null;
+  scenario_id: string | null;
+}
+
+export interface ImportFault {
+  code: string;
+  message: string;
+  object: string;
+  part_ref: string | null;
+}
+
+/** La fiche d'une pièce ; les clés de calcul n'existent qu'avec `calculation_id`. */
+export interface PartCardData {
+  part_ref: string;
+  label: string;
+  material_ref: string | null;
+  material_quantity_kg: string | null;
+  mass_kg: string | null;
+  composition: { part_ref: string; label: string; quantity: string; unit: string }[];
+  cumulative_quantity?: string | null;
+  unit_cost?: Money | null;
+  own_unit_cost?: Money | null;
+  own_contribution?: Money | null;
 }

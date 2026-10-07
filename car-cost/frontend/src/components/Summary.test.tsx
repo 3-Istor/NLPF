@@ -257,3 +257,25 @@ describe("empreinte carbone", () => {
     expect(onGoToPath).toHaveBeenCalledWith("VEH/CAI/BODY-PANEL");
   });
 });
+
+describe("une variante de carrosserie", () => {
+  it("hides CO₂ on a variant", () => {
+    render(
+      <Summary
+        calculation={degraded}
+        journal={null}
+        state="UP_TO_DATE"
+        staleReason={null}
+        busy={false}
+        failure={null}
+        hideCo2
+        onRecalculate={() => {}}
+        onGoToPath={() => {}}
+        onGoToPart={() => {}}
+      />,
+    );
+
+    expect(screen.getByText("Coût de fabrication")).toBeInTheDocument();
+    expect(screen.queryByText(/CO₂|CO2/)).toBeNull();
+  });
+});

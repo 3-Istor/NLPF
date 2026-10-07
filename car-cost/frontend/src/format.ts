@@ -38,6 +38,16 @@ export function co2(value: Co2 | string | null | undefined): string {
   return `${rounded} kg CO₂e`;
 }
 
+/** Une masse en kg, deux décimales. `null` : inconnue, jamais zéro. */
+export function mass(value: string | null | undefined): string {
+  if (value === null || value === undefined) return "—";
+  const rounded = Number.parseFloat(value).toLocaleString("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${rounded} kg`;
+}
+
 /** Une quantité garde ses décimales utiles, et rien de plus. */
 export function quantity(value: string | undefined, unit?: string): string {
   if (value === undefined) return "—";

@@ -102,6 +102,17 @@ export function App() {
     setPage(next);
   }
 
+  /** Une variante vient d'être créée : relire la liste pour qu'elle y figure, puis l'ouvrir. */
+  async function openCreated(id: string) {
+    try {
+      const { items } = await api.bomVersions();
+      setVersions(ordered(items));
+    } catch (error) {
+      setListError(describe(error));
+    }
+    choose(id);
+  }
+
   function choose(next: string) {
     writeBom(next);
     setVersion(next);
@@ -162,6 +173,8 @@ export function App() {
           key={version}
           version={version}
           labourRate={current?.reference_labour_rate ?? FALLBACK_LABOUR_RATE}
+          isVariant={current?.parent_version_id !== undefined}
+          onOpenVersion={openCreated}
         />
       )}
     </div>
