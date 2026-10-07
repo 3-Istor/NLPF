@@ -454,6 +454,8 @@ button { font: inherit; }
 .side .summary { width: auto; border-left: none; overflow: visible; }
 .side__import, .variant, .part-card { padding: 8px 16px; }
 .part-card { border-top: 1px solid var(--line); }
+.model3d__canvas { height: 360px; }
+.model3d__canvas canvas { display: block; cursor: pointer; }
 .part-card dl, .variant__totals { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 4px 0; }
 .part-card dt, .variant__totals dt { color: var(--muted); }
 .part-card dd, .variant__totals dd { margin: 0; }

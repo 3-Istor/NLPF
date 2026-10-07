@@ -9,7 +9,7 @@
  * est celui des positions à l'écran.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiFailure } from "./api/client";
 import type {
   BodyChanges,
@@ -36,8 +36,12 @@ import { TreeHeader } from "./components/TreeHeader";
 import { TreeToolbar } from "./components/TreeToolbar";
 import { rowId, Tree } from "./components/Tree";
 import { WhereUsed } from "./components/WhereUsed";
+import { refOfPath } from "./model3d/selection";
 import { byPart, Refusals } from "./quarantine";
 import { useTreeState, type TreeState } from "./tree/useTreeState";
+
+// La vue 3D et `three` forment leur propre chunk, chargé à l'ouverture de l'onglet.
+const ModelViewer = lazy(() => import("./model3d/ModelViewer").then((m) => ({ default: m.ModelViewer })));
 
 /**
  * Le scénario et la ligne sélectionnée vivent dans l'URL : un F5 ou un lien
@@ -110,7 +114,10 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
   const [outcome, setOutcome] = useState<BodyImportResult | null>(null);
   const [problem, setProblem] = useState<unknown>(null);
   const [importing, setImporting] = useState(false);
-  const [tab, setTab] = useState<"summary" | "variant">("summary");
+  const [tab, setTab] = useState<"summary" | "variant" | "3d">("summary");
+  // Le `.glb` du véhicule : `undefined` tant que l'onglet 3D n'a pas été ouvert, `null` sans modèle.
+  const [model, setModel] = useState<ArrayBuffer | null>();
+  const [modelFailure, setModelFailure] = useState<string | null>(null);
   const [card, setCard] = useState<{ path: string; data: PartCardData } | null>(null);
   const [initial] = useState(readLocation);
   const tree = useTreeState({
@@ -136,6 +143,14 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
       alive = false;
     };
   }, [isVariant, version]);
+
+  useEffect(() => {
+    if (tab !== "3d" || model !== undefined) return;
+    api
+      .model(version)
+      .then(setModel)
+      .catch((error) => setModelFailure(describe(error)));
+  }, [tab, model, version]);
 
   // La fiche suit la ligne sélectionnée et le calcul affiché.
   useEffect(() => {
@@ -661,9 +676,10 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
               }}
             />
           </div>
-          {(isVariant || outcome || problem !== null) && (
-            <div className="shell__tabs" role="tablist" aria-label="Panneau de droite">
-              {(["summary", "variant"] as const).map((choice) => (
+          <div className="shell__tabs" role="tablist" aria-label="Panneau de droite">
+            {(["summary", "3d", "variant"] as const)
+              .filter((choice) => choice !== "variant" || isVariant || outcome || problem !== null)
+              .map((choice) => (
                 <button
                   key={choice}
                   type="button"
@@ -671,12 +687,26 @@ export function Workspace({ version, labourRate, isVariant, onOpenVersion }: Wor
                   aria-selected={tab === choice}
                   onClick={() => setTab(choice)}
                 >
-                  {choice === "summary" ? "Synthèse" : "Variante"}
+                  {choice === "summary" ? "Synthèse" : choice === "3d" ? "3D" : "Variante"}
                 </button>
               ))}
-            </div>
-          )}
-          {tab === "variant" ? (
+          </div>
+          {tab === "3d" ? (
+            model ? (
+              <Suspense fallback={<p className="hint">chargement du modèle 3D…</p>}>
+                <ModelViewer
+                  model={model}
+                  selectedRef={refOfPath(tree.selected)}
+                  changes={changes?.changes ?? []}
+                  onPick={(ref) => void goToPart(ref)}
+                />
+              </Suspense>
+            ) : (
+              <p className="hint">
+                {model === null ? "pas de modèle 3D pour ce véhicule" : (modelFailure ?? "chargement du modèle 3D…")}
+              </p>
+            )
+          ) : tab === "variant" ? (
             <BodyChangesPanel changes={changes} outcome={outcome} failure={problem} onOpen={onOpenVersion} />
           ) : (
             <Summary

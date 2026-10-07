@@ -145,6 +145,14 @@ export const api = {
   bodyChanges: (version: string) =>
     call<BodyChanges>(`/bom/${encodeURIComponent(version)}/body-changes`),
 
+  /** Le `.glb` du véhicule, ou `null` s'il n'en a pas (404 `MODEL_NOT_FOUND`). */
+  model: async (version: string): Promise<ArrayBuffer | null> => {
+    const response = await fetch(`/api/v1/bom/${encodeURIComponent(version)}/model`);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new ApiFailure("UNKNOWN", response.statusText, response.status);
+    return response.arrayBuffer();
+  },
+
   createScenario: (body: {
     bom_version: string;
     name: string;
