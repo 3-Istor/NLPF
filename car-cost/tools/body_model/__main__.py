@@ -98,23 +98,34 @@ def volume(points, triangles) -> Fraction:
     return total / 6
 
 
-def prism(polygon, width: float, axis: str):
+def prism(polygon, width: float, axis: str, bulge=(0, 0)):
     """Polygone extrudé sur `width`, centré : sommets float32, faces vers l'extérieur.
 
-    Les faces planes partagent exactement les arêtes du contour avec les
-    parois : le maillage est fermé.
+    Avec `bulge`, l'extrusion est découpée en tranches, chacune décalée dans
+    le plan du polygone de bulge × (1 − u⁴), u allant de -1 à 1 sur la
+    largeur : panneau bombé au milieu, bords adoucis. Chaque tranche garde
+    l'aire du polygone, donc volume = aire × largeur comme sans galbe
+    (Cavalieri) ; les parois entre tranches sont des parallélogrammes.
+    Les faces partagent exactement leurs arêtes : le maillage est fermé.
     """
     if sum(a0 * b1 - a1 * b0 for (a0, b0), (a1, b1) in zip(polygon, polygon[1:] + polygon[:1])) < 0:
         polygon = polygon[::-1]
     place = {"x": lambda a, b, e: (e, b, a), "y": lambda a, b, e: (a, e, b),
              "z": lambda a, b, e: (a, b, e)}[axis]
-    n = len(polygon)
-    points = [[f32(c) for c in place(a, b, e)] for e in (-width / 2, width / 2) for a, b in polygon]
+    n, slices = len(polygon), 12 if any(bulge) else 1
+    points = []
+    for step in range(slices + 1):
+        u = 2 * step / slices - 1
+        lift = 1 - u * u * u * u
+        points += [[f32(c) for c in place(a + bulge[0] * lift, b + bulge[1] * lift, u * width / 2)]
+                   for a, b in polygon]
     caps = triangulate(polygon)
-    triangles = [(i, k, j) for i, j, k in caps] + [(n + i, n + j, n + k) for i, j, k in caps]
-    for i in range(n):
-        j = (i + 1) % n
-        triangles += [(i, j, n + j), (i, n + j, n + i)]
+    top = n * slices
+    triangles = [(i, k, j) for i, j, k in caps] + [(top + i, top + j, top + k) for i, j, k in caps]
+    for base in range(0, top, n):
+        for i in range(n):
+            j = (i + 1) % n
+            triangles += [(base + i, base + j, base + n + j), (base + i, base + n + j, base + n + i)]
     if volume(points, triangles) < 0:
         triangles = [(i, k, j) for i, j, k in triangles]
     return points, triangles
