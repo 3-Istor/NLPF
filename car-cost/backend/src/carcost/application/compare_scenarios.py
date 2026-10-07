@@ -52,10 +52,6 @@ def compare_calculations(
         raise IncomparableCalculations(
             "les scénarios doivent être calculés avec le même snapshot de prix"
         )
-    if calculation_a.bom_version != calculation_b.bom_version:
-        raise IncomparableCalculations(
-            "les scénarios doivent utiliser la même version de nomenclature"
-        )
     if calculation_a.display_currency != calculation_b.display_currency:
         raise IncomparableCalculations(
             "les scénarios doivent utiliser la même devise d'affichage"
