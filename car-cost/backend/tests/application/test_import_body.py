@@ -361,3 +361,56 @@ def test_body_changes_on_incomplete_prices_names_the_parts(world, static):
 
     assert caught.value.parts_without_price == NO_PRICE
     assert world.writes() == before
+
+
+def test_changes_carry_cumulative_quantities_and_unit_costs(world):
+    outcome = world.run(b"capot-alu")
+
+    [hood] = outcome.changes
+    assert hood.cumulative_quantity == 1
+    assert (hood.unit_cost_before, hood.unit_cost_after) == (Decimal("23.8324016"), Decimal("22.499254092617"))
+    assert outcome.material_mass_delta_kg == Decimal("-7.347771")
+    assert world.changes_of(outcome.variant_id).changes == outcome.changes
+    assert world.changes_of(outcome.variant_id).material_mass_delta_kg == Decimal("-7.347771")
+
+
+def test_a_new_part_has_no_unit_cost_before(world):
+    outcome = world.run(b"aileron")
+
+    [spoiler] = outcome.changes
+    assert (spoiler.part_ref, spoiler.unit_cost_before) == ("BODY-SPOILER", None)
+    assert spoiler.unit_cost_after == Decimal("6.5233862")
+    assert outcome.material_mass_delta_kg == Decimal("3.15")
+
+
+def test_without_price_snapshot_no_unit_costs(static):
+    outcome = World(static, priced=False).run(b"capot-alu")
+
+    [hood] = outcome.changes
+    assert (hood.unit_cost_before, hood.unit_cost_after) == (None, None)
+    assert hood.cumulative_quantity == 1
+    assert outcome.material_mass_delta_kg == Decimal("-7.347771")
+
+
+def test_aluminium_body_control_values(world):
+    from real_multipla import SEEDS
+
+    outcome = world.run((SEEDS / "demo" / "carrosserie-alu.glb").read_bytes())
+
+    assert outcome.cost.delta == Decimal("-8.332166788091")
+    assert outcome.cost.total_after == Decimal("13277.328834381909")
+    assert outcome.material_mass_delta_kg == Decimal("-45.923567")
+    by_ref = {c.part_ref: c for c in outcome.changes}
+    assert len(by_ref) == 5
+    front = by_ref["CAR-DOOR-SHELL-FRONT"]
+    assert front.cumulative_quantity == 2
+    assert (front.unit_cost_before, front.unit_cost_after) == (Decimal("24.6021942"), Decimal("23.483303222933"))
+    assert (by_ref["CAR-DOOR-SHELL-REAR"].unit_cost_before, by_ref["CAR-DOOR-SHELL-REAR"].unit_cost_after) == (
+        Decimal("22.2998798"), Decimal("21.276214273426"),
+    )
+    assert (by_ref["CAR-PANEL-ROOF"].unit_cost_before, by_ref["CAR-PANEL-ROOF"].unit_cost_after) == (
+        Decimal("25.1858732"), Decimal("23.709888983464"),
+    )
+    assert (by_ref["CAR-TAILGATE-SHELL"].unit_cost_before, by_ref["CAR-TAILGATE-SHELL"].unit_cost_after) == (
+        Decimal("24.3300872"), Decimal("23.09216514311"),
+    )

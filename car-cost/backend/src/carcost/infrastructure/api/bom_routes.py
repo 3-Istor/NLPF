@@ -68,6 +68,12 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                         if summary.reference_labour_rate is not None
                         else None
                     ),
+                    # Absente hors variante, comme `suppliers` sur un ensemble.
+                    **(
+                        {"parent_version_id": summary.parent_version_id}
+                        if summary.parent_version_id
+                        else {}
+                    ),
                 }
                 for summary in repository.versions()
             ]
@@ -261,7 +267,7 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
         }
 
     @app.get("/api/v1/bom/{version}/parts/{part_ref}")
-    def read_part(version: str, part_ref: str):
+    def read_part(version: str, part_ref: str, calculation_id: str | None = Query(None)):
         """La fiche d'une pièce, et ses options de sourcing si elle est achetée.
 
         Sur un ensemble fabriqué, la clé `suppliers` est **absente** — pas vide.
@@ -283,7 +289,34 @@ def register_bom_routes(app: FastAPI, repositories) -> None:
                 str(part.labour_minutes) if part.labour_minutes is not None else None
             ),
             "occurrence_count": where_used(bom, part_ref, limit=1).total,
+            "material_ref": part.material_ref,
+            "material_quantity_kg": (
+                _text(dict(bom.children_of(part_ref)).get(part.material_ref)) if part.material_ref else None
+            ),
+            "mass_kg": _text(part.mass_kg),
+            "composition": [
+                {
+                    "part_ref": child,
+                    "label": bom.parts[child].label,
+                    "quantity": str(quantity),
+                    "unit": bom.parts[child].unit,
+                }
+                for child, quantity in bom.children_of(part_ref)
+            ],
         }
+        if calculation_id is not None:
+            calculation = repositories.calculations.get(calculation_id)
+            line = calculation.lines_by_ref.get(part_ref)
+            currency = calculation.display_currency
+            payload.update(
+                {
+                    "cumulative_quantity": _text(line and line.cumulative_quantity),
+                    "unit_cost": _money(line and line.full_unit_cost, currency),
+                    "own_unit_cost": _money(line and line.own_unit_cost, currency),
+                    "own_contribution": _money(line and line.own_contribution, currency),
+                    "price_status": calculation.price_status_of(part_ref).value,
+                }
+            )
         if part.is_purchased and repositories.sourcing is not None:
             sourcing = repositories.sourcing.load(version)
             payload["suppliers"] = [
@@ -399,6 +432,10 @@ def _money(amount: Decimal | None, currency: str) -> dict | None:
     if amount is None:
         return None
     return {"amount": str(amount), "currency": currency}
+
+
+def _text(value: Decimal | None) -> str | None:
+    return None if value is None else str(value)
 
 
 def _decimal(value: Decimal) -> str:

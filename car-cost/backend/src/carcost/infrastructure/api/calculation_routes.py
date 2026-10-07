@@ -29,6 +29,7 @@ from ...application.recommend_sourcing import (
 from ...application.browse_bom import where_used
 from ...application.calculation_issues import calculation_issues
 from ...application.calculation_state import scope_label, state_of
+from ...application.import_body import price_origin
 from ...application.explain_calculation import (
     AssemblyBreakdown,
     CatalogueBreakdown,
@@ -829,10 +830,11 @@ def _report_payload(report, query: SourcingQuery, accepted: set, currency: str) 
 
 def _snapshot_or_none(repositories, bom_version: str):
     """Le dernier snapshot **de cette nomenclature** : celui d'une autre
-    laisserait toutes les pièces sans prix (ADR-0015)."""
+    laisserait toutes les pièces sans prix (ADR-0015). Une variante prend celui
+    de l'origine de sa filiation (ADR-0017)."""
     if not repositories.snapshots:
         return None
-    return repositories.snapshots.latest(bom_version)
+    return repositories.snapshots.latest(price_origin(bom_version, repositories.bom))
 
 
 def _snapshot(repositories, snapshot_id: str | None, bom_version: str):

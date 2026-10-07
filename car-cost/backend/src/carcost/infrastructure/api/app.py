@@ -15,6 +15,7 @@ from fastapi import FastAPI, Request
 
 from ...application.browse_bom import PathNotFound
 from ...application.ports import (
+    BodyModelRepository,
     BomRepository,
     BomVersionNotFound,
     BomVersionNotValidated,
@@ -28,10 +29,12 @@ from ...application.ports import (
     ScenarioNotFound,
     ScenarioRepository,
     SourcingRepository,
+    VariantWriter,
 )
 from ...application.take_snapshot import NoPriceAvailable
 from ..live_calculations import LiveCalculations, WithLiveCalculations
 from .bom_routes import register_bom_routes
+from .body_routes import register_body_routes
 from .calculation_routes import register_calculation_routes
 from .calculation_snapshot_routes import register_calculation_snapshot_routes
 from .errors import error_response
@@ -51,6 +54,9 @@ class Repositories:
     scenarios: ScenarioRepository | None = None
     calculations: CalculationRepository | None = None
     calculation_snapshots: CalculationSnapshotRepository | None = None
+    #: Le modèle 3D de chaque version, et l'écriture d'une variante importée (ADR-0017).
+    models: BodyModelRepository | None = None
+    variants: VariantWriter | None = None
     clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
     #: L'API de prix, interrogée en direct : mode direct, figer les prix,
     #: historique d'une pièce. None : ces routes répondent qu'elle manque.
@@ -123,6 +129,7 @@ def create_app(repositories: Repositories) -> FastAPI:
     register_snapshot_routes(app, repositories)
     register_calculation_snapshot_routes(app, repositories)
     register_bom_routes(app, repositories)
+    register_body_routes(app, repositories)
 
     return app
 

@@ -13,6 +13,7 @@ from typing import Annotated
 from fastapi import FastAPI, Path, Query, Request
 from pydantic import BaseModel, Field
 
+from ...application.import_body import price_origin
 from ...application.ports import PriceSnapshotNotFound, PriceSourceError
 from ...application.take_snapshot import TookFallback, snapshot_for_bom
 from .errors import error_response
@@ -87,10 +88,11 @@ def register_snapshot_routes(app: FastAPI, repositories) -> None:
     def take_price_snapshot(payload: NewPriceSnapshot):
         source = price_source(repositories)
         bom = repositories.bom.load(payload.bom_version)
-        previous = previous_for(repositories, payload.bom_version, payload.currency)
+        origin = price_origin(payload.bom_version, repositories.bom)
+        previous = previous_for(repositories, origin, payload.currency)
         now = repositories.clock()
         outcome = snapshot_for_bom(
-            source, bom, bom_version=payload.bom_version, currency=payload.currency,
+            source, bom, bom_version=origin, currency=payload.currency,
             previous=previous, now=now, snapshot_id=f"snp-{uuid.uuid4().hex[:12]}",
         )
         if isinstance(outcome, TookFallback):

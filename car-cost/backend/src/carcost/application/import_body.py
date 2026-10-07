@@ -11,7 +11,7 @@ d'écart : jamais 0 €.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import astuple, dataclass
 from decimal import Decimal
 from hashlib import sha256
 
@@ -37,6 +37,16 @@ class IncompletePrices(Exception):
 
 
 @dataclass(frozen=True)
+class CostedChange(PartChange):
+    """Un changement, avec ce que le serveur lit pour l'écran : jamais le navigateur."""
+
+    cumulative_quantity: Decimal
+    #: `None` sans snapshot, et avant pour une pièce nouvelle.
+    unit_cost_before: Decimal | None = None
+    unit_cost_after: Decimal | None = None
+
+
+@dataclass(frozen=True)
 class CostDelta:
     snapshot_id: str
     total_before: Decimal
@@ -51,18 +61,21 @@ class ImportOutcome:
     variant_id: str | None
     variant_label: str | None
     scenario_id: str | None
-    changes: tuple[PartChange, ...]
+    changes: tuple[CostedChange, ...]
     cost: CostDelta | None
     cost_status: str  # "OK" | "NO_PRICES"
+    #: Écart de quantité de matière des pièces mesurées (R1), fixations non comprises.
+    material_mass_delta_kg: Decimal
 
 
 @dataclass(frozen=True)
 class BodyChanges:
     version: str
     parent_version: str | None
-    changes: tuple[PartChange, ...]
+    changes: tuple[CostedChange, ...]
     cost: CostDelta | None
     cost_status: str
+    material_mass_delta_kg: Decimal
 
 
 def price_origin(version: str, boms) -> str:
@@ -88,7 +101,7 @@ def import_body(
     reference = _priced(parent, _neutral("body-import-a", version, summary), sourcing.load(version), snapshot, now)
     if plan is None:
         cost = _delta(reference, reference)
-        return ImportOutcome("NO_CHANGE", version, None, None, None, (), cost, _status(cost))
+        return ImportOutcome("NO_CHANGE", version, None, None, None, (), cost, _status(cost), Decimal(0))
 
     digest = sha256(data).hexdigest()
     variant_id = f"{version}+{digest[:8]}"
@@ -99,9 +112,10 @@ def import_body(
         variant = boms.load(variant_id)
         priced = _priced(variant, _neutral("body-import-b", variant_id, summary), sourcing.load(version), snapshot, now)
         cost = _delta(reference, priced)
+        changes = _costed(diff_versions(parent, variant), variant, reference, priced)
         return ImportOutcome(
-            "ALREADY_IMPORTED", version, variant_id, label, None,
-            diff_versions(parent, variant), cost, _status(cost),
+            "ALREADY_IMPORTED", version, variant_id, label, None, changes, cost, _status(cost),
+            _mass_delta(changes),
         )
 
     scenario = Scenario(
@@ -115,23 +129,26 @@ def import_body(
     scenarios.create(scenario)
     if priced is not None:
         calculations.save(priced)
-    return ImportOutcome("CREATED", version, variant_id, label, scenario.id, plan.changes, cost, _status(cost))
+    changes = _costed(plan.changes, plan.bom, reference, priced)
+    return ImportOutcome(
+        "CREATED", version, variant_id, label, scenario.id, changes, cost, _status(cost), _mass_delta(changes),
+    )
 
 
 def body_changes(version: str, *, boms, sourcing, snapshots, clock) -> BodyChanges:
     variant = boms.load(version)
     parent_id = _summary(version, boms).parent_version_id
     if parent_id is None:
-        return BodyChanges(version, None, (), None, "OK")
+        return BodyChanges(version, None, (), None, "OK", Decimal(0))
     parent = boms.load(parent_id)
     summary = _summary(parent_id, boms)
     snapshot = snapshots.latest(price_origin(version, boms))
     now = clock()
-    cost = _delta(
-        _priced(parent, _neutral("body-changes-a", parent_id, summary), sourcing.load(parent_id), snapshot, now),
-        _priced(variant, _neutral("body-changes-b", version, summary), sourcing.load(version), snapshot, now),
-    )
-    return BodyChanges(version, parent_id, diff_versions(parent, variant), cost, _status(cost))
+    before = _priced(parent, _neutral("body-changes-a", parent_id, summary), sourcing.load(parent_id), snapshot, now)
+    after = _priced(variant, _neutral("body-changes-b", version, summary), sourcing.load(version), snapshot, now)
+    cost = _delta(before, after)
+    changes = _costed(diff_versions(parent, variant), variant, before, after)
+    return BodyChanges(version, parent_id, changes, cost, _status(cost), _mass_delta(changes))
 
 
 def _summary(version: str, boms):
@@ -160,6 +177,27 @@ def _delta(a: Calculation | None, b: Calculation | None) -> CostDelta | None:
         raise IncompletePrices(tuple(sorted(set(a.parts_without_price) | set(b.parts_without_price))), a.snapshot_id)
     comparison = compare_calculations(a, b)
     return CostDelta(comparison.snapshot_id, comparison.total_a, comparison.total_b, comparison.cost_delta)
+
+
+def _costed(changes, bom: Bom, before: Calculation | None, after: Calculation | None) -> tuple[CostedChange, ...]:
+    cumulative = {ref: Decimal(0) for ref in bom.parts}
+    cumulative[bom.root_ref] = Decimal(1)
+    for ref in bom.topological_order():
+        for child, quantity in bom.children_of(ref):
+            cumulative[child] += cumulative[ref] * quantity
+
+    def unit_costs(calculation):
+        return {} if calculation is None else {l.part_ref: l.full_unit_cost for l in calculation.lines}
+
+    costs_before, costs_after = unit_costs(before), unit_costs(after)
+    return tuple(
+        CostedChange(*astuple(c), cumulative[c.part_ref], costs_before.get(c.part_ref), costs_after.get(c.part_ref))
+        for c in changes
+    )
+
+
+def _mass_delta(changes) -> Decimal:
+    return sum((c.mass_delta_kg * c.cumulative_quantity for c in changes), Decimal(0))
 
 
 def _status(cost: CostDelta | None) -> str:

@@ -87,6 +87,10 @@ Paramètres `limit` (défaut 50, maximum 500) et `offset`. Réponse :
 | `CALCULATION_SNAPSHOT_MISMATCH` | 422 | Lignes d'arbre demandées avec un `calculation_id` qui n'est pas celui du `calculation_snapshot_id` (§2.3) |
 | `SCENARIO_HAS_SNAPSHOTS` | 409 | Suppression d'un scénario qui porte des snapshots de calcul ; `details.snapshots` les nomme (§3.6) |
 | `SNAPSHOT_SETTINGS_NOT_APPLICABLE` | 422 | Repartir d'un snapshot de calcul dont un réglage copié ne s'applique plus ; `details.parts` nomme chaque pièce, `[{part_ref, path, reason}]`, et aucun scénario n'est créé (§3.11) |
+| `MODEL_NOT_FOUND` | 404 | La version n'a pas de modèle 3D (§2.7) |
+| `BODY_IMPORT_REJECTED` | 422 | Fichier 3D refusé ; `details.faults` les liste toutes, `[{code, message, object, part_ref}]` (§2.7) |
+| `VARIANT_ID_COLLISION` | 409 | Même identifiant de variante, empreinte différente (§2.7) |
+| `INCOMPLETE_CALCULATION` | 409 | Import ou écart de carrosserie sur un calcul incomplet ; `details.parts_without_price` nomme les pièces, `details.snapshot_id` le snapshot ; rien n'est écrit (§2.7) |
 | `NO_PRICE_SNAPSHOT` | 409 | Aucun snapshot disponible, même périmé |
 | `PRICE_SNAPSHOT_NOT_FOUND` | 404 | Identifiant de snapshot inconnu (journal de quarantaine, ou `price_snapshot_id` d'un calcul) |
 | `CALCULATION_FAILED` | 500 | Échec interne ; le calcul est persisté avec `status = "FAILED"` |
@@ -112,6 +116,8 @@ Toute réponse de calcul porte : `bom_version`, `price_snapshot_id`, `rules_vers
 ```
 
 `is_synthetic: true` est **toujours** renvoyé et affiché : les données sont plausibles mais inventées.
+
+Une variante importée (§2.7) porte aussi `parent_version_id` ; la clé est **absente** des autres versions.
 
 Une version pas encore validée est listée avec `validated_at: null` : l'écran peut dire pourquoi
 elle ne s'ouvre pas. Une version validée ne change plus (ADR-0013).
@@ -271,6 +277,59 @@ est `purchased` — la liste de ses fournisseurs et, pour chacun, ses usines :
 
 Sur une pièce `manufactured`, la clé `suppliers` est **absente** — pas vide : le panneau de saisie ne
 doit pas pouvoir proposer un fournisseur sur un ensemble (ADR-0008).
+
+Toujours présents : `material_ref` (ou `null`), `material_quantity_kg` (la quantité de l'arête vers la
+matière, en chaîne, ou `null`), `mass_kg` et `composition` = `[{part_ref, label, quantity, unit}]`
+(enfants directs et quantité par unité, sans calcul).
+
+Avec `?calculation_id=<id>` (404 `CALCULATION_NOT_FOUND` si inconnu), les grandeurs **de la pièce** sont
+lues dans la ligne de ce calcul, sans recalcul : `cumulative_quantity`, `unit_cost`, `own_unit_cost`,
+`own_contribution` (la seule qui se somme au total), toutes `{amount, currency}` en chaînes sauf la
+quantité, et `price_status`. Sans `calculation_id`, ces clés sont **absentes**, pas `null`.
+
+### 2.7 Variante de carrosserie : `body-imports`, `model`, `body-changes` (ADR-0017)
+
+`POST /bom/{bom_version}/body-imports` — corps **brut** (un `.glb`, `application/octet-stream`), pas
+de formulaire. Une variante est calculée sur le snapshot de prix de l'**origine** de sa filiation.
+`201` si la variante est créée, `200` si le fichier était déjà importé (`ALREADY_IMPORTED`, « déjà
+importé ») ou ne change rien (`NO_CHANGE`, « aucun changement »).
+
+```json
+{ "status": "CREATED", "message": "variante créée", "parent_version": "bom-multipla-2026-09-22",
+  "variant": { "id": "bom-multipla-2026-09-22+1a2b3c4d", "label": "…" }, "scenario_id": "scn-…",
+  "changes": [ { "part_ref": "CAR-HOOD-SHELL", "label": "…", "kind": "MODIFIED",
+    "material_before": "MAT-STEEL-SHEET", "material_after": "MAT-ALU-SHEET",
+    "mass_before_kg": "11.2", "mass_after_kg": "3.852229", "mass_delta_kg": "-7.347771",
+    "cumulative_quantity": "1", "unit_cost_before": "23.832401600000",
+    "unit_cost_after": "22.499254092617" } ],
+  "material_mass_delta_kg": "-7.347771",
+  "cost": { "snapshot_id": "snp-…", "total_before": { "amount": "…", "currency": "EUR" },
+    "total_after": { "amount": "…", "currency": "EUR" },
+    "delta": { "amount": "-1.333147507383", "currency": "EUR" } },
+  "cost_status": "OK" }
+```
+
+- Tous les nombres sont des **chaînes**, sans arrondi. `variant` et `scenario_id` valent `null` sans
+  nouvelle variante ; un écart nul s'écrit `"0"`.
+- `unit_cost_before` et `unit_cost_after` sont les coûts unitaires complets de la pièce, `null` sans
+  snapshot (`cost_status: "NO_PRICES"`, `cost: null`) ; `unit_cost_before` est `null` pour une pièce
+  `NEW`.
+- `material_mass_delta_kg` est la somme de `mass_delta_kg × cumulative_quantity` : l'écart de
+  **quantité de matière** des pièces mesurées, fixations non comprises.
+- `422 BODY_IMPORT_REJECTED` : fautes du fichier, y compris un fichier illisible (`INVALID_MODEL_FILE`).
+- `409 INCOMPLETE_CALCULATION` : le fichier est valide, mais le snapshot ne couvre pas toutes les
+  pièces ; le message nomme les pièces, `details.parts_without_price` les liste triées. Il faut figer
+  des prix complets (§5.1), pas corriger le fichier.
+
+`GET /bom/{bom_version}/model` : `200`, `model/gltf-binary`, les octets du modèle de la version ;
+`404 MODEL_NOT_FOUND` sinon.
+
+`GET /bom/{bom_version}/body-changes` : `{version, parent_version, changes, cost, cost_status,
+material_mass_delta_kg}`, au même format. `parent_version` vaut `null` hors variante, avec
+`changes: []`. Mêmes `404` et `409 INCOMPLETE_CALCULATION`.
+
+Un calcul (§4.1) et « Figer les prix » (§5.1) sur une variante prennent le snapshot de l'origine ;
+celui que `POST /price-snapshots` enregistre porte la nomenclature d'origine.
 
 ---
 
