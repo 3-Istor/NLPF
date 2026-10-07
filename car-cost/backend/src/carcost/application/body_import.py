@@ -92,14 +92,23 @@ def plan_variant(parent: Bom, model: BodyModel) -> VariantPlan | None:
     for obj in pieces:
         if isinstance(obj.spec, Mapping) and isinstance(obj.spec.get("ref"), str):
             groups.setdefault(obj.spec["ref"], []).append(obj)
+    unmeasurable = {"INVALID_SPEC", "MISSING_SPEC", "UNKNOWN_MATERIAL", "MATERIAL_WITHOUT_DENSITY"}
     for ref, objects in groups.items():
-        first = objects[0]
-        for other in objects[1:]:
-            if other.mesh_index != first.mesh_index or (
-                ref not in parent.parts and other.spec.get("parts") != first.spec.get("parts")
-            ):
-                faults.append(_fault("OCCURRENCES_DIFFER", other, "maillage ou fixations différents des autres emplacements"))
-                break
+        if any(f.part_ref == (ref or None) and f.code in unmeasurable for f in faults):
+            continue  # masse incalculable, la faute est déjà rendue
+        first, *others = objects
+        masses = [measured_mass(o.volume_m3, parent.parts[o.materials[0]].density_kg_m3) for o in objects]
+        for other, mass in zip(others, masses[1:]):
+            if other.materials != first.materials:
+                why = f"matière {other.materials[0]} au lieu de {first.materials[0]}"
+            elif mass != masses[0]:
+                why = f"masse {mass} kg au lieu de {masses[0]} kg"
+            elif ref not in parent.parts and other.spec.get("parts") != first.spec.get("parts"):
+                why = "fixations différentes des autres emplacements"
+            else:
+                continue
+            faults.append(_fault("OCCURRENCES_DIFFER", other, why))
+            break
     if faults:
         raise BodyImportRejected(faults)
 
