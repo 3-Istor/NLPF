@@ -860,7 +860,8 @@ catalogues des quatre nomenclatures.
 GET /history?ref=VALH-BOM-0006-PEAU-EXT&currency=EUR
 ```
 
-L'année jour par jour (`points`, 365), l'instant présent (`now`), la référence, le profil
+Les 365 jours simulés qui finissent aujourd'hui (`points` ; le marché boucle, les jours d'avant le
+1er janvier sont datés de l'année précédente), l'instant présent (`now`), la référence, le profil
 (`profile`, `drivers`) et la devise du fournisseur (`origin_currency`). Pièce non cotée : `404`.
 
 ### 5.5 `GET /bom/{bom_version}/parts/{part_ref}/price-history?currency=EUR`

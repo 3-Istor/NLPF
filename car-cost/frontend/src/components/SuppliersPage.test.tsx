@@ -49,9 +49,9 @@ vi.mock("../api/client", () => ({
       origin_currency: "GBP",
       reference: "58554.000000",
       points: [
-        { date: "2026-01-01", price: "58554.000000" },
-        { date: "2026-01-02", price: "60000.000000" },
-        { date: "2026-01-03", price: "55000.000000" },
+        { date: "2025-12-31", price: "58554.000000" },
+        { date: "2026-01-01", price: "60000.000000" },
+        { date: "2026-01-02", price: "55000.000000" },
       ],
       now: { at: "2026-01-02T12:00:00+00:00", price: "57500.000000" },
       snapshots: [{ id: "snp-1", taken_at: "2026-10-02T09:00:00+00:00", price: "58554.000000", origin: "API" }],
@@ -86,10 +86,13 @@ describe("SuppliersPage", () => {
     fireEvent.click(await screen.findByText("VALH-BOM-0309"));
     await waitFor(() => expect(api.priceHistory).toHaveBeenCalledWith(VERSION, "VALH-BOM-0309", "EUR"));
     const chart = await screen.findByRole("img");
+    // Les douze mois qui finissent maintenant, sans légende « référence » sur l'axe.
+    expect(within(chart).queryByText("référence")).not.toBeInTheDocument();
+    expect(within(chart).getByText("janv.")).toBeInTheDocument();
     expect(chart.getAttribute("aria-label")).toMatch(/de 55 000,00 € à 60 000,00 €/);
     expect(new URLSearchParams(window.location.search).get("part")).toBe("VALH-BOM-0309");
-    const facts = screen.getByText("Plus haut de l'année").nextElementSibling as HTMLElement;
-    expect(within(facts).getByText(/2026-01-02/)).toBeInTheDocument();
+    const facts = screen.getByText("Plus haut sur 12 mois").nextElementSibling as HTMLElement;
+    expect(within(facts).getByText(/2026-01-01/)).toBeInTheDocument();
     const frozen = screen.getByRole("heading", { name: "Prix figés (snapshots)" })
       .parentElement as HTMLElement;
     expect(within(frozen).getByText("snp-1")).toBeInTheDocument();

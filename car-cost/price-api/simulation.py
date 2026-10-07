@@ -144,15 +144,20 @@ class Market:
         return (reference * factor).quantize(SCALE)
 
     def history(self, entry: dict, currency: str, ref: str = "") -> dict:
-        """Un point par jour simulé, et l'instant présent."""
+        """Les 365 jours simulés qui finissent aujourd'hui, et l'instant présent.
+
+        Le marché boucle sur une année : un jour d'avant le 1er janvier est
+        daté de l'année précédente et coté comme le même jour de cette année-là.
+        """
         now = self.position()
+        today = int(now)
         return {
             "points": [
                 {
                     "date": (self.start_date + timedelta(days=day)).isoformat(),
-                    "price": str(self.price(entry, currency, Decimal(day), ref)),
+                    "price": str(self.price(entry, currency, Decimal(day % DAYS), ref)),
                 }
-                for day in range(DAYS)
+                for day in range(today - DAYS + 1, today + 1)
             ],
             "now": {
                 "at": self.moment(now).isoformat(),

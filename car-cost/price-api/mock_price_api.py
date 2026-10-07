@@ -14,7 +14,8 @@ reproductible.
 
 Il sert les catalogues des quatre nomenclatures (le Multipla et les trois
 Valhalla) et fait varier leurs prix sur une année simulée (`simulation.py`).
-`/history` rend cette année jour par jour, pour le graphe d'une pièce.
+`/history` rend les 365 jours simulés qui finissent aujourd'hui (le marché boucle :
+les jours d'avant le 1er janvier sont datés de l'année précédente), pour le graphe d'une pièce.
 
 Bibliothèque standard seule : un simulateur ne mérite pas une dépendance, et
 celui-ci doit pouvoir démarrer sur n'importe quelle machine de l'équipe.

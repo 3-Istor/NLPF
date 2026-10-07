@@ -69,7 +69,7 @@ button.link { background: none; border: none; padding: 0; cursor: pointer; }
 .price-chart svg { width: 100%; height: auto; display: block; }
 .price-chart__line { fill: none; stroke: var(--accent); stroke-width: 1.6; }
 .price-chart__grid { stroke: var(--line); stroke-width: 1; }
-.price-chart__reference { stroke: var(--muted); stroke-dasharray: 4 3; }
+.price-chart__axis-line { stroke: var(--muted); stroke-width: 1; }
 .price-chart__today { stroke: var(--warn); stroke-dasharray: 2 2; }
 .price-chart__dot { fill: var(--warn); }
 .price-chart__axis { font-size: 10px; fill: var(--muted); }
