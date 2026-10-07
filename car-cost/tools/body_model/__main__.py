@@ -26,7 +26,7 @@ from pathlib import Path
 
 from carcost.infrastructure.seed_loader import seed_bom
 
-from .placement import COLOURS, DECOR, PIECES
+from .placement import COLOURS, DECOR, MIRRORED, PIECES, flank
 
 FILE_NAME = "body_multipla.glb"
 ROOT = "CAR-ASSY"
@@ -98,37 +98,103 @@ def volume(points, triangles) -> Fraction:
     return total / 6
 
 
+def close(points, caps, contour, size: int):
+    """Solide fermé à couches de `size` sommets : `caps` (triangles du sens
+    trigonométrique, comme `contour`) ferment la première et la dernière
+    couche, des parois relient les couches successives le long du contour.
+    Les faces partagent exactement leurs arêtes. Orienté vers l'extérieur."""
+    top = len(points) - size
+    triangles = [(i, k, j) for i, j, k in caps] + [(top + i, top + j, top + k) for i, j, k in caps]
+    for base in range(0, top, size):
+        for p, q in zip(contour, contour[1:] + contour[:1]):
+            triangles += [(base + p, base + q, base + size + q), (base + p, base + size + q, base + size + p)]
+    if volume(points, triangles) < 0:
+        triangles = [(i, k, j) for i, j, k in triangles]
+    return points, triangles
+
+
 def prism(polygon, width: float, axis: str, bulge=(0, 0)):
-    """Polygone extrudé sur `width`, centré : sommets float32, faces vers l'extérieur.
+    """Polygone extrudé sur `width`, centré, en sommets float32.
 
     Avec `bulge`, l'extrusion est découpée en tranches, chacune décalée dans
     le plan du polygone de bulge × (1 − u⁴), u allant de -1 à 1 sur la
     largeur : panneau bombé au milieu, bords adoucis. Chaque tranche garde
     l'aire du polygone, donc volume = aire × largeur comme sans galbe
     (Cavalieri) ; les parois entre tranches sont des parallélogrammes.
-    Les faces partagent exactement leurs arêtes : le maillage est fermé.
     """
     if sum(a0 * b1 - a1 * b0 for (a0, b0), (a1, b1) in zip(polygon, polygon[1:] + polygon[:1])) < 0:
         polygon = polygon[::-1]
     place = {"x": lambda a, b, e: (e, b, a), "y": lambda a, b, e: (a, e, b),
              "z": lambda a, b, e: (a, b, e)}[axis]
-    n, slices = len(polygon), 12 if any(bulge) else 1
+    slices = 12 if any(bulge) else 1
     points = []
     for step in range(slices + 1):
         u = 2 * step / slices - 1
         lift = 1 - u * u * u * u
         points += [[f32(c) for c in place(a + bulge[0] * lift, b + bulge[1] * lift, u * width / 2)]
                    for a, b in polygon]
-    caps = triangulate(polygon)
-    top = n * slices
-    triangles = [(i, k, j) for i, j, k in caps] + [(top + i, top + j, top + k) for i, j, k in caps]
-    for base in range(0, top, n):
-        for i in range(n):
-            j = (i + 1) % n
-            triangles += [(base + i, base + j, base + n + j), (base + i, base + n + j, base + n + i)]
-    if volume(points, triangles) < 0:
-        triangles = [(i, k, j) for i, j, k in triangles]
-    return points, triangles
+    return close(points, triangulate(polygon), list(range(len(polygon))), len(polygon))
+
+
+def sheet(columns, t: float, rows: int = 8):
+    """Tôle de flanc : grille (z, y) de colonnes `(z, bas, haut)` aux z croissants,
+    d'épaisseur t selon X, déportée vers +X de `flank(y)`.
+
+    Les deux faces sont la même surface décalée de t selon X : volume = aire
+    du profil × t, exactement comme une tôle plane (Cavalieri).
+    """
+    grid = [(z, low + (high - low) * j / rows) for z, low, high in columns for j in range(rows + 1)]
+    points = [[f32(flank(y) + e), f32(y), f32(z)] for e in (-t / 2, t / 2) for z, y in grid]
+    at = lambda i, j: i * (rows + 1) + j  # noqa: E731
+    m = len(columns)
+    caps = [tri for i in range(m - 1) for j in range(rows)
+            for tri in ((at(i, j), at(i + 1, j), at(i + 1, j + 1)), (at(i, j), at(i + 1, j + 1), at(i, j + 1)))]
+    contour = ([at(i, 0) for i in range(m)] + [at(m - 1, j) for j in range(1, rows + 1)]
+               + [at(i, rows) for i in range(m - 2, -1, -1)] + [at(0, j) for j in range(rows - 1, 0, -1)])
+    return close(points, caps, contour, len(grid))
+
+
+def mesh(shape):
+    """Maillage d'une forme de placement.py : tôle de flanc ou polygone extrudé."""
+    return sheet(*shape[1:]) if shape[0] == "sheet" else prism(*shape)
+
+
+def mirror(points, triangles):
+    """Reflet X → -X, exact en float32 ; l'ordre inversé garde le volume, positif et égal."""
+    return [[-x, y, z] for x, y, z in points], [(i, k, j) for i, j, k in triangles]
+
+
+SMOOTH = 0.8660254037844387  # cos 30° : en deçà, deux facettes voisines sont lissées ensemble
+
+
+def smooth_normals(points, triangles):
+    """Sommets dédoublés par normale : chaque coin prend la moyenne (pondérée par
+    l'aire) des facettes qui touchent sa position à moins de 30° de la sienne.
+    Galbes lisses, arêtes vives ; les positions, donc les volumes, ne bougent pas."""
+    faces = []
+    for a, b, c in triangles:
+        (ax, ay, az), (bx, by, bz), (cx, cy, cz) = points[a], points[b], points[c]
+        n = ((by - ay) * (cz - az) - (bz - az) * (cy - ay), (bz - az) * (cx - ax) - (bx - ax) * (cz - az),
+             (bx - ax) * (cy - ay) - (by - ay) * (cx - ax))
+        length = math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2])
+        if length == 0:
+            sys.exit("triangle dégénéré : normale indéfinie")
+        faces.append((n, [c / length for c in n]))
+    touching = {}
+    for f, tri in enumerate(triangles):
+        for i in tri:
+            touching.setdefault(tuple(points[i]), []).append(f)
+    vertices, indices = {}, []
+    for f, tri in enumerate(triangles):
+        unit = faces[f][1]
+        for i in tri:
+            position = tuple(points[i])
+            total = [sum(faces[g][0][k] for g in touching[position]
+                         if sum(u * v for u, v in zip(faces[g][1], unit)) > SMOOTH) for k in range(3)]
+            length = math.sqrt(sum(c * c for c in total))
+            normal = tuple(f32(c / length) for c in total)
+            indices.append(vertices.setdefault((position, normal), len(vertices)))
+    return list(vertices), [tuple(indices[k:k + 3]) for k in range(0, len(indices), 3)]
 
 
 def fit(ref: str, shape, quantity: Decimal, density: Decimal):
@@ -144,9 +210,9 @@ def fit(ref: str, shape, quantity: Decimal, density: Decimal):
     target = Fraction(quantity) / Fraction(density)
     t = 0.001
     for _ in range(6):
-        points, triangles = prism(*shape(t))
+        points, triangles = mesh(shape(t))
         t *= float(target / volume(points, triangles))
-    points, triangles = prism(*shape(t))
+    points, triangles = mesh(shape(t))
     for _ in range(60):
         measured = volume(points, triangles)
         if micro(measured * Fraction(density)) == micro(Fraction(quantity)):
@@ -214,26 +280,33 @@ def build(seeds_dir: Path) -> bytes:
                 entry["alphaMode"] = "BLEND"
             document["materials"].append(entry)
             names.append(material)
+        vertices, triangles = smooth_normals(points, triangles)
+        positions = [list(position) for position, _ in vertices]
         accessors = document["accessors"]
         accessors.append({
-            "bufferView": add_view(struct.pack(f"<{3 * len(points)}f", *sum(points, []))),
-            "componentType": 5126, "count": len(points), "type": "VEC3",
-            "min": [min(c) for c in zip(*points)], "max": [max(c) for c in zip(*points)],
+            "bufferView": add_view(struct.pack(f"<{3 * len(positions)}f", *sum(positions, []))),
+            "componentType": 5126, "count": len(positions), "type": "VEC3",
+            "min": [min(c) for c in zip(*positions)], "max": [max(c) for c in zip(*positions)],
+        })
+        accessors.append({
+            "bufferView": add_view(struct.pack(f"<{3 * len(vertices)}f",
+                                               *(c for _, normal in vertices for c in normal))),
+            "componentType": 5126, "count": len(vertices), "type": "VEC3",
         })
         accessors.append({
             "bufferView": add_view(struct.pack(f"<{3 * len(triangles)}H", *sum(triangles, ()))),
             "componentType": 5123, "count": 3 * len(triangles), "type": "SCALAR",
         })
         document["meshes"].append({"primitives": [{
-            "attributes": {"POSITION": len(accessors) - 2},
+            "attributes": {"POSITION": len(accessors) - 3, "NORMAL": len(accessors) - 2},
             "indices": len(accessors) - 1,
             "material": names.index(material),
         }]})
         return len(document["meshes"]) - 1
 
-    def add_nodes(name: str, mesh: int, centers, extras=None) -> None:
+    def add_nodes(name: str, centers, mesh_at, extras=None) -> None:
         for number, center in enumerate(centers, 1):
-            node = {"name": f"{name} {number}", "mesh": mesh, "translation": list(center)}
+            node = {"name": f"{name} {number}", "mesh": mesh_at(center), "translation": list(center)}
             if extras:
                 node["extras"] = extras
             document["scenes"][0]["nodes"].append(len(document["nodes"]))
@@ -243,10 +316,14 @@ def build(seeds_dir: Path) -> bytes:
         shape, centers = PIECES[ref]
         if len(centers) != count:
             sys.exit(f"{ref} : {len(centers)} emplacements, la nomenclature en monte {count}")
-        mesh = add_mesh(*fit(ref, shape, quantity, density), bom.parts[ref].material_ref)
-        add_nodes(ref, mesh, centers, {"carcost": {"ref": ref}})
+        fitted = fit(ref, shape, quantity, density)
+        left = add_mesh(*fitted, bom.parts[ref].material_ref)
+        # Flancs et portes : l'emplacement de droite reçoit le miroir, de même masse.
+        right = add_mesh(*mirror(*fitted), bom.parts[ref].material_ref) if ref in MIRRORED else left
+        add_nodes(ref, centers, lambda c: right if c[0] < 0 else left, {"carcost": {"ref": ref}})
     for name, (shape, material, centers) in DECOR.items():
-        add_nodes(name, add_mesh(*prism(*shape), material), centers)
+        index = add_mesh(*prism(*shape), material)
+        add_nodes(name, centers, lambda c: index)
 
     document["buffers"].append({"byteLength": len(binary)})
     text = json.dumps(document, ensure_ascii=False, separators=(",", ":")).encode("utf-8")

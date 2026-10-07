@@ -7,6 +7,7 @@ l'accessor POSITION + translation : la maquette ne pose rien autrement.
 import json
 import math
 import struct
+from itertools import combinations
 from pathlib import Path
 
 from carcost.infrastructure.seed_loader import seed_bom
@@ -285,5 +286,5 @@ def test_curved_panels_have_smooth_normals():
             assert any(
                 2 <= angle(f1, f2) < 30 and angle(n1, n2) < min(15, angle(f1, f2) / 2)
                 for found in corners.values()
-                for (f1, n1), (f2, n2) in zip(found, found[1:])
+                for (f1, n1), (f2, n2) in combinations(found, 2)
             ), node["name"]
