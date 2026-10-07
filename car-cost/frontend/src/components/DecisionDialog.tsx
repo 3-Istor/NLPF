@@ -118,8 +118,8 @@ function ComparePane({
   return (
     <section className="decision">
       <div className="decision__form">
-        <ScenarioSelect label="A — référence" value={a} onChange={setA} scenarios={scenarios} />
-        <ScenarioSelect label="B — variante" value={b} onChange={setB} scenarios={scenarios} />
+        <ScenarioSelect label="A (référence)" value={a} onChange={setA} scenarios={scenarios} />
+        <ScenarioSelect label="B (variante)" value={b} onChange={setB} scenarios={scenarios} />
         <button className="decision__go" onClick={compare} disabled={busy || a === b}>
           {busy ? "Calcul…" : "Comparer"}
         </button>
@@ -259,8 +259,8 @@ function SnapshotComparePane({ bomVersion, onGoToPart }: Props) {
   return (
     <section className="decision">
       <div className="decision__form">
-        <SnapshotSelect label="A — référence" value={a} onChange={setA} items={list} />
-        <SnapshotSelect label="B — variante" value={b} onChange={setB} items={list} />
+        <SnapshotSelect label="A (référence)" value={a} onChange={setA} items={list} />
+        <SnapshotSelect label="B (variante)" value={b} onChange={setB} items={list} />
         <button
           className="decision__go"
           onClick={compare}
@@ -379,7 +379,7 @@ function SnapshotSelect({
       <select value={value} onChange={(event) => onChange(event.target.value)}>
         {items.map((item) => (
           <option key={item.id} value={item.id}>
-            {item.name} — prix {item.price_snapshot_id}
+            {item.name}, prix {item.price_snapshot_id}
           </option>
         ))}
       </select>
@@ -398,7 +398,7 @@ function RecommendPane({
   const [leadTime, setLeadTime] = useState("");
   const [preview, setPreview] = useState<SourcingPreview | null>(null);
   const [accepted, setAccepted] = useState<Set<string>>(new Set());
-  const [name, setName] = useState(`${current.name} — sourcing optimisé`);
+  const [name, setName] = useState(`${current.name} (sourcing optimisé)`);
   const [variant, setVariant] = useState<SourcingVariant | null>(null);
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
@@ -493,7 +493,7 @@ function RecommendPane({
             {preview.unresolved.length} pièce(s) violent une contrainte sans
             option autorisée
           </strong>{" "}
-          — elles resteront telles quelles dans la variante :
+          : elles resteront telles quelles dans la variante :
           <ul className="decision__unresolved">
             {preview.unresolved.map((item) => (
               <li key={item.part_ref}>
@@ -519,7 +519,7 @@ function RecommendPane({
         <>
           <table className="decision__table">
             <caption>
-              {preview.recommendations.length} recommandation(s) — snapshot{" "}
+              {preview.recommendations.length} recommandation(s), snapshot{" "}
               <code>{preview.price_snapshot_id}</code>
             </caption>
             <thead>
@@ -591,8 +591,8 @@ function RecommendPane({
       {variant && (
         <div className="banner banner--ok">
           <p>
-            Variante <strong>{variant.optimized_scenario.name}</strong> créée —
-            économie sur le véhicule : <strong>{money(variant.savings)}</strong>.
+            Variante <strong>{variant.optimized_scenario.name}</strong> créée.
+            Économie sur le véhicule : <strong>{money(variant.savings)}</strong>.
             Le scénario d'origine n'a pas été modifié.
           </p>
           <div className="decision__form">
@@ -654,6 +654,6 @@ function negated(amount: string): string {
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

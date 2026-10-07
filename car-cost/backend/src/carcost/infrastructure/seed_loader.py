@@ -14,6 +14,7 @@ module existe (ADR-0004).
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from decimal import Decimal
 from pathlib import Path
@@ -40,6 +41,7 @@ PART_COLUMNS = (
     "price_per",
     "material_ref",
     "mass_kg",
+    "density_kg_m3",
     "carbon_factor_kg_co2e_per_unit",
     "expected_cumulative_quantity",
 )
@@ -61,6 +63,7 @@ def build_load_script(
     parts: Sequence[Mapping],
     edges: Sequence[Mapping],
     suppliers: Mapping,
+    model: bytes | None = None,
 ) -> str:
     """Valide d'abord, émet ensuite. Un fichier refusé ne produit aucun SQL."""
     # Un fichier antérieur au SAV n'a pas la colonne : aucune pièce de rechange.
@@ -85,6 +88,9 @@ def build_load_script(
     supplier_sql = _supplier_blocks(version, suppliers)
     if supplier_sql:
         blocks += ["", supplier_sql]
+
+    if model is not None:
+        blocks += ["", _insert_model(version, model)]
 
     blocks += [
         "",
@@ -117,6 +123,10 @@ def _to_domain(
                 Decimal(row["labour_minutes"]) if row["labour_minutes"] else None
             ),
             mass_kg=Decimal(row["mass_kg"]) if row["mass_kg"] else None,
+            material_ref=row.get("material_ref") or None,
+            density_kg_m3=(
+                Decimal(row["density_kg_m3"]) if row.get("density_kg_m3") else None
+            ),
         )
         for row in parts
     }
@@ -236,7 +246,16 @@ def _copy_field(value) -> str:
 
 def _copy_block(table: str, columns: Sequence[str], rows: Sequence[Mapping]) -> str:
     lines = [f"COPY {table} ({', '.join(columns)}) FROM STDIN;"]
-    lines += ["\t".join(_copy_field(row[column]) for column in columns) for row in rows]
+    # `get` : un jeu qui ne déclare pas de densités (les Valhalla) n'a pas la
+    # colonne ; elle se charge alors à NULL. Les autres colonnes restent exigées.
+    optional = {"density_kg_m3"}
+    lines += [
+        "\t".join(
+            _copy_field(row.get(column) if column in optional else row[column])
+            for column in columns
+        )
+        for row in rows
+    ]
     lines.append("\\.")
     return "\n".join(lines)
 
@@ -256,6 +275,15 @@ def _insert_bom_version(
         f"{'true' if metadata['is_synthetic'] else 'false'}, "
         f"{len(parts)}, {len(edges)}, "
         f"{_labour_rate(metadata)});"
+    )
+
+
+def _insert_model(version: str, model: bytes) -> str:
+    """La maquette générée de la version (ADR-0017 §5), à l'octet près."""
+    return (
+        "INSERT INTO bom_model (bom_version_id, glb, sha256, source) VALUES ("
+        f"{_quote(version)}, decode('{model.hex()}', 'hex'), "
+        f"'{hashlib.sha256(model).hexdigest()}', 'generated');"
     )
 
 
@@ -366,12 +394,32 @@ def read_seeds(seeds_dir: Path) -> dict:
         )
     bom = json.loads(candidates[0].read_text(encoding="utf-8"))
     suppliers = json.loads((seeds_dir / "suppliers.json").read_text(encoding="utf-8"))
+    models = sorted(seeds_dir.glob("body_*.glb"))
+    if len(models) > 1:
+        raise SeedRejected(
+            f"{seeds_dir} : au plus un fichier body_*.glb attendu, {len(models)} trouvés"
+        )
     return {
         "metadata": bom["metadata"],
         "parts": list(csv.DictReader(_lines(seeds_dir / "parts.csv"))),
         "edges": list(csv.DictReader(_lines(seeds_dir / "edges.csv"))),
         "suppliers": suppliers,
+        "model": models[0].read_bytes() if models else None,
     }
+
+
+def seed_bom(seeds_dir: Path) -> Bom:
+    """Le graphe d'un jeu de données, tel que le domaine le lit.
+
+    Même construction que le chargement en base : les tests et les cas d'usage
+    qui veulent la vraie nomenclature n'ont pas besoin de Postgres.
+    """
+    seeds = read_seeds(seeds_dir)
+    edges = [
+        {**row, "after_sales_quantity": row.get("after_sales_quantity") or "0"}
+        for row in seeds["edges"]
+    ]
+    return _to_domain(seeds["metadata"], seeds["parts"], edges)
 
 
 def _lines(path: Path) -> list[str]:

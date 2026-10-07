@@ -20,6 +20,8 @@ parents. Les nomenclatures (Multipla, trois Valhalla) cohabitent, distinguées p
 ```mermaid
 erDiagram
     bom_version ||--o{ part : "contient"
+    bom_version ||--o| bom_model : "porte (0008)"
+    bom_version |o--o{ bom_version : "variante de (0008)"
     part ||--o{ bom_edge : "parent (fabriquée seulement)"
     part ||--o{ bom_edge : "enfant"
     part ||--o{ part_supplier : "achetée seulement"
@@ -39,6 +41,14 @@ erDiagram
         timestamptz created_at
         timestamptz validated_at "NULL = aucun calcul permis"
         jsonb validation_report
+        text parent_version_id FK "version dont dérive une variante (0008)"
+    }
+    bom_model {
+        text bom_version_id PK,FK
+        bytea glb "modèle 3D, écrit une fois"
+        text sha256 "somme de contrôle du contenu"
+        text source "generated | imported"
+        timestamptz created_at
     }
     part {
         text bom_version_id PK,FK
@@ -53,6 +63,7 @@ erDiagram
         numeric price_per
         text material_ref
         numeric mass_kg
+        numeric density_kg_m3 "densité synthétique, nullable (0008)"
         numeric carbon_factor_kg_co2e_per_unit
         numeric expected_cumulative_quantity "valeur de contrôle, lue par les tests"
     }
@@ -100,6 +111,13 @@ erDiagram
 - **Arêtes** : une seule arête par paire (parent, enfant), pas de boucle sur soi-même, quantité > 0.
 - **Version validée figée** (ADR-0013, migration 0003) : dès que `validated_at` est renseigné, des
   déclencheurs refusent toute écriture sur `part`, `bom_edge`, `part_supplier` et `bom_version`.
+- **Modèle 3D** (ADR-0017, migration 0008) : `bom_model` porte au plus un modèle par version ; il
+  s'écrit une fois (`forbid_mutation` : ni `UPDATE`, ni `DELETE`) et se rattache même à une version
+  validée, car il ne touche ni `part`, ni `bom_edge`, ni `part_supplier`. La base vérifie que
+  `sha256` est celui du contenu (intégrité, pas une règle métier) et que `source` vaut `generated`
+  ou `imported`. `part.density_kg_m3` est nullable et strictement positive ; `parent_version_id` doit
+  désigner une version existante, autre que la version elle-même. Les densités sont synthétiques et
+  la migration n'en remplit aucune.
 - **Ce qu'elle ne garantit pas** : l'acyclicité, l'absence d'orphelin et l'unicité de la racine. Le
   chargeur les vérifie par tri topologique avant de renseigner `validated_at`.
 
@@ -331,12 +349,13 @@ erDiagram
 |---|---|---|---|---|
 | `part`, `bom_edge`, `part_supplier` | refusé si BOM validée | refusé si BOM validée | refusé si BOM validée | `forbid_change_to_validated_bom` (0003) |
 | `bom_version` | oui | refusé si validée | refusé si validée | `forbid_change_to_validated_bom_version` (0003) |
+| `bom_model` | oui (même sur version validée) | **non** | **non** | `forbid_mutation` (0008) |
 | `price_snapshot`, `price_snapshot_line` | oui | **non** | **non** | `forbid_mutation` (0001) |
 | `calculation` | oui | **non** | oui (cascade du scénario) | `forbid_mutation` (0001) |
 | `calculation_snapshot` | oui | nom seul | **non** | 0004 |
 | `calculation_snapshot_parameter`, `calculation_snapshot_name` | oui | **non** | **non** | `forbid_mutation` (0004) |
 
-Le script [checks/contraintes.sql](../backend/migrations/checks/contraintes.sql) tente les 26 écritures
+Le script [checks/contraintes.sql](../backend/migrations/checks/contraintes.sql) tente les 32 écritures
 interdites et vérifie qu'elles sont toutes refusées ; la CI échoue si ce nombre change.
 
 ## 5. Types et domaines

@@ -9,19 +9,25 @@
  * est celui des positions à l'écran.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiFailure } from "./api/client";
 import type {
+  BodyChanges,
+  BodyImportResult,
+  BomVersion,
   Calculation,
   CalculationSnapshot,
   CalculationSnapshotSummary,
+  PartCardData,
   QuarantineJournal,
   Scenario,
   TreeLine,
 } from "./api/types";
 import { AfterSalesToggle } from "./components/AfterSalesToggle";
+import { BodyChangesPanel } from "./components/BodyChangesPanel";
 import { LabourRateInput } from "./components/LabourRateInput";
 import { DecisionDialog } from "./components/DecisionDialog";
+import { PartCard } from "./components/PartCard";
 import { PriceModeBar, type PriceMode } from "./components/PriceModeBar";
 import { ScenarioBar } from "./components/ScenarioBar";
 import { SearchBar } from "./components/SearchBar";
@@ -31,8 +37,12 @@ import { TreeHeader } from "./components/TreeHeader";
 import { TreeToolbar } from "./components/TreeToolbar";
 import { rowId, Tree } from "./components/Tree";
 import { WhereUsed } from "./components/WhereUsed";
+import { refOfPath } from "./model3d/selection";
 import { byPart, Refusals } from "./quarantine";
-import { useTreeState } from "./tree/useTreeState";
+import { useTreeState, type TreeState } from "./tree/useTreeState";
+
+// La vue 3D et `three` forment leur propre chunk, chargé à l'ouverture de l'onglet.
+const ModelViewer = lazy(() => import("./model3d/ModelViewer").then((m) => ({ default: m.ModelViewer })));
 
 /**
  * Le scénario et la ligne sélectionnée vivent dans l'URL : un F5 ou un lien
@@ -58,9 +68,23 @@ interface WorkspaceProps {
   version: string;
   /** Taux horaire proposé à la création d'un scénario sur cette nomenclature. */
   labourRate: string;
+  /** Une variante de carrosserie : son CO₂ est masqué, son écart est lu à l'API. */
+  isVariant: boolean;
+  /** Ouvre une autre nomenclature, par exemple la variante qu'un import vient de créer. */
+  onOpenVersion: (id: string) => void;
+  /** L'origine et ses variantes importées, pour passer de l'une à l'autre. */
+  models?: BomVersion[];
 }
 
-export function Workspace({ version, labourRate }: WorkspaceProps) {
+/** La ligne d'arbre d'un chemin, si sa page est chargée. De la navigation, pas un calcul. */
+function lineAt(root: TreeLine, state: TreeState, path: string | null): TreeLine | null {
+  if (path === null) return null;
+  if (path === root.path) return root;
+  const entry = state.childrenOf(path.slice(0, path.lastIndexOf("/")));
+  return entry?.status === "ready" ? (entry.page.items.find((l) => l.path === path) ?? null) : null;
+}
+
+export function Workspace({ version, labourRate, isVariant, onOpenVersion, models = [] }: WorkspaceProps) {
   const SCENARIO_DEFAULTS = {
     bom_version: version,
     display_currency: "EUR",
@@ -88,6 +112,16 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
   const [liveAt, setLiveAt] = useState<string | null>(null);
   // La recherche en cours, surlignée dans l'arbre.
   const [query, setQuery] = useState("");
+  // Variante de carrosserie : l'écart servi par l'API et le dernier import tenté.
+  const [changes, setChanges] = useState<BodyChanges | null>(null);
+  const [outcome, setOutcome] = useState<BodyImportResult | null>(null);
+  const [problem, setProblem] = useState<unknown>(null);
+  const [importing, setImporting] = useState(false);
+  const [tab, setTab] = useState<"summary" | "variant" | "3d">("summary");
+  // Le `.glb` du véhicule : `undefined` tant que l'onglet 3D n'a pas été ouvert, `null` sans modèle.
+  const [model, setModel] = useState<ArrayBuffer | null>();
+  const [modelFailure, setModelFailure] = useState<string | null>(null);
+  const [card, setCard] = useState<{ path: string; data: PartCardData } | null>(null);
   const [initial] = useState(readLocation);
   const tree = useTreeState({
     version,
@@ -95,9 +129,66 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
     snapshotId: openSnapshot?.id ?? null,
     initialSelected: initial.node,
   });
+  const selectedLine = root ? lineAt(root, tree, tree.selected) : null;
+  const selectedPath = selectedLine?.path ?? null;
+  const selectedRef = selectedLine?.part_ref ?? null;
+  const calculationId = calculation?.id ?? null;
+  const change = changes?.changes.find((item) => item.part_ref === selectedRef);
+
+  useEffect(() => {
+    if (!isVariant) return;
+    let alive = true;
+    api
+      .bodyChanges(version)
+      .then((served) => alive && setChanges(served))
+      .catch((error) => alive && setProblem(error));
+    return () => {
+      alive = false;
+    };
+  }, [isVariant, version]);
+
+  useEffect(() => {
+    if (tab !== "3d" || model !== undefined) return;
+    api
+      .model(version)
+      .then(setModel)
+      .catch((error) => setModelFailure(describe(error)));
+  }, [tab, model, version]);
+
+  // La fiche suit la ligne sélectionnée et le calcul affiché.
+  useEffect(() => {
+    if (selectedPath === null || selectedRef === null) return;
+    let alive = true;
+    api
+      .partCard(version, selectedRef, calculationId)
+      .then((data) => alive && setCard({ path: selectedPath, data }))
+      .catch(() => alive && setCard(null));
+    return () => {
+      alive = false;
+    };
+  }, [version, selectedPath, selectedRef, calculationId]);
+
+  async function importBody(file: File) {
+    setImporting(true);
+    setProblem(null);
+    setTab("variant");
+    try {
+      const result = await api.bodyImport(version, file, file.name);
+      setOutcome(result);
+      // Le fichier désigne un modèle : on l'ouvre, qu'il soit neuf, déjà importé ou l'origine.
+      const target = result.variant?.id ?? result.parent_version;
+      if (target && target !== version) onOpenVersion(target);
+    } catch (error) {
+      setProblem(error);
+    } finally {
+      setImporting(false);
+    }
+  }
+
   // La ligne de l'URL, à rouvrir puis à amener à l'écran une fois l'arbre là.
   const [pendingReveal, setPendingReveal] = useState(initial.node);
   const pendingScroll = useRef(initial.node);
+  const importInput = useRef<HTMLInputElement>(null);
 
   // Démarrage : on reprend le scénario de l'URL s'il appartient à cette
   // nomenclature, sinon le plus récent, sans rien signaler (un lien vers un
@@ -345,7 +436,7 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
       }
       const created = await api.createScenario({
         ...SCENARIO_DEFAULTS,
-        name: "Catalogue — sans réglage",
+        name: "Catalogue sans réglage",
       });
       await reloadScenarios(created.id);
     } catch (error) {
@@ -572,23 +663,90 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
           )}
         </section>
 
-        <Summary
-          calculation={calculation}
-          journal={journal}
-          state={
-            openSnapshot
-              ? "FROZEN"
-              : priceMode === "LIVE"
-                ? "LIVE"
-                : (scenario?.calculation_state ?? "NEVER_RUN")
-          }
-          staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
-          busy={busy}
-          failure={failure}
-          onRecalculate={recalculate}
-          onGoToPath={goToPath}
-          onGoToPart={goToPart}
-        />
+        <div className="side">
+          <div className="side__import">
+            {models.length > 1 && (
+              <select aria-label="Modèle" value={version} onChange={(event) => onOpenVersion(event.target.value)}>
+                {models.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.parent_version_id === undefined ? "Origine" : item.label}
+                  </option>
+                ))}
+              </select>
+            )}
+            <button type="button" disabled={importing} onClick={() => importInput.current?.click()}>
+              Importer une variante (.glb)
+            </button>
+            <input
+              ref={importInput}
+              type="file"
+              accept=".glb"
+              hidden
+              aria-label="Fichier .glb"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.target.value = "";
+                if (file) void importBody(file);
+              }}
+            />
+          </div>
+          <div className="tabs side__tabs" role="tablist" aria-label="Panneau de droite">
+            {(["summary", "3d", "variant"] as const)
+              .filter((choice) => choice !== "variant" || isVariant || outcome || problem !== null)
+              .map((choice) => (
+                <button
+                  key={choice}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === choice}
+                  className={tab === choice ? "tabs__on" : undefined}
+                  onClick={() => setTab(choice)}
+                >
+                  {choice === "summary" ? "Synthèse" : choice === "3d" ? "3D" : "Variante"}
+                </button>
+              ))}
+          </div>
+          {tab === "3d" ? (
+            model ? (
+              <Suspense fallback={<p className="hint">chargement du modèle 3D…</p>}>
+                <ModelViewer
+                  model={model}
+                  selectedRef={refOfPath(tree.selected)}
+                  changes={changes?.changes ?? []}
+                  onPick={(ref) => void goToPart(ref)}
+                />
+              </Suspense>
+            ) : (
+              <p className="hint">
+                {model === null ? "pas de modèle 3D pour ce véhicule" : (modelFailure ?? "chargement du modèle 3D…")}
+              </p>
+            )
+          ) : tab === "variant" ? (
+            <BodyChangesPanel changes={changes} outcome={outcome} failure={problem} onOpen={onOpenVersion} />
+          ) : (
+            <Summary
+              calculation={calculation}
+              journal={journal}
+              state={
+                openSnapshot
+                  ? "FROZEN"
+                  : priceMode === "LIVE"
+                    ? "LIVE"
+                    : (scenario?.calculation_state ?? "NEVER_RUN")
+              }
+              staleReason={openSnapshot ? null : (scenario?.stale_reason ?? null)}
+              busy={busy}
+              failure={failure}
+              hideCo2={isVariant}
+              onRecalculate={recalculate}
+              onGoToPath={goToPath}
+              onGoToPart={goToPart}
+            />
+          )}
+          {selectedLine && card?.path === selectedLine.path && (
+            <PartCard card={card.data} line={selectedLine} change={change} />
+          )}
+        </div>
       </main>
 
       {deciding && scenario && (
@@ -621,6 +779,6 @@ export function Workspace({ version, labourRate }: WorkspaceProps) {
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

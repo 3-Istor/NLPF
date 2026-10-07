@@ -10,7 +10,7 @@ python price-api/mock_price_api.py --port 8099 --year-minutes 40
 
 - `GET /prices?refs=…&currency=EUR` — cotations à l'instant simulé ; pannes par l'en-tête
   `X-Mock-Failure: none | timeout | outlier | missing | garbage`.
-- `GET /history?ref=…&currency=EUR` — l'année simulée de la pièce, jour par jour.
+- `GET /history?ref=…&currency=EUR` — les 365 jours simulés de la pièce qui finissent aujourd'hui, jour par jour.
 
 Sans `--catalog`, il sert `seeds/price_catalog.json` (Multipla) et
 `seeds/valhalla/*/price_catalog.json`. `--year-minutes 0` fige chaque prix à sa référence.

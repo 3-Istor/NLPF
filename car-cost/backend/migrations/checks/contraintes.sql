@@ -6,7 +6,7 @@
 --
 --   docker compose exec -T db psql -U 3istor -d 3istor -q --       < backend/migrations/checks/contraintes.sql
 --
--- Attendu : 26 refus, 0 WARNING, 2 paramètres valides acceptés, un renommage
+-- Attendu : 32 refus, 0 WARNING, 2 paramètres valides acceptés, un renommage
 -- de snapshot de calcul accepté.
 \set ON_ERROR_STOP on
 \pset pager off
@@ -233,6 +233,57 @@ SELECT doit_refuser(
 SELECT doit_refuser(
     'scénario reparti d''un snapshot de calcul inexistant (ADR-0014, 0005)',
     $q$UPDATE scenario SET derived_from = 'cs-inconnu' WHERE id = 'scn'$q$);
+
+-- Le modèle 3D d'une version (ADR-0017) : écrit une fois, intègre, jamais
+-- modifié. Un modèle valide est inséré sur la version validée (permis : il ne
+-- touche ni part, ni bom_edge, ni part_supplier), puis on tente de l'abîmer.
+INSERT INTO bom_model (bom_version_id, glb, sha256, source)
+VALUES ('t', '\x676c5446'::bytea, encode(sha256('\x676c5446'::bytea), 'hex'), 'generated');
+SELECT '  accepté (comme attendu) : modèle 3D rattaché à la version validée'
+       AS resultat;
+
+-- Une seconde version, non validée, pour les refus qui ne doivent pas venir du
+-- gel d'une version validée.
+INSERT INTO bom_version
+    (id, label, root_part_ref, generator_version, seed_checksum, part_count, edge_count)
+VALUES ('t2', 'test 3D', 'ROOT', '1.0.0', 'sha256:x', 1, 1);
+INSERT INTO part
+    (bom_version_id, part_ref, label, category, system, unit, valuation_mode,
+     labour_minutes, carbon_factor_kg_co2e_per_unit, expected_cumulative_quantity)
+VALUES ('t2', 'ROOT', 'Racine', 'vehicle', 'VEH', 'pce', 'manufactured', 10, 1, 1);
+
+SELECT doit_refuser(
+    'modèle 3D modifié (ADR-0017)',
+    $q$UPDATE bom_model SET source = 'imported' WHERE bom_version_id = 't'$q$);
+
+SELECT doit_refuser(
+    'modèle 3D supprimé (ADR-0017)',
+    $q$DELETE FROM bom_model WHERE bom_version_id = 't'$q$);
+
+SELECT doit_refuser(
+    'origine de modèle 3D inconnue (ADR-0017)',
+    $q$INSERT INTO bom_model (bom_version_id, glb, sha256, source)
+       VALUES ('t2', '\x676c5446'::bytea,
+               encode(sha256('\x676c5446'::bytea), 'hex'), 'manual')$q$);
+
+SELECT doit_refuser(
+    'modèle 3D dont la somme de contrôle ne correspond pas au contenu (ADR-0017)',
+    $q$INSERT INTO bom_model (bom_version_id, glb, sha256, source)
+       VALUES ('t2', '\x676c5446'::bytea,
+               encode(sha256('\x00'::bytea), 'hex'), 'generated')$q$);
+
+SELECT doit_refuser(
+    'densité nulle sur une pièce (ADR-0017)',
+    $q$INSERT INTO part
+        (bom_version_id, part_ref, label, category, system, unit, valuation_mode,
+         labour_minutes, carbon_factor_kg_co2e_per_unit,
+         expected_cumulative_quantity, density_kg_m3)
+       VALUES ('t2', 'DENSE', 'Dense', 'body', 'CAR', 'pce', 'manufactured',
+               1, 1, 1, 0)$q$);
+
+SELECT doit_refuser(
+    'version dérivée d''une version inconnue (ADR-0017)',
+    $q$UPDATE bom_version SET parent_version_id = 'inconnue' WHERE id = 't2'$q$);
 
 SELECT '  accepté (comme attendu) : ' || count(*)::text ||
        ' paramètres valides' AS resultat

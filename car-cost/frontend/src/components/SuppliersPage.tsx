@@ -135,7 +135,7 @@ export function SuppliersPage({ version }: Props) {
             <p className="hint">
               {parts.plants.map((plant) => (
                 <span key={plant.plant_id} className="suppliers__plant">
-                  {plant.label} ({plant.origin_country}) — coefficient {plant.price_coefficient},{" "}
+                  {plant.label} ({plant.origin_country}), coefficient {plant.price_coefficient},{" "}
                   {plant.lead_time_days} j{plant.is_default ? ", usine par défaut" : ""}
                 </span>
               ))}
@@ -187,6 +187,6 @@ export function SuppliersPage({ version }: Props) {
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

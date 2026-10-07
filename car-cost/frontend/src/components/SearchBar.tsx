@@ -56,12 +56,12 @@ function counter(result: Result, index: number): string {
   const position = result.paths.length > 0 ? index + 1 : 0;
   const text = `${position} / ${result.totalOccurrences} résultats (${result.totalParts} pièces)`;
   return result.paths.length < result.totalOccurrences
-    ? `${text} — ${result.paths.length} parcourables`
+    ? `${text}, ${result.paths.length} parcourables`
     : text;
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }
 

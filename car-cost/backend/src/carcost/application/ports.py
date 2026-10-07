@@ -10,7 +10,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
-from typing import Mapping, Protocol, Sequence
+from typing import TYPE_CHECKING, Mapping, Protocol, Sequence
+
+if TYPE_CHECKING:
+    from .body_import import VariantPlan
 
 
 class PriceSourceError(Exception):
@@ -104,6 +107,8 @@ class BomVersionSummary:
     is_synthetic: bool
     #: Taux horaire proposé à la création d'un scénario sur cette version.
     reference_labour_rate: Decimal | None = None
+    #: Version dont celle-ci est la variante (import d'un modèle 3D, ADR-0017).
+    parent_version_id: str | None = None
 
 
 class BomRepository(Protocol):
@@ -113,6 +118,44 @@ class BomRepository(Protocol):
 
     def versions(self) -> Sequence[BomVersionSummary]:  # pragma: no cover
         """Toutes les versions, validées ou non, la plus récente d'abord."""
+        ...
+
+
+class ModelNotFound(Exception):
+    """La version n'a pas de modèle 3D : rien à comparer, l'import est refusé."""
+
+
+class VariantIdCollision(Exception):
+    """Même id `<parente>+<8 hex>`, SHA-256 complet différent (ADR-0017 §6)."""
+
+
+@dataclass(frozen=True)
+class StoredModel:
+    bom_version: str
+    glb: bytes
+    sha256: str
+    source: str  # "generated" | "imported"
+
+
+class BodyModelRepository(Protocol):
+    def get(self, version: str) -> StoredModel | None:  # pragma: no cover - contrat
+        ...
+
+
+@dataclass(frozen=True)
+class NewVariant:
+    id: str
+    label: str
+    parent_id: str
+    sha256: str
+    glb: bytes
+    plan: VariantPlan
+    generator_version: str = "body-import/1"
+
+
+class VariantWriter(Protocol):
+    def save_variant(self, variant: NewVariant) -> None:  # pragma: no cover - contrat
+        """Version validée, pièces, arêtes, offres et modèle : tout ou rien."""
         ...
 
 

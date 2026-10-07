@@ -146,7 +146,7 @@ describe("le scénario sans réglage", () => {
   it("est proposé même si aucun n'existe", () => {
     bar({ scenarios: [tuned], current: tuned });
     expect(
-      screen.getByRole("option", { name: "Catalogue — sans réglage" }),
+      screen.getByRole("option", { name: "Catalogue sans réglage" }),
     ).toBeInTheDocument();
   });
 

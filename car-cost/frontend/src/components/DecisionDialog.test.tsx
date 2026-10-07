@@ -230,7 +230,7 @@ describe("recommander", () => {
     expect(createSourcingVariant).toHaveBeenCalledWith("scn-a", {
       forbidden_origins: ["RU"],
       max_lead_time_days: null,
-      name: "Base — sourcing optimisé",
+      name: "Base (sourcing optimisé)",
       accepted_part_refs: ["S"],
       price_snapshot_id: "snp-apercu",
     });
@@ -250,10 +250,10 @@ describe("comparer deux snapshots de calcul", () => {
   it("compare deux snapshots de calcul par leur nom, sans recalcul", async () => {
     await openTab();
     await screen.findAllByRole("option", { name: /Variante Turquie/ });
-    fireEvent.change(screen.getByLabelText("A — référence"), {
+    fireEvent.change(screen.getByLabelText("A (référence)"), {
       target: { value: "csn-1" },
     });
-    fireEvent.change(screen.getByLabelText("B — variante"), {
+    fireEvent.change(screen.getByLabelText("B (variante)"), {
       target: { value: "csn-2" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Comparer" }));
@@ -343,10 +343,10 @@ describe("comparer deux snapshots de calcul : les refus", () => {
   it("le bouton est désactivé quand A et B sont le même snapshot", async () => {
     await openTab();
 
-    fireEvent.change(screen.getByLabelText("B — variante"), {
+    fireEvent.change(screen.getByLabelText("B (variante)"), {
       target: { value: "csn-1" },
     });
-    fireEvent.change(screen.getByLabelText("A — référence"), {
+    fireEvent.change(screen.getByLabelText("A (référence)"), {
       target: { value: "csn-1" },
     });
 

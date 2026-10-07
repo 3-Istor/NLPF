@@ -24,7 +24,7 @@ export function SnapshotHeader({ snapshot, busy, onBack, onDerive }: Props) {
   return (
     <div className="snapshot-title" role="region" aria-label="Snapshot de calcul ouvert">
       <p>
-        Snapshot de calcul : <strong>{snapshot.name}</strong> — lecture seule,
+        Snapshot de calcul : <strong>{snapshot.name}</strong>, lecture seule,
         les réglages montrés sont ceux du gel.{" "}
         <button onClick={onBack} disabled={busy}>
           Revenir au scénario

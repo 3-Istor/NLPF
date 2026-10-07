@@ -241,6 +241,23 @@ vi.mock("./api/client", () => ({
       return found;
     }),
     part: vi.fn(async () => ({ suppliers: [] })),
+    partCard: vi.fn(async (_version: string, partRef: string) => ({
+      part_ref: partRef,
+      label: "Fiche servie",
+      composition: [],
+      material_ref: null,
+      material_quantity_kg: null,
+      mass_kg: null,
+    })),
+    bodyChanges: vi.fn(async (version: string) => ({
+      version,
+      parent_version: VERSION,
+      changes: [],
+      cost: null,
+      cost_status: "NO_PRICES",
+      material_mass_delta_kg: "0",
+    })),
+    bodyImport: vi.fn(),
     search: vi.fn(),
     deriveScenario: vi.fn(async (snapshotId: string, name: string) => {
       const created = {
@@ -589,7 +606,7 @@ describe("un snapshot ouvert est en lecture seule", () => {
 
     openSettings("V/A");
 
-    const copied = await screen.findByRole("region", { name: "Réglages figés — GMP" });
+    const copied = await screen.findByRole("region", { name: "Réglages figés : GMP" });
     expect(within(copied).getByText("toutes les occurrences")).toBeInTheDocument();
     expect(within(copied).getByText("12.5 min")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Appliquer" })).toBeNull();
@@ -605,7 +622,7 @@ describe("un snapshot ouvert est en lecture seule", () => {
 
     fireEvent.click(screen.getByText("Châssis"));
 
-    const copied = await screen.findByRole("region", { name: "Réglages figés — CHS" });
+    const copied = await screen.findByRole("region", { name: "Réglages figés : CHS" });
     expect(within(copied).getByText(/Aucun réglage/)).toBeInTheDocument();
   });
 
@@ -866,5 +883,124 @@ describe("prix en direct ou figés", () => {
     await waitFor(() => expect(api.takePriceSnapshot).toHaveBeenCalledWith(VERSION, "EUR"));
     await waitFor(() => expect(api.calculate).toHaveBeenCalledWith("scn-1"));
     expect((screen.getByLabelText("Snapshot") as HTMLInputElement).checked).toBe(true);
+  });
+});
+
+describe("le modèle de carrosserie", () => {
+  it("selecting a row opens its part card", async () => {
+    await start();
+    fireEvent.click(chevron("V"));
+    fireEvent.click(await screen.findByText("Châssis"));
+
+    expect(await screen.findByText("Fiche servie")).toBeInTheDocument();
+    expect(api.partCard).toHaveBeenCalledWith(VERSION, "CHS", "calc-1");
+  });
+
+  it("opens the created variant", async () => {
+    const variant = `${VERSION}+1a2b3c4d`;
+    vi.mocked(api.bodyImport).mockResolvedValue({
+      status: "CREATED",
+      message: "variante créée",
+      parent_version: VERSION,
+      variant: { id: variant, label: "Multipla — capot alu" },
+      scenario_id: "scn-v",
+      changes: [],
+      cost: null,
+      cost_status: "NO_PRICES",
+      material_mass_delta_kg: "0",
+    });
+    await start();
+    const listed = (await api.bomVersions()).items;
+    vi.mocked(api.bomVersions).mockResolvedValueOnce({
+      items: [
+        ...listed,
+        {
+          id: variant,
+          label: "Multipla — capot alu",
+          root_part_ref: "VEH",
+          part_count: 475,
+          edge_count: 690,
+          validated_at: "2026-10-07T08:00:00+00:00",
+          is_synthetic: true,
+          reference_labour_rate: "42.00",
+          parent_version_id: VERSION,
+        },
+      ],
+    });
+
+    const file = new File([new Uint8Array([1, 2, 3])], "capot-alu.glb");
+    fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(variant));
+    expect(api.bodyImport).toHaveBeenCalledWith(VERSION, file, "capot-alu.glb");
+    expect(await screen.findByRole("tab", { name: "Variante" })).toBeInTheDocument();
+  });
+
+  const VARIANT = `${VERSION}+1a2b3c4d`;
+
+  async function startWithVariant() {
+    const listed = (await api.bomVersions()).items;
+    vi.mocked(api.bomVersions).mockResolvedValue({
+      items: [
+        ...listed,
+        {
+          id: VARIANT,
+          label: "Multipla — aileron",
+          root_part_ref: "VEH",
+          part_count: 476,
+          edge_count: 692,
+          validated_at: "2026-10-07T08:00:00+00:00",
+          is_synthetic: true,
+          reference_labour_rate: "42.00",
+          parent_version_id: VERSION,
+        },
+      ],
+    });
+    await start();
+  }
+
+  function outcome(status: "ALREADY_IMPORTED" | "NO_CHANGE") {
+    return {
+      status,
+      message: "",
+      parent_version: VERSION,
+      variant: status === "NO_CHANGE" ? null : { id: VARIANT, label: "Multipla — aileron" },
+      scenario_id: null,
+      changes: [],
+      cost: null,
+      cost_status: "NO_PRICES" as const,
+      material_mass_delta_kg: "0",
+    };
+  }
+
+  it("the model selector opens an imported model", async () => {
+    await startWithVariant();
+
+    fireEvent.change(await screen.findByLabelText("Modèle"), { target: { value: VARIANT } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VARIANT));
+    expect(screen.getByLabelText("Modèle")).toHaveValue(VARIANT);
+  });
+
+  it("a file already imported reopens its variant", async () => {
+    vi.mocked(api.bodyImport).mockResolvedValue(outcome("ALREADY_IMPORTED"));
+    await startWithVariant();
+
+    const file = new File([new Uint8Array([1])], "aileron.glb");
+    fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VARIANT));
+  });
+
+  it("reimporting the mockup from a variant goes back to the origin", async () => {
+    vi.mocked(api.bodyImport).mockResolvedValue(outcome("NO_CHANGE"));
+    await startWithVariant();
+    fireEvent.change(await screen.findByLabelText("Modèle"), { target: { value: VARIANT } });
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VARIANT));
+
+    const file = new File([new Uint8Array([1])], "body_multipla.glb");
+    fireEvent.change(screen.getByLabelText("Fichier .glb"), { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByLabelText("Nomenclature ouverte")).toHaveValue(VERSION));
   });
 });

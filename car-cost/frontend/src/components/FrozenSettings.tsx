@@ -59,10 +59,10 @@ export function FrozenSettings({ line, snapshot, version, depth }: Props) {
     <section
       className="panel panel--frozen"
       style={{ marginLeft: `${depth * 18 + 34}px` }}
-      aria-label={`Réglages figés — ${line.part_ref}`}
+      aria-label={`Réglages figés : ${line.part_ref}`}
     >
       <p className="panel__title">
-        Réglages figés dans « {snapshot.name} » — {line.part_ref}
+        Réglages figés dans « {snapshot.name} », {line.part_ref}
       </p>
       {copied.length === 0 ? (
         <p className="panel__note">
@@ -90,7 +90,7 @@ export function FrozenSettings({ line, snapshot, version, depth }: Props) {
               <>
                 <dt>Prix forcé</dt>
                 <dd>
-                  {parameter.price_override} — {parameter.price_override_justification}
+                  {parameter.price_override} ({parameter.price_override_justification})
                 </dd>
               </>
             )}

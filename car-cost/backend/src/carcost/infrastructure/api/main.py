@@ -11,12 +11,14 @@ from __future__ import annotations
 import os
 
 from ..cached_bom_repository import CachedBomRepository
+from ..postgres.body_models import PostgresBodyModelRepository
 from ..postgres.bom import PostgresBomRepository
 from ..postgres.calculation_snapshots import PostgresCalculationSnapshotRepository
 from ..postgres.calculations import PostgresCalculationRepository
 from ..postgres.scenarios import PostgresScenarioRepository
 from ..postgres.snapshots import PostgresPriceSnapshotRepository
 from ..postgres.sourcing import PostgresSourcingRepository
+from ..postgres.variants import PostgresVariantWriter
 from ..http_price_source import HttpPriceSource
 from .app import Repositories, create_app
 
@@ -30,6 +32,8 @@ app = create_app(
         scenarios=PostgresScenarioRepository(DSN),
         calculations=PostgresCalculationRepository(DSN),
         calculation_snapshots=PostgresCalculationSnapshotRepository(DSN),
+        models=PostgresBodyModelRepository(DSN),
+        variants=PostgresVariantWriter(DSN),
         prices=HttpPriceSource(
             os.environ.get("CARCOST_PRICE_API", "http://127.0.0.1:8099"),
             timeout_seconds=float(os.environ.get("CARCOST_PRICE_TIMEOUT", "5")),

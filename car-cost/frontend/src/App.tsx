@@ -102,12 +102,24 @@ export function App() {
     setPage(next);
   }
 
+  /** Une variante vient d'être créée : relire la liste pour qu'elle y figure, puis l'ouvrir. */
+  async function openCreated(id: string) {
+    try {
+      const { items } = await api.bomVersions();
+      setVersions(ordered(items));
+    } catch (error) {
+      setListError(describe(error));
+    }
+    choose(id);
+  }
+
   function choose(next: string) {
     writeBom(next);
     setVersion(next);
   }
 
   const current = versions?.find((item) => item.id === version) ?? null;
+  const models = family(versions ?? [], version);
 
   return (
     <div className="app">
@@ -123,7 +135,7 @@ export function App() {
             >
               {versions.map((item) => (
                 <option key={item.id} value={item.id}>
-                  {item.label} — {item.part_count} pièces
+                  {item.label} ({item.part_count} pièces)
                 </option>
               ))}
             </select>
@@ -162,13 +174,29 @@ export function App() {
           key={version}
           version={version}
           labourRate={current?.reference_labour_rate ?? FALLBACK_LABOUR_RATE}
+          isVariant={current?.parent_version_id !== undefined}
+          onOpenVersion={openCreated}
+          models={models}
         />
       )}
     </div>
   );
 }
 
+/** L'origine de la version ouverte, puis les variantes qui en descendent. De la navigation, pas un calcul. */
+function family(versions: BomVersion[], version: string): BomVersion[] {
+  const parentOf = new Map(versions.map((item) => [item.id, item.parent_version_id]));
+  const originOf = (id: string): string => {
+    const parent = parentOf.get(id);
+    return parent ? originOf(parent) : id;
+  };
+  const origin = originOf(version);
+  return versions
+    .filter((item) => originOf(item.id) === origin)
+    .sort((a, b) => (a.id === origin ? -1 : b.id === origin ? 1 : a.label.localeCompare(b.label)));
+}
+
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

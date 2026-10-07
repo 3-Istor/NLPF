@@ -89,8 +89,8 @@ jobs:
           fi
           refus=$(grep -c "refusé" <<<"$rapport" || true)
           echo "écritures interdites refusées : $refus"
-          if [ "$refus" -ne 26 ]; then
-            echo "::error::26 refus attendus, $refus obtenus — un contrôle a disparu"
+          if [ "$refus" -ne 32 ]; then
+            echo "::error::32 refus attendus, $refus obtenus — un contrôle a disparu"
             exit 1
           fi
 
@@ -104,6 +104,11 @@ jobs:
       # alternatifs sont générés, ils ne doivent pas se retoucher à la main.
       - name: Vérifier le déterminisme de l'import Valhalla
         run: python -m tools.valhalla_import --check
+
+      # La maquette 3D du Multipla est générée elle aussi : chaque pavé y pèse
+      # exactement la quantité de matière de la nomenclature (ADR-0017).
+      - name: Vérifier le déterminisme de la maquette 3D
+        run: python -m tools.body_model --check
 
       - name: Charger la nomenclature
         run: |

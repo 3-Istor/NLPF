@@ -107,32 +107,36 @@ class TestMarket:
             Decimal(100) * market.factor(ENTRY["drivers"], day) * market.fx_change(day)
         ).quantize(Decimal("0.000001"))
 
-    def test_history_has_one_point_per_simulated_day(self, market, clock):
+    def test_history_is_the_365_days_ending_today(self, market, clock):
+        """Le marché boucle sur une année : les jours d'avant le 1er janvier sont ceux de l'année d'avant."""
         clock.now += 42 * DAY
         history = market.history(ENTRY, "EUR")
         assert len(history["points"]) == 365
-        assert history["points"][0] == {"date": "2026-01-01", "price": "100.000000"}
+        assert history["points"][0]["date"] == "2025-02-13"
+        assert history["points"][0]["price"] == str(market.price(ENTRY, "EUR", Decimal(43)))
+        assert history["points"][322] == {"date": "2026-01-01", "price": "100.000000"}
+        assert history["points"][-1]["date"] == "2026-02-12"
         assert history["now"]["day"] == "42.000"
-        assert history["now"]["price"] == history["points"][42]["price"]
+        assert history["now"]["price"] == history["points"][-1]["price"]
 
     def test_two_parts_with_the_same_drivers_move_differently(self, market):
         """La part propre : même profil, courbes distinctes, départ et bouclage intacts."""
-        one = [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]]
-        other = [p["price"] for p in market.history(ENTRY, "EUR", "REF-B")["points"]]
+        one = [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]][::-1]
+        other = [p["price"] for p in market.history(ENTRY, "EUR", "REF-B")["points"]][::-1]
         assert one[0] == other[0] == "100.000000"
         assert one != other
-        assert one == [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]]
+        assert one == [p["price"] for p in market.history(ENTRY, "EUR", "REF-A")["points"]][::-1]
         assert abs(simulation.wobble("REF-A", Decimal(365))) < Decimal("1e-9")
 
     def test_the_catalog_bounds_hold_the_curve(self, market):
-        """Le creux de l'année touche `year_min`, le sommet `year_max`, le jour 0 la référence."""
+        """Le creux des douze mois touche `year_min`, le sommet `year_max`, le jour 0 la référence."""
         bounded = {
             **ENTRY,
             "prices": {"EUR": {"reference": "100.000000", "year_min": "80.000000",
                                "year_max": "130.000000"}},
         }
         prices = [Decimal(p["price"]) for p in market.history(bounded, "EUR", "REF-A")["points"]]
-        assert prices[0] == Decimal("100.000000")
+        assert prices[-1] == Decimal("100.000000")  # aujourd'hui : le jour 0, au bout de la fenêtre glissante
         assert min(prices) == Decimal("80.000000")
         assert max(prices) == Decimal("130.000000")
         assert Decimal(80) <= market.price(bounded, "EUR", Decimal("364.5"), "REF-A") <= 130
@@ -172,14 +176,14 @@ def _get(url: str) -> tuple[int, dict]:
 
 
 class TestHistoryRoute:
-    def test_serves_the_year_of_a_part(self, served, clock):
+    def test_serves_the_last_year_of_a_part(self, served, clock):
         clock.now += 12 * DAY
         status, body = _get(f"{served}/history?ref=VALH-BOM-0006-PEAU-EXT&currency=EUR")
         assert status == 200
         assert body["is_synthetic"] is True
         assert len(body["points"]) == 365
         assert body["profile"] == "composite"
-        assert body["now"]["price"] == body["points"][12]["price"]
+        assert body["now"]["price"] == body["points"][-1]["price"]
 
     def test_an_unknown_part_is_named(self, served):
         status, body = _get(f"{served}/history?ref=NOPE&currency=EUR")
@@ -201,7 +205,7 @@ class TestHttpHistory:
 
         history = HttpPriceSource(served).history("FIX-M6-16", "EUR")
         assert history.reference == Decimal("0.039")
-        assert history.points[0].price == Decimal("0.039")
+        assert history.points[-1].price == Decimal("0.039")  # aujourd'hui, le 1er janvier simulé
         assert len(history.points) == 365
 
     def test_an_unquoted_part_is_not_a_breakdown(self, served):

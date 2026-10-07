@@ -46,7 +46,7 @@ après la fin de la commande. Deux conséquences :
 # tout depuis la racine du dépôt
 cd car-cost && source backend/.venv/bin/activate
 
-python -m pytest backend                 # 606 tests, dont 48 d'intégration Postgres
+python -m pytest backend                 # 774 tests, dont 66 d'intégration Postgres
 python -m tools.bom_generator --check    # déterminisme du jeu de données
 python -m tools.valhalla_import --check  # idem pour les trois Valhalla
 python -m carcost.infrastructure seeds   # émet le SQL de chargement, n'écrit rien

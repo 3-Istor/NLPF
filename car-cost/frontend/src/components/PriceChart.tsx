@@ -1,5 +1,6 @@
 /**
- * La variation du prix d'une pièce sur l'année de marché simulée.
+ * La variation du prix d'une pièce sur les douze mois simulés qui finissent
+ * maintenant : l'avenir simulé n'est pas montré.
  *
  * Les montants viennent de l'API tels quels ; ce composant ne calcule que des
  * positions à l'écran. La courbe est datée en temps simulé (une année dure
@@ -58,18 +59,24 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
   }
   if (!history) return <p className="hint">chargement de l'historique…</p>;
 
-  const values = history.points.map((point) => Number.parseFloat(point.price));
+  // L'API sert les douze mois qui finissent aujourd'hui : maintenant est au bord droit.
+  const nowDay = dayOf(history.points[0].date, history.now.at, history.points.length);
+  const shown = [
+    ...history.points.map((point, day) => ({ ...point, day })),
+    { date: history.now.at.slice(0, 10), price: history.now.price, day: nowDay },
+  ];
+  const values = shown.map((point) => Number.parseFloat(point.price));
   const low = Math.min(...values);
   const high = Math.max(...values);
   const span = high - low || Math.abs(high) || 1;
-  const x = (day: number) =>
-    PAD.left + (day / (values.length - 1)) * (WIDTH - PAD.left - PAD.right);
+  const lastDay = Math.max(nowDay, 1);
+  const x = (day: number) => PAD.left + (day / lastDay) * (WIDTH - PAD.left - PAD.right);
   const y = (value: number) =>
     PAD.top + (1 - (value - (low - span * 0.05)) / (span * 1.1)) * (HEIGHT - PAD.top - PAD.bottom);
-  const line = values.map((value, day) => `${day ? "L" : "M"}${x(day).toFixed(1)},${y(value).toFixed(1)}`).join(" ");
-  const nowDay = dayOf(history.points[0].date, history.now.at, values.length);
+  const line = shown
+    .map((point, index) => `${index ? "L" : "M"}${x(point.day).toFixed(1)},${y(values[index]).toFixed(1)}`)
+    .join(" ");
   const nowValue = Number.parseFloat(history.now.price);
-  const reference = Number.parseFloat(history.reference);
   const lowIndex = values.indexOf(low);
   const highIndex = values.indexOf(high);
   const amount = (raw: string) => money({ amount: raw, currency: history.currency });
@@ -82,7 +89,7 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
           maintenant : {amount(history.now.price)} / {history.unit}
         </span>
         <span className="price-chart__meta">
-          profil {history.profile ?? "—"}
+          profil {history.profile ?? "-"}
           {history.origin_currency && ` · fournisseur facturant en ${history.origin_currency}`}
           {" · données synthétiques"}
         </span>
@@ -91,26 +98,34 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         role="img"
         aria-label={
-          `Prix de ${history.label} sur l'année simulée : de ${amount(history.points[lowIndex].price)} ` +
-          `à ${amount(history.points[highIndex].price)}, ${amount(history.now.price)} maintenant`
+          `Prix de ${history.label} sur les douze derniers mois simulés : de ${amount(shown[lowIndex].price)} ` +
+          `à ${amount(shown[highIndex].price)}, ${amount(history.now.price)} maintenant`
         }
       >
-        {MONTHS.map((month, index) => {
-          const position = x((index * values.length) / 12);
+        {shown.map(({ date, day }) => {
+          if (!date.endsWith("-01") || day !== Math.trunc(day)) return null;
+          const position = x(day);
           return (
-            <g key={month}>
+            <g key={date}>
               <line x1={position} x2={position} y1={PAD.top} y2={HEIGHT - PAD.bottom} className="price-chart__grid" />
-              <text x={position + 2} y={HEIGHT - 8} className="price-chart__axis">{month}</text>
+              <text x={position + 2} y={HEIGHT - 8} className="price-chart__axis">{MONTHS[Number(date.slice(5, 7)) - 1]}</text>
             </g>
           );
         })}
-        <line
-          x1={PAD.left} x2={WIDTH - PAD.right} y1={y(reference)} y2={y(reference)}
-          className="price-chart__reference"
-        />
-        <text x={4} y={y(reference) + 4} className="price-chart__axis">référence</text>
+        {[high, low].map((value, index) => (
+          <line
+            key={index} x1={PAD.left} x2={WIDTH - PAD.right} y1={y(value)} y2={y(value)}
+            className="price-chart__grid"
+          />
+        ))}
         <text x={4} y={y(high) + 4} className="price-chart__axis">{compact(high)}</text>
         <text x={4} y={y(low) + 4} className="price-chart__axis">{compact(low)}</text>
+        {/* Les deux axes : ordonnée à gauche, abscisse en bas. */}
+        <line x1={PAD.left} x2={PAD.left} y1={PAD.top} y2={HEIGHT - PAD.bottom} className="price-chart__axis-line" />
+        <line
+          x1={PAD.left} x2={WIDTH - PAD.right} y1={HEIGHT - PAD.bottom} y2={HEIGHT - PAD.bottom}
+          className="price-chart__axis-line"
+        />
         <path d={line} className="price-chart__line" />
         <line
           x1={x(nowDay)} x2={x(nowDay)} y1={PAD.top} y2={HEIGHT - PAD.bottom}
@@ -120,8 +135,8 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
       </svg>
       <dl className="price-chart__facts">
         <dt>Référence</dt><dd>{amount(history.reference)}</dd>
-        <dt>Plus bas de l'année</dt><dd>{amount(history.points[lowIndex].price)} ({history.points[lowIndex].date})</dd>
-        <dt>Plus haut de l'année</dt><dd>{amount(history.points[highIndex].price)} ({history.points[highIndex].date})</dd>
+        <dt>Plus bas sur 12 mois</dt><dd>{amount(shown[lowIndex].price)} ({shown[lowIndex].date})</dd>
+        <dt>Plus haut sur 12 mois</dt><dd>{amount(shown[highIndex].price)} ({shown[highIndex].date})</dd>
         <dt>Date simulée</dt><dd>{history.now.at.slice(0, 10)}</dd>
       </dl>
       <div className="price-chart__frozen">
@@ -132,7 +147,7 @@ export function PriceChart({ version, partRef, currency = "EUR" }: Props) {
           <ul>
             {history.snapshots.map((snapshot) => (
               <li key={snapshot.id}>
-                {amount(snapshot.price)} — <code>{snapshot.id}</code>,{" "}
+                {amount(snapshot.price)}, <code>{snapshot.id}</code>,{" "}
                 {new Date(snapshot.taken_at).toLocaleString("fr-FR")}
                 {snapshot.origin === "FALLBACK" && " (repli sur le prix précédent)"}
               </li>
@@ -157,6 +172,6 @@ function compact(value: number): string {
 }
 
 function describe(error: unknown): string {
-  if (error instanceof ApiFailure) return `${error.code} — ${error.message}`;
+  if (error instanceof ApiFailure) return `${error.code} : ${error.message}`;
   return error instanceof Error ? error.message : "erreur inconnue";
 }

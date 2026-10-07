@@ -6,6 +6,8 @@
  */
 
 import type {
+  BodyChanges,
+  BodyImportResult,
   BomVersion,
   Calculation,
   PriceHistoryResponse,
@@ -17,6 +19,7 @@ import type {
   Comparison,
   Occurrence,
   Page,
+  PartCardData,
   ParameterAck,
   QuarantineJournal,
   SnapshotComparison,
@@ -33,6 +36,8 @@ export class ApiFailure extends Error {
     readonly code: string,
     message: string,
     readonly status: number,
+    /** Le détail de l'erreur, tel que l'API le sert (`faults`, `parts_without_price`…). */
+    readonly details?: Record<string, unknown>,
   ) {
     super(message);
   }
@@ -51,6 +56,7 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
       error?.code ?? "UNKNOWN",
       error?.message ?? response.statusText,
       response.status,
+      error?.details,
     );
   }
   // Une suppression répond 204, sans corps à lire.
@@ -121,6 +127,31 @@ export const api = {
   part: (version: string, partRef: string) =>
     call<Record<string, unknown>>(`/bom/${version}/parts/${partRef}`),
 
+  /** La fiche d'une pièce ; avec un calcul, ses coûts et quantités cumulées. */
+  partCard: (version: string, partRef: string, calculationId?: string | null) =>
+    call<PartCardData>(
+      `/bom/${encodeURIComponent(version)}/parts/${encodeURIComponent(partRef)}` +
+        (calculationId ? `?calculation_id=${encodeURIComponent(calculationId)}` : ""),
+    ),
+
+  /** Le `.glb` part tel quel, en corps brut : ni formulaire ni JSON. Son nom libelle la variante. */
+  bodyImport: (version: string, file: Blob, name?: string) =>
+    call<BodyImportResult>(
+      `/bom/${encodeURIComponent(version)}/body-imports` + (name ? `?name=${encodeURIComponent(name)}` : ""),
+      { method: "POST", body: file, headers: { "Content-Type": "application/octet-stream" } },
+    ),
+
+  bodyChanges: (version: string) =>
+    call<BodyChanges>(`/bom/${encodeURIComponent(version)}/body-changes`),
+
+  /** Le `.glb` du véhicule, ou `null` s'il n'en a pas (404 `MODEL_NOT_FOUND`). */
+  model: async (version: string): Promise<ArrayBuffer | null> => {
+    const response = await fetch(`/api/v1/bom/${encodeURIComponent(version)}/model`);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new ApiFailure("UNKNOWN", response.statusText, response.status);
+    return response.arrayBuffer();
+  },
+
   createScenario: (body: {
     bom_version: string;
     name: string;
@@ -154,12 +185,6 @@ export const api = {
 
   deleteScenario: (id: string) =>
     call<void>(`/scenarios/${id}`, { method: "DELETE" }),
-
-  deleteParameter: (scenarioId: string, parameterId: string) =>
-    call<{ calculation_state: string; stale_reason: string | null }>(
-      `/scenarios/${scenarioId}/parameters/${parameterId}`,
-      { method: "DELETE" },
-    ),
 
   /** Recalcule A et B sur un même snapshot ; le delta vaut B − A. */
   compare: (scenarioA: string, scenarioB: string) =>
@@ -216,11 +241,6 @@ export const api = {
     call<PriceSnapshotSummary>(
       "/price-snapshots",
       post({ bom_version: version, currency }),
-    ),
-
-  priceSnapshots: (version: string) =>
-    call<{ items: PriceSnapshotSummary[]; total: number }>(
-      `/price-snapshots?bom_version=${encodeURIComponent(version)}`,
     ),
 
   /** Lance un calcul sur le scénario et le fige sous ce nom. */

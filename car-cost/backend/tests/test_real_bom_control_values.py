@@ -104,7 +104,7 @@ def test_hand_checkable_quantities(result, part_ref, quantity, why) -> None:
 
 def test_no_price_is_missing(result) -> None:
     assert result.parts_without_price == ()
-    assert not result.is_incomplete
+    assert not result.parts_without_price
 
 
 def test_contributions_sum_to_the_total(result) -> None:

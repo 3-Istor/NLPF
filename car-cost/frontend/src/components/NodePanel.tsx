@@ -129,7 +129,7 @@ export function NodePanel({ line, version, scenario, depth, onChanged }: Props) 
   return (
     <div className="panel" style={{ marginLeft: `${depth * 18 + 34}px` }}>
       <p className="panel__title">
-        {purchased ? "Pièce achetée" : "Ensemble fabriqué"} — {line.part_ref}
+        {purchased ? "Pièce achetée" : "Ensemble fabriqué"} : {line.part_ref}
       </p>
 
       {purchased ? (
@@ -155,7 +155,7 @@ export function NodePanel({ line, version, scenario, depth, onChanged }: Props) 
               {suppliers.map((supplier) => (
                 <option key={supplier.supplier_id} value={supplier.supplier_id}>
                   {supplier.name} (×{supplier.price_multiplier})
-                  {supplier.is_default ? " — par défaut" : ""}
+                  {supplier.is_default ? " (par défaut)" : ""}
                 </option>
               ))}
             </select>
@@ -172,9 +172,9 @@ export function NodePanel({ line, version, scenario, depth, onChanged }: Props) 
               {plants.map((plant) => (
                 <option key={plant.plant_id} value={plant.plant_id}>
                   {plant.label} ({plant.origin_country}) ×{plant.price_coefficient}
-                  {" — "}
+                  {", "}
                   {plant.lead_time_days} j
-                  {plant.is_default ? " — par défaut" : ""}
+                  {plant.is_default ? " (par défaut)" : ""}
                 </option>
               ))}
             </select>

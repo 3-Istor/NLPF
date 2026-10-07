@@ -14,6 +14,7 @@ import json
 from decimal import Decimal
 from pathlib import Path
 
+from .densities import DENSITIES_KG_M3
 from .model import Bom
 
 DATASET_DATE = "2026-09-22"
@@ -68,6 +69,10 @@ MULTIPLA = {
     "transport_co2": CONVENTIONS["transport_co2"],
     "currencies": ["EUR", "USD", "RUB"],
     "extra_conventions": {},
+    #: Densités des matières au kilogramme, en kg/m³ (ADR-0017). Un jeu qui ne
+    #: déclare pas cette clé n'écrit pas la colonne `density_kg_m3` : les
+    #: fichiers des autres véhicules restent identiques à l'octet.
+    "densities": DENSITIES_KG_M3,
 }
 
 
@@ -80,8 +85,15 @@ def _write(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8", newline="\n")
 
 
-def _part_row(bom_version: str, ref: str, part, cumulative: dict[str, Decimal], mass):
-    return {
+def _part_row(
+    bom_version: str,
+    ref: str,
+    part,
+    cumulative: dict[str, Decimal],
+    mass,
+    densities: dict[str, Decimal] | None = None,
+):
+    row = {
         "bom_version_id": bom_version,
         "part_ref": ref,
         "label": part.label,
@@ -97,6 +109,11 @@ def _part_row(bom_version: str, ref: str, part, cumulative: dict[str, Decimal], 
         "carbon_factor_kg_co2e_per_unit": str(part.carbon_factor),
         "expected_cumulative_quantity": str(cumulative[ref]),
     }
+    if densities is not None:
+        if ref in densities and part.unit != "kg":
+            raise ValueError(f"{ref} : une densité n'a de sens que pour une matière au kg")
+        row["density_kg_m3"] = str(densities[ref]) if ref in densities else ""
+    return row
 
 
 def _csv(rows: list[dict], fieldnames: list[str]) -> str:
@@ -125,7 +142,7 @@ def write_all(
         **dataset["extra_conventions"],
     }
     part_rows = [
-        _part_row(bom_version, ref, part, cumulative, mass)
+        _part_row(bom_version, ref, part, cumulative, mass, dataset.get("densities"))
         for ref, part in bom.parts.items()
     ]
     edge_rows = [

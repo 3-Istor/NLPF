@@ -69,7 +69,7 @@ button.link { background: none; border: none; padding: 0; cursor: pointer; }
 .price-chart svg { width: 100%; height: auto; display: block; }
 .price-chart__line { fill: none; stroke: var(--accent); stroke-width: 1.6; }
 .price-chart__grid { stroke: var(--line); stroke-width: 1; }
-.price-chart__reference { stroke: var(--muted); stroke-dasharray: 4 3; }
+.price-chart__axis-line { stroke: var(--muted); stroke-width: 1; }
 .price-chart__today { stroke: var(--warn); stroke-dasharray: 2 2; }
 .price-chart__dot { fill: var(--warn); }
 .price-chart__axis { font-size: 10px; fill: var(--muted); }
@@ -448,3 +448,21 @@ button { font: inherit; }
 .node-status { margin: 4px 0 4px 34px; color: var(--muted); font-size: 12px; list-style: none; }
 .node-status--danger { color: var(--danger); }
 .scenario-bar__error { color: var(--danger); font-size: 12px; }
+
+/* Colonne de droite : import, onglets, synthèse ou variante, fiche pièce. */
+.side { width: 380px; flex: none; overflow: auto; background: var(--panel); border-left: 1px solid var(--line); }
+.side .summary { width: auto; border-left: none; overflow: visible; }
+.side__import, .variant, .part-card { padding: 8px 16px; }
+.side__import { display: flex; gap: 8px; }
+.side__import select { flex: 1; min-width: 0; }
+.part-card { border-top: 1px solid var(--line); }
+.model3d__canvas { height: 360px; }
+.model3d__canvas canvas { display: block; cursor: pointer; }
+.part-card dl, .variant__totals { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 4px 0; }
+.part-card dt, .variant__totals dt { color: var(--muted); }
+.part-card dd, .variant__totals dd { margin: 0; }
+.variant__changes { width: 100%; font-size: 12px; border-collapse: collapse; }
+.variant__changes th, .variant__changes td { text-align: left; padding: 2px 4px; vertical-align: top; }
+@media (max-width: 900px) {
+  .side { width: auto; border-left: none; border-bottom: 1px solid var(--line); order: -1; }
+}

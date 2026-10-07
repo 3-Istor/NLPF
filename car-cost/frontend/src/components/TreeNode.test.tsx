@@ -217,7 +217,7 @@ describe("montants", () => {
   it("affiche des tirets tant qu'aucun calcul n'a eu lieu", () => {
     const { container } = mount();
 
-    expect(container.querySelectorAll(".cost")[0].textContent).toBe("—");
+    expect(container.querySelectorAll(".cost")[0].textContent).toBe("-");
   });
 
   it("affiche le montant reçu, sans jamais en calculer un", () => {
@@ -281,7 +281,7 @@ describe("panneau de saisie", () => {
     await waitFor(() =>
       expect(screen.getByText("Groupe motopropulseur")).toBeInTheDocument(),
     );
-    expect(screen.queryByText(/Ensemble fabriqué — V/)).toBeNull();
+    expect(screen.queryByText(/Ensemble fabriqué : V/)).toBeNull();
   });
 
   it("le panneau suit la ligne sélectionnée", async () => {
@@ -297,7 +297,7 @@ describe("panneau de saisie", () => {
 
     const panels = container.querySelectorAll(".panel");
     expect(panels).toHaveLength(1);
-    expect(panels[0].textContent).toContain("Ensemble fabriqué — B");
+    expect(panels[0].textContent).toContain("Ensemble fabriqué : B");
     expect(row("V/B")).toHaveAttribute("aria-selected", "true");
     expect(row("V")).toHaveAttribute("aria-selected", "false");
   });
@@ -370,7 +370,7 @@ describe("clic sur le libellé", () => {
     await waitFor(() => expect(screen.getByText("Groupe motopropulseur")).toBeInTheDocument());
     expect(row("V")).toHaveAttribute("aria-expanded", "true");
     expect(row("V")).toHaveAttribute("aria-selected", "true");
-    expect(screen.queryByText(/Ensemble fabriqué — V/)).toBeNull();
+    expect(screen.queryByText(/Ensemble fabriqué : V/)).toBeNull();
   });
 
   it("replie un ensemble déplié", async () => {
@@ -392,7 +392,7 @@ describe("clic sur le libellé", () => {
 
     act(() => screen.getByText("Véhicule complet").click());
 
-    expect(await screen.findByText(/Pièce achetée — V/)).toBeInTheDocument();
+    expect(await screen.findByText(/Pièce achetée : V/)).toBeInTheDocument();
   });
 
   it("le bouton « Régler » ouvre le panneau d'un ensemble, sans le déplier", async () => {
@@ -400,7 +400,7 @@ describe("clic sur le libellé", () => {
 
     act(() => screen.getByRole("button", { name: "Régler cette pièce" }).click());
 
-    expect(await screen.findByText(/Ensemble fabriqué — V/)).toBeInTheDocument();
+    expect(await screen.findByText(/Ensemble fabriqué : V/)).toBeInTheDocument();
     expect(row("V")).toHaveAttribute("aria-expanded", "false");
   });
 });
@@ -452,7 +452,7 @@ describe("valeurs retenues dans le panneau", () => {
 
     await waitFor(() => expect(screen.getByLabelText("Fournisseur")).toHaveValue("SUP-B"));
     expect(screen.getByLabelText("Provenance")).toHaveValue("B-2");
-    expect(screen.queryByText(/— par défaut —/)).toBeNull();
+    expect(screen.queryByText(/(par défaut),/)).toBeNull();
   });
 
   it("le réglage enregistré gagne sur le catalogue", async () => {

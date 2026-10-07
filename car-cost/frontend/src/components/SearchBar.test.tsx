@@ -152,7 +152,7 @@ describe("SearchBar", () => {
     await searchFor("vis");
 
     expect(
-      await screen.findByText("1 / 60 résultats (1 pièces) — 50 parcourables"),
+      await screen.findByText("1 / 60 résultats (1 pièces), 50 parcourables"),
     ).toBeInTheDocument();
   });
 
