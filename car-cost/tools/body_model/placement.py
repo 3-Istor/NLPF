@@ -39,7 +39,7 @@ def strip(points, t):
 def turn(angle):
     """(cos, sin) de `angle` × π, angle rationnel ≤ 2 : série de Taylor en Fraction,
     arrondie une fois. Même résultat sur toute plateforme, alors que
-    math.cos dépend de la libm et casserait le `--check` octet pour octet."""
+    le cosinus de la libm varie selon la plateforme et casserait le `--check` octet pour octet."""
     x, term, c, s = Fraction(math.pi) * angle, Fraction(1), Fraction(0), Fraction(0)
     for i in range(60):  # dernier terme < 10⁻³⁰ pour |x| ≤ 2π
         if i % 2:
