@@ -74,14 +74,19 @@ def test_each_measured_mass_equals_the_material_quantity():
     assert masses["INT-DOOR-PANEL-FRONT"] == Decimal("1.600000")
 
 
-def test_occurrences_share_one_mesh_and_are_closed():
+def test_occurrences_share_material_and_mass_and_are_closed():
+    """Chaque emplacement porte la matière et la masse de la nomenclature ;
+    le maillage peut différer (ADR-0017, amendement du 2026-10-07)."""
     model = read_glb(MOCKUP.read_bytes())
-    meshes = {}
-    for obj in pieces_of(model):
-        meshes.setdefault(obj.spec["ref"], set()).add(obj.mesh_index)
+    bom, _ = body_pieces()
 
-    assert all(len(indexes) == 1 for indexes in meshes.values()), meshes
-    assert all(obj.is_closed and obj.volume_m3 > 0 for obj in pieces_of(model))
+    for obj in pieces_of(model):
+        part = bom.parts[obj.spec["ref"]]
+        density = bom.parts[part.material_ref].density_kg_m3
+        quantity = dict(bom.children_of(part.ref))[part.material_ref]
+        assert obj.materials == (part.material_ref,), obj.name
+        assert measured_mass(obj.volume_m3, density) == quantity, obj.name
+        assert obj.is_closed and obj.volume_m3 > 0, obj.name
 
 
 def test_decor_is_present_and_ignored():

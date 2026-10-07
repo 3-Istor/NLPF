@@ -255,15 +255,67 @@ def test_the_ref_of_an_assembly_without_material_is_refused(parent, mockup):
     assert rejected(parent, model) == [("NOT_A_MATERIAL_PIECE", "Caisse", "CAR-BIW-ASSY")]
 
 
-def test_occurrences_on_different_meshes_are_refused(parent, mockup):
-    model = BodyModel(
+def second_side(mockup, **changes):
+    """La maquette, l'objet `CAR-PANEL-SIDE 2` modifié par `changes`."""
+    return BodyModel(
         tuple(
-            replace(obj, mesh_index=999) if obj.name == "CAR-PANEL-SIDE 2" else obj
+            replace(obj, **changes) if obj.name == "CAR-PANEL-SIDE 2" else obj
             for obj in mockup.objects
         )
     )
 
-    assert rejected(parent, model) == [("OCCURRENCES_DIFFER", "CAR-PANEL-SIDE 2", "CAR-PANEL-SIDE")]
+
+def side_volume(mockup):
+    return next(obj.volume_m3 for obj in mockup.objects if obj.name == "CAR-PANEL-SIDE 1")
+
+
+def test_occurrences_on_different_meshes_with_equal_mass_are_accepted(parent, mockup):
+    model = second_side(mockup, mesh_index=999)
+
+    assert plan_variant(parent, model) is None
+
+
+def test_occurrences_with_different_masses_are_refused(parent, mockup):
+    """Même maillage, masse double : le « trou de l'échelle » (ADR-0017, amendement 2026-10-07)."""
+    model = second_side(mockup, volume_m3=2 * side_volume(mockup))
+
+    with pytest.raises(BodyImportRejected) as caught:
+        plan_variant(parent, model)
+
+    assert [(f.code, f.object_name, f.part_ref) for f in caught.value.faults] == [
+        ("OCCURRENCES_DIFFER", "CAR-PANEL-SIDE 2", "CAR-PANEL-SIDE")
+    ]
+    assert "37.000000" in caught.value.faults[0].message
+    assert "18.500000" in caught.value.faults[0].message
+
+
+def test_occurrences_with_different_materials_are_refused(parent, mockup):
+    """Aluminium à masse ÉGALE à l'acier : seule la matière diverge."""
+    steel, alu = (parent.parts[m].density_kg_m3 for m in ("MAT-STEEL-SHEET", "MAT-ALU-SHEET"))
+    volume = side_volume(mockup) * Fraction(steel) / Fraction(alu)
+    assert measured_mass(volume, alu) == measured_mass(side_volume(mockup), steel)
+    model = second_side(mockup, materials=("MAT-ALU-SHEET",), volume_m3=volume)
+
+    with pytest.raises(BodyImportRejected) as caught:
+        plan_variant(parent, model)
+
+    assert [(f.code, f.object_name, f.part_ref) for f in caught.value.faults] == [
+        ("OCCURRENCES_DIFFER", "CAR-PANEL-SIDE 2", "CAR-PANEL-SIDE")
+    ]
+    assert "MAT-ALU-SHEET" in caught.value.faults[0].message
+    assert "MAT-STEEL-SHEET" in caught.value.faults[0].message
+
+
+def test_occurrences_equal_at_a_millionth_of_a_kilogram_are_accepted(parent, mockup):
+    """Tolérance R1 : deux emplacements sont égaux si leurs masses arrondies à 10⁻⁶ kg le sont.
+    10⁻¹² m³ d'acier pèsent 7,85·10⁻⁹ kg, bien sous le pas d'arrondi."""
+    steel = parent.parts["MAT-STEEL-SHEET"].density_kg_m3
+    volume = side_volume(mockup) + Fraction(1, 10**12)
+    assert volume != side_volume(mockup)
+    assert measured_mass(volume, steel) == measured_mass(side_volume(mockup), steel)
+    model = second_side(mockup, mesh_index=999, volume_m3=volume)
+
+    assert plan_variant(parent, model) is None
 
 
 def test_occurrences_of_a_new_part_with_different_fixations_are_refused(parent, mockup):
