@@ -234,24 +234,96 @@ Vite ; il n'y a pas de CORS à configurer.
 
 ---
 
+## Démonstration : import d'une variante de carrosserie
+
+Une variante de carrosserie se crée en important un modèle 3D (`.glb`, glTF 2.0
+binaire) : l'application mesure le volume de chaque pièce, en déduit sa masse
+(volume × densité de la matière), compare à la nomenclature, puis crée une
+**variante** de la version d'origine et la chiffre sur le snapshot de prix de
+l'origine. La maquette du véhicule est servie par l'API et s'affiche dans
+l'onglet 3D. Décision : [ADR-0017](car-cost/docs/adr/0017-import-de-variante-de-carrosserie-3d.md).
+
+> **Ce que le chiffre est, et n'est pas.** L'écart affiché est un **impact
+> matière** (masse et prix de la matière, plus les fixations ajoutées), **pas un
+> coût complet** : l'outillage, le temps de fabrication et le reste de la
+> chaîne ne sont pas rechiffrés. Les densités, la maquette et les prix sont
+> **synthétiques** : aucun ne vient d'un constructeur.
+
+Fichiers de démonstration, dans `car-cost/seeds/demo/` :
+
+| Fichier | Contenu | Résultat attendu |
+|---|---|---|
+| `capot-alu.glb` | le capot passe de l'acier à l'aluminium, même géométrie | −1,33 € et −7,35 kg |
+| `aileron.glb` | un aileron `BODY-SPOILER` en ABS, 4 vis `FIX-M8-20` | +6,52 €, et la vis M8 passe de 204 à **208** |
+| `carrosserie-alu.glb` | capot, pavillon, quatre portes et hayon en aluminium | −8,33 € et −45,92 kg de matière |
+| `capot-surface.glb` | le capot est une surface ouverte | refus `MESH_NOT_CLOSED`, qui nomme le capot |
+
+La maquette de référence (`car-cost/seeds/body_multipla.glb`) se régénère avec
+`python -m tools.body_model` ; `--check` vérifie qu'elle est inchangée.
+
+Déroulé en trois minutes, sur la nomenclature Multipla :
+
+1. ouvrir le Multipla, puis l'onglet 3D ; cliquer sur le capot : l'arbre suit ;
+2. importer `capot-alu.glb` : le capot est coloré, −1,33 €, −7,35 kg ;
+3. importer `aileron.glb` : l'aileron apparaît, +6,52 €, la vis M8 passe à 208 ;
+4. réimporter la maquette : « aucun changement », aucune variante créée ;
+5. importer `capot-surface.glb` : refus `MESH_NOT_CLOSED`, qui nomme l'objet ;
+6. importer `carrosserie-alu.glb` : cinq pièces colorées, −8,33 € et −45,92 kg.
+
+Importer deux fois le même fichier sur la même version redonne la même
+variante (« déjà importé ») et ne crée rien.
+
+**Fiche pièce.** Un clic sur une pièce, dans la 3D ou dans l'arbre, ouvre sa
+fiche : référence, libellé, matière, masse, quantité cumulée, coût unitaire et
+contribution, et, sur une variante, l'avant et l'après. Sur la variante
+« aileron », un clic sur l'aileron ouvre `BODY-SPOILER` sous `CAR-ASSY` : 3,15 kg
+de `MAT-ABS-GRANULE`, 4 × `FIX-M8-20`, 6,52 €. Sur « carrosserie-alu », un clic
+sur une porte avant ouvre `CAR-DOOR-SHELL-FRONT` : acier → aluminium,
+9,40 → 3,23 kg, 24,60 → 23,48 €.
+
+Les valeurs ci-dessus sont celles du snapshot figé aux **prix de référence**.
+En démonstration, les prix figés à l'instant donnent d'autres valeurs, avec la
+même mécanique. L'import est refusé (409 `INCOMPLETE_CALCULATION`) si une pièce
+n'a pas de prix dans le snapshot ; le CO₂ n'est pas affiché pour une variante
+(il n'est pas recalculé).
+
+### Base existante : à recréer
+
+La migration 0008 ajoute les densités et le stockage des variantes, mais **ne
+remplit pas** les versions de nomenclature déjà validées (elles sont
+immuables). Sur une base créée avant cette mise à jour, l'import répond
+`MATERIAL_WITHOUT_DENSITY` ou `MODEL_NOT_FOUND`. Il faut la recréer :
+
+```bash
+docker compose down -v && docker compose up -d
+```
+
+**Cette commande efface les données locales : scénarios, snapshots de prix et
+snapshots de calcul sont perdus.** Prendre un nouveau snapshot de prix ensuite
+(l'écran le propose, et le premier lancement en prend un).
+
+---
+
 ## Les tests
 
 ```bash
-# backend — 554 tests
+# backend — 768 tests
 cd car-cost && source backend/.venv/bin/activate && python -m pytest backend
 
-# front — 138 tests
+# front — 183 tests
 cd car-cost/frontend && npm test
 ```
 
-Les quarante-quatre tests d'intégration se **sautent** si Postgres n'est pas
+Les soixante-six tests d'intégration se **sautent** si Postgres n'est pas
 joignable : la suite reste verte hors ligne. Mesuré sous WSL (Python 3.12) :
-`510 passed, 44 skipped` hors ligne, `554 passed` avec la base chargée et
-migrée jusqu'à 0005 (le démarrage de l'API rattrape les migrations
+`702 passed, 66 skipped` hors ligne, `768 passed` avec la base chargée et
+migrée jusqu'à 0008 (le démarrage de l'API rattrape les migrations
 manquantes). Les tests d'intégration qui écrivent le font dans une
 transaction annulée : un
 snapshot ne se supprime pas, et un snapshot de test deviendrait celui que
-l'écran utilise.
+l'écran utilise. Les tests d'import de variante créent des variantes
+(immuables) et les retirent en fin de module en désactivant les déclencheurs
+de gel (rôle superutilisateur requis) : les lancer sur une base jetable.
 
 Deux contrôles valent d'être lancés à la main :
 
@@ -259,10 +331,11 @@ Deux contrôles valent d'être lancés à la main :
 # le schéma refuse-t-il vraiment ce qu'il prétend refuser ?
 docker compose exec -T db psql -U 3istor -d 3istor -q \
   < backend/migrations/checks/contraintes.sql
-# attendu : 26 refus, 0 WARNING
+# attendu : 32 refus, 0 WARNING
 
 # le générateur est-il déterministe ?
 python -m tools.bom_generator --check
+python -m tools.body_model --check   # idem pour la maquette 3D
 ```
 
 ---
@@ -275,7 +348,7 @@ python -m tools.bom_generator --check
 | [docs/cadrage.md](car-cost/docs/cadrage.md) | Le problème, les acteurs, 5 questions métier, 5 invariants, 3 modes de panne, 11 ambiguïtés |
 | [docs/perimetre.md](car-cost/docs/perimetre.md) | Ce qu'on fait, ce qu'on ne fait pas, ce qu'on reporte, la tranche verticale |
 | [docs/domain-glossary.md](car-cost/docs/domain-glossary.md) | Pièce, occurrence, quantité unitaire, quantité cumulée — les quatre mots qu'on confond |
-| [docs/adr/](car-cost/docs/adr) | Quatorze décisions d'architecture, avec les options écartées et ce qui nous y ferait revenir |
+| [docs/adr/](car-cost/docs/adr) | Dix-sept décisions d'architecture, avec les options écartées et ce qui nous y ferait revenir |
 | [docs/api.md](car-cost/docs/api.md) | Les contrats d'API, écrits avant l'implémentation |
 | [backend/migrations/](car-cost/backend/migrations) | Le schéma, et ce qu'il garantit ou non |
 | [seeds/validation_report.json](car-cost/seeds/validation_report.json) | Le rapport du générateur : 474 pièces, 689 arêtes, 65 partagées |
@@ -381,6 +454,35 @@ entièrement distinct.
   simulée et ses prix figés. Vérifié dans le navigateur sur une pile isolée.
 
 ### Ce qu'il reste à faire
+
+**Import de variante de carrosserie (3D)**
+
+- [ ] **Les trois Valhalla** (recentrage §5, V1 à V6) : ni maquette, ni densités ;
+      un véhicule sans modèle répond `MODEL_NOT_FOUND` et l'écran le dit. Le
+      sandwich carbone n'a pas de densité : la règle métier est à trancher
+      avant de le mesurer.
+- [ ] **Commentaires par pièce** : non commencés.
+- [ ] **Les quatre matières sans densité** (`MAT-ADHESIVE-PU`, `MAT-BITUMEN-PAD`,
+      `MAT-FOAM-PU`, `MAT-GLASS-FIBER`) et les matières au m², au L ou au g :
+      une pièce faite de l'une d'elles est refusée à l'import
+      (`MATERIAL_WITHOUT_DENSITY`).
+- [ ] **Pas un coût complet** : l'écart d'une variante est un impact matière
+      (matière et fixations ajoutées) ; main-d'oeuvre, outillage et CO₂ ne sont
+      pas rechiffrés.
+- [ ] **Pilotage navigateur non fait par les agents** : rendu WebGL, couleurs,
+      clic 3D vers l'arbre et la fiche, message sans modèle sur une Valhalla.
+      Liste de contrôle dans le rapport de recette (`T13-report.md`).
+- [ ] **Constats mineurs ouverts**, sans effet sur les chiffres :
+      l'erreur de chargement d'une fiche pièce est avalée par `Workspace.tsx` ;
+      la fiche affiche « — » pour les coûts avant/après quand aucun calcul n'est
+      ouvert, alors que `body-changes` les sert ; un clic 3D n'amène pas la ligne
+      de l'arbre à l'écran, et reste muet si la pièce n'a pas de « où utilisé » ;
+      le moteur 3D peut fuir un renderer sur exception et ne libère pas les
+      textures ; le verrou d'import ne protège qu'un seul processus (plusieurs
+      workers uvicorn, ou deux imports simultanés, peuvent créer deux scénarios) ;
+      la SAV n'est pas reportée sur l'arête d'une nouvelle matière ; `EUR` est
+      codé en dur dans les réponses d'import ; un cumul à plus de six décimales
+      serait arrondi à l'écriture.
 
 **Suite du lot 1 et lots suivants (vues)**
 
