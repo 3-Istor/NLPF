@@ -97,10 +97,10 @@ def at_wheels(x):
 PIECES = {
     # Structure
     "CAR-PANEL-FLOOR": (lambda t: (rectangle(1.60, 2.90), t, "y"), [(0, 0.26, -0.30)]),
-    "CAR-PANEL-ROOF": (lambda t: (strip(ROOF, t), 1.84, "x", (0, 0.03)), [(0, 0, 0)]),
+    "CAR-PANEL-ROOF": (lambda t: (strip(ROOF, t), 1.84, "x", (0, 0.06)), [(0, 0, 0)]),
     "CAR-PANEL-SIDE": (lambda t: (SIDE, t, "x"), sides(0.92)),
     "CAR-BULKHEAD": (lambda t: (rectangle(1.60, 0.53), t, "z"), [(0, 0.60, 1.20)]),
-    "CAR-COWL": (lambda t: (strip(COWL, t), 1.84, "x", (0, 0.03)), [(0, 0, 0)]),
+    "CAR-COWL": (lambda t: (strip(COWL, t), 1.84, "x", (0, 0.05)), [(0, 0, 0)]),
     "CAR-PILLAR-A": (lambda t: (strip([(1.14, 1.06), (0.38, 1.62)], 0.07), t, "x"), sides(0.916)),
     "CAR-PILLAR-B": (lambda t: (strip([(0.03, 1.02), (0.0, 1.66)], 0.08), t, "x"), sides(0.916)),
     "CAR-PILLAR-C": (lambda t: (strip([(-1.36, 1.02), (-1.40, 1.66)], 0.08), t, "x"), sides(0.916)),
@@ -108,12 +108,12 @@ PIECES = {
     "CAR-RAIL-REAR": (lambda t: (rectangle(0.90, 0.12), t, "x"), sides(0.50, 0.42, -1.45)),
     "CAR-WHEEL-ARCH": (lambda t: (strip(arc(0.40), t), 0.26, "x"), at_wheels(0.79)),
     # Ouvrants
-    "CAR-HOOD-SHELL": (lambda t: (strip(HOOD, t), 1.84, "x", (0, 0.03)), [(0, 0, 0)]),
+    "CAR-HOOD-SHELL": (lambda t: (strip(HOOD, t), 1.84, "x", (0, 0.05)), [(0, 0, 0)]),
     "CAR-DOOR-SHELL-FRONT": (lambda t: (FRONT_DOOR, t, "x"), sides(0.930)),
     "CAR-DOOR-SHELL-REAR": (lambda t: ([(-z, y) for z, y in FRONT_DOOR], t, "x"), sides(0.930)),
     "CAR-TAILGATE-SHELL": (
         lambda t: (strip([(-1.965, 1.02), (-1.975, 0.80), (-1.985, 0.60)], t), 1.80, "x",
-                    (-0.02, 0)),
+                    (-0.04, 0)),
         [(0, 0, 0)],
     ),
     "CAR-DOOR-SEAL": (
@@ -126,14 +126,14 @@ PIECES = {
         sides(0.910),
     ),
     "CAR-GLASS-TAILGATE": (lambda t: (strip([(-1.955, 1.60), (-1.965, 1.03)], t), 1.80, "x",
-                                      (-0.02, 0)),
+                                      (-0.04, 0)),
                            [(0, 0, 0)]),
     # Pare-chocs et garnitures extérieures
     "CAR-BUMPER-BEAM": (lambda t: (rectangle(1.50, 0.12), t, "z"), [(0, 0.42, 1.90), (0, 0.42, -1.90)]),
-    "CAR-BUMPER-SKIN-FRONT": (lambda t: (strip(FRONT_BUMPER, t), 0.40, "y", (0, 0.02)),
+    "CAR-BUMPER-SKIN-FRONT": (lambda t: (strip(FRONT_BUMPER, t), 0.40, "y", (0, 0.04)),
                               [(0, 0.42, 0)]),
     "CAR-BUMPER-SKIN-REAR": (  # le même tracé tourné d'un demi-tour autour de Y
-        lambda t: (strip([(-x, -z) for x, z in FRONT_BUMPER], t), 0.40, "y", (0, -0.02)),
+        lambda t: (strip([(-x, -z) for x, z in FRONT_BUMPER], t), 0.40, "y", (0, -0.04)),
         [(0, 0.42, 0)],
     ),
     "CAR-GRILLE": (
@@ -155,14 +155,14 @@ PIECES = {
 # translations). Le Multipla se reconnaît à ses deux étages d'optiques avant,
 # le haut sur la marche au pied du pare-brise.
 DECOR = {
-    "Pare-brise": ((strip(WINDSCREEN, 0.006), 1.84, "x", (0, 0.03)), "DECOR-GLASS", [(0, 0, 0)]),
+    "Pare-brise": ((strip(WINDSCREEN, 0.006), 1.84, "x", (0, 0.05)), "DECOR-GLASS", [(0, 0, 0)]),
     "Vitre avant": (([(1.11, 1.05), (0.38, 1.62), (0.03, 1.66), (0.03, 1.03)], 0.005, "x"),
                     "DECOR-GLASS", sides(0.910)),
     "Vitre arrière": (([(-0.03, 1.03), (-0.03, 1.662), (-0.60, 1.67), (-1.37, 1.666), (-1.37, 1.03)], 0.005, "x"),
                       "DECOR-GLASS", sides(0.910)),
     "Optique basse": ((ellipse(0.17, 0.065), 0.04, "z"), "DECOR-LIGHT", sides(0.69, 0.70, 1.975)),
-    "Optique haute": ((ellipse(0.11, 0.04), 0.03, "z"), "DECOR-LIGHT", sides(0.60, 1.005, 1.275)),
-    "Feu arrière": ((ellipse(0.07, 0.17), 0.02, "z"), "DECOR-TAIL-LIGHT", sides(0.81, 0.81, -1.995)),
+    "Optique haute": ((ellipse(0.11, 0.04), 0.03, "z"), "DECOR-LIGHT", sides(0.60, 1.02, 1.275)),
+    "Feu arrière": ((ellipse(0.07, 0.17), 0.02, "z"), "DECOR-TAIL-LIGHT", sides(0.81, 0.81, -2.0)),
     "Rétroviseur": ((ellipse(0.06, 0.05), 0.10, "z"), "DECOR-TRIM", sides(0.90, 1.12, 1.02)),
     "Pneu": ((ellipse(0.31, 0.31), 0.20, "x"), "DECOR-TYRE", at_wheels(0.78)),
     "Jante": ((ellipse(0.19, 0.19), 0.21, "x"), "DECOR-RIM", at_wheels(0.78)),
