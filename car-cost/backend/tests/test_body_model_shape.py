@@ -142,3 +142,51 @@ def test_pieces_stay_inside_the_body():
         node_low, node_high = box(document, node)
         assert all(a >= b - 0.02 for a, b in zip(node_low, low)), node["name"]
         assert all(a <= b + 0.02 for a, b in zip(node_high, high)), node["name"]
+
+
+# ref → (axe de la largeur, axe du galbe, sens vers l'extérieur)
+CROWNED = {
+    "CAR-HOOD-SHELL": (0, 1, 1),
+    "CAR-PANEL-ROOF": (0, 1, 1),
+    "CAR-TAILGATE-SHELL": (0, 2, -1),
+    "CAR-BUMPER-SKIN-FRONT": (1, 2, 1),
+    "CAR-BUMPER-SKIN-REAR": (1, 2, -1),
+}
+
+
+def positions(document, binary, mesh):
+    found = []
+    for primitive in document["meshes"][mesh]["primitives"]:
+        accessor = document["accessors"][primitive["attributes"]["POSITION"]]
+        view = document["bufferViews"][accessor["bufferView"]]
+        start = view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
+        found += struct.iter_unpack("<3f", binary[start:start + 12 * accessor["count"]])
+    return found
+
+
+def test_skin_panels_are_crowned_across_the_width():
+    """Le milieu de la largeur dépasse les bords d'au moins 1 cm vers l'extérieur."""
+    document, binary = load()
+    nodes = by_name(document)
+
+    for ref, (across, bulge, outward) in CROWNED.items():
+        points = positions(document, binary, nodes[f"{ref} 1"]["mesh"])
+        low = min(p[across] for p in points)
+        high = max(p[across] for p in points)
+        middle, half = (low + high) / 2, (high - low) / 2
+        centre = max((outward * p[bulge] for p in points if abs(p[across] - middle) < 0.1 * half),
+                     default=float("-inf"))  # aucun sommet au milieu : panneau plat
+        edges = max(outward * p[bulge] for p in points if abs(p[across] - middle) > 0.9 * half)
+        assert centre - edges >= 0.01, ref
+
+
+def test_glass_is_dark_and_nearly_opaque():
+    """Opacité ≥ 0,8 : ce qui est derrière une vitre y compte pour 20 % au plus,
+    et pour 4 % au plus derrière deux vitres (de part et d'autre de la caisse)."""
+    document, _ = load()
+
+    glass = [m for m in document["materials"] if "GLASS" in m["name"]]
+    assert glass
+    for material in glass:
+        *rgb, alpha = material["pbrMetallicRoughness"]["baseColorFactor"]
+        assert 0.8 <= alpha < 1 and max(rgb) <= 0.2, material["name"]
