@@ -5,6 +5,7 @@ l'accessor POSITION + translation : la maquette ne pose rien autrement.
 """
 
 import json
+import math
 import struct
 from pathlib import Path
 
@@ -190,3 +191,99 @@ def test_glass_is_dark_and_nearly_opaque():
     for material in glass:
         *rgb, alpha = material["pbrMetallicRoughness"]["baseColorFactor"]
         assert 0.8 <= alpha < 1 and max(rgb) <= 0.2, material["name"]
+
+
+FLANKS = ("CAR-PANEL-SIDE", "CAR-DOOR-SHELL-FRONT", "CAR-DOOR-SHELL-REAR")
+CURVED = ("CAR-HOOD-SHELL", "CAR-COWL", "CAR-PANEL-ROOF", "CAR-TAILGATE-SHELL",
+          "CAR-BUMPER-SKIN-FRONT", "CAR-BUMPER-SKIN-REAR") + FLANKS
+
+
+def occurrences(document, ref):
+    return [node for node in document["nodes"]
+            if node.get("extras", {}).get("carcost", {}).get("ref") == ref]
+
+
+def crown(points, across, bulge, outward):
+    """Avancée vers l'extérieur du milieu de la largeur sur ses bords (même mesure que CROWNED)."""
+    low = min(p[across] for p in points)
+    high = max(p[across] for p in points)
+    middle, half = (low + high) / 2, (high - low) / 2
+    centre = max((outward * p[bulge] for p in points if abs(p[across] - middle) < 0.1 * half),
+                 default=float("-inf"))
+    edges = max(outward * p[bulge] for p in points if abs(p[across] - middle) > 0.9 * half)
+    return centre - edges
+
+
+def read(document, binary, index, fmt):
+    accessor = document["accessors"][index]
+    view = document["bufferViews"][accessor["bufferView"]]
+    start = view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
+    size = struct.calcsize("<" + fmt)
+    return list(struct.iter_unpack("<" + fmt, binary[start:start + size * accessor["count"]]))
+
+
+def angle(u, v):
+    cosine = sum(a * b for a, b in zip(u, v)) / math.sqrt(sum(a * a for a in u) * sum(b * b for b in v))
+    return math.degrees(math.acos(max(-1.0, min(1.0, cosine))))
+
+
+def test_flanks_and_doors_bulge_outwards_on_both_sides():
+    document, binary = load()
+
+    for ref in FLANKS:
+        for node in occurrences(document, ref):
+            outward = 1 if node["translation"][0] > 0 else -1
+            points = positions(document, binary, node["mesh"])
+            assert crown(points, 1, 0, outward) >= 0.01, node["name"]
+
+
+def test_left_and_right_flanks_are_mirrors():
+    document, binary = load()
+
+    def world(node):
+        return {tuple(round(c + o, 6) for c, o in zip(p, node["translation"]))
+                for p in positions(document, binary, node["mesh"])}
+
+    for ref in FLANKS:
+        left, right = sorted(occurrences(document, ref), key=lambda node: -node["translation"][0])
+        assert left["mesh"] != right["mesh"], ref
+        assert {(-x, y, z) for x, y, z in world(left)} == world(right), ref
+
+
+def test_cowl_and_windscreen_are_crowned():
+    document, binary = load()
+    nodes = by_name(document)
+
+    for name in ("CAR-COWL 1", "Pare-brise 1"):
+        points = positions(document, binary, nodes[name]["mesh"])
+        assert crown(points, 0, 1, 1) >= 0.01, name
+
+
+def test_curved_panels_have_smooth_normals():
+    """NORMAL unitaire sur chaque sommet ; en un point partagé par deux facettes
+    voisines d'un galbe, les deux normales d'affichage sont plus proches que les
+    facettes elles-mêmes, et à moins de 15° : le galbe est lissé."""
+    document, binary = load()
+
+    for ref in CURVED:
+        for node in occurrences(document, ref):
+            (primitive,) = document["meshes"][node["mesh"]]["primitives"]
+            assert "NORMAL" in primitive["attributes"], node["name"]
+            points = read(document, binary, primitive["attributes"]["POSITION"], "3f")
+            normals = read(document, binary, primitive["attributes"]["NORMAL"], "3f")
+            assert len(normals) == len(points), node["name"]
+            assert all(abs(math.sqrt(sum(c * c for c in n)) - 1) <= 1e-6 for n in normals)
+            order = [i for (i,) in read(document, binary, primitive["indices"], "H")]
+            corners = {}  # position → [(normale de facette, normale du sommet)]
+            for k in range(0, len(order), 3):
+                a, b, c = (points[i] for i in order[k:k + 3])
+                face = [(b[1] - a[1]) * (c[2] - a[2]) - (b[2] - a[2]) * (c[1] - a[1]),
+                        (b[2] - a[2]) * (c[0] - a[0]) - (b[0] - a[0]) * (c[2] - a[2]),
+                        (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])]
+                for i in order[k:k + 3]:
+                    corners.setdefault(points[i], []).append((face, normals[i]))
+            assert any(
+                2 <= angle(f1, f2) < 30 and angle(n1, n2) < min(15, angle(f1, f2) / 2)
+                for found in corners.values()
+                for (f1, n1), (f2, n2) in zip(found, found[1:])
+            ), node["name"]
