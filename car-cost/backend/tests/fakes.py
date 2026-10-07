@@ -301,3 +301,56 @@ class FakeCalculationSnapshotRepository:
         for existing in self.list_for(bom_version):
             if existing.id != own_id and existing.name_key == name_key(name):
                 raise SnapshotNameTaken(name, existing.id)
+
+
+class FakeBomVersions:
+    """Plusieurs versions, chacune avec son résumé : de quoi suivre une filiation."""
+
+    def __init__(self, *entries):
+        self.entries = {summary.id: (summary, bom) for summary, bom in entries}
+
+    def load(self, version: str):
+        try:
+            return self.entries[version][1]
+        except KeyError as missing:
+            raise BomVersionNotFound(version) from missing
+
+    def versions(self):
+        return tuple(summary for summary, _ in reversed(self.entries.values()))
+
+
+class FakeBodyModelRepository:
+    def __init__(self, *models):
+        self.models = {model.bom_version: model for model in models}
+
+    def get(self, version: str):
+        return self.models.get(version)
+
+
+class FakeVariantWriter:
+    """Tout ou rien, comme la transaction : la version et son modèle deviennent
+    lisibles ensemble."""
+
+    def __init__(self, boms: FakeBomVersions, models: FakeBodyModelRepository, validated_at):
+        self.boms = boms
+        self.models = models
+        self.validated_at = validated_at
+        self.saved: list = []
+
+    def save_variant(self, variant) -> None:
+        from carcost.application.ports import StoredModel
+
+        if variant.id in self.boms.entries:
+            raise AssertionError("une version validée ne se réécrit pas")
+        parent = self.boms.entries[variant.parent_id][0]
+        bom = variant.plan.bom
+        self.boms.entries[variant.id] = (
+            replace(
+                parent, id=variant.id, label=variant.label, part_count=len(bom.parts),
+                edge_count=len(bom.edges), validated_at=self.validated_at,
+                is_synthetic=True, parent_version_id=variant.parent_id,
+            ),
+            bom,
+        )
+        self.models.models[variant.id] = StoredModel(variant.id, variant.glb, variant.sha256, "imported")
+        self.saved.append(variant)
