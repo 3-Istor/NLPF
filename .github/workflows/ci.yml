@@ -47,7 +47,7 @@ jobs:
       CARCOST_DSN: postgresql://3istor:3istor@127.0.0.1:5432/3istor
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v5
         with:
@@ -136,7 +136,7 @@ jobs:
         working-directory: car-cost/frontend
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v4
         with:
